@@ -88,6 +88,44 @@
                   {
                     "group": ["../../../*", "../../../**"],
                     "message": "Avoid deep relative imports (3+ levels up). Use @web/* instead."
+                  },
+                  {
+                    "group": ["@web/features/*/**"],
+                    "message": "Features communicate only through their root barrel: @web/features/<name>."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": ["apps/web/src/shared/**/*.{ts,tsx}"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "patterns": [
+                  {
+                    "group": ["@mui/*/*/*"],
+                    "message": "Avoid deep @mui imports."
+                  },
+                  {
+                    "group": ["../../../*", "../../../**"],
+                    "message": "Avoid deep relative imports (3+ levels up). Use @web/* instead."
+                  },
+                  {
+                    "group": [
+                      "@web/app",
+                      "@web/app/*",
+                      "@web/pages/*",
+                      "@web/widgets/*",
+                      "@web/features/*"
+                    ],
+                    "message": "shared/ must not depend on app/pages/widgets/features layers."
                   }
                 ]
               }

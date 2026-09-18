@@ -24,11 +24,52 @@ do not port data, secrets, or assumptions from elsewhere.
 - i18n: Lingui, locales `en` and `uk`. Every user-facing string goes through
   `t()`/`<Trans>` from day one — no hardcoded strings "to add i18n later."
 
-## Backend
+## Frontend Structure (FSD-lite, mirrors badNerd's apps/web)
+
+```
+apps/web/src/
+  app/            — bootstrap: App.tsx, providers/, router/, ui/ (error boundaries etc.)
+  pages/<name>/   — one folder per route, own index.ts barrel
+  features/<name>/ — self-contained feature, communicates only via its root barrel
+  widgets/<name>/ — composed UI blocks made of features/shared
+  shared/
+    api/          — API client wiring
+    lib/          — cross-cutting logic (e.g. shared/lib/i18n)
+    theme/        — MUI theme + light/dark mode
+    types/        — shared TS types
+    ui/           — generic presentational components
+  assets/
+```
+
+`shared/` must never import from `app/pages/widgets/features` (enforced via
+`biome.json` `noRestrictedImports`). Features only expose their root barrel.
+
+## Backend Structure (module-per-feature, mirrors apiService)
 
 `apps/api` — NestJS, in this same repo (unlike badNerd, no separate backend
 repo — keep it simple for a solo/open-source project until there's a reason
 to split).
+
+```
+apps/api/src/
+  <feature>/            — e.g. routes/, crags/, photos/
+    <feature>.module.ts
+    <feature>.controller.ts
+    <feature>.service.ts
+    <feature>.types.ts
+  common/
+    exceptions/
+    filters/            — e.g. http-exception.filter.ts
+    guards/
+    utils/
+  config/               — env/config loaders, e.g. supabase.config.ts
+  health/
+  app.module.ts
+  main.ts
+```
+
+New backend features are Nest modules under `src/<feature>/`, registered in
+`app.module.ts` — same shape as `apiService`'s users/decks/notes modules.
 
 Contracts flow one way: backend generates its OpenAPI/contract spec →
 `packages/api` generates typed client from it. Never hand-edit

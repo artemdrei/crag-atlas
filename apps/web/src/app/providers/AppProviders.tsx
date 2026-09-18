@@ -2,7 +2,7 @@ import { I18nProvider } from '@lingui/react';
 
 import { useEffect, useState } from 'react';
 
-import { activateLocale, i18n, readStoredLocale } from '@web/i18n/i18n';
+import { activateLocale, i18n, readStoredLocale } from '@web/shared/i18n/i18n';
 import { ThemeModeProvider } from '@web/shared/theme/ThemeModeProvider';
 
 export const AppProviders = ({ children }: { children: React.ReactNode }) => {
