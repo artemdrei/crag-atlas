@@ -1,0 +1,102 @@
+[
+  {
+    "id": "mizerna-lohika",
+    "sectorId": "bastion",
+    "name": "Мізерна логіка",
+    "grade": "7a",
+    "type": "sport",
+    "length": 20,
+    "boltsCount": 8,
+    "description": "Технічний вихід по мізерах у нижній частині."
+  },
+  {
+    "id": "sokil",
+    "sectorId": "bastion",
+    "name": "Сокіл",
+    "grade": "7a+",
+    "type": "sport",
+    "length": 22,
+    "boltsCount": 9,
+    "description": "Старт по мізерах під карнизом, ключ — вихід із карниза на третій відтяжці."
+  },
+  {
+    "id": "liva-shchylyna",
+    "sectorId": "bastion",
+    "name": "Ліва щілина",
+    "grade": "6b+",
+    "type": "trad",
+    "length": 18,
+    "boltsCount": 0,
+    "description": "Класична щілина, потрібне власне спорядження."
+  },
+  {
+    "id": "dovhyi-shlyakh",
+    "sectorId": "bastion",
+    "name": "Довгий шлях",
+    "grade": "6c+",
+    "type": "sport",
+    "length": 28,
+    "boltsCount": 11,
+    "description": "Найдовший маршрут сектора, витривалість на другій половині."
+  },
+  {
+    "id": "promin",
+    "sectorId": "bastion",
+    "name": "Промінь",
+    "grade": "8a",
+    "type": "sport",
+    "length": 24,
+    "boltsCount": 10,
+    "description": "Пробитий нещодавно, потребує підтвердження категорії."
+  },
+  {
+    "id": "dzerkalo-1",
+    "sectorId": "dzerkalo",
+    "name": "Плита №1",
+    "grade": "5a",
+    "type": "sport",
+    "length": 16,
+    "boltsCount": 6,
+    "description": "Легка розкатувальна лінія на пологій плиті."
+  },
+  {
+    "id": "karnyz-1",
+    "sectorId": "karnyz",
+    "name": "Навислий карниз",
+    "grade": "7c",
+    "type": "sport",
+    "length": 20,
+    "boltsCount": 9,
+    "description": "Силовий вихід через навислу секцію."
+  },
+  {
+    "id": "stina-1",
+    "sectorId": "stina-nad-vodoyu",
+    "name": "Ранкова стіна",
+    "grade": "6a",
+    "type": "sport",
+    "length": 18,
+    "boltsCount": 7,
+    "description": "Вертикальна стіна прямо над водою."
+  },
+  {
+    "id": "denesh-1",
+    "sectorId": "denesh-main",
+    "name": "Гранітна плита",
+    "grade": "6a",
+    "type": "sport",
+    "length": 25,
+    "boltsCount": 8,
+    "description": "Технічна плита на тертя."
+  },
+  {
+    "id": "aktove-1",
+    "sectorId": "aktove-canyon",
+    "name": "Над водоспадом",
+    "grade": "6b",
+    "type": "sport",
+    "length": 30,
+    "boltsCount": 10,
+    "description": "Довгий маршрут з красивим виглядом на каньйон."
+  }
+]
