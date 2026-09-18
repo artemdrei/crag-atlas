@@ -1,0 +1,30 @@
+{
+  "name": "crag-atlas",
+  "version": "0.0.0",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "lint": "biome lint .",
+    "lint:fix": "biome check --write .",
+    "check": "biome check .",
+    "test": "turbo run test",
+    "dev:web": "turbo run dev --filter=web",
+    "build:web": "turbo run build --filter=web",
+    "dev:api": "turbo run dev --filter=api",
+    "build:api": "turbo run build --filter=api",
+    "gen:contracts": "pnpm --filter api gen:contracts",
+    "gen:api": "pnpm --filter @crag-atlas/api gen:api"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.5",
+    "turbo": "^2.10.6",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=24",
+    "pnpm": ">=10.16"
+  },
+  "packageManager": "pnpm@10.34.1"
+}

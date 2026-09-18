@@ -1,0 +1,10 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-09-18 00:00+0000\n"
+"Language: en\n"
+
+msgid "app.title"
+msgstr "crag-atlas"
+
+msgid "home.heading"
+msgstr "Find your next climb"

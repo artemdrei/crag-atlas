@@ -1,0 +1,10 @@
+{
+  "name": "@crag-atlas/api",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./src/index.ts",
+  "scripts": {
+    "gen:api": "echo 'TODO: generate client from apps/api contract spec'"
+  }
+}
