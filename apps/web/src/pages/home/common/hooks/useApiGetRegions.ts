@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { type Failure, toFailure } from "@crag-atlas/utils";
+import { type Failure, toFailure } from '@crag-atlas/utils';
 
-import { apiGet } from "@web/shared/api";
+import { apiGet } from '@web/shared/api';
 
-import type { Region } from "../entities";
+import type { Region } from '../entities';
 
 export const useApiGetRegions = () => {
   const [regions, setRegions] = useState<Region[]>([]);
@@ -16,7 +16,7 @@ export const useApiGetRegions = () => {
 
     const fetchRegions = async () => {
       try {
-        const data = await apiGet<Region[]>("/regions");
+        const data = await apiGet<Region[]>('/regions');
         if (!cancelled) setRegions(data);
       } catch (err) {
         if (!cancelled) setFailure(toFailure(err));
