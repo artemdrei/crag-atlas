@@ -34,6 +34,37 @@
         },
         "tags": ["Regions"]
       }
+    },
+    "/regions/{regionId}/sectors": {
+      "get": {
+        "operationId": "SectorsController_findByRegion",
+        "parameters": [
+          {
+            "name": "regionId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SectorDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Sectors"]
+      }
     }
   },
   "info": {
@@ -77,6 +108,41 @@
           "province",
           "rockType",
           "sectorCount",
+          "routeCount",
+          "gradeRange"
+        ]
+      },
+      "SectorDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "regionId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "approachMinutes": {
+            "type": "number"
+          },
+          "routeCount": {
+            "type": "number"
+          },
+          "gradeRange": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "regionId",
+          "name",
+          "description",
+          "approachMinutes",
           "routeCount",
           "gradeRange"
         ]

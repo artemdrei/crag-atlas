@@ -36,6 +36,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/regions/{regionId}/sectors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["SectorsController_findByRegion"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -46,6 +62,15 @@ export interface components {
             province: string;
             rockType: string;
             sectorCount: number;
+            routeCount: number;
+            gradeRange: string;
+        };
+        SectorDto: {
+            id: string;
+            regionId: string;
+            name: string;
+            description: string;
+            approachMinutes: number;
             routeCount: number;
             gradeRange: string;
         };
@@ -90,6 +115,27 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["RegionDto"][];
+                };
+            };
+        };
+    };
+    SectorsController_findByRegion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                regionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SectorDto"][];
                 };
             };
         };
