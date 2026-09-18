@@ -1,1 +1,2 @@
-export { Home } from './Home';
+export { PageHomeDesktop } from './desktop/PageHomeDesktop';
+export { PageHomeMobile } from './mobile/PageHomeMobile';

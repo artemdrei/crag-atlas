@@ -1,8 +1,11 @@
+import { lazy } from 'react';
+import { isMobile } from 'react-device-detect';
+
 import { AppProviders } from '@web/app/providers';
-import { Home } from '@web/pages/home';
+
+const AppMobile = lazy(() => import('./mobile/AppMobile'));
+const AppDesktop = lazy(() => import('./desktop/AppDesktop'));
 
 export const App = () => (
-  <AppProviders>
-    <Home />
-  </AppProviders>
+  <AppProviders>{isMobile ? <AppMobile /> : <AppDesktop />}</AppProviders>
 );

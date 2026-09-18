@@ -28,21 +28,45 @@ do not port data, secrets, or assumptions from elsewhere.
 
 ```
 apps/web/src/
-  app/            — bootstrap: App.tsx, providers/, router/, ui/ (error boundaries etc.)
-  pages/<name>/   — one folder per route, own index.ts barrel
-  features/<name>/ — self-contained feature, communicates only via its root barrel
-  widgets/<name>/ — composed UI blocks made of features/shared
+  app/
+    App.tsx           — picks AppDesktop or AppMobile via react-device-detect
+    desktop/
+      AppDesktop.tsx  — desktop route tree
+      layout/         — AppLayoutDesktop etc., own index.ts barrel
+    mobile/
+      AppMobile.tsx   — mobile route tree
+      layout/         — HeaderMobile, AppBottomNavigation, own index.ts barrel
+    providers/        — AppProviders (theme + i18n), own index.ts barrel
+    router/           — Router.tsx (layout wrappers), routes.ts (ROUTES const)
+    ui/               — cross-cutting app-level UI (errorBoundary, etc.)
+  pages/<name>/
+    common/           — shared UI/logic between mobile and desktop variant
+    desktop/Page<Name>Desktop.tsx
+    mobile/Page<Name>Mobile.tsx
+    index.ts          — exports both Page<Name>Desktop and Page<Name>Mobile
+  features/<name>/    — same common/desktop/mobile split as pages when a
+                         feature has device-specific UI; root index.ts is the
+                         only import surface for the rest of the app
+  widgets/<name>/     — composed UI blocks made of features/shared
   shared/
-    api/          — API client wiring
-    lib/          — cross-cutting logic (e.g. shared/lib/i18n)
-    theme/        — MUI theme + light/dark mode
-    types/        — shared TS types
-    ui/           — generic presentational components
+    api/              — API client wiring
+    lib/              — cross-cutting logic
+    theme/            — MUI theme + light/dark mode
+    types/            — shared TS types
+    ui/               — generic presentational components
   assets/
 ```
 
+**Mobile vs desktop is mandatory, not optional** — every page/feature with
+UI ships both a desktop and mobile variant (identical data/logic in
+`common/`, device-specific layout in `desktop/`/`mobile/`). Device choice
+happens once at the top (`app/App.tsx`, `react-device-detect`'s `isMobile`),
+never re-checked deeper in the tree.
+
 `shared/` must never import from `app/pages/widgets/features` (enforced via
-`biome.json` `noRestrictedImports`). Features only expose their root barrel.
+`biome.json` `noRestrictedImports`). Features/pages only expose their root
+barrel — never import a submodule path like `@web/features/foo/mobile/*`
+directly.
 
 ## Backend Structure (module-per-feature, mirrors apiService)
 
