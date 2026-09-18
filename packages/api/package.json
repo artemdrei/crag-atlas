@@ -5,6 +5,9 @@
   "type": "module",
   "main": "./src/index.ts",
   "scripts": {
-    "gen:api": "echo 'TODO: generate client from apps/api contract spec'"
+    "gen:api": "openapi-typescript ../../apps/api/openapi.json -o src/generated/api-types.ts"
+  },
+  "devDependencies": {
+    "openapi-typescript": "^7.4.0"
   }
 }
