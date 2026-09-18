@@ -1,10 +1,15 @@
 import Stack from '@mui/material/Stack';
+import { styled } from '@mui/material/styles';
 
 import { HomeHeading, HomeThemeToggle } from '../common';
 
 export const PageHomeMobile = () => (
-  <Stack spacing={2} sx={{ p: 2 }}>
+  <PageStyled spacing={2}>
     <HomeHeading />
     <HomeThemeToggle />
-  </Stack>
+  </PageStyled>
 );
+
+const PageStyled = styled(Stack)(({ theme }) => ({
+  padding: theme.spacing(2)
+}));

@@ -7,6 +7,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import TerrainIcon from '@mui/icons-material/Terrain';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import { styled } from '@mui/material/styles';
 
 import { ROUTES } from '@web/app/router/routes';
 
@@ -14,16 +15,7 @@ export const AppBottomNavigation = () => {
   const navigate = useNavigate();
 
   return (
-    <BottomNavigation
-      showLabels
-      value={ROUTES.INDEX}
-      sx={{
-        borderTop: 1,
-        borderColor: 'divider',
-        height: 'auto',
-        pb: 'env(safe-area-inset-bottom)'
-      }}
-    >
+    <BottomNavigationStyled showLabels value={ROUTES.INDEX}>
       <BottomNavigationAction
         label={<Trans>Crags</Trans>}
         value={ROUTES.INDEX}
@@ -45,6 +37,12 @@ export const AppBottomNavigation = () => {
         icon={<PersonIcon />}
         disabled
       />
-    </BottomNavigation>
+    </BottomNavigationStyled>
   );
 };
+
+const BottomNavigationStyled = styled(BottomNavigation)(({ theme }) => ({
+  borderTop: `1px solid ${theme.palette.divider}`,
+  height: 'auto',
+  paddingBottom: 'env(safe-area-inset-bottom)'
+}));
