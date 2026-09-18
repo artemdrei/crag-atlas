@@ -24,7 +24,7 @@ do not port data, secrets, or assumptions from elsewhere.
 - i18n: Lingui, locales `en` and `uk`. Every user-facing string goes through
   `t()`/`<Trans>` from day one — no hardcoded strings "to add i18n later."
 
-## Frontend Structure (FSD-lite, mirrors badNerd's apps/web)
+## Frontend Structure (FSD-lite)
 
 ```
 apps/web/src/
@@ -68,11 +68,10 @@ never re-checked deeper in the tree.
 barrel — never import a submodule path like `@web/features/foo/mobile/*`
 directly.
 
-## Backend Structure (module-per-feature, mirrors apiService)
+## Backend Structure (module-per-feature)
 
-`apps/api` — NestJS, in this same repo (unlike badNerd, no separate backend
-repo — keep it simple for a solo/open-source project until there's a reason
-to split).
+`apps/api` — NestJS, in this same repo. Keep it simple for a solo/open-source
+project until there's a reason to split into a separate backend repo.
 
 ```
 apps/api/src/
@@ -93,7 +92,7 @@ apps/api/src/
 ```
 
 New backend features are Nest modules under `src/<feature>/`, registered in
-`app.module.ts` — same shape as `apiService`'s users/decks/notes modules.
+`app.module.ts`.
 
 Contracts flow one way: backend generates its OpenAPI/contract spec →
 `packages/api` generates typed client from it. Never hand-edit
