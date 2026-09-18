@@ -68,6 +68,32 @@ never re-checked deeper in the tree.
 barrel — never import a submodule path like `@web/features/foo/mobile/*`
 directly.
 
+## React Native Readiness
+
+A React Native app is a likely future target. This does not mean building
+one now — it means the `common/` layer of every page/feature must already be
+written so it could be reused by an RN app later without a rewrite:
+
+- **`common/` holds no MUI/DOM-specific code.** Business logic, data
+  fetching hooks, derived state, and prop/type contracts for a UI piece live
+  in `common/` and must not import `@mui/*`, `react-router`'s DOM APIs, or
+  anything web-only.
+- **Presentational components split by platform even within `common/`
+  when needed**: a shared piece of UI logic (e.g. "what fields does a
+  RegionCard show, in what order") is expressed as a plain data-shaping
+  function or hook in `common/`, consumed by a `desktop/`/`mobile/`
+  MUI component now, and by an RN component later — the shaping logic isn't
+  duplicated, only the render layer is.
+- **No inline styling logic mixed into data logic.** Keep "what to render"
+  (hooks, derived values) separate from "how it looks" (`styled()`
+  components) so the former ports to RN and the latter is rewritten once,
+  intentionally, not accidentally dragged along.
+- When building a new page/feature, ask: *if this had to render in React
+  Native tomorrow, what part of `common/` would I have to touch?* If the
+  answer is "the MUI components," that's fine — those are expected to be
+  rewritten. If the answer includes hooks or type contracts, they're in the
+  wrong layer.
+
 ## Backend Structure (module-per-feature)
 
 `apps/api` — NestJS, in this same repo. Keep it simple for a solo/open-source
@@ -150,7 +176,8 @@ All folders — camelCase. React components PascalCase, hooks `useX.ts`.
 - Single MUI theme source in `apps/web/src/shared/theme`, light + dark mode,
   switch persisted client-side.
 - No inline hex colors in components — always theme tokens.
-- **No `sx` prop anywhere.** Style through `styled()` from
+- **No `sx` prop anywhere.** Style through `styled()` template-literal form
+  (`styled(Component)\`...\``, not the object/callback form) from
   `@mui/material/styles`, declared below the component in the same file.
   Naming: `<Name>Styled` suffix (e.g. `TitleStyled`), never a bare name or
   a prefix. See `.claude/rules/components.md` for the full rule.

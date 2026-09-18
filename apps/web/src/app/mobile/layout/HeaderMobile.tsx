@@ -11,6 +11,6 @@ export const HeaderMobile = () => (
   </HeaderStyled>
 );
 
-const HeaderStyled = styled(AppBar)({
-  paddingTop: 'env(safe-area-inset-top)'
-});
+const HeaderStyled = styled(AppBar)`
+  padding-top: env(safe-area-inset-top);
+`;

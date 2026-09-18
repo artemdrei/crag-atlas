@@ -20,24 +20,24 @@ export const AppLayoutMobile = () => (
   </LayoutRootStyled>
 );
 
-const LayoutRootStyled = styled(Box)({
-  height: '100dvh',
-  display: 'flex',
-  flexDirection: 'column',
-  overflow: 'hidden'
-});
+const LayoutRootStyled = styled(Box)`
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+`;
 
-const HeaderSlotStyled = styled(Box)({
-  flexShrink: 0
-});
+const HeaderSlotStyled = styled(Box)`
+  flex-shrink: 0;
+`;
 
-const MainStyled = styled(Box)({
-  flexGrow: 1,
-  minHeight: 0,
-  overflowY: 'auto',
-  WebkitOverflowScrolling: 'touch'
-}) as typeof Box;
+const MainStyled = styled(Box)`
+  flex-grow: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+` as typeof Box;
 
-const NavSlotStyled = styled(Box)({
-  flexShrink: 0
-});
+const NavSlotStyled = styled(Box)`
+  flex-shrink: 0;
+`;

@@ -35,18 +35,18 @@ export const AppHeaderDesktop = () => {
   );
 };
 
-const HeaderStyled = styled(AppBar)(({ theme }) => ({
-  borderBottom: `1px solid ${theme.palette.divider}`
-}));
+const HeaderStyled = styled(AppBar)`
+  border-bottom: 1px solid ${({ theme }) => theme.palette.divider};
+`;
 
-const ToolbarStyled = styled(Toolbar)({
-  gap: 24
-});
+const ToolbarStyled = styled(Toolbar)`
+  gap: 24px;
+`;
 
-const LogoStyled = styled(Typography)({
-  cursor: 'pointer'
-}) as typeof Typography;
+const LogoStyled = styled(Typography)`
+  cursor: pointer;
+` as typeof Typography;
 
-const SpacerStyled = styled(Box)({
-  flexGrow: 1
-});
+const SpacerStyled = styled(Box)`
+  flex-grow: 1;
+`;

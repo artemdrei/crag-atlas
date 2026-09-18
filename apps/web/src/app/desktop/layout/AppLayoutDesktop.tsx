@@ -14,12 +14,12 @@ export const AppLayoutDesktop = () => (
   </LayoutRootStyled>
 );
 
-const LayoutRootStyled = styled(Box)({
-  minHeight: '100vh',
-  display: 'flex',
-  flexDirection: 'column'
-});
+const LayoutRootStyled = styled(Box)`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+`;
 
-const MainStyled = styled(Box)({
-  flexGrow: 1
-}) as typeof Box;
+const MainStyled = styled(Box)`
+  flex-grow: 1;
+` as typeof Box;
