@@ -15,7 +15,13 @@ paths:
   - Primary component → literally `Props`.
   - Secondary in same file → `<Name>Props`.
   - Hook params → `Params` (or `<HookName>Params`).
+- **No `sx` prop.** All styling goes through `styled()` from
+  `@mui/material/styles`, one styled component per styled element.
+- **Naming**: `<Name>Styled` — the plain name plus a `Styled` suffix
+  (e.g. `TitleStyled`, `HeaderStyled`), never a bare `Styled` or a prefix.
+- **Placement**: styled components are declared below the component that
+  uses them, in the same file — never above, never in a separate file.
 - **No inline hex colors** — always MUI theme tokens
-  (`theme.palette.*`, `sx` prop referencing theme values).
+  (`${({ theme }) => theme.palette.*}` inside the styled template).
 - **No inline styles for layout that repeats** — extract to a shared
   component in `shared/ui` once the same layout pattern appears twice.

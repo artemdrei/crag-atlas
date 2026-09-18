@@ -150,6 +150,10 @@ All folders — camelCase. React components PascalCase, hooks `useX.ts`.
 - Single MUI theme source in `apps/web/src/shared/theme`, light + dark mode,
   switch persisted client-side.
 - No inline hex colors in components — always theme tokens.
+- **No `sx` prop anywhere.** Style through `styled()` from
+  `@mui/material/styles`, declared below the component in the same file.
+  Naming: `<Name>Styled` suffix (e.g. `TitleStyled`), never a bare name or
+  a prefix. See `.claude/rules/components.md` for the full rule.
 
 ## Tests
 
