@@ -17,9 +17,9 @@ const ThemeModeContext = createContext<{
 const readStoredMode = (): ThemeMode => {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
-    return stored === 'dark' ? 'dark' : 'light';
+    return stored === 'light' ? 'light' : 'dark';
   } catch {
-    return 'light';
+    return 'dark';
   }
 };
 
@@ -33,7 +33,7 @@ export const ThemeModeProvider = ({
 
   const toggle = () => {
     setMode((prev) => {
-      const next = prev === 'light' ? 'dark' : 'light';
+      const next = prev === 'dark' ? 'light' : 'dark';
       try {
         localStorage.setItem(STORAGE_KEY, next);
       } catch {}
