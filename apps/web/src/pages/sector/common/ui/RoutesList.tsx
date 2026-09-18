@@ -5,12 +5,13 @@ import { RouteCard } from './RouteCard';
 
 export interface Props {
   routes: Route[];
+  onSelect: (route: Route) => void;
 }
 
-export const RoutesList = ({ routes }: Props) => (
+export const RoutesList = ({ routes, onSelect }: Props) => (
   <ListStyled>
     {routes.map((route) => (
-      <RouteCard key={route.id} route={route} />
+      <RouteCard key={route.id} route={route} onSelect={onSelect} />
     ))}
   </ListStyled>
 );

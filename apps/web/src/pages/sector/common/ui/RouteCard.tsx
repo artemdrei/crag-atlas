@@ -1,3 +1,4 @@
+import CardActionArea from '@mui/material/CardActionArea';
 import Chip from '@mui/material/Chip';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
@@ -6,10 +7,11 @@ import type { Route } from '../entities';
 
 export interface Props {
   route: Route;
+  onSelect: (route: Route) => void;
 }
 
-export const RouteCard = ({ route }: Props) => (
-  <RowStyled>
+export const RouteCard = ({ route, onSelect }: Props) => (
+  <CardAreaStyled onClick={() => onSelect(route)}>
     <HeaderRowStyled>
       <Typography variant="subtitle1" fontWeight={700}>
         {route.name}
@@ -32,12 +34,13 @@ export const RouteCard = ({ route }: Props) => (
         </Typography>
       )}
     </FooterRowStyled>
-  </RowStyled>
+  </CardAreaStyled>
 );
 
-const RowStyled = styled('div')`
+const CardAreaStyled = styled(CardActionArea)`
   display: flex;
   flex-direction: column;
+  align-items: stretch;
   gap: ${({ theme }) => theme.spacing(0.5)};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
   border: 1px solid ${({ theme }) => theme.palette.divider};
