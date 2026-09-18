@@ -65,6 +65,37 @@
         },
         "tags": ["Sectors"]
       }
+    },
+    "/sectors/{sectorId}/routes": {
+      "get": {
+        "operationId": "RoutesController_findBySector",
+        "parameters": [
+          {
+            "name": "sectorId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RouteDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Routes"]
+      }
     }
   },
   "info": {
@@ -145,6 +176,46 @@
           "approachMinutes",
           "routeCount",
           "gradeRange"
+        ]
+      },
+      "RouteDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "sectorId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "grade": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["sport", "trad", "boulder"]
+          },
+          "length": {
+            "type": "number"
+          },
+          "boltsCount": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "sectorId",
+          "name",
+          "grade",
+          "type",
+          "length",
+          "boltsCount",
+          "description"
         ]
       }
     }

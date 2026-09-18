@@ -52,6 +52,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/sectors/{sectorId}/routes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["RoutesController_findBySector"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -73,6 +89,17 @@ export interface components {
             approachMinutes: number;
             routeCount: number;
             gradeRange: string;
+        };
+        RouteDto: {
+            id: string;
+            sectorId: string;
+            name: string;
+            grade: string;
+            /** @enum {string} */
+            type: "sport" | "trad" | "boulder";
+            length: number;
+            boltsCount: number;
+            description: string;
         };
     };
     responses: never;
@@ -136,6 +163,27 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SectorDto"][];
+                };
+            };
+        };
+    };
+    RoutesController_findBySector: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sectorId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RouteDto"][];
                 };
             };
         };
