@@ -1,7 +1,7 @@
-import { Navigate, Outlet } from 'react-router';
+import { Navigate } from 'react-router';
 
 import { AppLayoutDesktop } from '@web/app/desktop/layout';
-import { AppBottomNavigation, HeaderMobile } from '@web/app/mobile/layout';
+import { AppLayoutMobile } from '@web/app/mobile/layout';
 import type { Role } from '@web/app/providers';
 import { useUser } from '@web/app/providers';
 
@@ -9,13 +9,7 @@ import { ROUTES } from './routes';
 
 export const LayoutWithSidebar = () => <AppLayoutDesktop />;
 
-export const LayoutWithMobileBottomNavigation = () => (
-  <>
-    <HeaderMobile />
-    <Outlet />
-    <AppBottomNavigation />
-  </>
-);
+export const LayoutWithMobileBottomNavigation = () => <AppLayoutMobile />;
 
 export const ProtectedRoute = ({
   role,

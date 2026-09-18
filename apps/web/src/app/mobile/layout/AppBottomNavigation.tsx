@@ -17,7 +17,12 @@ export const AppBottomNavigation = () => {
     <BottomNavigation
       showLabels
       value={ROUTES.INDEX}
-      sx={{ borderTop: 1, borderColor: 'divider' }}
+      sx={{
+        borderTop: 1,
+        borderColor: 'divider',
+        height: 'auto',
+        pb: 'env(safe-area-inset-bottom)'
+      }}
     >
       <BottomNavigationAction
         label={<Trans>Crags</Trans>}
