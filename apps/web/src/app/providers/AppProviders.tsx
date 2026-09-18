@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import { activateLocale, i18n, readStoredLocale } from '@web/shared/i18n/i18n';
 import { ThemeModeProvider } from '@web/shared/theme/ThemeModeProvider';
 
+import { UserProvider } from './UserProvider';
+
 export const AppProviders = ({ children }: { children: React.ReactNode }) => {
   const [ready, setReady] = useState(false);
 
@@ -16,7 +18,9 @@ export const AppProviders = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <I18nProvider i18n={i18n}>
-      <ThemeModeProvider>{children}</ThemeModeProvider>
+      <ThemeModeProvider>
+        <UserProvider>{children}</UserProvider>
+      </ThemeModeProvider>
     </I18nProvider>
   );
 };
