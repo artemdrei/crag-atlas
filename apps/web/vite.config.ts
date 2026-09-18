@@ -4,6 +4,9 @@ import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
+  server: {
+    port: 4000
+  },
   plugins: [
     react({ babel: { plugins: ['@lingui/babel-plugin-lingui-macro'] } }),
     lingui(),

@@ -19,6 +19,8 @@ Early scaffold — no working features yet.
 
 ```bash
 pnpm install
+pnpm dev        # web + api together
+# or separately:
 pnpm dev:web
 pnpm dev:api
 ```
