@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 export const HeaderMobile = () => (
   <AppBar position="static" color="transparent" elevation={0}>
     <Toolbar>
-      <Typography variant="h6">crag-atlas</Typography>
+      <Typography variant="h6">Crag Atlas</Typography>
     </Toolbar>
   </AppBar>
 );

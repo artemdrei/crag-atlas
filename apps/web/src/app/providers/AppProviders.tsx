@@ -1,6 +1,6 @@
-import { I18nProvider } from '@lingui/react';
-
 import { useEffect, useState } from 'react';
+
+import { I18nProvider } from '@lingui/react';
 
 import { activateLocale, i18n, readStoredLocale } from '@web/shared/i18n/i18n';
 import { ThemeModeProvider } from '@web/shared/theme/ThemeModeProvider';

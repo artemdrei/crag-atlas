@@ -1,7 +1,7 @@
+import { createContext, useContext, useMemo, useState } from 'react';
+
 import { ThemeProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
-
-import { createContext, useContext, useMemo, useState } from 'react';
 
 import { createAppTheme } from '@web/shared/theme/theme';
 
@@ -53,6 +53,7 @@ export const ThemeModeProvider = ({
 
 export const useThemeMode = () => {
   const ctx = useContext(ThemeModeContext);
-  if (!ctx) throw new Error('useThemeMode must be used within ThemeModeProvider');
+  if (!ctx)
+    throw new Error('useThemeMode must be used within ThemeModeProvider');
   return ctx;
 };

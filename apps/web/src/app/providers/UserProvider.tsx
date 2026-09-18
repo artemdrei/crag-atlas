@@ -1,4 +1,10 @@
-import { createContext, useContext, useMemo, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState
+} from 'react';
 
 export type Role = 'guest' | 'user' | 'admin';
 
@@ -25,12 +31,12 @@ const readStoredRole = (): Role => {
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [role, setRoleState] = useState<Role>(readStoredRole);
 
-  const setRole = (next: Role) => {
+  const setRole = useCallback((next: Role) => {
     setRoleState(next);
     try {
       localStorage.setItem(STORAGE_KEY, next);
     } catch {}
-  };
+  }, []);
 
   const value = useMemo(
     () => ({
@@ -39,7 +45,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       setRole,
       hasRole: (required: Role) => ROLE_RANK[role] >= ROLE_RANK[required]
     }),
-    [role]
+    [role, setRole]
   );
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
