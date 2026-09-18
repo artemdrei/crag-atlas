@@ -1,16 +1,24 @@
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 
-import { HomeHeading, HomeThemeToggle, RegionsGrid } from '../common';
-import { mockRegions } from '../common/mockRegions';
+import {
+  HomeHeading,
+  HomeThemeToggle,
+  RegionsGrid,
+  useApiGetRegions
+} from '../common';
 
-export const PageHomeMobile = () => (
-  <PageStyled spacing={2}>
-    <HomeHeading />
-    <HomeThemeToggle />
-    <RegionsGrid regions={mockRegions} onSelect={() => {}} />
-  </PageStyled>
-);
+export const PageHomeMobile = () => {
+  const { regions } = useApiGetRegions();
+
+  return (
+    <PageStyled spacing={2}>
+      <HomeHeading />
+      <HomeThemeToggle />
+      <RegionsGrid regions={regions} onSelect={() => {}} />
+    </PageStyled>
+  );
+};
 
 const PageStyled = styled(Stack)`
   padding: ${({ theme }) => theme.spacing(2)};
