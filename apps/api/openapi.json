@@ -96,6 +96,34 @@
         },
         "tags": ["Routes"]
       }
+    },
+    "/routes/{routeId}": {
+      "get": {
+        "operationId": "RouteController_findOne",
+        "parameters": [
+          {
+            "name": "routeId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RouteDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Route"]
+      }
     }
   },
   "info": {

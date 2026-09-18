@@ -18,4 +18,17 @@ export class RoutesService {
 
     return routes as RouteDto[];
   }
+
+  findOne(routeId: string): RouteDto {
+    const route = routesData.find((r) => r.id === routeId);
+
+    if (!route) {
+      throw new NotFoundException(
+        `Route "${routeId}" not found`,
+        'ROUTE_NOT_FOUND'
+      );
+    }
+
+    return route as RouteDto;
+  }
 }
