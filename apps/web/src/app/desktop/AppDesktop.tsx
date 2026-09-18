@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router';
 
 import { PageHomeDesktop } from '@web/pages/home';
 import { PageRegionDesktop } from '@web/pages/region';
+import { PageSectorDesktop } from '@web/pages/sector';
 
 import { LayoutWithSidebar } from '../router/Router';
 import { ROUTES } from '../router/routes';
@@ -15,6 +16,7 @@ const AppDesktop = () => (
         <Route element={<LayoutWithSidebar />}>
           <Route path={ROUTES.INDEX} element={<PageHomeDesktop />} />
           <Route path={ROUTES.REGION} element={<PageRegionDesktop />} />
+          <Route path={ROUTES.SECTOR} element={<PageSectorDesktop />} />
         </Route>
       </Routes>
     </Suspense>
