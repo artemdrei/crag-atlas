@@ -1,4 +1,9 @@
-import { apiGet, QUERY_KEYS, useApiQuery } from '@web/shared/api';
+import {
+  apiGet,
+  QUERY_KEYS,
+  useApiQuery,
+  useSeedDetailCache
+} from '@web/shared/api';
 
 import type { Route } from '../entities';
 
@@ -7,6 +12,8 @@ export const useApiGetRoutes = (idSector: string) => {
     queryKey: QUERY_KEYS.routes(idSector),
     queryFn: () => apiGet<Route[]>(`/sectors/${idSector}/routes`)
   });
+
+  useSeedDetailCache(data, QUERY_KEYS.route);
 
   return { routes: data ?? [], isLoading, failure };
 };

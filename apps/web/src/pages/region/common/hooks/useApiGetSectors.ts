@@ -1,4 +1,9 @@
-import { apiGet, QUERY_KEYS, useApiQuery } from '@web/shared/api';
+import {
+  apiGet,
+  QUERY_KEYS,
+  useApiQuery,
+  useSeedDetailCache
+} from '@web/shared/api';
 
 import type { Sector } from '../entities';
 
@@ -7,6 +12,8 @@ export const useApiGetSectors = (idRegion: string) => {
     queryKey: QUERY_KEYS.sectors(idRegion),
     queryFn: () => apiGet<Sector[]>(`/regions/${idRegion}/sectors`)
   });
+
+  useSeedDetailCache(data, QUERY_KEYS.sector);
 
   return { sectors: data ?? [], isLoading, failure };
 };

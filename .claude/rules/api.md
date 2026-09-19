@@ -22,6 +22,10 @@ had the data for.
   result to `{ data, isLoading, failure }` and is the single place `toFailure`
   runs. It takes `queryKey`/`queryFn`/`enabled` only — a hook that needs more
   of react-query calls `useQuery` directly instead of growing the wrapper.
+- **A list hook seeds the detail caches it feeds** via `useSeedDetailCache`:
+  the list response already holds every row a detail page will request, so the
+  detail page renders from cache on the first frame instead of flashing empty
+  labels while its own request runs.
 - **Query keys live in `shared/api/queryKeys.ts`**, never next to their hook:
   a mutation in one slice invalidates a query owned by another (logging a tick
   refreshes the logbook) and cross-slice imports are banned, so `shared` is the
