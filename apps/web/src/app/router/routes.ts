@@ -4,6 +4,8 @@ export const ROUTES = {
   LOGIN: '/login',
   PROFILE: '/profile',
   REGION: '/regions/:idRegion',
+  // Internal kitchen sink: deliberately not linked from any navigation.
+  PLAYGROUND: '/playground',
   SECTOR: '/regions/:idRegion/sectors/:idSector',
   ROUTE_DETAIL: '/regions/:idRegion/sectors/:idSector/routes/:idRoute'
 } as const;

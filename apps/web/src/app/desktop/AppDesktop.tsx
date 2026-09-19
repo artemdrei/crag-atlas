@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router';
 import { PageHomeDesktop } from '@web/pages/home';
 import { PageLogbookDesktop } from '@web/pages/logbook';
 import { PageLoginDesktop } from '@web/pages/login';
+import { PagePlaygroundDesktop } from '@web/pages/playground';
 import { PageProfileDesktop } from '@web/pages/profile';
 import { PageRegionDesktop } from '@web/pages/region';
 import { PageRouteDesktop } from '@web/pages/route';
@@ -23,6 +24,7 @@ const AppDesktop = () => (
           <Route path={ROUTES.REGION} element={<PageRegionDesktop />} />
           <Route path={ROUTES.SECTOR} element={<PageSectorDesktop />} />
           <Route path={ROUTES.ROUTE_DETAIL} element={<PageRouteDesktop />} />
+          <Route path={ROUTES.PLAYGROUND} element={<PagePlaygroundDesktop />} />
           <Route
             path={ROUTES.LOGBOOK}
             element={

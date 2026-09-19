@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router';
 import { PageHomeMobile } from '@web/pages/home';
 import { PageLogbookMobile } from '@web/pages/logbook';
 import { PageLoginMobile } from '@web/pages/login';
+import { PagePlaygroundMobile } from '@web/pages/playground';
 import { PageProfileMobile } from '@web/pages/profile';
 import { PageRegionMobile } from '@web/pages/region';
 import { PageRouteMobile } from '@web/pages/route';
@@ -26,6 +27,7 @@ const AppMobile = () => (
           <Route path={ROUTES.REGION} element={<PageRegionMobile />} />
           <Route path={ROUTES.SECTOR} element={<PageSectorMobile />} />
           <Route path={ROUTES.ROUTE_DETAIL} element={<PageRouteMobile />} />
+          <Route path={ROUTES.PLAYGROUND} element={<PagePlaygroundMobile />} />
           <Route
             path={ROUTES.LOGBOOK}
             element={
