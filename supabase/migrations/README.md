@@ -1,0 +1,13 @@
+# Migrations
+
+Plain SQL, applied in order. One file per change, named `NNN_short_name.sql`
+with a zero-padded sequence number — never renumbered, never edited once
+applied: a mistake is fixed by the next migration.
+
+Apply a migration in the Supabase dashboard (SQL Editor) or with
+`psql "$DATABASE_URL" -f supabase/migrations/NNN_short_name.sql`.
+
+| # | File | What it does |
+|---|------|--------------|
+| 001 | `001_create_ticks.sql` | `ticks` table (logged ascents) with per-user RLS |
+| 002 | `002_pin_function_search_path.sql` | Pin `search_path` on `set_updated_at` |
