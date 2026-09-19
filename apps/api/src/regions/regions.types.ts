@@ -19,6 +19,21 @@ export class RegionDto {
   @ApiProperty()
   routeCount!: number;
 
+  @ApiProperty({
+    required: false,
+    nullable: true,
+    description: 'Derived from the routes of the region; null when it has none'
+  })
+  gradeRange?: string | null;
+}
+
+export class UpdateRegionDto {
   @ApiProperty()
-  gradeRange!: string;
+  name!: string;
+
+  @ApiProperty()
+  province!: string;
+
+  @ApiProperty()
+  rockType!: string;
 }

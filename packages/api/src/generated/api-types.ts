@@ -20,6 +20,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["MeController_findMe"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/regions": {
         parameters: {
             query?: never;
@@ -49,7 +65,7 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        patch?: never;
+        patch: operations["RegionsController_update"];
         trace?: never;
     };
     "/regions/{idRegion}/sectors": {
@@ -81,7 +97,7 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        patch?: never;
+        patch: operations["SectorController_update"];
         trace?: never;
     };
     "/sectors/{idSector}/routes": {
@@ -113,7 +129,7 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        patch?: never;
+        patch: operations["RouteController_update"];
         trace?: never;
     };
     "/ticks": {
@@ -136,6 +152,11 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        MeDto: {
+            idUser: string;
+            /** @description Mirrors the user_roles row the RLS checks */
+            isAdmin: boolean;
+        };
         RegionDto: {
             id: string;
             name: string;
@@ -143,7 +164,13 @@ export interface components {
             rockType: string;
             sectorCount: number;
             routeCount: number;
-            gradeRange: string;
+            /** @description Derived from the routes of the region; null when it has none */
+            gradeRange?: string | null;
+        };
+        UpdateRegionDto: {
+            name: string;
+            province: string;
+            rockType: string;
         };
         SectorDto: {
             id: string;
@@ -154,7 +181,13 @@ export interface components {
             description: string;
             approachMinutes?: number | null;
             routeCount: number;
-            gradeRange: string;
+            /** @description Derived from the routes of the sector; null when it has none */
+            gradeRange?: string | null;
+        };
+        UpdateSectorDto: {
+            name: string;
+            description?: string | null;
+            approachMinutes?: number | null;
         };
         RouteDto: {
             id: string;
@@ -170,6 +203,15 @@ export interface components {
             length?: number | null;
             boltsCount?: number | null;
             description: string;
+        };
+        UpdateRouteDto: {
+            name: string;
+            grade: string;
+            /** @enum {string} */
+            type: "sport" | "trad" | "boulder";
+            length?: number | null;
+            boltsCount?: number | null;
+            description?: string | null;
         };
         TickDto: {
             id: string;
@@ -223,6 +265,25 @@ export interface operations {
             };
         };
     };
+    MeController_findMe: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeDto"];
+                };
+            };
+        };
+    };
     RegionsController_findAll: {
         parameters: {
             query?: never;
@@ -252,6 +313,31 @@ export interface operations {
             cookie?: never;
         };
         requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RegionDto"];
+                };
+            };
+        };
+    };
+    RegionsController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idRegion: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateRegionDto"];
+            };
+        };
         responses: {
             200: {
                 headers: {
@@ -305,6 +391,31 @@ export interface operations {
             };
         };
     };
+    SectorController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idSector: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateSectorDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SectorDto"];
+                };
+            };
+        };
+    };
     RoutesController_findBySector: {
         parameters: {
             query?: never;
@@ -336,6 +447,31 @@ export interface operations {
             cookie?: never;
         };
         requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RouteDto"];
+                };
+            };
+        };
+    };
+    RouteController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idRoute: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateRouteDto"];
+            };
+        };
         responses: {
             200: {
                 headers: {

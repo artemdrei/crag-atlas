@@ -22,6 +22,21 @@ export class SectorDto {
   @ApiProperty()
   routeCount!: number;
 
+  @ApiProperty({
+    required: false,
+    nullable: true,
+    description: 'Derived from the routes of the sector; null when it has none'
+  })
+  gradeRange?: string | null;
+}
+
+export class UpdateSectorDto {
   @ApiProperty()
-  gradeRange!: string;
+  name!: string;
+
+  @ApiProperty({ required: false, nullable: true })
+  description?: string | null;
+
+  @ApiProperty({ required: false, nullable: true })
+  approachMinutes?: number | null;
 }

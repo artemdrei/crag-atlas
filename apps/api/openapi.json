@@ -13,6 +13,25 @@
         "tags": ["Health"]
       }
     },
+    "/me": {
+      "get": {
+        "operationId": "MeController_findMe",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Me"]
+      }
+    },
     "/regions": {
       "get": {
         "operationId": "RegionsController_findAll",
@@ -48,6 +67,42 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegionDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Regions"]
+      },
+      "patch": {
+        "operationId": "RegionsController_update",
+        "parameters": [
+          {
+            "name": "idRegion",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRegionDto"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "",
@@ -120,6 +175,42 @@
           }
         },
         "tags": ["Sector"]
+      },
+      "patch": {
+        "operationId": "SectorController_update",
+        "parameters": [
+          {
+            "name": "idSector",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSectorDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SectorDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Sector"]
       }
     },
     "/sectors/{idSector}/routes": {
@@ -166,6 +257,42 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RouteDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Route"]
+      },
+      "patch": {
+        "operationId": "RouteController_update",
+        "parameters": [
+          {
+            "name": "idRoute",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRouteDto"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "",
@@ -241,6 +368,19 @@
   "servers": [],
   "components": {
     "schemas": {
+      "MeDto": {
+        "type": "object",
+        "properties": {
+          "idUser": {
+            "type": "string"
+          },
+          "isAdmin": {
+            "type": "boolean",
+            "description": "Mirrors the user_roles row the RLS checks"
+          }
+        },
+        "required": ["idUser", "isAdmin"]
+      },
       "RegionDto": {
         "type": "object",
         "properties": {
@@ -263,7 +403,9 @@
             "type": "number"
           },
           "gradeRange": {
-            "type": "string"
+            "type": "string",
+            "nullable": true,
+            "description": "Derived from the routes of the region; null when it has none"
           }
         },
         "required": [
@@ -272,9 +414,23 @@
           "province",
           "rockType",
           "sectorCount",
-          "routeCount",
-          "gradeRange"
+          "routeCount"
         ]
+      },
+      "UpdateRegionDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "province": {
+            "type": "string"
+          },
+          "rockType": {
+            "type": "string"
+          }
+        },
+        "required": ["name", "province", "rockType"]
       },
       "SectorDto": {
         "type": "object",
@@ -303,7 +459,9 @@
             "type": "number"
           },
           "gradeRange": {
-            "type": "string"
+            "type": "string",
+            "nullable": true,
+            "description": "Derived from the routes of the sector; null when it has none"
           }
         },
         "required": [
@@ -312,9 +470,25 @@
           "regionName",
           "name",
           "description",
-          "routeCount",
-          "gradeRange"
+          "routeCount"
         ]
+      },
+      "UpdateSectorDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "approachMinutes": {
+            "type": "number",
+            "nullable": true
+          }
+        },
+        "required": ["name"]
       },
       "RouteDto": {
         "type": "object",
@@ -368,6 +542,34 @@
           "type",
           "description"
         ]
+      },
+      "UpdateRouteDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "grade": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["sport", "trad", "boulder"]
+          },
+          "length": {
+            "type": "number",
+            "nullable": true
+          },
+          "boltsCount": {
+            "type": "number",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": ["name", "grade", "type"]
       },
       "TickDto": {
         "type": "object",

@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
 import { HealthModule } from './health/health.module';
+import { MeModule } from './me/me.module';
 import { RegionsModule } from './regions/regions.module';
 import { RoutesModule } from './routes/routes.module';
 import { SectorsModule } from './sectors/sectors.module';
@@ -11,6 +12,7 @@ import { TicksModule } from './ticks/ticks.module';
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     HealthModule,
+    MeModule,
     RegionsModule,
     SectorsModule,
     RoutesModule,

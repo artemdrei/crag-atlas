@@ -34,3 +34,23 @@ export class RouteDto {
   @ApiProperty()
   description!: string;
 }
+
+export class UpdateRouteDto {
+  @ApiProperty()
+  name!: string;
+
+  @ApiProperty()
+  grade!: string;
+
+  @ApiProperty({ enum: ['sport', 'trad', 'boulder'] })
+  type!: 'sport' | 'trad' | 'boulder';
+
+  @ApiProperty({ required: false, nullable: true })
+  length?: number | null;
+
+  @ApiProperty({ required: false, nullable: true })
+  boltsCount?: number | null;
+
+  @ApiProperty({ required: false, nullable: true })
+  description?: string | null;
+}

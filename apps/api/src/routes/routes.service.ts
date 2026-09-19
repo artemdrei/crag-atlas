@@ -4,8 +4,10 @@ import {
   AppException,
   NotFoundException
 } from '../common/exceptions/app.exception';
+import type { AuthUser } from '../common/guards/supabaseAuth.guard';
+import { userClient } from '../common/utils/userClient';
 import { publicSupabase } from '../config/supabase.client';
-import type { RouteDto } from './routes.types';
+import type { RouteDto, UpdateRouteDto } from './routes.types';
 
 // Sector and region names ride along for the breadcrumbs — see SectorsService.
 const COLUMNS =
@@ -78,6 +80,34 @@ export class RoutesService {
     }
 
     return toRouteDto(data);
+  }
+
+  async update(
+    authUser: AuthUser,
+    idRoute: string,
+    payload: UpdateRouteDto
+  ): Promise<RouteDto> {
+    const { error } = await userClient(authUser)
+      .from('routes')
+      .update({
+        name: payload.name,
+        grade: payload.grade,
+        type: payload.type,
+        length: payload.length ?? null,
+        bolts_count: payload.boltsCount ?? null,
+        description: payload.description ?? ''
+      })
+      .eq('id', idRoute);
+
+    if (error) {
+      throw new AppException(
+        error.message,
+        400,
+        error.code ?? 'ROUTE_UPDATE_FAILED'
+      );
+    }
+
+    return this.findOne(idRoute);
   }
 }
 
