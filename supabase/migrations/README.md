@@ -14,3 +14,4 @@ Apply a migration in the Supabase dashboard (SQL Editor) or with
 | 003 | `003_create_catalog.sql` | `regions` / `sectors` / `routes`, public read-only |
 | 004 | `004_seed_catalog.sql` | Demo catalog moved over from the static JSON |
 | 005 | `005_link_ticks_to_routes.sql` | FK from `ticks.id_route` to `routes.id` |
+| 006 | `006_catalog_uuid_keys.sql` | Catalog keys become uuids; names stay labels |
