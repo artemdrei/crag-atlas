@@ -12,7 +12,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. placeholder {0}: tick.attempts
-#: src/pages/logbook/common/ui/TickCard.tsx:32
+#: src/pages/logbook/common/ui/TickCard.tsx:41
 msgid "{0} attempts"
 msgstr "{0} attempts"
 
@@ -34,18 +34,18 @@ msgstr "Attempts"
 
 #: src/pages/region/desktop/PageRegionDesktop.tsx:23
 #: src/pages/region/mobile/PageRegionMobile.tsx:23
-msgid "Back to regions"
-msgstr "Back to regions"
+#~ msgid "Back to regions"
+#~ msgstr "Back to regions"
 
 #: src/pages/route/desktop/PageRouteDesktop.tsx:19
 #: src/pages/route/mobile/PageRouteMobile.tsx:19
-msgid "Back to routes"
-msgstr "Back to routes"
+#~ msgid "Back to routes"
+#~ msgstr "Back to routes"
 
 #: src/pages/sector/desktop/PageSectorDesktop.tsx:23
 #: src/pages/sector/mobile/PageSectorMobile.tsx:23
-msgid "Back to sectors"
-msgstr "Back to sectors"
+#~ msgid "Back to sectors"
+#~ msgstr "Back to sectors"
 
 #: src/features/logTick/common/ui/TickForm.tsx:88
 msgid "Cancel"
@@ -109,18 +109,18 @@ msgstr "Loading ascents…"
 msgid "Loading regions…"
 msgstr "Loading regions…"
 
-#: src/pages/route/desktop/PageRouteDesktop.tsx:24
-#: src/pages/route/mobile/PageRouteMobile.tsx:24
+#: src/pages/route/desktop/PageRouteDesktop.tsx:37
+#: src/pages/route/mobile/PageRouteMobile.tsx:37
 msgid "Loading route…"
 msgstr "Loading route…"
 
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:29
-#: src/pages/sector/mobile/PageSectorMobile.tsx:29
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:37
+#: src/pages/sector/mobile/PageSectorMobile.tsx:37
 msgid "Loading routes…"
 msgstr "Loading routes…"
 
-#: src/pages/region/desktop/PageRegionDesktop.tsx:29
-#: src/pages/region/mobile/PageRegionMobile.tsx:29
+#: src/pages/region/desktop/PageRegionDesktop.tsx:32
+#: src/pages/region/mobile/PageRegionMobile.tsx:32
 msgid "Loading sectors…"
 msgstr "Loading sectors…"
 
@@ -161,7 +161,7 @@ msgstr "Onsight"
 msgid "or"
 msgstr "or"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:48
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:58
 #: src/app/mobile/layout/AppBottomNavigation.tsx:48
 #: src/pages/profile/desktop/PageProfileDesktop.tsx:20
 #: src/pages/profile/mobile/PageProfileMobile.tsx:20
@@ -173,6 +173,12 @@ msgid "Redpoint"
 msgstr "Redpoint"
 
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:34
+#: src/pages/region/desktop/PageRegionDesktop.tsx:24
+#: src/pages/region/mobile/PageRegionMobile.tsx:24
+#: src/pages/route/desktop/PageRouteDesktop.tsx:25
+#: src/pages/route/mobile/PageRouteMobile.tsx:25
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:28
+#: src/pages/sector/mobile/PageSectorMobile.tsx:28
 msgid "Regions"
 msgstr "Regions"
 
@@ -192,7 +198,7 @@ msgstr "Saving…"
 msgid "Sending code…"
 msgstr "Sending code…"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:57
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:67
 msgid "Sign in"
 msgstr "Sign in"
 

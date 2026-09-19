@@ -6,3 +6,4 @@ export {
 } from './AscentStyleLabel';
 export { BottomSheet } from './BottomSheet';
 export { GradeBadge } from './GradeBadge';
+export { type Crumb, PageBreadcrumbs } from './PageBreadcrumbs';

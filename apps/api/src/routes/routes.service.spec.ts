@@ -34,7 +34,12 @@ const ROUTE_ROW = {
   type: 'sport',
   length: 20,
   bolts_count: 8,
-  description: 'Технічний вихід.'
+  description: 'Технічний вихід.',
+  sectors: {
+    name: 'Бастіон',
+    id_region: 'kamianets',
+    regions: { name: "Кам'янець-Подільський" }
+  }
 };
 
 describe('RoutesService', () => {
@@ -53,6 +58,9 @@ describe('RoutesService', () => {
       expect(route).toEqual({
         id: 'mizerna-lohika',
         idSector: 'bastion',
+        sectorName: 'Бастіон',
+        idRegion: 'kamianets',
+        regionName: "Кам'янець-Подільський",
         name: 'Мізерна логіка',
         grade: '7a',
         type: 'sport',

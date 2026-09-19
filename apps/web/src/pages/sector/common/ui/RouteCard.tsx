@@ -26,10 +26,12 @@ export const RouteCard = ({ route, onSelect }: Props) => (
       <Typography variant="caption" color="text.secondary">
         {route.type}
       </Typography>
-      <Typography variant="caption" color="text.secondary">
-        {route.length} m
-      </Typography>
-      {route.boltsCount > 0 && (
+      {!!route.length && (
+        <Typography variant="caption" color="text.secondary">
+          {route.length} m
+        </Typography>
+      )}
+      {!!route.boltsCount && (
         <Typography variant="caption" color="text.secondary">
           {route.boltsCount} bolts
         </Typography>

@@ -1,28 +1,31 @@
-import { Link, useLocation, useNavigate, useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
-import { Trans } from '@lingui/react/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { buildSectorPath, ROUTES } from '@web/app/router/routes';
-import { ApiFeedback } from '@web/shared/ui';
+import { ApiFeedback, PageBreadcrumbs } from '@web/shared/ui';
 
-import { SectorsList, useApiGetSectors } from '../common';
+import { SectorsList, useApiGetRegion, useApiGetSectors } from '../common';
 
 export const PageRegionDesktop = () => {
+  const { t } = useLingui();
   const { idRegion = '' } = useParams();
-  const location = useLocation();
   const navigate = useNavigate();
-  const regionName = (location.state as { name?: string } | null)?.name;
+  const { region } = useApiGetRegion(idRegion);
   const { sectors, isLoading, failure } = useApiGetSectors(idRegion);
 
   return (
     <PageStyled spacing={3}>
-      <Link to={ROUTES.INDEX}>
-        <Trans>Back to regions</Trans>
-      </Link>
-      <Typography variant="h4">{regionName ?? idRegion}</Typography>
+      <PageBreadcrumbs
+        items={[
+          { label: t`Regions`, to: ROUTES.INDEX },
+          { label: region?.name ?? '…' }
+        ]}
+      />
+      <Typography variant="h4">{region?.name ?? '…'}</Typography>
       <ApiFeedback
         isLoading={isLoading}
         failure={failure}
@@ -30,11 +33,7 @@ export const PageRegionDesktop = () => {
       />
       <SectorsList
         sectors={sectors}
-        onSelect={(sector) =>
-          navigate(buildSectorPath(idRegion, sector.id), {
-            state: { name: sector.name }
-          })
-        }
+        onSelect={(sector) => navigate(buildSectorPath(idRegion, sector.id))}
       />
     </PageStyled>
   );

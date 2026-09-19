@@ -36,6 +36,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/regions/{idRegion}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["RegionsController_findOne"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/regions/{idRegion}/sectors": {
         parameters: {
             query?: never;
@@ -44,6 +60,22 @@ export interface paths {
             cookie?: never;
         };
         get: operations["SectorsController_findByRegion"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/sectors/{idSector}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["SectorController_findOne"];
         put?: never;
         post?: never;
         delete?: never;
@@ -116,21 +148,27 @@ export interface components {
         SectorDto: {
             id: string;
             idRegion: string;
+            /** @description Label for breadcrumbs; ids carry no meaning */
+            regionName: string;
             name: string;
             description: string;
-            approachMinutes: number;
+            approachMinutes?: number | null;
             routeCount: number;
             gradeRange: string;
         };
         RouteDto: {
             id: string;
             idSector: string;
+            /** @description Label for breadcrumbs; ids carry no meaning */
+            sectorName: string;
+            idRegion: string;
+            regionName: string;
             name: string;
             grade: string;
             /** @enum {string} */
             type: "sport" | "trad" | "boulder";
-            length: number;
-            boltsCount: number;
+            length?: number | null;
+            boltsCount?: number | null;
             description: string;
         };
         TickDto: {
@@ -204,6 +242,27 @@ export interface operations {
             };
         };
     };
+    RegionsController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idRegion: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RegionDto"];
+                };
+            };
+        };
+    };
     SectorsController_findByRegion: {
         parameters: {
             query?: never;
@@ -221,6 +280,27 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SectorDto"][];
+                };
+            };
+        };
+    };
+    SectorController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idSector: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SectorDto"];
                 };
             };
         };

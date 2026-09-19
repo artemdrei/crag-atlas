@@ -7,6 +7,15 @@ export class RouteDto {
   @ApiProperty()
   idSector!: string;
 
+  @ApiProperty({ description: 'Label for breadcrumbs; ids carry no meaning' })
+  sectorName!: string;
+
+  @ApiProperty()
+  idRegion!: string;
+
+  @ApiProperty()
+  regionName!: string;
+
   @ApiProperty()
   name!: string;
 
@@ -16,11 +25,11 @@ export class RouteDto {
   @ApiProperty({ enum: ['sport', 'trad', 'boulder'] })
   type!: 'sport' | 'trad' | 'boulder';
 
-  @ApiProperty()
-  length!: number;
+  @ApiProperty({ required: false, nullable: true })
+  length?: number | null;
 
-  @ApiProperty()
-  boltsCount!: number;
+  @ApiProperty({ required: false, nullable: true })
+  boltsCount?: number | null;
 
   @ApiProperty()
   description!: string;

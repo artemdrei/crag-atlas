@@ -1,23 +1,36 @@
-import { Link, useParams } from 'react-router';
+import { useParams } from 'react-router';
 
-import { Trans } from '@lingui/react/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 
-import { buildSectorPath } from '@web/app/router/routes';
-import { ApiFeedback } from '@web/shared/ui';
+import {
+  buildRegionPath,
+  buildSectorPath,
+  ROUTES
+} from '@web/app/router/routes';
+import { ApiFeedback, PageBreadcrumbs } from '@web/shared/ui';
 
 import { LogTickButton, RouteDetails, useApiGetRoute } from '../common';
 
 export const PageRouteDesktop = () => {
+  const { t } = useLingui();
   const { idRegion = '', idSector = '', idRoute = '' } = useParams();
   const { route, isLoading, failure } = useApiGetRoute(idRoute);
 
   return (
     <PageStyled spacing={3}>
-      <Link to={buildSectorPath(idRegion, idSector)}>
-        <Trans>Back to routes</Trans>
-      </Link>
+      <PageBreadcrumbs
+        items={[
+          { label: t`Regions`, to: ROUTES.INDEX },
+          { label: route?.regionName ?? '…', to: buildRegionPath(idRegion) },
+          {
+            label: route?.sectorName ?? '…',
+            to: buildSectorPath(idRegion, idSector)
+          },
+          { label: route?.name ?? '…' }
+        ]}
+      />
       <ApiFeedback
         isLoading={isLoading}
         failure={failure}

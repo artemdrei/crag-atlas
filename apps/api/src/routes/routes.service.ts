@@ -7,8 +7,9 @@ import {
 import { publicSupabase } from '../config/supabase.client';
 import type { RouteDto } from './routes.types';
 
+// Sector and region names ride along for the breadcrumbs — see SectorsService.
 const COLUMNS =
-  'id, id_sector, name, grade, type, length, bolts_count, description';
+  'id, id_sector, name, grade, type, length, bolts_count, description, sectors (name, id_region, regions (name))';
 
 interface RouteRow {
   id: string;
@@ -19,6 +20,11 @@ interface RouteRow {
   length: number | null;
   bolts_count: number | null;
   description: string;
+  sectors: {
+    name: string;
+    id_region: string;
+    regions: { name: string } | null;
+  } | null;
 }
 
 @Injectable()
@@ -78,10 +84,13 @@ export class RoutesService {
 const toRouteDto = (row: RouteRow): RouteDto => ({
   id: row.id,
   idSector: row.id_sector,
+  sectorName: row.sectors?.name ?? '',
+  idRegion: row.sectors?.id_region ?? '',
+  regionName: row.sectors?.regions?.name ?? '',
   name: row.name,
   grade: row.grade,
   type: row.type,
-  length: row.length ?? 0,
-  boltsCount: row.bolts_count ?? 0,
+  length: row.length,
+  boltsCount: row.bolts_count,
   description: row.description
 });

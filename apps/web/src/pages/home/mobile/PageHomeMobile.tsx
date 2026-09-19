@@ -23,9 +23,7 @@ export const PageHomeMobile = () => {
       />
       <RegionsGrid
         regions={regions}
-        onSelect={(region) =>
-          navigate(buildRegionPath(region.id), { state: { name: region.name } })
-        }
+        onSelect={(region) => navigate(buildRegionPath(region.id))}
       />
     </PageStyled>
   );

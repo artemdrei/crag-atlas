@@ -19,10 +19,12 @@ export const RouteDetails = ({ route }: Props) => (
       <Typography variant="body2" color="text.secondary">
         {route.type}
       </Typography>
-      <Typography variant="body2" color="text.secondary">
-        {route.length} m
-      </Typography>
-      {route.boltsCount > 0 && (
+      {!!route.length && (
+        <Typography variant="body2" color="text.secondary">
+          {route.length} m
+        </Typography>
+      )}
+      {!!route.boltsCount && (
         <Typography variant="body2" color="text.secondary">
           {route.boltsCount} bolts
         </Typography>

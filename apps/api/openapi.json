@@ -35,6 +35,34 @@
         "tags": ["Regions"]
       }
     },
+    "/regions/{idRegion}": {
+      "get": {
+        "operationId": "RegionsController_findOne",
+        "parameters": [
+          {
+            "name": "idRegion",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegionDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Regions"]
+      }
+    },
     "/regions/{idRegion}/sectors": {
       "get": {
         "operationId": "SectorsController_findByRegion",
@@ -64,6 +92,34 @@
           }
         },
         "tags": ["Sectors"]
+      }
+    },
+    "/sectors/{idSector}": {
+      "get": {
+        "operationId": "SectorController_findOne",
+        "parameters": [
+          {
+            "name": "idSector",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SectorDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Sector"]
       }
     },
     "/sectors/{idSector}/routes": {
@@ -229,6 +285,10 @@
           "idRegion": {
             "type": "string"
           },
+          "regionName": {
+            "type": "string",
+            "description": "Label for breadcrumbs; ids carry no meaning"
+          },
           "name": {
             "type": "string"
           },
@@ -236,7 +296,8 @@
             "type": "string"
           },
           "approachMinutes": {
-            "type": "number"
+            "type": "number",
+            "nullable": true
           },
           "routeCount": {
             "type": "number"
@@ -248,9 +309,9 @@
         "required": [
           "id",
           "idRegion",
+          "regionName",
           "name",
           "description",
-          "approachMinutes",
           "routeCount",
           "gradeRange"
         ]
@@ -264,6 +325,16 @@
           "idSector": {
             "type": "string"
           },
+          "sectorName": {
+            "type": "string",
+            "description": "Label for breadcrumbs; ids carry no meaning"
+          },
+          "idRegion": {
+            "type": "string"
+          },
+          "regionName": {
+            "type": "string"
+          },
           "name": {
             "type": "string"
           },
@@ -275,10 +346,12 @@
             "enum": ["sport", "trad", "boulder"]
           },
           "length": {
-            "type": "number"
+            "type": "number",
+            "nullable": true
           },
           "boltsCount": {
-            "type": "number"
+            "type": "number",
+            "nullable": true
           },
           "description": {
             "type": "string"
@@ -287,11 +360,12 @@
         "required": [
           "id",
           "idSector",
+          "sectorName",
+          "idRegion",
+          "regionName",
           "name",
           "grade",
           "type",
-          "length",
-          "boltsCount",
           "description"
         ]
       },
