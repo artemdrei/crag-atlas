@@ -1,5 +1,5 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
-import { ApiCreatedResponse } from '@nestjs/swagger';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 
 import { CurrentUser } from '../common/decorators/authUser.decorator';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
@@ -11,6 +11,12 @@ import { CreateTickDto, TickDto } from './ticks.types';
 @UseGuards(SupabaseAuthGuard)
 export class TicksController {
   constructor(private readonly ticksService: TicksService) {}
+
+  @Get()
+  @ApiOkResponse({ type: [TickDto] })
+  findMine(@CurrentUser() authUser: AuthUser): Promise<TickDto[]> {
+    return this.ticksService.findMine(authUser);
+  }
 
   @Post()
   @ApiCreatedResponse({ type: TickDto })

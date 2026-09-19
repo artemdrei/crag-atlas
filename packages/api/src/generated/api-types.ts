@@ -91,7 +91,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        get: operations["TicksController_findMine"];
         put?: never;
         post: operations["TicksController_create"];
         delete?: never;
@@ -133,19 +133,14 @@ export interface components {
             boltsCount: number;
             description: string;
         };
-        CreateTickDto: {
-            idRoute: string;
-            /** @enum {string} */
-            ascentStyle: "onsight" | "flash" | "retro_flash" | "redpoint" | "toprope" | "attempt";
-            /** @description ISO date; defaults to today */
-            climbedAt?: string;
-            attempts?: number | null;
-            note?: string | null;
-        };
         TickDto: {
             id: string;
             idUser: string;
             idRoute: string;
+            /** @description Resolved from the route catalog; null if the route is gone */
+            routeName?: string | null;
+            routeGrade?: string | null;
+            sectorName?: string | null;
             /** @enum {string} */
             ascentStyle: "onsight" | "flash" | "retro_flash" | "redpoint" | "toprope" | "attempt";
             /** @description ISO date, e.g. 2026-09-19 */
@@ -154,6 +149,15 @@ export interface components {
             note?: string | null;
             createdAt: string;
             updatedAt: string;
+        };
+        CreateTickDto: {
+            idRoute: string;
+            /** @enum {string} */
+            ascentStyle: "onsight" | "flash" | "retro_flash" | "redpoint" | "toprope" | "attempt";
+            /** @description ISO date; defaults to today */
+            climbedAt?: string;
+            attempts?: number | null;
+            note?: string | null;
         };
     };
     responses: never;
@@ -259,6 +263,25 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["RouteDto"];
+                };
+            };
+        };
+    };
+    TicksController_findMine: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TickDto"][];
                 };
             };
         };

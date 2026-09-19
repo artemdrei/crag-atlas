@@ -6,9 +6,13 @@ import MenuItem from '@mui/material/MenuItem';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 
-import type { CreateTick } from '../entities';
+import {
+  ASCENT_STYLES,
+  type AscentStyle,
+  AscentStyleLabel
+} from '@web/shared/ui';
 
-type AscentStyle = CreateTick['ascentStyle'];
+import type { CreateTick } from '../entities';
 
 export interface Props {
   isPending: boolean;
@@ -36,15 +40,6 @@ export const TickForm = ({ isPending, onSubmit, onCancel }: Props) => {
     });
   };
 
-  const styleLabels: Record<AscentStyle, string> = {
-    onsight: t`Onsight`,
-    flash: t`Flash`,
-    retro_flash: t`Retro flash`,
-    redpoint: t`Redpoint`,
-    toprope: t`Top rope`,
-    attempt: t`Attempt`
-  };
-
   return (
     <FormStyled onSubmit={handleSubmit}>
       <TextField
@@ -63,9 +58,9 @@ export const TickForm = ({ isPending, onSubmit, onCancel }: Props) => {
         value={ascentStyle}
         onChange={(event) => setAscentStyle(event.target.value as AscentStyle)}
       >
-        {Object.entries(styleLabels).map(([value, label]) => (
+        {ASCENT_STYLES.map((value) => (
           <MenuItem key={value} value={value}>
-            {label}
+            <AscentStyleLabel ascentStyle={value} />
           </MenuItem>
         ))}
       </TextField>

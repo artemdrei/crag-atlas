@@ -6,6 +6,11 @@ import type { SectorDto } from './sectors.types';
 
 @Injectable()
 export class SectorsService {
+  /** Lookup for callers that treat a missing sector as data, not an error. */
+  findOneOrNull(idSector: string): SectorDto | null {
+    return sectorsData.find((sector) => sector.id === idSector) ?? null;
+  }
+
   findByRegion(idRegion: string): SectorDto[] {
     const sectors = sectorsData.filter(
       (sector) => sector.idRegion === idRegion

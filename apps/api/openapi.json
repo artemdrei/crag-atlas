@@ -126,6 +126,26 @@
       }
     },
     "/ticks": {
+      "get": {
+        "operationId": "TicksController_findMine",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TickDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Ticks"]
+      },
       "post": {
         "operationId": "TicksController_create",
         "parameters": [],
@@ -275,38 +295,6 @@
           "description"
         ]
       },
-      "CreateTickDto": {
-        "type": "object",
-        "properties": {
-          "idRoute": {
-            "type": "string"
-          },
-          "ascentStyle": {
-            "type": "string",
-            "enum": [
-              "onsight",
-              "flash",
-              "retro_flash",
-              "redpoint",
-              "toprope",
-              "attempt"
-            ]
-          },
-          "climbedAt": {
-            "type": "string",
-            "description": "ISO date; defaults to today"
-          },
-          "attempts": {
-            "type": "number",
-            "nullable": true
-          },
-          "note": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "required": ["idRoute", "ascentStyle"]
-      },
       "TickDto": {
         "type": "object",
         "properties": {
@@ -318,6 +306,19 @@
           },
           "idRoute": {
             "type": "string"
+          },
+          "routeName": {
+            "type": "string",
+            "nullable": true,
+            "description": "Resolved from the route catalog; null if the route is gone"
+          },
+          "routeGrade": {
+            "type": "string",
+            "nullable": true
+          },
+          "sectorName": {
+            "type": "string",
+            "nullable": true
           },
           "ascentStyle": {
             "type": "string",
@@ -358,6 +359,38 @@
           "createdAt",
           "updatedAt"
         ]
+      },
+      "CreateTickDto": {
+        "type": "object",
+        "properties": {
+          "idRoute": {
+            "type": "string"
+          },
+          "ascentStyle": {
+            "type": "string",
+            "enum": [
+              "onsight",
+              "flash",
+              "retro_flash",
+              "redpoint",
+              "toprope",
+              "attempt"
+            ]
+          },
+          "climbedAt": {
+            "type": "string",
+            "description": "ISO date; defaults to today"
+          },
+          "attempts": {
+            "type": "number",
+            "nullable": true
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": ["idRoute", "ascentStyle"]
       }
     }
   }

@@ -33,7 +33,12 @@ export const AppHeaderDesktop = () => {
         <Button color="inherit" onClick={() => navigate(ROUTES.INDEX)}>
           <Trans>Regions</Trans>
         </Button>
-        <Button color="inherit" disabled>
+        <Button
+          color="inherit"
+          onClick={() =>
+            navigate(isAuthenticated ? ROUTES.LOGBOOK : ROUTES.LOGIN)
+          }
+        >
           <Trans>My logbook</Trans>
         </Button>
         <SpacerStyled />

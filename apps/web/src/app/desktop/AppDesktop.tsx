@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { Route, Routes } from 'react-router';
 
 import { PageHomeDesktop } from '@web/pages/home';
+import { PageLogbookDesktop } from '@web/pages/logbook';
 import { PageLoginDesktop } from '@web/pages/login';
 import { PageProfileDesktop } from '@web/pages/profile';
 import { PageRegionDesktop } from '@web/pages/region';
@@ -22,6 +23,14 @@ const AppDesktop = () => (
           <Route path={ROUTES.REGION} element={<PageRegionDesktop />} />
           <Route path={ROUTES.SECTOR} element={<PageSectorDesktop />} />
           <Route path={ROUTES.ROUTE_DETAIL} element={<PageRouteDesktop />} />
+          <Route
+            path={ROUTES.LOGBOOK}
+            element={
+              <ProtectedRoute requiredRole="user">
+                <PageLogbookDesktop />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path={ROUTES.PROFILE}
             element={

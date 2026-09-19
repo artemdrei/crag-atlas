@@ -21,6 +21,19 @@ export class TickDto {
   @ApiProperty()
   idRoute!: string;
 
+  @ApiProperty({
+    required: false,
+    nullable: true,
+    description: 'Resolved from the route catalog; null if the route is gone'
+  })
+  routeName?: string | null;
+
+  @ApiProperty({ required: false, nullable: true })
+  routeGrade?: string | null;
+
+  @ApiProperty({ required: false, nullable: true })
+  sectorName?: string | null;
+
   @ApiProperty({ enum: ASCENT_STYLES })
   ascentStyle!: AscentStyle;
 

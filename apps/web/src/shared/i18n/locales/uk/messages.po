@@ -11,6 +11,11 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
+#. placeholder {0}: tick.attempts
+#: src/pages/logbook/common/ui/TickCard.tsx:32
+msgid "{0} attempts"
+msgstr "{0} спроб"
+
 #~ msgid "app.title"
 #~ msgstr "crag-atlas"
 
@@ -19,11 +24,11 @@ msgstr ""
 msgid "Ascent logged"
 msgstr "Пролаз записано"
 
-#: src/features/logTick/common/ui/TickForm.tsx:45
+#: src/shared/ui/AscentStyleLabel.tsx:29
 msgid "Attempt"
 msgstr "Спроба"
 
-#: src/features/logTick/common/ui/TickForm.tsx:76
+#: src/features/logTick/common/ui/TickForm.tsx:71
 msgid "Attempts"
 msgstr "Спроби"
 
@@ -42,7 +47,7 @@ msgstr ""
 msgid "Back to sectors"
 msgstr ""
 
-#: src/features/logTick/common/ui/TickForm.tsx:93
+#: src/features/logTick/common/ui/TickForm.tsx:88
 msgid "Cancel"
 msgstr "Скасувати"
 
@@ -63,7 +68,7 @@ msgstr ""
 msgid "Dark"
 msgstr "Темна"
 
-#: src/features/logTick/common/ui/TickForm.tsx:67
+#: src/features/logTick/common/ui/TickForm.tsx:48
 msgid "Date"
 msgstr "Дата"
 
@@ -79,7 +84,7 @@ msgstr "Введіть email"
 msgid "Find your next climb"
 msgstr ""
 
-#: src/features/logTick/common/ui/TickForm.tsx:41
+#: src/shared/ui/AscentStyleLabel.tsx:25
 msgid "Flash"
 msgstr "Флеш"
 
@@ -93,6 +98,11 @@ msgstr "Мова"
 #: src/pages/profile/common/ui/ThemeModeSetting.tsx:23
 msgid "Light"
 msgstr "Світла"
+
+#: src/pages/logbook/desktop/PageLogbookDesktop.tsx:21
+#: src/pages/logbook/mobile/PageLogbookMobile.tsx:21
+msgid "Loading ascents…"
+msgstr "Завантажуємо пролази…"
 
 #: src/pages/home/desktop/PageHomeDesktop.tsx:22
 #: src/pages/home/mobile/PageHomeMobile.tsx:22
@@ -114,7 +124,7 @@ msgstr ""
 msgid "Loading sectors…"
 msgstr ""
 
-#: src/features/logTick/common/ui/TickForm.tsx:96
+#: src/features/logTick/common/ui/TickForm.tsx:91
 #: src/features/logTick/desktop/LogTickDialog.tsx:32
 #: src/features/logTick/mobile/LogTickSheet.tsx:32
 #: src/pages/route/common/ui/LogTickButton.tsx:30
@@ -123,21 +133,27 @@ msgstr "Відмітити пролаз"
 
 #: src/app/mobile/layout/AppBottomNavigation.tsx:40
 msgid "Logbook"
-msgstr ""
+msgstr "Логбук"
 
 #: src/app/mobile/layout/AppBottomNavigation.tsx:35
 msgid "Map"
 msgstr ""
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:37
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:42
+#: src/pages/logbook/desktop/PageLogbookDesktop.tsx:16
+#: src/pages/logbook/mobile/PageLogbookMobile.tsx:16
 msgid "My logbook"
-msgstr ""
+msgstr "Мій логбук"
 
-#: src/features/logTick/common/ui/TickForm.tsx:86
+#: src/pages/logbook/common/ui/TicksList.tsx:17
+msgid "No ascents logged yet."
+msgstr "Поки що жодного пролазу."
+
+#: src/features/logTick/common/ui/TickForm.tsx:81
 msgid "Note"
 msgstr "Нотатка"
 
-#: src/features/logTick/common/ui/TickForm.tsx:40
+#: src/shared/ui/AscentStyleLabel.tsx:24
 msgid "Onsight"
 msgstr "Онсайт"
 
@@ -145,14 +161,14 @@ msgstr "Онсайт"
 msgid "or"
 msgstr "або"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:43
-#: src/app/mobile/layout/AppBottomNavigation.tsx:45
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:48
+#: src/app/mobile/layout/AppBottomNavigation.tsx:48
 #: src/pages/profile/desktop/PageProfileDesktop.tsx:20
 #: src/pages/profile/mobile/PageProfileMobile.tsx:20
 msgid "Profile"
 msgstr "Профіль"
 
-#: src/features/logTick/common/ui/TickForm.tsx:43
+#: src/shared/ui/AscentStyleLabel.tsx:27
 msgid "Redpoint"
 msgstr "Редпоінт"
 
@@ -164,11 +180,11 @@ msgstr ""
 msgid "Resend code"
 msgstr "Надіслати код ще раз"
 
-#: src/features/logTick/common/ui/TickForm.tsx:42
+#: src/shared/ui/AscentStyleLabel.tsx:26
 msgid "Retro flash"
 msgstr "Ретрофлеш"
 
-#: src/features/logTick/common/ui/TickForm.tsx:96
+#: src/features/logTick/common/ui/TickForm.tsx:91
 msgid "Saving…"
 msgstr "Зберігаємо…"
 
@@ -176,7 +192,7 @@ msgstr "Зберігаємо…"
 msgid "Sending code…"
 msgstr "Надсилаємо код…"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:52
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:57
 msgid "Sign in"
 msgstr "Увійти"
 
@@ -188,7 +204,7 @@ msgstr "Увійдіть, щоб відмічати пролази"
 msgid "Sign out"
 msgstr "Вийти"
 
-#: src/features/logTick/common/ui/TickForm.tsx:53
+#: src/features/logTick/common/ui/TickForm.tsx:57
 msgid "Style"
 msgstr "Стиль"
 
@@ -196,7 +212,7 @@ msgstr "Стиль"
 msgid "Theme"
 msgstr "Тема"
 
-#: src/features/logTick/common/ui/TickForm.tsx:44
+#: src/shared/ui/AscentStyleLabel.tsx:28
 msgid "Top rope"
 msgstr "Верхня страховка"
 

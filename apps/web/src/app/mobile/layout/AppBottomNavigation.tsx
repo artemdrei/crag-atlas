@@ -18,13 +18,13 @@ export const AppBottomNavigation = () => {
   const location = useLocation();
   const { isAuthenticated } = useUser();
 
-  const section = location.pathname.startsWith(ROUTES.PROFILE)
-    ? ROUTES.PROFILE
-    : ROUTES.INDEX;
+  const section = [ROUTES.PROFILE, ROUTES.LOGBOOK].find((route) =>
+    location.pathname.startsWith(route)
+  );
 
   return (
     <NavPaperStyled elevation={2}>
-      <BottomNavigationStyled showLabels value={section}>
+      <BottomNavigationStyled showLabels value={section ?? ROUTES.INDEX}>
         <BottomNavigationAction
           label={<Trans>Crags</Trans>}
           value={ROUTES.INDEX}
@@ -38,8 +38,11 @@ export const AppBottomNavigation = () => {
         />
         <BottomNavigationAction
           label={<Trans>Logbook</Trans>}
+          value={ROUTES.LOGBOOK}
           icon={<BookmarkIcon />}
-          disabled
+          onClick={() =>
+            navigate(isAuthenticated ? ROUTES.LOGBOOK : ROUTES.LOGIN)
+          }
         />
         <BottomNavigationAction
           label={<Trans>Profile</Trans>}

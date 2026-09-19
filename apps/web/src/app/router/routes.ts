@@ -1,5 +1,6 @@
 export const ROUTES = {
   INDEX: '/',
+  LOGBOOK: '/logbook',
   LOGIN: '/login',
   PROFILE: '/profile',
   REGION: '/regions/:idRegion',

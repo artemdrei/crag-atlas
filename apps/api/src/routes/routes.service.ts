@@ -19,6 +19,11 @@ export class RoutesService {
     return routes as RouteDto[];
   }
 
+  /** Lookup for callers that treat a missing route as data, not an error. */
+  findOneOrNull(idRoute: string): RouteDto | null {
+    return (routesData.find((r) => r.id === idRoute) as RouteDto) ?? null;
+  }
+
   findOne(idRoute: string): RouteDto {
     const route = routesData.find((r) => r.id === idRoute);
 
