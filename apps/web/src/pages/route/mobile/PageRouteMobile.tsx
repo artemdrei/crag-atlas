@@ -11,7 +11,8 @@ import {
   ROUTES
 } from '@web/app/router/routes';
 import { EditToggleButton, RouteEditForm } from '@web/features/catalogEdit';
-import { ApiFeedback, PageBreadcrumbs } from '@web/shared/ui';
+import { TopoImage, useApiGetTopos } from '@web/features/topo';
+import { ApiFeedback, PageBreadcrumbs, PhotoPlaceholder } from '@web/shared/ui';
 
 import { LogTickButton, RouteDetails, useApiGetRoute } from '../common';
 
@@ -20,6 +21,11 @@ export const PageRouteMobile = () => {
   const { idRegion = '', idSector = '', idRoute = '' } = useParams();
   const { route, isLoading, failure } = useApiGetRoute(idRoute);
   const [isEditing, setIsEditing] = useState(false);
+  const { topos } = useApiGetTopos(idSector);
+  // A route is drawn on exactly one of the sector's topos.
+  const topo = topos.find((item) =>
+    item.lines.some((line) => line.idRoute === idRoute)
+  );
 
   return (
     <PageStyled spacing={2}>
@@ -46,6 +52,11 @@ export const PageRouteMobile = () => {
             <RouteDetails route={route} />
             <EditToggleButton onClick={() => setIsEditing(true)} />
           </HeaderRowStyled>
+          {topo ? (
+            <TopoImage topo={topo} idHighlightedRoute={route.id} />
+          ) : (
+            <PhotoPlaceholder variant="wide" />
+          )}
           <LogTickButton idRoute={route.id} />
         </>
       )}

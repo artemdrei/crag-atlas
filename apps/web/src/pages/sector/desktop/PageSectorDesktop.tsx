@@ -12,7 +12,8 @@ import {
   ROUTES
 } from '@web/app/router/routes';
 import { EditToggleButton, SectorEditForm } from '@web/features/catalogEdit';
-import { ApiFeedback, PageBreadcrumbs } from '@web/shared/ui';
+import { TopoImage, useApiGetTopos } from '@web/features/topo';
+import { ApiFeedback, PageBreadcrumbs, PhotoPlaceholder } from '@web/shared/ui';
 
 import { RoutesList, useApiGetRoutes, useApiGetSector } from '../common';
 
@@ -23,6 +24,7 @@ export const PageSectorDesktop = () => {
   const { sector } = useApiGetSector(idSector);
   const [isEditing, setIsEditing] = useState(false);
   const { routes, isLoading, failure } = useApiGetRoutes(idSector);
+  const { topos } = useApiGetTopos(idSector);
 
   return (
     <PageStyled spacing={3}>
@@ -50,6 +52,11 @@ export const PageSectorDesktop = () => {
         failure={failure}
         loadingLabel={<Trans>Loading routes…</Trans>}
       />
+      {topos.length === 0 ? (
+        <PhotoPlaceholder variant="wide" />
+      ) : (
+        topos.map((topo) => <TopoImage key={topo.id} topo={topo} />)
+      )}
       <RoutesList
         routes={routes}
         onSelect={(route) =>

@@ -2,7 +2,7 @@ import CardActionArea from '@mui/material/CardActionArea';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import { GradeBadge } from '@web/shared/ui';
+import { GradeBadge, PhotoPlaceholder } from '@web/shared/ui';
 
 import type { Sector } from '../entities';
 
@@ -13,7 +13,13 @@ export interface Props {
 
 export const SectorCard = ({ sector, onSelect }: Props) => (
   <CardAreaStyled onClick={() => onSelect(sector)}>
-    <ThumbnailStyled />
+    <ThumbnailStyled>
+      {sector.photoUrl ? (
+        <PhotoStyled src={sector.photoUrl} alt={sector.name} />
+      ) : (
+        <PhotoPlaceholder />
+      )}
+    </ThumbnailStyled>
     <BodyStyled>
       <HeaderRowStyled>
         <Typography variant="subtitle1" fontWeight={700}>
@@ -51,9 +57,14 @@ const CardAreaStyled = styled(CardActionArea)`
 const ThumbnailStyled = styled('div')`
   flex-shrink: 0;
   width: 96px;
-  height: 96px;
+`;
+
+const PhotoStyled = styled('img')`
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
-  background: ${({ theme }) => theme.palette.action.hover};
 `;
 
 const BodyStyled = styled('div')`

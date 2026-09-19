@@ -10,6 +10,7 @@ export const QUERY_KEYS = {
   sectors: (idRegion: string) => ['regions', idRegion, 'sectors'] as const,
   sector: (idSector: string) => ['sectors', idSector] as const,
   routes: (idSector: string) => ['sectors', idSector, 'routes'] as const,
+  topos: (idSector: string) => ['sectors', idSector, 'topos'] as const,
   route: (idRoute: string) => ['routes', idRoute] as const,
   ticks: () => ['ticks'] as const,
   me: () => ['me'] as const

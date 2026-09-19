@@ -135,13 +135,13 @@ msgstr "Loading ascents…"
 msgid "Loading regions…"
 msgstr "Loading regions…"
 
-#: src/pages/route/desktop/PageRouteDesktop.tsx:40
-#: src/pages/route/mobile/PageRouteMobile.tsx:41
+#: src/pages/route/desktop/PageRouteDesktop.tsx:46
+#: src/pages/route/mobile/PageRouteMobile.tsx:47
 msgid "Loading route…"
 msgstr "Loading route…"
 
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:51
-#: src/pages/sector/mobile/PageSectorMobile.tsx:52
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:53
+#: src/pages/sector/mobile/PageSectorMobile.tsx:54
 msgid "Loading routes…"
 msgstr "Loading routes…"
 
@@ -181,6 +181,10 @@ msgstr "Name"
 msgid "No ascents logged yet."
 msgstr "No ascents logged yet."
 
+#: src/shared/ui/PhotoPlaceholder.tsx:17
+msgid "No topo yet"
+msgstr "No topo yet"
+
 #: src/features/logTick/common/ui/TickForm.tsx:81
 msgid "Note"
 msgstr "Note"
@@ -211,10 +215,10 @@ msgstr "Redpoint"
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:34
 #: src/pages/region/desktop/PageRegionDesktop.tsx:27
 #: src/pages/region/mobile/PageRegionMobile.tsx:28
-#: src/pages/route/desktop/PageRouteDesktop.tsx:28
-#: src/pages/route/mobile/PageRouteMobile.tsx:29
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:31
-#: src/pages/sector/mobile/PageSectorMobile.tsx:32
+#: src/pages/route/desktop/PageRouteDesktop.tsx:34
+#: src/pages/route/mobile/PageRouteMobile.tsx:35
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:33
+#: src/pages/sector/mobile/PageSectorMobile.tsx:34
 msgid "Regions"
 msgstr "Regions"
 

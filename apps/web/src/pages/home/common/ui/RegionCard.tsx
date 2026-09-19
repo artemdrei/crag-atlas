@@ -2,7 +2,7 @@ import CardActionArea from '@mui/material/CardActionArea';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import { GradeBadge } from '@web/shared/ui';
+import { GradeBadge, PhotoPlaceholder } from '@web/shared/ui';
 
 import type { Region } from '../entities';
 
@@ -13,7 +13,9 @@ export interface Props {
 
 export const RegionCard = ({ region, onSelect }: Props) => (
   <CardAreaStyled onClick={() => onSelect(region)}>
-    <ThumbnailStyled />
+    <ThumbnailStyled>
+      <PhotoPlaceholder />
+    </ThumbnailStyled>
     <BodyStyled>
       <Typography variant="subtitle1" fontWeight={700}>
         {region.name}
@@ -41,8 +43,7 @@ const CardAreaStyled = styled(CardActionArea)`
 `;
 
 const ThumbnailStyled = styled('div')`
-  height: 120px;
-  background: ${({ theme }) => theme.palette.action.hover};
+  padding: ${({ theme }) => theme.spacing(1.5, 1.5, 0)};
 `;
 
 const BodyStyled = styled('div')`
