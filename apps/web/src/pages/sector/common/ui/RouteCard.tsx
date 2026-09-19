@@ -1,3 +1,4 @@
+import { Plural, useLingui } from '@lingui/react/macro';
 import CardActionArea from '@mui/material/CardActionArea';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
@@ -8,58 +9,98 @@ import type { Route } from '../entities';
 
 export interface Props {
   route: Route;
-  onSelect: (route: Route) => void;
+  index: number;
+  isHighlighted?: boolean;
+  onOpen: (route: Route) => void;
+  onHover?: (route?: Route) => void;
 }
 
-export const RouteCard = ({ route, onSelect }: Props) => (
-  <CardAreaStyled onClick={() => onSelect(route)}>
-    <HeaderRowStyled>
-      <Typography variant="subtitle1" fontWeight={700}>
-        {route.name}
-      </Typography>
-      <GradeBadge grade={route.grade} />
-    </HeaderRowStyled>
-    <Typography variant="body2" color="text.secondary">
-      {route.description}
-    </Typography>
-    <FooterRowStyled>
-      <Typography variant="caption" color="text.secondary">
-        {route.type}
-      </Typography>
-      {!!route.length && (
-        <Typography variant="caption" color="text.secondary">
-          {route.length} m
-        </Typography>
-      )}
-      {!!route.boltsCount && (
-        <Typography variant="caption" color="text.secondary">
-          {route.boltsCount} bolts
-        </Typography>
-      )}
-    </FooterRowStyled>
-  </CardAreaStyled>
-);
+export const RouteCard = ({
+  route,
+  index,
+  isHighlighted,
+  onOpen,
+  onHover
+}: Props) => {
+  const { t } = useLingui();
+
+  return (
+    <RowStyled
+      isHighlighted={!!isHighlighted}
+      onMouseEnter={() => onHover?.(route)}
+      onMouseLeave={() => onHover?.(undefined)}
+    >
+      <CardAreaStyled onClick={() => onOpen(route)}>
+        <NumberBadgeStyled>{index + 1}</NumberBadgeStyled>
+        <TextStyled>
+          <Typography variant="subtitle2" fontWeight={700} noWrap>
+            {route.name}
+          </Typography>
+          <MetaStyled variant="caption" color="text.secondary" noWrap>
+            <span>{route.type}</span>
+            {!!route.length && <span>{t`${route.length} m`}</span>}
+            {!!route.boltsCount && (
+              <span>
+                <Plural value={route.boltsCount} one="# bolt" other="# bolts" />
+              </span>
+            )}
+          </MetaStyled>
+        </TextStyled>
+        <GradeBadge grade={route.grade} />
+      </CardAreaStyled>
+    </RowStyled>
+  );
+};
+
+const RowStyled = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'isHighlighted'
+})<{ isHighlighted: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing(0.5)};
+  padding-right: ${({ theme }) => theme.spacing(0.5)};
+  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
+  border: 1px solid
+    ${({ theme, isHighlighted }) =>
+      isHighlighted ? theme.palette.primary.main : 'transparent'};
+  background: ${({ theme, isHighlighted }) =>
+    isHighlighted ? theme.palette.action.hover : 'transparent'};
+`;
 
 const CardAreaStyled = styled(CardActionArea)`
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: ${({ theme }) => theme.spacing(0.5)};
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing(1.5)};
+  padding: ${({ theme }) => theme.spacing(1)};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
-  border: 1px solid ${({ theme }) => theme.palette.divider};
-  padding: ${({ theme }) => theme.spacing(1.5)};
 `;
 
-const HeaderRowStyled = styled('div')`
+const NumberBadgeStyled = styled('span')`
+  flex-shrink: 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
+  font-weight: 700;
+  font-size: ${({ theme }) => theme.typography.caption.fontSize};
+  color: ${({ theme }) => theme.palette.text.secondary};
+  background: ${({ theme }) => theme.palette.action.hover};
+`;
+
+const MetaStyled = styled(Typography)`
+  display: flex;
   gap: ${({ theme }) => theme.spacing(1)};
-`;
 
-const FooterRowStyled = styled('div')`
+  & > span + span::before {
+    content: "· ";
+  }
+` as typeof Typography;
+
+const TextStyled = styled('div')`
   display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing(2)};
-  margin-top: ${({ theme }) => theme.spacing(0.5)};
+  flex-direction: column;
+  flex-grow: 1;
+  min-width: 0;
 `;

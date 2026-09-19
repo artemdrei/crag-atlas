@@ -1,1 +1,2 @@
-export { useApiGetTopos } from './useApiGetTopos';
+export * from './useApiGetTopos';
+export * from './useTopoGallery';

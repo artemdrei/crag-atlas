@@ -11,13 +11,24 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
+#. placeholder {0}: route.boltsCount
+#: src/pages/sector/common/ui/RouteCard.tsx:44
+msgid "{0, plural, one {# bolt} other {# bolts}}"
+msgstr "{0, plural, one {# шлямбур} few {# шлямбури} many {# шлямбурів} other {# шлямбура}}"
+
 #. placeholder {0}: tick.attempts
 #: src/pages/logbook/common/ui/TickCard.tsx:41
 msgid "{0} attempts"
 msgstr "{0} спроб"
 
-#~ msgid "app.title"
-#~ msgstr "crag-atlas"
+#. placeholder {0}: route.length
+#: src/pages/sector/common/ui/RouteCard.tsx:41
+msgid "{0} m"
+msgstr "{0} м"
+
+#: src/pages/sector/common/ui/RoutesPanelHeader.tsx:10
+msgid "{routesCount, plural, one {# route} other {# routes}}"
+msgstr "{routesCount, plural, one {# маршрут} few {# маршрути} many {# маршрутів} other {# маршруту}}"
 
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:60
 msgid "Approach, minutes"
@@ -35,21 +46,6 @@ msgstr "Спроба"
 #: src/features/logTick/common/ui/TickForm.tsx:71
 msgid "Attempts"
 msgstr "Спроби"
-
-#: src/pages/region/desktop/PageRegionDesktop.tsx:23
-#: src/pages/region/mobile/PageRegionMobile.tsx:23
-#~ msgid "Back to regions"
-#~ msgstr ""
-
-#: src/pages/route/desktop/PageRouteDesktop.tsx:19
-#: src/pages/route/mobile/PageRouteMobile.tsx:19
-#~ msgid "Back to routes"
-#~ msgstr ""
-
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:23
-#: src/pages/sector/mobile/PageSectorMobile.tsx:23
-#~ msgid "Back to sectors"
-#~ msgstr ""
 
 #: src/features/catalogEdit/common/ui/RouteEditForm.tsx:92
 msgid "Bolts"
@@ -110,9 +106,6 @@ msgstr "Флеш"
 msgid "Grade"
 msgstr "Категорія"
 
-#~ msgid "home.heading"
-#~ msgstr "Знайди свій наступний маршрут"
-
 #: src/pages/profile/common/ui/LocaleSetting.tsx:20
 msgid "Language"
 msgstr "Мова"
@@ -140,8 +133,8 @@ msgstr ""
 msgid "Loading route…"
 msgstr ""
 
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:53
-#: src/pages/sector/mobile/PageSectorMobile.tsx:54
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:86
+#: src/pages/sector/mobile/PageSectorMobile.tsx:81
 msgid "Loading routes…"
 msgstr ""
 
@@ -217,8 +210,8 @@ msgstr "Редпоінт"
 #: src/pages/region/mobile/PageRegionMobile.tsx:28
 #: src/pages/route/desktop/PageRouteDesktop.tsx:34
 #: src/pages/route/mobile/PageRouteMobile.tsx:35
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:33
-#: src/pages/sector/mobile/PageSectorMobile.tsx:34
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:58
+#: src/pages/sector/mobile/PageSectorMobile.tsx:56
 msgid "Regions"
 msgstr "Регіони"
 
@@ -287,3 +280,11 @@ msgstr "Перевіряємо…"
 #: src/pages/login/common/ui/EmailOtpForm.tsx:53
 msgid "We sent a code to <0>{0}</0>"
 msgstr "Ми надіслали код на <0>{0}</0>"
+
+#: src/features/topo/desktop/TopoGalleryDesktop.tsx:55
+msgid "Zoom in"
+msgstr "Збільшити"
+
+#: src/features/topo/desktop/TopoGalleryDesktop.tsx:58
+msgid "Zoom out"
+msgstr "Зменшити"

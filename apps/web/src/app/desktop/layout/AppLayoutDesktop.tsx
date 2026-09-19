@@ -15,11 +15,13 @@ export const AppLayoutDesktop = () => (
 );
 
 const LayoutRootStyled = styled(Box)`
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
 `;
 
 const MainStyled = styled(Box)`
   flex-grow: 1;
+  min-height: 0;
+  overflow-y: auto;
 ` as typeof Box;

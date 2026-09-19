@@ -51,3 +51,25 @@ export const palette = {
     grade: grade.dark
   }
 } as const;
+
+// A range spans several levels, so colouring it by one of them would lie —
+// it gets the neutral tone, as does anything unreadable. Everything below 5
+// reads as 5 and above 9 as 9: the scale groups routes by feel, not exhaustively.
+export const resolveGradeTone = (grade: string): GradeTone => {
+  const matches = grade.match(/\d\s*[abc]/gi) ?? [];
+
+  if (matches.length !== 1) return 'neutral';
+
+  const digit = matches[0][0];
+
+  if (Number(digit) < 5) return '5';
+  if (Number(digit) > 9) return '9';
+
+  return digit as GradeTone;
+};
+
+/** Colour of a route's grade, for anything that is not a `GradeBadge`. */
+export const getGradeColor = (
+  grades: Record<GradeTone, GradeColor>,
+  grade?: string
+) => (grade ? grades[resolveGradeTone(grade)].background : undefined);

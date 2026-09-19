@@ -1,2 +1,3 @@
-export { useApiGetRoutes } from './useApiGetRoutes';
-export { useApiGetSector } from './useApiGetSector';
+export * from './useApiGetRoutes';
+export * from './useApiGetSector';
+export * from './useSectorSelection';
