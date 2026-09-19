@@ -10,7 +10,7 @@ export class RouteController {
 
   @Get(':idRoute')
   @ApiOkResponse({ type: RouteDto })
-  findOne(@Param('idRoute') idRoute: string): RouteDto {
+  findOne(@Param('idRoute') idRoute: string): Promise<RouteDto> {
     return this.routesService.findOne(idRoute);
   }
 }

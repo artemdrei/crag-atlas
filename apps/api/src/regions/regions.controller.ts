@@ -10,7 +10,7 @@ export class RegionsController {
 
   @Get()
   @ApiOkResponse({ type: RegionDto, isArray: true })
-  findAll(): RegionDto[] {
+  findAll(): Promise<RegionDto[]> {
     return this.regionsService.findAll();
   }
 }

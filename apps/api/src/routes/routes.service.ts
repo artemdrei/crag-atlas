@@ -1,39 +1,87 @@
 import { Injectable } from '@nestjs/common';
 
-import { NotFoundException } from '../common/exceptions/app.exception';
-import routesData from './data/routes.json';
+import {
+  AppException,
+  NotFoundException
+} from '../common/exceptions/app.exception';
+import { publicSupabase } from '../config/supabase.client';
 import type { RouteDto } from './routes.types';
+
+const COLUMNS =
+  'id, id_sector, name, grade, type, length, bolts_count, description';
+
+interface RouteRow {
+  id: string;
+  id_sector: string;
+  name: string;
+  grade: string;
+  type: RouteDto['type'];
+  length: number | null;
+  bolts_count: number | null;
+  description: string;
+}
 
 @Injectable()
 export class RoutesService {
-  findBySector(idSector: string): RouteDto[] {
-    const routes = routesData.filter((route) => route.idSector === idSector);
+  async findBySector(idSector: string): Promise<RouteDto[]> {
+    const { data, error } = await publicSupabase()
+      .from('routes')
+      .select(COLUMNS)
+      .eq('id_sector', idSector)
+      .order('name')
+      .returns<RouteRow[]>();
 
-    if (routes.length === 0) {
+    if (error) {
+      throw new AppException(
+        error.message,
+        500,
+        error.code ?? 'ROUTES_READ_FAILED'
+      );
+    }
+
+    if (data.length === 0) {
       throw new NotFoundException(
         `No routes found for sector "${idSector}"`,
         'SECTOR_NOT_FOUND'
       );
     }
 
-    return routes as RouteDto[];
+    return data.map(toRouteDto);
   }
 
-  /** Lookup for callers that treat a missing route as data, not an error. */
-  findOneOrNull(idRoute: string): RouteDto | null {
-    return (routesData.find((r) => r.id === idRoute) as RouteDto) ?? null;
-  }
+  async findOne(idRoute: string): Promise<RouteDto> {
+    const { data, error } = await publicSupabase()
+      .from('routes')
+      .select(COLUMNS)
+      .eq('id', idRoute)
+      .maybeSingle<RouteRow>();
 
-  findOne(idRoute: string): RouteDto {
-    const route = routesData.find((r) => r.id === idRoute);
+    if (error) {
+      throw new AppException(
+        error.message,
+        500,
+        error.code ?? 'ROUTE_READ_FAILED'
+      );
+    }
 
-    if (!route) {
+    if (!data) {
       throw new NotFoundException(
         `Route "${idRoute}" not found`,
         'ROUTE_NOT_FOUND'
       );
     }
 
-    return route as RouteDto;
+    return toRouteDto(data);
   }
 }
+
+const toRouteDto = (row: RouteRow): RouteDto => ({
+  id: row.id,
+  idSector: row.id_sector,
+  name: row.name,
+  grade: row.grade,
+  type: row.type,
+  length: row.length ?? 0,
+  boltsCount: row.bolts_count ?? 0,
+  description: row.description
+});

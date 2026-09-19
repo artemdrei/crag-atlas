@@ -10,7 +10,7 @@ export class SectorsController {
 
   @Get()
   @ApiOkResponse({ type: SectorDto, isArray: true })
-  findByRegion(@Param('idRegion') idRegion: string): SectorDto[] {
+  findByRegion(@Param('idRegion') idRegion: string): Promise<SectorDto[]> {
     return this.sectorsService.findByRegion(idRegion);
   }
 }

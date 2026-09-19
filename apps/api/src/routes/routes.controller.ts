@@ -10,7 +10,7 @@ export class RoutesController {
 
   @Get()
   @ApiOkResponse({ type: RouteDto, isArray: true })
-  findBySector(@Param('idSector') idSector: string): RouteDto[] {
+  findBySector(@Param('idSector') idSector: string): Promise<RouteDto[]> {
     return this.routesService.findBySector(idSector);
   }
 }

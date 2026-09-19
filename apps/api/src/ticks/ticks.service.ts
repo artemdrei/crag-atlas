@@ -7,9 +7,11 @@ import {
 } from '../common/exceptions/app.exception';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
 import { supabaseConfig } from '../config/supabase.config';
-import { RoutesService } from '../routes/routes.service';
-import { SectorsService } from '../sectors/sectors.service';
 import { ASCENT_STYLES, type CreateTickDto, type TickDto } from './ticks.types';
+
+// The catalog rows come back embedded through the ticks → routes → sectors
+// foreign keys, so a logbook page is one query, not one per tick.
+const COLUMNS = '*, routes (name, grade, sectors (name))';
 
 interface TickRow {
   id: string;
@@ -21,21 +23,21 @@ interface TickRow {
   note: string | null;
   created_at: string;
   updated_at: string;
+  routes: {
+    name: string;
+    grade: string;
+    sectors: { name: string } | null;
+  } | null;
 }
 
 @Injectable()
 export class TicksService {
-  constructor(
-    private readonly routesService: RoutesService,
-    private readonly sectorsService: SectorsService
-  ) {}
-
   async findMine(authUser: AuthUser): Promise<TickDto[]> {
     // No filter on id_user: the RLS select policy already scopes this to the
     // caller, and a second filter would only hide a policy regression.
     const { data, error } = await this.userClient(authUser)
       .from('ticks')
-      .select()
+      .select(COLUMNS)
       .order('climbed_at', { ascending: false })
       .returns<TickRow[]>();
 
@@ -47,7 +49,7 @@ export class TicksService {
       );
     }
 
-    return data.map((row) => this.toTickDto(row));
+    return data.map(toTickDto);
   }
 
   async create(authUser: AuthUser, payload: CreateTickDto): Promise<TickDto> {
@@ -73,7 +75,7 @@ export class TicksService {
         attempts: payload.attempts ?? null,
         note: payload.note ?? null
       })
-      .select()
+      .select(COLUMNS)
       .single<TickRow>();
 
     if (error) {
@@ -84,29 +86,7 @@ export class TicksService {
       );
     }
 
-    return this.toTickDto(data);
-  }
-
-  private toTickDto(row: TickRow): TickDto {
-    // The catalog is static JSON for now, so this walk is two array lookups;
-    // it becomes a join once the catalog lives in the database.
-    const route = this.routesService.findOneOrNull(row.id_route);
-    const sector = route && this.sectorsService.findOneOrNull(route.idSector);
-
-    return {
-      id: row.id,
-      idUser: row.id_user,
-      idRoute: row.id_route,
-      routeName: route?.name ?? null,
-      routeGrade: route?.grade ?? null,
-      sectorName: sector?.name ?? null,
-      ascentStyle: row.ascent_style,
-      climbedAt: row.climbed_at,
-      attempts: row.attempts,
-      note: row.note,
-      createdAt: row.created_at,
-      updatedAt: row.updated_at
-    };
+    return toTickDto(data);
   }
 
   /** Calls the database as the user, so their RLS policies still apply. */
@@ -119,3 +99,18 @@ export class TicksService {
     });
   }
 }
+
+const toTickDto = (row: TickRow): TickDto => ({
+  id: row.id,
+  idUser: row.id_user,
+  idRoute: row.id_route,
+  routeName: row.routes?.name ?? null,
+  routeGrade: row.routes?.grade ?? null,
+  sectorName: row.routes?.sectors?.name ?? null,
+  ascentStyle: row.ascent_style,
+  climbedAt: row.climbed_at,
+  attempts: row.attempts,
+  note: row.note,
+  createdAt: row.created_at,
+  updatedAt: row.updated_at
+});
