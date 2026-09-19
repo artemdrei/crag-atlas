@@ -148,6 +148,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/sectors/{idSector}/topos": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ToposController_findBySector"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -178,6 +194,8 @@ export interface components {
             /** @description Label for breadcrumbs; ids carry no meaning */
             regionName: string;
             name: string;
+            /** @description First topo photo, used as the card thumbnail */
+            photoUrl?: string | null;
             description: string;
             approachMinutes?: number | null;
             routeCount: number;
@@ -238,6 +256,19 @@ export interface components {
             climbedAt?: string;
             attempts?: number | null;
             note?: string | null;
+        };
+        RouteLineDto: {
+            idRoute: string;
+            routeName: string;
+            grade: string;
+            /** @description [[x, y], …] as 0..1 fractions of the photo */
+            points: number[][];
+        };
+        TopoDto: {
+            id: string;
+            label: string;
+            photoUrl: string;
+            lines: components["schemas"]["RouteLineDto"][];
         };
     };
     responses: never;
@@ -521,6 +552,27 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["TickDto"];
+                };
+            };
+        };
+    };
+    ToposController_findBySector: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idSector: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TopoDto"][];
                 };
             };
         };

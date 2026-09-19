@@ -20,3 +20,7 @@ export const publicSupabase = (): SupabaseClient => {
 
   return client;
 };
+
+/** Public bucket URLs are stable and derivable, so no round trip is needed. */
+export const storagePublicUrl = (bucket: string, path: string): string =>
+  `${supabaseConfig().url}/storage/v1/object/public/${bucket}/${path}`;

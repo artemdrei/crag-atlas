@@ -7,6 +7,7 @@ import { RegionsModule } from './regions/regions.module';
 import { RoutesModule } from './routes/routes.module';
 import { SectorsModule } from './sectors/sectors.module';
 import { TicksModule } from './ticks/ticks.module';
+import { ToposModule } from './topos/topos.module';
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { TicksModule } from './ticks/ticks.module';
     RegionsModule,
     SectorsModule,
     RoutesModule,
-    TicksModule
+    TicksModule,
+    ToposModule
   ]
 })
 export class AppModule {}

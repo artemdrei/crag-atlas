@@ -13,6 +13,13 @@ export class SectorDto {
   @ApiProperty()
   name!: string;
 
+  @ApiProperty({
+    required: false,
+    nullable: true,
+    description: 'First topo photo, used as the card thumbnail'
+  })
+  photoUrl?: string | null;
+
   @ApiProperty()
   description!: string;
 

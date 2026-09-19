@@ -6,13 +6,13 @@ import {
 } from '../common/exceptions/app.exception';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
 import { userClient } from '../common/utils/userClient';
-import { publicSupabase } from '../config/supabase.client';
+import { publicSupabase, storagePublicUrl } from '../config/supabase.client';
 import type { SectorDto, UpdateSectorDto } from './sectors.types';
 
 // The region name rides along: ids are uuids, so a page opened by URL has no
 // label to show in its breadcrumbs otherwise.
 const COLUMNS =
-  'id, id_region, name, description, approach_minutes, route_count, grade_min, grade_max, regions (name)';
+  'id, id_region, name, description, approach_minutes, route_count, grade_min, grade_max, regions (name), topos (storage_path, sort_order)';
 
 interface SectorRow {
   id: string;
@@ -24,6 +24,7 @@ interface SectorRow {
   grade_min: string | null;
   grade_max: string | null;
   regions: { name: string } | null;
+  topos: { storage_path: string; sort_order: number }[];
 }
 
 @Injectable()
@@ -110,9 +111,16 @@ const toSectorDto = (row: SectorRow): SectorDto => ({
   idRegion: row.id_region,
   regionName: row.regions?.name ?? '',
   name: row.name,
+  photoUrl: toPhotoUrl(row),
   description: row.description,
   approachMinutes: row.approach_minutes,
   routeCount: row.route_count,
   gradeRange:
     row.grade_min && row.grade_max ? `${row.grade_min}-${row.grade_max}` : null
 });
+
+const toPhotoUrl = (row: SectorRow): string | null => {
+  const [first] = [...row.topos].sort((a, b) => a.sort_order - b.sort_order);
+
+  return first ? storagePublicUrl('topos', first.storage_path) : null;
+};
