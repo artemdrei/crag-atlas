@@ -7,7 +7,7 @@ import { styled } from '@mui/material/styles';
 import { buildSectorPath } from '@web/app/router/routes';
 import { ApiFeedback } from '@web/shared/ui';
 
-import { RouteDetails, useApiGetRoute } from '../common';
+import { LogTickButton, RouteDetails, useApiGetRoute } from '../common';
 
 export const PageRouteMobile = () => {
   const { idRegion = '', idSector = '', idRoute = '' } = useParams();
@@ -23,7 +23,12 @@ export const PageRouteMobile = () => {
         failure={failure}
         loadingLabel={<Trans>Loading route…</Trans>}
       />
-      {route && <RouteDetails route={route} />}
+      {route && (
+        <>
+          <RouteDetails route={route} />
+          <LogTickButton idRoute={route.id} />
+        </>
+      )}
     </PageStyled>
   );
 };
