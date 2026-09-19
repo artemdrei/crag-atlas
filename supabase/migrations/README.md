@@ -17,3 +17,4 @@ Apply a migration in the Supabase dashboard (SQL Editor) or with
 | 006 | `006_catalog_uuid_keys.sql` | Catalog keys become uuids; names stay labels |
 | 007 | `007_admin_role.sql` | `user_roles` + `is_admin()`; catalog writes for admins |
 | 008 | `008_computed_catalog_stats.sql` | Counts and grade ranges become views |
+| 009 | `009_topos.sql` | Sector topo photos, route lines, and the storage bucket |
