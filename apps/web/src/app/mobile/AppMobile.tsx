@@ -3,11 +3,15 @@ import { Route, Routes } from 'react-router';
 
 import { PageHomeMobile } from '@web/pages/home';
 import { PageLoginMobile } from '@web/pages/login';
+import { PageProfileMobile } from '@web/pages/profile';
 import { PageRegionMobile } from '@web/pages/region';
 import { PageRouteMobile } from '@web/pages/route';
 import { PageSectorMobile } from '@web/pages/sector';
 
-import { LayoutWithMobileBottomNavigation } from '../router/Router';
+import {
+  LayoutWithMobileBottomNavigation,
+  ProtectedRoute
+} from '../router/Router';
 import { ROUTES } from '../router/routes';
 import { ErrorBoundary } from '../ui/errorBoundary';
 
@@ -21,6 +25,14 @@ const AppMobile = () => (
           <Route path={ROUTES.REGION} element={<PageRegionMobile />} />
           <Route path={ROUTES.SECTOR} element={<PageSectorMobile />} />
           <Route path={ROUTES.ROUTE_DETAIL} element={<PageRouteMobile />} />
+          <Route
+            path={ROUTES.PROFILE}
+            element={
+              <ProtectedRoute requiredRole="user">
+                <PageProfileMobile />
+              </ProtectedRoute>
+            }
+          />
         </Route>
       </Routes>
     </Suspense>

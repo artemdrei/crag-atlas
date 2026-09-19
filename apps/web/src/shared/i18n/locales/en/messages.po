@@ -38,9 +38,13 @@ msgstr "Continue"
 msgid "Continue with Google"
 msgstr "Continue with Google"
 
-#: src/app/mobile/layout/AppBottomNavigation.tsx:22
+#: src/app/mobile/layout/AppBottomNavigation.tsx:29
 msgid "Crags"
 msgstr "Crags"
+
+#: src/pages/profile/common/ui/ThemeModeSetting.tsx:26
+msgid "Dark"
+msgstr "Dark"
 
 #: src/pages/login/common/ui/EmailOtpForm.tsx:62
 msgid "Enter code"
@@ -57,8 +61,16 @@ msgstr "Find your next climb"
 #~ msgid "home.heading"
 #~ msgstr "Find your next climb"
 
-#: src/pages/home/desktop/PageHomeDesktop.tsx:28
-#: src/pages/home/mobile/PageHomeMobile.tsx:28
+#: src/pages/profile/common/ui/LocaleSetting.tsx:20
+msgid "Language"
+msgstr "Language"
+
+#: src/pages/profile/common/ui/ThemeModeSetting.tsx:23
+msgid "Light"
+msgstr "Light"
+
+#: src/pages/home/desktop/PageHomeDesktop.tsx:22
+#: src/pages/home/mobile/PageHomeMobile.tsx:22
 msgid "Loading regions…"
 msgstr "Loading regions…"
 
@@ -77,15 +89,15 @@ msgstr "Loading routes…"
 msgid "Loading sectors…"
 msgstr "Loading sectors…"
 
-#: src/app/mobile/layout/AppBottomNavigation.tsx:33
+#: src/app/mobile/layout/AppBottomNavigation.tsx:40
 msgid "Logbook"
 msgstr "Logbook"
 
-#: src/app/mobile/layout/AppBottomNavigation.tsx:28
+#: src/app/mobile/layout/AppBottomNavigation.tsx:35
 msgid "Map"
 msgstr "Map"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:30
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:39
 msgid "My logbook"
 msgstr "My logbook"
 
@@ -93,11 +105,14 @@ msgstr "My logbook"
 msgid "or"
 msgstr "or"
 
-#: src/app/mobile/layout/AppBottomNavigation.tsx:38
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:45
+#: src/app/mobile/layout/AppBottomNavigation.tsx:45
+#: src/pages/profile/desktop/PageProfileDesktop.tsx:21
+#: src/pages/profile/mobile/PageProfileMobile.tsx:21
 msgid "Profile"
 msgstr "Profile"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:27
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:36
 msgid "Regions"
 msgstr "Regions"
 
@@ -109,9 +124,21 @@ msgstr "Resend code"
 msgid "Sending code…"
 msgstr "Sending code…"
 
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:57
+msgid "Sign in"
+msgstr "Sign in"
+
 #: src/pages/login/common/ui/LoginCard.tsx:25
 msgid "Sign in to log your sends"
 msgstr "Sign in to log your sends"
+
+#: src/pages/profile/common/ui/SignOutButton.tsx:14
+msgid "Sign out"
+msgstr "Sign out"
+
+#: src/pages/profile/common/ui/ThemeModeSetting.tsx:13
+msgid "Theme"
+msgstr "Theme"
 
 #: src/pages/login/common/ui/EmailOtpForm.tsx:89
 msgid "Use another email"

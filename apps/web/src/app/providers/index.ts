@@ -8,3 +8,4 @@ export type {
 export { useModal } from './modalProvider';
 export type { Role } from './UserProvider';
 export { useUser } from './UserProvider';
+export { useProfileIdentity } from './useProfileIdentity';

@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 import { Trans } from '@lingui/react/macro';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
@@ -10,14 +10,21 @@ import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import Paper from '@mui/material/Paper';
 import { keyframes, styled } from '@mui/material/styles';
 
+import { useUser } from '@web/app/providers';
 import { ROUTES } from '@web/app/router/routes';
 
 export const AppBottomNavigation = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { isAuthenticated } = useUser();
+
+  const section = location.pathname.startsWith(ROUTES.PROFILE)
+    ? ROUTES.PROFILE
+    : ROUTES.INDEX;
 
   return (
     <NavPaperStyled elevation={2}>
-      <BottomNavigationStyled showLabels value={ROUTES.INDEX}>
+      <BottomNavigationStyled showLabels value={section}>
         <BottomNavigationAction
           label={<Trans>Crags</Trans>}
           value={ROUTES.INDEX}
@@ -36,8 +43,11 @@ export const AppBottomNavigation = () => {
         />
         <BottomNavigationAction
           label={<Trans>Profile</Trans>}
+          value={ROUTES.PROFILE}
           icon={<PersonIcon />}
-          disabled
+          onClick={() =>
+            navigate(isAuthenticated ? ROUTES.PROFILE : ROUTES.LOGIN)
+          }
         />
       </BottomNavigationStyled>
     </NavPaperStyled>

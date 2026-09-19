@@ -12,10 +12,10 @@ export const LayoutWithSidebar = () => <AppLayoutDesktop />;
 export const LayoutWithMobileBottomNavigation = () => <AppLayoutMobile />;
 
 export const ProtectedRoute = ({
-  role,
+  requiredRole,
   children
 }: {
-  role: Role;
+  requiredRole: Role;
   children: React.ReactNode;
 }) => {
   const { hasRole, isLoading } = useUser();
@@ -23,7 +23,7 @@ export const ProtectedRoute = ({
 
   if (isLoading) return null;
 
-  if (!hasRole(role)) {
+  if (!hasRole(requiredRole)) {
     return (
       <Navigate
         to={ROUTES.LOGIN}

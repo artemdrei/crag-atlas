@@ -1,0 +1,1 @@
+export { useLocaleSetting } from './useLocaleSetting';

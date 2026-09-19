@@ -38,9 +38,13 @@ msgstr "Продовжити"
 msgid "Continue with Google"
 msgstr "Продовжити з Google"
 
-#: src/app/mobile/layout/AppBottomNavigation.tsx:22
+#: src/app/mobile/layout/AppBottomNavigation.tsx:29
 msgid "Crags"
 msgstr ""
+
+#: src/pages/profile/common/ui/ThemeModeSetting.tsx:26
+msgid "Dark"
+msgstr "Темна"
 
 #: src/pages/login/common/ui/EmailOtpForm.tsx:62
 msgid "Enter code"
@@ -57,8 +61,16 @@ msgstr ""
 #~ msgid "home.heading"
 #~ msgstr "Знайди свій наступний маршрут"
 
-#: src/pages/home/desktop/PageHomeDesktop.tsx:28
-#: src/pages/home/mobile/PageHomeMobile.tsx:28
+#: src/pages/profile/common/ui/LocaleSetting.tsx:20
+msgid "Language"
+msgstr "Мова"
+
+#: src/pages/profile/common/ui/ThemeModeSetting.tsx:23
+msgid "Light"
+msgstr "Світла"
+
+#: src/pages/home/desktop/PageHomeDesktop.tsx:22
+#: src/pages/home/mobile/PageHomeMobile.tsx:22
 msgid "Loading regions…"
 msgstr ""
 
@@ -77,15 +89,15 @@ msgstr ""
 msgid "Loading sectors…"
 msgstr ""
 
-#: src/app/mobile/layout/AppBottomNavigation.tsx:33
+#: src/app/mobile/layout/AppBottomNavigation.tsx:40
 msgid "Logbook"
 msgstr ""
 
-#: src/app/mobile/layout/AppBottomNavigation.tsx:28
+#: src/app/mobile/layout/AppBottomNavigation.tsx:35
 msgid "Map"
 msgstr ""
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:30
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:39
 msgid "My logbook"
 msgstr ""
 
@@ -93,11 +105,14 @@ msgstr ""
 msgid "or"
 msgstr "або"
 
-#: src/app/mobile/layout/AppBottomNavigation.tsx:38
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:45
+#: src/app/mobile/layout/AppBottomNavigation.tsx:45
+#: src/pages/profile/desktop/PageProfileDesktop.tsx:21
+#: src/pages/profile/mobile/PageProfileMobile.tsx:21
 msgid "Profile"
-msgstr ""
+msgstr "Профіль"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:27
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:36
 msgid "Regions"
 msgstr ""
 
@@ -109,9 +124,21 @@ msgstr "Надіслати код ще раз"
 msgid "Sending code…"
 msgstr "Надсилаємо код…"
 
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:57
+msgid "Sign in"
+msgstr "Увійти"
+
 #: src/pages/login/common/ui/LoginCard.tsx:25
 msgid "Sign in to log your sends"
 msgstr "Увійдіть, щоб відмічати пролази"
+
+#: src/pages/profile/common/ui/SignOutButton.tsx:14
+msgid "Sign out"
+msgstr "Вийти"
+
+#: src/pages/profile/common/ui/ThemeModeSetting.tsx:13
+msgid "Theme"
+msgstr "Тема"
 
 #: src/pages/login/common/ui/EmailOtpForm.tsx:89
 msgid "Use another email"
@@ -121,7 +148,6 @@ msgstr "Інший email"
 msgid "Verifying…"
 msgstr "Перевіряємо…"
 
-#: src/pages/login/common/ui/EmailOtpForm.tsx:53
 #. placeholder {0}: email.trim()
 #: src/pages/login/common/ui/EmailOtpForm.tsx:53
 msgid "We sent a code to <0>{0}</0>"

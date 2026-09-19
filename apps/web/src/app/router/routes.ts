@@ -1,6 +1,7 @@
 export const ROUTES = {
   INDEX: '/',
   LOGIN: '/login',
+  PROFILE: '/profile',
   REGION: '/regions/:idRegion',
   SECTOR: '/regions/:idRegion/sectors/:idSector',
   ROUTE_DETAIL: '/regions/:idRegion/sectors/:idSector/routes/:idRoute'

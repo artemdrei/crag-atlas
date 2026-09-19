@@ -7,12 +7,7 @@ import { styled } from '@mui/material/styles';
 import { buildRegionPath } from '@web/app/router/routes';
 import { ApiFeedback } from '@web/shared/ui';
 
-import {
-  HomeHeading,
-  HomeThemeToggle,
-  RegionsGrid,
-  useApiGetRegions
-} from '../common';
+import { HomeHeading, RegionsGrid, useApiGetRegions } from '../common';
 
 export const PageHomeDesktop = () => {
   const navigate = useNavigate();
@@ -21,7 +16,6 @@ export const PageHomeDesktop = () => {
   return (
     <PageStyled spacing={3}>
       <HomeHeading />
-      <HomeThemeToggle />
       <ApiFeedback
         isLoading={isLoading}
         failure={failure}

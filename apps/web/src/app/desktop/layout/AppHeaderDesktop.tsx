@@ -1,17 +1,24 @@
 import { useNavigate } from 'react-router';
 
-import { Trans } from '@lingui/react/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import AppBar from '@mui/material/AppBar';
+import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
+import { useProfileIdentity, useUser } from '@web/app/providers';
 import { ROUTES } from '@web/app/router/routes';
+import { getInitials } from '@web/shared/lib';
 
 export const AppHeaderDesktop = () => {
+  const { t } = useLingui();
   const navigate = useNavigate();
+  const { isAuthenticated, isLoading } = useUser();
+  const { avatarUrl, displayName } = useProfileIdentity();
 
   return (
     <HeaderStyled position="static" color="transparent" elevation={0}>
@@ -30,6 +37,21 @@ export const AppHeaderDesktop = () => {
           <Trans>My logbook</Trans>
         </Button>
         <SpacerStyled />
+        {!isLoading &&
+          (isAuthenticated ? (
+            <IconButton
+              aria-label={t`Profile`}
+              onClick={() => navigate(ROUTES.PROFILE)}
+            >
+              <AvatarStyled src={avatarUrl} alt={displayName}>
+                {getInitials(displayName)}
+              </AvatarStyled>
+            </IconButton>
+          ) : (
+            <Button variant="outlined" onClick={() => navigate(ROUTES.LOGIN)}>
+              <Trans>Sign in</Trans>
+            </Button>
+          ))}
       </ToolbarStyled>
     </HeaderStyled>
   );
@@ -49,4 +71,10 @@ const LogoStyled = styled(Typography)`
 
 const SpacerStyled = styled(Box)`
   flex-grow: 1;
+`;
+
+const AvatarStyled = styled(Avatar)`
+  width: 32px;
+  height: 32px;
+  font-size: ${({ theme }) => theme.typography.body2.fontSize};
 `;
