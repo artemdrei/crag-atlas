@@ -11,18 +11,18 @@ import { ApiFeedback } from '@web/shared/ui';
 import { RoutesList, useApiGetRoutes } from '../common';
 
 export const PageSectorMobile = () => {
-  const { regionId = '', sectorId = '' } = useParams();
+  const { idRegion = '', idSector = '' } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
   const sectorName = (location.state as { name?: string } | null)?.name;
-  const { routes, isLoading, failure } = useApiGetRoutes(sectorId);
+  const { routes, isLoading, failure } = useApiGetRoutes(idSector);
 
   return (
     <PageStyled spacing={2}>
-      <Link to={`/regions/${regionId}`}>
+      <Link to={`/regions/${idRegion}`}>
         <Trans>Back to sectors</Trans>
       </Link>
-      <Typography variant="h5">{sectorName ?? sectorId}</Typography>
+      <Typography variant="h5">{sectorName ?? idSector}</Typography>
       <ApiFeedback
         isLoading={isLoading}
         failure={failure}
@@ -31,7 +31,7 @@ export const PageSectorMobile = () => {
       <RoutesList
         routes={routes}
         onSelect={(route) =>
-          navigate(buildRoutePath(regionId, sectorId, route.id))
+          navigate(buildRoutePath(idRegion, idSector, route.id))
         }
       />
     </PageStyled>

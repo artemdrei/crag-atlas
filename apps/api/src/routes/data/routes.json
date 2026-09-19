@@ -1,7 +1,7 @@
 [
   {
     "id": "mizerna-lohika",
-    "sectorId": "bastion",
+    "idSector": "bastion",
     "name": "Мізерна логіка",
     "grade": "7a",
     "type": "sport",
@@ -11,7 +11,7 @@
   },
   {
     "id": "sokil",
-    "sectorId": "bastion",
+    "idSector": "bastion",
     "name": "Сокіл",
     "grade": "7a+",
     "type": "sport",
@@ -21,7 +21,7 @@
   },
   {
     "id": "liva-shchylyna",
-    "sectorId": "bastion",
+    "idSector": "bastion",
     "name": "Ліва щілина",
     "grade": "6b+",
     "type": "trad",
@@ -31,7 +31,7 @@
   },
   {
     "id": "dovhyi-shlyakh",
-    "sectorId": "bastion",
+    "idSector": "bastion",
     "name": "Довгий шлях",
     "grade": "6c+",
     "type": "sport",
@@ -41,7 +41,7 @@
   },
   {
     "id": "promin",
-    "sectorId": "bastion",
+    "idSector": "bastion",
     "name": "Промінь",
     "grade": "8a",
     "type": "sport",
@@ -51,7 +51,7 @@
   },
   {
     "id": "dzerkalo-1",
-    "sectorId": "dzerkalo",
+    "idSector": "dzerkalo",
     "name": "Плита №1",
     "grade": "5a",
     "type": "sport",
@@ -61,7 +61,7 @@
   },
   {
     "id": "karnyz-1",
-    "sectorId": "karnyz",
+    "idSector": "karnyz",
     "name": "Навислий карниз",
     "grade": "7c",
     "type": "sport",
@@ -71,7 +71,7 @@
   },
   {
     "id": "stina-1",
-    "sectorId": "stina-nad-vodoyu",
+    "idSector": "stina-nad-vodoyu",
     "name": "Ранкова стіна",
     "grade": "6a",
     "type": "sport",
@@ -81,7 +81,7 @@
   },
   {
     "id": "denesh-1",
-    "sectorId": "denesh-main",
+    "idSector": "denesh-main",
     "name": "Гранітна плита",
     "grade": "6a",
     "type": "sport",
@@ -91,7 +91,7 @@
   },
   {
     "id": "aktove-1",
-    "sectorId": "aktove-canyon",
+    "idSector": "aktove-canyon",
     "name": "Над водоспадом",
     "grade": "6b",
     "type": "sport",

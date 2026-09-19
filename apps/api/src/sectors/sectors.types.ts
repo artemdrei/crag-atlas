@@ -5,7 +5,7 @@ export class SectorDto {
   id!: string;
 
   @ApiProperty()
-  regionId!: string;
+  idRegion!: string;
 
   @ApiProperty()
   name!: string;

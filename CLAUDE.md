@@ -138,7 +138,7 @@ regenerate.
 
 ## Security
 
-- Every Supabase mutation must validate ownership (`user_id`/RLS) — never
+- Every Supabase mutation must validate ownership (`id_user`/RLS) — never
   trust client-supplied IDs without server-side verification.
 - No `dangerouslySetInnerHTML`. User input reaching the DOM must be sanitized.
 - Supabase queries use parameterized SDK methods only — no string
@@ -156,8 +156,16 @@ Max two levels up (`../../x`). Deeper → use the `@web/*` alias.
 
 ## ID Naming
 
-- DB / API (snake_case): `id_user`, `id_route`, `id_crag`.
-- JS / TS (camelCase): `idUser`, `idRoute`, `idCrag`.
+**`id` always comes first — a trailing `Id`/`_id` is never allowed.**
+
+- DB (snake_case): `id_user`, `id_route`, `id_crag` — never `user_id`.
+- API payloads, DTOs, route params, JS/TS (camelCase): `idUser`, `idRoute`,
+  `idCrag` — never `userId`, `routeId`.
+- Applies to every layer and every artifact: Supabase columns, NestJS DTOs and
+  `@Param()` names, URL path params (`/regions/:idRegion`), React state, hook
+  arguments, test fixtures, JSON fixtures, docs.
+- The only exception is a bare `id` (a resource's own identifier) and
+  third-party names we don't own (`getElementById`, OpenAPI's `operationId`).
 
 ## Folder Naming
 

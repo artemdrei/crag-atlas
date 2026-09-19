@@ -6,7 +6,7 @@ import { apiGet } from '@web/shared/api';
 
 import type { Route } from '../entities';
 
-export const useApiGetRoutes = (sectorId: string) => {
+export const useApiGetRoutes = (idSector: string) => {
   const [routes, setRoutes] = useState<Route[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [failure, setFailure] = useState<Failure | null>(null);
@@ -19,7 +19,7 @@ export const useApiGetRoutes = (sectorId: string) => {
       setFailure(null);
 
       try {
-        const data = await apiGet<Route[]>(`/sectors/${sectorId}/routes`);
+        const data = await apiGet<Route[]>(`/sectors/${idSector}/routes`);
         if (!cancelled) setRoutes(data);
       } catch (err) {
         if (!cancelled) setFailure(toFailure(err));
@@ -33,7 +33,7 @@ export const useApiGetRoutes = (sectorId: string) => {
     return () => {
       cancelled = true;
     };
-  }, [sectorId]);
+  }, [idSector]);
 
   return { routes, isLoading, failure };
 };

@@ -6,7 +6,7 @@ import { apiGet } from '@web/shared/api';
 
 import type { Route } from '../entities';
 
-export const useApiGetRoute = (routeId: string) => {
+export const useApiGetRoute = (idRoute: string) => {
   const [route, setRoute] = useState<Route | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [failure, setFailure] = useState<Failure | null>(null);
@@ -19,7 +19,7 @@ export const useApiGetRoute = (routeId: string) => {
       setFailure(null);
 
       try {
-        const data = await apiGet<Route>(`/routes/${routeId}`);
+        const data = await apiGet<Route>(`/routes/${idRoute}`);
         if (!cancelled) setRoute(data);
       } catch (err) {
         if (!cancelled) setFailure(toFailure(err));
@@ -33,7 +33,7 @@ export const useApiGetRoute = (routeId: string) => {
     return () => {
       cancelled = true;
     };
-  }, [routeId]);
+  }, [idRoute]);
 
   return { route, isLoading, failure };
 };

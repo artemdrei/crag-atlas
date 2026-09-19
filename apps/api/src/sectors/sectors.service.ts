@@ -6,14 +6,14 @@ import type { SectorDto } from './sectors.types';
 
 @Injectable()
 export class SectorsService {
-  findByRegion(regionId: string): SectorDto[] {
+  findByRegion(idRegion: string): SectorDto[] {
     const sectors = sectorsData.filter(
-      (sector) => sector.regionId === regionId
+      (sector) => sector.idRegion === idRegion
     );
 
     if (sectors.length === 0) {
       throw new NotFoundException(
-        `No sectors found for region "${regionId}"`,
+        `No sectors found for region "${idRegion}"`,
         'REGION_NOT_FOUND'
       );
     }

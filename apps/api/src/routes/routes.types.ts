@@ -5,7 +5,7 @@ export class RouteDto {
   id!: string;
 
   @ApiProperty()
-  sectorId!: string;
+  idSector!: string;
 
   @ApiProperty()
   name!: string;

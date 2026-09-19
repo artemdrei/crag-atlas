@@ -1,7 +1,7 @@
 [
   {
     "id": "bastion",
-    "regionId": "kamianets-podilskyi",
+    "idRegion": "kamianets-podilskyi",
     "name": "Бастіон",
     "description": "Вертикаль і навислі стіни, мізери. Сонце після 15:00.",
     "approachMinutes": 10,
@@ -10,7 +10,7 @@
   },
   {
     "id": "dzerkalo",
-    "regionId": "kamianets-podilskyi",
+    "idRegion": "kamianets-podilskyi",
     "name": "Дзеркало",
     "description": "Пологі плити, багато легких ліній для розкатки.",
     "approachMinutes": 4,
@@ -19,7 +19,7 @@
   },
   {
     "id": "karnyz",
-    "regionId": "kamianets-podilskyi",
+    "idRegion": "kamianets-podilskyi",
     "name": "Карниз",
     "description": "Сильне навислення, тінь. Сухо після дощу.",
     "approachMinutes": 18,
@@ -28,7 +28,7 @@
   },
   {
     "id": "stina-nad-vodoyu",
-    "regionId": "kamianets-podilskyi",
+    "idRegion": "kamianets-podilskyi",
     "name": "Стіна над водою",
     "description": "Вихід просто над річкою, ранкове сонце.",
     "approachMinutes": 12,
@@ -37,7 +37,7 @@
   },
   {
     "id": "denesh-main",
-    "regionId": "denesh",
+    "idRegion": "denesh",
     "name": "Головний сектор",
     "description": "Гранітні плити, стабільна тінь у другій половині дня.",
     "approachMinutes": 15,
@@ -46,7 +46,7 @@
   },
   {
     "id": "aktove-canyon",
-    "regionId": "aktove",
+    "idRegion": "aktove",
     "name": "Каньйон",
     "description": "Довгі маршрути над водою, потрібна страховка на спуску.",
     "approachMinutes": 20,

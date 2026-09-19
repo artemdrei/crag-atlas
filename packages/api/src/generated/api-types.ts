@@ -36,7 +36,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/regions/{regionId}/sectors": {
+    "/regions/{idRegion}/sectors": {
         parameters: {
             query?: never;
             header?: never;
@@ -52,7 +52,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/sectors/{sectorId}/routes": {
+    "/sectors/{idSector}/routes": {
         parameters: {
             query?: never;
             header?: never;
@@ -68,7 +68,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/routes/{routeId}": {
+    "/routes/{idRoute}": {
         parameters: {
             query?: never;
             header?: never;
@@ -99,7 +99,7 @@ export interface components {
         };
         SectorDto: {
             id: string;
-            regionId: string;
+            idRegion: string;
             name: string;
             description: string;
             approachMinutes: number;
@@ -108,7 +108,7 @@ export interface components {
         };
         RouteDto: {
             id: string;
-            sectorId: string;
+            idSector: string;
             name: string;
             grade: string;
             /** @enum {string} */
@@ -167,7 +167,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                regionId: string;
+                idRegion: string;
             };
             cookie?: never;
         };
@@ -188,7 +188,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                sectorId: string;
+                idSector: string;
             };
             cookie?: never;
         };
@@ -209,7 +209,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                routeId: string;
+                idRoute: string;
             };
             cookie?: never;
         };

@@ -8,9 +8,9 @@ import { RouteDto } from './routes.types';
 export class RouteController {
   constructor(private readonly routesService: RoutesService) {}
 
-  @Get(':routeId')
+  @Get(':idRoute')
   @ApiOkResponse({ type: RouteDto })
-  findOne(@Param('routeId') routeId: string): RouteDto {
-    return this.routesService.findOne(routeId);
+  findOne(@Param('idRoute') idRoute: string): RouteDto {
+    return this.routesService.findOne(idRoute);
   }
 }

@@ -1,17 +1,18 @@
 export const ROUTES = {
   INDEX: '/',
-  REGION: '/regions/:regionId',
-  SECTOR: '/regions/:regionId/sectors/:sectorId',
-  ROUTE_DETAIL: '/regions/:regionId/sectors/:sectorId/routes/:routeId'
+  LOGIN: '/login',
+  REGION: '/regions/:idRegion',
+  SECTOR: '/regions/:idRegion/sectors/:idSector',
+  ROUTE_DETAIL: '/regions/:idRegion/sectors/:idSector/routes/:idRoute'
 } as const;
 
-export const buildRegionPath = (regionId: string) => `/regions/${regionId}`;
+export const buildRegionPath = (idRegion: string) => `/regions/${idRegion}`;
 
-export const buildSectorPath = (regionId: string, sectorId: string) =>
-  `/regions/${regionId}/sectors/${sectorId}`;
+export const buildSectorPath = (idRegion: string, idSector: string) =>
+  `/regions/${idRegion}/sectors/${idSector}`;
 
 export const buildRoutePath = (
-  regionId: string,
-  sectorId: string,
-  routeId: string
-) => `/regions/${regionId}/sectors/${sectorId}/routes/${routeId}`;
+  idRegion: string,
+  idSector: string,
+  idRoute: string
+) => `/regions/${idRegion}/sectors/${idSector}/routes/${idRoute}`;

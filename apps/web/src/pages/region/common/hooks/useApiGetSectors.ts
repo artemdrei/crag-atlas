@@ -6,7 +6,7 @@ import { apiGet } from '@web/shared/api';
 
 import type { Sector } from '../entities';
 
-export const useApiGetSectors = (regionId: string) => {
+export const useApiGetSectors = (idRegion: string) => {
   const [sectors, setSectors] = useState<Sector[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [failure, setFailure] = useState<Failure | null>(null);
@@ -19,7 +19,7 @@ export const useApiGetSectors = (regionId: string) => {
       setFailure(null);
 
       try {
-        const data = await apiGet<Sector[]>(`/regions/${regionId}/sectors`);
+        const data = await apiGet<Sector[]>(`/regions/${idRegion}/sectors`);
         if (!cancelled) setSectors(data);
       } catch (err) {
         if (!cancelled) setFailure(toFailure(err));
@@ -33,7 +33,7 @@ export const useApiGetSectors = (regionId: string) => {
     return () => {
       cancelled = true;
     };
-  }, [regionId]);
+  }, [idRegion]);
 
   return { sectors, isLoading, failure };
 };

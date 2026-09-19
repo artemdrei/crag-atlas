@@ -4,13 +4,13 @@ import { ApiOkResponse } from '@nestjs/swagger';
 import { SectorsService } from './sectors.service';
 import { SectorDto } from './sectors.types';
 
-@Controller('regions/:regionId/sectors')
+@Controller('regions/:idRegion/sectors')
 export class SectorsController {
   constructor(private readonly sectorsService: SectorsService) {}
 
   @Get()
   @ApiOkResponse({ type: SectorDto, isArray: true })
-  findByRegion(@Param('regionId') regionId: string): SectorDto[] {
-    return this.sectorsService.findByRegion(regionId);
+  findByRegion(@Param('idRegion') idRegion: string): SectorDto[] {
+    return this.sectorsService.findByRegion(idRegion);
   }
 }

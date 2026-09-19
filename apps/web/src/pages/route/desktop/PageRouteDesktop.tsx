@@ -10,12 +10,12 @@ import { ApiFeedback } from '@web/shared/ui';
 import { RouteDetails, useApiGetRoute } from '../common';
 
 export const PageRouteDesktop = () => {
-  const { regionId = '', sectorId = '', routeId = '' } = useParams();
-  const { route, isLoading, failure } = useApiGetRoute(routeId);
+  const { idRegion = '', idSector = '', idRoute = '' } = useParams();
+  const { route, isLoading, failure } = useApiGetRoute(idRoute);
 
   return (
     <PageStyled spacing={3}>
-      <Link to={buildSectorPath(regionId, sectorId)}>
+      <Link to={buildSectorPath(idRegion, idSector)}>
         <Trans>Back to routes</Trans>
       </Link>
       <ApiFeedback

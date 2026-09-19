@@ -35,12 +35,12 @@
         "tags": ["Regions"]
       }
     },
-    "/regions/{regionId}/sectors": {
+    "/regions/{idRegion}/sectors": {
       "get": {
         "operationId": "SectorsController_findByRegion",
         "parameters": [
           {
-            "name": "regionId",
+            "name": "idRegion",
             "required": true,
             "in": "path",
             "schema": {
@@ -66,12 +66,12 @@
         "tags": ["Sectors"]
       }
     },
-    "/sectors/{sectorId}/routes": {
+    "/sectors/{idSector}/routes": {
       "get": {
         "operationId": "RoutesController_findBySector",
         "parameters": [
           {
-            "name": "sectorId",
+            "name": "idSector",
             "required": true,
             "in": "path",
             "schema": {
@@ -97,12 +97,12 @@
         "tags": ["Routes"]
       }
     },
-    "/routes/{routeId}": {
+    "/routes/{idRoute}": {
       "get": {
         "operationId": "RouteController_findOne",
         "parameters": [
           {
-            "name": "routeId",
+            "name": "idRoute",
             "required": true,
             "in": "path",
             "schema": {
@@ -177,7 +177,7 @@
           "id": {
             "type": "string"
           },
-          "regionId": {
+          "idRegion": {
             "type": "string"
           },
           "name": {
@@ -198,7 +198,7 @@
         },
         "required": [
           "id",
-          "regionId",
+          "idRegion",
           "name",
           "description",
           "approachMinutes",
@@ -212,7 +212,7 @@
           "id": {
             "type": "string"
           },
-          "sectorId": {
+          "idSector": {
             "type": "string"
           },
           "name": {
@@ -237,7 +237,7 @@
         },
         "required": [
           "id",
-          "sectorId",
+          "idSector",
           "name",
           "grade",
           "type",
