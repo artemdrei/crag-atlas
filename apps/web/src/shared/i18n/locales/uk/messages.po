@@ -2,9 +2,127 @@ msgid ""
 msgstr ""
 "POT-Creation-Date: 2026-09-18 00:00+0000\n"
 "Language: uk\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Content-Type: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
 
-msgid "app.title"
-msgstr "crag-atlas"
+#~ msgid "app.title"
+#~ msgstr "crag-atlas"
 
-msgid "home.heading"
-msgstr "Знайди свій наступний маршрут"
+#: src/pages/region/desktop/PageRegionDesktop.tsx:23
+#: src/pages/region/mobile/PageRegionMobile.tsx:23
+msgid "Back to regions"
+msgstr ""
+
+#: src/pages/route/desktop/PageRouteDesktop.tsx:19
+#: src/pages/route/mobile/PageRouteMobile.tsx:19
+msgid "Back to routes"
+msgstr ""
+
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:23
+#: src/pages/sector/mobile/PageSectorMobile.tsx:23
+msgid "Back to sectors"
+msgstr ""
+
+#: src/pages/login/common/ui/EmailOtpForm.tsx:75
+#: src/pages/login/common/ui/EmailOtpForm.tsx:114
+msgid "Continue"
+msgstr "Продовжити"
+
+#: src/pages/login/common/ui/LoginCard.tsx:37
+msgid "Continue with Google"
+msgstr "Продовжити з Google"
+
+#: src/app/mobile/layout/AppBottomNavigation.tsx:22
+msgid "Crags"
+msgstr ""
+
+#: src/pages/login/common/ui/EmailOtpForm.tsx:62
+msgid "Enter code"
+msgstr "Введіть код"
+
+#: src/pages/login/common/ui/EmailOtpForm.tsx:102
+msgid "Enter email address"
+msgstr "Введіть email"
+
+#: src/pages/home/common/ui/HomeHeading.tsx:6
+msgid "Find your next climb"
+msgstr ""
+
+#~ msgid "home.heading"
+#~ msgstr "Знайди свій наступний маршрут"
+
+#: src/pages/home/desktop/PageHomeDesktop.tsx:28
+#: src/pages/home/mobile/PageHomeMobile.tsx:28
+msgid "Loading regions…"
+msgstr ""
+
+#: src/pages/route/desktop/PageRouteDesktop.tsx:24
+#: src/pages/route/mobile/PageRouteMobile.tsx:24
+msgid "Loading route…"
+msgstr ""
+
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:29
+#: src/pages/sector/mobile/PageSectorMobile.tsx:29
+msgid "Loading routes…"
+msgstr ""
+
+#: src/pages/region/desktop/PageRegionDesktop.tsx:29
+#: src/pages/region/mobile/PageRegionMobile.tsx:29
+msgid "Loading sectors…"
+msgstr ""
+
+#: src/app/mobile/layout/AppBottomNavigation.tsx:33
+msgid "Logbook"
+msgstr ""
+
+#: src/app/mobile/layout/AppBottomNavigation.tsx:28
+msgid "Map"
+msgstr ""
+
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:30
+msgid "My logbook"
+msgstr ""
+
+#: src/pages/login/common/ui/LoginCard.tsx:41
+msgid "or"
+msgstr "або"
+
+#: src/app/mobile/layout/AppBottomNavigation.tsx:38
+msgid "Profile"
+msgstr ""
+
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:27
+msgid "Regions"
+msgstr ""
+
+#: src/pages/login/common/ui/EmailOtpForm.tsx:85
+msgid "Resend code"
+msgstr "Надіслати код ще раз"
+
+#: src/pages/login/common/ui/EmailOtpForm.tsx:114
+msgid "Sending code…"
+msgstr "Надсилаємо код…"
+
+#: src/pages/login/common/ui/LoginCard.tsx:25
+msgid "Sign in to log your sends"
+msgstr "Увійдіть, щоб відмічати пролази"
+
+#: src/pages/login/common/ui/EmailOtpForm.tsx:89
+msgid "Use another email"
+msgstr "Інший email"
+
+#: src/pages/login/common/ui/EmailOtpForm.tsx:75
+msgid "Verifying…"
+msgstr "Перевіряємо…"
+
+#: src/pages/login/common/ui/EmailOtpForm.tsx:53
+#. placeholder {0}: email.trim()
+#: src/pages/login/common/ui/EmailOtpForm.tsx:53
+msgid "We sent a code to <0>{0}</0>"
+msgstr "Ми надіслали код на <0>{0}</0>"
