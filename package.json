@@ -6,9 +6,8 @@
   "scripts": {
     "format": "biome format --write .",
     "format:check": "biome format .",
-    "lint": "biome lint .",
+    "lint": "biome check .",
     "lint:fix": "biome check --write .",
-    "check": "biome check .",
     "test": "turbo run test",
     "dev": "turbo run dev --filter=web --filter=api",
     "dev:web": "turbo run dev --filter=web",
