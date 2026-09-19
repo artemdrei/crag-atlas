@@ -33,14 +33,24 @@ const throwResponseFailure = async (
 };
 
 export const apiPost = <T>(path: string, payload: unknown): Promise<T> =>
-  wrapApiCall(`apiPost:${path}`, async () => {
+  sendJson<T>('POST', path, payload);
+
+export const apiPatch = <T>(path: string, payload: unknown): Promise<T> =>
+  sendJson<T>('PATCH', path, payload);
+
+const sendJson = <T>(
+  method: 'POST' | 'PATCH',
+  path: string,
+  payload: unknown
+): Promise<T> =>
+  wrapApiCall(`api${method}:${path}`, async () => {
     const response = await fetch(`${API_BASE_URL}${path}`, {
-      method: 'POST',
+      method,
       headers: await buildHeaders(),
       body: JSON.stringify(payload)
     });
 
-    if (!response.ok) await throwResponseFailure(response, `POST ${path}`);
+    if (!response.ok) await throwResponseFailure(response, `${method} ${path}`);
 
     return response.json() as Promise<T>;
   });

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import { Trans, useLingui } from '@lingui/react/macro';
@@ -6,6 +7,7 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { buildSectorPath, ROUTES } from '@web/app/router/routes';
+import { EditToggleButton, RegionEditForm } from '@web/features/catalogEdit';
 import { ApiFeedback, PageBreadcrumbs } from '@web/shared/ui';
 
 import { SectorsList, useApiGetRegion, useApiGetSectors } from '../common';
@@ -15,6 +17,7 @@ export const PageRegionDesktop = () => {
   const { idRegion = '' } = useParams();
   const navigate = useNavigate();
   const { region } = useApiGetRegion(idRegion);
+  const [isEditing, setIsEditing] = useState(false);
   const { sectors, isLoading, failure } = useApiGetSectors(idRegion);
 
   return (
@@ -25,7 +28,13 @@ export const PageRegionDesktop = () => {
           { label: region?.name ?? '…' }
         ]}
       />
-      <Typography variant="h4">{region?.name ?? '…'}</Typography>
+      <HeaderRowStyled>
+        <Typography variant="h4">{region?.name ?? '…'}</Typography>
+        {!isEditing && <EditToggleButton onClick={() => setIsEditing(true)} />}
+      </HeaderRowStyled>
+      {isEditing && region && (
+        <RegionEditForm region={region} onClose={() => setIsEditing(false)} />
+      )}
       <ApiFeedback
         isLoading={isLoading}
         failure={failure}
@@ -38,6 +47,12 @@ export const PageRegionDesktop = () => {
     </PageStyled>
   );
 };
+
+const HeaderRowStyled = styled('div')`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing(2)};
+`;
 
 const PageStyled = styled(Stack)`
   padding: ${({ theme }) => theme.spacing(4)};

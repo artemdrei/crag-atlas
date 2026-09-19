@@ -11,5 +11,6 @@ export const QUERY_KEYS = {
   sector: (idSector: string) => ['sectors', idSector] as const,
   routes: (idSector: string) => ['sectors', idSector, 'routes'] as const,
   route: (idRoute: string) => ['routes', idRoute] as const,
-  ticks: () => ['ticks'] as const
+  ticks: () => ['ticks'] as const,
+  me: () => ['me'] as const
 } as const;

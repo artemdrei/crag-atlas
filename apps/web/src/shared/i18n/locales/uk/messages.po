@@ -19,6 +19,10 @@ msgstr "{0} спроб"
 #~ msgid "app.title"
 #~ msgstr "crag-atlas"
 
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:60
+msgid "Approach, minutes"
+msgstr "Підхід, хв"
+
 #: src/features/logTick/desktop/LogTickDialog.tsx:24
 #: src/features/logTick/mobile/LogTickSheet.tsx:24
 msgid "Ascent logged"
@@ -47,6 +51,11 @@ msgstr "Спроби"
 #~ msgid "Back to sectors"
 #~ msgstr ""
 
+#: src/features/catalogEdit/common/ui/RouteEditForm.tsx:92
+msgid "Bolts"
+msgstr "Болти"
+
+#: src/features/catalogEdit/common/ui/EditActions.tsx:13
 #: src/features/logTick/common/ui/TickForm.tsx:88
 msgid "Cancel"
 msgstr "Скасувати"
@@ -72,6 +81,15 @@ msgstr "Темна"
 msgid "Date"
 msgstr "Дата"
 
+#: src/features/catalogEdit/common/ui/RouteEditForm.tsx:101
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:53
+msgid "Description"
+msgstr "Опис"
+
+#: src/features/catalogEdit/common/ui/EditToggleButton.tsx:19
+msgid "Edit"
+msgstr "Редагувати"
+
 #: src/pages/login/common/ui/EmailOtpForm.tsx:62
 msgid "Enter code"
 msgstr "Введіть код"
@@ -88,12 +106,20 @@ msgstr ""
 msgid "Flash"
 msgstr "Флеш"
 
+#: src/features/catalogEdit/common/ui/RouteEditForm.tsx:64
+msgid "Grade"
+msgstr "Категорія"
+
 #~ msgid "home.heading"
 #~ msgstr "Знайди свій наступний маршрут"
 
 #: src/pages/profile/common/ui/LocaleSetting.tsx:20
 msgid "Language"
 msgstr "Мова"
+
+#: src/features/catalogEdit/common/ui/RouteEditForm.tsx:84
+msgid "Length, m"
+msgstr "Довжина, м"
 
 #: src/pages/profile/common/ui/ThemeModeSetting.tsx:23
 msgid "Light"
@@ -109,18 +135,18 @@ msgstr "Завантажуємо пролази…"
 msgid "Loading regions…"
 msgstr ""
 
-#: src/pages/route/desktop/PageRouteDesktop.tsx:37
-#: src/pages/route/mobile/PageRouteMobile.tsx:37
+#: src/pages/route/desktop/PageRouteDesktop.tsx:40
+#: src/pages/route/mobile/PageRouteMobile.tsx:41
 msgid "Loading route…"
 msgstr ""
 
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:37
-#: src/pages/sector/mobile/PageSectorMobile.tsx:37
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:51
+#: src/pages/sector/mobile/PageSectorMobile.tsx:52
 msgid "Loading routes…"
 msgstr ""
 
-#: src/pages/region/desktop/PageRegionDesktop.tsx:32
-#: src/pages/region/mobile/PageRegionMobile.tsx:32
+#: src/pages/region/desktop/PageRegionDesktop.tsx:41
+#: src/pages/region/mobile/PageRegionMobile.tsx:42
 msgid "Loading sectors…"
 msgstr ""
 
@@ -145,6 +171,12 @@ msgstr ""
 msgid "My logbook"
 msgstr "Мій логбук"
 
+#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:36
+#: src/features/catalogEdit/common/ui/RouteEditForm.tsx:58
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:45
+msgid "Name"
+msgstr "Назва"
+
 #: src/pages/logbook/common/ui/TicksList.tsx:17
 msgid "No ascents logged yet."
 msgstr "Поки що жодного пролазу."
@@ -168,17 +200,21 @@ msgstr "або"
 msgid "Profile"
 msgstr "Профіль"
 
+#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:42
+msgid "Province"
+msgstr "Область"
+
 #: src/shared/ui/AscentStyleLabel.tsx:27
 msgid "Redpoint"
 msgstr "Редпоінт"
 
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:34
-#: src/pages/region/desktop/PageRegionDesktop.tsx:24
-#: src/pages/region/mobile/PageRegionMobile.tsx:24
-#: src/pages/route/desktop/PageRouteDesktop.tsx:25
-#: src/pages/route/mobile/PageRouteMobile.tsx:25
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:28
-#: src/pages/sector/mobile/PageSectorMobile.tsx:28
+#: src/pages/region/desktop/PageRegionDesktop.tsx:27
+#: src/pages/region/mobile/PageRegionMobile.tsx:28
+#: src/pages/route/desktop/PageRouteDesktop.tsx:28
+#: src/pages/route/mobile/PageRouteMobile.tsx:29
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:31
+#: src/pages/sector/mobile/PageSectorMobile.tsx:32
 msgid "Regions"
 msgstr "Регіони"
 
@@ -190,6 +226,15 @@ msgstr "Надіслати код ще раз"
 msgid "Retro flash"
 msgstr "Ретрофлеш"
 
+#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:48
+msgid "Rock type"
+msgstr "Порода"
+
+#: src/features/catalogEdit/common/ui/EditActions.tsx:16
+msgid "Save"
+msgstr "Зберегти"
+
+#: src/features/catalogEdit/common/ui/EditActions.tsx:16
 #: src/features/logTick/common/ui/TickForm.tsx:91
 msgid "Saving…"
 msgstr "Зберігаємо…"
@@ -221,6 +266,10 @@ msgstr "Тема"
 #: src/shared/ui/AscentStyleLabel.tsx:28
 msgid "Top rope"
 msgstr "Верхня страховка"
+
+#: src/features/catalogEdit/common/ui/RouteEditForm.tsx:71
+msgid "Type"
+msgstr "Тип"
 
 #: src/pages/login/common/ui/EmailOtpForm.tsx:89
 msgid "Use another email"

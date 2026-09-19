@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import { Trans, useLingui } from '@lingui/react/macro';
@@ -10,6 +11,7 @@ import {
   buildRoutePath,
   ROUTES
 } from '@web/app/router/routes';
+import { EditToggleButton, SectorEditForm } from '@web/features/catalogEdit';
 import { ApiFeedback, PageBreadcrumbs } from '@web/shared/ui';
 
 import { RoutesList, useApiGetRoutes, useApiGetSector } from '../common';
@@ -19,6 +21,7 @@ export const PageSectorMobile = () => {
   const { idRegion = '', idSector = '' } = useParams();
   const navigate = useNavigate();
   const { sector } = useApiGetSector(idSector);
+  const [isEditing, setIsEditing] = useState(false);
   const { routes, isLoading, failure } = useApiGetRoutes(idSector);
 
   return (
@@ -31,7 +34,18 @@ export const PageSectorMobile = () => {
           { label: sector?.name ?? '…' }
         ]}
       />
-      <Typography variant="h5">{sector?.name ?? '…'}</Typography>
+      <HeaderRowStyled>
+        <Typography variant="h5">{sector?.name ?? '…'}</Typography>
+        {!isEditing && <EditToggleButton onClick={() => setIsEditing(true)} />}
+      </HeaderRowStyled>
+      {isEditing && sector && (
+        <SectorEditForm sector={sector} onClose={() => setIsEditing(false)} />
+      )}
+      {!isEditing && sector?.description && (
+        <Typography variant="body2" color="text.secondary">
+          {sector.description}
+        </Typography>
+      )}
       <ApiFeedback
         isLoading={isLoading}
         failure={failure}
@@ -46,6 +60,12 @@ export const PageSectorMobile = () => {
     </PageStyled>
   );
 };
+
+const HeaderRowStyled = styled('div')`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing(2)};
+`;
 
 const PageStyled = styled(Stack)`
   padding: ${({ theme }) => theme.spacing(2)};

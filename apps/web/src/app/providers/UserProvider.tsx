@@ -1,7 +1,9 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
+import type { Me } from '@crag-atlas/api';
 import type { Session } from '@supabase/supabase-js';
 
+import { apiGet, QUERY_KEYS, useApiQuery } from '@web/shared/api';
 import { supabase } from '@web/shared/supabase';
 
 export type Role = 'guest' | 'user' | 'admin';
@@ -35,9 +37,16 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     return () => subscription.unsubscribe();
   }, []);
 
+  // The role lives in the database, next to the RLS policies that enforce it —
+  // never in a flag the client could set for itself.
+  const { data: me } = useApiQuery({
+    queryKey: QUERY_KEYS.me(),
+    queryFn: () => apiGet<Me>('/me'),
+    enabled: !!session
+  });
+
   const value = useMemo(() => {
-    // No role system in the DB yet — an authenticated user is always 'user'.
-    const role: Role = session ? 'user' : 'guest';
+    const role: Role = me?.isAdmin ? 'admin' : session ? 'user' : 'guest';
 
     return {
       role,
@@ -49,7 +58,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         await supabase.auth.signOut();
       }
     };
-  }, [session, isLoading]);
+  }, [session, isLoading, me]);
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useParams } from 'react-router';
 
 import { Trans, useLingui } from '@lingui/react/macro';
@@ -9,6 +10,7 @@ import {
   buildSectorPath,
   ROUTES
 } from '@web/app/router/routes';
+import { EditToggleButton, RouteEditForm } from '@web/features/catalogEdit';
 import { ApiFeedback, PageBreadcrumbs } from '@web/shared/ui';
 
 import { LogTickButton, RouteDetails, useApiGetRoute } from '../common';
@@ -17,6 +19,7 @@ export const PageRouteDesktop = () => {
   const { t } = useLingui();
   const { idRegion = '', idSector = '', idRoute = '' } = useParams();
   const { route, isLoading, failure } = useApiGetRoute(idRoute);
+  const [isEditing, setIsEditing] = useState(false);
 
   return (
     <PageStyled spacing={3}>
@@ -36,15 +39,28 @@ export const PageRouteDesktop = () => {
         failure={failure}
         loadingLabel={<Trans>Loading route…</Trans>}
       />
-      {route && (
+      {route && !isEditing && (
         <>
-          <RouteDetails route={route} />
+          <HeaderRowStyled>
+            <RouteDetails route={route} />
+            <EditToggleButton onClick={() => setIsEditing(true)} />
+          </HeaderRowStyled>
           <LogTickButton idRoute={route.id} />
         </>
+      )}
+      {route && isEditing && (
+        <RouteEditForm route={route} onClose={() => setIsEditing(false)} />
       )}
     </PageStyled>
   );
 };
+
+const HeaderRowStyled = styled('div')`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: ${({ theme }) => theme.spacing(2)};
+`;
 
 const PageStyled = styled(Stack)`
   padding: ${({ theme }) => theme.spacing(4)};
