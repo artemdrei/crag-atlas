@@ -9,11 +9,13 @@ import {
 import {
   playgroundDesktopRegistrations,
   playgroundMobileRegistrations
-} from '@web/pages/playground';
+} from '@web/pages/playground/registrations';
 
 const AppMobile = lazy(() => import('./mobile/AppMobile'));
 const AppDesktop = lazy(() => import('./desktop/AppDesktop'));
 
+// The playground registrations are empty in a production build — the gate
+// lives in their own module, next to the imports it has to drop.
 const desktopRegistrations = [
   ...logTickDesktopRegistrations,
   ...playgroundDesktopRegistrations

@@ -1,22 +1,9 @@
-import { lazy } from 'react';
-
-import type { ModalRegistration } from '@web/app/providers';
-
-import './types';
+// Dev-only surface: everything here is loaded lazily and gated by
+// import.meta.env.DEV at the call sites, so a production build drops it.
 
 export { PagePlaygroundDesktop } from './desktop/PagePlaygroundDesktop';
 export { PagePlaygroundMobile } from './mobile/PagePlaygroundMobile';
-
-export const playgroundDesktopRegistrations: ModalRegistration[] = [
-  {
-    id: 'PLAYGROUND_DEMO',
-    Component: lazy(() => import('./desktop/PlaygroundDemoDialog'))
-  }
-];
-
-export const playgroundMobileRegistrations: ModalRegistration[] = [
-  {
-    id: 'PLAYGROUND_DEMO',
-    Component: lazy(() => import('./mobile/PlaygroundDemoSheet'))
-  }
-];
+export {
+  playgroundDesktopRegistrations,
+  playgroundMobileRegistrations
+} from './registrations';

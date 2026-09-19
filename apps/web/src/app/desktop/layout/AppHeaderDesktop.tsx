@@ -42,6 +42,16 @@ export const AppHeaderDesktop = () => {
           <Trans>My logbook</Trans>
         </Button>
         <SpacerStyled />
+        {/* Dev-only shortcut: the route itself does not exist in a build. */}
+        {import.meta.env.DEV && (
+          <Button
+            color="inherit"
+            size="small"
+            onClick={() => navigate(ROUTES.PLAYGROUND)}
+          >
+            Playground
+          </Button>
+        )}
         {!isLoading &&
           (isAuthenticated ? (
             <IconButton
