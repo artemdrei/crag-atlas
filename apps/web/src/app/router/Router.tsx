@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router';
+import { Navigate, useLocation } from 'react-router';
 
 import { AppLayoutDesktop } from '@web/app/desktop/layout';
 import { AppLayoutMobile } from '@web/app/mobile/layout';
@@ -18,10 +18,19 @@ export const ProtectedRoute = ({
   role: Role;
   children: React.ReactNode;
 }) => {
-  const { hasRole } = useUser();
+  const { hasRole, isLoading } = useUser();
+  const location = useLocation();
+
+  if (isLoading) return null;
 
   if (!hasRole(role)) {
-    return <Navigate to={ROUTES.INDEX} replace />;
+    return (
+      <Navigate
+        to={ROUTES.LOGIN}
+        replace
+        state={{ from: location.pathname + location.search }}
+      />
+    );
   }
 
   return children;

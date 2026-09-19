@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { Route, Routes } from 'react-router';
 
 import { PageHomeDesktop } from '@web/pages/home';
+import { PageLoginDesktop } from '@web/pages/login';
 import { PageRegionDesktop } from '@web/pages/region';
 import { PageRouteDesktop } from '@web/pages/route';
 import { PageSectorDesktop } from '@web/pages/sector';
@@ -14,6 +15,7 @@ const AppDesktop = () => (
   <ErrorBoundary>
     <Suspense>
       <Routes>
+        <Route path={ROUTES.LOGIN} element={<PageLoginDesktop />} />
         <Route element={<LayoutWithSidebar />}>
           <Route path={ROUTES.INDEX} element={<PageHomeDesktop />} />
           <Route path={ROUTES.REGION} element={<PageRegionDesktop />} />

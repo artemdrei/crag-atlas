@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { Route, Routes } from 'react-router';
 
 import { PageHomeMobile } from '@web/pages/home';
+import { PageLoginMobile } from '@web/pages/login';
 import { PageRegionMobile } from '@web/pages/region';
 import { PageRouteMobile } from '@web/pages/route';
 import { PageSectorMobile } from '@web/pages/sector';
@@ -14,6 +15,7 @@ const AppMobile = () => (
   <ErrorBoundary>
     <Suspense>
       <Routes>
+        <Route path={ROUTES.LOGIN} element={<PageLoginMobile />} />
         <Route element={<LayoutWithMobileBottomNavigation />}>
           <Route path={ROUTES.INDEX} element={<PageHomeMobile />} />
           <Route path={ROUTES.REGION} element={<PageRegionMobile />} />
