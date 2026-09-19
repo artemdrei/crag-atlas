@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 
 import { I18nProvider } from '@lingui/react';
+import { QueryClientProvider } from '@tanstack/react-query';
 
+import { queryClient } from '@web/shared/api';
 import { activateLocale, i18n, readStoredLocale } from '@web/shared/i18n/i18n';
 import { ThemeModeProvider } from '@web/shared/theme/ThemeModeProvider';
 
@@ -27,16 +29,18 @@ export const AppProviders = ({ modalRegistrations, children }: Props) => {
   if (!ready) return null;
 
   return (
-    <I18nProvider i18n={i18n}>
-      <ThemeModeProvider>
-        <AppToastProvider>
-          <UserProvider>
-            <ModalProvider registrations={modalRegistrations}>
-              {children}
-            </ModalProvider>
-          </UserProvider>
-        </AppToastProvider>
-      </ThemeModeProvider>
-    </I18nProvider>
+    <QueryClientProvider client={queryClient}>
+      <I18nProvider i18n={i18n}>
+        <ThemeModeProvider>
+          <AppToastProvider>
+            <UserProvider>
+              <ModalProvider registrations={modalRegistrations}>
+                {children}
+              </ModalProvider>
+            </UserProvider>
+          </AppToastProvider>
+        </ThemeModeProvider>
+      </I18nProvider>
+    </QueryClientProvider>
   );
 };

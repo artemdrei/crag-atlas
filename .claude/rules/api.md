@@ -6,20 +6,36 @@ paths:
 
 # API & Error Handling
 
-## Frontend hook naming
+## Frontend data fetching — TanStack Query, always
+
+**Every server read goes through TanStack Query. Hand-rolled
+`useState` + `useEffect` + `cancelled` fetching is forbidden** — it has no
+cache, so each mount refetches and the page flashes a placeholder it already
+had the data for.
 
 - Data-fetching hook: `useApiGet<Resource>.ts` (e.g. `useApiGetRegions.ts`),
-  never a bare `use<Resource>`.
-- Mutation hook: `useApi<Action><Resource>.ts` (e.g. `useApiCreateRoute.ts`).
-- One file = one hook. Return an object (`{ data, isLoading, error }`),
-  never a tuple.
-- Calls go through `shared/api` (`apiGet`/future `apiPost` etc.) — never a
-  raw `fetch()` in a hook.
-- **Async control flow**: `useEffect` can't take an `async` callback
-  directly, so declare an inner `async` function and call it immediately
-  inside the effect. Use `try/catch/finally` inside that function — never
-  `.then()/.catch()/.finally()` chains. Keep the `cancelled` flag pattern
-  for avoiding state updates after unmount.
+  never a bare `use<Resource>`. Mutation hook: `useApi<Action><Resource>.ts`.
+- One file = one hook. Return a named object (`{ regions, isLoading, failure }`),
+  never the raw query result and never a tuple — pages depend on that shape
+  and on `ApiFeedback` reading it.
+- Reads use `useApiQuery` (`shared/api/useApiQuery.ts`): it maps the query
+  result to `{ data, isLoading, failure }` and is the single place `toFailure`
+  runs. It takes `queryKey`/`queryFn`/`enabled` only — a hook that needs more
+  of react-query calls `useQuery` directly instead of growing the wrapper.
+- **Query keys live in `shared/api/queryKeys.ts`**, never next to their hook:
+  a mutation in one slice invalidates a query owned by another (logging a tick
+  refreshes the logbook) and cross-slice imports are banned, so `shared` is the
+  only place both sides may import from.
+- Mutations use `useMutation` + `queryClient.invalidateQueries` with the same
+  `QUERY_KEYS` entry. Success/failure toasts stay at the call site (see
+  `ui-feedback.md`).
+- Requests that need a session pass `enabled: isAuthenticated` — firing before
+  the session resolves is a guaranteed 401 the user cannot act on.
+- Client defaults live in `shared/api/queryClient.ts`: 5-minute `staleTime`,
+  no refetch on window focus, and no retry for `domain` failures (a 404 is an
+  answer, not a hiccup).
+- Calls go through `shared/api` (`apiGet`/`apiPost`) — never a raw `fetch()`
+  in a hook.
 
 ## Backend error model
 

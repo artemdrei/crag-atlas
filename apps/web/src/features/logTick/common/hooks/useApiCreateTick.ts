@@ -1,8 +1,7 @@
-import { useState } from 'react';
-
 import { resolveFailureMessage, toFailure } from '@crag-atlas/utils';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { apiPost } from '@web/shared/api';
+import { apiPost, QUERY_KEYS } from '@web/shared/api';
 import { toast } from '@web/shared/lib';
 
 import type { CreateTick, Tick } from '../entities';
@@ -12,19 +11,18 @@ export interface Params {
 }
 
 export const useApiCreateTick = ({ onCreated }: Params) => {
-  const [isPending, setIsPending] = useState(false);
+  const queryClient = useQueryClient();
 
-  const createTick = async (payload: CreateTick) => {
-    setIsPending(true);
+  const { isPending, mutate } = useMutation({
+    mutationFn: (payload: CreateTick) => apiPost<Tick>('/ticks', payload),
+    onSuccess: (tick) => {
+      // The logbook is another slice's query; its key lives in shared/api so
+      // both sides can name the same cache entry.
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ticks() });
+      onCreated(tick);
+    },
+    onError: (error) => toast.error(resolveFailureMessage(toFailure(error)))
+  });
 
-    try {
-      onCreated(await apiPost<Tick>('/ticks', payload));
-    } catch (err) {
-      toast.error(resolveFailureMessage(toFailure(err)));
-    } finally {
-      setIsPending(false);
-    }
-  };
-
-  return { isPending, createTick };
+  return { isPending, createTick: mutate };
 };

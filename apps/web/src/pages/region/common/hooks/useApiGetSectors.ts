@@ -1,39 +1,12 @@
-import { useEffect, useState } from 'react';
-
-import { type Failure, toFailure } from '@crag-atlas/utils';
-
-import { apiGet } from '@web/shared/api';
+import { apiGet, QUERY_KEYS, useApiQuery } from '@web/shared/api';
 
 import type { Sector } from '../entities';
 
 export const useApiGetSectors = (idRegion: string) => {
-  const [sectors, setSectors] = useState<Sector[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [failure, setFailure] = useState<Failure | null>(null);
+  const { data, isLoading, failure } = useApiQuery({
+    queryKey: QUERY_KEYS.sectors(idRegion),
+    queryFn: () => apiGet<Sector[]>(`/regions/${idRegion}/sectors`)
+  });
 
-  useEffect(() => {
-    let cancelled = false;
-
-    const fetchSectors = async () => {
-      setIsLoading(true);
-      setFailure(null);
-
-      try {
-        const data = await apiGet<Sector[]>(`/regions/${idRegion}/sectors`);
-        if (!cancelled) setSectors(data);
-      } catch (err) {
-        if (!cancelled) setFailure(toFailure(err));
-      } finally {
-        if (!cancelled) setIsLoading(false);
-      }
-    };
-
-    fetchSectors();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [idRegion]);
-
-  return { sectors, isLoading, failure };
+  return { sectors: data ?? [], isLoading, failure };
 };

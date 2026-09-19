@@ -1,36 +1,22 @@
-import { useEffect, useState } from 'react';
-
-import { type Failure, toFailure } from '@crag-atlas/utils';
-
-import { apiGet } from '@web/shared/api';
+import { useUser } from '@web/app/providers';
+import { apiGet, QUERY_KEYS, useApiQuery } from '@web/shared/api';
 
 import type { Tick } from '../entities';
 
 export const useApiGetTicks = () => {
-  const [ticks, setTicks] = useState<Tick[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [failure, setFailure] = useState<Failure | null>(null);
+  const { isAuthenticated, isLoading: isSessionLoading } = useUser();
 
-  useEffect(() => {
-    let cancelled = false;
+  const { data, isLoading, failure } = useApiQuery({
+    queryKey: QUERY_KEYS.ticks(),
+    queryFn: () => apiGet<Tick[]>('/ticks'),
+    // Without the session the request is a guaranteed 401; the page shows
+    // loading until it resolves rather than an error it cannot act on.
+    enabled: isAuthenticated
+  });
 
-    const fetchTicks = async () => {
-      try {
-        const data = await apiGet<Tick[]>('/ticks');
-        if (!cancelled) setTicks(data);
-      } catch (err) {
-        if (!cancelled) setFailure(toFailure(err));
-      } finally {
-        if (!cancelled) setIsLoading(false);
-      }
-    };
-
-    fetchTicks();
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  return { ticks, isLoading, failure };
+  return {
+    ticks: data ?? [],
+    isLoading: isSessionLoading || isLoading,
+    failure
+  };
 };
