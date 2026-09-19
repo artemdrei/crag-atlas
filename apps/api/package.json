@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "nest start --watch",
+    "dev": "PORT=4001 nest start --watch",
     "build": "nest build",
     "test": "vitest run",
     "gen:contracts": "ts-node scripts/generate-openapi.ts"

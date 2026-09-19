@@ -2,7 +2,7 @@ import { domainFailure, wrapApiCall } from '@crag-atlas/utils';
 
 import type { ErrorResponseBody } from './ErrorResponseBody';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000';
+const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:4001';
 
 export const apiGet = <T>(path: string): Promise<T> =>
   wrapApiCall(`apiGet:${path}`, async () => {
