@@ -18,3 +18,19 @@ export class NotFoundException extends AppException {
     Object.setPrototypeOf(this, NotFoundException.prototype);
   }
 }
+
+export class UnauthorizedException extends AppException {
+  constructor(message = 'Not authenticated', code = 'UNAUTHORIZED') {
+    super(message, 401, code);
+    this.name = 'UnauthorizedException';
+    Object.setPrototypeOf(this, UnauthorizedException.prototype);
+  }
+}
+
+export class ValidationException extends AppException {
+  constructor(message = 'Invalid request', code = 'VALIDATION_FAILED') {
+    super(message, 400, code);
+    this.name = 'ValidationException';
+    Object.setPrototypeOf(this, ValidationException.prototype);
+  }
+}

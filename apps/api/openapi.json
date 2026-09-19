@@ -124,6 +124,35 @@
         },
         "tags": ["Route"]
       }
+    },
+    "/ticks": {
+      "post": {
+        "operationId": "TicksController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTickDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TickDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Ticks"]
+      }
     }
   },
   "info": {
@@ -244,6 +273,90 @@
           "length",
           "boltsCount",
           "description"
+        ]
+      },
+      "CreateTickDto": {
+        "type": "object",
+        "properties": {
+          "idRoute": {
+            "type": "string"
+          },
+          "ascentStyle": {
+            "type": "string",
+            "enum": [
+              "onsight",
+              "flash",
+              "retro_flash",
+              "redpoint",
+              "toprope",
+              "attempt"
+            ]
+          },
+          "climbedAt": {
+            "type": "string",
+            "description": "ISO date; defaults to today"
+          },
+          "attempts": {
+            "type": "number",
+            "nullable": true
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": ["idRoute", "ascentStyle"]
+      },
+      "TickDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "idUser": {
+            "type": "string"
+          },
+          "idRoute": {
+            "type": "string"
+          },
+          "ascentStyle": {
+            "type": "string",
+            "enum": [
+              "onsight",
+              "flash",
+              "retro_flash",
+              "redpoint",
+              "toprope",
+              "attempt"
+            ]
+          },
+          "climbedAt": {
+            "type": "string",
+            "description": "ISO date, e.g. 2026-09-19"
+          },
+          "attempts": {
+            "type": "number",
+            "nullable": true
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "idUser",
+          "idRoute",
+          "ascentStyle",
+          "climbedAt",
+          "createdAt",
+          "updatedAt"
         ]
       }
     }

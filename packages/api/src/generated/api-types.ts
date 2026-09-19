@@ -84,6 +84,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/ticks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["TicksController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -116,6 +132,28 @@ export interface components {
             length: number;
             boltsCount: number;
             description: string;
+        };
+        CreateTickDto: {
+            idRoute: string;
+            /** @enum {string} */
+            ascentStyle: "onsight" | "flash" | "retro_flash" | "redpoint" | "toprope" | "attempt";
+            /** @description ISO date; defaults to today */
+            climbedAt?: string;
+            attempts?: number | null;
+            note?: string | null;
+        };
+        TickDto: {
+            id: string;
+            idUser: string;
+            idRoute: string;
+            /** @enum {string} */
+            ascentStyle: "onsight" | "flash" | "retro_flash" | "redpoint" | "toprope" | "attempt";
+            /** @description ISO date, e.g. 2026-09-19 */
+            climbedAt: string;
+            attempts?: number | null;
+            note?: string | null;
+            createdAt: string;
+            updatedAt: string;
         };
     };
     responses: never;
@@ -221,6 +259,29 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["RouteDto"];
+                };
+            };
+        };
+    };
+    TicksController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateTickDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TickDto"];
                 };
             };
         };

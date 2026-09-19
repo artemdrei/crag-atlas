@@ -1,11 +1,20 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 
 import { HealthModule } from './health/health.module';
 import { RegionsModule } from './regions/regions.module';
 import { RoutesModule } from './routes/routes.module';
 import { SectorsModule } from './sectors/sectors.module';
+import { TicksModule } from './ticks/ticks.module';
 
 @Module({
-  imports: [HealthModule, RegionsModule, SectorsModule, RoutesModule]
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    HealthModule,
+    RegionsModule,
+    SectorsModule,
+    RoutesModule,
+    TicksModule
+  ]
 })
 export class AppModule {}

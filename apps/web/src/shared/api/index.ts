@@ -1,1 +1,1 @@
-export { apiGet } from './httpClient';
+export { apiGet, apiPost } from './httpClient';
