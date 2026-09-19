@@ -18,9 +18,9 @@
     "gen:api": "pnpm --filter @crag-atlas/api gen:api"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.5",
-    "turbo": "^2.10.6",
-    "typescript": "^5.7.2"
+    "@biomejs/biome": "^2.5.14",
+    "turbo": "^2.11.2",
+    "typescript": "^7.0.2"
   },
   "engines": {
     "node": ">=24",
