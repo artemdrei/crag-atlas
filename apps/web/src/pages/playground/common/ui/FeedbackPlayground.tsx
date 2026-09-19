@@ -14,17 +14,8 @@ export const FeedbackPlayground = () => (
     <ApiFeedback
       isLoading={false}
       failure={domainFailure('ROUTE_NOT_FOUND', 'Route "nope" not found')}
-      loadingLabel=""
     />
-    <ApiFeedback
-      isLoading={false}
-      failure={networkFailure('fetch failed')}
-      loadingLabel=""
-    />
-    <ApiFeedback
-      isLoading={false}
-      failure={unknownFailure('boom')}
-      loadingLabel=""
-    />
+    <ApiFeedback isLoading={false} failure={networkFailure('fetch failed')} />
+    <ApiFeedback isLoading={false} failure={unknownFailure('boom')} />
   </PlaygroundSection>
 );

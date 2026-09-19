@@ -6,7 +6,8 @@ import Typography from '@mui/material/Typography';
 export interface Props {
   isLoading: boolean;
   failure: Failure | null;
-  loadingLabel: ReactNode;
+  /** Only read while loading — a caller that never loads can leave it out. */
+  loadingLabel?: ReactNode;
 }
 
 export const ApiFeedback = ({ isLoading, failure, loadingLabel }: Props) => {
