@@ -1,7 +1,8 @@
 import CardActionArea from '@mui/material/CardActionArea';
-import Chip from '@mui/material/Chip';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+
+import { GradeBadge } from '@web/shared/ui';
 
 import type { Sector } from '../entities';
 
@@ -18,7 +19,7 @@ export const SectorCard = ({ sector, onSelect }: Props) => (
         <Typography variant="subtitle1" fontWeight={700}>
           {sector.name}
         </Typography>
-        <Chip size="small" label={sector.gradeRange} />
+        <GradeBadge grade={sector.gradeRange} />
       </HeaderRowStyled>
       <Typography variant="body2" color="text.secondary">
         {sector.description}

@@ -1,7 +1,8 @@
 import CardActionArea from '@mui/material/CardActionArea';
-import Chip from '@mui/material/Chip';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+
+import { GradeBadge } from '@web/shared/ui';
 
 import type { Route } from '../entities';
 
@@ -16,7 +17,7 @@ export const RouteCard = ({ route, onSelect }: Props) => (
       <Typography variant="subtitle1" fontWeight={700}>
         {route.name}
       </Typography>
-      <Chip size="small" label={route.grade} />
+      <GradeBadge grade={route.grade} />
     </HeaderRowStyled>
     <Typography variant="body2" color="text.secondary">
       {route.description}

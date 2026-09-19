@@ -1,6 +1,7 @@
-import Chip from '@mui/material/Chip';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+
+import { GradeBadge } from '@web/shared/ui';
 
 import type { Route } from '../entities';
 
@@ -12,7 +13,7 @@ export const RouteDetails = ({ route }: Props) => (
   <ContainerStyled>
     <HeaderRowStyled>
       <Typography variant="h4">{route.name}</Typography>
-      <Chip label={route.grade} />
+      <GradeBadge grade={route.grade} />
     </HeaderRowStyled>
     <StatsRowStyled>
       <Typography variant="body2" color="text.secondary">

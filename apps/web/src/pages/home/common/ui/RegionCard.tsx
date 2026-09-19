@@ -1,7 +1,8 @@
 import CardActionArea from '@mui/material/CardActionArea';
-import Chip from '@mui/material/Chip';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+
+import { GradeBadge } from '@web/shared/ui';
 
 import type { Region } from '../entities';
 
@@ -21,7 +22,7 @@ export const RegionCard = ({ region, onSelect }: Props) => (
         {region.province} · {region.rockType}
       </Typography>
       <FooterRowStyled>
-        <Chip size="small" label={region.gradeRange} />
+        <GradeBadge grade={region.gradeRange} />
         <Typography variant="caption" color="text.secondary">
           {region.routeCount} routes · {region.sectorCount} sectors
         </Typography>
