@@ -1,5 +1,7 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 
+import { reporter, toFailure } from '@crag-atlas/utils';
+
 interface Props {
   children: ReactNode;
 }
@@ -15,8 +17,11 @@ export class ErrorBoundary extends Component<Props, State> {
     return { hasError: true };
   }
 
-  componentDidCatch(_error: Error, _info: ErrorInfo) {
-    // TODO: wire up error reporting (@crag-atlas/utils reporter) once it exists
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    reporter.error(toFailure(error), {
+      scope: 'ErrorBoundary',
+      componentStack: info.componentStack
+    });
   }
 
   handleReload = () => {
