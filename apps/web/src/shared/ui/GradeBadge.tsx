@@ -5,12 +5,13 @@ import type { GradeTone } from '@web/shared/theme/palette';
 
 export interface Props {
   /** A single grade ("7a+"), a range ("5a-8b") or anything else ("project"). */
-  grade: string;
+  grade?: string | null;
 }
 
-export const GradeBadge = ({ grade }: Props) => (
-  <ChipStyled size="small" label={grade} tone={resolveGradeTone(grade)} />
-);
+export const GradeBadge = ({ grade }: Props) =>
+  grade ? (
+    <ChipStyled size="small" label={grade} tone={resolveGradeTone(grade)} />
+  ) : null;
 
 // A range spans several levels, so colouring it by one of them would lie —
 // it gets the neutral tone, as does anything unreadable. Everything below 5
