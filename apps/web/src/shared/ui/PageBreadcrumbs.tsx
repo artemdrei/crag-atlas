@@ -11,11 +11,17 @@ export interface Crumb {
 
 export interface Props {
   items: Crumb[];
+  /** Above this many crumbs the head collapses into an expandable "…". */
+  maxItems?: number;
 }
 
 /** Ids in the URL are uuids, so the trail is the only place a name appears. */
-export const PageBreadcrumbs = ({ items }: Props) => (
-  <Breadcrumbs>
+export const PageBreadcrumbs = ({ items, maxItems }: Props) => (
+  <Breadcrumbs
+    maxItems={maxItems}
+    itemsBeforeCollapse={0}
+    itemsAfterCollapse={2}
+  >
     {items.map((item) =>
       item.to ? (
         <LinkStyled key={item.label} to={item.to}>

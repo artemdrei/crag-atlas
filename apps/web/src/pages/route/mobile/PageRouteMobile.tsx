@@ -21,6 +21,7 @@ export const PageRouteMobile = () => {
   return (
     <PageStyled spacing={2}>
       <PageBreadcrumbs
+        maxItems={2}
         items={[
           { label: t`Regions`, to: ROUTES.INDEX },
           { label: route?.regionName ?? '…', to: buildRegionPath(idRegion) },

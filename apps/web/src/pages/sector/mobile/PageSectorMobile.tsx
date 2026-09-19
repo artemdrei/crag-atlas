@@ -24,6 +24,7 @@ export const PageSectorMobile = () => {
   return (
     <PageStyled spacing={2}>
       <PageBreadcrumbs
+        maxItems={2}
         items={[
           { label: t`Regions`, to: ROUTES.INDEX },
           { label: sector?.regionName ?? '…', to: buildRegionPath(idRegion) },
