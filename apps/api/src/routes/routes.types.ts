@@ -39,6 +39,26 @@ export class RouteDto {
   })
   rating?: number | null;
 
+  @ApiProperty({ type: Number, required: false, nullable: true })
+  ascentsCount?: number | null;
+
+  @ApiProperty({ type: Number, required: false, nullable: true })
+  onsightCount?: number | null;
+
+  @ApiProperty({
+    type: Number,
+    required: false,
+    nullable: true,
+    description: 'Votes saying the grade is soft'
+  })
+  votesSoft?: number | null;
+
+  @ApiProperty({ type: Number, required: false, nullable: true })
+  votesNeutral?: number | null;
+
+  @ApiProperty({ type: Number, required: false, nullable: true })
+  votesHard?: number | null;
+
   @ApiProperty()
   description!: string;
 }

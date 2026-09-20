@@ -12,7 +12,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. placeholder {0}: route.boltsCount
-#: src/pages/route/common/ui/RouteDetails.tsx:38
+#: src/pages/route/common/ui/RouteDetails.tsx:48
 #: src/pages/sector/common/ui/RouteCard.tsx:44
 msgid "{0, plural, one {# bolt} other {# bolts}}"
 msgstr "{0, plural, one {# шлямбур} few {# шлямбури} many {# шлямбурів} other {# шлямбура}}"
@@ -33,7 +33,7 @@ msgid "{0} attempts"
 msgstr "{0} спроб"
 
 #. placeholder {0}: route.length
-#: src/pages/route/common/ui/RouteDetails.tsx:32
+#: src/pages/route/common/ui/RouteDetails.tsx:42
 #: src/pages/sector/common/ui/RouteCard.tsx:41
 msgid "{0} m"
 msgstr "{0} м"
@@ -42,7 +42,7 @@ msgstr "{0} м"
 msgid "{routesCount, plural, one {# route} other {# routes}}"
 msgstr "{routesCount, plural, one {# маршрут} few {# маршрути} many {# маршрутів} other {# маршруту}}"
 
-#: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:22
+#: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:36
 msgid "{total, plural, one {# vote} other {# votes}}"
 msgstr "{total, plural, one {# голос} few {# голоси} many {# голосів} other {# голосу}}"
 
@@ -59,7 +59,7 @@ msgstr "Додати своє"
 msgid "Ascent logged"
 msgstr "Пролаз записано"
 
-#: src/pages/route/common/ui/RouteStats.tsx:14
+#: src/pages/route/common/ui/RouteStats.tsx:15
 msgid "ascents"
 msgstr "пролазів"
 
@@ -138,9 +138,13 @@ msgstr "Флеш"
 msgid "Grade"
 msgstr "Категорія"
 
-#: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:19
+#: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:33
 msgid "Grade consensus"
 msgstr "Консенсус категорії"
+
+#: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:24
+msgid "harder"
+msgstr "жорсткіше"
 
 #: src/pages/profile/common/ui/LocaleSetting.tsx:20
 msgid "Language"
@@ -165,7 +169,7 @@ msgid "Loading regions…"
 msgstr ""
 
 #: src/pages/route/desktop/PageRouteDesktop.tsx:59
-#: src/pages/route/mobile/PageRouteMobile.tsx:58
+#: src/pages/route/mobile/PageRouteMobile.tsx:60
 msgid "Loading route…"
 msgstr ""
 
@@ -222,7 +226,7 @@ msgstr "Топо ще немає"
 msgid "Note"
 msgstr "Нотатка"
 
-#: src/pages/route/common/ui/RouteStats.tsx:20
+#: src/pages/route/common/ui/RouteStats.tsx:24
 msgid "onsight"
 msgstr "онсайт"
 
@@ -253,7 +257,7 @@ msgstr "Редпоінт"
 #: src/pages/region/desktop/PageRegionDesktop.tsx:27
 #: src/pages/region/mobile/PageRegionMobile.tsx:28
 #: src/pages/route/desktop/PageRouteDesktop.tsx:43
-#: src/pages/route/mobile/PageRouteMobile.tsx:42
+#: src/pages/route/mobile/PageRouteMobile.tsx:44
 #: src/pages/sector/desktop/PageSectorDesktop.tsx:58
 #: src/pages/sector/mobile/PageSectorMobile.tsx:56
 msgid "Regions"
@@ -295,6 +299,10 @@ msgstr "Увійдіть, щоб відмічати пролази"
 #: src/pages/profile/common/ui/SignOutButton.tsx:14
 msgid "Sign out"
 msgstr "Вийти"
+
+#: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:22
+msgid "softer"
+msgstr "м'якше"
 
 #: src/features/logTick/common/ui/TickForm.tsx:57
 msgid "Style"

@@ -560,6 +560,27 @@
             "nullable": true,
             "description": "Community rating, 0..5"
           },
+          "ascentsCount": {
+            "type": "number",
+            "nullable": true
+          },
+          "onsightCount": {
+            "type": "number",
+            "nullable": true
+          },
+          "votesSoft": {
+            "type": "number",
+            "nullable": true,
+            "description": "Votes saying the grade is soft"
+          },
+          "votesNeutral": {
+            "type": "number",
+            "nullable": true
+          },
+          "votesHard": {
+            "type": "number",
+            "nullable": true
+          },
           "description": {
             "type": "string"
           }

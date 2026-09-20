@@ -11,7 +11,7 @@ import type { RouteDto, UpdateRouteDto } from './routes.types';
 
 // Sector and region names ride along for the breadcrumbs — see SectorsService.
 const COLUMNS =
-  'id, id_sector, name, grade, type, length, bolts_count, rating, description, sectors (name, id_region, regions (name))';
+  'id, id_sector, name, grade, type, length, bolts_count, rating, ascents_count, onsight_count, votes_soft, votes_neutral, votes_hard, description, sectors (name, id_region, regions (name))';
 
 interface RouteRow {
   id: string;
@@ -22,6 +22,11 @@ interface RouteRow {
   length: number | null;
   bolts_count: number | null;
   rating: number | null;
+  ascents_count: number | null;
+  onsight_count: number | null;
+  votes_soft: number | null;
+  votes_neutral: number | null;
+  votes_hard: number | null;
   description: string;
   sectors: {
     name: string;
@@ -125,5 +130,10 @@ const toRouteDto = (row: RouteRow): RouteDto => ({
   length: row.length,
   boltsCount: row.bolts_count,
   rating: row.rating,
+  ascentsCount: row.ascents_count,
+  onsightCount: row.onsight_count,
+  votesSoft: row.votes_soft,
+  votesNeutral: row.votes_neutral,
+  votesHard: row.votes_hard,
   description: row.description
 });

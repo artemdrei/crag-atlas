@@ -13,7 +13,7 @@ import {
 import { EditToggleButton, RouteEditForm } from '@web/features/catalogEdit';
 import { TopoImage, useApiGetTopos } from '@web/features/topo';
 import { ApiFeedback, PageBreadcrumbs, PhotoPlaceholder } from '@web/shared/ui';
-import { DEMO_GRADE_VOTES, GradeConsensus } from '@web/widgets/gradeConsensus';
+import { GradeConsensus } from '@web/widgets/gradeConsensus';
 
 import {
   LogTickButton,
@@ -69,8 +69,20 @@ export const PageRouteDesktop = () => {
           </PhotoStyled>
           <MainColumnStyled>
             <RouteDetails route={route} />
-            <RouteStats />
-            <GradeConsensus votes={DEMO_GRADE_VOTES} />
+            {!!route.ascentsCount && (
+              <RouteStats
+                ascentsCount={route.ascentsCount}
+                onsightCount={route.onsightCount}
+              />
+            )}
+            {!!route.votesNeutral && (
+              <GradeConsensus
+                grade={route.grade}
+                votesSoft={route.votesSoft ?? 0}
+                votesNeutral={route.votesNeutral}
+                votesHard={route.votesHard ?? 0}
+              />
+            )}
             <RouteTabs />
           </MainColumnStyled>
           <ActionsStyled>

@@ -1,16 +1,30 @@
-import { Plural, Trans } from '@lingui/react/macro';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import type { GradeVote } from '../entities';
-
 export interface Props {
-  votes: GradeVote[];
+  /** The grade the route is listed at — the middle bucket. */
+  grade: string;
+  votesSoft: number;
+  votesNeutral: number;
+  votesHard: number;
 }
 
-export const GradeConsensus = ({ votes }: Props) => {
-  const total = votes.reduce((sum, { votes: count }) => sum + count, 0);
-  const top = Math.max(...votes.map(({ votes: count }) => count));
+export const GradeConsensus = ({
+  grade,
+  votesSoft,
+  votesNeutral,
+  votesHard
+}: Props) => {
+  const { t } = useLingui();
+
+  const buckets = [
+    { id: 'soft', label: t`softer`, votes: votesSoft },
+    { id: 'neutral', label: grade, votes: votesNeutral },
+    { id: 'hard', label: t`harder`, votes: votesHard }
+  ];
+  const total = votesSoft + votesNeutral + votesHard;
+  const top = Math.max(...buckets.map(({ votes }) => votes));
 
   return (
     <CardStyled>
@@ -23,15 +37,18 @@ export const GradeConsensus = ({ votes }: Props) => {
         </Typography>
       </HeaderRowStyled>
       <BarsRowStyled>
-        {votes.map(({ grade, votes: count }) => (
-          <ColumnStyled key={grade}>
+        {buckets.map(({ id, label, votes }) => (
+          <ColumnStyled key={id}>
             <BarStyled
-              share={count / top}
-              isConsensus={count === top}
-              aria-hidden
-            />
+              share={top ? votes / top : 0}
+              isConsensus={votes === top}
+            >
+              <Typography variant="caption" color="text.secondary">
+                {votes}
+              </Typography>
+            </BarStyled>
             <Typography variant="caption" color="text.secondary">
-              {grade}
+              {label}
             </Typography>
           </ColumnStyled>
         ))}
@@ -70,7 +87,6 @@ const ColumnStyled = styled('div')`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
   gap: ${({ theme }) => theme.spacing(0.5)};
   flex: 1 1 0;
 `;
@@ -78,9 +94,12 @@ const ColumnStyled = styled('div')`
 const BarStyled = styled('div', {
   shouldForwardProp: (prop) => prop !== 'share' && prop !== 'isConsensus'
 })<{ share: number; isConsensus: boolean }>`
-  width: ${({ share }) => `${Math.max(share, 0.15) * 100}%`};
-  height: 10px;
-  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: ${({ share }) => `${Math.max(share * 64, 20)}px`};
+  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
   background: ${({ theme, isConsensus }) =>
     isConsensus ? theme.palette.secondary.main : theme.palette.action.selected};
 `;

@@ -220,6 +220,12 @@ export interface components {
             boltsCount?: number | null;
             /** @description Community rating, 0..5 */
             rating?: number | null;
+            ascentsCount?: number | null;
+            onsightCount?: number | null;
+            /** @description Votes saying the grade is soft */
+            votesSoft?: number | null;
+            votesNeutral?: number | null;
+            votesHard?: number | null;
             description: string;
         };
         UpdateRouteDto: {

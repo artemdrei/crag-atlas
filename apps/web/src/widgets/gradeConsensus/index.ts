@@ -1,1 +1,1 @@
-export { DEMO_GRADE_VOTES, GradeConsensus } from './common';
+export { GradeConsensus } from './common';

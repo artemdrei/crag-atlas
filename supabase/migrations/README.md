@@ -21,3 +21,5 @@ Apply a migration in the Supabase dashboard (SQL Editor) or with
 | 010 | `010_route_rating.sql` | Optional `routes.rating`, 0..5 |
 | 011 | `011_import_mist_route_details.sql` | Ratings and bolt counts for the Mist sector |
 | 012 | `012_drop_sector_approach_minutes.sql` | Drop `sectors.approach_minutes` |
+| 013 | `013_route_stats.sql` | Optional ascent, onsight and grade-vote counts |
+| 014 | `014_import_mist_route_stats.sql` | Those counts for the Mist sector |

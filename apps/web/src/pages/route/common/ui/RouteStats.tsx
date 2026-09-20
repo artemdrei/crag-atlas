@@ -2,24 +2,29 @@ import { Trans } from '@lingui/react/macro';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-/** Demo values until the API counts ascents. */
-const DEMO_ASCENTS = 340;
-const DEMO_ONSIGHT_SHARE = 18;
+export interface Props {
+  ascentsCount: number;
+  onsightCount?: number | null;
+}
 
-export const RouteStats = () => (
+export const RouteStats = ({ ascentsCount, onsightCount }: Props) => (
   <RowStyled>
     <TileStyled>
-      <ValueStyled variant="h5">{DEMO_ASCENTS}</ValueStyled>
+      <ValueStyled variant="h5">{ascentsCount}</ValueStyled>
       <Typography variant="caption" color="text.secondary">
         <Trans>ascents</Trans>
       </Typography>
     </TileStyled>
-    <TileStyled>
-      <ValueStyled variant="h5">{DEMO_ONSIGHT_SHARE}%</ValueStyled>
-      <Typography variant="caption" color="text.secondary">
-        <Trans>onsight</Trans>
-      </Typography>
-    </TileStyled>
+    {!!onsightCount && (
+      <TileStyled>
+        <ValueStyled variant="h5">
+          {Math.round((onsightCount / ascentsCount) * 100)}%
+        </ValueStyled>
+        <Typography variant="caption" color="text.secondary">
+          <Trans>onsight</Trans>
+        </Typography>
+      </TileStyled>
+    )}
   </RowStyled>
 );
 

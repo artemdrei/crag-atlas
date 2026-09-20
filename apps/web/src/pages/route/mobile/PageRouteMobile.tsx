@@ -13,11 +13,13 @@ import {
 import { EditToggleButton, RouteEditForm } from '@web/features/catalogEdit';
 import { TopoImage, useApiGetTopos } from '@web/features/topo';
 import { ApiFeedback, PageBreadcrumbs, PhotoPlaceholder } from '@web/shared/ui';
+import { GradeConsensus } from '@web/widgets/gradeConsensus';
 
 import {
   LogTickButton,
   MyAscentsCard,
   RouteDetails,
+  RouteStats,
   RouteTabs,
   useApiGetRoute
 } from '../common';
@@ -67,6 +69,20 @@ export const PageRouteMobile = () => {
             )}
           </PhotoStyled>
           <RouteDetails route={route} />
+          {!!route.ascentsCount && (
+            <RouteStats
+              ascentsCount={route.ascentsCount}
+              onsightCount={route.onsightCount}
+            />
+          )}
+          {!!route.votesNeutral && (
+            <GradeConsensus
+              grade={route.grade}
+              votesSoft={route.votesSoft ?? 0}
+              votesNeutral={route.votesNeutral}
+              votesHard={route.votesHard ?? 0}
+            />
+          )}
           <RouteTabs />
           <MyAscentsCard />
           <ActionBarStyled>
