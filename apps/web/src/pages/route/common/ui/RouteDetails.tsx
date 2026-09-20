@@ -1,4 +1,7 @@
 import { Plural, useLingui } from '@lingui/react/macro';
+import HeightIcon from '@mui/icons-material/Height';
+import LinearScaleIcon from '@mui/icons-material/LinearScale';
+import Rating from '@mui/material/Rating';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
@@ -15,20 +18,31 @@ export const RouteDetails = ({ route }: Props) => {
 
   return (
     <ContainerStyled>
-      <HeaderRowStyled>
-        <Typography variant="h4">{route.name}</Typography>
+      <Typography variant="h4">{route.name}</Typography>
+      <SummaryRowStyled>
         <GradeBadge grade={route.grade} />
-      </HeaderRowStyled>
-      <MetaStyled variant="body2" color="text.secondary">
-        <span>{route.type}</span>
-        {!!route.length && <span>{t`${route.length} m`}</span>}
-        {!!route.boltsCount && (
-          <span>
-            <Plural value={route.boltsCount} one="# bolt" other="# bolts" />
-          </span>
+        {!!route.rating && (
+          <Rating value={route.rating} precision={0.5} size="small" readOnly />
         )}
-      </MetaStyled>
-      <Typography variant="body1">{route.description}</Typography>
+        <MetaStyled variant="body2" color="text.secondary">
+          <span>{route.type}</span>
+          {!!route.length && (
+            <MetaItemStyled>
+              <HeightIcon fontSize="inherit" />
+              {t`${route.length} m`}
+            </MetaItemStyled>
+          )}
+          {!!route.boltsCount && (
+            <MetaItemStyled>
+              <LinearScaleIcon fontSize="inherit" />
+              <Plural value={route.boltsCount} one="# bolt" other="# bolts" />
+            </MetaItemStyled>
+          )}
+        </MetaStyled>
+      </SummaryRowStyled>
+      {!!route.description && (
+        <Typography variant="body1">{route.description}</Typography>
+      )}
     </ContainerStyled>
   );
 };
@@ -39,18 +53,22 @@ const ContainerStyled = styled('div')`
   gap: ${({ theme }) => theme.spacing(1.5)};
 `;
 
-const HeaderRowStyled = styled('div')`
+const SummaryRowStyled = styled('div')`
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: ${({ theme }) => theme.spacing(1.5)};
 `;
 
 const MetaStyled = styled(Typography)`
   display: flex;
   flex-wrap: wrap;
-  gap: ${({ theme }) => theme.spacing(1)};
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing(1.5)};
+`;
 
-  & > span + span::before {
-    content: '· ';
-  }
+const MetaItemStyled = styled('span')`
+  display: inline-flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing(0.5)};
 `;
