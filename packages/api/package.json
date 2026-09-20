@@ -8,6 +8,7 @@
     "gen:api": "openapi-typescript ../../apps/api/openapi.json -o src/generated/api-types.ts"
   },
   "devDependencies": {
-    "openapi-typescript": "^7.4.0"
+    "openapi-typescript": "^7.4.0",
+    "typescript": "6.0.3"
   }
 }

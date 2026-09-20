@@ -20,6 +20,7 @@ export class RegionDto {
   routeCount!: number;
 
   @ApiProperty({
+    type: String,
     required: false,
     nullable: true,
     description: 'Derived from the routes of the region; null when it has none'

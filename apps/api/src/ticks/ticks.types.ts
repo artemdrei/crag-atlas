@@ -22,16 +22,17 @@ export class TickDto {
   idRoute!: string;
 
   @ApiProperty({
+    type: String,
     required: false,
     nullable: true,
     description: 'Resolved from the route catalog; null if the route is gone'
   })
   routeName?: string | null;
 
-  @ApiProperty({ required: false, nullable: true })
+  @ApiProperty({ type: String, required: false, nullable: true })
   routeGrade?: string | null;
 
-  @ApiProperty({ required: false, nullable: true })
+  @ApiProperty({ type: String, required: false, nullable: true })
   sectorName?: string | null;
 
   @ApiProperty({ enum: ASCENT_STYLES })
@@ -40,10 +41,10 @@ export class TickDto {
   @ApiProperty({ description: 'ISO date, e.g. 2026-09-19' })
   climbedAt!: string;
 
-  @ApiProperty({ required: false, nullable: true })
+  @ApiProperty({ type: Number, required: false, nullable: true })
   attempts?: number | null;
 
-  @ApiProperty({ required: false, nullable: true })
+  @ApiProperty({ type: String, required: false, nullable: true })
   note?: string | null;
 
   @ApiProperty()
@@ -63,9 +64,9 @@ export class CreateTickDto {
   @ApiProperty({ required: false, description: 'ISO date; defaults to today' })
   climbedAt?: string;
 
-  @ApiProperty({ required: false, nullable: true })
+  @ApiProperty({ type: Number, required: false, nullable: true })
   attempts?: number | null;
 
-  @ApiProperty({ required: false, nullable: true })
+  @ApiProperty({ type: String, required: false, nullable: true })
   note?: string | null;
 }
