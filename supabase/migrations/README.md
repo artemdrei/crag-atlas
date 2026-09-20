@@ -23,3 +23,6 @@ Apply a migration in the Supabase dashboard (SQL Editor) or with
 | 012 | `012_drop_sector_approach_minutes.sql` | Drop `sectors.approach_minutes` |
 | 013 | `013_route_stats.sql` | Optional ascent, onsight and grade-vote counts |
 | 014 | `014_import_mist_route_stats.sql` | Those counts for the Mist sector |
+| 015 | `015_users.sql` | Public `users`, created for every sign-up |
+| 016 | `016_route_comments.sql` | Comments on a route, public read, own write |
+| 017 | `017_route_media.sql` | Videos and photos linked to a route |

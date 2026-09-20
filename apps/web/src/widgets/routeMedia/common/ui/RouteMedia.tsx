@@ -1,44 +1,56 @@
-import { Trans, useLingui } from '@lingui/react/macro';
-import AddIcon from '@mui/icons-material/Add';
+import { Trans } from '@lingui/react/macro';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import ButtonBase from '@mui/material/ButtonBase';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import type { RouteMediaItem } from '../entities';
+import { ApiFeedback } from '@web/shared/ui';
+
+import { useApiGetRouteMedia } from '../hooks';
 
 export interface Props {
-  items: RouteMediaItem[];
+  idRoute: string;
 }
 
-export const RouteMedia = ({ items }: Props) => {
-  const { t } = useLingui();
+export const RouteMedia = ({ idRoute }: Props) => {
+  const { media, isLoading, failure } = useApiGetRouteMedia(idRoute);
 
   return (
     <StripStyled>
-      {items.map((item) => (
-        <CardStyled key={item.id}>
+      <ApiFeedback
+        isLoading={isLoading}
+        failure={failure}
+        loadingLabel={<Trans>Loading media…</Trans>}
+      />
+      {!isLoading && media.length === 0 && (
+        <Typography variant="body2" color="text.secondary">
+          <Trans>No videos or photos yet.</Trans>
+        </Typography>
+      )}
+      {media.map((item) => (
+        <CardStyled key={item.id} href={item.url} target="_blank">
           <ThumbnailStyled>
-            {!!item.duration && <PlayArrowIcon fontSize="large" />}
+            {item.kind === 'video' && <PlayArrowIcon fontSize="large" />}
           </ThumbnailStyled>
           <CaptionStyled>
             <Typography variant="subtitle2" noWrap>
               {item.title}
             </Typography>
             <Typography variant="caption" color="text.secondary" noWrap>
-              {[item.author, item.duration].filter(Boolean).join(' · ')}
+              {[item.authorName, formatDuration(item.durationSeconds)]
+                .filter(Boolean)
+                .join(' · ')}
             </Typography>
           </CaptionStyled>
         </CardStyled>
       ))}
-      <AddTileStyled aria-label={t`Add media`} disabled>
-        <AddIcon />
-        <Typography variant="caption" color="text.secondary">
-          <Trans>Add yours</Trans>
-        </Typography>
-      </AddTileStyled>
     </StripStyled>
   );
+};
+
+const formatDuration = (seconds?: number | null) => {
+  if (!seconds) return '';
+
+  return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
 };
 
 const StripStyled = styled('div')`
@@ -53,9 +65,11 @@ const StripStyled = styled('div')`
   }
 `;
 
-const CardStyled = styled('div')`
+const CardStyled = styled('a')`
   flex: 0 0 auto;
   width: 240px;
+  color: inherit;
+  text-decoration: none;
   border: 1px solid ${({ theme }) => theme.palette.divider};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
   overflow: hidden;
@@ -74,15 +88,4 @@ const CaptionStyled = styled('div')`
   display: flex;
   flex-direction: column;
   padding: ${({ theme }) => theme.spacing(1, 1.5, 1.5)};
-`;
-
-const AddTileStyled = styled(ButtonBase)`
-  flex: 0 0 auto;
-  width: 160px;
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(0.5)};
-  color: ${({ theme }) => theme.palette.text.secondary};
-  border: 1px dashed ${({ theme }) => theme.palette.divider};
-  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
 `;

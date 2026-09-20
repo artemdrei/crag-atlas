@@ -311,7 +311,16 @@
     "/ticks": {
       "get": {
         "operationId": "TicksController_findMine",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "idRoute",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -386,6 +395,140 @@
           }
         },
         "tags": ["Topos"]
+      }
+    },
+    "/routes/{idRoute}/comments": {
+      "get": {
+        "operationId": "CommentsController_findByRoute",
+        "parameters": [
+          {
+            "name": "idRoute",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CommentDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Comments"]
+      },
+      "post": {
+        "operationId": "CommentsController_create",
+        "parameters": [
+          {
+            "name": "idRoute",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCommentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommentDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Comments"]
+      }
+    },
+    "/routes/{idRoute}/media": {
+      "get": {
+        "operationId": "MediaController_findByRoute",
+        "parameters": [
+          {
+            "name": "idRoute",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MediaDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Media"]
+      },
+      "post": {
+        "operationId": "MediaController_create",
+        "parameters": [
+          {
+            "name": "idRoute",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMediaDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Media"]
       }
     }
   },
@@ -771,6 +914,119 @@
           }
         },
         "required": ["id", "label", "photoUrl", "lines"]
+      },
+      "CommentDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "idRoute": {
+            "type": "string"
+          },
+          "idUser": {
+            "type": "string"
+          },
+          "authorName": {
+            "type": "string",
+            "description": "Author label; ids carry no meaning"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "body": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "ISO timestamp"
+          }
+        },
+        "required": [
+          "id",
+          "idRoute",
+          "idUser",
+          "authorName",
+          "body",
+          "createdAt"
+        ]
+      },
+      "CreateCommentDto": {
+        "type": "object",
+        "properties": {
+          "body": {
+            "type": "string"
+          }
+        },
+        "required": ["body"]
+      },
+      "MediaDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "idRoute": {
+            "type": "string"
+          },
+          "idUser": {
+            "type": "string"
+          },
+          "authorName": {
+            "type": "string",
+            "description": "Author label; ids carry no meaning"
+          },
+          "kind": {
+            "type": "string",
+            "enum": ["video", "photo"]
+          },
+          "url": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "durationSeconds": {
+            "type": "number",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "ISO timestamp"
+          }
+        },
+        "required": [
+          "id",
+          "idRoute",
+          "idUser",
+          "authorName",
+          "kind",
+          "url",
+          "title",
+          "createdAt"
+        ]
+      },
+      "CreateMediaDto": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": ["video", "photo"]
+          },
+          "url": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "durationSeconds": {
+            "type": "number",
+            "nullable": true
+          }
+        },
+        "required": ["kind", "url"]
       }
     }
   }

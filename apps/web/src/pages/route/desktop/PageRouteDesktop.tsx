@@ -83,11 +83,11 @@ export const PageRouteDesktop = () => {
                 votesHard={route.votesHard ?? 0}
               />
             )}
-            <RouteTabs />
+            <RouteTabs idRoute={route.id} />
           </MainColumnStyled>
           <ActionsStyled>
             <LogTickButton idRoute={route.id} />
-            <MyAscentsCard />
+            <MyAscentsCard idRoute={route.id} />
           </ActionsStyled>
         </ColumnsStyled>
       )}

@@ -17,13 +17,13 @@ msgstr ""
 msgid "{0, plural, one {# bolt} other {# bolts}}"
 msgstr "{0, plural, one {# bolt} other {# bolts}}"
 
-#. placeholder {0}: DEMO_MY_ASCENTS.length
-#: src/pages/route/common/ui/MyAscentsCard.tsx:41
+#. placeholder {0}: ticks.length
+#: src/pages/route/common/ui/MyAscentsCard.tsx:25
 msgid "{0, plural, one {# entry} other {# entries}}"
 msgstr "{0, plural, one {# entry} other {# entries}}"
 
-#. placeholder {0}: ascent.attempts
-#: src/pages/route/common/ui/MyAscentsCard.tsx:55
+#. placeholder {0}: tick.attempts
+#: src/pages/route/common/ui/MyAscentsCard.tsx:36
 msgid "{0, plural, one {# try} other {# tries}}"
 msgstr "{0, plural, one {# try} other {# tries}}"
 
@@ -46,14 +46,6 @@ msgstr "{routesCount, plural, one {# route} other {# routes}}"
 msgid "{total, plural, one {# vote} other {# votes}}"
 msgstr "{total, plural, one {# vote} other {# votes}}"
 
-#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:34
-msgid "Add media"
-msgstr "Add media"
-
-#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:37
-msgid "Add yours"
-msgstr "Add yours"
-
 #: src/features/logTick/desktop/LogTickDialog.tsx:24
 #: src/features/logTick/mobile/LogTickSheet.tsx:24
 msgid "Ascent logged"
@@ -62,10 +54,6 @@ msgstr "Ascent logged"
 #: src/pages/route/common/ui/RouteStats.tsx:15
 msgid "ascents"
 msgstr "ascents"
-
-#: src/pages/route/common/ui/RouteTabs.tsx:24
-msgid "Ascents"
-msgstr "Ascents"
 
 #: src/shared/ui/AscentStyleLabel.tsx:29
 msgid "Attempt"
@@ -84,7 +72,7 @@ msgstr "Bolts"
 msgid "Cancel"
 msgstr "Cancel"
 
-#: src/pages/route/common/ui/RouteTabs.tsx:23
+#: src/pages/route/common/ui/RouteTabs.tsx:25
 msgid "Comments"
 msgstr "Comments"
 
@@ -163,6 +151,14 @@ msgstr "Light"
 msgid "Loading ascents…"
 msgstr "Loading ascents…"
 
+#: src/widgets/routeComments/common/ui/RouteComments.tsx:22
+msgid "Loading comments…"
+msgstr "Loading comments…"
+
+#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:22
+msgid "Loading media…"
+msgstr "Loading media…"
+
 #: src/pages/home/desktop/PageHomeDesktop.tsx:22
 #: src/pages/home/mobile/PageHomeMobile.tsx:22
 msgid "Loading regions…"
@@ -198,7 +194,7 @@ msgstr "Logbook"
 msgid "Map"
 msgstr "Map"
 
-#: src/pages/route/common/ui/MyAscentsCard.tsx:38
+#: src/pages/route/common/ui/MyAscentsCard.tsx:22
 msgid "My ascents"
 msgstr "My ascents"
 
@@ -218,9 +214,17 @@ msgstr "Name"
 msgid "No ascents logged yet."
 msgstr "No ascents logged yet."
 
+#: src/widgets/routeComments/common/ui/RouteComments.tsx:26
+msgid "No comments yet — be the first to add beta."
+msgstr "No comments yet — be the first to add beta."
+
 #: src/shared/ui/PhotoPlaceholder.tsx:17
 msgid "No topo yet"
 msgstr "No topo yet"
+
+#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:26
+msgid "No videos or photos yet."
+msgstr "No videos or photos yet."
 
 #: src/features/logTick/common/ui/TickForm.tsx:81
 msgid "Note"
@@ -328,7 +332,7 @@ msgstr "Use another email"
 msgid "Verifying…"
 msgstr "Verifying…"
 
-#: src/pages/route/common/ui/RouteTabs.tsx:22
+#: src/pages/route/common/ui/RouteTabs.tsx:24
 msgid "Video and photo"
 msgstr "Video and photo"
 

@@ -1,1 +1,2 @@
-export { useApiGetRoute } from './useApiGetRoute';
+export * from './useApiGetRoute';
+export * from './useApiGetRouteTicks';

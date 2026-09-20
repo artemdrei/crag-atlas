@@ -1,36 +1,50 @@
+import { Trans } from '@lingui/react/macro';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { getInitials } from '@web/shared/lib';
-import { AscentStyleBadge } from '@web/shared/ui';
+import { ApiFeedback } from '@web/shared/ui';
 
-import type { RouteComment } from '../entities';
+import { useApiGetRouteComments } from '../hooks';
 
 export interface Props {
-  comments: RouteComment[];
+  idRoute: string;
 }
 
-export const RouteComments = ({ comments }: Props) => (
-  <ListStyled>
-    {comments.map((comment) => (
-      <CommentStyled key={comment.id}>
-        <AvatarStyled>{getInitials(comment.author)}</AvatarStyled>
-        <BodyStyled>
-          <HeaderRowStyled>
-            <AuthorStyled variant="subtitle2">{comment.author}</AuthorStyled>
-            <Typography variant="caption" color="text.secondary">
-              {comment.postedAt}
-            </Typography>
-            {!!comment.ascentStyle && (
-              <AscentStyleBadge ascentStyle={comment.ascentStyle} />
-            )}
-          </HeaderRowStyled>
-          <Typography variant="body2">{comment.text}</Typography>
-        </BodyStyled>
-      </CommentStyled>
-    ))}
-  </ListStyled>
-);
+export const RouteComments = ({ idRoute }: Props) => {
+  const { comments, isLoading, failure } = useApiGetRouteComments(idRoute);
+
+  return (
+    <ListStyled>
+      <ApiFeedback
+        isLoading={isLoading}
+        failure={failure}
+        loadingLabel={<Trans>Loading comments…</Trans>}
+      />
+      {!isLoading && comments.length === 0 && (
+        <Typography variant="body2" color="text.secondary">
+          <Trans>No comments yet — be the first to add beta.</Trans>
+        </Typography>
+      )}
+      {comments.map((comment) => (
+        <CommentStyled key={comment.id}>
+          <AvatarStyled>{getInitials(comment.authorName)}</AvatarStyled>
+          <BodyStyled>
+            <HeaderRowStyled>
+              <AuthorStyled variant="subtitle2">
+                {comment.authorName}
+              </AuthorStyled>
+              <Typography variant="caption" color="text.secondary">
+                {comment.createdAt.slice(0, 10)}
+              </Typography>
+            </HeaderRowStyled>
+            <Typography variant="body2">{comment.body}</Typography>
+          </BodyStyled>
+        </CommentStyled>
+      ))}
+    </ListStyled>
+  );
+};
 
 const ListStyled = styled('div')`
   display: flex;
@@ -66,13 +80,13 @@ const BodyStyled = styled('div')`
   min-width: 0;
 `;
 
-const AuthorStyled = styled(Typography)`
-  font-weight: 700;
-`;
-
 const HeaderRowStyled = styled('div')`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: ${({ theme }) => theme.spacing(1)};
+`;
+
+const AuthorStyled = styled(Typography)`
+  font-weight: 700;
 `;

@@ -164,6 +164,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/routes/{idRoute}/comments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["CommentsController_findByRoute"];
+        put?: never;
+        post: operations["CommentsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/routes/{idRoute}/media": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["MediaController_findByRoute"];
+        put?: never;
+        post: operations["MediaController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -276,6 +308,41 @@ export interface components {
             label: string;
             photoUrl: string;
             lines: components["schemas"]["RouteLineDto"][];
+        };
+        CommentDto: {
+            id: string;
+            idRoute: string;
+            idUser: string;
+            /** @description Author label; ids carry no meaning */
+            authorName: string;
+            avatarUrl?: string | null;
+            body: string;
+            /** @description ISO timestamp */
+            createdAt: string;
+        };
+        CreateCommentDto: {
+            body: string;
+        };
+        MediaDto: {
+            id: string;
+            idRoute: string;
+            idUser: string;
+            /** @description Author label; ids carry no meaning */
+            authorName: string;
+            /** @enum {string} */
+            kind: "video" | "photo";
+            url: string;
+            title: string;
+            durationSeconds?: number | null;
+            /** @description ISO timestamp */
+            createdAt: string;
+        };
+        CreateMediaDto: {
+            /** @enum {string} */
+            kind: "video" | "photo";
+            url: string;
+            title?: string | null;
+            durationSeconds?: number | null;
         };
     };
     responses: never;
@@ -523,7 +590,9 @@ export interface operations {
     };
     TicksController_findMine: {
         parameters: {
-            query?: never;
+            query?: {
+                idRoute?: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -580,6 +649,98 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["TopoDto"][];
+                };
+            };
+        };
+    };
+    CommentsController_findByRoute: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idRoute: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CommentDto"][];
+                };
+            };
+        };
+    };
+    CommentsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idRoute: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateCommentDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CommentDto"];
+                };
+            };
+        };
+    };
+    MediaController_findByRoute: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idRoute: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaDto"][];
+                };
+            };
+        };
+    };
+    MediaController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idRoute: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateMediaDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaDto"];
                 };
             };
         };

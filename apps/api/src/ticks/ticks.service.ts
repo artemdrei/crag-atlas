@@ -32,14 +32,18 @@ interface TickRow {
 
 @Injectable()
 export class TicksService {
-  async findMine(authUser: AuthUser): Promise<TickDto[]> {
+  async findMine(authUser: AuthUser, idRoute?: string): Promise<TickDto[]> {
     // No filter on id_user: the RLS select policy already scopes this to the
     // caller, and a second filter would only hide a policy regression.
-    const { data, error } = await this.userClient(authUser)
+    const query = this.userClient(authUser)
       .from('ticks')
       .select(COLUMNS)
-      .order('climbed_at', { ascending: false })
-      .returns<TickRow[]>();
+      .order('climbed_at', { ascending: false });
+
+    const { data, error } = await (idRoute
+      ? query.eq('id_route', idRoute)
+      : query
+    ).returns<TickRow[]>();
 
     if (error) {
       throw new AppException(

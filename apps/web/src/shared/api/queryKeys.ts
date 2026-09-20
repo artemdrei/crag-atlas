@@ -12,6 +12,9 @@ export const QUERY_KEYS = {
   routes: (idSector: string) => ['sectors', idSector, 'routes'] as const,
   topos: (idSector: string) => ['sectors', idSector, 'topos'] as const,
   route: (idRoute: string) => ['routes', idRoute] as const,
+  routeComments: (idRoute: string) => ['routes', idRoute, 'comments'] as const,
+  routeMedia: (idRoute: string) => ['routes', idRoute, 'media'] as const,
   ticks: () => ['ticks'] as const,
+  routeTicks: (idRoute: string) => ['ticks', idRoute] as const,
   me: () => ['me'] as const
 } as const;

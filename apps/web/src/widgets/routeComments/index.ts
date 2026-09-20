@@ -1,1 +1,1 @@
-export { DEMO_ROUTE_COMMENTS, RouteComments } from './common';
+export { RouteComments } from './common';

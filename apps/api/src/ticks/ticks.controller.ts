@@ -1,5 +1,5 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
-import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
+import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import { ApiCreatedResponse, ApiOkResponse, ApiQuery } from '@nestjs/swagger';
 
 import { CurrentUser } from '../common/decorators/authUser.decorator';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
@@ -14,8 +14,12 @@ export class TicksController {
 
   @Get()
   @ApiOkResponse({ type: [TickDto] })
-  findMine(@CurrentUser() authUser: AuthUser): Promise<TickDto[]> {
-    return this.ticksService.findMine(authUser);
+  @ApiQuery({ name: 'idRoute', required: false })
+  findMine(
+    @CurrentUser() authUser: AuthUser,
+    @Query('idRoute') idRoute?: string
+  ): Promise<TickDto[]> {
+    return this.ticksService.findMine(authUser, idRoute);
   }
 
   @Post()

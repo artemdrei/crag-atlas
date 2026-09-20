@@ -5,14 +5,16 @@ import { styled } from '@mui/material/styles';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 
-import { DEMO_ROUTE_COMMENTS, RouteComments } from '@web/widgets/routeComments';
-import { DEMO_ROUTE_MEDIA, RouteMedia } from '@web/widgets/routeMedia';
+import { RouteComments } from '@web/widgets/routeComments';
+import { RouteMedia } from '@web/widgets/routeMedia';
 
-import { RouteAscents } from './RouteAscents';
+type TabId = 'media' | 'comments';
 
-type TabId = 'media' | 'comments' | 'ascents';
+export interface Props {
+  idRoute: string;
+}
 
-export const RouteTabs = () => {
+export const RouteTabs = ({ idRoute }: Props) => {
   const { t } = useLingui();
   const [tab, setTab] = useState<TabId>('media');
 
@@ -21,11 +23,9 @@ export const RouteTabs = () => {
       <Tabs value={tab} onChange={(_, next: TabId) => setTab(next)}>
         <Tab value="media" label={t`Video and photo`} />
         <Tab value="comments" label={t`Comments`} />
-        <Tab value="ascents" label={t`Ascents`} />
       </Tabs>
-      {tab === 'media' && <RouteMedia items={DEMO_ROUTE_MEDIA} />}
-      {tab === 'comments' && <RouteComments comments={DEMO_ROUTE_COMMENTS} />}
-      {tab === 'ascents' && <RouteAscents />}
+      {tab === 'media' && <RouteMedia idRoute={idRoute} />}
+      {tab === 'comments' && <RouteComments idRoute={idRoute} />}
     </SectionStyled>
   );
 };

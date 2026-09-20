@@ -83,8 +83,8 @@ export const PageRouteMobile = () => {
               votesHard={route.votesHard ?? 0}
             />
           )}
-          <RouteTabs />
-          <MyAscentsCard />
+          <RouteTabs idRoute={route.id} />
+          <MyAscentsCard idRoute={route.id} />
           <ActionBarStyled>
             <LogTickButton idRoute={route.id} />
           </ActionBarStyled>
