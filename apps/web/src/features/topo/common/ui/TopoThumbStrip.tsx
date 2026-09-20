@@ -17,7 +17,12 @@ export const TopoThumbStrip = ({ topos, idActiveTopo, onSelect }: Props) => (
         isActive={topo.id === idActiveTopo}
         onClick={() => onSelect(topo.id)}
       >
-        <ThumbImageStyled src={topo.photoUrl} alt={topo.label} />
+        <ThumbImageStyled
+          src={topo.photoUrl}
+          alt={topo.label}
+          loading="lazy"
+          decoding="async"
+        />
         <ThumbLabelStyled variant="caption" noWrap>
           {topo.label}
         </ThumbLabelStyled>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import type { Topo } from '@crag-atlas/api';
+import CircularProgress from '@mui/material/CircularProgress';
 import { styled } from '@mui/material/styles';
 
 export interface Props {
@@ -16,7 +17,13 @@ export const TopoImage = ({
   isContained,
   colorOf
 }: Props) => {
-  const [ratio, setRatio] = useState<number>();
+  const [loadedPhoto, setLoadedPhoto] = useState<{
+    url: string;
+    ratio: number;
+  }>();
+
+  const isLoaded = loadedPhoto?.url === topo.photoUrl;
+  const ratio = isLoaded ? loadedPhoto.ratio : undefined;
 
   const hasHighlight = topo.lines.some(
     (line) => line.idRoute === idHighlightedRoute
@@ -27,12 +34,26 @@ export const TopoImage = ({
       <ImageStyled
         src={topo.photoUrl}
         alt={topo.label}
+        decoding="async"
         isContained={!!isContained && !!ratio}
+        isLoaded={isLoaded}
         onLoad={({ currentTarget }) =>
-          setRatio(currentTarget.naturalWidth / currentTarget.naturalHeight)
+          setLoadedPhoto({
+            url: currentTarget.src,
+            ratio: currentTarget.naturalWidth / currentTarget.naturalHeight
+          })
         }
       />
-      <OverlayStyled viewBox="0 0 1 1" preserveAspectRatio="none">
+      {!isLoaded && (
+        <LoaderStyled>
+          <CircularProgress size={28} />
+        </LoaderStyled>
+      )}
+      <OverlayStyled
+        viewBox="0 0 1 1"
+        preserveAspectRatio="none"
+        isLoaded={isLoaded}
+      >
         <title>{topo.label}</title>
         {topo.lines.map((line) => (
           <PathStyled
@@ -48,6 +69,8 @@ export const TopoImage = ({
   );
 };
 
+const FALLBACK_RATIO = '4 / 3';
+
 const toPath = (points: number[][]) =>
   points
     .map(([x, y], index) => `${index === 0 ? 'M' : 'L'}${x} ${y}`)
@@ -62,25 +85,41 @@ const FrameStyled = styled('div', {
   width: ${({ isContained }) => (isContained ? 'auto' : '100%')};
   height: ${({ isContained }) => (isContained ? '100%' : 'auto')};
   max-width: 100%;
-  aspect-ratio: ${({ ratio }) => ratio ?? 'auto'};
+  /* Until the photo reports its own ratio the frame keeps a stand-in one, so
+     the box never collapses and reflows when a topo is switched. */
+  aspect-ratio: ${({ ratio }) => ratio ?? FALLBACK_RATIO};
   overflow: hidden;
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
   background: ${({ theme }) => theme.palette.action.hover};
 `;
 
 const ImageStyled = styled('img', {
-  shouldForwardProp: (prop) => prop !== 'isContained'
-})<{ isContained: boolean }>`
+  shouldForwardProp: (prop) => prop !== 'isContained' && prop !== 'isLoaded'
+})<{ isContained: boolean; isLoaded: boolean }>`
   display: block;
   width: 100%;
   height: ${({ isContained }) => (isContained ? '100%' : 'auto')};
+  opacity: ${({ isLoaded }) => (isLoaded ? 1 : 0)};
+  transition: opacity 0.2s ease-out;
 `;
 
-const OverlayStyled = styled('svg')`
+const LoaderStyled = styled('div')`
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const OverlayStyled = styled('svg', {
+  shouldForwardProp: (prop) => prop !== 'isLoaded'
+})<{ isLoaded: boolean }>`
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+  opacity: ${({ isLoaded }) => (isLoaded ? 1 : 0)};
+  transition: opacity 0.2s ease-out;
 `;
 
 const PathStyled = styled('path', {
