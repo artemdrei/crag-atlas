@@ -17,9 +17,7 @@ export const RegionCard = ({ region, onSelect }: Props) => (
       <PhotoPlaceholder />
     </ThumbnailStyled>
     <BodyStyled>
-      <Typography variant="subtitle1" fontWeight={700}>
-        {region.name}
-      </Typography>
+      <Typography variant="subtitle1">{region.name}</Typography>
       <Typography variant="body2" color="text.secondary">
         {region.province} · {region.rockType}
       </Typography>

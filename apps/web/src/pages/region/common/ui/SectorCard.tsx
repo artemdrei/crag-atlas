@@ -22,9 +22,7 @@ export const SectorCard = ({ sector, onSelect }: Props) => (
     </ThumbnailStyled>
     <BodyStyled>
       <HeaderRowStyled>
-        <Typography variant="subtitle1" fontWeight={700}>
-          {sector.name}
-        </Typography>
+        <Typography variant="subtitle1">{sector.name}</Typography>
         <GradeBadge grade={sector.gradeRange} />
       </HeaderRowStyled>
       <Typography variant="body2" color="text.secondary">

@@ -33,7 +33,7 @@ export const RouteCard = ({
       <CardAreaStyled onClick={() => onOpen(route)}>
         <NumberBadgeStyled>{index + 1}</NumberBadgeStyled>
         <TextStyled>
-          <Typography variant="subtitle2" fontWeight={700} noWrap>
+          <Typography variant="subtitle2" noWrap>
             {route.name}
           </Typography>
           <MetaStyled variant="caption" color="text.secondary" noWrap>

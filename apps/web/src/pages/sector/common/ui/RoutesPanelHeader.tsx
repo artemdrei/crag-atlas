@@ -6,7 +6,7 @@ export interface Props {
 }
 
 export const RoutesPanelHeader = ({ routesCount }: Props) => (
-  <Typography variant="subtitle1" fontWeight={700}>
+  <Typography variant="subtitle1">
     <Plural value={routesCount} one="# route" other="# routes" />
   </Typography>
 );

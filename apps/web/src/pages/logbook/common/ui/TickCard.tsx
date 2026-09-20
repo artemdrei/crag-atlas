@@ -16,7 +16,7 @@ export const TickCard = ({ tick }: Props) => (
   <CardStyled elevation={0}>
     <HeaderRowStyled>
       <TitleGroupStyled>
-        <Typography variant="subtitle1" fontWeight={700}>
+        <Typography variant="subtitle1">
           {tick.routeName ?? tick.idRoute}
         </Typography>
         {tick.routeGrade && <GradeBadge grade={tick.routeGrade} />}
