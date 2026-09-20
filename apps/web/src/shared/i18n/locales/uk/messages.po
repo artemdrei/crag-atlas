@@ -12,7 +12,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. placeholder {0}: route.boltsCount
-#: src/pages/route/common/ui/RouteDetails.tsx:27
+#: src/pages/route/common/ui/RouteDetails.tsx:38
 #: src/pages/sector/common/ui/RouteCard.tsx:44
 msgid "{0, plural, one {# bolt} other {# bolts}}"
 msgstr "{0, plural, one {# шлямбур} few {# шлямбури} many {# шлямбурів} other {# шлямбура}}"
@@ -33,7 +33,7 @@ msgid "{0} attempts"
 msgstr "{0} спроб"
 
 #. placeholder {0}: route.length
-#: src/pages/route/common/ui/RouteDetails.tsx:24
+#: src/pages/route/common/ui/RouteDetails.tsx:32
 #: src/pages/sector/common/ui/RouteCard.tsx:41
 msgid "{0} m"
 msgstr "{0} м"
@@ -53,10 +53,6 @@ msgstr "Додати медіа"
 #: src/widgets/routeMedia/common/ui/RouteMedia.tsx:37
 msgid "Add yours"
 msgstr "Додати своє"
-
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:60
-msgid "Approach, minutes"
-msgstr "Підхід, хв"
 
 #: src/features/logTick/desktop/LogTickDialog.tsx:24
 #: src/features/logTick/mobile/LogTickSheet.tsx:24
@@ -114,7 +110,7 @@ msgid "Date"
 msgstr "Дата"
 
 #: src/features/catalogEdit/common/ui/RouteEditForm.tsx:101
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:53
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:48
 msgid "Description"
 msgstr "Опис"
 
@@ -210,7 +206,7 @@ msgstr "Мій логбук"
 
 #: src/features/catalogEdit/common/ui/RegionEditForm.tsx:36
 #: src/features/catalogEdit/common/ui/RouteEditForm.tsx:58
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:45
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:40
 msgid "Name"
 msgstr "Назва"
 

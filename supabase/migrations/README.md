@@ -18,3 +18,4 @@ Apply a migration in the Supabase dashboard (SQL Editor) or with
 | 007 | `007_admin_role.sql` | `user_roles` + `is_admin()`; catalog writes for admins |
 | 008 | `008_computed_catalog_stats.sql` | Counts and grade ranges become views |
 | 009 | `009_topos.sql` | Sector topo photos, route lines, and the storage bucket |
+| 012 | `012_drop_sector_approach_minutes.sql` | Drop `sectors.approach_minutes` |

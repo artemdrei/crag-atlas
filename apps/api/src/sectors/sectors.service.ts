@@ -12,14 +12,13 @@ import type { SectorDto, UpdateSectorDto } from './sectors.types';
 // The region name rides along: ids are uuids, so a page opened by URL has no
 // label to show in its breadcrumbs otherwise.
 const COLUMNS =
-  'id, id_region, name, description, approach_minutes, route_count, grade_min, grade_max, regions (name), topos (storage_path, sort_order)';
+  'id, id_region, name, description, route_count, grade_min, grade_max, regions (name), topos (storage_path, sort_order)';
 
 interface SectorRow {
   id: string;
   id_region: string;
   name: string;
   description: string;
-  approach_minutes: number | null;
   route_count: number;
   grade_min: string | null;
   grade_max: string | null;
@@ -89,8 +88,7 @@ export class SectorsService {
       .from('sectors')
       .update({
         name: payload.name,
-        description: payload.description ?? '',
-        approach_minutes: payload.approachMinutes ?? null
+        description: payload.description ?? ''
       })
       .eq('id', idSector);
 
@@ -113,7 +111,6 @@ const toSectorDto = (row: SectorRow): SectorDto => ({
   name: row.name,
   photoUrl: toPhotoUrl(row),
   description: row.description,
-  approachMinutes: row.approach_minutes,
   routeCount: row.route_count,
   gradeRange:
     row.grade_min && row.grade_max ? `${row.grade_min}-${row.grade_max}` : null

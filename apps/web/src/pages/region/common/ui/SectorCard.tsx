@@ -32,11 +32,6 @@ export const SectorCard = ({ sector, onSelect }: Props) => (
         <Typography variant="caption" color="text.secondary">
           {sector.routeCount} routes
         </Typography>
-        {!!sector.approachMinutes && (
-          <Typography variant="caption" color="text.secondary">
-            {sector.approachMinutes} min approach
-          </Typography>
-        )}
       </FooterRowStyled>
     </BodyStyled>
   </CardAreaStyled>

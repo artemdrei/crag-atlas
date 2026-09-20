@@ -197,7 +197,6 @@ export interface components {
             /** @description First topo photo, used as the card thumbnail */
             photoUrl?: string | null;
             description: string;
-            approachMinutes?: number | null;
             routeCount: number;
             /** @description Derived from the routes of the sector; null when it has none */
             gradeRange?: string | null;
@@ -205,7 +204,6 @@ export interface components {
         UpdateSectorDto: {
             name: string;
             description?: string | null;
-            approachMinutes?: number | null;
         };
         RouteDto: {
             id: string;
@@ -218,8 +216,8 @@ export interface components {
             grade: string;
             /** @enum {string} */
             type: "sport" | "trad" | "boulder";
-            length?: number | null;
-            boltsCount?: number | null;
+            length?: Record<string, never> | null;
+            boltsCount?: Record<string, never> | null;
             description: string;
         };
         UpdateRouteDto: {
@@ -227,9 +225,9 @@ export interface components {
             grade: string;
             /** @enum {string} */
             type: "sport" | "trad" | "boulder";
-            length?: number | null;
-            boltsCount?: number | null;
-            description?: string | null;
+            length?: Record<string, never> | null;
+            boltsCount?: Record<string, never> | null;
+            description?: Record<string, never> | null;
         };
         TickDto: {
             id: string;

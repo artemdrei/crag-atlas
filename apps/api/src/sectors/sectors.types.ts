@@ -14,6 +14,7 @@ export class SectorDto {
   name!: string;
 
   @ApiProperty({
+    type: String,
     required: false,
     nullable: true,
     description: 'First topo photo, used as the card thumbnail'
@@ -23,13 +24,11 @@ export class SectorDto {
   @ApiProperty()
   description!: string;
 
-  @ApiProperty({ required: false, nullable: true })
-  approachMinutes?: number | null;
-
   @ApiProperty()
   routeCount!: number;
 
   @ApiProperty({
+    type: String,
     required: false,
     nullable: true,
     description: 'Derived from the routes of the sector; null when it has none'
@@ -41,9 +40,6 @@ export class UpdateSectorDto {
   @ApiProperty()
   name!: string;
 
-  @ApiProperty({ required: false, nullable: true })
+  @ApiProperty({ type: String, required: false, nullable: true })
   description?: string | null;
-
-  @ApiProperty({ required: false, nullable: true })
-  approachMinutes?: number | null;
 }
