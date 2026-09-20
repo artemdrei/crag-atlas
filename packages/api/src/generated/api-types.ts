@@ -216,8 +216,10 @@ export interface components {
             grade: string;
             /** @enum {string} */
             type: "sport" | "trad" | "boulder";
-            length?: Record<string, never> | null;
-            boltsCount?: Record<string, never> | null;
+            length?: number | null;
+            boltsCount?: number | null;
+            /** @description Community rating, 0..5 */
+            rating?: number | null;
             description: string;
         };
         UpdateRouteDto: {
@@ -225,9 +227,10 @@ export interface components {
             grade: string;
             /** @enum {string} */
             type: "sport" | "trad" | "boulder";
-            length?: Record<string, never> | null;
-            boltsCount?: Record<string, never> | null;
-            description?: Record<string, never> | null;
+            length?: number | null;
+            boltsCount?: number | null;
+            rating?: number | null;
+            description?: string | null;
         };
         TickDto: {
             id: string;

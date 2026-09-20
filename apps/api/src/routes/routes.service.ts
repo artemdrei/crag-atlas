@@ -11,7 +11,7 @@ import type { RouteDto, UpdateRouteDto } from './routes.types';
 
 // Sector and region names ride along for the breadcrumbs — see SectorsService.
 const COLUMNS =
-  'id, id_sector, name, grade, type, length, bolts_count, description, sectors (name, id_region, regions (name))';
+  'id, id_sector, name, grade, type, length, bolts_count, rating, description, sectors (name, id_region, regions (name))';
 
 interface RouteRow {
   id: string;
@@ -21,6 +21,7 @@ interface RouteRow {
   type: RouteDto['type'];
   length: number | null;
   bolts_count: number | null;
+  rating: number | null;
   description: string;
   sectors: {
     name: string;
@@ -95,6 +96,7 @@ export class RoutesService {
         type: payload.type,
         length: payload.length ?? null,
         bolts_count: payload.boltsCount ?? null,
+        rating: payload.rating ?? null,
         description: payload.description ?? ''
       })
       .eq('id', idRoute);
@@ -122,5 +124,6 @@ const toRouteDto = (row: RouteRow): RouteDto => ({
   type: row.type,
   length: row.length,
   boltsCount: row.bolts_count,
+  rating: row.rating,
   description: row.description
 });

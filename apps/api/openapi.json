@@ -548,12 +548,17 @@
             "enum": ["sport", "trad", "boulder"]
           },
           "length": {
-            "type": "object",
+            "type": "number",
             "nullable": true
           },
           "boltsCount": {
-            "type": "object",
+            "type": "number",
             "nullable": true
+          },
+          "rating": {
+            "type": "number",
+            "nullable": true,
+            "description": "Community rating, 0..5"
           },
           "description": {
             "type": "string"
@@ -585,15 +590,19 @@
             "enum": ["sport", "trad", "boulder"]
           },
           "length": {
-            "type": "object",
+            "type": "number",
             "nullable": true
           },
           "boltsCount": {
-            "type": "object",
+            "type": "number",
+            "nullable": true
+          },
+          "rating": {
+            "type": "number",
             "nullable": true
           },
           "description": {
-            "type": "object",
+            "type": "string",
             "nullable": true
           }
         },

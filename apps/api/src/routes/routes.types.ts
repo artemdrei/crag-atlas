@@ -25,11 +25,19 @@ export class RouteDto {
   @ApiProperty({ enum: ['sport', 'trad', 'boulder'] })
   type!: 'sport' | 'trad' | 'boulder';
 
-  @ApiProperty({ required: false, nullable: true })
+  @ApiProperty({ type: Number, required: false, nullable: true })
   length?: number | null;
 
-  @ApiProperty({ required: false, nullable: true })
+  @ApiProperty({ type: Number, required: false, nullable: true })
   boltsCount?: number | null;
+
+  @ApiProperty({
+    type: Number,
+    required: false,
+    nullable: true,
+    description: 'Community rating, 0..5'
+  })
+  rating?: number | null;
 
   @ApiProperty()
   description!: string;
@@ -45,12 +53,15 @@ export class UpdateRouteDto {
   @ApiProperty({ enum: ['sport', 'trad', 'boulder'] })
   type!: 'sport' | 'trad' | 'boulder';
 
-  @ApiProperty({ required: false, nullable: true })
+  @ApiProperty({ type: Number, required: false, nullable: true })
   length?: number | null;
 
-  @ApiProperty({ required: false, nullable: true })
+  @ApiProperty({ type: Number, required: false, nullable: true })
   boltsCount?: number | null;
 
-  @ApiProperty({ required: false, nullable: true })
+  @ApiProperty({ type: Number, required: false, nullable: true })
+  rating?: number | null;
+
+  @ApiProperty({ type: String, required: false, nullable: true })
   description?: string | null;
 }
