@@ -22,7 +22,17 @@ export const RouteDetails = ({ route }: Props) => {
       <SummaryRowStyled>
         <GradeBadge grade={route.grade} />
         {!!route.rating && (
-          <Rating value={route.rating} precision={0.5} size="small" readOnly />
+          <RatingRowStyled>
+            <Rating
+              value={route.rating}
+              precision={0.5}
+              size="small"
+              readOnly
+            />
+            <Typography variant="body2" color="text.secondary">
+              {route.rating.toFixed(1)}
+            </Typography>
+          </RatingRowStyled>
         )}
         <MetaStyled variant="body2" color="text.secondary">
           <span>{route.type}</span>
@@ -58,6 +68,12 @@ const SummaryRowStyled = styled('div')`
   align-items: center;
   flex-wrap: wrap;
   gap: ${({ theme }) => theme.spacing(1.5)};
+`;
+
+const RatingRowStyled = styled('div')`
+  display: inline-flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing(0.5)};
 `;
 
 const MetaStyled = styled(Typography)`
