@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import type { AscentStyle } from '@web/shared/ui';
-import { AscentStyleLabel } from '@web/shared/ui';
+import { AscentStyleBadge } from '@web/shared/ui';
 
 interface Ascent {
   id: string;
@@ -38,7 +38,7 @@ export const RouteAscents = () => (
     {DEMO_ASCENTS.map((ascent) => (
       <RowStyled key={ascent.id}>
         <Typography variant="body2">{ascent.climber}</Typography>
-        <AscentStyleLabel ascentStyle={ascent.ascentStyle} />
+        <AscentStyleBadge ascentStyle={ascent.ascentStyle} />
         <Typography variant="caption" color="text.secondary">
           {ascent.climbedAt}
         </Typography>

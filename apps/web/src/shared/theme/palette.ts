@@ -1,3 +1,5 @@
+import type { Tick } from '@crag-atlas/api';
+
 /** French sport grades bucketed by their leading number: 5a…5c, 6a…6c+, … */
 export const GRADE_LEVELS = ['5', '6', '7', '8', '9'] as const;
 
@@ -10,6 +12,8 @@ export interface GradeColor {
   background: string;
   text: string;
 }
+
+export type AscentStyleTone = Tick['ascentStyle'];
 
 // Distinct hue per level, the way gyms colour-code walls: green → yellow →
 // red → purple → black. Every badge is a solid fill of the same intensity;
@@ -33,6 +37,30 @@ const grade: Record<'light' | 'dark', Record<GradeTone, GradeColor>> = {
   }
 };
 
+// Ascent styles read as a scale of cleanliness: the ground-up styles share a
+// green, the rehearsed ones cool down, and an attempt stays amber.
+const ascentStyle: Record<
+  'light' | 'dark',
+  Record<AscentStyleTone, GradeColor>
+> = {
+  light: {
+    onsight: { background: '#2E9E4F', text: '#FFFFFF' },
+    flash: { background: '#2E8E93', text: '#FFFFFF' },
+    retro_flash: { background: '#4A6BB5', text: '#FFFFFF' },
+    redpoint: { background: '#6F8F3A', text: '#FFFFFF' },
+    toprope: { background: '#8A7F70', text: '#FFFFFF' },
+    attempt: { background: '#C98A22', text: '#1A1310' }
+  },
+  dark: {
+    onsight: { background: '#2E4A28', text: '#9FD481' },
+    flash: { background: '#20444A', text: '#62C2C7' },
+    retro_flash: { background: '#22304F', text: '#8FB0F0' },
+    redpoint: { background: '#33421F', text: '#B9D481' },
+    toprope: { background: '#2F2A25', text: '#C7BCAE' },
+    attempt: { background: '#4A3F22', text: '#E8C55A' }
+  }
+};
+
 export const palette = {
   light: {
     background: { default: '#F6F1E9', paper: '#FFFFFF' },
@@ -40,7 +68,8 @@ export const palette = {
     primary: { main: '#C25A2A', dark: '#9C4720' },
     secondary: { main: '#B8963E' },
     divider: '#E4DACB',
-    grade: grade.light
+    grade: grade.light,
+    ascentStyle: ascentStyle.light
   },
   dark: {
     background: { default: '#0B0A09', paper: '#1B1815' },
@@ -48,7 +77,8 @@ export const palette = {
     primary: { main: '#E2703A', dark: '#F08A57' },
     secondary: { main: '#E8C55A' },
     divider: '#2A2521',
-    grade: grade.dark
+    grade: grade.dark,
+    ascentStyle: ascentStyle.dark
   }
 } as const;
 

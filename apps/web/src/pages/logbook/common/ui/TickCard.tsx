@@ -1,10 +1,9 @@
 import { Trans } from '@lingui/react/macro';
-import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import { AscentStyleLabel, GradeBadge } from '@web/shared/ui';
+import { AscentStyleBadge, GradeBadge } from '@web/shared/ui';
 
 import type { Tick } from '../entities';
 
@@ -21,10 +20,7 @@ export const TickCard = ({ tick }: Props) => (
         </Typography>
         {tick.routeGrade && <GradeBadge grade={tick.routeGrade} />}
       </TitleGroupStyled>
-      <Chip
-        size="small"
-        label={<AscentStyleLabel ascentStyle={tick.ascentStyle} />}
-      />
+      <AscentStyleBadge ascentStyle={tick.ascentStyle} />
     </HeaderRowStyled>
 
     {tick.sectorName && (

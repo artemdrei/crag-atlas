@@ -28,7 +28,7 @@ msgid "{0, plural, one {# try} other {# tries}}"
 msgstr "{0, plural, one {# try} other {# tries}}"
 
 #. placeholder {0}: tick.attempts
-#: src/pages/logbook/common/ui/TickCard.tsx:41
+#: src/pages/logbook/common/ui/TickCard.tsx:37
 msgid "{0} attempts"
 msgstr "{0} attempts"
 

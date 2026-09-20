@@ -1,4 +1,5 @@
 export { ApiFeedback } from './ApiFeedback';
+export { AscentStyleBadge } from './AscentStyleBadge';
 export {
   ASCENT_STYLES,
   type AscentStyle,

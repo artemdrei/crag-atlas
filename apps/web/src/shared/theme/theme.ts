@@ -1,16 +1,18 @@
 import { createTheme } from '@mui/material/styles';
 
-import type { GradeColor, GradeTone } from './palette';
+import type { AscentStyleTone, GradeColor, GradeTone } from './palette';
 import { palette } from './palette';
 import { typography } from './typography';
 
 declare module '@mui/material/styles' {
   interface Palette {
     grade: Record<GradeTone, GradeColor>;
+    ascentStyle: Record<AscentStyleTone, GradeColor>;
   }
 
   interface PaletteOptions {
     grade?: Record<GradeTone, GradeColor>;
+    ascentStyle?: Record<AscentStyleTone, GradeColor>;
   }
 }
 

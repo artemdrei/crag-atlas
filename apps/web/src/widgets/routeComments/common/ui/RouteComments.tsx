@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { getInitials } from '@web/shared/lib';
-import { AscentStyleLabel } from '@web/shared/ui';
+import { AscentStyleBadge } from '@web/shared/ui';
 
 import type { RouteComment } from '../entities';
 
@@ -22,7 +22,7 @@ export const RouteComments = ({ comments }: Props) => (
               {comment.postedAt}
             </Typography>
             {!!comment.ascentStyle && (
-              <AscentStyleLabel ascentStyle={comment.ascentStyle} />
+              <AscentStyleBadge ascentStyle={comment.ascentStyle} />
             )}
           </HeaderRowStyled>
           <Typography variant="body2">{comment.text}</Typography>

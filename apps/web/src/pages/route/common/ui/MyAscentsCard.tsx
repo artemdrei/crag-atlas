@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import type { AscentStyle } from '@web/shared/ui';
-import { AscentStyleLabel } from '@web/shared/ui';
+import { AscentStyleBadge } from '@web/shared/ui';
 
 interface MyAscent {
   id: string;
@@ -48,7 +48,7 @@ export const MyAscentsCard = () => (
     {DEMO_MY_ASCENTS.map((ascent) => (
       <EntryStyled key={ascent.id}>
         <EntryHeaderStyled>
-          <AscentStyleLabel ascentStyle={ascent.ascentStyle} />
+          <AscentStyleBadge ascentStyle={ascent.ascentStyle} />
           <Typography variant="body2">{ascent.climbedAt}</Typography>
           <SpacerStyled />
           <Typography variant="caption" color="text.secondary">
