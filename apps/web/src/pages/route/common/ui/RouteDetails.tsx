@@ -1,3 +1,4 @@
+import { Plural, useLingui } from '@lingui/react/macro';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
@@ -9,30 +10,28 @@ export interface Props {
   route: Route;
 }
 
-export const RouteDetails = ({ route }: Props) => (
-  <ContainerStyled>
-    <HeaderRowStyled>
-      <Typography variant="h4">{route.name}</Typography>
-      <GradeBadge grade={route.grade} />
-    </HeaderRowStyled>
-    <StatsRowStyled>
-      <Typography variant="body2" color="text.secondary">
-        {route.type}
-      </Typography>
-      {!!route.length && (
-        <Typography variant="body2" color="text.secondary">
-          {route.length} m
-        </Typography>
-      )}
-      {!!route.boltsCount && (
-        <Typography variant="body2" color="text.secondary">
-          {route.boltsCount} bolts
-        </Typography>
-      )}
-    </StatsRowStyled>
-    <Typography variant="body1">{route.description}</Typography>
-  </ContainerStyled>
-);
+export const RouteDetails = ({ route }: Props) => {
+  const { t } = useLingui();
+
+  return (
+    <ContainerStyled>
+      <HeaderRowStyled>
+        <Typography variant="h4">{route.name}</Typography>
+        <GradeBadge grade={route.grade} />
+      </HeaderRowStyled>
+      <MetaStyled variant="body2" color="text.secondary">
+        <span>{route.type}</span>
+        {!!route.length && <span>{t`${route.length} m`}</span>}
+        {!!route.boltsCount && (
+          <span>
+            <Plural value={route.boltsCount} one="# bolt" other="# bolts" />
+          </span>
+        )}
+      </MetaStyled>
+      <Typography variant="body1">{route.description}</Typography>
+    </ContainerStyled>
+  );
+};
 
 const ContainerStyled = styled('div')`
   display: flex;
@@ -46,8 +45,12 @@ const HeaderRowStyled = styled('div')`
   gap: ${({ theme }) => theme.spacing(1.5)};
 `;
 
-const StatsRowStyled = styled('div')`
+const MetaStyled = styled(Typography)`
   display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing(2)};
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing(1)};
+
+  & > span + span::before {
+    content: '· ';
+  }
 `;

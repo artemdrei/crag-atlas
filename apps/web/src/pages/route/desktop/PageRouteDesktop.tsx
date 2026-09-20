@@ -28,36 +28,42 @@ export const PageRouteDesktop = () => {
   );
 
   return (
-    <PageStyled spacing={3}>
-      <PageBreadcrumbs
-        items={[
-          { label: t`Regions`, to: ROUTES.INDEX },
-          { label: route?.regionName ?? '…', to: buildRegionPath(idRegion) },
-          {
-            label: route?.sectorName ?? '…',
-            to: buildSectorPath(idRegion, idSector)
-          },
-          { label: route?.name ?? '…' }
-        ]}
-      />
+    <PageStyled spacing={2}>
+      <HeaderRowStyled>
+        <PageBreadcrumbs
+          items={[
+            { label: t`Regions`, to: ROUTES.INDEX },
+            { label: route?.regionName ?? '…', to: buildRegionPath(idRegion) },
+            {
+              label: route?.sectorName ?? '…',
+              to: buildSectorPath(idRegion, idSector)
+            },
+            { label: route?.name ?? '…' }
+          ]}
+        />
+        {route && !isEditing && (
+          <EditToggleButton onClick={() => setIsEditing(true)} />
+        )}
+      </HeaderRowStyled>
       <ApiFeedback
         isLoading={isLoading}
         failure={failure}
         loadingLabel={<Trans>Loading route…</Trans>}
       />
       {route && !isEditing && (
-        <>
-          <HeaderRowStyled>
-            <RouteDetails route={route} />
-            <EditToggleButton onClick={() => setIsEditing(true)} />
-          </HeaderRowStyled>
-          {topo ? (
-            <TopoImage topo={topo} idHighlightedRoute={route.id} />
-          ) : (
-            <PhotoPlaceholder variant="wide" />
-          )}
-          <LogTickButton idRoute={route.id} />
-        </>
+        <ColumnsStyled>
+          <PhotoStyled>
+            {topo ? (
+              <TopoImage topo={topo} isContained areLinesHidden />
+            ) : (
+              <PhotoPlaceholder variant="wide" />
+            )}
+          </PhotoStyled>
+          <RouteDetails route={route} />
+          <ActionsStyled>
+            <LogTickButton idRoute={route.id} />
+          </ActionsStyled>
+        </ColumnsStyled>
       )}
       {route && isEditing && (
         <RouteEditForm route={route} onClose={() => setIsEditing(false)} />
@@ -68,11 +74,39 @@ export const PageRouteDesktop = () => {
 
 const HeaderRowStyled = styled('div')`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacing(2)};
 `;
 
+const ColumnsStyled = styled('div')`
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr) 320px;
+  gap: ${({ theme }) => theme.spacing(3)};
+  align-items: start;
+
+  ${({ theme }) => theme.breakpoints.down('lg')} {
+    grid-template-columns: minmax(0, 1fr);
+  }
+`;
+
+const PhotoStyled = styled('div')`
+  position: sticky;
+  top: ${({ theme }) => theme.spacing(2)};
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ActionsStyled = styled('div')`
+  position: sticky;
+  top: ${({ theme }) => theme.spacing(2)};
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing(1.5)};
+`;
+
 const PageStyled = styled(Stack)`
-  padding: ${({ theme }) => theme.spacing(4)};
+  padding: ${({ theme }) => theme.spacing(1, 3, 3)};
 `;

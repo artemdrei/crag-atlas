@@ -12,6 +12,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. placeholder {0}: route.boltsCount
+#: src/pages/route/common/ui/RouteDetails.tsx:27
 #: src/pages/sector/common/ui/RouteCard.tsx:44
 msgid "{0, plural, one {# bolt} other {# bolts}}"
 msgstr "{0, plural, one {# bolt} other {# bolts}}"
@@ -22,6 +23,7 @@ msgid "{0} attempts"
 msgstr "{0} attempts"
 
 #. placeholder {0}: route.length
+#: src/pages/route/common/ui/RouteDetails.tsx:24
 #: src/pages/sector/common/ui/RouteCard.tsx:41
 msgid "{0} m"
 msgstr "{0} m"
@@ -128,8 +130,8 @@ msgstr "Loading ascents…"
 msgid "Loading regions…"
 msgstr "Loading regions…"
 
-#: src/pages/route/desktop/PageRouteDesktop.tsx:46
-#: src/pages/route/mobile/PageRouteMobile.tsx:47
+#: src/pages/route/desktop/PageRouteDesktop.tsx:51
+#: src/pages/route/mobile/PageRouteMobile.tsx:52
 msgid "Loading route…"
 msgstr "Loading route…"
 
@@ -208,8 +210,8 @@ msgstr "Redpoint"
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:34
 #: src/pages/region/desktop/PageRegionDesktop.tsx:27
 #: src/pages/region/mobile/PageRegionMobile.tsx:28
-#: src/pages/route/desktop/PageRouteDesktop.tsx:34
-#: src/pages/route/mobile/PageRouteMobile.tsx:35
+#: src/pages/route/desktop/PageRouteDesktop.tsx:35
+#: src/pages/route/mobile/PageRouteMobile.tsx:36
 #: src/pages/sector/desktop/PageSectorDesktop.tsx:58
 #: src/pages/sector/mobile/PageSectorMobile.tsx:56
 msgid "Regions"

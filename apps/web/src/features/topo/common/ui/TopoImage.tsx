@@ -8,6 +8,8 @@ export interface Props {
   topo: Topo;
   idHighlightedRoute?: string;
   isContained?: boolean;
+  /** Shows the bare photo — the route page draws no lines yet. */
+  areLinesHidden?: boolean;
   colorOf?: (idRoute: string) => string | undefined;
 }
 
@@ -15,6 +17,7 @@ export const TopoImage = ({
   topo,
   idHighlightedRoute,
   isContained,
+  areLinesHidden,
   colorOf
 }: Props) => {
   const [loadedPhoto, setLoadedPhoto] = useState<{
@@ -52,7 +55,7 @@ export const TopoImage = ({
       <OverlayStyled
         viewBox="0 0 1 1"
         preserveAspectRatio="none"
-        isLoaded={isLoaded}
+        isLoaded={isLoaded && !areLinesHidden}
       >
         <title>{topo.label}</title>
         {topo.lines.map((line) => (

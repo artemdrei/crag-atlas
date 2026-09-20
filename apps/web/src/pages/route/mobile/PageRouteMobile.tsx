@@ -29,18 +29,23 @@ export const PageRouteMobile = () => {
 
   return (
     <PageStyled spacing={2}>
-      <PageBreadcrumbs
-        maxItems={2}
-        items={[
-          { label: t`Regions`, to: ROUTES.INDEX },
-          { label: route?.regionName ?? '…', to: buildRegionPath(idRegion) },
-          {
-            label: route?.sectorName ?? '…',
-            to: buildSectorPath(idRegion, idSector)
-          },
-          { label: route?.name ?? '…' }
-        ]}
-      />
+      <HeaderRowStyled>
+        <PageBreadcrumbs
+          maxItems={2}
+          items={[
+            { label: t`Regions`, to: ROUTES.INDEX },
+            { label: route?.regionName ?? '…', to: buildRegionPath(idRegion) },
+            {
+              label: route?.sectorName ?? '…',
+              to: buildSectorPath(idRegion, idSector)
+            },
+            { label: route?.name ?? '…' }
+          ]}
+        />
+        {route && !isEditing && (
+          <EditToggleButton onClick={() => setIsEditing(true)} />
+        )}
+      </HeaderRowStyled>
       <ApiFeedback
         isLoading={isLoading}
         failure={failure}
@@ -48,16 +53,17 @@ export const PageRouteMobile = () => {
       />
       {route && !isEditing && (
         <>
-          <HeaderRowStyled>
-            <RouteDetails route={route} />
-            <EditToggleButton onClick={() => setIsEditing(true)} />
-          </HeaderRowStyled>
-          {topo ? (
-            <TopoImage topo={topo} idHighlightedRoute={route.id} />
-          ) : (
-            <PhotoPlaceholder variant="wide" />
-          )}
-          <LogTickButton idRoute={route.id} />
+          <PhotoStyled>
+            {topo ? (
+              <TopoImage topo={topo} isContained areLinesHidden />
+            ) : (
+              <PhotoPlaceholder variant="wide" />
+            )}
+          </PhotoStyled>
+          <RouteDetails route={route} />
+          <ActionBarStyled>
+            <LogTickButton idRoute={route.id} />
+          </ActionBarStyled>
         </>
       )}
       {route && isEditing && (
@@ -69,9 +75,25 @@ export const PageRouteMobile = () => {
 
 const HeaderRowStyled = styled('div')`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  gap: ${({ theme }) => theme.spacing(2)};
+  gap: ${({ theme }) => theme.spacing(1)};
+`;
+
+const PhotoStyled = styled('div')`
+  height: 38svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ActionBarStyled = styled('div')`
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: ${({ theme }) => theme.spacing(1)};
+  background: ${({ theme }) => theme.palette.background.default};
 `;
 
 const PageStyled = styled(Stack)`
