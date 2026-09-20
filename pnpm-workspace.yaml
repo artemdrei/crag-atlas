@@ -1,3 +1,32 @@
 packages:
   - 'apps/*'
   - 'packages/*'
+
+# Quarantine freshly published releases: a version must be at least 7 days
+# old before pnpm will resolve it. Covers transitive deps too, which is where
+# supply-chain attacks actually land.
+minimumReleaseAge: 10080
+
+minimumReleaseAgeExclude:
+  # Compiled platform binaries. They are republished on every parent release,
+  # so the newest one is almost always inside the window. The parent package
+  # itself is still subject to the rule.
+  - '@rollup/*'
+  - '@turbo/*'
+  - '@biomejs/cli-*'
+
+  # Already installed and working when the rule was introduced; excluded so it
+  # does not force a downgrade. Remove an entry once its pinned version has
+  # aged past the window on its own.
+  - turbo
+  - '@biomejs/biome'
+  - '@tanstack/react-query'
+  - motion
+  - browserslist
+  - '@testing-library/dom'
+
+# multer <2.3.0 has three DoS advisories. It arrives transitively through
+# @nestjs/platform-express; the API exposes no upload endpoint, so this is
+# hygiene rather than an exposed path.
+overrides:
+  multer: '>=2.3.0'
