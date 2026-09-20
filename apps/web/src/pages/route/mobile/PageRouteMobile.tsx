@@ -14,7 +14,13 @@ import { EditToggleButton, RouteEditForm } from '@web/features/catalogEdit';
 import { TopoImage, useApiGetTopos } from '@web/features/topo';
 import { ApiFeedback, PageBreadcrumbs, PhotoPlaceholder } from '@web/shared/ui';
 
-import { LogTickButton, RouteDetails, useApiGetRoute } from '../common';
+import {
+  LogTickButton,
+  MyAscentsCard,
+  RouteDetails,
+  RouteTabs,
+  useApiGetRoute
+} from '../common';
 
 export const PageRouteMobile = () => {
   const { t } = useLingui();
@@ -61,6 +67,8 @@ export const PageRouteMobile = () => {
             )}
           </PhotoStyled>
           <RouteDetails route={route} />
+          <RouteTabs />
+          <MyAscentsCard />
           <ActionBarStyled>
             <LogTickButton idRoute={route.id} />
           </ActionBarStyled>

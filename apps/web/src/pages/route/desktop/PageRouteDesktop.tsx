@@ -13,8 +13,16 @@ import {
 import { EditToggleButton, RouteEditForm } from '@web/features/catalogEdit';
 import { TopoImage, useApiGetTopos } from '@web/features/topo';
 import { ApiFeedback, PageBreadcrumbs, PhotoPlaceholder } from '@web/shared/ui';
+import { DEMO_GRADE_VOTES, GradeConsensus } from '@web/widgets/gradeConsensus';
 
-import { LogTickButton, RouteDetails, useApiGetRoute } from '../common';
+import {
+  LogTickButton,
+  MyAscentsCard,
+  RouteDetails,
+  RouteStats,
+  RouteTabs,
+  useApiGetRoute
+} from '../common';
 
 export const PageRouteDesktop = () => {
   const { t } = useLingui();
@@ -59,9 +67,15 @@ export const PageRouteDesktop = () => {
               <PhotoPlaceholder variant="wide" />
             )}
           </PhotoStyled>
-          <RouteDetails route={route} />
+          <MainColumnStyled>
+            <RouteDetails route={route} />
+            <RouteStats />
+            <GradeConsensus votes={DEMO_GRADE_VOTES} />
+            <RouteTabs />
+          </MainColumnStyled>
           <ActionsStyled>
             <LogTickButton idRoute={route.id} />
+            <MyAscentsCard />
           </ActionsStyled>
         </ColumnsStyled>
       )}
@@ -90,6 +104,13 @@ const ColumnsStyled = styled('div')`
   }
 `;
 
+const MainColumnStyled = styled('div')`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing(3)};
+  min-width: 0;
+`;
+
 const PhotoStyled = styled('div')`
   position: sticky;
   top: ${({ theme }) => theme.spacing(2)};
@@ -97,6 +118,10 @@ const PhotoStyled = styled('div')`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  ${({ theme }) => theme.breakpoints.down('lg')} {
+    position: static;
+  }
 `;
 
 const ActionsStyled = styled('div')`
@@ -105,6 +130,10 @@ const ActionsStyled = styled('div')`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(1.5)};
+
+  ${({ theme }) => theme.breakpoints.down('lg')} {
+    position: static;
+  }
 `;
 
 const PageStyled = styled(Stack)`

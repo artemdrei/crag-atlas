@@ -17,6 +17,16 @@ msgstr ""
 msgid "{0, plural, one {# bolt} other {# bolts}}"
 msgstr "{0, plural, one {# bolt} other {# bolts}}"
 
+#. placeholder {0}: DEMO_MY_ASCENTS.length
+#: src/pages/route/common/ui/MyAscentsCard.tsx:41
+msgid "{0, plural, one {# entry} other {# entries}}"
+msgstr "{0, plural, one {# entry} other {# entries}}"
+
+#. placeholder {0}: ascent.attempts
+#: src/pages/route/common/ui/MyAscentsCard.tsx:55
+msgid "{0, plural, one {# try} other {# tries}}"
+msgstr "{0, plural, one {# try} other {# tries}}"
+
 #. placeholder {0}: tick.attempts
 #: src/pages/logbook/common/ui/TickCard.tsx:41
 msgid "{0} attempts"
@@ -32,6 +42,18 @@ msgstr "{0} m"
 msgid "{routesCount, plural, one {# route} other {# routes}}"
 msgstr "{routesCount, plural, one {# route} other {# routes}}"
 
+#: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:22
+msgid "{total, plural, one {# vote} other {# votes}}"
+msgstr "{total, plural, one {# vote} other {# votes}}"
+
+#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:34
+msgid "Add media"
+msgstr "Add media"
+
+#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:37
+msgid "Add yours"
+msgstr "Add yours"
+
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:60
 msgid "Approach, minutes"
 msgstr "Approach, minutes"
@@ -40,6 +62,14 @@ msgstr "Approach, minutes"
 #: src/features/logTick/mobile/LogTickSheet.tsx:24
 msgid "Ascent logged"
 msgstr "Ascent logged"
+
+#: src/pages/route/common/ui/RouteStats.tsx:14
+msgid "ascents"
+msgstr "ascents"
+
+#: src/pages/route/common/ui/RouteTabs.tsx:24
+msgid "Ascents"
+msgstr "Ascents"
 
 #: src/shared/ui/AscentStyleLabel.tsx:29
 msgid "Attempt"
@@ -57,6 +87,10 @@ msgstr "Bolts"
 #: src/features/logTick/common/ui/TickForm.tsx:88
 msgid "Cancel"
 msgstr "Cancel"
+
+#: src/pages/route/common/ui/RouteTabs.tsx:23
+msgid "Comments"
+msgstr "Comments"
 
 #: src/pages/login/common/ui/EmailOtpForm.tsx:75
 #: src/pages/login/common/ui/EmailOtpForm.tsx:114
@@ -108,6 +142,10 @@ msgstr "Flash"
 msgid "Grade"
 msgstr "Grade"
 
+#: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:19
+msgid "Grade consensus"
+msgstr "Grade consensus"
+
 #: src/pages/profile/common/ui/LocaleSetting.tsx:20
 msgid "Language"
 msgstr "Language"
@@ -130,8 +168,8 @@ msgstr "Loading ascents…"
 msgid "Loading regions…"
 msgstr "Loading regions…"
 
-#: src/pages/route/desktop/PageRouteDesktop.tsx:51
-#: src/pages/route/mobile/PageRouteMobile.tsx:52
+#: src/pages/route/desktop/PageRouteDesktop.tsx:59
+#: src/pages/route/mobile/PageRouteMobile.tsx:58
 msgid "Loading route…"
 msgstr "Loading route…"
 
@@ -160,6 +198,10 @@ msgstr "Logbook"
 msgid "Map"
 msgstr "Map"
 
+#: src/pages/route/common/ui/MyAscentsCard.tsx:38
+msgid "My ascents"
+msgstr "My ascents"
+
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:42
 #: src/pages/logbook/desktop/PageLogbookDesktop.tsx:16
 #: src/pages/logbook/mobile/PageLogbookMobile.tsx:16
@@ -183,6 +225,10 @@ msgstr "No topo yet"
 #: src/features/logTick/common/ui/TickForm.tsx:81
 msgid "Note"
 msgstr "Note"
+
+#: src/pages/route/common/ui/RouteStats.tsx:20
+msgid "onsight"
+msgstr "onsight"
 
 #: src/shared/ui/AscentStyleLabel.tsx:24
 msgid "Onsight"
@@ -210,8 +256,8 @@ msgstr "Redpoint"
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:34
 #: src/pages/region/desktop/PageRegionDesktop.tsx:27
 #: src/pages/region/mobile/PageRegionMobile.tsx:28
-#: src/pages/route/desktop/PageRouteDesktop.tsx:35
-#: src/pages/route/mobile/PageRouteMobile.tsx:36
+#: src/pages/route/desktop/PageRouteDesktop.tsx:43
+#: src/pages/route/mobile/PageRouteMobile.tsx:42
 #: src/pages/sector/desktop/PageSectorDesktop.tsx:58
 #: src/pages/sector/mobile/PageSectorMobile.tsx:56
 msgid "Regions"
@@ -277,6 +323,10 @@ msgstr "Use another email"
 #: src/pages/login/common/ui/EmailOtpForm.tsx:75
 msgid "Verifying…"
 msgstr "Verifying…"
+
+#: src/pages/route/common/ui/RouteTabs.tsx:22
+msgid "Video and photo"
+msgstr "Video and photo"
 
 #. placeholder {0}: email.trim()
 #: src/pages/login/common/ui/EmailOtpForm.tsx:53
