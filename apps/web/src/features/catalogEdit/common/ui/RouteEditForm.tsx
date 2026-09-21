@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 
 import {
   defaultGradeScale,
+  digitsOnly,
   gradeOptions,
   gradeScaleExample,
   gradeScaleName,
@@ -128,19 +129,17 @@ export const RouteEditForm = ({ route, onClose }: Props) => {
       </TextField>
       <TextField
         fullWidth
-        type="number"
         label={t`Length, m`}
         value={length}
-        slotProps={{ htmlInput: { min: 1 } }}
-        onChange={(event) => setLength(event.target.value)}
+        slotProps={{ htmlInput: { inputMode: 'numeric' } }}
+        onChange={(event) => setLength(digitsOnly(event.target.value))}
       />
       <TextField
         fullWidth
-        type="number"
         label={t`Bolts`}
         value={boltsCount}
-        slotProps={{ htmlInput: { min: 0 } }}
-        onChange={(event) => setBoltsCount(event.target.value)}
+        slotProps={{ htmlInput: { inputMode: 'numeric' } }}
+        onChange={(event) => setBoltsCount(digitsOnly(event.target.value))}
       />
       <TextField
         fullWidth

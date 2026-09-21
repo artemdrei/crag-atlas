@@ -1,3 +1,4 @@
+export { digitsOnly } from './digitsOnly';
 export { formatBytes, savedPercent } from './formatBytes';
 export { getInitials } from './getInitials';
 export * from './grade';

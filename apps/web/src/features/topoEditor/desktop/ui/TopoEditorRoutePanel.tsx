@@ -15,6 +15,7 @@ import Typography from '@mui/material/Typography';
 import { useModal } from '@web/app/providers';
 import {
   defaultGradeScale,
+  digitsOnly,
   gradeOptions,
   gradeScaleExample,
   gradeScaleName,
@@ -157,14 +158,20 @@ export const TopoEditorRoutePanel = ({
           size="small"
           label={t`Length, m`}
           value={route.length}
-          onChange={({ target }) => onChange({ length: target.value })}
+          slotProps={{ htmlInput: { inputMode: 'numeric' } }}
+          onChange={({ target }) =>
+            onChange({ length: digitsOnly(target.value) })
+          }
         />
         {route.type === 'sport' && (
           <TextField
             size="small"
             label={t`Bolts`}
             value={route.boltsCount}
-            onChange={({ target }) => onChange({ boltsCount: target.value })}
+            slotProps={{ htmlInput: { inputMode: 'numeric' } }}
+            onChange={({ target }) =>
+              onChange({ boltsCount: digitsOnly(target.value) })
+            }
           />
         )}
       </RowStyled>
