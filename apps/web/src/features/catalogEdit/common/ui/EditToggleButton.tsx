@@ -15,7 +15,12 @@ export const EditToggleButton = ({ onClick }: Props) => {
   if (!hasRole('admin')) return null;
 
   return (
-    <Button size="small" startIcon={<EditIcon />} onClick={onClick}>
+    <Button
+      size="small"
+      variant="outlined"
+      startIcon={<EditIcon />}
+      onClick={onClick}
+    >
       <Trans>Edit</Trans>
     </Button>
   );
