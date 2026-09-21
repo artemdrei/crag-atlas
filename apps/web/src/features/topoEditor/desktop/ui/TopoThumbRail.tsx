@@ -28,10 +28,10 @@ export interface Props {
   idActiveTopo?: string;
   isBusy: boolean;
   onSelect: (idTopo: string) => void;
-  onReorder: (idTopo: string, toIndex: number) => void;
-  onReplace: (idTopo: string, file: File) => void;
-  onAdd: (files: File[]) => void;
-  onDelete: (idTopo: string) => void;
+  onReorder?: (idTopo: string, toIndex: number) => void;
+  onReplace?: (idTopo: string, file: File) => void;
+  onAdd?: (files: File[]) => void;
+  onDelete?: (idTopo: string) => void;
 }
 
 /** Below this the pointer is clicking the thumbnail, not dragging it. */
@@ -79,7 +79,7 @@ export const TopoThumbRail = ({
 
     if (!over || active.id === over.id) return;
 
-    onReorder(
+    onReorder?.(
       String(active.id),
       topos.findIndex(({ id }) => id === over.id)
     );
@@ -126,42 +126,52 @@ export const TopoThumbRail = ({
               isCover={index === 0}
               isActive={topo.id === idActiveTopo}
               isBusy={isBusy}
+              isSortable={!!onReorder}
               onSelect={onSelect}
-              onReplace={(idTopo) => {
-                idReplacing.current = idTopo;
-                replaceRef.current?.click();
-              }}
+              onReplace={
+                onReplace &&
+                ((idTopo) => {
+                  idReplacing.current = idTopo;
+                  replaceRef.current?.click();
+                })
+              }
               onDelete={onDelete}
             />
           ))}
         </SortableContext>
-        <AddTileStyled
-          type="button"
-          disabled={isBusy}
-          onClick={() => addRef.current?.click()}
-        >
-          <AddIcon fontSize="small" />
-          <Typography variant="caption">
-            <Trans>Add photo</Trans>
-          </Typography>
-        </AddTileStyled>
-        <FileInputStyled
-          ref={addRef}
-          type="file"
-          accept="image/*"
-          multiple
-          onChange={() => pick(addRef.current, onAdd)}
-        />
-        <FileInputStyled
-          ref={replaceRef}
-          type="file"
-          accept="image/*"
-          onChange={() =>
-            pick(replaceRef.current, ([file]) =>
-              onReplace(idReplacing.current, file)
-            )
-          }
-        />
+        {onAdd && (
+          <>
+            <AddTileStyled
+              type="button"
+              disabled={isBusy}
+              onClick={() => addRef.current?.click()}
+            >
+              <AddIcon fontSize="small" />
+              <Typography variant="caption">
+                <Trans>Add photo</Trans>
+              </Typography>
+            </AddTileStyled>
+            <FileInputStyled
+              ref={addRef}
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={() => pick(addRef.current, onAdd)}
+            />
+          </>
+        )}
+        {onReplace && (
+          <FileInputStyled
+            ref={replaceRef}
+            type="file"
+            accept="image/*"
+            onChange={() =>
+              pick(replaceRef.current, ([file]) =>
+                onReplace(idReplacing.current, file)
+              )
+            }
+          />
+        )}
       </RailStyled>
       <DragOverlay>
         {dragged && (

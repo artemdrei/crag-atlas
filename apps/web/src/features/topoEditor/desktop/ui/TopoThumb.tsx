@@ -15,9 +15,10 @@ export interface Props {
   isCover: boolean;
   isActive: boolean;
   isBusy: boolean;
+  isSortable: boolean;
   onSelect: (idTopo: string) => void;
-  onReplace: (idTopo: string) => void;
-  onDelete: (idTopo: string) => void;
+  onReplace?: (idTopo: string) => void;
+  onDelete?: (idTopo: string) => void;
 }
 
 export const TopoThumb = ({
@@ -25,6 +26,7 @@ export const TopoThumb = ({
   isCover,
   isActive,
   isBusy,
+  isSortable,
   onSelect,
   onReplace,
   onDelete
@@ -41,7 +43,7 @@ export const TopoThumb = ({
     index,
     activeIndex,
     overIndex
-  } = useSortable({ id: topo.id, disabled: isBusy });
+  } = useSortable({ id: topo.id, disabled: isBusy || !isSortable });
 
   const isTarget = isSorting && index === overIndex && index !== activeIndex;
   const insertAt = !isTarget
@@ -56,6 +58,7 @@ export const TopoThumb = ({
       isActive={isActive}
       isDragging={isDragging}
       isMuted={isSorting && !isDragging}
+      isSortable={isSortable}
       insertAt={insertAt}
       style={{ transform: CSS.Transform.toString(transform), transition }}
       onClick={() => onSelect(topo.id)}
@@ -68,39 +71,45 @@ export const TopoThumb = ({
           <Trans>Cover</Trans>
         </CoverStyled>
       )}
-      <ActionsStyled>
-        <Tooltip title={t`Replace photo`}>
-          <span>
-            <IconButton
-              size="small"
-              aria-label={t`Replace photo`}
-              disabled={isBusy}
-              onClick={(event) => {
-                event.stopPropagation();
-                onReplace(topo.id);
-              }}
-            >
-              <CameraswitchIcon fontSize="small" />
-            </IconButton>
-          </span>
-        </Tooltip>
-        <Tooltip title={t`Delete photo`}>
-          <span>
-            <IconButton
-              size="small"
-              color="error"
-              aria-label={t`Delete photo`}
-              disabled={isBusy}
-              onClick={(event) => {
-                event.stopPropagation();
-                onDelete(topo.id);
-              }}
-            >
-              <DeleteOutlinedIcon fontSize="small" />
-            </IconButton>
-          </span>
-        </Tooltip>
-      </ActionsStyled>
+      {(onReplace || onDelete) && (
+        <ActionsStyled>
+          {onReplace && (
+            <Tooltip title={t`Replace photo`}>
+              <span>
+                <IconButton
+                  size="small"
+                  aria-label={t`Replace photo`}
+                  disabled={isBusy}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    onReplace(topo.id);
+                  }}
+                >
+                  <CameraswitchIcon fontSize="small" />
+                </IconButton>
+              </span>
+            </Tooltip>
+          )}
+          {onDelete && (
+            <Tooltip title={t`Delete photo`}>
+              <span>
+                <IconButton
+                  size="small"
+                  color="error"
+                  aria-label={t`Delete photo`}
+                  disabled={isBusy}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    onDelete(topo.id);
+                  }}
+                >
+                  <DeleteOutlinedIcon fontSize="small" />
+                </IconButton>
+              </span>
+            </Tooltip>
+          )}
+        </ActionsStyled>
+      )}
     </ThumbStyled>
   );
 };
@@ -110,11 +119,13 @@ export const ThumbStyled = styled('div', {
     prop !== 'isActive' &&
     prop !== 'isDragging' &&
     prop !== 'isMuted' &&
+    prop !== 'isSortable' &&
     prop !== 'insertAt'
 })<{
   isActive: boolean;
   isDragging?: boolean;
   isMuted?: boolean;
+  isSortable?: boolean;
   insertAt?: 'before' | 'after';
 }>`
   position: relative;
@@ -123,7 +134,7 @@ export const ThumbStyled = styled('div', {
   height: 84px;
   overflow: hidden;
   background: ${({ theme }) => theme.palette.action.hover};
-  cursor: grab;
+  cursor: ${({ isSortable }) => (isSortable === false ? 'pointer' : 'grab')};
   touch-action: none;
   border: 2px solid
     ${({ theme, isActive }) =>
