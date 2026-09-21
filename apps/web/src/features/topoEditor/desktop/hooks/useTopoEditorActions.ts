@@ -2,7 +2,6 @@ import { useCallback } from 'react';
 
 import type { SaveRouteLine, Topo } from '@crag-atlas/api';
 import { resolveFailureMessage, toFailure } from '@crag-atlas/utils';
-import { useLingui } from '@lingui/react/macro';
 
 import { useModal } from '@web/app/providers';
 import { toast } from '@web/shared/lib';
@@ -31,7 +30,6 @@ export interface Params {
 }
 
 export const useTopoEditorActions = ({ idSector, editor, topos }: Params) => {
-  const { t } = useLingui();
   const { openModal } = useModal();
   const { session, dispatch, resetHistory } = editor;
 
@@ -172,30 +170,39 @@ export const useTopoEditorActions = ({ idSector, editor, topos }: Params) => {
     [openModal, idSector, session.topos]
   );
 
-  const removePhoto = useCallback(
-    async (idTopo: string) => {
-      const current = session.topos[idTopo];
-      const affected = Object.keys(current?.lines ?? {})
-        .map((idRoute) => session.routes[idRoute]?.name)
-        .filter(Boolean);
-
-      if (
-        affected.length > 0 &&
-        !window.confirm(
-          t`This photo carries the lines of: ${affected.join(', ')}. Delete it anyway?`
-        )
-      ) {
-        return;
-      }
-
+  const deletePhoto = useCallback(
+    async (idTopo: string, isForced: boolean) => {
       try {
-        await deleteTopo({ idTopo, isForced: affected.length > 0 });
+        await deleteTopo({ idTopo, isForced });
         resetHistory();
       } catch (error) {
         toast.error(resolveFailureMessage(toFailure(error)));
       }
     },
-    [session.topos, session.routes, deleteTopo, resetHistory, t]
+    [deleteTopo, resetHistory]
+  );
+
+  // Deleting a photo takes its lines with it, so a photo that carries any goes
+  // through a dialog that names the routes losing them.
+  const removePhoto = useCallback(
+    (idTopo: string) => {
+      const current = session.topos[idTopo];
+      const affected = Object.keys(current?.lines ?? {})
+        .map((idRoute) => session.routes[idRoute]?.name)
+        .filter((name): name is string => !!name);
+
+      if (affected.length === 0) {
+        deletePhoto(idTopo, false);
+
+        return;
+      }
+
+      openModal('DELETE_TOPO_PHOTO', {
+        routeNames: affected.join(', '),
+        onConfirm: () => deletePhoto(idTopo, true)
+      });
+    },
+    [session.topos, session.routes, openModal, deletePhoto]
   );
 
   const movePhotoTo = useCallback(

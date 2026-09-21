@@ -8,6 +8,7 @@ declare module '@web/app/providers/modalProvider/types' {
       replacing?: ReplacedTopo;
     };
     DELETE_TOPO_LINE: { routeName: string; onConfirm: () => void };
+    DELETE_TOPO_PHOTO: { routeNames: string; onConfirm: () => void };
     DELETE_ROUTE: {
       routeName: string;
       isNew: boolean;
