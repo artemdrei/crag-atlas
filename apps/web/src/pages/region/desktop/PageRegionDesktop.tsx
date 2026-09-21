@@ -23,13 +23,21 @@ export const PageRegionDesktop = () => {
   const { region } = useApiGetRegion(idRegion);
   const [isEditing, setIsEditing] = useState(false);
   const [idSelectedSector, setIdSelectedSector] = useState<string>();
+  const [isSelectedDirty, setIsSelectedDirty] = useState(false);
+
+  // No form is mounted once nothing is selected, so nothing would ever report
+  // the edits as gone.
+  const selectSector = (idSector?: string) => {
+    setIdSelectedSector(idSector);
+    setIsSelectedDirty(false);
+  };
   const { sectors, isLoading, failure } = useApiGetSectors(idRegion);
   const { columns, changeColumns } = useGridColumns(
     'crag-atlas:sector-columns'
   );
 
   return (
-    <PageStyled spacing={3}>
+    <PageStyled spacing={1}>
       <HeaderRowStyled>
         <PageBreadcrumbs
           items={[
@@ -44,7 +52,7 @@ export const PageRegionDesktop = () => {
             startIcon={<CloseIcon fontSize="small" />}
             onClick={() => {
               setIsEditing(false);
-              setIdSelectedSector(undefined);
+              selectSector(undefined);
             }}
           >
             <Trans>Close editing</Trans>
@@ -66,10 +74,11 @@ export const PageRegionDesktop = () => {
         <SectorsList
           sectors={sectors}
           idSelectedSector={isEditing ? idSelectedSector : undefined}
+          idDirtySector={isSelectedDirty ? idSelectedSector : undefined}
           columns={columns}
           onSelect={(sector) =>
             isEditing
-              ? setIdSelectedSector(sector.id)
+              ? selectSector(sector.id)
               : navigate(buildSectorPath(idRegion, sector.id))
           }
         />
@@ -77,7 +86,8 @@ export const PageRegionDesktop = () => {
           <RegionEditSidebar
             region={region ?? undefined}
             selectedSector={sectors.find(({ id }) => id === idSelectedSector)}
-            onSelectSector={setIdSelectedSector}
+            onSelectSector={selectSector}
+            onDirtyChange={setIsSelectedDirty}
           />
         )}
       </ColumnsStyled>
@@ -102,8 +112,10 @@ const ColumnsStyled = styled('div', {
     isEditing ? 'minmax(0, 1fr) 360px' : 'minmax(0, 1fr)'};
   gap: ${({ theme }) => theme.spacing(3)};
   align-items: start;
+  /* The header rows sit close together; the cards need air under them. */
+  padding-top: ${({ theme }) => theme.spacing(1)};
 `;
 
 const PageStyled = styled(Stack)`
-  padding: ${({ theme }) => theme.spacing(4)};
+  padding: ${({ theme }) => theme.spacing(2, 3, 3)};
 `;

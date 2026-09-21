@@ -1,4 +1,4 @@
-import { type FormEvent, useState } from 'react';
+import { type FormEvent, useEffect, useState } from 'react';
 
 import type { Sector } from '@crag-atlas/api';
 import { useLingui } from '@lingui/react/macro';
@@ -12,12 +12,20 @@ export interface Props {
   sector: Sector;
   /** Omitted inside the editor, where the form is a permanent panel. */
   onClose?: () => void;
+  /** Lets the list outside mark the row this form is holding edits for. */
+  onDirtyChange?: (isDirty: boolean) => void;
 }
 
-export const SectorEditForm = ({ sector, onClose }: Props) => {
+export const SectorEditForm = ({ sector, onClose, onDirtyChange }: Props) => {
   const { t } = useLingui();
   const [name, setName] = useState(sector.name);
   const [description, setDescription] = useState(sector.description);
+
+  const isDirty = name !== sector.name || description !== sector.description;
+
+  useEffect(() => {
+    onDirtyChange?.(isDirty);
+  }, [isDirty, onDirtyChange]);
 
   const { isPending, updateSector } = useApiUpdateSector({
     idSector: sector.id,

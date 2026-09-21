@@ -25,12 +25,14 @@ export interface Props {
   region?: Region;
   selectedSector?: Sector;
   onSelectSector: (idSector?: string) => void;
+  onDirtyChange: (isDirty: boolean) => void;
 }
 
 export const RegionEditSidebar = ({
   region,
   selectedSector,
-  onSelectSector
+  onSelectSector,
+  onDirtyChange
 }: Props) => {
   // The region's own fields are set once; sectors are what this panel is for.
   const [isRegionOpen, setIsRegionOpen] = useState(false);
@@ -74,7 +76,11 @@ export const RegionEditSidebar = ({
           </BackButtonStyled>
           <SectorPhotoPicker idSector={selectedSector.id} />
           {/* Seeded from props once, so another sector needs another instance. */}
-          <SectorEditForm key={selectedSector.id} sector={selectedSector} />
+          <SectorEditForm
+            key={selectedSector.id}
+            sector={selectedSector}
+            onDirtyChange={onDirtyChange}
+          />
         </>
       ) : (
         <HintStyled>

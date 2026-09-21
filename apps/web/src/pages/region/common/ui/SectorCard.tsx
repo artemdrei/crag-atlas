@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react/macro';
 import CardActionArea from '@mui/material/CardActionArea';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
@@ -10,10 +11,16 @@ import type { Sector } from '../entities';
 export interface Props {
   sector: Sector;
   isSelected?: boolean;
+  isUnsaved?: boolean;
   onSelect: (sector: Sector) => void;
 }
 
-export const SectorCard = ({ sector, isSelected, onSelect }: Props) => {
+export const SectorCard = ({
+  sector,
+  isSelected,
+  isUnsaved,
+  onSelect
+}: Props) => {
   const gradeRange = useGradeRange(sector);
 
   return (
@@ -27,7 +34,14 @@ export const SectorCard = ({ sector, isSelected, onSelect }: Props) => {
       </ThumbnailStyled>
       <BodyStyled>
         <HeaderRowStyled>
-          <Typography variant="subtitle1">{sector.name}</Typography>
+          <Typography variant="subtitle1" noWrap>
+            {sector.name}
+          </Typography>
+          {isUnsaved && (
+            <Typography variant="caption" color="warning.main">
+              <Trans>Unsaved</Trans>
+            </Typography>
+          )}
           <GradeBadge grade={gradeRange} />
         </HeaderRowStyled>
         <Typography variant="body2" color="text.secondary">

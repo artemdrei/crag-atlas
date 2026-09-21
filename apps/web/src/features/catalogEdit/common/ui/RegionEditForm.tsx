@@ -1,4 +1,4 @@
-import { type FormEvent, useState } from 'react';
+import { type FormEvent, useEffect, useState } from 'react';
 
 import type { Region } from '@crag-atlas/api';
 import { useLingui } from '@lingui/react/macro';
@@ -12,13 +12,24 @@ export interface Props {
   region: Region;
   /** Omitted in the sidebar, where the form is a permanent panel. */
   onClose?: () => void;
+  /** Lets the grid outside mark the card this form is holding edits for. */
+  onDirtyChange?: (isDirty: boolean) => void;
 }
 
-export const RegionEditForm = ({ region, onClose }: Props) => {
+export const RegionEditForm = ({ region, onClose, onDirtyChange }: Props) => {
   const { t } = useLingui();
   const [name, setName] = useState(region.name);
   const [province, setProvince] = useState(region.province);
   const [rockType, setRockType] = useState(region.rockType);
+
+  const isDirty =
+    name !== region.name ||
+    province !== region.province ||
+    rockType !== region.rockType;
+
+  useEffect(() => {
+    onDirtyChange?.(isDirty);
+  }, [isDirty, onDirtyChange]);
 
   const { isPending, updateRegion } = useApiUpdateRegion({
     idRegion: region.id,

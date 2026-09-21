@@ -18,9 +18,14 @@ import type { Region } from '../../common';
 export interface Props {
   selectedRegion?: Region;
   onSelectRegion: (idRegion?: string) => void;
+  onDirtyChange: (isDirty: boolean) => void;
 }
 
-export const HomeEditSidebar = ({ selectedRegion, onSelectRegion }: Props) => {
+export const HomeEditSidebar = ({
+  selectedRegion,
+  onSelectRegion,
+  onDirtyChange
+}: Props) => {
   const [isAdding, setIsAdding] = useState(false);
 
   return (
@@ -50,7 +55,11 @@ export const HomeEditSidebar = ({ selectedRegion, onSelectRegion }: Props) => {
             photoUrl={selectedRegion.photoUrl}
           />
           {/* Seeded from props once, so another region needs another instance. */}
-          <RegionEditForm key={selectedRegion.id} region={selectedRegion} />
+          <RegionEditForm
+            key={selectedRegion.id}
+            region={selectedRegion}
+            onDirtyChange={onDirtyChange}
+          />
         </>
       ) : (
         <HintStyled>

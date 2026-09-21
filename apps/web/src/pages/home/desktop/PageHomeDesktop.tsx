@@ -21,12 +21,20 @@ export const PageHomeDesktop = () => {
   const { regions, isLoading, failure } = useApiGetRegions();
   const [isEditing, setIsEditing] = useState(false);
   const [idSelectedRegion, setIdSelectedRegion] = useState<string>();
+  const [isSelectedDirty, setIsSelectedDirty] = useState(false);
+
+  // No form is mounted once nothing is selected, so nothing would ever report
+  // the edits as gone.
+  const selectRegion = (idRegion?: string) => {
+    setIdSelectedRegion(idRegion);
+    setIsSelectedDirty(false);
+  };
   const { columns, changeColumns } = useGridColumns(
     'crag-atlas:region-columns'
   );
 
   return (
-    <PageStyled spacing={3}>
+    <PageStyled spacing={1}>
       <HeaderRowStyled>
         {/* The same trail every deeper screen has, so the header does not
             shift as the reader walks down into a region. */}
@@ -63,16 +71,18 @@ export const PageHomeDesktop = () => {
           regions={regions}
           columns={columns}
           idSelectedRegion={isEditing ? idSelectedRegion : undefined}
+          idDirtyRegion={isSelectedDirty ? idSelectedRegion : undefined}
           onSelect={(region) =>
             isEditing
-              ? setIdSelectedRegion(region.id)
+              ? selectRegion(region.id)
               : navigate(buildRegionPath(region.id))
           }
         />
         {isEditing && (
           <HomeEditSidebar
             selectedRegion={regions.find(({ id }) => id === idSelectedRegion)}
-            onSelectRegion={setIdSelectedRegion}
+            onSelectRegion={selectRegion}
+            onDirtyChange={setIsSelectedDirty}
           />
         )}
       </ColumnsStyled>
@@ -103,8 +113,10 @@ const ColumnsStyled = styled('div', {
     isEditing ? 'minmax(0, 1fr) 360px' : 'minmax(0, 1fr)'};
   gap: ${({ theme }) => theme.spacing(3)};
   align-items: start;
+  /* The header rows sit close together; the cards need air under them. */
+  padding-top: ${({ theme }) => theme.spacing(1)};
 `;
 
 const PageStyled = styled(Stack)`
-  padding: ${({ theme }) => theme.spacing(4)};
+  padding: ${({ theme }) => theme.spacing(2, 3, 3)};
 `;

@@ -6,6 +6,8 @@ import { SectorCard } from './SectorCard';
 export interface Props {
   sectors: Sector[];
   idSelectedSector?: string;
+  /** The card whose form holds edits nobody saved yet. */
+  idDirtySector?: string;
   columns?: number;
   onSelect: (sector: Sector) => void;
 }
@@ -13,6 +15,7 @@ export interface Props {
 export const SectorsList = ({
   sectors,
   idSelectedSector,
+  idDirtySector,
   columns = 1,
   onSelect
 }: Props) => (
@@ -22,6 +25,7 @@ export const SectorsList = ({
         key={sector.id}
         sector={sector}
         isSelected={sector.id === idSelectedSector}
+        isUnsaved={sector.id === idDirtySector}
         onSelect={onSelect}
       />
     ))}

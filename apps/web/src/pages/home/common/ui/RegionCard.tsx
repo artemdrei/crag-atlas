@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react/macro';
 import CardActionArea from '@mui/material/CardActionArea';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
@@ -10,10 +11,16 @@ import type { Region } from '../entities';
 export interface Props {
   region: Region;
   isSelected?: boolean;
+  isUnsaved?: boolean;
   onSelect: (region: Region) => void;
 }
 
-export const RegionCard = ({ region, isSelected, onSelect }: Props) => {
+export const RegionCard = ({
+  region,
+  isSelected,
+  isUnsaved,
+  onSelect
+}: Props) => {
   const gradeRange = useGradeRange(region);
 
   return (
@@ -26,7 +33,16 @@ export const RegionCard = ({ region, isSelected, onSelect }: Props) => {
         )}
       </ThumbnailStyled>
       <BodyStyled>
-        <Typography variant="subtitle1">{region.name}</Typography>
+        <HeaderRowStyled>
+          <Typography variant="subtitle1" noWrap>
+            {region.name}
+          </Typography>
+          {isUnsaved && (
+            <Typography variant="caption" color="warning.main">
+              <Trans>Unsaved</Trans>
+            </Typography>
+          )}
+        </HeaderRowStyled>
         <Typography variant="body2" color="text.secondary">
           {region.province} · {region.rockType}
         </Typography>
@@ -76,6 +92,14 @@ const BodyStyled = styled('div')`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(0.5)};
   flex-grow: 1;
+  min-width: 0;
+`;
+
+const HeaderRowStyled = styled('div')`
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: ${({ theme }) => theme.spacing(1)};
   min-width: 0;
 `;
 

@@ -6,6 +6,8 @@ import { RegionCard } from './RegionCard';
 export interface Props {
   regions: Region[];
   idSelectedRegion?: string;
+  /** The card whose form holds edits nobody saved yet. */
+  idDirtyRegion?: string;
   columns?: number;
   onSelect: (region: Region) => void;
 }
@@ -13,6 +15,7 @@ export interface Props {
 export const RegionsGrid = ({
   regions,
   idSelectedRegion,
+  idDirtyRegion,
   columns = 1,
   onSelect
 }: Props) => (
@@ -22,6 +25,7 @@ export const RegionsGrid = ({
         key={region.id}
         region={region}
         isSelected={region.id === idSelectedRegion}
+        isUnsaved={region.id === idDirtyRegion}
         onSelect={onSelect}
       />
     ))}
