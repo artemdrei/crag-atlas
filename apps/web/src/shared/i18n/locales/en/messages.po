@@ -56,12 +56,12 @@ msgstr "{0} m"
 #~ msgid "{choice} per row"
 #~ msgstr "{choice} per row"
 
-#: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:205
+#: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:262
 msgid "{failed} file(s) could not be read as photos."
 msgstr "{failed} file(s) could not be read as photos."
 
 #. placeholder {0}: formatBytes(MAX_PHOTO_BYTES, i18n.locale)
-#: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:196
+#: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:249
 msgid "{oversized} photo(s) stay over {0} even compressed and will be skipped."
 msgstr "{oversized} photo(s) stay over {0} even compressed and will be skipped."
 
@@ -98,14 +98,18 @@ msgid "Add"
 msgstr "Add"
 
 #. placeholder {0}: files.length
-#: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:127
+#: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:172
 msgid "Add {0} photos"
 msgstr "Add {0} photos"
 
-#: src/features/catalogEdit/common/ui/RegionPhotoPicker.tsx:39
-#: src/features/catalogEdit/common/ui/RegionPhotoPicker.tsx:49
-#: src/pages/region/desktop/ui/SectorPhotoPicker.tsx:57
-#: src/pages/region/desktop/ui/SectorPhotoPicker.tsx:68
+#: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:169
+msgid "Add a cover photo"
+msgstr "Add a cover photo"
+
+#: src/features/catalogEdit/desktop/ui/RegionPhotoPicker.tsx:33
+#: src/features/catalogEdit/desktop/ui/RegionPhotoPicker.tsx:43
+#: src/pages/region/desktop/ui/SectorPhotoPicker.tsx:60
+#: src/pages/region/desktop/ui/SectorPhotoPicker.tsx:71
 msgid "Add a photo"
 msgstr "Add a photo"
 
@@ -113,13 +117,13 @@ msgstr "Add a photo"
 msgid "Add a photo to start drawing routes on it."
 msgstr "Add a photo to start drawing routes on it."
 
+#: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:175
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:145
-#: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:129
 msgid "Add photo"
 msgstr "Add photo"
 
 #: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:65
-#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:70
+#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:79
 msgid "Add region"
 msgstr "Add region"
 
@@ -128,7 +132,7 @@ msgid "Add route"
 msgstr "Add route"
 
 #: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:62
-#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:94
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:100
 msgid "Add sector"
 msgstr "Add sector"
 
@@ -136,15 +140,15 @@ msgstr "Add sector"
 #. placeholder {1}: formatBytes(before, i18n.locale)
 #. placeholder {2}: formatBytes(after, i18n.locale)
 #. placeholder {3}: savedAll >= 0 ? `−${savedAll}%` : `+${-savedAll}%`
-#: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:187
+#: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:234
 msgid "All {0}: {1} → {2} ({3})"
 msgstr "All {0}: {1} → {2} ({3})"
 
-#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:46
+#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:51
 msgid "All regions"
 msgstr "All regions"
 
-#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:73
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:75
 msgid "All sectors"
 msgstr "All sectors"
 
@@ -174,8 +178,8 @@ msgstr "Attempt"
 msgid "Attempts"
 msgstr "Attempts"
 
-#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:35
-#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:62
+#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:40
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:64
 msgid "Back"
 msgstr "Back"
 
@@ -188,7 +192,7 @@ msgid "Bolt"
 msgstr "Bolt"
 
 #: src/features/catalogEdit/common/ui/RouteEditForm.tsx:139
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:175
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:171
 msgid "Bolts"
 msgstr "Bolts"
 
@@ -196,16 +200,16 @@ msgstr "Bolts"
 #~ msgid "Both panes scroll together."
 #~ msgstr "Both panes scroll together."
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:133
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:129
 msgid "Boulder"
 msgstr "Boulder"
 
 #: src/features/catalogEdit/common/ui/EditActions.tsx:15
 #: src/features/logTick/common/ui/TickForm.tsx:88
+#: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:287
 #: src/features/topoEditor/desktop/DeleteLineDialog.tsx:42
 #: src/features/topoEditor/desktop/DeletePhotoDialog.tsx:43
 #: src/features/topoEditor/desktop/DeleteRouteDialog.tsx:60
-#: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:229
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -229,8 +233,8 @@ msgstr "Cards per row"
 msgid "Close"
 msgstr "Close"
 
-#: src/pages/home/desktop/PageHomeDesktop.tsx:45
-#: src/pages/region/desktop/PageRegionDesktop.tsx:50
+#: src/pages/home/desktop/PageHomeDesktop.tsx:53
+#: src/pages/region/desktop/PageRegionDesktop.tsx:58
 msgid "Close editing"
 msgstr "Close editing"
 
@@ -242,15 +246,15 @@ msgstr "Close the editor"
 msgid "Comments"
 msgstr "Comments"
 
-#: src/features/topoEditor/desktop/ui/PhotoCompare.tsx:74
+#: src/features/photoUpload/desktop/ui/PhotoCompare.tsx:74
 msgid "Compressed"
 msgstr "Compressed"
 
-#: src/features/topoEditor/desktop/ui/PhotoCompare.tsx:75
+#: src/features/photoUpload/desktop/ui/PhotoCompare.tsx:75
 msgid "Compressed photo"
 msgstr "Compressed photo"
 
-#: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:136
+#: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:183
 msgid "Compressing the photo…"
 msgstr "Compressing the photo…"
 
@@ -279,11 +283,11 @@ msgstr "Crags"
 #~ msgid "Create a new one"
 #~ msgstr "Create a new one"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:238
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:234
 msgid "Create route"
 msgstr "Create route"
 
-#: src/features/topoEditor/desktop/ui/PhotoSwap.tsx:14
+#: src/features/photoUpload/desktop/ui/PhotoSwap.tsx:14
 msgid "Current photo"
 msgstr "Current photo"
 
@@ -300,7 +304,7 @@ msgstr "Date"
 #~ msgstr "Delete"
 
 #: src/features/topoEditor/desktop/DeleteLineDialog.tsx:45
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:249
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:245
 msgid "Delete line"
 msgstr "Delete line"
 
@@ -315,7 +319,7 @@ msgid "Delete point"
 msgstr "Delete point"
 
 #: src/features/topoEditor/desktop/DeleteRouteDialog.tsx:63
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:252
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:248
 msgid "Delete route"
 msgstr "Delete route"
 
@@ -333,8 +337,8 @@ msgstr "Delete the route?"
 
 #: src/features/catalogEdit/common/ui/RouteEditForm.tsx:148
 #: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:53
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:49
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:189
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:57
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:185
 msgid "Description"
 msgstr "Description"
 
@@ -361,7 +365,7 @@ msgstr "Dropped on {0}"
 #~ msgid "Dropped on photo {0}"
 #~ msgstr "Dropped on photo {0}"
 
-#: src/features/catalogEdit/common/ui/EditToggleButton.tsx:19
+#: src/features/catalogEdit/common/ui/EditToggleButton.tsx:24
 #: src/pages/sector/desktop/PageSectorDesktop.tsx:103
 msgid "Edit"
 msgstr "Edit"
@@ -404,7 +408,7 @@ msgid "Flash"
 msgstr "Flash"
 
 #: src/features/catalogEdit/common/ui/RouteEditForm.tsx:120
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:153
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:149
 msgid "Grade"
 msgstr "Grade"
 
@@ -441,7 +445,7 @@ msgid "Leave with unsaved changes?"
 msgstr "Leave with unsaved changes?"
 
 #: src/features/catalogEdit/common/ui/RouteEditForm.tsx:132
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:165
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:161
 msgid "Length, m"
 msgstr "Length, m"
 
@@ -470,7 +474,7 @@ msgstr "Loading comments…"
 msgid "Loading media…"
 msgstr "Loading media…"
 
-#: src/pages/home/desktop/PageHomeDesktop.tsx:59
+#: src/pages/home/desktop/PageHomeDesktop.tsx:67
 #: src/pages/home/mobile/PageHomeMobile.tsx:22
 msgid "Loading regions…"
 msgstr "Loading regions…"
@@ -485,7 +489,7 @@ msgstr "Loading route…"
 msgid "Loading routes…"
 msgstr "Loading routes…"
 
-#: src/pages/region/desktop/PageRegionDesktop.tsx:63
+#: src/pages/region/desktop/PageRegionDesktop.tsx:71
 #: src/pages/region/mobile/PageRegionMobile.tsx:33
 msgid "Loading sectors…"
 msgstr "Loading sectors…"
@@ -537,19 +541,19 @@ msgid "My logbook"
 msgstr "My logbook"
 
 #: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:42
-#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:37
+#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:48
 #: src/features/catalogEdit/common/ui/RouteEditForm.tsx:87
 #: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:44
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:41
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:116
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:49
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:112
 msgid "Name"
 msgstr "Name"
 
-#: src/features/topoEditor/desktop/ui/PhotoSwap.tsx:22
+#: src/features/photoUpload/desktop/ui/PhotoSwap.tsx:22
 msgid "New photo"
 msgstr "New photo"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:107
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:103
 msgid "New route"
 msgstr "New route"
 
@@ -582,7 +586,7 @@ msgid "No videos or photos yet."
 msgstr "No videos or photos yet."
 
 #: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:106
-#: src/pages/sector/common/hooks/useRoutesByTopo.ts:61
+#: src/pages/sector/common/hooks/useRoutesByTopo.ts:60
 msgid "Not on a photo"
 msgstr "Not on a photo"
 
@@ -617,8 +621,8 @@ msgid "or"
 msgstr "or"
 
 #: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:276
-#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:62
-#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:86
+#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:71
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:92
 msgid "Or"
 msgstr "Or"
 
@@ -626,11 +630,11 @@ msgstr "Or"
 #~ msgid "Or create a new one."
 #~ msgstr "Or create a new one."
 
-#: src/features/topoEditor/desktop/ui/PhotoCompare.tsx:66
+#: src/features/photoUpload/desktop/ui/PhotoCompare.tsx:66
 msgid "Original"
 msgstr "Original"
 
-#: src/features/topoEditor/desktop/ui/PhotoCompare.tsx:67
+#: src/features/photoUpload/desktop/ui/PhotoCompare.tsx:67
 msgid "Original photo"
 msgstr "Original photo"
 
@@ -647,19 +651,21 @@ msgstr "Original photo"
 msgid "photo {0}"
 msgstr "photo {0}"
 
-#: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:97
+#: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:130
+#: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:140
 msgid "Photo replaced"
 msgstr "Photo replaced"
 
-#: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:112
+#: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:130
+#: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:155
 msgid "Photo uploaded"
 msgstr "Photo uploaded"
 
-#: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:112
+#: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:155
 msgid "Photos uploaded"
 msgstr "Photos uploaded"
 
-#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:59
+#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:68
 msgid "Pick a region on the left to edit it."
 msgstr "Pick a region on the left to edit it."
 
@@ -671,7 +677,7 @@ msgstr "Pick a route on the left to edit it."
 #~ msgid "Pick a route to draw, or click a line on the photo."
 #~ msgstr "Pick a route to draw, or click a line on the photo."
 
-#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:83
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:89
 msgid "Pick a sector on the left to edit it."
 msgstr "Pick a sector on the left to edit it."
 
@@ -689,7 +695,7 @@ msgstr "Picked up {0}"
 #~ msgid "Picked up photo {0}"
 #~ msgstr "Picked up photo {0}"
 
-#: src/features/topoEditor/desktop/ui/PhotoCompare.tsx:60
+#: src/features/photoUpload/desktop/ui/PhotoCompare.tsx:60
 msgid "Pinch or double-click to zoom — both panes follow the same view."
 msgstr "Pinch or double-click to zoom — both panes follow the same view."
 
@@ -709,7 +715,7 @@ msgid "Profile"
 msgstr "Profile"
 
 #: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:49
-#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:43
+#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:54
 msgid "Province"
 msgstr "Province"
 
@@ -721,13 +727,13 @@ msgstr "Province"
 #~ msgid "Quality"
 #~ msgstr "Quality"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:219
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:221
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:215
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:217
 msgid "Reader view"
 msgstr "Reader view"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:207
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:210
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:203
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:206
 msgid "Redo"
 msgstr "Redo"
 
@@ -739,7 +745,7 @@ msgstr "Redpoint"
 #~ msgid "Redraw line"
 #~ msgstr "Redraw line"
 
-#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:47
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:49
 msgid "Region"
 msgstr "Region"
 
@@ -749,8 +755,8 @@ msgid "Region {0} created"
 msgstr "Region {0} created"
 
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:35
-#: src/pages/home/desktop/PageHomeDesktop.tsx:33
-#: src/pages/region/desktop/PageRegionDesktop.tsx:36
+#: src/pages/home/desktop/PageHomeDesktop.tsx:41
+#: src/pages/region/desktop/PageRegionDesktop.tsx:44
 #: src/pages/region/mobile/PageRegionMobile.tsx:25
 #: src/pages/route/desktop/PageRouteDesktop.tsx:58
 #: src/pages/route/mobile/PageRouteMobile.tsx:56
@@ -775,15 +781,19 @@ msgstr "Reload"
 #~ msgid "Replace and remove lines"
 #~ msgstr "Replace and remove lines"
 
+#: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:170
+#: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:301
 #: src/features/topoEditor/desktop/ui/TopoThumb.tsx:72
 #: src/features/topoEditor/desktop/ui/TopoThumb.tsx:76
-#: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:125
-#: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:242
 msgid "Replace photo"
 msgstr "Replace photo"
 
-#: src/features/catalogEdit/common/ui/RegionPhotoPicker.tsx:49
-#: src/pages/region/desktop/ui/SectorPhotoPicker.tsx:68
+#: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:168
+msgid "Replace the cover photo"
+msgstr "Replace the cover photo"
+
+#: src/features/catalogEdit/desktop/ui/RegionPhotoPicker.tsx:43
+#: src/pages/region/desktop/ui/SectorPhotoPicker.tsx:71
 msgid "Replace the photo"
 msgstr "Replace the photo"
 
@@ -796,15 +806,15 @@ msgid "Retro flash"
 msgstr "Retro flash"
 
 #: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:56
-#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:49
+#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:60
 msgid "Rock type"
 msgstr "Rock type"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:109
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:105
 msgid "Route №{number}"
 msgstr "Route №{number}"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:111
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:107
 msgid "Route not on the wall yet"
 msgstr "Route not on the wall yet"
 
@@ -816,7 +826,7 @@ msgstr "Routes"
 msgid "Save"
 msgstr "Save"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:240
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:236
 msgid "Save changes"
 msgstr "Save changes"
 
@@ -824,7 +834,7 @@ msgstr "Save changes"
 #~ msgid "Save route"
 #~ msgstr "Save route"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:230
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:226
 msgid "Saved changes go live for everyone straight away."
 msgstr "Saved changes go live for everyone straight away."
 
@@ -874,7 +884,7 @@ msgstr "softer"
 msgid "Something went wrong"
 msgstr "Something went wrong"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:130
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:126
 msgid "Sport"
 msgstr "Sport"
 
@@ -882,7 +892,7 @@ msgstr "Sport"
 msgid "Style"
 msgstr "Style"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:140
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:136
 msgid "System"
 msgstr "System"
 
@@ -894,7 +904,7 @@ msgstr "System"
 msgid "The line drawn for {routeName} disappears from this photo, for everyone, straight away. You can draw it again."
 msgstr "The line drawn for {routeName} disappears from this photo, for everyone, straight away. You can draw it again."
 
-#: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:217
+#: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:275
 msgid "The lines are kept. The proportions match, so they should land where they are now — check them after replacing."
 msgstr "The lines are kept. The proportions match, so they should land where they are now — check them after replacing."
 
@@ -906,7 +916,7 @@ msgstr "The lines are kept. The proportions match, so they should land where the
 #~ msgid "The new photo has different proportions, so the lines drawn on this one would no longer match it. Replace the photo and remove its lines?"
 #~ msgstr "The new photo has different proportions, so the lines drawn on this one would no longer match it. Replace the photo and remove its lines?"
 
-#: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:211
+#: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:269
 msgid "The new photo has different proportions. The lines are kept, but they will sit off the rock until you drag their points onto it."
 msgstr "The new photo has different proportions. The lines are kept, but they will sit off the rock until you drag their points onto it."
 
@@ -918,9 +928,9 @@ msgstr "The new photo has different proportions. The lines are kept, but they wi
 msgid "Theme"
 msgstr "Theme"
 
-#: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:104
-#~ msgid "This file could not be read as a photo."
-#~ msgstr "This file could not be read as a photo."
+#: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:260
+msgid "This file could not be read as a photo."
+msgstr "This file could not be read as a photo."
 
 #. placeholder {0}: affected.join(', ')
 #: src/features/topoEditor/desktop/hooks/useTopoEditorActions.ts:185
@@ -930,6 +940,11 @@ msgstr "Theme"
 #: src/features/topoEditor/desktop/DeletePhotoDialog.tsx:34
 msgid "This photo carries the lines of: {routeNames}. It disappears from the sector together with those lines, for everyone, straight away. The routes themselves stay in the catalog."
 msgstr "This photo carries the lines of: {routeNames}. It disappears from the sector together with those lines, for everyone, straight away. The routes themselves stay in the catalog."
+
+#. placeholder {0}: formatBytes(MAX_PHOTO_BYTES, i18n.locale)
+#: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:244
+msgid "This photo stays over {0} even compressed."
+msgstr "This photo stays over {0} even compressed."
 
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:72
 msgid "this route"
@@ -959,12 +974,14 @@ msgstr "Top rope"
 msgid "Type"
 msgstr "Type"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:196
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:199
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:192
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:195
 msgid "Undo"
 msgstr "Undo"
 
 #: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:52
+#: src/pages/home/common/ui/RegionCard.tsx:42
+#: src/pages/region/common/ui/SectorCard.tsx:42
 msgid "Unsaved"
 msgstr "Unsaved"
 
@@ -972,17 +989,17 @@ msgstr "Unsaved"
 #~ msgid "Unsaved changes"
 #~ msgstr "Unsaved changes"
 
-#: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:249
+#: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:303
 msgid "Upload"
 msgstr "Upload"
 
 #. placeholder {0}: sendable.length
-#: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:247
+#: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:305
 msgid "Upload {0} photos"
 msgstr "Upload {0} photos"
 
 #. placeholder {0}: sendable.length
-#: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:237
+#: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:295
 msgid "Uploading {uploaded} of {0}…"
 msgstr "Uploading {uploaded} of {0}…"
 
