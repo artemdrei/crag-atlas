@@ -23,7 +23,6 @@ export const GRADE_SCALES = [
 export type RouteGradeScale = (typeof ROUTE_GRADE_SCALES)[number];
 export type BoulderGradeScale = (typeof BOULDER_GRADE_SCALES)[number];
 export type GradeScale = (typeof GRADE_SCALES)[number];
-/** What a climber who has not chosen yet sees. */
 export const DEFAULT_ROUTE_GRADE_SCALE: RouteGradeScale = 'french';
 export const DEFAULT_BOULDER_GRADE_SCALE: BoulderGradeScale = 'vscale';
 

@@ -36,11 +36,9 @@ export const gradeScalesForType = (
 ): readonly GradeScale[] =>
   type === 'boulder' ? BOULDER_GRADE_SCALES : ROUTE_GRADE_SCALES;
 
-/** What a route of this type starts out graded in. */
 export const defaultGradeScale = (type: 'sport' | 'boulder'): GradeScale =>
   type === 'boulder' ? 'vscale' : 'french';
 
-/** A sample grade in this scale, to show next to its name. */
 export const gradeScaleExample = (scale: GradeScale): string => {
   const group = getScale(scale)?.conversionGroup;
   const example = group ? EXAMPLE_GRADE[group] : undefined;
@@ -52,6 +50,5 @@ export const gradeScaleExample = (scale: GradeScale): string => {
   return convertGrade(example.grade, example.scale, scale);
 };
 
-/** Every grade the scale defines, in order: the options of a grade picker. */
 export const gradeOptions = (scale: GradeScale): string[] =>
   getScale(scale)?.grades ?? [];

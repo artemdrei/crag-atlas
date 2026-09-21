@@ -80,8 +80,6 @@ export const TopoEditorRoutePanel = ({
       onConfirm: onDelete
     });
 
-  // A grade belongs to its scale, so switching systems drops one the new
-  // scale does not define.
   const changeScale = (next: GradeScale) => {
     onChange({
       gradeScale: next,
@@ -89,8 +87,6 @@ export const TopoEditorRoutePanel = ({
     });
   };
 
-  // Boulder and route scales are separate families, so the type decides which
-  // systems are even on offer — and drags the grade along when it changes.
   const changeType = (next: Route['type']) => {
     if (gradeScalesForType(next).includes(route.gradeScale)) {
       onChange({ type: next });

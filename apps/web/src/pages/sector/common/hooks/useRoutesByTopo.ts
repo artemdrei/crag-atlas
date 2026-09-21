@@ -14,7 +14,6 @@ export interface RouteGroup {
 export interface Params {
   routes: Route[];
   topos: Topo[];
-  /** The number each route wears on the photo; the list follows it. */
   numberOf: Record<string, number>;
 }
 
