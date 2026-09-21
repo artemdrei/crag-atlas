@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import { Trans, useLingui } from '@lingui/react/macro';
@@ -11,7 +11,6 @@ import {
   buildRoutePath,
   ROUTES
 } from '@web/app/router/routes';
-import { EditToggleButton, SectorEditForm } from '@web/features/catalogEdit';
 import {
   orderRoutes,
   TopoGalleryMobile,
@@ -36,7 +35,6 @@ export const PageSectorMobile = () => {
   const { idRegion = '', idSector = '' } = useParams();
   const navigate = useNavigate();
   const { sector } = useApiGetSector(idSector);
-  const [isEditing, setIsEditing] = useState(false);
   const { routes, isLoading, failure } = useApiGetRoutes(idSector);
   const { topos } = useApiGetTopos(idSector);
   const { idActiveTopo, selectTopo } = useTopoGallery({ topos });
@@ -49,7 +47,7 @@ export const PageSectorMobile = () => {
     [topos, routes]
   );
 
-  const groups = useRoutesByTopo({ routes, topos });
+  const groups = useRoutesByTopo({ routes, topos, numberOf });
 
   const colorOf = (idRoute: string) => {
     const route = routes.find(({ id }) => id === idRoute);
@@ -77,12 +75,8 @@ export const PageSectorMobile = () => {
             { label: sector?.name ?? '…' }
           ]}
         />
-        {!isEditing && <EditToggleButton onClick={() => setIsEditing(true)} />}
       </HeaderRowStyled>
-      {isEditing && sector && (
-        <SectorEditForm sector={sector} onClose={() => setIsEditing(false)} />
-      )}
-      {!isEditing && sector?.description && (
+      {sector?.description && (
         <Typography variant="body2" color="text.secondary">
           {sector.description}
         </Typography>

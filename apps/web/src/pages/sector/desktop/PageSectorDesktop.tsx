@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import { Trans, useLingui } from '@lingui/react/macro';
+import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { styled, useTheme } from '@mui/material/styles';
@@ -14,7 +15,6 @@ import {
   buildSectorEditPath,
   ROUTES
 } from '@web/app/router/routes';
-import { EditToggleButton, SectorEditForm } from '@web/features/catalogEdit';
 import {
   findTopoOfRoute,
   orderRoutes,
@@ -41,7 +41,6 @@ export const PageSectorDesktop = () => {
   const { idRegion = '', idSector = '' } = useParams();
   const navigate = useNavigate();
   const { sector } = useApiGetSector(idSector);
-  const [isEditing, setIsEditing] = useState(false);
   const { routes, isLoading, failure } = useApiGetRoutes(idSector);
   const { topos } = useApiGetTopos(idSector);
   const { idActiveTopo, selectTopo } = useTopoGallery({ topos });
@@ -94,24 +93,18 @@ export const PageSectorDesktop = () => {
             { label: sector?.name ?? '…' }
           ]}
         />
-        <HeaderActionsStyled>
-          {hasRole('admin') && (
-            <Button
-              size="small"
-              onClick={() => navigate(buildSectorEditPath(idRegion, idSector))}
-            >
-              <Trans>Edit topo</Trans>
-            </Button>
-          )}
-          {!isEditing && (
-            <EditToggleButton onClick={() => setIsEditing(true)} />
-          )}
-        </HeaderActionsStyled>
+        {hasRole('admin') && (
+          <Button
+            size="small"
+            variant="outlined"
+            startIcon={<EditIcon />}
+            onClick={() => navigate(buildSectorEditPath(idRegion, idSector))}
+          >
+            <Trans>Edit</Trans>
+          </Button>
+        )}
       </HeaderRowStyled>
-      {isEditing && sector && (
-        <SectorEditForm sector={sector} onClose={() => setIsEditing(false)} />
-      )}
-      {!isEditing && sector?.description && (
+      {sector?.description && (
         <Typography variant="body2" color="text.secondary">
           {sector.description}
         </Typography>
@@ -148,12 +141,6 @@ export const PageSectorDesktop = () => {
     </PageStyled>
   );
 };
-
-const HeaderActionsStyled = styled('div')`
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing(1)};
-`;
 
 const HeaderRowStyled = styled('div')`
   display: flex;

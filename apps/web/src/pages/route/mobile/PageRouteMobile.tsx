@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useParams } from 'react-router';
 
 import { Trans, useLingui } from '@lingui/react/macro';
@@ -11,7 +10,6 @@ import {
   buildSectorPath,
   ROUTES
 } from '@web/app/router/routes';
-import { EditToggleButton, RouteEditForm } from '@web/features/catalogEdit';
 import { TopoImage, useRouteTopo } from '@web/features/topo';
 import { getGradeColor } from '@web/shared/theme/palette';
 import { ApiFeedback, PageBreadcrumbs, PhotoPlaceholder } from '@web/shared/ui';
@@ -32,7 +30,6 @@ export const PageRouteMobile = () => {
   const theme = useTheme();
   const { openModal } = useModal();
   const { route, isLoading, failure } = useApiGetRoute(idRoute);
-  const [isEditing, setIsEditing] = useState(false);
   const { topo, lines, numberOf } = useRouteTopo(idSector, idRoute);
 
   const colorOf = () =>
@@ -65,16 +62,13 @@ export const PageRouteMobile = () => {
             { label: route?.name ?? '…' }
           ]}
         />
-        {route && !isEditing && (
-          <EditToggleButton onClick={() => setIsEditing(true)} />
-        )}
       </HeaderRowStyled>
       <ApiFeedback
         isLoading={isLoading}
         failure={failure}
         loadingLabel={<Trans>Loading route…</Trans>}
       />
-      {route && !isEditing && (
+      {route && (
         <>
           <PhotoStyled>
             {topo ? (
@@ -121,9 +115,6 @@ export const PageRouteMobile = () => {
             <LogTickButton idRoute={route.id} />
           </ActionBarStyled>
         </>
-      )}
-      {route && isEditing && (
-        <RouteEditForm route={route} onClose={() => setIsEditing(false)} />
       )}
     </PageStyled>
   );
