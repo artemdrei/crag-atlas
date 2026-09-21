@@ -37,6 +37,20 @@ export const assertWebp = ({ buffer }: UploadedPhoto): void => {
   }
 };
 
+/** Multipart carries strings only, and there is no global ValidationPipe. */
+export const parseDimension = (value: unknown, field: string): number => {
+  const parsed = Number(value);
+
+  if (!Number.isInteger(parsed) || parsed <= 0) {
+    throw new ValidationException(
+      `"${field}" must be a positive integer`,
+      'PHOTO_DIMENSION_INVALID'
+    );
+  }
+
+  return parsed;
+};
+
 export const uploadPhoto = async (
   client: SupabaseClient,
   bucket: string,

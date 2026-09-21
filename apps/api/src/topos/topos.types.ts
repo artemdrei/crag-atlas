@@ -128,11 +128,3 @@ export class ReorderToposDto {
   @ApiProperty({ type: [TopoOrderDto] })
   items!: TopoOrderDto[];
 }
-
-/** What multer hands over; `@types/multer` is not installed. */
-export interface UploadedPhoto {
-  originalname: string;
-  mimetype: string;
-  size: number;
-  buffer: Buffer;
-}

@@ -23,9 +23,13 @@ import { CurrentUser } from '../common/decorators/authUser.decorator';
 import { AdminGuard } from '../common/guards/admin.guard';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
 import { SupabaseAuthGuard } from '../common/guards/supabaseAuth.guard';
-import { MAX_PHOTO_BYTES, parseDimension } from './topoStorage';
+import {
+  MAX_PHOTO_BYTES,
+  parseDimension,
+  type UploadedPhoto
+} from '../common/utils/photoStorage';
 import { ToposService } from './topos.service';
-import { TopoDto, UpdateTopoDto, type UploadedPhoto } from './topos.types';
+import { TopoDto, UpdateTopoDto } from './topos.types';
 
 @Controller('topos')
 @UseGuards(SupabaseAuthGuard, AdminGuard)

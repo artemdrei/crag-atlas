@@ -11,20 +11,18 @@ import {
 } from '../common/exceptions/database.exception';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
 import type { GradeScale } from '../common/utils/grade';
-import { userClient } from '../common/utils/userClient';
-import { publicSupabase, storagePublicUrl } from '../config/supabase.client';
 import {
   assertWebp,
   buildPhotoPath,
   removePhoto,
+  type UploadedPhoto,
   uploadPhoto
-} from './topoStorage';
-import type {
-  ReorderToposDto,
-  TopoDto,
-  UpdateTopoDto,
-  UploadedPhoto
-} from './topos.types';
+} from '../common/utils/photoStorage';
+import { userClient } from '../common/utils/userClient';
+import { publicSupabase, storagePublicUrl } from '../config/supabase.client';
+import type { ReorderToposDto, TopoDto, UpdateTopoDto } from './topos.types';
+
+export const TOPOS_BUCKET = 'topos';
 
 const COLUMNS =
   'id, id_sector, label, storage_path, sort_order, width, height, route_lines (id_route, id_topo, points, bolts, anchor, label_offset_x, label_offset_y, routes (name, grade, grade_scale))';
@@ -81,7 +79,7 @@ export class ToposService {
     // Before the upload: a throw here must not orphan the stored file.
     const sortOrder = await this.nextSortOrder(idSector);
 
-    await uploadPhoto(client, path, photo);
+    await uploadPhoto(client, TOPOS_BUCKET, path, photo);
 
     const { data, error } = await client
       .from('topos')
@@ -97,7 +95,7 @@ export class ToposService {
       .single<TopoRow>();
 
     if (error) {
-      await removePhoto(client, path);
+      await removePhoto(client, TOPOS_BUCKET, path);
 
       throw writeFailed('Could not add the photo', 'TOPO_CREATE_FAILED', error);
     }
@@ -141,7 +139,7 @@ export class ToposService {
     const client = userClient(authUser);
     const path = buildPhotoPath(current.id_sector);
 
-    await uploadPhoto(client, path, photo);
+    await uploadPhoto(client, TOPOS_BUCKET, path, photo);
 
     const { error } = await client
       .from('topos')
@@ -149,7 +147,7 @@ export class ToposService {
       .eq('id', idTopo);
 
     if (error) {
-      await removePhoto(client, path);
+      await removePhoto(client, TOPOS_BUCKET, path);
 
       throw writeFailed(
         'Could not replace the photo',
@@ -158,7 +156,7 @@ export class ToposService {
       );
     }
 
-    await removePhoto(client, current.storage_path);
+    await removePhoto(client, TOPOS_BUCKET, current.storage_path);
 
     return this.findOne(idTopo);
   }
@@ -192,7 +190,7 @@ export class ToposService {
       );
     }
 
-    await removePhoto(client, current.storage_path);
+    await removePhoto(client, TOPOS_BUCKET, current.storage_path);
   }
 
   async reorder(
@@ -276,7 +274,7 @@ export class ToposService {
 const toTopoDto = (row: TopoRow): TopoDto => ({
   id: row.id,
   label: row.label,
-  photoUrl: storagePublicUrl('topos', row.storage_path),
+  photoUrl: storagePublicUrl(TOPOS_BUCKET, row.storage_path),
   sortOrder: row.sort_order,
   width: row.width,
   height: row.height,
