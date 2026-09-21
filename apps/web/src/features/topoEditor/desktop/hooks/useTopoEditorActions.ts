@@ -123,20 +123,26 @@ export const useTopoEditorActions = ({ idSector, editor, topos }: Params) => {
     [dispatch]
   );
 
+  /** Resolves to whether the route is gone, so a caller whose whole page is
+      that route does not navigate away from a failed delete. */
   const removeRoute = useCallback(
     async (idRoute: string) => {
       if (session.routes[idRoute]?.isNew) {
         dispatch({ type: 'REMOVE_ROUTE', idRoute });
 
-        return;
+        return true;
       }
 
       try {
         await deleteRoute(idRoute);
         dispatch({ type: 'REMOVE_ROUTE', idRoute });
         resetHistory();
+
+        return true;
       } catch (error) {
         toast.error(resolveFailureMessage(toFailure(error)));
+
+        return false;
       }
     },
     [session.routes, deleteRoute, dispatch, resetHistory]
