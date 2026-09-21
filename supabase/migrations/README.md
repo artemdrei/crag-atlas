@@ -31,3 +31,4 @@ Apply a migration in the Supabase dashboard (SQL Editor) or with
 | 020 | `020_restore_view_security_invoker.sql` | Give the stats views back the setting 019 dropped |
 | 021 | `021_grade_scale_defaults.sql` | Grade preferences default to French and V Scale, never null |
 | 022 | `022_region_photo.sql` | Cover photo for a region, in its own bucket |
+| 023 | `023_tighten_storage_and_grants.sql` | Drop the storage listing policies; revoke EXECUTE on the sign-up trigger |
