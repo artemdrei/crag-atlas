@@ -2,6 +2,7 @@ import CardActionArea from '@mui/material/CardActionArea';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
+import { useGradeRange } from '@web/shared/lib';
 import { GradeBadge, PhotoPlaceholder } from '@web/shared/ui';
 
 import type { Sector } from '../entities';
@@ -11,31 +12,35 @@ export interface Props {
   onSelect: (sector: Sector) => void;
 }
 
-export const SectorCard = ({ sector, onSelect }: Props) => (
-  <CardAreaStyled onClick={() => onSelect(sector)}>
-    <ThumbnailStyled>
-      {sector.photoUrl ? (
-        <PhotoStyled src={sector.photoUrl} alt={sector.name} />
-      ) : (
-        <PhotoPlaceholder />
-      )}
-    </ThumbnailStyled>
-    <BodyStyled>
-      <HeaderRowStyled>
-        <Typography variant="subtitle1">{sector.name}</Typography>
-        <GradeBadge grade={sector.gradeRange} />
-      </HeaderRowStyled>
-      <Typography variant="body2" color="text.secondary">
-        {sector.description}
-      </Typography>
-      <FooterRowStyled>
-        <Typography variant="caption" color="text.secondary">
-          {sector.routeCount} routes
+export const SectorCard = ({ sector, onSelect }: Props) => {
+  const gradeRange = useGradeRange(sector);
+
+  return (
+    <CardAreaStyled onClick={() => onSelect(sector)}>
+      <ThumbnailStyled>
+        {sector.photoUrl ? (
+          <PhotoStyled src={sector.photoUrl} alt={sector.name} />
+        ) : (
+          <PhotoPlaceholder />
+        )}
+      </ThumbnailStyled>
+      <BodyStyled>
+        <HeaderRowStyled>
+          <Typography variant="subtitle1">{sector.name}</Typography>
+          <GradeBadge grade={gradeRange} />
+        </HeaderRowStyled>
+        <Typography variant="body2" color="text.secondary">
+          {sector.description}
         </Typography>
-      </FooterRowStyled>
-    </BodyStyled>
-  </CardAreaStyled>
-);
+        <FooterRowStyled>
+          <Typography variant="caption" color="text.secondary">
+            {sector.routeCount} routes
+          </Typography>
+        </FooterRowStyled>
+      </BodyStyled>
+    </CardAreaStyled>
+  );
+};
 
 const CardAreaStyled = styled(CardActionArea)`
   display: flex;

@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import { useProfileIdentity } from '@web/app/providers';
 
 import {
+  GradeScaleSetting,
   LocaleSetting,
   ProfileIdentity,
   SignOutButton,
@@ -24,6 +25,7 @@ export const PageProfileMobile = () => {
 
       <ThemeModeSetting />
       <LocaleSetting />
+      <GradeScaleSetting />
       <SignOutButton />
     </PageStyled>
   );

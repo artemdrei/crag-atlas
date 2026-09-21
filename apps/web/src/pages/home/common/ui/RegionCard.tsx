@@ -2,6 +2,7 @@ import CardActionArea from '@mui/material/CardActionArea';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
+import { useGradeRange } from '@web/shared/lib';
 import { GradeBadge, PhotoPlaceholder } from '@web/shared/ui';
 
 import type { Region } from '../entities';
@@ -11,25 +12,29 @@ export interface Props {
   onSelect: (region: Region) => void;
 }
 
-export const RegionCard = ({ region, onSelect }: Props) => (
-  <CardAreaStyled onClick={() => onSelect(region)}>
-    <ThumbnailStyled>
-      <PhotoPlaceholder />
-    </ThumbnailStyled>
-    <BodyStyled>
-      <Typography variant="subtitle1">{region.name}</Typography>
-      <Typography variant="body2" color="text.secondary">
-        {region.province} · {region.rockType}
-      </Typography>
-      <FooterRowStyled>
-        <GradeBadge grade={region.gradeRange} />
-        <Typography variant="caption" color="text.secondary">
-          {region.routeCount} routes · {region.sectorCount} sectors
+export const RegionCard = ({ region, onSelect }: Props) => {
+  const gradeRange = useGradeRange(region);
+
+  return (
+    <CardAreaStyled onClick={() => onSelect(region)}>
+      <ThumbnailStyled>
+        <PhotoPlaceholder />
+      </ThumbnailStyled>
+      <BodyStyled>
+        <Typography variant="subtitle1">{region.name}</Typography>
+        <Typography variant="body2" color="text.secondary">
+          {region.province} · {region.rockType}
         </Typography>
-      </FooterRowStyled>
-    </BodyStyled>
-  </CardAreaStyled>
-);
+        <FooterRowStyled>
+          <GradeBadge grade={gradeRange} />
+          <Typography variant="caption" color="text.secondary">
+            {region.routeCount} routes · {region.sectorCount} sectors
+          </Typography>
+        </FooterRowStyled>
+      </BodyStyled>
+    </CardAreaStyled>
+  );
+};
 
 const CardAreaStyled = styled(CardActionArea)`
   display: flex;

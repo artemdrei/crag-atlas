@@ -4,6 +4,7 @@ import type { Me } from '@crag-atlas/api';
 import type { Session } from '@supabase/supabase-js';
 
 import { apiGet, QUERY_KEYS, useApiQuery } from '@web/shared/api';
+import { GradePreferenceProvider } from '@web/shared/lib';
 import { supabase } from '@web/shared/supabase';
 
 export type Role = 'guest' | 'user' | 'admin';
@@ -21,7 +22,7 @@ const UserContext = createContext<{
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isSessionLoading, setIsSessionLoading] = useState(true);
 
   useEffect(() => {
     // Fires INITIAL_SESSION right away with the persisted session, so there's
@@ -31,19 +32,22 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       data: { subscription }
     } = supabase.auth.onAuthStateChange((_event, nextSession) => {
       setSession(nextSession);
-      setIsLoading(false);
+      setIsSessionLoading(false);
     });
 
     return () => subscription.unsubscribe();
   }, []);
 
-  // The role lives in the database, next to the RLS policies that enforce it —
-  // never in a flag the client could set for itself.
-  const { data: me } = useApiQuery({
+  const { data: me, isLoading: isRoleLoading } = useApiQuery({
     queryKey: QUERY_KEYS.me(),
     queryFn: () => apiGet<Me>('/me'),
     enabled: !!session
   });
+
+  // The session comes back from storage well before `/me` answers, so a guard
+  // that only waited for the session would see an admin as a plain user and
+  // redirect them away from their own page on every reload.
+  const isLoading = isSessionLoading || isRoleLoading;
 
   const value = useMemo(() => {
     const role: Role = me?.isAdmin ? 'admin' : session ? 'user' : 'guest';
@@ -60,7 +64,23 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, [session, isLoading, me]);
 
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+  // Grades are shown in the system this user picked, so the preference has to
+  // reach every badge on the page, not just the profile screen.
+  const gradePreference = useMemo(
+    () => ({
+      route: me?.gradeScaleRoute ?? 'french',
+      boulder: me?.gradeScaleBoulder ?? 'vscale'
+    }),
+    [me]
+  );
+
+  return (
+    <UserContext.Provider value={value}>
+      <GradePreferenceProvider preference={gradePreference}>
+        {children}
+      </GradePreferenceProvider>
+    </UserContext.Provider>
+  );
 };
 
 export const useUser = () => {

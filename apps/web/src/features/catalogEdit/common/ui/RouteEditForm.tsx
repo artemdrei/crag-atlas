@@ -1,9 +1,17 @@
 import { type FormEvent, useState } from 'react';
 
-import type { Route } from '@crag-atlas/api';
+import type { GradeScale, Route } from '@crag-atlas/api';
 import { useLingui } from '@lingui/react/macro';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
+
+import {
+  defaultGradeScale,
+  gradeOptions,
+  gradeScaleExample,
+  gradeScaleName,
+  gradeScalesForType
+} from '@web/shared/lib';
 
 import { useApiUpdateRoute } from '../hooks';
 import { EditActions } from './EditActions';
@@ -11,7 +19,7 @@ import { EditFormStyled } from './EditFormStyled';
 
 type RouteType = Route['type'];
 
-const ROUTE_TYPES: RouteType[] = ['sport', 'trad', 'boulder'];
+const ROUTE_TYPES: RouteType[] = ['sport', 'boulder'];
 
 export interface Props {
   route: Route;
@@ -22,6 +30,7 @@ export const RouteEditForm = ({ route, onClose }: Props) => {
   const { t } = useLingui();
   const [name, setName] = useState(route.name);
   const [grade, setGrade] = useState(route.grade);
+  const [gradeScale, setGradeScale] = useState<GradeScale>(route.gradeScale);
   const [type, setType] = useState<RouteType>(route.type);
   const [length, setLength] = useState(
     route.length ? String(route.length) : ''
@@ -37,12 +46,31 @@ export const RouteEditForm = ({ route, onClose }: Props) => {
     onSaved: onClose
   });
 
+  // A grade only means something inside its own scale, so switching systems
+  // drops a grade the new one does not define.
+  const changeScale = (next: GradeScale) => {
+    setGradeScale(next);
+    setGrade(gradeOptions(next).includes(grade) ? grade : '');
+  };
+
+  // Boulder and route scales are separate families, so the type decides which
+  // systems are on offer — and drags the grade along when it changes.
+  const changeType = (next: RouteType) => {
+    setType(next);
+
+    if (gradeScalesForType(next).includes(gradeScale)) return;
+
+    setGradeScale(defaultGradeScale(next));
+    setGrade('');
+  };
+
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
     updateRoute({
       name: name.trim(),
-      grade: grade.trim(),
+      grade,
+      gradeScale,
       type,
       // Empty means unknown; the database keeps null rather than a made-up 0.
       length: length ? Number(length) : null,
@@ -60,19 +88,39 @@ export const RouteEditForm = ({ route, onClose }: Props) => {
         onChange={(event) => setName(event.target.value)}
       />
       <TextField
-        fullWidth
-        label={t`Grade`}
-        value={grade}
-        onChange={(event) => setGrade(event.target.value)}
-      />
-      <TextField
         select
         fullWidth
         label={t`Type`}
         value={type}
-        onChange={(event) => setType(event.target.value as RouteType)}
+        onChange={(event) => changeType(event.target.value as RouteType)}
       >
         {ROUTE_TYPES.map((value) => (
+          <MenuItem key={value} value={value}>
+            {value}
+          </MenuItem>
+        ))}
+      </TextField>
+      <TextField
+        select
+        fullWidth
+        label={t`Grade system`}
+        value={gradeScale}
+        onChange={(event) => changeScale(event.target.value as GradeScale)}
+      >
+        {gradeScalesForType(type).map((value) => (
+          <MenuItem key={value} value={value}>
+            {`${gradeScaleName(value)} (${gradeScaleExample(value)})`}
+          </MenuItem>
+        ))}
+      </TextField>
+      <TextField
+        select
+        fullWidth
+        label={t`Grade`}
+        value={grade}
+        onChange={(event) => setGrade(event.target.value)}
+      >
+        {gradeOptions(gradeScale).map((value) => (
           <MenuItem key={value} value={value}>
             {value}
           </MenuItem>

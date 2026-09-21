@@ -18,7 +18,9 @@ export const TickCard = ({ tick }: Props) => (
         <Typography variant="subtitle1">
           {tick.routeName ?? tick.idRoute}
         </Typography>
-        {tick.routeGrade && <GradeBadge grade={tick.routeGrade} />}
+        {tick.routeGrade && (
+          <GradeBadge grade={tick.routeGrade} scale={tick.routeGradeScale} />
+        )}
       </TitleGroupStyled>
       <AscentStyleBadge ascentStyle={tick.ascentStyle} />
     </HeaderRowStyled>

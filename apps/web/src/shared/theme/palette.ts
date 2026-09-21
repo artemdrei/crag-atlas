@@ -1,4 +1,5 @@
-import type { Tick } from '@crag-atlas/api';
+import type { GradeScale, Tick } from '@crag-atlas/api';
+import { getScoreForSort } from '@openbeta/sandbag';
 
 /** French sport grades bucketed by their leading number: 5a…5c, 6a…6c+, … */
 export const GRADE_LEVELS = ['5', '6', '7', '8', '9'] as const;
@@ -85,21 +86,31 @@ export const palette = {
 // A range spans several levels, so colouring it by one of them would lie —
 // it gets the neutral tone, as does anything unreadable. Everything below 5
 // reads as 5 and above 9 as 9: the scale groups routes by feel, not exhaustively.
-export const resolveGradeTone = (grade: string): GradeTone => {
-  const matches = grade.match(/\d\s*[abc]/gi) ?? [];
+// Level boundaries read off the French scale, so a hue keeps the meaning it
+// had before a grade could arrive in any system: 5a and 5.8 look alike now.
+const TONE_THRESHOLDS = GRADE_LEVELS.map((level) => ({
+  tone: level as GradeTone,
+  score: getScoreForSort(`${level}a`, 'french')
+})).reverse();
 
-  if (matches.length !== 1) return 'neutral';
+export const resolveGradeTone = (
+  grade: string,
+  scale: GradeScale
+): GradeTone => {
+  // An unreadable grade scores zero, which no real grade does.
+  const score = getScoreForSort(grade, scale);
 
-  const digit = matches[0][0];
+  if (!score) return 'neutral';
 
-  if (Number(digit) < 5) return '5';
-  if (Number(digit) > 9) return '9';
-
-  return digit as GradeTone;
+  return TONE_THRESHOLDS.find((level) => score >= level.score)?.tone ?? '5';
 };
 
 /** Colour of a route's grade, for anything that is not a `GradeBadge`. */
 export const getGradeColor = (
   grades: Record<GradeTone, GradeColor>,
-  grade?: string
-) => (grade ? grades[resolveGradeTone(grade)].background : undefined);
+  grade?: string,
+  scale?: GradeScale | null
+) =>
+  grade && scale
+    ? grades[resolveGradeTone(grade, scale)].background
+    : undefined;

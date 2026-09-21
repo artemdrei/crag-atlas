@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import { useProfileIdentity } from '@web/app/providers';
 
 import {
+  GradeScaleSetting,
   LocaleSetting,
   ProfileIdentity,
   SignOutButton,
@@ -24,6 +25,7 @@ export const PageProfileDesktop = () => {
 
       <ThemeModeSetting />
       <LocaleSetting />
+      <GradeScaleSetting />
       <SignOutButton />
     </PageStyled>
   );
@@ -34,7 +36,7 @@ const PageStyled = styled('div')`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(2)};
   width: 100%;
-  max-width: 480px;
+  max-width: 720px;
   margin: 0 auto;
   padding: ${({ theme }) => theme.spacing(4)};
 `;
