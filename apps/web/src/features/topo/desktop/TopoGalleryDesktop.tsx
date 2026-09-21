@@ -1,23 +1,20 @@
-import { useControls } from 'react-zoom-pan-pinch';
-
-import { useLingui } from '@lingui/react/macro';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
-import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { PhotoPlaceholder } from '@web/shared/ui';
 
 import type { TopoGalleryProps } from '../common';
-import { TopoThumbStrip, TopoZoomStage } from '../common';
+import { TopoThumbStrip, TopoZoomControls, TopoZoomStage } from '../common';
 
 export const TopoGalleryDesktop = ({
   topos,
   idActiveTopo,
   idHighlightedRoute,
   colorOf,
-  onSelectTopo
+  numberOf,
+  onSelectTopo,
+  onSelectRoute,
+  onHoverRoute
 }: TopoGalleryProps) => {
   const activeTopo = topos.find(({ id }) => id === idActiveTopo);
 
@@ -25,12 +22,17 @@ export const TopoGalleryDesktop = ({
     <GalleryStyled>
       {activeTopo ? (
         <ZoomStageStyled
-          topo={activeTopo}
+          photoUrl={activeTopo.photoUrl}
+          label={activeTopo.label}
+          lines={activeTopo.lines}
           idHighlightedRoute={idHighlightedRoute}
           colorOf={colorOf}
+          numberOf={numberOf}
+          onSelectRoute={onSelectRoute}
+          onHoverRoute={onHoverRoute}
         >
           <CaptionStyled variant="caption">{activeTopo.label}</CaptionStyled>
-          <ZoomControls />
+          <TopoZoomControls />
         </ZoomStageStyled>
       ) : (
         <PhotoPlaceholder variant="wide" />
@@ -43,22 +45,6 @@ export const TopoGalleryDesktop = ({
         />
       )}
     </GalleryStyled>
-  );
-};
-
-const ZoomControls = () => {
-  const { t } = useLingui();
-  const { zoomIn, zoomOut } = useControls();
-
-  return (
-    <ZoomStyled>
-      <IconButton aria-label={t`Zoom in`} onClick={() => zoomIn()}>
-        <AddIcon fontSize="small" />
-      </IconButton>
-      <IconButton aria-label={t`Zoom out`} onClick={() => zoomOut()}>
-        <RemoveIcon fontSize="small" />
-      </IconButton>
-    </ZoomStyled>
   );
 };
 
@@ -88,16 +74,4 @@ const CaptionStyled = styled(Typography)`
   border: 1px solid ${({ theme }) => theme.palette.divider};
   background: ${({ theme }) => theme.palette.background.paper};
   color: ${({ theme }) => theme.palette.text.secondary};
-`;
-
-const ZoomStyled = styled('div')`
-  position: absolute;
-  right: ${({ theme }) => theme.spacing(1.5)};
-  bottom: ${({ theme }) => theme.spacing(1.5)};
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(1)};
-  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
-  border: 1px solid ${({ theme }) => theme.palette.divider};
-  background: ${({ theme }) => theme.palette.background.paper};
 `;

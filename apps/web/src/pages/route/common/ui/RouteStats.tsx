@@ -5,18 +5,25 @@ import Typography from '@mui/material/Typography';
 export interface Props {
   ascentsCount: number;
   onsightCount?: number | null;
+  isCompact?: boolean;
+  className?: string;
 }
 
-export const RouteStats = ({ ascentsCount, onsightCount }: Props) => (
-  <RowStyled>
-    <TileStyled>
+export const RouteStats = ({
+  ascentsCount,
+  onsightCount,
+  isCompact,
+  className
+}: Props) => (
+  <RowStyled className={className}>
+    <TileStyled isCompact={!!isCompact}>
       <ValueStyled variant="h5">{ascentsCount}</ValueStyled>
       <Typography variant="caption" color="text.secondary">
         <Trans>ascents</Trans>
       </Typography>
     </TileStyled>
     {!!onsightCount && (
-      <TileStyled>
+      <TileStyled isCompact={!!isCompact}>
         <ValueStyled variant="h5">
           {Math.round((onsightCount / ascentsCount) * 100)}%
         </ValueStyled>
@@ -33,12 +40,14 @@ const RowStyled = styled('div')`
   gap: ${({ theme }) => theme.spacing(2)};
 `;
 
-const TileStyled = styled('div')`
+const TileStyled = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'isCompact'
+})<{ isCompact: boolean }>`
   flex: 1 1 0;
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(0.5)};
-  padding: ${({ theme }) => theme.spacing(2)};
+  padding: ${({ theme, isCompact }) => theme.spacing(isCompact ? 1.5 : 2)};
   border: 1px solid ${({ theme }) => theme.palette.divider};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
 `;

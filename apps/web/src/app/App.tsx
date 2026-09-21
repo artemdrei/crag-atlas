@@ -7,6 +7,11 @@ import {
   logTickMobileRegistrations
 } from '@web/features/logTick';
 import {
+  topoDesktopRegistrations,
+  topoMobileRegistrations
+} from '@web/features/topo';
+import { topoEditorDesktopRegistrations } from '@web/features/topoEditor';
+import {
   playgroundDesktopRegistrations,
   playgroundMobileRegistrations
 } from '@web/pages/playground/registrations';
@@ -14,15 +19,16 @@ import {
 const AppMobile = lazy(() => import('./mobile/AppMobile'));
 const AppDesktop = lazy(() => import('./desktop/AppDesktop'));
 
-// The playground registrations are empty in a production build — the gate
-// lives in their own module, next to the imports it has to drop.
 const desktopRegistrations = [
   ...logTickDesktopRegistrations,
+  ...topoDesktopRegistrations,
+  ...topoEditorDesktopRegistrations,
   ...playgroundDesktopRegistrations
 ];
 
 const mobileRegistrations = [
   ...logTickMobileRegistrations,
+  ...topoMobileRegistrations,
   ...playgroundMobileRegistrations
 ];
 

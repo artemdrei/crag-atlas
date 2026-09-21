@@ -38,8 +38,42 @@ export const apiPost = <T>(path: string, payload: unknown): Promise<T> =>
 export const apiPatch = <T>(path: string, payload: unknown): Promise<T> =>
   sendJson<T>('PATCH', path, payload);
 
+export const apiPut = <T>(path: string, payload: unknown): Promise<T> =>
+  sendJson<T>('PUT', path, payload);
+
+export const apiDelete = (path: string): Promise<void> =>
+  wrapApiCall(`apiDELETE:${path}`, async () => {
+    const response = await fetch(`${API_BASE_URL}${path}`, {
+      method: 'DELETE',
+      headers: await buildHeaders()
+    });
+
+    if (!response.ok) await throwResponseFailure(response, `DELETE ${path}`);
+  });
+
+/**
+ * Multipart, so the content type is left to the browser: it has to append the
+ * boundary, and any value we set here would replace it and break the parse.
+ */
+export const apiUpload = <T>(
+  method: 'POST' | 'PUT',
+  path: string,
+  body: FormData
+): Promise<T> =>
+  wrapApiCall(`api${method}:${path}`, async () => {
+    const response = await fetch(`${API_BASE_URL}${path}`, {
+      method,
+      headers: await buildAuthHeaders(),
+      body
+    });
+
+    if (!response.ok) await throwResponseFailure(response, `${method} ${path}`);
+
+    return response.json() as Promise<T>;
+  });
+
 const sendJson = <T>(
-  method: 'POST' | 'PATCH',
+  method: 'POST' | 'PATCH' | 'PUT',
   path: string,
   payload: unknown
 ): Promise<T> =>
@@ -55,18 +89,15 @@ const sendJson = <T>(
     return response.json() as Promise<T>;
   });
 
-// Sent on every call, not just the authenticated ones: public endpoints
-// ignore it, and the alternative is each call site knowing which is which.
 // Read at call time, never cached: supabase-js refreshes the token in place.
-const buildHeaders = async (): Promise<HeadersInit> => {
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json'
-  };
+const buildHeaders = async (): Promise<HeadersInit> => ({
+  'Content-Type': 'application/json',
+  ...(await buildAuthHeaders())
+});
 
+const buildAuthHeaders = async (): Promise<Record<string, string>> => {
   const { data } = await supabase.auth.getSession();
   const accessToken = data.session?.access_token;
 
-  if (accessToken) headers.Authorization = `Bearer ${accessToken}`;
-
-  return headers;
+  return accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
 };

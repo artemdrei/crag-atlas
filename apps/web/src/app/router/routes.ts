@@ -4,10 +4,10 @@ export const ROUTES = {
   LOGIN: '/login',
   PROFILE: '/profile',
   REGION: '/regions/:idRegion',
-  // Internal kitchen sink: deliberately not linked from any navigation.
   PLAYGROUND: '/playground',
   SECTOR: '/regions/:idRegion/sectors/:idSector',
-  ROUTE_DETAIL: '/regions/:idRegion/sectors/:idSector/routes/:idRoute'
+  ROUTE_DETAIL: '/regions/:idRegion/sectors/:idSector/routes/:idRoute',
+  SECTOR_EDIT: '/regions/:idRegion/sectors/:idSector/edit'
 } as const;
 
 export const buildRegionPath = (idRegion: string) => `/regions/${idRegion}`;
@@ -20,3 +20,6 @@ export const buildRoutePath = (
   idSector: string,
   idRoute: string
 ) => `/regions/${idRegion}/sectors/${idSector}/routes/${idRoute}`;
+
+export const buildSectorEditPath = (idRegion: string, idSector: string) =>
+  `/regions/${idRegion}/sectors/${idSector}/edit`;

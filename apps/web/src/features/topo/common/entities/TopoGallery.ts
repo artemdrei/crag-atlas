@@ -5,5 +5,8 @@ export interface TopoGalleryProps {
   idActiveTopo?: string;
   idHighlightedRoute?: string;
   colorOf?: (idRoute: string) => string | undefined;
+  numberOf?: Record<string, number>;
   onSelectTopo: (idTopo: string) => void;
+  onSelectRoute?: (idRoute: string) => void;
+  onHoverRoute?: (idRoute?: string) => void;
 }

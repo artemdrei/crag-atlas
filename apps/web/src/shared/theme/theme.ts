@@ -20,5 +20,17 @@ export const createAppTheme = (mode: 'light' | 'dark') =>
   createTheme({
     palette: { mode, ...palette[mode] },
     typography,
-    shape: { borderRadius: mode === 'dark' ? 12 : 10 }
+    shape: { borderRadius: mode === 'dark' ? 12 : 10 },
+    components: {
+      MuiButton: {
+        styleOverrides: {
+          root: { textTransform: 'capitalize' }
+        }
+      },
+      MuiToggleButton: {
+        styleOverrides: {
+          root: { textTransform: 'capitalize' }
+        }
+      }
+    }
   });

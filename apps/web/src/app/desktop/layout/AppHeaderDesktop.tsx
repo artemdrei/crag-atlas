@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import { useProfileIdentity, useUser } from '@web/app/providers';
 import { ROUTES } from '@web/app/router/routes';
 import { getInitials } from '@web/shared/lib';
+import { CONTENT_MAX_WIDTH } from '@web/shared/theme/layout';
 
 export const AppHeaderDesktop = () => {
   const { t } = useLingui();
@@ -78,6 +79,9 @@ const HeaderStyled = styled(AppBar)`
 
 const ToolbarStyled = styled(Toolbar)`
   gap: 24px;
+  width: 100%;
+  max-width: ${CONTENT_MAX_WIDTH}px;
+  margin: 0 auto;
 `;
 
 const LogoStyled = styled(Typography)`

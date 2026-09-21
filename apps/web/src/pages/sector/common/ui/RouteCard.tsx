@@ -1,5 +1,7 @@
 import { Plural, useLingui } from '@lingui/react/macro';
+import PhishingIcon from '@mui/icons-material/Phishing';
 import CardActionArea from '@mui/material/CardActionArea';
+import Rating from '@mui/material/Rating';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
@@ -9,15 +11,15 @@ import type { Route } from '../entities';
 
 export interface Props {
   route: Route;
-  index: number;
+  number?: number;
   isHighlighted?: boolean;
   onOpen: (route: Route) => void;
-  onHover?: (route?: Route) => void;
+  onHover?: (idRoute?: string) => void;
 }
 
 export const RouteCard = ({
   route,
-  index,
+  number,
   isHighlighted,
   onOpen,
   onHover
@@ -27,26 +29,46 @@ export const RouteCard = ({
   return (
     <RowStyled
       isHighlighted={!!isHighlighted}
-      onMouseEnter={() => onHover?.(route)}
+      onMouseEnter={() => onHover?.(route.id)}
       onMouseLeave={() => onHover?.(undefined)}
     >
       <CardAreaStyled onClick={() => onOpen(route)}>
-        <NumberBadgeStyled>{index + 1}</NumberBadgeStyled>
+        <NumberBadgeStyled>{number ?? '—'}</NumberBadgeStyled>
         <TextStyled>
           <Typography variant="subtitle2" noWrap>
             {route.name}
           </Typography>
           <MetaStyled variant="caption" color="text.secondary" noWrap>
-            <span>{route.type}</span>
+            {!!route.rating && (
+              <MetaItemStyled>
+                <RatingStyled
+                  value={route.rating}
+                  precision={0.5}
+                  size="small"
+                  readOnly
+                />
+                {route.rating.toFixed(1)}
+              </MetaItemStyled>
+            )}
+            {!!route.ascentsCount && (
+              <span>
+                <Plural
+                  value={route.ascentsCount}
+                  one="# ascent"
+                  other="# ascents"
+                />
+              </span>
+            )}
             {!!route.length && <span>{t`${route.length} m`}</span>}
             {!!route.boltsCount && (
-              <span>
-                <Plural value={route.boltsCount} one="# bolt" other="# bolts" />
-              </span>
+              <MetaItemStyled>
+                <PhishingIcon fontSize="inherit" />
+                {route.boltsCount}
+              </MetaItemStyled>
             )}
           </MetaStyled>
         </TextStyled>
-        <GradeBadge grade={route.grade} />
+        <GradeBadge grade={route.grade} scale={route.gradeScale} />
       </CardAreaStyled>
     </RowStyled>
   );
@@ -91,12 +113,23 @@ const NumberBadgeStyled = styled('span')`
 
 const MetaStyled = styled(Typography)`
   display: flex;
+  align-items: center;
   gap: ${({ theme }) => theme.spacing(1)};
 
   & > span + span::before {
     content: "· ";
   }
 ` as typeof Typography;
+
+const MetaItemStyled = styled('span')`
+  display: inline-flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing(0.5)};
+`;
+
+const RatingStyled = styled(Rating)`
+  font-size: inherit;
+`;
 
 const TextStyled = styled('div')`
   display: flex;

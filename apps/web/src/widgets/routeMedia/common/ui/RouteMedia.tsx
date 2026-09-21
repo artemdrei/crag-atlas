@@ -3,6 +3,7 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
+import { isSafeHttpUrl } from '@web/shared/lib';
 import { ApiFeedback } from '@web/shared/ui';
 
 import { useApiGetRouteMedia } from '../hooks';
@@ -27,7 +28,12 @@ export const RouteMedia = ({ idRoute }: Props) => {
         </Typography>
       )}
       {media.map((item) => (
-        <CardStyled key={item.id} href={item.url} target="_blank">
+        <CardStyled
+          key={item.id}
+          href={isSafeHttpUrl(item.url) ? item.url : undefined}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <ThumbnailStyled>
             {item.kind === 'video' && <PlayArrowIcon fontSize="large" />}
           </ThumbnailStyled>

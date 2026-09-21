@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import { Trans, useLingui } from '@lingui/react/macro';
@@ -13,6 +13,7 @@ import {
 } from '@web/app/router/routes';
 import { EditToggleButton, SectorEditForm } from '@web/features/catalogEdit';
 import {
+  orderRoutes,
   TopoGalleryMobile,
   useApiGetTopos,
   useTopoGallery
@@ -25,7 +26,8 @@ import {
   RoutesList,
   RoutesPanelHeader,
   useApiGetRoutes,
-  useApiGetSector
+  useApiGetSector,
+  useRoutesByTopo
 } from '../common';
 
 export const PageSectorMobile = () => {
@@ -38,14 +40,31 @@ export const PageSectorMobile = () => {
   const { routes, isLoading, failure } = useApiGetRoutes(idSector);
   const { topos } = useApiGetTopos(idSector);
   const { idActiveTopo, selectTopo } = useTopoGallery({ topos });
-  const colorOf = (idRoute: string) =>
-    getGradeColor(
-      theme.palette.grade,
-      routes.find(({ id }) => id === idRoute)?.grade
-    );
+  const numberOf = useMemo(
+    () =>
+      orderRoutes(
+        topos,
+        routes.map((route) => route.id)
+      ),
+    [topos, routes]
+  );
+
+  const groups = useRoutesByTopo({ routes, topos });
+
+  const colorOf = (idRoute: string) => {
+    const route = routes.find(({ id }) => id === idRoute);
+
+    return getGradeColor(theme.palette.grade, route?.grade, route?.gradeScale);
+  };
 
   const openRoute = (route: Route) =>
     navigate(buildRoutePath(idRegion, idSector, route.id));
+
+  const openRouteById = (idRoute: string) => {
+    const route = routes.find(({ id }) => id === idRoute);
+
+    if (route) openRoute(route);
+  };
 
   return (
     <PageStyled spacing={2}>
@@ -72,7 +91,9 @@ export const PageSectorMobile = () => {
         topos={topos}
         idActiveTopo={idActiveTopo}
         colorOf={colorOf}
+        numberOf={numberOf}
         onSelectTopo={selectTopo}
+        onSelectRoute={openRouteById}
       />
       <RoutesPanelHeader routesCount={routes.length} />
       <ApiFeedback
@@ -80,7 +101,7 @@ export const PageSectorMobile = () => {
         failure={failure}
         loadingLabel={<Trans>Loading routes…</Trans>}
       />
-      <RoutesList routes={routes} onOpen={openRoute} />
+      <RoutesList groups={groups} numberOf={numberOf} onOpen={openRoute} />
       <ActionBarStyled></ActionBarStyled>
     </PageStyled>
   );

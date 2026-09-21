@@ -1,6 +1,6 @@
 import { Plural, useLingui } from '@lingui/react/macro';
 import HeightIcon from '@mui/icons-material/Height';
-import LinearScaleIcon from '@mui/icons-material/LinearScale';
+import PhishingIcon from '@mui/icons-material/Phishing';
 import Rating from '@mui/material/Rating';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
@@ -20,33 +20,30 @@ export const RouteDetails = ({ route }: Props) => {
     <ContainerStyled>
       <Typography variant="h4">{route.name}</Typography>
       <SummaryRowStyled>
-        <GradeBadge grade={route.grade} />
-        {!!route.rating && (
-          <RatingRowStyled>
-            <Rating
-              value={route.rating}
-              precision={0.5}
-              size="small"
-              readOnly
-            />
-            <Typography variant="body2" color="text.secondary">
-              {route.rating.toFixed(1)}
-            </Typography>
-          </RatingRowStyled>
-        )}
+        <GradeBadge grade={route.grade} scale={route.gradeScale} />
         <MetaStyled variant="body2" color="text.secondary">
-          <span>{route.type}</span>
+          {!!route.rating && (
+            <span>
+              <Rating
+                value={route.rating}
+                precision={0.5}
+                size="small"
+                readOnly
+              />
+              {route.rating.toFixed(1)}
+            </span>
+          )}
           {!!route.length && (
-            <MetaItemStyled>
+            <span>
               <HeightIcon fontSize="inherit" />
               {t`${route.length} m`}
-            </MetaItemStyled>
+            </span>
           )}
           {!!route.boltsCount && (
-            <MetaItemStyled>
-              <LinearScaleIcon fontSize="inherit" />
+            <span>
+              <PhishingIcon fontSize="inherit" />
               <Plural value={route.boltsCount} one="# bolt" other="# bolts" />
-            </MetaItemStyled>
+            </span>
           )}
         </MetaStyled>
       </SummaryRowStyled>
@@ -70,21 +67,20 @@ const SummaryRowStyled = styled('div')`
   gap: ${({ theme }) => theme.spacing(1.5)};
 `;
 
-const RatingRowStyled = styled('div')`
-  display: inline-flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing(0.5)};
-`;
-
 const MetaStyled = styled(Typography)`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: ${({ theme }) => theme.spacing(1.5)};
-`;
 
-const MetaItemStyled = styled('span')`
-  display: inline-flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing(0.5)};
-`;
+  & > span {
+    display: inline-flex;
+    align-items: center;
+    gap: ${({ theme }) => theme.spacing(0.5)};
+  }
+
+  & > span + span::before {
+    content: "·";
+    margin-right: ${({ theme }) => theme.spacing(1.5)};
+  }
+` as typeof Typography;

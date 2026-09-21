@@ -8,6 +8,7 @@ import { PageProfileDesktop } from '@web/pages/profile';
 import { PageRegionDesktop } from '@web/pages/region';
 import { PageRouteDesktop } from '@web/pages/route';
 import { PageSectorDesktop } from '@web/pages/sector';
+import { PageSectorEditDesktop } from '@web/pages/sectorEdit';
 
 import { LayoutWithSidebar, ProtectedRoute } from '../router/Router';
 import { ROUTES } from '../router/routes';
@@ -33,6 +34,14 @@ const AppDesktop = () => (
           <Route path={ROUTES.REGION} element={<PageRegionDesktop />} />
           <Route path={ROUTES.SECTOR} element={<PageSectorDesktop />} />
           <Route path={ROUTES.ROUTE_DETAIL} element={<PageRouteDesktop />} />
+          <Route
+            path={ROUTES.SECTOR_EDIT}
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <PageSectorEditDesktop />
+              </ProtectedRoute>
+            }
+          />
           {PagePlaygroundDesktop && (
             <Route
               path={ROUTES.PLAYGROUND}

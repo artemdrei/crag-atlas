@@ -8,6 +8,7 @@ import { PageProfileMobile } from '@web/pages/profile';
 import { PageRegionMobile } from '@web/pages/region';
 import { PageRouteMobile } from '@web/pages/route';
 import { PageSectorMobile } from '@web/pages/sector';
+import { PageSectorEditMobile } from '@web/pages/sectorEdit';
 
 import {
   LayoutWithMobileBottomNavigation,
@@ -36,6 +37,14 @@ const AppMobile = () => (
           <Route path={ROUTES.REGION} element={<PageRegionMobile />} />
           <Route path={ROUTES.SECTOR} element={<PageSectorMobile />} />
           <Route path={ROUTES.ROUTE_DETAIL} element={<PageRouteMobile />} />
+          <Route
+            path={ROUTES.SECTOR_EDIT}
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <PageSectorEditMobile />
+              </ProtectedRoute>
+            }
+          />
           {PagePlaygroundMobile && (
             <Route
               path={ROUTES.PLAYGROUND}

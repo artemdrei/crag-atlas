@@ -10,7 +10,10 @@ export const TopoGalleryMobile = ({
   idActiveTopo,
   idHighlightedRoute,
   colorOf,
-  onSelectTopo
+  numberOf,
+  onSelectTopo,
+  onSelectRoute,
+  onHoverRoute
 }: TopoGalleryProps) => {
   const activeTopo = topos.find(({ id }) => id === idActiveTopo);
 
@@ -18,9 +21,14 @@ export const TopoGalleryMobile = ({
     <GalleryStyled>
       {activeTopo ? (
         <ZoomStageStyled
-          topo={activeTopo}
+          photoUrl={activeTopo.photoUrl}
+          label={activeTopo.label}
+          lines={activeTopo.lines}
           idHighlightedRoute={idHighlightedRoute}
           colorOf={colorOf}
+          numberOf={numberOf}
+          onSelectRoute={onSelectRoute}
+          onHoverRoute={onHoverRoute}
         />
       ) : (
         <PhotoPlaceholder variant="wide" />

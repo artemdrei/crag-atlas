@@ -3,15 +3,17 @@ import { useParams } from 'react-router';
 
 import { Trans, useLingui } from '@lingui/react/macro';
 import Stack from '@mui/material/Stack';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 
+import { useModal } from '@web/app/providers';
 import {
   buildRegionPath,
   buildSectorPath,
   ROUTES
 } from '@web/app/router/routes';
 import { EditToggleButton, RouteEditForm } from '@web/features/catalogEdit';
-import { TopoImage, useApiGetTopos } from '@web/features/topo';
+import { TopoImage, useRouteTopo } from '@web/features/topo';
+import { getGradeColor } from '@web/shared/theme/palette';
 import { ApiFeedback, PageBreadcrumbs, PhotoPlaceholder } from '@web/shared/ui';
 import { GradeConsensus } from '@web/widgets/gradeConsensus';
 
@@ -27,13 +29,26 @@ import {
 export const PageRouteMobile = () => {
   const { t } = useLingui();
   const { idRegion = '', idSector = '', idRoute = '' } = useParams();
+  const theme = useTheme();
+  const { openModal } = useModal();
   const { route, isLoading, failure } = useApiGetRoute(idRoute);
   const [isEditing, setIsEditing] = useState(false);
-  const { topos } = useApiGetTopos(idSector);
-  // A route is drawn on exactly one of the sector's topos.
-  const topo = topos.find((item) =>
-    item.lines.some((line) => line.idRoute === idRoute)
-  );
+  const { topo, lines, numberOf } = useRouteTopo(idSector, idRoute);
+
+  const colorOf = () =>
+    getGradeColor(theme.palette.grade, route?.grade, route?.gradeScale);
+
+  const openPhoto = () => {
+    if (!topo) return;
+
+    openModal('VIEW_TOPO_PHOTO', {
+      photoUrl: topo.photoUrl,
+      label: topo.label,
+      lines,
+      numberOf,
+      colorOf
+    });
+  };
 
   return (
     <PageStyled spacing={2}>
@@ -63,26 +78,43 @@ export const PageRouteMobile = () => {
         <>
           <PhotoStyled>
             {topo ? (
-              <TopoImage topo={topo} isContained areLinesHidden />
+              <PhotoButtonStyled
+                type="button"
+                aria-label={t`Open the photo`}
+                onClick={openPhoto}
+              >
+                <TopoImage
+                  photoUrl={topo.photoUrl}
+                  label={topo.label}
+                  lines={lines}
+                  numberOf={numberOf}
+                  colorOf={colorOf}
+                  isContained
+                />
+              </PhotoButtonStyled>
             ) : (
               <PhotoPlaceholder variant="wide" />
             )}
           </PhotoStyled>
           <RouteDetails route={route} />
-          {!!route.ascentsCount && (
-            <RouteStats
-              ascentsCount={route.ascentsCount}
-              onsightCount={route.onsightCount}
-            />
-          )}
-          {!!route.votesNeutral && (
-            <GradeConsensus
-              grade={route.grade}
-              votesSoft={route.votesSoft ?? 0}
-              votesNeutral={route.votesNeutral}
-              votesHard={route.votesHard ?? 0}
-            />
-          )}
+          <StatsRowStyled>
+            {!!route.ascentsCount && (
+              <StatsStyled
+                ascentsCount={route.ascentsCount}
+                onsightCount={route.onsightCount}
+                isCompact
+              />
+            )}
+            {!!route.votesNeutral && (
+              <ConsensusStyled
+                grade={route.grade}
+                votesSoft={route.votesSoft ?? 0}
+                votesNeutral={route.votesNeutral}
+                votesHard={route.votesHard ?? 0}
+                isCompact
+              />
+            )}
+          </StatsRowStyled>
           <RouteTabs idRoute={route.id} />
           <MyAscentsCard idRoute={route.id} />
           <ActionBarStyled>
@@ -102,6 +134,33 @@ const HeaderRowStyled = styled('div')`
   align-items: center;
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacing(1)};
+`;
+
+const StatsRowStyled = styled('div')`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: ${({ theme }) => theme.spacing(1)};
+`;
+
+const StatsStyled = styled(RouteStats)`
+  display: contents;
+`;
+
+const ConsensusStyled = styled(GradeConsensus)`
+  flex: 1 1 100%;
+  min-width: 0;
+`;
+
+const PhotoButtonStyled = styled('button')`
+  position: relative;
+  display: inline-flex;
+  height: 100%;
+  max-width: 100%;
+  padding: 0;
+  cursor: zoom-in;
+  border: none;
+  background: none;
 `;
 
 const PhotoStyled = styled('div')`

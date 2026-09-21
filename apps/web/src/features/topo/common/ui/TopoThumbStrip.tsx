@@ -65,8 +65,8 @@ const ThumbStyled = styled(ButtonBase, {
 const ThumbImageStyled = styled('img')`
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+  aspect-ratio: 1;
+  object-fit: contain;
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
   background: ${({ theme }) => theme.palette.action.hover};
 `;

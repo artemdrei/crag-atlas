@@ -1,18 +1,23 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import { Trans, useLingui } from '@lingui/react/macro';
+import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { styled, useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
+import { useUser } from '@web/app/providers';
 import {
   buildRegionPath,
   buildRoutePath,
+  buildSectorEditPath,
   ROUTES
 } from '@web/app/router/routes';
 import { EditToggleButton, SectorEditForm } from '@web/features/catalogEdit';
 import {
+  findTopoOfRoute,
+  orderRoutes,
   TopoGalleryDesktop,
   useApiGetTopos,
   useTopoGallery
@@ -26,6 +31,7 @@ import {
   RoutesPanelHeader,
   useApiGetRoutes,
   useApiGetSector,
+  useRoutesByTopo,
   useSectorSelection
 } from '../common';
 
@@ -40,15 +46,43 @@ export const PageSectorDesktop = () => {
   const { topos } = useApiGetTopos(idSector);
   const { idActiveTopo, selectTopo } = useTopoGallery({ topos });
   const { idHighlightedRoute, highlightRoute } = useSectorSelection();
+  const { hasRole } = useUser();
 
-  const colorOf = (idRoute: string) =>
-    getGradeColor(
-      theme.palette.grade,
-      routes.find(({ id }) => id === idRoute)?.grade
-    );
+  const numberOf = useMemo(
+    () =>
+      orderRoutes(
+        topos,
+        routes.map((route) => route.id)
+      ),
+    [topos, routes]
+  );
 
-  const openRoute = (route: Route) =>
+  const groups = useRoutesByTopo({ routes, topos });
+
+  const colorOf = (idRoute: string) => {
+    const route = routes.find(({ id }) => id === idRoute);
+
+    return getGradeColor(theme.palette.grade, route?.grade, route?.gradeScale);
+  };
+
+  const openRoute = (route: Route) => {
+    const topo = findTopoOfRoute(topos, route.id);
+
+    if (topo && topo.id !== idActiveTopo) {
+      selectTopo(topo.id);
+      highlightRoute(route.id);
+
+      return;
+    }
+
     navigate(buildRoutePath(idRegion, idSector, route.id));
+  };
+
+  const openRouteById = (idRoute: string) => {
+    const route = routes.find(({ id }) => id === idRoute);
+
+    if (route) navigate(buildRoutePath(idRegion, idSector, route.id));
+  };
 
   return (
     <PageStyled spacing={1}>
@@ -60,7 +94,19 @@ export const PageSectorDesktop = () => {
             { label: sector?.name ?? '…' }
           ]}
         />
-        {!isEditing && <EditToggleButton onClick={() => setIsEditing(true)} />}
+        <HeaderActionsStyled>
+          {hasRole('admin') && (
+            <Button
+              size="small"
+              onClick={() => navigate(buildSectorEditPath(idRegion, idSector))}
+            >
+              <Trans>Edit topo</Trans>
+            </Button>
+          )}
+          {!isEditing && (
+            <EditToggleButton onClick={() => setIsEditing(true)} />
+          )}
+        </HeaderActionsStyled>
       </HeaderRowStyled>
       {isEditing && sector && (
         <SectorEditForm sector={sector} onClose={() => setIsEditing(false)} />
@@ -76,7 +122,10 @@ export const PageSectorDesktop = () => {
           idActiveTopo={idActiveTopo}
           idHighlightedRoute={idHighlightedRoute}
           colorOf={colorOf}
+          numberOf={numberOf}
           onSelectTopo={selectTopo}
+          onSelectRoute={openRouteById}
+          onHoverRoute={highlightRoute}
         />
         <PanelStyled>
           <RoutesPanelHeader routesCount={routes.length} />
@@ -87,7 +136,8 @@ export const PageSectorDesktop = () => {
           />
           <ScrollAreaStyled>
             <RoutesList
-              routes={routes}
+              groups={groups}
+              numberOf={numberOf}
               idHighlightedRoute={idHighlightedRoute}
               onOpen={openRoute}
               onHover={highlightRoute}
@@ -98,6 +148,12 @@ export const PageSectorDesktop = () => {
     </PageStyled>
   );
 };
+
+const HeaderActionsStyled = styled('div')`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing(1)};
+`;
 
 const HeaderRowStyled = styled('div')`
   display: flex;
@@ -135,5 +191,5 @@ const ScrollAreaStyled = styled('div')`
 const PageStyled = styled(Stack)`
   height: 100%;
   overflow: hidden;
-  padding: ${({ theme }) => theme.spacing(1, 3, 2)};
+  padding: ${({ theme }) => theme.spacing(2, 3, 3)};
 `;

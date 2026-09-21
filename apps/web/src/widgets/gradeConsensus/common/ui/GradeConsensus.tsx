@@ -8,13 +8,17 @@ export interface Props {
   votesSoft: number;
   votesNeutral: number;
   votesHard: number;
+  isCompact?: boolean;
+  className?: string;
 }
 
 export const GradeConsensus = ({
   grade,
   votesSoft,
   votesNeutral,
-  votesHard
+  votesHard,
+  isCompact,
+  className
 }: Props) => {
   const { t } = useLingui();
 
@@ -27,7 +31,7 @@ export const GradeConsensus = ({
   const top = Math.max(...buckets.map(({ votes }) => votes));
 
   return (
-    <CardStyled>
+    <CardStyled className={className} isCompact={!!isCompact}>
       <HeaderRowStyled>
         <TitleStyled variant="overline" color="text.secondary">
           <Trans>Grade consensus</Trans>
@@ -43,9 +47,7 @@ export const GradeConsensus = ({
               share={top ? votes / top : 0}
               isConsensus={votes === top}
             >
-              <Typography variant="caption" color="text.secondary">
-                {votes}
-              </Typography>
+              <VotesStyled isConsensus={votes === top}>{votes}</VotesStyled>
             </BarStyled>
             <Typography variant="caption" color="text.secondary">
               {label}
@@ -57,11 +59,13 @@ export const GradeConsensus = ({
   );
 };
 
-const CardStyled = styled('div')`
+const CardStyled = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'isCompact'
+})<{ isCompact: boolean }>`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(2)};
-  padding: ${({ theme }) => theme.spacing(2)};
+  gap: ${({ theme, isCompact }) => theme.spacing(isCompact ? 1 : 2)};
+  padding: ${({ theme, isCompact }) => theme.spacing(isCompact ? 1.5 : 2)};
   border: 1px solid ${({ theme }) => theme.palette.divider};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
 `;
@@ -91,6 +95,18 @@ const ColumnStyled = styled('div')`
   flex: 1 1 0;
 `;
 
+const VotesStyled = styled('span', {
+  shouldForwardProp: (prop) => prop !== 'isConsensus'
+})<{ isConsensus: boolean }>`
+  font-size: ${({ theme }) => theme.typography.h6.fontSize};
+  font-weight: 700;
+  line-height: 1;
+  color: ${({ theme, isConsensus }) =>
+    isConsensus
+      ? theme.palette.getContrastText(theme.palette.secondary.main)
+      : theme.palette.text.primary};
+`;
+
 const BarStyled = styled('div', {
   shouldForwardProp: (prop) => prop !== 'share' && prop !== 'isConsensus'
 })<{ share: number; isConsensus: boolean }>`
@@ -98,7 +114,7 @@ const BarStyled = styled('div', {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: ${({ share }) => `${Math.max(share * 64, 20)}px`};
+  height: ${({ share }) => `${Math.max(share * 72, 32)}px`};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
   background: ${({ theme, isConsensus }) =>
     isConsensus ? theme.palette.secondary.main : theme.palette.action.selected};

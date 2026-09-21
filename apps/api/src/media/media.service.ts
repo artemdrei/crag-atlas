@@ -64,6 +64,13 @@ export class MediaService {
       throw new ValidationException('A link is required', 'URL_EMPTY');
     }
 
+    if (!isHttpUrl(url)) {
+      throw new ValidationException(
+        'A link must start with http:// or https://',
+        'URL_UNSUPPORTED'
+      );
+    }
+
     const { data, error } = await userClient(authUser)
       .from('route_media')
       .insert({
@@ -88,6 +95,16 @@ export class MediaService {
     return toMediaDto(data);
   }
 }
+
+const isHttpUrl = (value: string): boolean => {
+  try {
+    const { protocol } = new URL(value);
+
+    return protocol === 'http:' || protocol === 'https:';
+  } catch {
+    return false;
+  }
+};
 
 const toMediaDto = (row: MediaRow): MediaDto => ({
   id: row.id,

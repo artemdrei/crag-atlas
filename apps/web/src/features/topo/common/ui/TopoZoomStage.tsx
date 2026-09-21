@@ -1,15 +1,20 @@
-import type { PropsWithChildren } from 'react';
+import { type PropsWithChildren, useState } from 'react';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 
-import type { Topo } from '@crag-atlas/api';
+import type { RouteLine } from '@crag-atlas/api';
 import { styled } from '@mui/material/styles';
 
 import { TopoImage } from './TopoImage';
 
 export interface Props {
-  topo: Topo;
+  photoUrl: string;
+  label: string;
+  lines: RouteLine[];
   idHighlightedRoute?: string;
   colorOf?: (idRoute: string) => string | undefined;
+  numberOf?: Record<string, number>;
+  onSelectRoute?: (idRoute: string) => void;
+  onHoverRoute?: (idRoute?: string) => void;
   className?: string;
 }
 
@@ -17,32 +22,52 @@ const MIN_SCALE = 1;
 const MAX_SCALE = 5;
 
 export const TopoZoomStage = ({
-  topo,
+  photoUrl,
+  label,
+  lines,
   idHighlightedRoute,
   colorOf,
+  numberOf,
+  onSelectRoute,
+  onHoverRoute,
   className,
   children
-}: PropsWithChildren<Props>) => (
-  <StageStyled className={className}>
-    <TransformWrapper
-      key={topo.id}
-      minScale={MIN_SCALE}
-      maxScale={MAX_SCALE}
-      centerOnInit
-      doubleClick={{ mode: 'toggle' }}
-    >
-      <TransformComponent>
-        <TopoImage
-          topo={topo}
-          idHighlightedRoute={idHighlightedRoute}
-          isContained
-          colorOf={colorOf}
-        />
-      </TransformComponent>
-      {children}
-    </TransformWrapper>
-  </StageStyled>
-);
+}: PropsWithChildren<Props>) => {
+  const [isZoomed, setIsZoomed] = useState(false);
+
+  return (
+    <StageStyled className={className}>
+      <TransformWrapper
+        key={photoUrl}
+        minScale={MIN_SCALE}
+        maxScale={MAX_SCALE}
+        centerOnInit
+        doubleClick={{ mode: 'toggle' }}
+        // A plain scroll belongs to the page; only a pinch (ctrl+wheel on a
+        // trackpad) zooms, and dragging pans only once the topo is zoomed in.
+        wheel={{ wheelDisabled: true }}
+        panning={{ disabled: !isZoomed }}
+        trackPadPanning={{ disabled: !isZoomed }}
+        onTransform={(_ref, state) => setIsZoomed(state.scale > MIN_SCALE)}
+      >
+        <TransformComponent>
+          <TopoImage
+            photoUrl={photoUrl}
+            label={label}
+            lines={lines}
+            idHighlightedRoute={idHighlightedRoute}
+            isContained
+            colorOf={colorOf}
+            numberOf={numberOf}
+            onSelectRoute={onSelectRoute}
+            onHoverRoute={onHoverRoute}
+          />
+        </TransformComponent>
+        {children}
+      </TransformWrapper>
+    </StageStyled>
+  );
+};
 
 const StageStyled = styled('div')`
   position: relative;
@@ -50,9 +75,9 @@ const StageStyled = styled('div')`
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  padding: ${({ theme }) => theme.spacing(1)};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
 
-  /* The zoom layer is the library's markup; it has to fill the stage. */
   & .react-transform-wrapper,
   & .react-transform-component {
     width: 100%;
