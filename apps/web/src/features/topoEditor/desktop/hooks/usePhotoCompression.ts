@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { imageToWebp } from '../lib';
+import { imageToWebp } from '@web/shared/lib';
 
 export interface PhotoVersion {
   url: string;
