@@ -32,6 +32,9 @@ export interface Props {
   topo: EditableTopo;
   session: TopoEditorSession;
   idHoveredRoute?: string;
+  /** When set, only this route can be picked or reshaped — the other lines
+      on the photo stay visible but are not editable. */
+  idLockedRoute?: string;
   numberOf: Record<string, number>;
   colorOf: (idRoute: string) => string | undefined;
   gradeOf: (idRoute: string) => string;
@@ -58,6 +61,7 @@ export const TopoEditStage = ({
   topo,
   session,
   idHoveredRoute,
+  idLockedRoute,
   numberOf,
   colorOf,
   gradeOf,
@@ -83,6 +87,9 @@ export const TopoEditStage = ({
   const selected = session.idSelectedRoute
     ? topo.lines[session.idSelectedRoute]
     : undefined;
+
+  const isEditable = (idRoute: string) =>
+    !idLockedRoute || idRoute === idLockedRoute;
 
   const handleOverlayDown = (event: ReactPointerEvent<SVGSVGElement>) => {
     if (session.isPreview || event.button !== 0 || !overlayRef.current) return;
@@ -112,8 +119,10 @@ export const TopoEditStage = ({
       tolerance
     );
 
+    // Locked to one route, a hit on someone else's line is neither a pick nor
+    // a place to draw: the click lands on a line the user cannot touch.
     if (idRoute) {
-      onAction({ type: 'SELECT_ROUTE', idRoute });
+      if (isEditable(idRoute)) onAction({ type: 'SELECT_ROUTE', idRoute });
 
       return;
     }
@@ -125,14 +134,13 @@ export const TopoEditStage = ({
     if (dragRef.current || session.isPreview || !overlayRef.current) return;
 
     const point = pointerToPhoto(event, overlayRef.current);
-
-    onHoverRoute(
-      findNearestLine(
-        Object.values(topo.lines),
-        point,
-        toleranceOf(overlayRef.current, LINE_TOLERANCE)
-      )
+    const idRoute = findNearestLine(
+      Object.values(topo.lines),
+      point,
+      toleranceOf(overlayRef.current, LINE_TOLERANCE)
     );
+
+    onHoverRoute(idRoute && isEditable(idRoute) ? idRoute : undefined);
   };
 
   const handleDragMove = (event: ReactPointerEvent) => {
@@ -190,7 +198,7 @@ export const TopoEditStage = ({
     origin: Point,
     event: ReactPointerEvent
   ) => {
-    if (session.isPreview) return;
+    if (session.isPreview || !isEditable(idRoute)) return;
 
     event.stopPropagation();
     onAction({ type: 'SELECT_ROUTE', idRoute });
@@ -288,11 +296,21 @@ export const TopoEditStage = ({
                       !!session.idSelectedRoute &&
                       line.idRoute !== session.idSelectedRoute
                     }
-                    onSelect={() =>
-                      onAction({ type: 'SELECT_ROUTE', idRoute: line.idRoute })
+                    onSelect={
+                      isEditable(line.idRoute)
+                        ? () =>
+                            onAction({
+                              type: 'SELECT_ROUTE',
+                              idRoute: line.idRoute
+                            })
+                        : undefined
                     }
                     onHover={(isOver) =>
-                      onHoverRoute(isOver ? line.idRoute : undefined)
+                      onHoverRoute(
+                        isOver && isEditable(line.idRoute)
+                          ? line.idRoute
+                          : undefined
+                      )
                     }
                   />
                 </BadgeSlotStyled>
