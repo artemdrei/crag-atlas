@@ -8,11 +8,13 @@ export type { TopoEditorSessionApi } from './common';
 export {
   dirtyRouteIds,
   hasUnsavedChanges,
+  isRouteDirty,
   useTopoEditorSession
 } from './common';
 export type { TopoEditorActions } from './desktop/hooks';
 export { useTopoEditorActions } from './desktop/hooks';
 export { TopoEditorDesktop } from './desktop/TopoEditorDesktop';
+export { TopoEditorRouteDesktop } from './desktop/TopoEditorRouteDesktop';
 
 export const topoEditorDesktopRegistrations: ModalRegistration[] = [
   {

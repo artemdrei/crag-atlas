@@ -7,6 +7,7 @@ import { PageLoginDesktop } from '@web/pages/login';
 import { PageProfileDesktop } from '@web/pages/profile';
 import { PageRegionDesktop } from '@web/pages/region';
 import { PageRouteDesktop } from '@web/pages/route';
+import { PageRouteEditDesktop } from '@web/pages/routeEdit';
 import { PageSectorDesktop } from '@web/pages/sector';
 import { PageSectorEditDesktop } from '@web/pages/sectorEdit';
 
@@ -34,6 +35,14 @@ const AppDesktop = () => (
           <Route path={ROUTES.REGION} element={<PageRegionDesktop />} />
           <Route path={ROUTES.SECTOR} element={<PageSectorDesktop />} />
           <Route path={ROUTES.ROUTE_DETAIL} element={<PageRouteDesktop />} />
+          <Route
+            path={ROUTES.ROUTE_EDIT}
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <PageRouteEditDesktop />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path={ROUTES.SECTOR_EDIT}
             element={

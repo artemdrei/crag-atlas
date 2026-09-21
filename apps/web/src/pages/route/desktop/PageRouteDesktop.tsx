@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
 import { Trans, useLingui } from '@lingui/react/macro';
 import Stack from '@mui/material/Stack';
@@ -8,10 +7,11 @@ import { styled, useTheme } from '@mui/material/styles';
 import { useModal } from '@web/app/providers';
 import {
   buildRegionPath,
+  buildRouteEditPath,
   buildSectorPath,
   ROUTES
 } from '@web/app/router/routes';
-import { EditToggleButton, RouteEditForm } from '@web/features/catalogEdit';
+import { EditToggleButton } from '@web/features/catalogEdit';
 import { TopoImage, useRouteTopo } from '@web/features/topo';
 import { getGradeColor } from '@web/shared/theme/palette';
 import { ApiFeedback, PageBreadcrumbs, PhotoPlaceholder } from '@web/shared/ui';
@@ -30,9 +30,9 @@ export const PageRouteDesktop = () => {
   const { t } = useLingui();
   const { idRegion = '', idSector = '', idRoute = '' } = useParams();
   const theme = useTheme();
+  const navigate = useNavigate();
   const { openModal } = useModal();
   const { route, isLoading, failure } = useApiGetRoute(idRoute);
-  const [isEditing, setIsEditing] = useState(false);
   const { topo, lines, numberOf } = useRouteTopo(idSector, idRoute);
 
   const colorOf = () =>
@@ -64,8 +64,12 @@ export const PageRouteDesktop = () => {
             { label: route?.name ?? '…' }
           ]}
         />
-        {route && !isEditing && (
-          <EditToggleButton onClick={() => setIsEditing(true)} />
+        {route && (
+          <EditToggleButton
+            onClick={() =>
+              navigate(buildRouteEditPath(idRegion, idSector, idRoute))
+            }
+          />
         )}
       </HeaderRowStyled>
       <ApiFeedback
@@ -73,7 +77,7 @@ export const PageRouteDesktop = () => {
         failure={failure}
         loadingLabel={<Trans>Loading route…</Trans>}
       />
-      {route && !isEditing && (
+      {route && (
         <ColumnsStyled>
           <PhotoStyled>
             {topo ? (
@@ -120,9 +124,6 @@ export const PageRouteDesktop = () => {
             <MyAscentsCard idRoute={route.id} />
           </ActionsStyled>
         </ColumnsStyled>
-      )}
-      {route && isEditing && (
-        <RouteEditForm route={route} onClose={() => setIsEditing(false)} />
       )}
     </PageStyled>
   );

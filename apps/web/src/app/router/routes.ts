@@ -7,7 +7,8 @@ export const ROUTES = {
   PLAYGROUND: '/playground',
   SECTOR: '/regions/:idRegion/sectors/:idSector',
   ROUTE_DETAIL: '/regions/:idRegion/sectors/:idSector/routes/:idRoute',
-  SECTOR_EDIT: '/regions/:idRegion/sectors/:idSector/edit'
+  SECTOR_EDIT: '/regions/:idRegion/sectors/:idSector/edit',
+  ROUTE_EDIT: '/regions/:idRegion/sectors/:idSector/routes/:idRoute/edit'
 } as const;
 
 export const buildRegionPath = (idRegion: string) => `/regions/${idRegion}`;
@@ -23,3 +24,9 @@ export const buildRoutePath = (
 
 export const buildSectorEditPath = (idRegion: string, idSector: string) =>
   `/regions/${idRegion}/sectors/${idSector}/edit`;
+
+export const buildRouteEditPath = (
+  idRegion: string,
+  idSector: string,
+  idRoute: string
+) => `/regions/${idRegion}/sectors/${idSector}/routes/${idRoute}/edit`;
