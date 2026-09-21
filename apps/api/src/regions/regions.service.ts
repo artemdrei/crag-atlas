@@ -134,6 +134,12 @@ export class RegionsService {
     const client = userClient(authUser);
     const path = buildPhotoPath(idRegion);
 
+    const { data: current } = await client
+      .from('regions')
+      .select('photo_path')
+      .eq('id', idRegion)
+      .maybeSingle<{ photo_path: string | null }>();
+
     await uploadPhoto(client, REGIONS_BUCKET, path, photo);
 
     const { data, error } = await client
@@ -153,6 +159,12 @@ export class RegionsService {
         error ? 400 : 404,
         error?.code ?? 'REGION_PHOTO_FAILED'
       );
+    }
+
+    // The bucket is public, so a cover left behind stays downloadable by
+    // anyone who ever saw its URL.
+    if (current?.photo_path) {
+      await removePhoto(client, REGIONS_BUCKET, current.photo_path);
     }
 
     return this.findOne(idRegion);
