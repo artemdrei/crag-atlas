@@ -2,6 +2,7 @@ import type { GradeScale, Route } from '@crag-atlas/api';
 import { Trans, useLingui } from '@lingui/react/macro';
 import RedoIcon from '@mui/icons-material/Redo';
 import UndoIcon from '@mui/icons-material/Undo';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
@@ -10,6 +11,7 @@ import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 
 import { useModal } from '@web/app/providers';
@@ -30,9 +32,11 @@ export interface Props {
   hasLine: boolean;
   isDirty: boolean;
   isBusy: boolean;
+  isPreview: boolean;
   canUndo: boolean;
   canRedo: boolean;
   onChange: (patch: Partial<RouteDraft>) => void;
+  onTogglePreview: () => void;
   onUndo: () => void;
   onRedo: () => void;
   onSave: () => void;
@@ -46,9 +50,11 @@ export const TopoEditorRoutePanel = ({
   hasLine,
   isDirty,
   isBusy,
+  isPreview,
   canUndo,
   canRedo,
   onChange,
+  onTogglePreview,
   onUndo,
   onRedo,
   onSave,
@@ -185,12 +191,40 @@ export const TopoEditorRoutePanel = ({
         onChange={({ target }) => onChange({ description: target.value })}
       />
       <HistoryRowStyled>
-        <IconButton aria-label={t`Undo`} disabled={!canUndo} onClick={onUndo}>
-          <UndoIcon fontSize="small" />
-        </IconButton>
-        <IconButton aria-label={t`Redo`} disabled={!canRedo} onClick={onRedo}>
-          <RedoIcon fontSize="small" />
-        </IconButton>
+        {/* A disabled button fires no pointer events, so the tooltip needs a
+            wrapper that still does. */}
+        <Tooltip title={t`Undo`}>
+          <span>
+            <IconButton
+              aria-label={t`Undo`}
+              disabled={!canUndo}
+              onClick={onUndo}
+            >
+              <UndoIcon fontSize="small" />
+            </IconButton>
+          </span>
+        </Tooltip>
+        <Tooltip title={t`Redo`}>
+          <span>
+            <IconButton
+              aria-label={t`Redo`}
+              disabled={!canRedo}
+              onClick={onRedo}
+            >
+              <RedoIcon fontSize="small" />
+            </IconButton>
+          </span>
+        </Tooltip>
+        <Divider orientation="vertical" flexItem />
+        <Tooltip title={t`Reader view`}>
+          <IconButton
+            aria-label={t`Reader view`}
+            color={isPreview ? 'primary' : 'default'}
+            onClick={onTogglePreview}
+          >
+            <VisibilityIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
       </HistoryRowStyled>
       <Typography variant="caption" color="text.secondary">
         <Trans>Saved changes go live for everyone straight away.</Trans>

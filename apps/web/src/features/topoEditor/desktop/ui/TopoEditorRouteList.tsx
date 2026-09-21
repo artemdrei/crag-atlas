@@ -9,10 +9,10 @@ import type { GradeTone } from '@web/shared/theme/palette';
 import { resolveGradeTone } from '@web/shared/theme/palette';
 
 import type { RouteDraft } from '../../common';
+import type { RouteGroupDraft } from '../TopoEditorDesktop';
 
 export interface Props {
-  onThisTopo: RouteDraft[];
-  elsewhere: RouteDraft[];
+  groups: RouteGroupDraft[];
   numberOf: Record<string, number>;
   idSelectedRoute?: string;
   idHoveredRoute?: string;
@@ -23,8 +23,7 @@ export interface Props {
 }
 
 export const TopoEditorRouteList = ({
-  onThisTopo,
-  elsewhere,
+  groups,
   numberOf,
   idSelectedRoute,
   idHoveredRoute,
@@ -75,23 +74,19 @@ export const TopoEditorRouteList = ({
           <Trans>Add</Trans>
         </Button>
       </HeaderStyled>
-      {onThisTopo.length === 0 && elsewhere.length === 0 && (
+      {groups.length === 0 && (
         <Typography variant="body2" color="text.secondary">
           <Trans>No routes yet — add the first one.</Trans>
         </Typography>
       )}
-      {onThisTopo.length > 0 && (
-        <GroupLabelStyled variant="caption" color="text.secondary">
-          <Trans>On this photo</Trans>
-        </GroupLabelStyled>
-      )}
-      {onThisTopo.map(renderRow)}
-      {elsewhere.length > 0 && (
-        <GroupLabelStyled variant="caption" color="text.secondary">
-          <Trans>Other routes</Trans>
-        </GroupLabelStyled>
-      )}
-      {elsewhere.map(renderRow)}
+      {groups.map((group) => (
+        <GroupStyled key={group.id}>
+          <GroupLabelStyled variant="caption" color="text.secondary">
+            {group.label}
+          </GroupLabelStyled>
+          {group.routes.map(renderRow)}
+        </GroupStyled>
+      ))}
     </ListStyled>
   );
 };
@@ -110,6 +105,12 @@ const HeaderStyled = styled('div')`
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacing(1)};
   padding-bottom: ${({ theme }) => theme.spacing(1)};
+`;
+
+const GroupStyled = styled('div')`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing(0.5)};
 `;
 
 const GroupLabelStyled = styled(Typography)`

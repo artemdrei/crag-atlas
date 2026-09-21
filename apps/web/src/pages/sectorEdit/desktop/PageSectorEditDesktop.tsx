@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router';
 
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import CloseIcon from '@mui/icons-material/Close';
 import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
 import IconButton from '@mui/material/IconButton';
@@ -33,6 +34,12 @@ export const PageSectorEditDesktop = () => {
 
   const isDirty = hasUnsavedChanges(session);
 
+  const leave = () => {
+    if (isDirty && !window.confirm(t`Leave with unsaved changes?`)) return;
+
+    navigate(buildSectorPath(idRegion, idSector));
+  };
+
   // An empty sector is legitimate, so emptiness cannot mean "not hydrated".
   const hasHydrated = useRef(false);
 
@@ -62,16 +69,7 @@ export const PageSectorEditDesktop = () => {
   return (
     <PageStyled spacing={1}>
       <TopBarStyled>
-        <IconButton
-          aria-label={t`Back to the sector`}
-          onClick={() => {
-            if (isDirty && !window.confirm(t`Leave with unsaved changes?`)) {
-              return;
-            }
-
-            navigate(buildSectorPath(idRegion, idSector));
-          }}
-        >
+        <IconButton aria-label={t`Back to the sector`} onClick={leave}>
           <ArrowBackIcon fontSize="small" />
         </IconButton>
         <Chip
@@ -91,10 +89,11 @@ export const PageSectorEditDesktop = () => {
           />
         </TitleStyled>
         <Button
-          onClick={() => dispatch({ type: 'TOGGLE_PREVIEW' })}
-          variant={session.isPreview ? 'contained' : 'outlined'}
+          variant="outlined"
+          startIcon={<CloseIcon fontSize="small" />}
+          onClick={leave}
         >
-          <Trans>Reader view</Trans>
+          <Trans>Close the editor</Trans>
         </Button>
       </TopBarStyled>
       <ApiFeedback
@@ -103,7 +102,11 @@ export const PageSectorEditDesktop = () => {
         loadingLabel={<Trans>Loading the sector…</Trans>}
       />
       {!isLoading && !failure && (
-        <TopoEditorDesktop editor={editor} actions={actions} />
+        <TopoEditorDesktop
+          sector={sector ?? undefined}
+          editor={editor}
+          actions={actions}
+        />
       )}
     </PageStyled>
   );
