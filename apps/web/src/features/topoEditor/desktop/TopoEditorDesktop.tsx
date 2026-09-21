@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 
-import type { GradeScale, Sector } from '@crag-atlas/api';
+import type { Sector } from '@crag-atlas/api';
 import { Trans, useLingui } from '@lingui/react/macro';
 import AddIcon from '@mui/icons-material/Add';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -8,16 +8,15 @@ import Button from '@mui/material/Button';
 import ButtonBase from '@mui/material/ButtonBase';
 import Collapse from '@mui/material/Collapse';
 import Divider from '@mui/material/Divider';
-import { styled, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { SectorEditForm } from '@web/features/catalogEdit';
-import { findTopoOfRoute, orderRoutes } from '@web/features/topo';
-import { getGradeColor } from '@web/shared/theme/palette';
 
 import type { RouteDraft, TopoEditorSessionApi } from '../common';
+import { isRouteDirty } from '../common';
 import type { TopoEditorActions } from './hooks';
-import { useEditorHotkeys } from './hooks';
+import { useEditorHotkeys, useTopoEditorDerived } from './hooks';
 import {
   TopoEditorRouteList,
   TopoEditorRoutePanel,
@@ -39,8 +38,9 @@ export interface Props {
 
 export const TopoEditorDesktop = ({ sector, editor, actions }: Props) => {
   const { t } = useLingui();
-  const theme = useTheme();
   const { session, dispatch, beginGesture, endGesture, undo, redo } = editor;
+  const { numberOf, gradeOf, gradeScaleOf, nameOf, colorOf, selectRoute } =
+    useTopoEditorDerived(editor);
   const [idHoveredRoute, setIdHoveredRoute] = useState<string>();
   // The name and description are set once and rarely touched; the route being
   // drawn is what this column is for.
@@ -52,18 +52,6 @@ export const TopoEditorDesktop = ({ sector, editor, actions }: Props) => {
   const selectedRoute = session.idSelectedRoute
     ? session.routes[session.idSelectedRoute]
     : undefined;
-
-  const numberOf = useMemo(
-    () =>
-      orderRoutes(
-        session.order.map((id) => ({
-          sortOrder: session.topos[id].sortOrder,
-          lines: Object.values(session.topos[id].lines)
-        })),
-        session.routeOrder
-      ),
-    [session.order, session.topos, session.routeOrder]
-  );
 
   // Same shape as the reader sees: photo by photo, each route in the order it
   // is numbered on the rock, and whatever is not drawn yet at the end.
@@ -117,51 +105,6 @@ export const TopoEditorDesktop = ({ sector, editor, actions }: Props) => {
     numberOf,
     t
   ]);
-
-  const selectRoute = useCallback(
-    (idRoute: string) => {
-      const topo = findTopoOfRoute(
-        session.order.map((id) => ({
-          ...session.topos[id],
-          lines: Object.values(session.topos[id].lines)
-        })),
-        idRoute
-      );
-
-      if (topo && topo.id !== session.idActiveTopo) {
-        dispatch({ type: 'SELECT_TOPO', idTopo: topo.id });
-      }
-
-      dispatch({ type: 'SELECT_ROUTE', idRoute });
-    },
-    [session.order, session.topos, session.idActiveTopo, dispatch]
-  );
-
-  const gradeOf = useCallback(
-    (idRoute: string) => session.routes[idRoute]?.grade ?? '',
-    [session.routes]
-  );
-
-  const gradeScaleOf = useCallback(
-    (idRoute: string): GradeScale =>
-      session.routes[idRoute]?.gradeScale ?? 'french',
-    [session.routes]
-  );
-
-  const nameOf = useCallback(
-    (idRoute: string) => session.routes[idRoute]?.name ?? '',
-    [session.routes]
-  );
-
-  const colorOf = useCallback(
-    (idRoute: string) =>
-      getGradeColor(
-        theme.palette.grade,
-        gradeOf(idRoute),
-        gradeScaleOf(idRoute)
-      ),
-    [theme.palette.grade, gradeOf, gradeScaleOf]
-  );
 
   const handleDelete = useCallback(() => {
     if (session.idSelectedPoint !== undefined) {
@@ -247,10 +190,7 @@ export const TopoEditorDesktop = ({ sector, editor, actions }: Props) => {
             hasLine={
               (activeTopo?.lines[selectedRoute.id]?.points.length ?? 0) > 0
             }
-            isDirty={
-              selectedRoute.isDirty ||
-              isGeometryDirty(session, selectedRoute.id)
-            }
+            isDirty={isRouteDirty(session, selectedRoute.id)}
             isBusy={actions.isBusy}
             isPreview={session.isPreview}
             canUndo={editor.canUndo}
@@ -291,11 +231,6 @@ export const TopoEditorDesktop = ({ sector, editor, actions }: Props) => {
     </LayoutStyled>
   );
 };
-
-const isGeometryDirty = (
-  session: TopoEditorSessionApi['session'],
-  idRoute: string
-) => Object.values(session.topos).some((topo) => topo.lines[idRoute]?.isDirty);
 
 const LayoutStyled = styled('div')`
   display: grid;
