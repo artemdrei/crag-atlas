@@ -2,13 +2,18 @@ import { Injectable } from '@nestjs/common';
 
 import {
   AppException,
-  NotFoundException
+  NotFoundException,
+  ValidationException
 } from '../common/exceptions/app.exception';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
 import type { GradeScale } from '../common/utils/grade';
 import { userClient } from '../common/utils/userClient';
 import { publicSupabase, storagePublicUrl } from '../config/supabase.client';
-import type { SectorDto, UpdateSectorDto } from './sectors.types';
+import type {
+  CreateSectorDto,
+  SectorDto,
+  UpdateSectorDto
+} from './sectors.types';
 
 // The region name rides along: ids are uuids, so a page opened by URL has no
 // label to show in its breadcrumbs otherwise.
@@ -80,6 +85,38 @@ export class SectorsService {
     }
 
     return toSectorDto(data);
+  }
+
+  async create(
+    authUser: AuthUser,
+    idRegion: string,
+    payload: CreateSectorDto
+  ): Promise<SectorDto> {
+    const name = payload.name?.trim() ?? '';
+
+    if (!name) {
+      throw new ValidationException('A name is required', 'SECTOR_NAME_EMPTY');
+    }
+
+    const { data, error } = await userClient(authUser)
+      .from('sectors')
+      .insert({
+        id_region: idRegion,
+        name,
+        description: payload.description?.trim() ?? ''
+      })
+      .select('id')
+      .single<{ id: string }>();
+
+    if (error) {
+      throw new AppException(
+        error.message,
+        400,
+        error.code ?? 'SECTOR_CREATE_FAILED'
+      );
+    }
+
+    return this.findOne(data.id);
   }
 
   async update(

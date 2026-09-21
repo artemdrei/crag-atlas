@@ -45,7 +45,7 @@ export interface paths {
         };
         get: operations["RegionsController_findAll"];
         put?: never;
-        post?: never;
+        post: operations["RegionsController_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -68,6 +68,22 @@ export interface paths {
         patch: operations["RegionsController_update"];
         trace?: never;
     };
+    "/regions/{idRegion}/photo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["RegionsController_replacePhoto"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/regions/{idRegion}/sectors": {
         parameters: {
             query?: never;
@@ -77,7 +93,7 @@ export interface paths {
         };
         get: operations["SectorsController_findByRegion"];
         put?: never;
-        post?: never;
+        post: operations["SectorsController_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -290,6 +306,8 @@ export interface components {
             name: string;
             province: string;
             rockType: string;
+            /** @description Cover photo; null until an admin uploads one */
+            photoUrl?: string | null;
             sectorCount: number;
             routeCount: number;
             /** @description Easiest grade among the routes; null when there are none */
@@ -306,10 +324,17 @@ export interface components {
              */
             gradeMaxScale?: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux" | "font" | "vscale" | null;
         };
+        CreateRegionDto: {
+            name: string;
+            province?: string | null;
+            rockType?: string | null;
+        };
         UpdateRegionDto: {
             name: string;
             province: string;
             rockType: string;
+            /** @description Cover photo; null until an admin uploads one */
+            photoUrl?: string | null;
         };
         SectorDto: {
             id: string;
@@ -334,6 +359,10 @@ export interface components {
              * @enum {string|null}
              */
             gradeMaxScale?: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux" | "font" | "vscale" | null;
+        };
+        CreateSectorDto: {
+            name: string;
+            description?: string | null;
         };
         UpdateSectorDto: {
             name: string;
@@ -597,6 +626,29 @@ export interface operations {
             };
         };
     };
+    RegionsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateRegionDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RegionDto"];
+                };
+            };
+        };
+    };
     RegionsController_findOne: {
         parameters: {
             query?: never;
@@ -643,6 +695,34 @@ export interface operations {
             };
         };
     };
+    RegionsController_replacePhoto: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idRegion: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": {
+                    /** Format: binary */
+                    file: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RegionDto"];
+                };
+            };
+        };
+    };
     SectorsController_findByRegion: {
         parameters: {
             query?: never;
@@ -660,6 +740,31 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SectorDto"][];
+                };
+            };
+        };
+    };
+    SectorsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idRegion: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateSectorDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SectorDto"];
                 };
             };
         };

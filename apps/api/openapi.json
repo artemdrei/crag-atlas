@@ -79,6 +79,33 @@
           }
         },
         "tags": ["Regions"]
+      },
+      "post": {
+        "operationId": "RegionsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRegionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegionDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Regions"]
       }
     },
     "/regions/{idRegion}": {
@@ -145,6 +172,51 @@
         "tags": ["Regions"]
       }
     },
+    "/regions/{idRegion}/photo": {
+      "put": {
+        "operationId": "RegionsController_replacePhoto",
+        "parameters": [
+          {
+            "name": "idRegion",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["file"],
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegionDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Regions"]
+      }
+    },
     "/regions/{idRegion}/sectors": {
       "get": {
         "operationId": "SectorsController_findByRegion",
@@ -168,6 +240,42 @@
                   "items": {
                     "$ref": "#/components/schemas/SectorDto"
                   }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Sectors"]
+      },
+      "post": {
+        "operationId": "SectorsController_create",
+        "parameters": [
+          {
+            "name": "idRegion",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSectorDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SectorDto"
                 }
               }
             }
@@ -1025,6 +1133,11 @@
           "rockType": {
             "type": "string"
           },
+          "photoUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "Cover photo; null until an admin uploads one"
+          },
           "sectorCount": {
             "type": "number"
           },
@@ -1082,6 +1195,23 @@
           "routeCount"
         ]
       },
+      "CreateRegionDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "province": {
+            "type": "string",
+            "nullable": true
+          },
+          "rockType": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": ["name"]
+      },
       "UpdateRegionDto": {
         "type": "object",
         "properties": {
@@ -1093,6 +1223,11 @@
           },
           "rockType": {
             "type": "string"
+          },
+          "photoUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "Cover photo; null until an admin uploads one"
           }
         },
         "required": ["name", "province", "rockType"]
@@ -1174,6 +1309,19 @@
           "description",
           "routeCount"
         ]
+      },
+      "CreateSectorDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": ["name"]
       },
       "UpdateSectorDto": {
         "type": "object",

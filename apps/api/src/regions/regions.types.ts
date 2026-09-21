@@ -16,6 +16,14 @@ export class RegionDto {
   @ApiProperty()
   rockType!: string;
 
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description: 'Cover photo; null until an admin uploads one'
+  })
+  photoUrl?: string | null;
+
   @ApiProperty()
   sectorCount!: number;
 
@@ -50,6 +58,17 @@ export class RegionDto {
   gradeMaxScale?: GradeScale | null;
 }
 
+export class CreateRegionDto {
+  @ApiProperty()
+  name!: string;
+
+  @ApiProperty({ type: String, required: false, nullable: true })
+  province?: string | null;
+
+  @ApiProperty({ type: String, required: false, nullable: true })
+  rockType?: string | null;
+}
+
 export class UpdateRegionDto {
   @ApiProperty()
   name!: string;
@@ -59,4 +78,12 @@ export class UpdateRegionDto {
 
   @ApiProperty()
   rockType!: string;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description: 'Cover photo; null until an admin uploads one'
+  })
+  photoUrl?: string | null;
 }

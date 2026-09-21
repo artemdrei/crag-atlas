@@ -58,6 +58,14 @@ export class SectorDto {
   gradeMaxScale?: GradeScale | null;
 }
 
+export class CreateSectorDto {
+  @ApiProperty()
+  name!: string;
+
+  @ApiProperty({ type: String, required: false, nullable: true })
+  description?: string | null;
+}
+
 export class UpdateSectorDto {
   @ApiProperty()
   name!: string;
