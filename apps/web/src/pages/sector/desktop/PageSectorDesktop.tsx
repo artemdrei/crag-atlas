@@ -56,7 +56,7 @@ export const PageSectorDesktop = () => {
     [topos, routes]
   );
 
-  const groups = useRoutesByTopo({ routes, topos });
+  const groups = useRoutesByTopo({ routes, topos, numberOf });
 
   const colorOf = (idRoute: string) => {
     const route = routes.find(({ id }) => id === idRoute);
