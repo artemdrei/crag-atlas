@@ -28,13 +28,17 @@ import { HANDLE_CLASS, TopoEditMarkers } from './TopoEditMarkers';
 import { TopoEditOverlay } from './TopoEditOverlay';
 import { TopoPointMenu } from './TopoPointMenu';
 
+/** A sector editor reaches every line on the photo; an editor scoped to one
+    route leaves the rest visible but untouchable. */
+export type StageAccess =
+  | { kind: 'sector' }
+  | { kind: 'route'; idRoute: string };
+
 export interface Props {
   topo: EditableTopo;
   session: TopoEditorSession;
   idHoveredRoute?: string;
-  /** When set, only this route can be picked or reshaped — the other lines
-      on the photo stay visible but are not editable. */
-  idLockedRoute?: string;
+  access: StageAccess;
   numberOf: Record<string, number>;
   colorOf: (idRoute: string) => string | undefined;
   gradeOf: (idRoute: string) => string;
@@ -61,7 +65,7 @@ export const TopoEditStage = ({
   topo,
   session,
   idHoveredRoute,
-  idLockedRoute,
+  access,
   numberOf,
   colorOf,
   gradeOf,
@@ -89,7 +93,7 @@ export const TopoEditStage = ({
     : undefined;
 
   const isEditable = (idRoute: string) =>
-    !idLockedRoute || idRoute === idLockedRoute;
+    access.kind === 'sector' || idRoute === access.idRoute;
 
   const handleOverlayDown = (event: ReactPointerEvent<SVGSVGElement>) => {
     if (session.isPreview || event.button !== 0 || !overlayRef.current) return;

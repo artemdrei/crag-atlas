@@ -127,6 +127,7 @@ export const TopoEditorDesktop = ({ sector, editor, actions }: Props) => {
           <StageStyled
             topo={activeTopo}
             session={session}
+            access={{ kind: 'sector' }}
             numberOf={numberOf}
             colorOf={colorOf}
             gradeOf={gradeOf}
@@ -148,12 +149,15 @@ export const TopoEditorDesktop = ({ sector, editor, actions }: Props) => {
         <TopoThumbRail
           topos={session.order.map((id) => session.topos[id])}
           idActiveTopo={session.idActiveTopo}
+          mode={{
+            kind: 'manage',
+            onReorder: actions.movePhotoTo,
+            onReplace: actions.replacePhoto,
+            onAdd: actions.addPhoto,
+            onDelete: actions.removePhoto
+          }}
           isBusy={actions.isBusy}
           onSelect={(idTopo) => dispatch({ type: 'SELECT_TOPO', idTopo })}
-          onReorder={actions.movePhotoTo}
-          onReplace={actions.replacePhoto}
-          onAdd={actions.addPhoto}
-          onDelete={actions.removePhoto}
         />
       </StageColumnStyled>
       <ColumnStyled>

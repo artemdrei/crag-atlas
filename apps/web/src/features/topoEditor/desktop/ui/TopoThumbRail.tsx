@@ -23,15 +23,24 @@ import Typography from '@mui/material/Typography';
 import type { EditableTopo } from '../../common';
 import { ThumbStyled, TopoThumb } from './TopoThumb';
 
+/** Which photo belongs to the sector is a sector-level decision, so an editor
+    scoped to one route browses the rail instead of managing it. */
+export type RailMode =
+  | { kind: 'browse' }
+  | {
+      kind: 'manage';
+      onReorder: (idTopo: string, toIndex: number) => void;
+      onReplace: (idTopo: string, file: File) => void;
+      onAdd: (files: File[]) => void;
+      onDelete: (idTopo: string) => void;
+    };
+
 export interface Props {
   topos: EditableTopo[];
   idActiveTopo?: string;
+  mode: RailMode;
   isBusy: boolean;
   onSelect: (idTopo: string) => void;
-  onReorder?: (idTopo: string, toIndex: number) => void;
-  onReplace?: (idTopo: string, file: File) => void;
-  onAdd?: (files: File[]) => void;
-  onDelete?: (idTopo: string) => void;
 }
 
 /** Below this the pointer is clicking the thumbnail, not dragging it. */
@@ -40,12 +49,9 @@ const DRAG_THRESHOLD = 6;
 export const TopoThumbRail = ({
   topos,
   idActiveTopo,
+  mode,
   isBusy,
-  onSelect,
-  onReorder,
-  onReplace,
-  onAdd,
-  onDelete
+  onSelect
 }: Props) => {
   const { t } = useLingui();
   const [idDragged, setIdDragged] = useState<string>();
@@ -77,9 +83,9 @@ export const TopoThumbRail = ({
   const handleDragEnd = ({ active, over }: DragEndEvent) => {
     setIdDragged(undefined);
 
-    if (!over || active.id === over.id) return;
+    if (!over || active.id === over.id || mode.kind !== 'manage') return;
 
-    onReorder?.(
+    mode.onReorder(
       String(active.id),
       topos.findIndex(({ id }) => id === over.id)
     );
@@ -123,23 +129,26 @@ export const TopoThumbRail = ({
             <TopoThumb
               key={topo.id}
               topo={topo}
+              mode={
+                mode.kind === 'manage'
+                  ? {
+                      kind: 'manage',
+                      onReplace: (idTopo) => {
+                        idReplacing.current = idTopo;
+                        replaceRef.current?.click();
+                      },
+                      onDelete: mode.onDelete
+                    }
+                  : { kind: 'browse' }
+              }
               isCover={index === 0}
               isActive={topo.id === idActiveTopo}
               isBusy={isBusy}
-              isSortable={!!onReorder}
               onSelect={onSelect}
-              onReplace={
-                onReplace &&
-                ((idTopo) => {
-                  idReplacing.current = idTopo;
-                  replaceRef.current?.click();
-                })
-              }
-              onDelete={onDelete}
             />
           ))}
         </SortableContext>
-        {onAdd && (
+        {mode.kind === 'manage' && (
           <>
             <AddTileStyled
               type="button"
@@ -156,21 +165,19 @@ export const TopoThumbRail = ({
               type="file"
               accept="image/*"
               multiple
-              onChange={() => pick(addRef.current, onAdd)}
+              onChange={() => pick(addRef.current, mode.onAdd)}
+            />
+            <FileInputStyled
+              ref={replaceRef}
+              type="file"
+              accept="image/*"
+              onChange={() =>
+                pick(replaceRef.current, ([file]) =>
+                  mode.onReplace(idReplacing.current, file)
+                )
+              }
             />
           </>
-        )}
-        {onReplace && (
-          <FileInputStyled
-            ref={replaceRef}
-            type="file"
-            accept="image/*"
-            onChange={() =>
-              pick(replaceRef.current, ([file]) =>
-                onReplace(idReplacing.current, file)
-              )
-            }
-          />
         )}
       </RailStyled>
       <DragOverlay>

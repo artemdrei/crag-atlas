@@ -62,7 +62,7 @@ export const TopoEditorRouteDesktop = ({
           <StageStyled
             topo={activeTopo}
             session={session}
-            idLockedRoute={idRoute}
+            access={{ kind: 'route', idRoute }}
             numberOf={numberOf}
             colorOf={colorOf}
             gradeOf={gradeOf}
@@ -86,6 +86,7 @@ export const TopoEditorRouteDesktop = ({
         <TopoThumbRail
           topos={session.order.map((id) => session.topos[id])}
           idActiveTopo={session.idActiveTopo}
+          mode={{ kind: 'browse' }}
           isBusy={actions.isBusy}
           onSelect={(idTopo) => dispatch({ type: 'SELECT_TOPO', idTopo })}
         />

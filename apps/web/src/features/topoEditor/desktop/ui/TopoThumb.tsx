@@ -10,26 +10,31 @@ import Typography from '@mui/material/Typography';
 
 import type { EditableTopo } from '../../common';
 
+/** Browsing shows the photo only; managing adds the actions that change it. */
+export type ThumbMode =
+  | { kind: 'browse' }
+  | {
+      kind: 'manage';
+      onReplace: (idTopo: string) => void;
+      onDelete: (idTopo: string) => void;
+    };
+
 export interface Props {
   topo: EditableTopo;
+  mode: ThumbMode;
   isCover: boolean;
   isActive: boolean;
   isBusy: boolean;
-  isSortable: boolean;
   onSelect: (idTopo: string) => void;
-  onReplace?: (idTopo: string) => void;
-  onDelete?: (idTopo: string) => void;
 }
 
 export const TopoThumb = ({
   topo,
+  mode,
   isCover,
   isActive,
   isBusy,
-  isSortable,
-  onSelect,
-  onReplace,
-  onDelete
+  onSelect
 }: Props) => {
   const { t } = useLingui();
   const {
@@ -43,7 +48,7 @@ export const TopoThumb = ({
     index,
     activeIndex,
     overIndex
-  } = useSortable({ id: topo.id, disabled: isBusy || !isSortable });
+  } = useSortable({ id: topo.id, disabled: isBusy || mode.kind === 'browse' });
 
   const isTarget = isSorting && index === overIndex && index !== activeIndex;
   const insertAt = !isTarget
@@ -58,7 +63,7 @@ export const TopoThumb = ({
       isActive={isActive}
       isDragging={isDragging}
       isMuted={isSorting && !isDragging}
-      isSortable={isSortable}
+      isSortable={mode.kind === 'manage'}
       insertAt={insertAt}
       style={{ transform: CSS.Transform.toString(transform), transition }}
       onClick={() => onSelect(topo.id)}
@@ -71,43 +76,39 @@ export const TopoThumb = ({
           <Trans>Cover</Trans>
         </CoverStyled>
       )}
-      {(onReplace || onDelete) && (
+      {mode.kind === 'manage' && (
         <ActionsStyled>
-          {onReplace && (
-            <Tooltip title={t`Replace photo`}>
-              <span>
-                <IconButton
-                  size="small"
-                  aria-label={t`Replace photo`}
-                  disabled={isBusy}
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    onReplace(topo.id);
-                  }}
-                >
-                  <CameraswitchIcon fontSize="small" />
-                </IconButton>
-              </span>
-            </Tooltip>
-          )}
-          {onDelete && (
-            <Tooltip title={t`Delete photo`}>
-              <span>
-                <IconButton
-                  size="small"
-                  color="error"
-                  aria-label={t`Delete photo`}
-                  disabled={isBusy}
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    onDelete(topo.id);
-                  }}
-                >
-                  <DeleteOutlinedIcon fontSize="small" />
-                </IconButton>
-              </span>
-            </Tooltip>
-          )}
+          <Tooltip title={t`Replace photo`}>
+            <span>
+              <IconButton
+                size="small"
+                aria-label={t`Replace photo`}
+                disabled={isBusy}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  mode.onReplace(topo.id);
+                }}
+              >
+                <CameraswitchIcon fontSize="small" />
+              </IconButton>
+            </span>
+          </Tooltip>
+          <Tooltip title={t`Delete photo`}>
+            <span>
+              <IconButton
+                size="small"
+                color="error"
+                aria-label={t`Delete photo`}
+                disabled={isBusy}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  mode.onDelete(topo.id);
+                }}
+              >
+                <DeleteOutlinedIcon fontSize="small" />
+              </IconButton>
+            </span>
+          </Tooltip>
         </ActionsStyled>
       )}
     </ThumbStyled>
