@@ -27,7 +27,7 @@ msgid "{0, plural, one {# entry} other {# entries}}"
 msgstr "{0, plural, one {# запис} few {# записи} many {# записів} other {# запису}}"
 
 #. placeholder {0}: routes.length
-#: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:85
+#: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:83
 msgid "{0, plural, one {# route} few {# routes} many {# routes} other {# routes}}"
 msgstr "{0, plural, one {# маршрут} few {# маршрути} many {# маршрутів} other {# маршрутів}}"
 
@@ -51,6 +51,10 @@ msgstr "{0} м"
 #: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:93
 #~ msgid "{0} routes"
 #~ msgstr "{0} маршрутів"
+
+#: src/pages/region/common/ui/SectorColumnsMenu.tsx:52
+#~ msgid "{choice} per row"
+#~ msgstr "{choice} у рядку"
 
 #: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:205
 msgid "{failed} file(s) could not be read as photos."
@@ -89,7 +93,7 @@ msgstr "{total, plural, one {# голос} few {# голоси} many {# голо
 msgid "A route with logged ascents cannot be deleted: those ascents stay in people's logbooks."
 msgstr "Маршрут із записаними пролазами видалити не можна: ці пролази лишаються в логбуках людей."
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:75
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:74
 msgid "Add"
 msgstr "Додати"
 
@@ -98,7 +102,14 @@ msgstr "Додати"
 msgid "Add {0} photos"
 msgstr "Додати {0} фото"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:144
+#: src/features/catalogEdit/common/ui/RegionPhotoPicker.tsx:39
+#: src/features/catalogEdit/common/ui/RegionPhotoPicker.tsx:49
+#: src/pages/region/desktop/ui/SectorPhotoPicker.tsx:57
+#: src/pages/region/desktop/ui/SectorPhotoPicker.tsx:68
+msgid "Add a photo"
+msgstr "Додати фото"
+
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:201
 msgid "Add a photo to start drawing routes on it."
 msgstr "Додайте фото, щоб малювати на ньому маршрути."
 
@@ -107,6 +118,20 @@ msgstr "Додайте фото, щоб малювати на ньому мар�
 msgid "Add photo"
 msgstr "Додати фото"
 
+#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:65
+#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:70
+msgid "Add region"
+msgstr "Додати регіон"
+
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:286
+msgid "Add route"
+msgstr "Додати маршрут"
+
+#: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:62
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:94
+msgid "Add sector"
+msgstr "Додати сектор"
+
 #. placeholder {0}: sendable.length
 #. placeholder {1}: formatBytes(before, i18n.locale)
 #. placeholder {2}: formatBytes(after, i18n.locale)
@@ -114,6 +139,14 @@ msgstr "Додати фото"
 #: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:187
 msgid "All {0}: {1} → {2} ({3})"
 msgstr "Разом {0}: {1} → {2} ({3})"
+
+#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:46
+msgid "All regions"
+msgstr "Усі регіони"
+
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:73
+msgid "All sectors"
+msgstr "Усі сектори"
 
 #: src/features/topoEditor/desktop/ui/TopoPointMenu.tsx:46
 msgid "Anchor"
@@ -141,7 +174,12 @@ msgstr "Спроба"
 msgid "Attempts"
 msgstr "Спроби"
 
-#: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:66
+#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:35
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:62
+msgid "Back"
+msgstr "Назад"
+
+#: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:72
 msgid "Back to the sector"
 msgstr "Назад до сектора"
 
@@ -149,8 +187,8 @@ msgstr "Назад до сектора"
 msgid "Bolt"
 msgstr "Гак"
 
-#: src/features/catalogEdit/common/ui/RouteEditForm.tsx:140
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:165
+#: src/features/catalogEdit/common/ui/RouteEditForm.tsx:139
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:175
 msgid "Bolts"
 msgstr "Болти"
 
@@ -158,17 +196,22 @@ msgstr "Болти"
 #~ msgid "Both panes scroll together."
 #~ msgstr "Обидві панелі прокручуються разом."
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:126
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:133
 msgid "Boulder"
 msgstr "Болдер"
 
-#: src/features/catalogEdit/common/ui/EditActions.tsx:13
+#: src/features/catalogEdit/common/ui/EditActions.tsx:15
 #: src/features/logTick/common/ui/TickForm.tsx:88
 #: src/features/topoEditor/desktop/DeleteLineDialog.tsx:42
+#: src/features/topoEditor/desktop/DeletePhotoDialog.tsx:43
 #: src/features/topoEditor/desktop/DeleteRouteDialog.tsx:60
 #: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:229
 msgid "Cancel"
 msgstr "Скасувати"
+
+#: src/shared/ui/GridColumnsMenu.tsx:35
+msgid "Cards per row"
+msgstr "Карток у рядку"
 
 #: src/features/topoEditor/desktop/hooks/useTopoEditorActions.ts:140
 #~ msgid "Changes published"
@@ -185,6 +228,15 @@ msgstr "Скасувати"
 #: src/features/topo/desktop/TopoPhotoDialog.tsx:37
 msgid "Close"
 msgstr "Закрити"
+
+#: src/pages/home/desktop/PageHomeDesktop.tsx:45
+#: src/pages/region/desktop/PageRegionDesktop.tsx:50
+msgid "Close editing"
+msgstr "Закрити редагування"
+
+#: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:96
+msgid "Close the editor"
+msgstr "Закрити редагування"
 
 #: src/pages/route/common/ui/RouteTabs.tsx:25
 msgid "Comments"
@@ -223,7 +275,11 @@ msgstr "Головне"
 msgid "Crags"
 msgstr ""
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:197
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:277
+#~ msgid "Create a new one"
+#~ msgstr "Створіть новий"
+
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:238
 msgid "Create route"
 msgstr "Створити маршрут"
 
@@ -244,10 +300,11 @@ msgstr "Дата"
 #~ msgstr "Видалити"
 
 #: src/features/topoEditor/desktop/DeleteLineDialog.tsx:45
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:208
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:249
 msgid "Delete line"
 msgstr "Видалити лінію"
 
+#: src/features/topoEditor/desktop/DeletePhotoDialog.tsx:46
 #: src/features/topoEditor/desktop/ui/TopoThumb.tsx:87
 #: src/features/topoEditor/desktop/ui/TopoThumb.tsx:92
 msgid "Delete photo"
@@ -258,7 +315,7 @@ msgid "Delete point"
 msgstr "Видалити точку"
 
 #: src/features/topoEditor/desktop/DeleteRouteDialog.tsx:63
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:211
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:252
 msgid "Delete route"
 msgstr "Видалити маршрут"
 
@@ -266,19 +323,28 @@ msgstr "Видалити маршрут"
 msgid "Delete the line?"
 msgstr "Видалити лінію?"
 
+#: src/features/topoEditor/desktop/DeletePhotoDialog.tsx:30
+msgid "Delete the photo?"
+msgstr "Видалити фото?"
+
 #: src/features/topoEditor/desktop/DeleteRouteDialog.tsx:33
 msgid "Delete the route?"
 msgstr "Видалити маршрут?"
 
-#: src/features/catalogEdit/common/ui/RouteEditForm.tsx:149
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:48
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:176
+#: src/features/catalogEdit/common/ui/RouteEditForm.tsx:148
+#: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:53
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:49
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:189
 msgid "Description"
 msgstr "Опис"
 
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:105
 #~ msgid "Discard changes"
 #~ msgstr "Скасувати зміни"
+
+#: src/pages/region/desktop/PageRegionDesktop.tsx:43
+#~ msgid "Done"
+#~ msgstr "Готово"
 
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:109
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:110
@@ -296,14 +362,15 @@ msgstr "Відпущено на {0}"
 #~ msgstr ""
 
 #: src/features/catalogEdit/common/ui/EditToggleButton.tsx:19
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:103
 msgid "Edit"
 msgstr "Редагувати"
 
 #: src/pages/sector/desktop/PageSectorDesktop.tsx:103
-msgid "Edit topo"
-msgstr "Редагувати топо"
+#~ msgid "Edit topo"
+#~ msgstr "Редагувати топо"
 
-#: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:81
+#: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:79
 msgid "Editor"
 msgstr "Редактор"
 
@@ -336,8 +403,8 @@ msgstr "Вмістити фото"
 msgid "Flash"
 msgstr "Флеш"
 
-#: src/features/catalogEdit/common/ui/RouteEditForm.tsx:119
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:146
+#: src/features/catalogEdit/common/ui/RouteEditForm.tsx:120
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:153
 msgid "Grade"
 msgstr "Категорія"
 
@@ -345,7 +412,7 @@ msgstr "Категорія"
 msgid "Grade consensus"
 msgstr "Консенсус категорії"
 
-#: src/features/catalogEdit/common/ui/RouteEditForm.tsx:106
+#: src/features/catalogEdit/common/ui/RouteEditForm.tsx:107
 msgid "Grade system"
 msgstr "Система складності"
 
@@ -357,6 +424,10 @@ msgstr "Система складності — болдеринг"
 msgid "Grade system — routes"
 msgstr "Система складності — маршрути"
 
+#: src/pages/region/common/ui/SectorViewToggle.tsx:46
+#~ msgid "Grid"
+#~ msgstr "Плитка"
+
 #: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:28
 msgid "harder"
 msgstr "жорсткіше"
@@ -365,12 +436,12 @@ msgstr "жорсткіше"
 msgid "Language"
 msgstr "Мова"
 
-#: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:68
+#: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:38
 msgid "Leave with unsaved changes?"
 msgstr "Вийти, не зберігши зміни?"
 
 #: src/features/catalogEdit/common/ui/RouteEditForm.tsx:132
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:158
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:165
 msgid "Length, m"
 msgstr "Довжина, м"
 
@@ -381,6 +452,10 @@ msgstr "Світла"
 #: src/features/topoEditor/desktop/ui/TopoEditorToolbar.tsx:54
 #~ msgid "Line"
 #~ msgstr "Лінія"
+
+#: src/pages/region/common/ui/SectorViewToggle.tsx:55
+#~ msgid "List"
+#~ msgstr "Список"
 
 #: src/pages/logbook/desktop/PageLogbookDesktop.tsx:21
 #: src/pages/logbook/mobile/PageLogbookMobile.tsx:21
@@ -395,27 +470,27 @@ msgstr "Завантаження коментарів…"
 msgid "Loading media…"
 msgstr "Завантаження медіа…"
 
-#: src/pages/home/desktop/PageHomeDesktop.tsx:22
+#: src/pages/home/desktop/PageHomeDesktop.tsx:59
 #: src/pages/home/mobile/PageHomeMobile.tsx:22
 msgid "Loading regions…"
 msgstr ""
 
 #: src/pages/route/desktop/PageRouteDesktop.tsx:74
-#: src/pages/route/mobile/PageRouteMobile.tsx:75
+#: src/pages/route/mobile/PageRouteMobile.tsx:69
 msgid "Loading route…"
 msgstr ""
 
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:135
-#: src/pages/sector/mobile/PageSectorMobile.tsx:102
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:128
+#: src/pages/sector/mobile/PageSectorMobile.tsx:96
 msgid "Loading routes…"
 msgstr ""
 
-#: src/pages/region/desktop/PageRegionDesktop.tsx:41
-#: src/pages/region/mobile/PageRegionMobile.tsx:42
+#: src/pages/region/desktop/PageRegionDesktop.tsx:63
+#: src/pages/region/mobile/PageRegionMobile.tsx:33
 msgid "Loading sectors…"
 msgstr ""
 
-#: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:103
+#: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:102
 msgid "Loading the sector…"
 msgstr "Завантаження сектора…"
 
@@ -461,10 +536,12 @@ msgstr "Мої пролази"
 msgid "My logbook"
 msgstr "Мій логбук"
 
-#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:36
-#: src/features/catalogEdit/common/ui/RouteEditForm.tsx:86
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:40
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:109
+#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:42
+#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:37
+#: src/features/catalogEdit/common/ui/RouteEditForm.tsx:87
+#: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:44
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:41
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:116
 msgid "Name"
 msgstr "Назва"
 
@@ -472,9 +549,13 @@ msgstr "Назва"
 msgid "New photo"
 msgstr "Нове фото"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:100
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:107
 msgid "New route"
 msgstr "Новий маршрут"
+
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:102
+#~ msgid "New sector"
+#~ msgstr "Новий сектор"
 
 #: src/pages/logbook/common/ui/TicksList.tsx:17
 msgid "No ascents logged yet."
@@ -488,7 +569,7 @@ msgstr "Коментарів ще немає — додай бету перши�
 #~ msgid "No photo yet"
 #~ msgstr "Фото ще немає"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:80
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:79
 msgid "No routes yet — add the first one."
 msgstr "Маршрутів ще немає — додайте перший."
 
@@ -500,7 +581,8 @@ msgstr "Топо ще немає"
 msgid "No videos or photos yet."
 msgstr "Відео та фото ще немає."
 
-#: src/pages/sector/common/hooks/useRoutesByTopo.ts:42
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:106
+#: src/pages/sector/common/hooks/useRoutesByTopo.ts:61
 msgid "Not on a photo"
 msgstr "Не на фото"
 
@@ -514,8 +596,8 @@ msgid "Now over {0}"
 msgstr "Зараз над {0}"
 
 #: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:85
-msgid "On this photo"
-msgstr "На цьому фото"
+#~ msgid "On this photo"
+#~ msgstr "На цьому фото"
 
 #: src/pages/route/common/ui/RouteStats.tsx:31
 msgid "onsight"
@@ -526,13 +608,23 @@ msgid "Onsight"
 msgstr "Онсайт"
 
 #: src/pages/route/desktop/PageRouteDesktop.tsx:82
-#: src/pages/route/mobile/PageRouteMobile.tsx:83
+#: src/pages/route/mobile/PageRouteMobile.tsx:77
 msgid "Open the photo"
 msgstr "Відкрити фото"
 
 #: src/pages/login/common/ui/LoginCard.tsx:41
 msgid "or"
 msgstr "або"
+
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:276
+#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:62
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:86
+msgid "Or"
+msgstr "Або"
+
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:274
+#~ msgid "Or create a new one."
+#~ msgstr "Або створіть новий."
 
 #: src/features/topoEditor/desktop/ui/PhotoCompare.tsx:66
 msgid "Original"
@@ -543,8 +635,12 @@ msgid "Original photo"
 msgstr "Оригінальне фото"
 
 #: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:91
-msgid "Other routes"
-msgstr "Інші маршрути"
+#~ msgid "Other routes"
+#~ msgstr "Інші маршрути"
+
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:143
+#~ msgid "Photo"
+#~ msgstr "Фото"
 
 #. placeholder {0}: index + 1
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:71
@@ -563,9 +659,25 @@ msgstr "Фото завантажено"
 msgid "Photos uploaded"
 msgstr "Фото завантажено"
 
+#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:59
+msgid "Pick a region on the left to edit it."
+msgstr "Оберіть регіон ліворуч, щоб редагувати його."
+
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:273
+msgid "Pick a route on the left to edit it."
+msgstr "Оберіть маршрут ліворуч, щоб редагувати його."
+
 #: src/features/topoEditor/desktop/ui/TopoEditorToolbar.tsx:42
 #~ msgid "Pick a route to draw, or click a line on the photo."
 #~ msgstr "Оберіть маршрут або клацніть по лінії на фото."
+
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:83
+msgid "Pick a sector on the left to edit it."
+msgstr "Оберіть сектор ліворуч, щоб редагувати його."
+
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:97
+#~ msgid "Pick a sector to edit it."
+#~ msgstr "Оберіть сектор, щоб редагувати його."
 
 #. placeholder {0}: nameOf(active.id)
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:105
@@ -596,7 +708,8 @@ msgstr "Звичайна точка"
 msgid "Profile"
 msgstr "Профіль"
 
-#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:42
+#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:49
+#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:43
 msgid "Province"
 msgstr "Область"
 
@@ -608,11 +721,13 @@ msgstr "Область"
 #~ msgid "Quality"
 #~ msgstr "Якість"
 
-#: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:97
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:219
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:221
 msgid "Reader view"
 msgstr "Як бачить користувач"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:184
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:207
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:210
 msgid "Redo"
 msgstr "Повторити"
 
@@ -624,15 +739,29 @@ msgstr "Редпоінт"
 #~ msgid "Redraw line"
 #~ msgstr "Перемалювати лінію"
 
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:47
+msgid "Region"
+msgstr "Регіон"
+
+#. placeholder {0}: region.name
+#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:23
+msgid "Region {0} created"
+msgstr "Регіон {0} створено"
+
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:35
-#: src/pages/region/desktop/PageRegionDesktop.tsx:27
-#: src/pages/region/mobile/PageRegionMobile.tsx:28
+#: src/pages/home/desktop/PageHomeDesktop.tsx:33
+#: src/pages/region/desktop/PageRegionDesktop.tsx:36
+#: src/pages/region/mobile/PageRegionMobile.tsx:25
 #: src/pages/route/desktop/PageRouteDesktop.tsx:58
-#: src/pages/route/mobile/PageRouteMobile.tsx:59
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:92
-#: src/pages/sector/mobile/PageSectorMobile.tsx:75
+#: src/pages/route/mobile/PageRouteMobile.tsx:56
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:91
+#: src/pages/sector/mobile/PageSectorMobile.tsx:73
 msgid "Regions"
 msgstr "Регіони"
+
+#: src/app/ui/errorBoundary/ErrorFallback.tsx:21
+msgid "Reload"
+msgstr "Перезавантажити"
 
 #: src/features/topoEditor/desktop/ui/TopoEditorToolbar.tsx:51
 #~ msgid "Remove line"
@@ -653,6 +782,11 @@ msgstr "Регіони"
 msgid "Replace photo"
 msgstr "Замінити фото"
 
+#: src/features/catalogEdit/common/ui/RegionPhotoPicker.tsx:49
+#: src/pages/region/desktop/ui/SectorPhotoPicker.tsx:68
+msgid "Replace the photo"
+msgstr "Замінити фото"
+
 #: src/pages/login/common/ui/EmailOtpForm.tsx:85
 msgid "Resend code"
 msgstr "Надіслати код ще раз"
@@ -661,27 +795,28 @@ msgstr "Надіслати код ще раз"
 msgid "Retro flash"
 msgstr "Ретрофлеш"
 
-#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:48
+#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:56
+#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:49
 msgid "Rock type"
 msgstr "Порода"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:102
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:109
 msgid "Route №{number}"
 msgstr "Маршрут №{number}"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:104
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:111
 msgid "Route not on the wall yet"
 msgstr "Маршрут ще не на стіні"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:66
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:65
 msgid "Routes"
 msgstr "Маршрути"
 
-#: src/features/catalogEdit/common/ui/EditActions.tsx:16
+#: src/features/catalogEdit/common/ui/EditActions.tsx:19
 msgid "Save"
 msgstr "Зберегти"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:199
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:240
 msgid "Save changes"
 msgstr "Відредагувати"
 
@@ -689,14 +824,27 @@ msgstr "Відредагувати"
 #~ msgid "Save route"
 #~ msgstr "Зберегти маршрут"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:189
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:230
 msgid "Saved changes go live for everyone straight away."
 msgstr "Збережені зміни одразу стають видимими всім."
 
-#: src/features/catalogEdit/common/ui/EditActions.tsx:16
+#: src/features/catalogEdit/common/ui/EditActions.tsx:19
 #: src/features/logTick/common/ui/TickForm.tsx:91
 msgid "Saving…"
 msgstr "Зберігаємо…"
+
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:235
+msgid "Sector"
+msgstr "Сектор"
+
+#. placeholder {0}: sector.name
+#: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:26
+msgid "Sector {0} created"
+msgstr "Сектор {0} створено"
+
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:78
+#~ msgid "Sectors"
+#~ msgstr "Сектори"
 
 #: src/features/topoEditor/desktop/ui/TopoEditorToolbar.tsx:49
 #~ msgid "Select"
@@ -722,7 +870,11 @@ msgstr "Вийти"
 msgid "softer"
 msgstr "м'якше"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:123
+#: src/app/ui/errorBoundary/ErrorFallback.tsx:13
+msgid "Something went wrong"
+msgstr "Щось пішло не так"
+
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:130
 msgid "Sport"
 msgstr "Спорт"
 
@@ -730,7 +882,7 @@ msgstr "Спорт"
 msgid "Style"
 msgstr "Стиль"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:133
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:140
 msgid "System"
 msgstr "Система"
 
@@ -759,8 +911,8 @@ msgid "The new photo has different proportions. The lines are kept, but they wil
 msgstr "Нове фото має інші пропорції. Лінії зберігаються, але лежатимуть не на скелі, доки ви не перетягнете їхні точки на місце."
 
 #: src/pages/sectorEdit/mobile/PageSectorEditMobile.tsx:8
-msgid "The topo editor is available on a desktop screen."
-msgstr "Редактор топо доступний на десктопі."
+#~ msgid "The topo editor is available on a desktop screen."
+#~ msgstr "Редактор топо доступний на десктопі."
 
 #: src/pages/profile/common/ui/ThemeModeSetting.tsx:13
 msgid "Theme"
@@ -772,16 +924,24 @@ msgstr "Тема"
 
 #. placeholder {0}: affected.join(', ')
 #: src/features/topoEditor/desktop/hooks/useTopoEditorActions.ts:185
-msgid "This photo carries the lines of: {0}. Delete it anyway?"
-msgstr "На цьому фото є лінії маршрутів: {0}. Все одно видалити?"
+#~ msgid "This photo carries the lines of: {0}. Delete it anyway?"
+#~ msgstr "На цьому фото є лінії маршрутів: {0}. Все одно видалити?"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:65
+#: src/features/topoEditor/desktop/DeletePhotoDialog.tsx:34
+msgid "This photo carries the lines of: {routeNames}. It disappears from the sector together with those lines, for everyone, straight away. The routes themselves stay in the catalog."
+msgstr "На цьому фото є лінії маршрутів: {routeNames}. Фото зникне зі сектора разом із цими лініями — одразу й для всіх. Самі маршрути залишаться в каталозі."
+
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:72
 msgid "this route"
 msgstr "цього маршруту"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:71
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:78
 msgid "This route"
 msgstr "Цей маршрут"
+
+#: src/app/ui/errorBoundary/ErrorFallback.tsx:16
+msgid "This screen could not be drawn. Reloading usually gets past it."
+msgstr "Цей екран не вдалося намалювати. Зазвичай допомагає перезавантаження."
 
 #: src/shared/ui/AscentStyleLabel.tsx:28
 msgid "Top rope"
@@ -795,15 +955,16 @@ msgstr "Верхня страховка"
 #~ msgid "Trad"
 #~ msgstr "Трад"
 
-#: src/features/catalogEdit/common/ui/RouteEditForm.tsx:93
+#: src/features/catalogEdit/common/ui/RouteEditForm.tsx:94
 msgid "Type"
 msgstr "Тип"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:181
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:196
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:199
 msgid "Undo"
 msgstr "Скасувати"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:53
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:52
 msgid "Unsaved"
 msgstr "Не збережено"
 
