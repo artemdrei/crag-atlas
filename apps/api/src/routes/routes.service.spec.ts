@@ -10,8 +10,6 @@ interface QueryResult {
 
 let result: QueryResult = { data: [], error: null };
 
-// The service talks to Supabase; the stub keeps the test about mapping and
-// error handling rather than about the network.
 vi.mock('../config/supabase.client', () => ({
   publicSupabase: () => {
     const builder = {
@@ -31,6 +29,7 @@ const ROUTE_ROW = {
   id_sector: 'bastion',
   name: 'Мізерна логіка',
   grade: '7a',
+  grade_scale: 'french',
   type: 'sport',
   length: 20,
   bolts_count: 8,
@@ -63,6 +62,7 @@ describe('RoutesService', () => {
         regionName: "Кам'янець-Подільський",
         name: 'Мізерна логіка',
         grade: '7a',
+        gradeScale: 'french',
         type: 'sport',
         length: 20,
         boltsCount: 8,
@@ -70,10 +70,8 @@ describe('RoutesService', () => {
       });
     });
 
-    it('throws NotFoundException when the sector has no routes', async () => {
-      await expect(service.findBySector('nope')).rejects.toThrow(
-        NotFoundException
-      );
+    it('returns an empty list when the sector has no routes', async () => {
+      await expect(service.findBySector('nope')).resolves.toEqual([]);
     });
   });
 

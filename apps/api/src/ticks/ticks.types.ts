@@ -1,5 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 
+import type { GradeScale } from '../common/utils/grade';
+import { GRADE_SCALES } from '../common/utils/grade';
+
 export const ASCENT_STYLES = [
   'onsight',
   'flash',
@@ -31,6 +34,14 @@ export class TickDto {
 
   @ApiProperty({ type: String, required: false, nullable: true })
   routeGrade?: string | null;
+
+  @ApiProperty({
+    enum: GRADE_SCALES,
+    required: false,
+    nullable: true,
+    description: 'System routeGrade is written in'
+  })
+  routeGradeScale?: GradeScale | null;
 
   @ApiProperty({ type: String, required: false, nullable: true })
   sectorName?: string | null;

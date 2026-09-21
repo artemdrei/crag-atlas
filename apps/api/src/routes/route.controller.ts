@@ -1,5 +1,14 @@
-import { Body, Controller, Get, Param, Patch, UseGuards } from '@nestjs/common';
-import { ApiOkResponse } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Patch,
+  UseGuards
+} from '@nestjs/common';
+import { ApiNoContentResponse, ApiOkResponse } from '@nestjs/swagger';
 
 import { CurrentUser } from '../common/decorators/authUser.decorator';
 import { AdminGuard } from '../common/guards/admin.guard';
@@ -27,5 +36,16 @@ export class RouteController {
     @Body() payload: UpdateRouteDto
   ): Promise<RouteDto> {
     return this.routesService.update(authUser, idRoute, payload);
+  }
+
+  @Delete(':idRoute')
+  @UseGuards(SupabaseAuthGuard, AdminGuard)
+  @HttpCode(204)
+  @ApiNoContentResponse()
+  remove(
+    @CurrentUser() authUser: AuthUser,
+    @Param('idRoute') idRoute: string
+  ): Promise<void> {
+    return this.routesService.remove(authUser, idRoute);
   }
 }

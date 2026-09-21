@@ -5,6 +5,7 @@ import {
   NotFoundException
 } from '../common/exceptions/app.exception';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
+import type { GradeScale } from '../common/utils/grade';
 import { userClient } from '../common/utils/userClient';
 import { publicSupabase } from '../config/supabase.client';
 import type { RegionDto, UpdateRegionDto } from './regions.types';
@@ -12,7 +13,7 @@ import type { RegionDto, UpdateRegionDto } from './regions.types';
 // Counts and grade ranges are derived, so reads come from the view and writes
 // go to the table underneath it.
 const COLUMNS =
-  'id, name, province, rock_type, sector_count, route_count, grade_min, grade_max';
+  'id, name, province, rock_type, sector_count, route_count, grade_min, grade_min_scale, grade_max, grade_max_scale';
 
 interface RegionRow {
   id: string;
@@ -22,7 +23,9 @@ interface RegionRow {
   sector_count: number;
   route_count: number;
   grade_min: string | null;
+  grade_min_scale: GradeScale | null;
   grade_max: string | null;
+  grade_max_scale: GradeScale | null;
 }
 
 @Injectable()
@@ -103,6 +106,8 @@ const toRegionDto = (row: RegionRow): RegionDto => ({
   rockType: row.rock_type,
   sectorCount: row.sector_count,
   routeCount: row.route_count,
-  gradeRange:
-    row.grade_min && row.grade_max ? `${row.grade_min}-${row.grade_max}` : null
+  gradeMin: row.grade_min,
+  gradeMinScale: row.grade_min_scale,
+  gradeMax: row.grade_max,
+  gradeMaxScale: row.grade_max_scale
 });

@@ -30,6 +30,33 @@
           }
         },
         "tags": ["Me"]
+      },
+      "patch": {
+        "operationId": "MeController_update",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Me"]
       }
     },
     "/regions": {
@@ -224,6 +251,53 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "type",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["sport", "boulder"]
+            }
+          },
+          {
+            "name": "gradeFrom",
+            "required": false,
+            "in": "query",
+            "description": "Easiest grade to include",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "gradeTo",
+            "required": false,
+            "in": "query",
+            "description": "Hardest grade to include",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "gradeScale",
+            "required": false,
+            "in": "query",
+            "description": "System the two bounds are written in",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "french",
+                "yds",
+                "uiaa",
+                "saxon",
+                "ewbank",
+                "norwegian",
+                "brazilian_crux",
+                "font",
+                "vscale"
+              ]
+            }
           }
         ],
         "responses": {
@@ -236,6 +310,42 @@
                   "items": {
                     "$ref": "#/components/schemas/RouteDto"
                   }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Routes"]
+      },
+      "post": {
+        "operationId": "RoutesController_create",
+        "parameters": [
+          {
+            "name": "idSector",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRouteDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RouteDto"
                 }
               }
             }
@@ -303,6 +413,25 @@
                 }
               }
             }
+          }
+        },
+        "tags": ["Route"]
+      },
+      "delete": {
+        "operationId": "RouteController_remove",
+        "parameters": [
+          {
+            "name": "idRoute",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
           }
         },
         "tags": ["Route"]
@@ -395,6 +524,288 @@
           }
         },
         "tags": ["Topos"]
+      },
+      "post": {
+        "operationId": "ToposController_create",
+        "parameters": [
+          {
+            "name": "idSector",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["file", "width", "height"],
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "label": {
+                    "type": "string"
+                  },
+                  "width": {
+                    "type": "integer"
+                  },
+                  "height": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TopoDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Topos"]
+      }
+    },
+    "/sectors/{idSector}/topos/order": {
+      "patch": {
+        "operationId": "ToposController_reorder",
+        "parameters": [
+          {
+            "name": "idSector",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReorderToposDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TopoDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Topos"]
+      }
+    },
+    "/topos/{idTopo}": {
+      "patch": {
+        "operationId": "TopoController_update",
+        "parameters": [
+          {
+            "name": "idTopo",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTopoDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TopoDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Topo"]
+      },
+      "delete": {
+        "operationId": "TopoController_remove",
+        "parameters": [
+          {
+            "name": "idTopo",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "force",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": ["Topo"]
+      }
+    },
+    "/topos/{idTopo}/photo": {
+      "put": {
+        "operationId": "TopoController_replacePhoto",
+        "parameters": [
+          {
+            "name": "idTopo",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["file", "width", "height"],
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "width": {
+                    "type": "integer"
+                  },
+                  "height": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TopoDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Topo"]
+      }
+    },
+    "/routes/{idRoute}/topos/{idTopo}/line": {
+      "put": {
+        "operationId": "RouteLineController_save",
+        "parameters": [
+          {
+            "name": "idRoute",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idTopo",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveRouteLineDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RouteLineDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["RouteLine"]
+      },
+      "delete": {
+        "operationId": "RouteLineController_remove",
+        "parameters": [
+          {
+            "name": "idRoute",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idTopo",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": ["RouteLine"]
       }
     },
     "/routes/{idRoute}/comments": {
@@ -551,9 +962,53 @@
           "isAdmin": {
             "type": "boolean",
             "description": "Mirrors the user_roles row the RLS checks"
+          },
+          "gradeScaleRoute": {
+            "type": "string",
+            "enum": [
+              "french",
+              "yds",
+              "uiaa",
+              "saxon",
+              "ewbank",
+              "norwegian",
+              "brazilian_crux"
+            ],
+            "description": "System every route grade is shown in"
+          },
+          "gradeScaleBoulder": {
+            "type": "string",
+            "enum": ["font", "vscale"],
+            "description": "Boulder grades never convert into route grades, so they pick their own"
           }
         },
-        "required": ["idUser", "isAdmin"]
+        "required": [
+          "idUser",
+          "isAdmin",
+          "gradeScaleRoute",
+          "gradeScaleBoulder"
+        ]
+      },
+      "UpdateMeDto": {
+        "type": "object",
+        "properties": {
+          "gradeScaleRoute": {
+            "type": "string",
+            "enum": [
+              "french",
+              "yds",
+              "uiaa",
+              "saxon",
+              "ewbank",
+              "norwegian",
+              "brazilian_crux"
+            ]
+          },
+          "gradeScaleBoulder": {
+            "type": "string",
+            "enum": ["font", "vscale"]
+          }
+        }
       },
       "RegionDto": {
         "type": "object",
@@ -576,10 +1031,46 @@
           "routeCount": {
             "type": "number"
           },
-          "gradeRange": {
+          "gradeMin": {
             "type": "string",
             "nullable": true,
-            "description": "Derived from the routes of the region; null when it has none"
+            "description": "Easiest grade among the routes; null when there are none"
+          },
+          "gradeMinScale": {
+            "type": "string",
+            "enum": [
+              "french",
+              "yds",
+              "uiaa",
+              "saxon",
+              "ewbank",
+              "norwegian",
+              "brazilian_crux",
+              "font",
+              "vscale"
+            ],
+            "nullable": true,
+            "description": "System gradeMin is written in"
+          },
+          "gradeMax": {
+            "type": "string",
+            "nullable": true
+          },
+          "gradeMaxScale": {
+            "type": "string",
+            "enum": [
+              "french",
+              "yds",
+              "uiaa",
+              "saxon",
+              "ewbank",
+              "norwegian",
+              "brazilian_crux",
+              "font",
+              "vscale"
+            ],
+            "nullable": true,
+            "description": "System gradeMax is written in"
           }
         },
         "required": [
@@ -633,10 +1124,46 @@
           "routeCount": {
             "type": "number"
           },
-          "gradeRange": {
+          "gradeMin": {
             "type": "string",
             "nullable": true,
-            "description": "Derived from the routes of the sector; null when it has none"
+            "description": "Easiest grade among the routes; null when there are none"
+          },
+          "gradeMinScale": {
+            "type": "string",
+            "enum": [
+              "french",
+              "yds",
+              "uiaa",
+              "saxon",
+              "ewbank",
+              "norwegian",
+              "brazilian_crux",
+              "font",
+              "vscale"
+            ],
+            "nullable": true,
+            "description": "System gradeMin is written in"
+          },
+          "gradeMax": {
+            "type": "string",
+            "nullable": true
+          },
+          "gradeMaxScale": {
+            "type": "string",
+            "enum": [
+              "french",
+              "yds",
+              "uiaa",
+              "saxon",
+              "ewbank",
+              "norwegian",
+              "brazilian_crux",
+              "font",
+              "vscale"
+            ],
+            "nullable": true,
+            "description": "System gradeMax is written in"
           }
         },
         "required": [
@@ -686,9 +1213,24 @@
           "grade": {
             "type": "string"
           },
+          "gradeScale": {
+            "type": "string",
+            "enum": [
+              "french",
+              "yds",
+              "uiaa",
+              "saxon",
+              "ewbank",
+              "norwegian",
+              "brazilian_crux",
+              "font",
+              "vscale"
+            ],
+            "description": "The system the grade is written in; a grade alone is ambiguous"
+          },
           "type": {
             "type": "string",
-            "enum": ["sport", "trad", "boulder"]
+            "enum": ["sport", "boulder"]
           },
           "length": {
             "type": "number",
@@ -736,9 +1278,53 @@
           "regionName",
           "name",
           "grade",
+          "gradeScale",
           "type",
           "description"
         ]
+      },
+      "CreateRouteDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "grade": {
+            "type": "string"
+          },
+          "gradeScale": {
+            "type": "string",
+            "enum": [
+              "french",
+              "yds",
+              "uiaa",
+              "saxon",
+              "ewbank",
+              "norwegian",
+              "brazilian_crux",
+              "font",
+              "vscale"
+            ],
+            "description": "The system the grade is written in; a grade alone is ambiguous"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["sport", "boulder"]
+          },
+          "length": {
+            "type": "number",
+            "nullable": true
+          },
+          "boltsCount": {
+            "type": "number",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": ["name", "grade", "gradeScale", "type"]
       },
       "UpdateRouteDto": {
         "type": "object",
@@ -749,9 +1335,24 @@
           "grade": {
             "type": "string"
           },
+          "gradeScale": {
+            "type": "string",
+            "enum": [
+              "french",
+              "yds",
+              "uiaa",
+              "saxon",
+              "ewbank",
+              "norwegian",
+              "brazilian_crux",
+              "font",
+              "vscale"
+            ],
+            "description": "The system the grade is written in; a grade alone is ambiguous"
+          },
           "type": {
             "type": "string",
-            "enum": ["sport", "trad", "boulder"]
+            "enum": ["sport", "boulder"]
           },
           "length": {
             "type": "number",
@@ -761,16 +1362,12 @@
             "type": "number",
             "nullable": true
           },
-          "rating": {
-            "type": "number",
-            "nullable": true
-          },
           "description": {
             "type": "string",
             "nullable": true
           }
         },
-        "required": ["name", "grade", "type"]
+        "required": ["name", "grade", "gradeScale", "type"]
       },
       "TickDto": {
         "type": "object",
@@ -792,6 +1389,22 @@
           "routeGrade": {
             "type": "string",
             "nullable": true
+          },
+          "routeGradeScale": {
+            "type": "string",
+            "enum": [
+              "french",
+              "yds",
+              "uiaa",
+              "saxon",
+              "ewbank",
+              "norwegian",
+              "brazilian_crux",
+              "font",
+              "vscale"
+            ],
+            "nullable": true,
+            "description": "System routeGrade is written in"
           },
           "sectorName": {
             "type": "string",
@@ -875,11 +1488,29 @@
           "idRoute": {
             "type": "string"
           },
+          "idTopo": {
+            "type": "string"
+          },
           "routeName": {
             "type": "string"
           },
           "grade": {
             "type": "string"
+          },
+          "gradeScale": {
+            "type": "string",
+            "enum": [
+              "french",
+              "yds",
+              "uiaa",
+              "saxon",
+              "ewbank",
+              "norwegian",
+              "brazilian_crux",
+              "font",
+              "vscale"
+            ],
+            "description": "System the grade is written in"
           },
           "points": {
             "type": "array",
@@ -889,10 +1520,45 @@
                 "type": "number"
               }
             },
-            "description": "[[x, y], …] as 0..1 fractions of the photo"
+            "description": "[[x, y], …] as 0..1 fractions of the photo, first point at the start of the route"
+          },
+          "bolts": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            "description": "Bolt positions as 0..1 fractions of the photo"
+          },
+          "anchor": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "nullable": true,
+            "description": "The top station, if the route has one"
+          },
+          "labelOffsetX": {
+            "type": "number",
+            "description": "Nudge of the number marker, 0..1 fractions"
+          },
+          "labelOffsetY": {
+            "type": "number"
           }
         },
-        "required": ["idRoute", "routeName", "grade", "points"]
+        "required": [
+          "idRoute",
+          "idTopo",
+          "routeName",
+          "grade",
+          "gradeScale",
+          "points",
+          "bolts",
+          "labelOffsetX",
+          "labelOffsetY"
+        ]
       },
       "TopoDto": {
         "type": "object",
@@ -906,6 +1572,19 @@
           "photoUrl": {
             "type": "string"
           },
+          "sortOrder": {
+            "type": "number",
+            "description": "Lowest first; the lowest is the sector cover"
+          },
+          "width": {
+            "type": "number",
+            "nullable": true,
+            "description": "Pixel size of the photo, absent for rows imported before the editor"
+          },
+          "height": {
+            "type": "number",
+            "nullable": true
+          },
           "lines": {
             "type": "array",
             "items": {
@@ -913,7 +1592,78 @@
             }
           }
         },
-        "required": ["id", "label", "photoUrl", "lines"]
+        "required": ["id", "label", "photoUrl", "sortOrder", "lines"]
+      },
+      "TopoOrderDto": {
+        "type": "object",
+        "properties": {
+          "idTopo": {
+            "type": "string"
+          },
+          "sortOrder": {
+            "type": "number"
+          }
+        },
+        "required": ["idTopo", "sortOrder"]
+      },
+      "ReorderToposDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TopoOrderDto"
+            }
+          }
+        },
+        "required": ["items"]
+      },
+      "UpdateTopoDto": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          }
+        },
+        "required": ["label"]
+      },
+      "SaveRouteLineDto": {
+        "type": "object",
+        "properties": {
+          "points": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            "description": "Control points as 0..1 fractions, at least two, first one at the start of the route"
+          },
+          "bolts": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          },
+          "anchor": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "nullable": true
+          },
+          "labelOffsetX": {
+            "type": "number"
+          },
+          "labelOffsetY": {
+            "type": "number"
+          }
+        },
+        "required": ["points"]
       },
       "CommentDto": {
         "type": "object",

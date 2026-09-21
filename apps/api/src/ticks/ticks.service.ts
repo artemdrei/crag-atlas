@@ -6,12 +6,13 @@ import {
   ValidationException
 } from '../common/exceptions/app.exception';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
+import type { GradeScale } from '../common/utils/grade';
 import { supabaseConfig } from '../config/supabase.config';
 import { ASCENT_STYLES, type CreateTickDto, type TickDto } from './ticks.types';
 
 // The catalog rows come back embedded through the ticks → routes → sectors
 // foreign keys, so a logbook page is one query, not one per tick.
-const COLUMNS = '*, routes (name, grade, sectors (name))';
+const COLUMNS = '*, routes (name, grade, grade_scale, sectors (name))';
 
 interface TickRow {
   id: string;
@@ -26,6 +27,7 @@ interface TickRow {
   routes: {
     name: string;
     grade: string;
+    grade_scale: GradeScale;
     sectors: { name: string } | null;
   } | null;
 }
@@ -110,6 +112,7 @@ const toTickDto = (row: TickRow): TickDto => ({
   idRoute: row.id_route,
   routeName: row.routes?.name ?? null,
   routeGrade: row.routes?.grade ?? null,
+  routeGradeScale: row.routes?.grade_scale ?? null,
   sectorName: row.routes?.sectors?.name ?? null,
   ascentStyle: row.ascent_style,
   climbedAt: row.climbed_at,

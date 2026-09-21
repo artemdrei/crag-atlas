@@ -33,7 +33,7 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        patch?: never;
+        patch: operations["MeController_update"];
         trace?: never;
     };
     "/regions": {
@@ -109,7 +109,7 @@ export interface paths {
         };
         get: operations["RoutesController_findBySector"];
         put?: never;
-        post?: never;
+        post: operations["RoutesController_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -126,7 +126,7 @@ export interface paths {
         get: operations["RouteController_findOne"];
         put?: never;
         post?: never;
-        delete?: never;
+        delete: operations["RouteController_remove"];
         options?: never;
         head?: never;
         patch: operations["RouteController_update"];
@@ -157,8 +157,72 @@ export interface paths {
         };
         get: operations["ToposController_findBySector"];
         put?: never;
+        post: operations["ToposController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/sectors/{idSector}/topos/order": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["ToposController_reorder"];
+        trace?: never;
+    };
+    "/topos/{idTopo}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["TopoController_remove"];
+        options?: never;
+        head?: never;
+        patch: operations["TopoController_update"];
+        trace?: never;
+    };
+    "/topos/{idTopo}/photo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["TopoController_replacePhoto"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/routes/{idRoute}/topos/{idTopo}/line": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["RouteLineController_save"];
+        post?: never;
+        delete: operations["RouteLineController_remove"];
         options?: never;
         head?: never;
         patch?: never;
@@ -204,6 +268,22 @@ export interface components {
             idUser: string;
             /** @description Mirrors the user_roles row the RLS checks */
             isAdmin: boolean;
+            /**
+             * @description System every route grade is shown in
+             * @enum {string}
+             */
+            gradeScaleRoute: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux";
+            /**
+             * @description Boulder grades never convert into route grades, so they pick their own
+             * @enum {string}
+             */
+            gradeScaleBoulder: "font" | "vscale";
+        };
+        UpdateMeDto: {
+            /** @enum {string} */
+            gradeScaleRoute?: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux";
+            /** @enum {string} */
+            gradeScaleBoulder?: "font" | "vscale";
         };
         RegionDto: {
             id: string;
@@ -212,8 +292,19 @@ export interface components {
             rockType: string;
             sectorCount: number;
             routeCount: number;
-            /** @description Derived from the routes of the region; null when it has none */
-            gradeRange?: string | null;
+            /** @description Easiest grade among the routes; null when there are none */
+            gradeMin?: string | null;
+            /**
+             * @description System gradeMin is written in
+             * @enum {string|null}
+             */
+            gradeMinScale?: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux" | "font" | "vscale" | null;
+            gradeMax?: string | null;
+            /**
+             * @description System gradeMax is written in
+             * @enum {string|null}
+             */
+            gradeMaxScale?: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux" | "font" | "vscale" | null;
         };
         UpdateRegionDto: {
             name: string;
@@ -230,8 +321,19 @@ export interface components {
             photoUrl?: string | null;
             description: string;
             routeCount: number;
-            /** @description Derived from the routes of the sector; null when it has none */
-            gradeRange?: string | null;
+            /** @description Easiest grade among the routes; null when there are none */
+            gradeMin?: string | null;
+            /**
+             * @description System gradeMin is written in
+             * @enum {string|null}
+             */
+            gradeMinScale?: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux" | "font" | "vscale" | null;
+            gradeMax?: string | null;
+            /**
+             * @description System gradeMax is written in
+             * @enum {string|null}
+             */
+            gradeMaxScale?: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux" | "font" | "vscale" | null;
         };
         UpdateSectorDto: {
             name: string;
@@ -246,8 +348,13 @@ export interface components {
             regionName: string;
             name: string;
             grade: string;
+            /**
+             * @description The system the grade is written in; a grade alone is ambiguous
+             * @enum {string}
+             */
+            gradeScale: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux" | "font" | "vscale";
             /** @enum {string} */
-            type: "sport" | "trad" | "boulder";
+            type: "sport" | "boulder";
             length?: number | null;
             boltsCount?: number | null;
             /** @description Community rating, 0..5 */
@@ -260,14 +367,32 @@ export interface components {
             votesHard?: number | null;
             description: string;
         };
+        CreateRouteDto: {
+            name: string;
+            grade: string;
+            /**
+             * @description The system the grade is written in; a grade alone is ambiguous
+             * @enum {string}
+             */
+            gradeScale: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux" | "font" | "vscale";
+            /** @enum {string} */
+            type: "sport" | "boulder";
+            length?: number | null;
+            boltsCount?: number | null;
+            description?: string | null;
+        };
         UpdateRouteDto: {
             name: string;
             grade: string;
+            /**
+             * @description The system the grade is written in; a grade alone is ambiguous
+             * @enum {string}
+             */
+            gradeScale: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux" | "font" | "vscale";
             /** @enum {string} */
-            type: "sport" | "trad" | "boulder";
+            type: "sport" | "boulder";
             length?: number | null;
             boltsCount?: number | null;
-            rating?: number | null;
             description?: string | null;
         };
         TickDto: {
@@ -277,6 +402,11 @@ export interface components {
             /** @description Resolved from the route catalog; null if the route is gone */
             routeName?: string | null;
             routeGrade?: string | null;
+            /**
+             * @description System routeGrade is written in
+             * @enum {string|null}
+             */
+            routeGradeScale?: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux" | "font" | "vscale" | null;
             sectorName?: string | null;
             /** @enum {string} */
             ascentStyle: "onsight" | "flash" | "retro_flash" | "redpoint" | "toprope" | "attempt";
@@ -298,16 +428,52 @@ export interface components {
         };
         RouteLineDto: {
             idRoute: string;
+            idTopo: string;
             routeName: string;
             grade: string;
-            /** @description [[x, y], …] as 0..1 fractions of the photo */
+            /**
+             * @description System the grade is written in
+             * @enum {string}
+             */
+            gradeScale: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux" | "font" | "vscale";
+            /** @description [[x, y], …] as 0..1 fractions of the photo, first point at the start of the route */
             points: number[][];
+            /** @description Bolt positions as 0..1 fractions of the photo */
+            bolts: number[][];
+            /** @description The top station, if the route has one */
+            anchor?: number[] | null;
+            /** @description Nudge of the number marker, 0..1 fractions */
+            labelOffsetX: number;
+            labelOffsetY: number;
         };
         TopoDto: {
             id: string;
             label: string;
             photoUrl: string;
+            /** @description Lowest first; the lowest is the sector cover */
+            sortOrder: number;
+            /** @description Pixel size of the photo, absent for rows imported before the editor */
+            width?: number | null;
+            height?: number | null;
             lines: components["schemas"]["RouteLineDto"][];
+        };
+        TopoOrderDto: {
+            idTopo: string;
+            sortOrder: number;
+        };
+        ReorderToposDto: {
+            items: components["schemas"]["TopoOrderDto"][];
+        };
+        UpdateTopoDto: {
+            label: string;
+        };
+        SaveRouteLineDto: {
+            /** @description Control points as 0..1 fractions, at least two, first one at the start of the route */
+            points: number[][];
+            bolts?: number[][];
+            anchor?: number[] | null;
+            labelOffsetX?: number;
+            labelOffsetY?: number;
         };
         CommentDto: {
             id: string;
@@ -378,6 +544,29 @@ export interface operations {
             cookie?: never;
         };
         requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeDto"];
+                };
+            };
+        };
+    };
+    MeController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateMeDto"];
+            };
+        };
         responses: {
             200: {
                 headers: {
@@ -523,7 +712,15 @@ export interface operations {
     };
     RoutesController_findBySector: {
         parameters: {
-            query?: never;
+            query?: {
+                type?: "sport" | "boulder";
+                /** @description Easiest grade to include */
+                gradeFrom?: string;
+                /** @description Hardest grade to include */
+                gradeTo?: string;
+                /** @description System the two bounds are written in */
+                gradeScale?: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux" | "font" | "vscale";
+            };
             header?: never;
             path: {
                 idSector: string;
@@ -538,6 +735,31 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["RouteDto"][];
+                };
+            };
+        };
+    };
+    RoutesController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idSector: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateRouteDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RouteDto"];
                 };
             };
         };
@@ -560,6 +782,25 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["RouteDto"];
                 };
+            };
+        };
+    };
+    RouteController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idRoute: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -650,6 +891,184 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["TopoDto"][];
                 };
+            };
+        };
+    };
+    ToposController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idSector: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": {
+                    /** Format: binary */
+                    file: string;
+                    label?: string;
+                    width: number;
+                    height: number;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TopoDto"];
+                };
+            };
+        };
+    };
+    ToposController_reorder: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idSector: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReorderToposDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TopoDto"][];
+                };
+            };
+        };
+    };
+    TopoController_remove: {
+        parameters: {
+            query: {
+                force: string;
+            };
+            header?: never;
+            path: {
+                idTopo: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    TopoController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idTopo: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateTopoDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TopoDto"];
+                };
+            };
+        };
+    };
+    TopoController_replacePhoto: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idTopo: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": {
+                    /** Format: binary */
+                    file: string;
+                    width: number;
+                    height: number;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TopoDto"];
+                };
+            };
+        };
+    };
+    RouteLineController_save: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idRoute: string;
+                idTopo: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SaveRouteLineDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RouteLineDto"];
+                };
+            };
+        };
+    };
+    RouteLineController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idRoute: string;
+                idTopo: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

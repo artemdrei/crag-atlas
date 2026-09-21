@@ -5,6 +5,7 @@ import {
   NotFoundException
 } from '../common/exceptions/app.exception';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
+import type { GradeScale } from '../common/utils/grade';
 import { userClient } from '../common/utils/userClient';
 import { publicSupabase, storagePublicUrl } from '../config/supabase.client';
 import type { SectorDto, UpdateSectorDto } from './sectors.types';
@@ -12,7 +13,7 @@ import type { SectorDto, UpdateSectorDto } from './sectors.types';
 // The region name rides along: ids are uuids, so a page opened by URL has no
 // label to show in its breadcrumbs otherwise.
 const COLUMNS =
-  'id, id_region, name, description, route_count, grade_min, grade_max, regions (name), topos (storage_path, sort_order)';
+  'id, id_region, name, description, route_count, grade_min, grade_min_scale, grade_max, grade_max_scale, regions (name), topos (storage_path, sort_order)';
 
 interface SectorRow {
   id: string;
@@ -21,7 +22,9 @@ interface SectorRow {
   description: string;
   route_count: number;
   grade_min: string | null;
+  grade_min_scale: GradeScale | null;
   grade_max: string | null;
+  grade_max_scale: GradeScale | null;
   regions: { name: string } | null;
   topos: { storage_path: string; sort_order: number }[];
 }
@@ -112,8 +115,10 @@ const toSectorDto = (row: SectorRow): SectorDto => ({
   photoUrl: toPhotoUrl(row),
   description: row.description,
   routeCount: row.route_count,
-  gradeRange:
-    row.grade_min && row.grade_max ? `${row.grade_min}-${row.grade_max}` : null
+  gradeMin: row.grade_min,
+  gradeMinScale: row.grade_min_scale,
+  gradeMax: row.grade_max,
+  gradeMaxScale: row.grade_max_scale
 });
 
 const toPhotoUrl = (row: SectorRow): string | null => {
