@@ -30,3 +30,5 @@ minimumReleaseAgeExclude:
 # hygiene rather than an exposed path.
 overrides:
   multer: '>=2.3.0'
+patchedDependencies:
+  '@openbeta/sandbag@0.0.55': patches/@openbeta__sandbag@0.0.55.patch
