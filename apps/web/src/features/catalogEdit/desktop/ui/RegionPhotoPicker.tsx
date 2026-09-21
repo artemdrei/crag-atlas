@@ -2,35 +2,29 @@ import { useRef } from 'react';
 
 import { Trans, useLingui } from '@lingui/react/macro';
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
-import CircularProgress from '@mui/material/CircularProgress';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import { useApiReplaceRegionPhoto } from '../hooks';
+import { useModal } from '@web/app/providers';
 
 export interface Props {
   idRegion: string;
   photoUrl?: string | null;
 }
 
-/** Clicking the cover swaps it; a region has one photo, not a gallery. */
+/**
+ * Clicking the cover swaps it; a region has one photo, not a gallery. The
+ * upload dialog takes it from here — it shows what the compression saved.
+ */
 export const RegionPhotoPicker = ({ idRegion, photoUrl }: Props) => {
   const { t } = useLingui();
+  const { openModal } = useModal();
   const inputRef = useRef<HTMLInputElement>(null);
-  const { isPending, replaceRegionPhoto } = useApiReplaceRegionPhoto({
-    idRegion
-  });
 
   return (
     <>
-      <PickerStyled
-        type="button"
-        disabled={isPending}
-        onClick={() => inputRef.current?.click()}
-      >
-        {isPending ? (
-          <CircularProgress size={24} />
-        ) : photoUrl ? (
+      <PickerStyled type="button" onClick={() => inputRef.current?.click()}>
+        {photoUrl ? (
           <img src={photoUrl} alt="" />
         ) : (
           <PlaceholderStyled>
@@ -53,7 +47,12 @@ export const RegionPhotoPicker = ({ idRegion, photoUrl }: Props) => {
           // The same file twice in a row fires no change event.
           event.target.value = '';
 
-          if (file) replaceRegionPhoto(file);
+          if (file) {
+            openModal('UPLOAD_PHOTO', {
+              target: { kind: 'region', idRegion, photoUrl },
+              file
+            });
+          }
         }}
       />
     </>

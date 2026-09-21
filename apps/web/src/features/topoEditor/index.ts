@@ -16,10 +16,6 @@ export { TopoEditorDesktop } from './desktop/TopoEditorDesktop';
 
 export const topoEditorDesktopRegistrations: ModalRegistration[] = [
   {
-    id: 'UPLOAD_TOPO_PHOTO',
-    Component: lazy(() => import('./desktop/UploadPhotoDialog'))
-  },
-  {
     id: 'DELETE_TOPO_LINE',
     Component: lazy(() => import('./desktop/DeleteLineDialog'))
   },

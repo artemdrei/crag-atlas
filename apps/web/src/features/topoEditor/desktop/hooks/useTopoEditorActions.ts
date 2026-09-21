@@ -143,7 +143,11 @@ export const useTopoEditorActions = ({ idSector, editor, topos }: Params) => {
   );
 
   const addPhoto = useCallback(
-    (files: File[]) => openModal('UPLOAD_TOPO_PHOTO', { idSector, files }),
+    (files: File[]) =>
+      openModal('UPLOAD_PHOTO', {
+        target: { kind: 'topo', idSector },
+        files
+      }),
     [openModal, idSector]
   );
 
@@ -153,8 +157,8 @@ export const useTopoEditorActions = ({ idSector, editor, topos }: Params) => {
 
       if (!current) return;
 
-      openModal('UPLOAD_TOPO_PHOTO', {
-        idSector,
+      openModal('UPLOAD_PHOTO', {
+        target: { kind: 'topo', idSector },
         files: [file],
         replacing: {
           idTopo,
@@ -182,8 +186,6 @@ export const useTopoEditorActions = ({ idSector, editor, topos }: Params) => {
     [deleteTopo, resetHistory]
   );
 
-  // Deleting a photo takes its lines with it, so a photo that carries any goes
-  // through a dialog that names the routes losing them.
   const removePhoto = useCallback(
     (idTopo: string) => {
       const current = session.topos[idTopo];

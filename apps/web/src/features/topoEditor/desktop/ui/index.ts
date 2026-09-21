@@ -1,5 +1,3 @@
-export { PhotoCompare } from './PhotoCompare';
-export { PhotoSwap } from './PhotoSwap';
 export { TopoEditMarkers } from './TopoEditMarkers';
 export { TopoEditOverlay } from './TopoEditOverlay';
 export { TopoEditorRouteList } from './TopoEditorRouteList';

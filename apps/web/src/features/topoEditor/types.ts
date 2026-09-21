@@ -1,12 +1,9 @@
-import type { ReplacedTopo } from './desktop/UploadPhotoDialog';
+// Without a top-level export this file would be a script, and the block below
+// would replace the payload map instead of merging into it.
+export {};
 
 declare module '@web/app/providers/modalProvider/types' {
   interface ModalPayloadMap {
-    UPLOAD_TOPO_PHOTO: {
-      idSector: string;
-      files: File[];
-      replacing?: ReplacedTopo;
-    };
     DELETE_TOPO_LINE: { routeName: string; onConfirm: () => void };
     DELETE_TOPO_PHOTO: { routeNames: string; onConfirm: () => void };
     DELETE_ROUTE: {

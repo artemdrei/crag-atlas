@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import { TopoZoomControls } from '@web/features/topo';
 import { formatBytes } from '@web/shared/lib';
 
-import type { PhotoVersion } from '../hooks';
+import type { PhotoVersion } from '../../common';
 
 interface ViewTransform {
   scale: number;

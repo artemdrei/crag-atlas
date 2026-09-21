@@ -28,13 +28,16 @@ export const SectorPhotoPicker = ({ idSector }: Props) => {
     if (files.length === 0) return;
 
     if (!cover) {
-      openModal('UPLOAD_TOPO_PHOTO', { idSector, files });
+      openModal('UPLOAD_PHOTO', {
+        target: { kind: 'topo', idSector },
+        files
+      });
 
       return;
     }
 
-    openModal('UPLOAD_TOPO_PHOTO', {
-      idSector,
+    openModal('UPLOAD_PHOTO', {
+      target: { kind: 'topo', idSector },
       files: [files[0]],
       replacing: {
         idTopo: cover.id,

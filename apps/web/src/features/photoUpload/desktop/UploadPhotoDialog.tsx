@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { resolveFailureMessage, toFailure } from '@crag-atlas/utils';
 import { Trans, useLingui } from '@lingui/react/macro';
@@ -15,9 +15,13 @@ import Typography from '@mui/material/Typography';
 import { useModal } from '@web/app/providers';
 import { formatBytes, savedPercent, toast } from '@web/shared/lib';
 
-import { useApiReplaceTopoPhoto, useApiUploadTopo } from '../common';
-import type { CompressedPick, PhotoComparison } from './hooks';
-import { usePhotoCompression } from './hooks';
+import type { CompressedPick, PhotoComparison } from '../common';
+import {
+  useApiReplaceRegionPhoto,
+  useApiReplaceTopoPhoto,
+  useApiUploadTopo,
+  usePhotoCompression
+} from '../common';
 import { PhotoCompare, PhotoSwap } from './ui';
 
 /** The API rejects anything heavier, so the dialog says so before the trip. */
@@ -32,26 +36,58 @@ export interface ReplacedTopo {
   hasLines: boolean;
 }
 
-export interface Props {
+export interface TopoTarget {
+  kind: 'topo';
   idSector: string;
-  files: File[];
-  open: boolean;
-  replacing?: ReplacedTopo;
 }
 
-const UploadPhotoDialog = ({ idSector, files, open, replacing }: Props) => {
+export interface RegionTarget {
+  kind: 'region';
+  idRegion: string;
+  photoUrl?: string | null;
+}
+
+export type Props = { open: boolean } & (
+  | { target: TopoTarget; files: File[]; replacing?: ReplacedTopo }
+  | { target: RegionTarget; file: File }
+);
+
+const UploadPhotoDialog = (props: Props) => {
   const { t, i18n } = useLingui();
   const { closeModal } = useModal();
   const [idxShown, setIdxShown] = useState(0);
   const [uploaded, setUploaded] = useState(0);
+
+  const isRegion = props.target.kind === 'region';
+
+  // The compression effect keys off the array, so a fresh `[file]` every render
+  // would restart it forever.
+  const files = useMemo(
+    () =>
+      isRegion
+        ? [(props as { file: File }).file]
+        : (props as { files: File[] }).files,
+    [isRegion, props]
+  );
+
   const { isCompressing, picks } = usePhotoCompression(files);
 
-  const { isPending: isUploading, uploadTopo } = useApiUploadTopo({ idSector });
-  const { isPending: isReplacing, replaceTopoPhoto } = useApiReplaceTopoPhoto({
-    idSector
-  });
+  const replacing = isRegion
+    ? undefined
+    : (props as { replacing?: ReplacedTopo }).replacing;
 
-  const close = () => closeModal('UPLOAD_TOPO_PHOTO');
+  const { isPending: isUploading, uploadTopo } = useApiUploadTopo({
+    idSector: isRegion ? '' : (props.target as TopoTarget).idSector
+  });
+  const { isPending: isReplacing, replaceTopoPhoto } = useApiReplaceTopoPhoto({
+    idSector: isRegion ? '' : (props.target as TopoTarget).idSector
+  });
+  const { isPending: isReplacingCover, replaceRegionPhoto } =
+    useApiReplaceRegionPhoto({
+      idRegion: isRegion ? (props.target as RegionTarget).idRegion : ''
+    });
+
+  const close = () => closeModal('UPLOAD_PHOTO');
 
   const shown = picks[Math.min(idxShown, picks.length - 1)];
   const comparison = shown?.comparison;
@@ -73,19 +109,26 @@ const UploadPhotoDialog = ({ idSector, files, open, replacing }: Props) => {
     ? savedPercent(comparison.original.bytes, comparison.compressed.bytes)
     : 0;
 
+  const currentUrl = isRegion
+    ? ((props.target as RegionTarget).photoUrl ?? undefined)
+    : replacing?.photoUrl;
+
   const drifts =
     !!replacing &&
     replacing.ratio > 0 &&
     !!comparison &&
     Math.abs(comparison.ratio - replacing.ratio) / replacing.ratio >
       ASPECT_TOLERANCE;
-  const isBusy = isUploading || isReplacing;
+  const isBusy = isUploading || isReplacing || isReplacingCover;
 
   const upload = async () => {
     if (sendable.length === 0) return;
 
     try {
-      if (replacing) {
+      if (isRegion) {
+        await replaceRegionPhoto(sendable[0].comparison.blob);
+        toast.success(currentUrl ? t`Photo replaced` : t`Photo uploaded`);
+      } else if (replacing) {
         const { blob, compressed } = sendable[0].comparison;
 
         await replaceTopoPhoto({
@@ -120,13 +163,17 @@ const UploadPhotoDialog = ({ idSector, files, open, replacing }: Props) => {
   };
 
   return (
-    <Dialog fullWidth maxWidth="lg" open={open} onClose={close}>
+    <Dialog fullWidth maxWidth="lg" open={props.open} onClose={close}>
       <DialogTitle>
-        {replacing && <Trans>Replace photo</Trans>}
-        {!replacing && files.length > 1 && (
+        {isRegion && currentUrl && <Trans>Replace the cover photo</Trans>}
+        {isRegion && !currentUrl && <Trans>Add a cover photo</Trans>}
+        {!isRegion && replacing && <Trans>Replace photo</Trans>}
+        {!isRegion && !replacing && files.length > 1 && (
           <Trans>Add {files.length} photos</Trans>
         )}
-        {!replacing && files.length === 1 && <Trans>Add photo</Trans>}
+        {!isRegion && !replacing && files.length === 1 && (
+          <Trans>Add photo</Trans>
+        )}
       </DialogTitle>
       <DialogContent>
         {!comparison && (
@@ -139,7 +186,7 @@ const UploadPhotoDialog = ({ idSector, files, open, replacing }: Props) => {
         )}
         {comparison && (
           <>
-            {files.length > 1 && (
+            {!isRegion && files.length > 1 && (
               <PickStripStyled>
                 {picks.map((pick, index) => (
                   <PickStyled
@@ -158,9 +205,9 @@ const UploadPhotoDialog = ({ idSector, files, open, replacing }: Props) => {
                 {isCompressing && <CircularProgress size={20} />}
               </PickStripStyled>
             )}
-            {replacing ? (
+            {currentUrl ? (
               <PhotoSwap
-                currentUrl={replacing.photoUrl}
+                currentUrl={currentUrl}
                 nextUrl={comparison.compressed.url}
               />
             ) : (
@@ -182,7 +229,7 @@ const UploadPhotoDialog = ({ idSector, files, open, replacing }: Props) => {
               </SavedStyled>
               <BeforeStyled>{' · WebP'}</BeforeStyled>
             </SummaryStyled>
-            {sendable.length > 1 && (
+            {!isRegion && sendable.length > 1 && (
               <TotalStyled variant="caption" color="text.secondary">
                 <Trans>
                   All {sendable.length}: {formatBytes(before, i18n.locale)} →{' '}
@@ -193,16 +240,27 @@ const UploadPhotoDialog = ({ idSector, files, open, replacing }: Props) => {
             )}
             {oversized > 0 && (
               <Alert severity="error">
-                <Trans>
-                  {oversized} photo(s) stay over{' '}
-                  {formatBytes(MAX_PHOTO_BYTES, i18n.locale)} even compressed
-                  and will be skipped.
-                </Trans>
+                {isRegion ? (
+                  <Trans>
+                    This photo stays over{' '}
+                    {formatBytes(MAX_PHOTO_BYTES, i18n.locale)} even compressed.
+                  </Trans>
+                ) : (
+                  <Trans>
+                    {oversized} photo(s) stay over{' '}
+                    {formatBytes(MAX_PHOTO_BYTES, i18n.locale)} even compressed
+                    and will be skipped.
+                  </Trans>
+                )}
               </Alert>
             )}
             {failed > 0 && (
               <Alert severity="warning">
-                <Trans>{failed} file(s) could not be read as photos.</Trans>
+                {isRegion ? (
+                  <Trans>This file could not be read as a photo.</Trans>
+                ) : (
+                  <Trans>{failed} file(s) could not be read as photos.</Trans>
+                )}
               </Alert>
             )}
             {replacing?.hasLines && (
@@ -233,20 +291,18 @@ const UploadPhotoDialog = ({ idSector, files, open, replacing }: Props) => {
           disabled={sendable.length === 0 || isCompressing || isBusy}
           onClick={upload}
         >
-          {isBusy && sendable.length > 1 && (
+          {isBusy && !isRegion && sendable.length > 1 && (
             <Trans>
               Uploading {uploaded} of {sendable.length}…
             </Trans>
           )}
-          {!(isBusy && sendable.length > 1) && replacing && (
-            <Trans>Replace photo</Trans>
-          )}
-          {!(isBusy && sendable.length > 1) &&
-            !replacing &&
-            (sendable.length > 1 ? (
-              <Trans>Upload {sendable.length} photos</Trans>
-            ) : (
+          {!(isBusy && !isRegion && sendable.length > 1) &&
+            (currentUrl ? (
+              <Trans>Replace photo</Trans>
+            ) : isRegion || sendable.length === 1 ? (
               <Trans>Upload</Trans>
+            ) : (
+              <Trans>Upload {sendable.length} photos</Trans>
             ))}
         </Button>
       </DialogActions>

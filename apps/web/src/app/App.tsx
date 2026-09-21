@@ -6,6 +6,7 @@ import {
   logTickDesktopRegistrations,
   logTickMobileRegistrations
 } from '@web/features/logTick';
+import { photoUploadDesktopRegistrations } from '@web/features/photoUpload';
 import {
   topoDesktopRegistrations,
   topoMobileRegistrations
@@ -23,6 +24,7 @@ const desktopRegistrations = [
   ...logTickDesktopRegistrations,
   ...topoDesktopRegistrations,
   ...topoEditorDesktopRegistrations,
+  ...photoUploadDesktopRegistrations,
   ...playgroundDesktopRegistrations
 ];
 

@@ -38,11 +38,11 @@ export const useApiUploadTopo = ({ idSector }: Params) => {
 
 export const toPhotoForm = (
   blob: Blob,
-  fields: Record<string, string | number>
+  fields: Record<string, string | number> = {}
 ): FormData => {
   const form = new FormData();
 
-  form.append('file', blob, 'topo.webp');
+  form.append('file', blob, 'photo.webp');
 
   for (const [key, value] of Object.entries(fields)) {
     form.append(key, String(value));
