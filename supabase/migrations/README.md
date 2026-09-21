@@ -30,3 +30,4 @@ Apply a migration in the Supabase dashboard (SQL Editor) or with
 | 019 | `019_grade_scales.sql` | Grade scale per route, grade system per user; drops `sectors.approach_minutes`, which 012 could not |
 | 020 | `020_restore_view_security_invoker.sql` | Give the stats views back the setting 019 dropped |
 | 021 | `021_grade_scale_defaults.sql` | Grade preferences default to French and V Scale, never null |
+| 022 | `022_region_photo.sql` | Cover photo for a region, in its own bucket |
