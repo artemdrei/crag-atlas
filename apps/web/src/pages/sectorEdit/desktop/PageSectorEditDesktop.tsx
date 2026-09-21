@@ -89,6 +89,7 @@ export const PageSectorEditDesktop = () => {
           />
         </TitleStyled>
         <Button
+          size="small"
           variant="outlined"
           startIcon={<CloseIcon fontSize="small" />}
           onClick={leave}
