@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 
+import { ValidationException } from '../common/exceptions/app.exception';
 import {
-  AppException,
-  ValidationException
-} from '../common/exceptions/app.exception';
+  readFailed,
+  writeFailed
+} from '../common/exceptions/database.exception';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
 import { userClient } from '../common/utils/userClient';
 import { publicSupabase } from '../config/supabase.client';
@@ -32,10 +33,10 @@ export class CommentsService {
       .returns<CommentRow[]>();
 
     if (error) {
-      throw new AppException(
-        error.message,
-        500,
-        error.code ?? 'COMMENTS_READ_FAILED'
+      throw readFailed(
+        'Could not load the comments',
+        'COMMENTS_READ_FAILED',
+        error
       );
     }
 
@@ -60,10 +61,10 @@ export class CommentsService {
       .single<CommentRow>();
 
     if (error) {
-      throw new AppException(
-        error.message,
-        400,
-        error.code ?? 'COMMENT_CREATE_FAILED'
+      throw writeFailed(
+        'Could not post the comment',
+        'COMMENT_CREATE_FAILED',
+        error
       );
     }
 

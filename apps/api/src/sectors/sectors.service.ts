@@ -1,10 +1,13 @@
 import { Injectable } from '@nestjs/common';
 
 import {
-  AppException,
   NotFoundException,
   ValidationException
 } from '../common/exceptions/app.exception';
+import {
+  readFailed,
+  writeFailed
+} from '../common/exceptions/database.exception';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
 import type { GradeScale } from '../common/utils/grade';
 import { userClient } from '../common/utils/userClient';
@@ -45,10 +48,10 @@ export class SectorsService {
       .returns<SectorRow[]>();
 
     if (error) {
-      throw new AppException(
-        error.message,
-        500,
-        error.code ?? 'SECTORS_READ_FAILED'
+      throw readFailed(
+        'Could not load the sectors',
+        'SECTORS_READ_FAILED',
+        error
       );
     }
 
@@ -70,10 +73,10 @@ export class SectorsService {
       .maybeSingle<SectorRow>();
 
     if (error) {
-      throw new AppException(
-        error.message,
-        500,
-        error.code ?? 'SECTOR_READ_FAILED'
+      throw readFailed(
+        'Could not load the sector',
+        'SECTOR_READ_FAILED',
+        error
       );
     }
 
@@ -109,10 +112,10 @@ export class SectorsService {
       .single<{ id: string }>();
 
     if (error) {
-      throw new AppException(
-        error.message,
-        400,
-        error.code ?? 'SECTOR_CREATE_FAILED'
+      throw writeFailed(
+        'Could not create the sector',
+        'SECTOR_CREATE_FAILED',
+        error
       );
     }
 
@@ -133,10 +136,10 @@ export class SectorsService {
       .eq('id', idSector);
 
     if (error) {
-      throw new AppException(
-        error.message,
-        400,
-        error.code ?? 'SECTOR_UPDATE_FAILED'
+      throw writeFailed(
+        'Could not save the sector',
+        'SECTOR_UPDATE_FAILED',
+        error
       );
     }
 

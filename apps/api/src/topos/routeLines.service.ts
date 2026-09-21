@@ -1,10 +1,13 @@
 import { Injectable } from '@nestjs/common';
 
 import {
-  AppException,
   NotFoundException,
   ValidationException
 } from '../common/exceptions/app.exception';
+import {
+  readFailed,
+  writeFailed
+} from '../common/exceptions/database.exception';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
 import type { GradeScale } from '../common/utils/grade';
 import { userClient } from '../common/utils/userClient';
@@ -65,11 +68,7 @@ export class RouteLinesService {
       .single<RouteLineRow>();
 
     if (error) {
-      throw new AppException(
-        error.message,
-        400,
-        error.code ?? 'LINE_SAVE_FAILED'
-      );
+      throw writeFailed('Could not save the line', 'LINE_SAVE_FAILED', error);
     }
 
     return toRouteLineDto(data);
@@ -88,10 +87,10 @@ export class RouteLinesService {
       .maybeSingle<{ id_route: string }>();
 
     if (readError) {
-      throw new AppException(
-        readError.message,
-        500,
-        readError.code ?? 'LINE_READ_FAILED'
+      throw readFailed(
+        'Could not load the line',
+        'LINE_READ_FAILED',
+        readError
       );
     }
 
@@ -109,10 +108,10 @@ export class RouteLinesService {
       .eq('id_topo', idTopo);
 
     if (error) {
-      throw new AppException(
-        error.message,
-        400,
-        error.code ?? 'LINE_DELETE_FAILED'
+      throw writeFailed(
+        'Could not delete the line',
+        'LINE_DELETE_FAILED',
+        error
       );
     }
   }

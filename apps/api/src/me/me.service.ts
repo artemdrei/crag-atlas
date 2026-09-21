@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { ValidationException } from '../common/exceptions/app.exception';
+import { writeFailed } from '../common/exceptions/database.exception';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
 import type { BoulderGradeScale, RouteGradeScale } from '../common/utils/grade';
 import {
@@ -45,7 +46,6 @@ export class MeService {
   }
 
   async update(authUser: AuthUser, payload: UpdateMeDto): Promise<MeDto> {
-    // A PATCH that omits a field leaves it alone.
     const updates: Record<string, string> = {};
 
     if ('gradeScaleRoute' in payload) {
@@ -66,7 +66,11 @@ export class MeService {
       .eq('id', authUser.idUser);
 
     if (error) {
-      throw new ValidationException(error.message, 'ME_UPDATE_FAILED');
+      throw writeFailed(
+        'Could not save your settings',
+        'ME_UPDATE_FAILED',
+        error
+      );
     }
 
     return this.findMe(authUser);

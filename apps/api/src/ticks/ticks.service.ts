@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
+import { ValidationException } from '../common/exceptions/app.exception';
 import {
-  AppException,
-  ValidationException
-} from '../common/exceptions/app.exception';
+  readFailed,
+  writeFailed
+} from '../common/exceptions/database.exception';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
 import type { GradeScale } from '../common/utils/grade';
 import { supabaseConfig } from '../config/supabase.config';
@@ -48,10 +49,10 @@ export class TicksService {
     ).returns<TickRow[]>();
 
     if (error) {
-      throw new AppException(
-        error.message,
-        400,
-        error.code ?? 'TICKS_READ_FAILED'
+      throw readFailed(
+        'Could not load the logbook',
+        'TICKS_READ_FAILED',
+        error
       );
     }
 
@@ -85,10 +86,10 @@ export class TicksService {
       .single<TickRow>();
 
     if (error) {
-      throw new AppException(
-        error.message,
-        400,
-        error.code ?? 'TICK_INSERT_FAILED'
+      throw writeFailed(
+        'Could not log the ascent',
+        'TICK_INSERT_FAILED',
+        error
       );
     }
 

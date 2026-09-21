@@ -2,6 +2,7 @@ import type { ArgumentsHost, ExceptionFilter } from '@nestjs/common';
 import { Catch, HttpException, HttpStatus, Logger } from '@nestjs/common';
 
 import { AppException } from '../exceptions/app.exception';
+import { DatabaseException } from '../exceptions/database.exception';
 
 export const ERROR_RESPONSE_MESSAGE_500 = 'Internal server error';
 
@@ -33,11 +34,18 @@ export class GlobalHttpExceptionFilter implements ExceptionFilter {
     body: ErrorResponseBody;
   } {
     if (exception instanceof AppException) {
+      // A 5xx is our fault and its text is written for the log, not for the
+      // reader — a message only leaves the server with a status that says the
+      // caller can do something about it.
+      const isServerFault = exception.statusCode >= 500;
+
       return {
         statusCode: exception.statusCode,
         body: {
           success: false,
-          message: exception.message,
+          message: isServerFault
+            ? ERROR_RESPONSE_MESSAGE_500
+            : exception.message,
           code: exception.code,
           data: exception.data ?? null
         }
@@ -71,8 +79,14 @@ export class GlobalHttpExceptionFilter implements ExceptionFilter {
   ) {
     const detail =
       exception instanceof Error ? exception.message : String(exception);
+    // The database's own words never reach the client, so this is the only
+    // place they are readable at all.
+    const cause =
+      exception instanceof DatabaseException && exception.dbError
+        ? ` — database: ${JSON.stringify(exception.dbError)}`
+        : '';
     const stack = exception instanceof Error ? exception.stack : undefined;
-    const line = `${request.method} ${request.url} ${statusCode} — ${detail}`;
+    const line = `${request.method} ${request.url} ${statusCode} — ${detail}${cause}`;
 
     if (statusCode >= 500) {
       this.logger.error(line, stack);

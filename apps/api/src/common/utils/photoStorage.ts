@@ -4,6 +4,7 @@ import { Logger } from '@nestjs/common';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 import { ValidationException } from '../exceptions/app.exception';
+import { writeFailed } from '../exceptions/database.exception';
 
 const logger = new Logger('PhotoStorage');
 
@@ -50,7 +51,11 @@ export const uploadPhoto = async (
     });
 
   if (error) {
-    throw new ValidationException(error.message, 'PHOTO_UPLOAD_FAILED');
+    throw writeFailed(
+      'Could not store the photo',
+      'PHOTO_UPLOAD_FAILED',
+      error
+    );
   }
 };
 

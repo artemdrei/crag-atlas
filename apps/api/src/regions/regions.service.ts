@@ -5,6 +5,10 @@ import {
   NotFoundException,
   ValidationException
 } from '../common/exceptions/app.exception';
+import {
+  readFailed,
+  writeFailed
+} from '../common/exceptions/database.exception';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
 import type { GradeScale } from '../common/utils/grade';
 import type { UploadedPhoto } from '../common/utils/photoStorage';
@@ -54,10 +58,10 @@ export class RegionsService {
       .returns<RegionRow[]>();
 
     if (error) {
-      throw new AppException(
-        error.message,
-        500,
-        error.code ?? 'REGIONS_READ_FAILED'
+      throw readFailed(
+        'Could not load the regions',
+        'REGIONS_READ_FAILED',
+        error
       );
     }
 
@@ -72,10 +76,10 @@ export class RegionsService {
       .maybeSingle<RegionRow>();
 
     if (error) {
-      throw new AppException(
-        error.message,
-        500,
-        error.code ?? 'REGION_READ_FAILED'
+      throw readFailed(
+        'Could not load the region',
+        'REGION_READ_FAILED',
+        error
       );
     }
 
@@ -110,10 +114,10 @@ export class RegionsService {
       .single<{ id: string }>();
 
     if (error) {
-      throw new AppException(
-        error.message,
-        400,
-        error.code ?? 'REGION_CREATE_FAILED'
+      throw writeFailed(
+        'Could not create the region',
+        'REGION_CREATE_FAILED',
+        error
       );
     }
 
@@ -169,10 +173,10 @@ export class RegionsService {
       .eq('id', idRegion);
 
     if (error) {
-      throw new AppException(
-        error.message,
-        400,
-        error.code ?? 'REGION_UPDATE_FAILED'
+      throw writeFailed(
+        'Could not save the region',
+        'REGION_UPDATE_FAILED',
+        error
       );
     }
 

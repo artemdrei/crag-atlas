@@ -5,6 +5,10 @@ import {
   NotFoundException,
   ValidationException
 } from '../common/exceptions/app.exception';
+import {
+  readFailed,
+  writeFailed
+} from '../common/exceptions/database.exception';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
 import type { GradeScale } from '../common/utils/grade';
 import {
@@ -77,10 +81,10 @@ export class RoutesService {
     const { data, error } = await query.order('name').returns<RouteRow[]>();
 
     if (error) {
-      throw new AppException(
-        error.message,
-        500,
-        error.code ?? 'ROUTES_READ_FAILED'
+      throw readFailed(
+        'Could not load the routes',
+        'ROUTES_READ_FAILED',
+        error
       );
     }
 
@@ -95,11 +99,7 @@ export class RoutesService {
       .maybeSingle<RouteRow>();
 
     if (error) {
-      throw new AppException(
-        error.message,
-        500,
-        error.code ?? 'ROUTE_READ_FAILED'
-      );
+      throw readFailed('Could not load the route', 'ROUTE_READ_FAILED', error);
     }
 
     if (!data) {
@@ -150,10 +150,10 @@ export class RoutesService {
       .single<{ id: string }>();
 
     if (error) {
-      throw new AppException(
-        error.message,
-        400,
-        error.code ?? 'ROUTE_CREATE_FAILED'
+      throw writeFailed(
+        'Could not create the route',
+        'ROUTE_CREATE_FAILED',
+        error
       );
     }
 
@@ -168,10 +168,10 @@ export class RoutesService {
       .eq('id_route', idRoute);
 
     if (ticksError) {
-      throw new AppException(
-        ticksError.message,
-        500,
-        ticksError.code ?? 'ROUTE_TICKS_READ_FAILED'
+      throw readFailed(
+        'Could not check the logged ascents',
+        'ROUTE_TICKS_READ_FAILED',
+        ticksError
       );
     }
 
@@ -190,10 +190,10 @@ export class RoutesService {
       .eq('id', idRoute);
 
     if (error) {
-      throw new AppException(
-        error.message,
-        400,
-        error.code ?? 'ROUTE_DELETE_FAILED'
+      throw writeFailed(
+        'Could not delete the route',
+        'ROUTE_DELETE_FAILED',
+        error
       );
     }
   }
@@ -219,10 +219,10 @@ export class RoutesService {
       .eq('id', idRoute);
 
     if (error) {
-      throw new AppException(
-        error.message,
-        400,
-        error.code ?? 'ROUTE_UPDATE_FAILED'
+      throw writeFailed(
+        'Could not save the route',
+        'ROUTE_UPDATE_FAILED',
+        error
       );
     }
 

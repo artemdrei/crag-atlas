@@ -5,6 +5,10 @@ import {
   NotFoundException,
   ValidationException
 } from '../common/exceptions/app.exception';
+import {
+  readFailed,
+  writeFailed
+} from '../common/exceptions/database.exception';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
 import type { GradeScale } from '../common/utils/grade';
 import { userClient } from '../common/utils/userClient';
@@ -56,11 +60,7 @@ export class ToposService {
       .returns<TopoRow[]>();
 
     if (error) {
-      throw new AppException(
-        error.message,
-        500,
-        error.code ?? 'TOPOS_READ_FAILED'
-      );
+      throw readFailed('Could not load the photos', 'TOPOS_READ_FAILED', error);
     }
 
     return data.map(toTopoDto);
@@ -99,11 +99,7 @@ export class ToposService {
     if (error) {
       await removePhoto(client, path);
 
-      throw new AppException(
-        error.message,
-        400,
-        error.code ?? 'TOPO_CREATE_FAILED'
-      );
+      throw writeFailed('Could not add the photo', 'TOPO_CREATE_FAILED', error);
     }
 
     return toTopoDto(data);
@@ -120,10 +116,10 @@ export class ToposService {
       .eq('id', idTopo);
 
     if (error) {
-      throw new AppException(
-        error.message,
-        400,
-        error.code ?? 'TOPO_UPDATE_FAILED'
+      throw writeFailed(
+        'Could not save the photo',
+        'TOPO_UPDATE_FAILED',
+        error
       );
     }
 
@@ -155,10 +151,10 @@ export class ToposService {
     if (error) {
       await removePhoto(client, path);
 
-      throw new AppException(
-        error.message,
-        400,
-        error.code ?? 'TOPO_REPLACE_FAILED'
+      throw writeFailed(
+        'Could not replace the photo',
+        'TOPO_REPLACE_FAILED',
+        error
       );
     }
 
@@ -189,10 +185,10 @@ export class ToposService {
     const { error } = await client.from('topos').delete().eq('id', idTopo);
 
     if (error) {
-      throw new AppException(
-        error.message,
-        400,
-        error.code ?? 'TOPO_DELETE_FAILED'
+      throw writeFailed(
+        'Could not delete the photo',
+        'TOPO_DELETE_FAILED',
+        error
       );
     }
 
@@ -220,10 +216,10 @@ export class ToposService {
         .eq('id_sector', idSector);
 
       if (error) {
-        throw new AppException(
-          error.message,
-          400,
-          error.code ?? 'TOPO_REORDER_FAILED'
+        throw writeFailed(
+          'Could not reorder the photos',
+          'TOPO_REORDER_FAILED',
+          error
         );
       }
     }
@@ -243,11 +239,7 @@ export class ToposService {
       .maybeSingle<TopoRow>();
 
     if (error) {
-      throw new AppException(
-        error.message,
-        500,
-        error.code ?? 'TOPO_READ_FAILED'
-      );
+      throw readFailed('Could not load the photo', 'TOPO_READ_FAILED', error);
     }
 
     if (!data) {
@@ -270,10 +262,10 @@ export class ToposService {
       .maybeSingle<{ sort_order: number }>();
 
     if (error) {
-      throw new AppException(
-        error.message,
-        500,
-        error.code ?? 'TOPO_SORT_ORDER_FAILED'
+      throw readFailed(
+        'Could not read the photo order',
+        'TOPO_SORT_ORDER_FAILED',
+        error
       );
     }
 

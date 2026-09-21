@@ -4,6 +4,7 @@ import { Logger } from '@nestjs/common';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 import { ValidationException } from '../common/exceptions/app.exception';
+import { writeFailed } from '../common/exceptions/database.exception';
 import type { UploadedPhoto } from './topos.types';
 
 const logger = new Logger('TopoStorage');
@@ -53,7 +54,11 @@ export const uploadPhoto = async (
     .upload(path, photo.buffer, { contentType: 'image/webp', upsert: false });
 
   if (error) {
-    throw new ValidationException(error.message, 'PHOTO_UPLOAD_FAILED');
+    throw writeFailed(
+      'Could not store the photo',
+      'PHOTO_UPLOAD_FAILED',
+      error
+    );
   }
 };
 

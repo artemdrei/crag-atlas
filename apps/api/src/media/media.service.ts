@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 
+import { ValidationException } from '../common/exceptions/app.exception';
 import {
-  AppException,
-  ValidationException
-} from '../common/exceptions/app.exception';
+  readFailed,
+  writeFailed
+} from '../common/exceptions/database.exception';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
 import { userClient } from '../common/utils/userClient';
 import { publicSupabase } from '../config/supabase.client';
@@ -36,11 +37,7 @@ export class MediaService {
       .returns<MediaRow[]>();
 
     if (error) {
-      throw new AppException(
-        error.message,
-        500,
-        error.code ?? 'MEDIA_READ_FAILED'
-      );
+      throw readFailed('Could not load the media', 'MEDIA_READ_FAILED', error);
     }
 
     return data.map(toMediaDto);
@@ -85,10 +82,10 @@ export class MediaService {
       .single<MediaRow>();
 
     if (error) {
-      throw new AppException(
-        error.message,
-        400,
-        error.code ?? 'MEDIA_CREATE_FAILED'
+      throw writeFailed(
+        'Could not add the media',
+        'MEDIA_CREATE_FAILED',
+        error
       );
     }
 
