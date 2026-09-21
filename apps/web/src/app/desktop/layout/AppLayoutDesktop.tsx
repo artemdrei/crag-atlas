@@ -1,20 +1,29 @@
-import { Outlet } from 'react-router';
+import { Outlet, useLocation } from 'react-router';
 
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 
+import { ErrorBoundary } from '@web/app/ui/errorBoundary';
 import { CONTENT_MAX_WIDTH } from '@web/shared/theme/layout';
 
 import { AppHeaderDesktop } from './AppHeaderDesktop';
 
-export const AppLayoutDesktop = () => (
-  <LayoutRootStyled>
-    <AppHeaderDesktop />
-    <MainStyled component="main">
-      <Outlet />
-    </MainStyled>
-  </LayoutRootStyled>
-);
+export const AppLayoutDesktop = () => {
+  const location = useLocation();
+
+  return (
+    <LayoutRootStyled>
+      <AppHeaderDesktop />
+      <MainStyled component="main">
+        {/* Keyed by path: a crash on one screen must not follow the user to
+            the next one, and a boundary only clears by remounting. */}
+        <ErrorBoundary key={location.pathname}>
+          <Outlet />
+        </ErrorBoundary>
+      </MainStyled>
+    </LayoutRootStyled>
+  );
+};
 
 const LayoutRootStyled = styled(Box)`
   height: 100vh;

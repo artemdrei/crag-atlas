@@ -2,6 +2,8 @@ import { Component, type ErrorInfo, type ReactNode } from 'react';
 
 import { reporter, toFailure } from '@crag-atlas/utils';
 
+import { ErrorFallback } from './ErrorFallback';
+
 interface Props {
   children: ReactNode;
 }
@@ -30,14 +32,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
-      return (
-        <div>
-          <p>Something went wrong.</p>
-          <button type="button" onClick={this.handleReload}>
-            Reload
-          </button>
-        </div>
-      );
+      return <ErrorFallback onReload={this.handleReload} />;
     }
 
     return this.props.children;

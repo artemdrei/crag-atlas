@@ -1,24 +1,34 @@
-import { Outlet } from 'react-router';
+import { Outlet, useLocation } from 'react-router';
 
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 
+import { ErrorBoundary } from '@web/app/ui/errorBoundary';
+
 import { AppBottomNavigation } from './AppBottomNavigation';
 import { HeaderMobile } from './HeaderMobile';
 
-export const AppLayoutMobile = () => (
-  <LayoutRootStyled>
-    <HeaderSlotStyled>
-      <HeaderMobile />
-    </HeaderSlotStyled>
-    <MainStyled component="main">
-      <Outlet />
-    </MainStyled>
-    <NavSlotStyled>
-      <AppBottomNavigation />
-    </NavSlotStyled>
-  </LayoutRootStyled>
-);
+export const AppLayoutMobile = () => {
+  const location = useLocation();
+
+  return (
+    <LayoutRootStyled>
+      <HeaderSlotStyled>
+        <HeaderMobile />
+      </HeaderSlotStyled>
+      <MainStyled component="main">
+        {/* Keyed by path: a crash on one screen must not follow the user to
+            the next one, and a boundary only clears by remounting. */}
+        <ErrorBoundary key={location.pathname}>
+          <Outlet />
+        </ErrorBoundary>
+      </MainStyled>
+      <NavSlotStyled>
+        <AppBottomNavigation />
+      </NavSlotStyled>
+    </LayoutRootStyled>
+  );
+};
 
 const LayoutRootStyled = styled(Box)`
   height: 100dvh;
