@@ -25,7 +25,12 @@ export const useApiUploadTopo = ({ idSector }: Params) => {
         toPhotoForm(blob, { label, width, height })
       ),
     onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.topos(idSector) })
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: QUERY_KEYS.topos(idSector) }),
+        // A sector's card shows its first photo, and that card is listed under
+        // a region this hook has no id for.
+        queryClient.invalidateQueries({ queryKey: QUERY_KEYS.regions() })
+      ])
   });
 
   return { isPending, uploadTopo: mutateAsync };

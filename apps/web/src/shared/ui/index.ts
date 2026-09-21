@@ -7,5 +7,6 @@ export {
 } from './AscentStyleLabel';
 export { BottomSheet } from './BottomSheet';
 export { GradeBadge } from './GradeBadge';
+export { GridColumnsMenu } from './GridColumnsMenu';
 export { type Crumb, PageBreadcrumbs } from './PageBreadcrumbs';
 export { PhotoPlaceholder } from './PhotoPlaceholder';

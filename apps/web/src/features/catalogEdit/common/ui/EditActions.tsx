@@ -4,14 +4,17 @@ import { styled } from '@mui/material/styles';
 
 export interface Props {
   isPending: boolean;
-  onCancel: () => void;
+  /** Left out where the form is always on screen and has nothing to close. */
+  onCancel?: () => void;
 }
 
 export const EditActions = ({ isPending, onCancel }: Props) => (
   <ActionsStyled>
-    <Button type="button" onClick={onCancel}>
-      <Trans>Cancel</Trans>
-    </Button>
+    {onCancel && (
+      <Button type="button" onClick={onCancel}>
+        <Trans>Cancel</Trans>
+      </Button>
+    )}
     <Button type="submit" variant="contained" disabled={isPending}>
       {isPending ? <Trans>Saving…</Trans> : <Trans>Save</Trans>}
     </Button>

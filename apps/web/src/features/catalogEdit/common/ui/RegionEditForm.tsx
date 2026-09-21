@@ -10,7 +10,8 @@ import { EditFormStyled } from './EditFormStyled';
 
 export interface Props {
   region: Region;
-  onClose: () => void;
+  /** Omitted in the sidebar, where the form is a permanent panel. */
+  onClose?: () => void;
 }
 
 export const RegionEditForm = ({ region, onClose }: Props) => {

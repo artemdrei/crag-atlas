@@ -18,7 +18,12 @@ export const useApiDeleteTopo = ({ idSector }: Params) => {
       isForced?: boolean;
     }) => apiDelete(`/topos/${idTopo}${isForced ? '?force=true' : ''}`),
     onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.topos(idSector) })
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: QUERY_KEYS.topos(idSector) }),
+        // A sector's card shows its first photo, and that card is listed under
+        // a region this hook has no id for.
+        queryClient.invalidateQueries({ queryKey: QUERY_KEYS.regions() })
+      ])
   });
 
   return { isPending, deleteTopo: mutateAsync };

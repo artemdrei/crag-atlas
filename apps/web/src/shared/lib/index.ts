@@ -7,3 +7,5 @@ export { imageToWebp } from './imageToWebp';
 export { isSafeHttpUrl } from './isSafeHttpUrl';
 export { sleep } from './sleep';
 export { toast } from './toast';
+export type { GridColumns } from './useGridColumns';
+export { GRID_COLUMN_CHOICES, useGridColumns } from './useGridColumns';

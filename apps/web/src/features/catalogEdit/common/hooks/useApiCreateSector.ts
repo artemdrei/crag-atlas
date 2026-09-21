@@ -1,29 +1,28 @@
-import type { Sector, UpdateSector } from '@crag-atlas/api';
+import type { CreateSector, Sector } from '@crag-atlas/api';
 import { resolveFailureMessage, toFailure } from '@crag-atlas/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { apiPatch, QUERY_KEYS } from '@web/shared/api';
+import { apiPost, QUERY_KEYS } from '@web/shared/api';
 import { toast } from '@web/shared/lib';
 
 export interface Params {
-  idSector: string;
   idRegion: string;
-  onSaved?: () => void;
+  onCreated?: (sector: Sector) => void;
 }
 
-export const useApiUpdateSector = ({ idSector, idRegion, onSaved }: Params) => {
+export const useApiCreateSector = ({ idRegion, onCreated }: Params) => {
   const queryClient = useQueryClient();
 
   const { isPending, mutate } = useMutation({
-    mutationFn: (payload: UpdateSector) =>
-      apiPatch<Sector>(`/sectors/${idSector}`, payload),
+    mutationFn: (payload: CreateSector) =>
+      apiPost<Sector>(`/regions/${idRegion}/sectors`, payload),
     onSuccess: (sector) => {
-      queryClient.setQueryData(QUERY_KEYS.sector(idSector), sector);
+      queryClient.setQueryData(QUERY_KEYS.sector(sector.id), sector);
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.sectors(idRegion) });
-      onSaved?.();
+      onCreated?.(sector);
     },
     onError: (error) => toast.error(resolveFailureMessage(toFailure(error)))
   });
 
-  return { isPending, updateSector: mutate };
+  return { isPending, createSector: mutate };
 };
