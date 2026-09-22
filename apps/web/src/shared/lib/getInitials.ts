@@ -1,12 +1,13 @@
 /** "Crag Atlas" → "CA", "cragatlas@gmail.com" → "CR". Empty input → "". */
 export const getInitials = (name: string): string => {
-  const source = name.includes('@') ? name.split('@')[0] : name;
-  const words = source.split(/[\s._-]+/).filter(Boolean);
+  const [local = name] = name.includes('@') ? name.split('@') : [name];
+  const [first, second] = local.split(/[\s._-]+/).filter(Boolean);
 
-  if (words.length === 0) return '';
+  if (!first) return '';
 
-  const letters =
-    words.length > 1 ? `${words[0][0]}${words[1][0]}` : words[0].slice(0, 2);
+  const letters = second
+    ? `${first.slice(0, 1)}${second.slice(0, 1)}`
+    : first.slice(0, 2);
 
   return letters.toUpperCase();
 };

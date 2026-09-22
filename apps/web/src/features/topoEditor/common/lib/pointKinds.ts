@@ -23,7 +23,7 @@ export const boltsOf = (points: Point[], kinds: PointKind[]): Point[] =>
 export const anchorOf = (points: Point[], kinds: PointKind[]): Point | null => {
   const index = kinds.indexOf('anchor');
 
-  return index === -1 ? null : points[index];
+  return points[index] ?? null;
 };
 
 const keyOf = ([x, y]: number[]): string => `${x}:${y}`;

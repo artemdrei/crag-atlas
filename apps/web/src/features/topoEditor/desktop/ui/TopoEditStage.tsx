@@ -271,19 +271,22 @@ export const TopoEditStage = ({
               onPointMove={handleDragMove}
               onPointUp={handleDragEnd}
             />
-            {Object.values(topo.lines).map((line) =>
-              numberOf[line.idRoute] && line.points.length > 0 ? (
+            {Object.values(topo.lines).map((line) => {
+              const number = numberOf[line.idRoute];
+              const [start] = line.points;
+
+              return number && start ? (
                 <BadgeSlotStyled
                   key={line.idRoute}
                   onPointerDown={(event) =>
-                    handleLabelDown(line.idRoute, line.points[0], event)
+                    handleLabelDown(line.idRoute, start, event)
                   }
                   onPointerMove={handleDragMove}
                   onPointerUp={handleDragEnd}
                   onPointerCancel={handleDragEnd}
                 >
                   <TopoRouteBadge
-                    number={numberOf[line.idRoute]}
+                    number={number}
                     grade={gradeOf(line.idRoute)}
                     gradeScale={gradeScaleOf(line.idRoute)}
                     name={
@@ -293,8 +296,8 @@ export const TopoEditStage = ({
                         ? nameOf(line.idRoute)
                         : undefined
                     }
-                    x={line.points[0][0] + line.labelOffset[0]}
-                    y={line.points[0][1] + line.labelOffset[1]}
+                    x={start[0] + line.labelOffset[0]}
+                    y={start[1] + line.labelOffset[1]}
                     isHighlighted={line.idRoute === session.idSelectedRoute}
                     isDimmed={
                       !!session.idSelectedRoute &&
@@ -318,8 +321,8 @@ export const TopoEditStage = ({
                     }
                   />
                 </BadgeSlotStyled>
-              ) : null
-            )}
+              ) : null;
+            })}
           </FrameStyled>
         </TransformComponent>
         <TopoZoomControls />

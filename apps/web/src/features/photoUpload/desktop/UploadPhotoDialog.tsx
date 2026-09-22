@@ -122,14 +122,16 @@ const UploadPhotoDialog = (props: Props) => {
   const isBusy = isUploading || isReplacing || isReplacingCover;
 
   const upload = async () => {
-    if (sendable.length === 0) return;
+    const [firstSendable] = sendable;
+
+    if (!firstSendable) return;
 
     try {
       if (isRegion) {
-        await replaceRegionPhoto(sendable[0].comparison.blob);
+        await replaceRegionPhoto(firstSendable.comparison.blob);
         toast.success(currentUrl ? t`Photo replaced` : t`Photo uploaded`);
       } else if (replacing) {
-        const { blob, compressed } = sendable[0].comparison;
+        const { blob, compressed } = firstSendable.comparison;
 
         await replaceTopoPhoto({
           idTopo: replacing.idTopo,

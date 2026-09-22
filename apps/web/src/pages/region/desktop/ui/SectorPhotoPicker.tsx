@@ -25,7 +25,9 @@ export const SectorPhotoPicker = ({ idSector }: Props) => {
   const cover = topos[0];
 
   const pick = (files: File[]) => {
-    if (files.length === 0) return;
+    const [first] = files;
+
+    if (!first) return;
 
     if (!cover) {
       openModal('UPLOAD_PHOTO', {
@@ -38,7 +40,7 @@ export const SectorPhotoPicker = ({ idSector }: Props) => {
 
     openModal('UPLOAD_PHOTO', {
       target: { kind: 'topo', idSector },
-      files: [files[0]],
+      files: [first],
       replacing: {
         idTopo: cover.id,
         photoUrl: cover.photoUrl,

@@ -172,9 +172,9 @@ export const TopoThumbRail = ({
               type="file"
               accept="image/*"
               onChange={() =>
-                pick(replaceRef.current, ([file]) =>
-                  mode.onReplace(idReplacing.current, file)
-                )
+                pick(replaceRef.current, ([file]) => {
+                  if (file) mode.onReplace(idReplacing.current, file);
+                })
               }
             />
           </>
