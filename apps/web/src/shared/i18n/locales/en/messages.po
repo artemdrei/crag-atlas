@@ -31,7 +31,7 @@ msgstr "{0, plural, one {# entry} other {# entries}}"
 #. placeholder {0}: sector.routeCount
 #: src/pages/region/common/ui/SectorCard.tsx:41
 #: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:68
-#: src/widgets/gradeHistogram/common/ui/GradeHistogram.tsx:58
+#: src/widgets/gradeHistogram/common/ui/GradeHistogram.tsx:53
 msgid "{0, plural, one {# route} few {# routes} many {# routes} other {# routes}}"
 msgstr "{0, plural, one {# route} few {# routes} many {# routes} other {# routes}}"
 
@@ -166,11 +166,11 @@ msgstr "Anchor"
 #~ msgstr "As written"
 
 #: src/features/logTick/desktop/LogTickDialog.tsx:24
-#: src/features/logTick/mobile/LogTickSheet.tsx:24
+#: src/features/logTick/mobile/LogTickSheet.tsx:22
 msgid "Ascent logged"
 msgstr "Ascent logged"
 
-#: src/pages/route/common/ui/RouteStats.tsx:22
+#: src/pages/route/common/ui/RouteStats.tsx:21
 msgid "ascents"
 msgstr "ascents"
 
@@ -211,13 +211,15 @@ msgstr "Bolts"
 msgid "Boulder"
 msgstr "Boulder"
 
-#: src/widgets/gradeHistogram/common/ui/GradeHistogram.tsx:43
+#: src/widgets/gradeHistogram/common/ui/GradeHistogram.tsx:38
 msgid "Bouldering"
 msgstr "Bouldering"
 
 #: src/features/catalogEdit/common/ui/EditActions.tsx:15
 #: src/features/logTick/common/ui/TickForm.tsx:88
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:385
+#: src/features/routeComment/common/ui/DeleteRouteCommentActions.tsx:17
+#: src/features/routeComment/common/ui/RouteCommentForm.tsx:46
 #: src/features/topoEditor/desktop/DeleteLineDialog.tsx:42
 #: src/features/topoEditor/desktop/DeletePhotoDialog.tsx:43
 #: src/features/topoEditor/desktop/DeleteRouteDialog.tsx:60
@@ -253,7 +255,19 @@ msgstr "Close editing"
 msgid "Close the editor"
 msgstr "Close the editor"
 
-#: src/pages/route/common/ui/RouteTabs.tsx:25
+#: src/features/routeComment/common/ui/RouteCommentItem.tsx:50
+msgid "Comment actions"
+msgstr "Comment actions"
+
+#: src/features/routeComment/common/hooks/useRemoveRouteComment.ts:23
+msgid "Comment deleted"
+msgstr "Comment deleted"
+
+#: src/features/routeComment/common/hooks/useEditRouteComment.ts:23
+msgid "Comment saved"
+msgstr "Comment saved"
+
+#: src/pages/route/common/ui/RouteTabs.tsx:24
 msgid "Comments"
 msgstr "Comments"
 
@@ -310,9 +324,15 @@ msgstr "Dark"
 msgid "Date"
 msgstr "Date"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:108
-#~ msgid "Delete"
-#~ msgstr "Delete"
+#: src/features/routeComment/common/ui/DeleteRouteCommentActions.tsx:26
+#: src/features/routeComment/common/ui/RouteCommentMenuItems.tsx:45
+msgid "Delete"
+msgstr "Delete"
+
+#: src/features/routeComment/desktop/DeleteRouteCommentDialog.tsx:25
+#: src/features/routeComment/mobile/DeleteRouteCommentSheet.tsx:23
+msgid "Delete comment"
+msgstr "Delete comment"
 
 #: src/features/topoEditor/desktop/DeleteLineDialog.tsx:45
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:287
@@ -345,6 +365,10 @@ msgstr "Delete the photo?"
 #: src/features/topoEditor/desktop/DeleteRouteDialog.tsx:33
 msgid "Delete the route?"
 msgstr "Delete the route?"
+
+#: src/features/routeComment/common/ui/DeleteRouteCommentActions.tsx:26
+msgid "Deleting…"
+msgstr "Deleting…"
 
 #: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:53
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:63
@@ -381,9 +405,15 @@ msgid "Dropped on {0}"
 msgstr "Dropped on {0}"
 
 #: src/features/catalogEdit/common/ui/EditToggleButton.tsx:24
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:116
+#: src/features/routeComment/common/ui/RouteCommentMenuItems.tsx:35
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:118
 msgid "Edit"
 msgstr "Edit"
+
+#: src/features/routeComment/desktop/EditRouteCommentDialog.tsx:25
+#: src/features/routeComment/mobile/EditRouteCommentSheet.tsx:22
+msgid "Edit comment"
+msgstr "Edit comment"
 
 #: src/pages/sector/desktop/PageSectorDesktop.tsx:103
 #~ msgid "Edit topo"
@@ -492,7 +522,7 @@ msgstr "Light"
 msgid "Loading ascents…"
 msgstr "Loading ascents…"
 
-#: src/widgets/routeComments/common/ui/RouteComments.tsx:22
+#: src/widgets/routeComments/common/ui/RouteComments.tsx:26
 msgid "Loading comments…"
 msgstr "Loading comments…"
 
@@ -510,8 +540,8 @@ msgstr "Loading regions…"
 msgid "Loading route…"
 msgstr "Loading route…"
 
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:147
-#: src/pages/sector/mobile/PageSectorMobile.tsx:115
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:149
+#: src/pages/sector/mobile/PageSectorMobile.tsx:117
 msgid "Loading routes…"
 msgstr "Loading routes…"
 
@@ -530,7 +560,7 @@ msgstr "Loading the sector…"
 
 #: src/features/logTick/common/ui/TickForm.tsx:91
 #: src/features/logTick/desktop/LogTickDialog.tsx:32
-#: src/features/logTick/mobile/LogTickSheet.tsx:32
+#: src/features/logTick/mobile/LogTickSheet.tsx:28
 #: src/pages/route/common/ui/LogTickButton.tsx:30
 msgid "Log ascent"
 msgstr "Log ascent"
@@ -564,7 +594,7 @@ msgstr "Moved to {0}"
 msgid "My ascents"
 msgstr "My ascents"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:43
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:42
 #: src/pages/logbook/desktop/PageLogbookDesktop.tsx:14
 #: src/pages/logbook/mobile/PageLogbookMobile.tsx:14
 msgid "My logbook"
@@ -595,7 +625,7 @@ msgstr "New route"
 msgid "No ascents logged yet."
 msgstr "No ascents logged yet."
 
-#: src/widgets/routeComments/common/ui/RouteComments.tsx:26
+#: src/widgets/routeComments/common/ui/RouteComments.tsx:30
 msgid "No comments yet — be the first to add beta."
 msgstr "No comments yet — be the first to add beta."
 
@@ -641,7 +671,7 @@ msgstr "Now over {0}"
 #~ msgid "On this photo"
 #~ msgstr "On this photo"
 
-#: src/pages/route/common/ui/RouteStats.tsx:31
+#: src/pages/route/common/ui/RouteStats.tsx:28
 msgid "onsight"
 msgstr "onsight"
 
@@ -750,7 +780,11 @@ msgstr "Plain point"
 #~ msgid "Point {index} of {total} — drag to move"
 #~ msgstr "Point {index} of {total} — drag to move"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:59
+#: src/features/routeComment/common/ui/RouteCommentComposer.tsx:30
+msgid "Post"
+msgstr "Post"
+
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:58
 #: src/app/mobile/layout/AppBottomNavigation.tsx:48
 #: src/pages/profile/desktop/PageProfileDesktop.tsx:21
 #: src/pages/profile/mobile/PageProfileMobile.tsx:21
@@ -800,14 +834,14 @@ msgstr "Region {0} created"
 msgid "Region saved"
 msgstr "Region saved"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:35
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:34
 #: src/pages/home/desktop/PageHomeDesktop.tsx:46
 #: src/pages/region/desktop/PageRegionDesktop.tsx:49
 #: src/pages/region/mobile/PageRegionMobile.tsx:23
 #: src/pages/route/desktop/PageRouteDesktop.tsx:63
 #: src/pages/route/mobile/PageRouteMobile.tsx:61
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:104
-#: src/pages/sector/mobile/PageSectorMobile.tsx:86
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:106
+#: src/pages/sector/mobile/PageSectorMobile.tsx:88
 msgid "Regions"
 msgstr "Regions"
 
@@ -847,7 +881,7 @@ msgstr "Replace the photo"
 msgid "Resend code"
 msgstr "Resend code"
 
-#: src/pages/sector/common/ui/RoutesPanelHeader.tsx:31
+#: src/pages/sector/common/ui/RoutesPanelHeader.tsx:35
 msgid "Reset filters"
 msgstr "Reset filters"
 
@@ -881,6 +915,8 @@ msgid "Routes"
 msgstr "Routes"
 
 #: src/features/catalogEdit/common/ui/EditActions.tsx:19
+#: src/features/routeComment/desktop/EditRouteCommentDialog.tsx:29
+#: src/features/routeComment/mobile/EditRouteCommentSheet.tsx:24
 msgid "Save"
 msgstr "Save"
 
@@ -898,6 +934,7 @@ msgstr "Saved changes go live for everyone straight away."
 
 #: src/features/catalogEdit/common/ui/EditActions.tsx:19
 #: src/features/logTick/common/ui/TickForm.tsx:91
+#: src/features/routeComment/common/ui/RouteCommentForm.tsx:54
 msgid "Saving…"
 msgstr "Saving…"
 
@@ -930,7 +967,7 @@ msgstr "Sector saved"
 msgid "Sending code…"
 msgstr "Sending code…"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:68
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:65
 msgid "Sign in"
 msgstr "Sign in"
 
@@ -951,7 +988,7 @@ msgid "Something went wrong"
 msgstr "Something went wrong"
 
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:199
-#: src/widgets/gradeHistogram/common/ui/GradeHistogram.tsx:41
+#: src/widgets/gradeHistogram/common/ui/GradeHistogram.tsx:36
 msgid "Sport"
 msgstr "Sport"
 
@@ -1007,6 +1044,11 @@ msgstr "The sector has no photo yet — add one in the sector editor."
 msgid "Theme"
 msgstr "Theme"
 
+#: src/features/routeComment/desktop/DeleteRouteCommentDialog.tsx:29
+#: src/features/routeComment/mobile/DeleteRouteCommentSheet.tsx:25
+msgid "This cannot be undone."
+msgstr "This cannot be undone."
+
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:360
 msgid "This file could not be read as a photo."
 msgstr "This file could not be read as a photo."
@@ -1058,7 +1100,7 @@ msgstr "Top rope"
 #~ msgid "Topo photo"
 #~ msgstr "Topo photo"
 
-#: src/widgets/gradeHistogram/common/ui/GradeHistogram.tsx:42
+#: src/widgets/gradeHistogram/common/ui/GradeHistogram.tsx:37
 msgid "Trad"
 msgstr "Trad"
 
@@ -1100,7 +1142,7 @@ msgstr "Use another email"
 msgid "Verifying…"
 msgstr "Verifying…"
 
-#: src/pages/route/common/ui/RouteTabs.tsx:24
+#: src/pages/route/common/ui/RouteTabs.tsx:25
 msgid "Video and photo"
 msgstr "Video and photo"
 
@@ -1108,6 +1150,10 @@ msgstr "Video and photo"
 #: src/pages/login/common/ui/EmailOtpForm.tsx:53
 msgid "We sent a code to <0>{0}</0>"
 msgstr "We sent a code to <0>{0}</0>"
+
+#: src/features/routeComment/common/ui/RouteCommentForm.tsx:39
+msgid "Your beta"
+msgstr "Your beta"
 
 #: src/features/topo/common/ui/TopoZoomControls.tsx:31
 msgid "Zoom in"

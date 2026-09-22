@@ -8,7 +8,7 @@ import Tabs from '@mui/material/Tabs';
 import { RouteComments } from '@web/widgets/routeComments';
 import { RouteMedia } from '@web/widgets/routeMedia';
 
-type TabId = 'media' | 'comments';
+type TabId = 'comments' | 'media';
 
 export interface Props {
   idRoute: string;
@@ -16,16 +16,16 @@ export interface Props {
 
 export const RouteTabs = ({ idRoute }: Props) => {
   const { t } = useLingui();
-  const [tab, setTab] = useState<TabId>('media');
+  const [tab, setTab] = useState<TabId>('comments');
 
   return (
     <SectionStyled>
       <Tabs value={tab} onChange={(_, next: TabId) => setTab(next)}>
-        <Tab value="media" label={t`Video and photo`} />
         <Tab value="comments" label={t`Comments`} />
+        <Tab value="media" label={t`Video and photo`} />
       </Tabs>
-      {tab === 'media' && <RouteMedia idRoute={idRoute} />}
       {tab === 'comments' && <RouteComments idRoute={idRoute} />}
+      {tab === 'media' && <RouteMedia idRoute={idRoute} />}
     </SectionStyled>
   );
 };

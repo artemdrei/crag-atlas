@@ -13,6 +13,8 @@ const ROLE_RANK: Record<Role, number> = { guest: 0, user: 1, admin: 2 };
 
 const UserContext = createContext<{
   role: Role;
+  /** The caller's own id, for "is this mine?" checks on public rows. */
+  idUser: string | null;
   session: Session | null;
   isAuthenticated: boolean;
   isLoading: boolean;
@@ -54,6 +56,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
     return {
       role,
+      idUser: session?.user.id ?? null,
       session,
       isAuthenticated: !!session,
       isLoading,

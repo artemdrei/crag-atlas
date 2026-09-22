@@ -8,6 +8,10 @@ import {
 } from '@web/features/logTick';
 import { photoUploadDesktopRegistrations } from '@web/features/photoUpload';
 import {
+  routeCommentDesktopRegistrations,
+  routeCommentMobileRegistrations
+} from '@web/features/routeComment';
+import {
   topoDesktopRegistrations,
   topoMobileRegistrations
 } from '@web/features/topo';
@@ -25,12 +29,14 @@ const desktopRegistrations = [
   ...topoDesktopRegistrations,
   ...topoEditorDesktopRegistrations,
   ...photoUploadDesktopRegistrations,
+  ...routeCommentDesktopRegistrations,
   ...playgroundDesktopRegistrations
 ];
 
 const mobileRegistrations = [
   ...logTickMobileRegistrations,
   ...topoMobileRegistrations,
+  ...routeCommentMobileRegistrations,
   ...playgroundMobileRegistrations
 ];
 
