@@ -7,6 +7,7 @@ import { findTopoOfRoute, orderRoutes } from '@web/features/topo';
 import { getGradeColor } from '@web/shared/theme/palette';
 
 import type { TopoEditorSessionApi } from '../../common';
+import { orderedTopos } from '../../common';
 
 export const useTopoEditorDerived = ({
   session,
@@ -17,9 +18,9 @@ export const useTopoEditorDerived = ({
   const numberOf = useMemo(
     () =>
       orderRoutes(
-        session.order.map((id) => ({
-          sortOrder: session.topos[id].sortOrder,
-          lines: Object.values(session.topos[id].lines)
+        orderedTopos(session.order, session.topos).map((topo) => ({
+          sortOrder: topo.sortOrder,
+          lines: Object.values(topo.lines)
         })),
         session.routeOrder
       ),
@@ -55,9 +56,9 @@ export const useTopoEditorDerived = ({
   const selectRoute = useCallback(
     (idRoute: string) => {
       const topo = findTopoOfRoute(
-        session.order.map((id) => ({
-          ...session.topos[id],
-          lines: Object.values(session.topos[id].lines)
+        orderedTopos(session.order, session.topos).map((item) => ({
+          ...item,
+          lines: Object.values(item.lines)
         })),
         idRoute
       );

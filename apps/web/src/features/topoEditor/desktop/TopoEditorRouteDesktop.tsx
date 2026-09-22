@@ -6,7 +6,7 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import type { TopoEditorSessionApi } from '../common';
-import { changedRouteFields, isRouteDirty } from '../common';
+import { changedRouteFields, isRouteDirty, orderedTopos } from '../common';
 import type { TopoEditorActions } from './hooks';
 import { useEditorHotkeys, useTopoEditorDerived } from './hooks';
 import { TopoEditorRoutePanel, TopoEditStage, TopoThumbRail } from './ui';
@@ -88,7 +88,7 @@ export const TopoEditorRouteDesktop = ({
           </EmptyPhotoStyled>
         )}
         <TopoThumbRail
-          topos={session.order.map((id) => session.topos[id])}
+          topos={orderedTopos(session.order, session.topos)}
           idActiveTopo={session.idActiveTopo}
           mode={{ kind: 'browse' }}
           isBusy={actions.isBusy}

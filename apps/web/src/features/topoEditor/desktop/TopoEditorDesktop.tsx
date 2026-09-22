@@ -14,7 +14,12 @@ import Typography from '@mui/material/Typography';
 import { SectorEditForm } from '@web/features/catalogEdit';
 
 import type { RouteDraft, TopoEditorSessionApi } from '../common';
-import { changedRouteFields, dirtyRouteIds, isRouteDirty } from '../common';
+import {
+  changedRouteFields,
+  dirtyRouteIds,
+  isRouteDirty,
+  orderedTopos
+} from '../common';
 import type { TopoEditorActions } from './hooks';
 import { useEditorHotkeys, useTopoEditorDerived } from './hooks';
 import {
@@ -73,12 +78,10 @@ export const TopoEditorDesktop = ({
     const placed = new Set<string>();
     const grouped: RouteGroupDraft[] = [];
 
-    for (const idTopo of session.order) {
-      const topo = session.topos[idTopo];
+    for (const topo of orderedTopos(session.order, session.topos)) {
       const drawn = Object.values(topo.lines)
         .filter((line) => line.points.length > 0)
-        .map((line) => session.routes[line.idRoute])
-        .filter((route): route is RouteDraft => !!route);
+        .flatMap((line) => session.routes[line.idRoute] ?? []);
 
       for (const route of drawn) placed.add(route.id);
 
@@ -92,8 +95,8 @@ export const TopoEditorDesktop = ({
     }
 
     const rest = session.routeOrder
-      .map((id) => session.routes[id])
-      .filter((route) => !!route && !placed.has(route.id));
+      .flatMap((id) => session.routes[id] ?? [])
+      .filter((route) => !placed.has(route.id));
 
     if (rest.length > 0) {
       grouped.push({
@@ -154,7 +157,7 @@ export const TopoEditorDesktop = ({
           </EmptyPhotoStyled>
         )}
         <TopoThumbRail
-          topos={session.order.map((id) => session.topos[id])}
+          topos={orderedTopos(session.order, session.topos)}
           idActiveTopo={session.idActiveTopo}
           mode={{
             kind: 'manage',
