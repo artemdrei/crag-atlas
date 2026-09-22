@@ -32,3 +32,5 @@ Apply a migration in the Supabase dashboard (SQL Editor) or with
 | 021 | `021_grade_scale_defaults.sql` | Grade preferences default to French and V Scale, never null |
 | 022 | `022_region_photo.sql` | Cover photo for a region, in its own bucket |
 | 023 | `023_tighten_storage_and_grants.sql` | Drop the storage listing policies; revoke EXECUTE on the sign-up trigger |
+| 024 | `024_drop_topo_label.sql` | Drop `topos.label`: a photo is named by its position |
+| 025 | `025_one_line_per_route.sql` | `route_lines` is keyed by the route alone: one line per route, moved instead of copied |

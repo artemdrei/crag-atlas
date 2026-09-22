@@ -10,7 +10,6 @@ import {
   writeFailed
 } from '../common/exceptions/database.exception';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
-import type { GradeScale } from '../common/utils/grade';
 import {
   assertWebp,
   buildPhotoPath,
@@ -20,31 +19,25 @@ import {
 } from '../common/utils/photoStorage';
 import { userClient } from '../common/utils/userClient';
 import { publicSupabase, storagePublicUrl } from '../config/supabase.client';
-import type { ReorderToposDto, TopoDto, UpdateTopoDto } from './topos.types';
+import {
+  ROUTE_LINE_COLUMNS,
+  type RouteLineRow,
+  toRouteLineDto
+} from './routeLine.mapper';
+import type { ReorderToposDto, TopoDto } from './topos.types';
 
-export const TOPOS_BUCKET = 'topos';
+const TOPOS_BUCKET = 'topos';
 
-const COLUMNS =
-  'id, id_sector, label, storage_path, sort_order, width, height, route_lines (id_route, id_topo, points, bolts, anchor, label_offset_x, label_offset_y, routes (name, grade, grade_scale))';
+const COLUMNS = `id, id_sector, storage_path, sort_order, width, height, route_lines (${ROUTE_LINE_COLUMNS})`;
 
 interface TopoRow {
   id: string;
   id_sector: string;
-  label: string;
   storage_path: string;
   sort_order: number;
   width: number | null;
   height: number | null;
-  route_lines: {
-    id_route: string;
-    id_topo: string;
-    points: number[][];
-    bolts: number[][] | null;
-    anchor: number[] | null;
-    label_offset_x: number;
-    label_offset_y: number;
-    routes: { name: string; grade: string; grade_scale: GradeScale } | null;
-  }[];
+  route_lines: RouteLineRow[];
 }
 
 @Injectable()
@@ -68,7 +61,6 @@ export class ToposService {
     authUser: AuthUser,
     idSector: string,
     photo: UploadedPhoto,
-    label: string,
     width: number,
     height: number
   ): Promise<TopoDto> {
@@ -86,7 +78,6 @@ export class ToposService {
       .insert({
         id_sector: idSector,
         storage_path: path,
-        label,
         width,
         height,
         sort_order: sortOrder
@@ -101,27 +92,6 @@ export class ToposService {
     }
 
     return toTopoDto(data);
-  }
-
-  async update(
-    authUser: AuthUser,
-    idTopo: string,
-    payload: UpdateTopoDto
-  ): Promise<TopoDto> {
-    const { error } = await userClient(authUser)
-      .from('topos')
-      .update({ label: payload.label?.trim() ?? '' })
-      .eq('id', idTopo);
-
-    if (error) {
-      throw writeFailed(
-        'Could not save the photo',
-        'TOPO_UPDATE_FAILED',
-        error
-      );
-    }
-
-    return this.findOne(idTopo);
   }
 
   /** The lines stay: different proportions are an adjustment, not a reason
@@ -206,20 +176,24 @@ export class ToposService {
 
     const client = userClient(authUser);
 
-    for (const item of items) {
-      const { error } = await client
-        .from('topos')
-        .update({ sort_order: item.sortOrder })
-        .eq('id', item.idTopo)
-        .eq('id_sector', idSector);
+    const results = await Promise.all(
+      items.map((item) =>
+        client
+          .from('topos')
+          .update({ sort_order: item.sortOrder })
+          .eq('id', item.idTopo)
+          .eq('id_sector', idSector)
+      )
+    );
 
-      if (error) {
-        throw writeFailed(
-          'Could not reorder the photos',
-          'TOPO_REORDER_FAILED',
-          error
-        );
-      }
+    const error = results.find((result) => result.error)?.error;
+
+    if (error) {
+      throw writeFailed(
+        'Could not reorder the photos',
+        'TOPO_REORDER_FAILED',
+        error
+      );
     }
 
     return this.findBySector(idSector);
@@ -273,21 +247,9 @@ export class ToposService {
 
 const toTopoDto = (row: TopoRow): TopoDto => ({
   id: row.id,
-  label: row.label,
   photoUrl: storagePublicUrl(TOPOS_BUCKET, row.storage_path),
   sortOrder: row.sort_order,
   width: row.width,
   height: row.height,
-  lines: row.route_lines.map((line) => ({
-    idRoute: line.id_route,
-    idTopo: line.id_topo,
-    routeName: line.routes?.name ?? '',
-    grade: line.routes?.grade ?? '',
-    gradeScale: line.routes?.grade_scale ?? 'french',
-    points: line.points,
-    bolts: line.bolts ?? [],
-    anchor: line.anchor,
-    labelOffsetX: line.label_offset_x,
-    labelOffsetY: line.label_offset_y
-  }))
+  lines: row.route_lines.map(toRouteLineDto)
 });

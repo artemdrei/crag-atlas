@@ -61,9 +61,6 @@ export class TopoDto {
   id!: string;
 
   @ApiProperty()
-  label!: string;
-
-  @ApiProperty()
   photoUrl!: string;
 
   @ApiProperty({ description: 'Lowest first; the lowest is the sector cover' })
@@ -109,11 +106,6 @@ export class SaveRouteLineDto {
 
   @ApiProperty({ type: Number, required: false })
   labelOffsetY?: number;
-}
-
-export class UpdateTopoDto {
-  @ApiProperty()
-  label!: string;
 }
 
 export class TopoOrderDto {

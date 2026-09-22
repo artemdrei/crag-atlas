@@ -51,7 +51,6 @@ export class ToposController {
       required: ['file', 'width', 'height'],
       properties: {
         file: { type: 'string', format: 'binary' },
-        label: { type: 'string' },
         width: { type: 'integer' },
         height: { type: 'integer' }
       }
@@ -68,7 +67,6 @@ export class ToposController {
       authUser,
       idSector,
       file,
-      payload.label?.trim() ?? '',
       // Multipart carries strings only, and there is no global ValidationPipe.
       parseDimension(payload.width, 'width'),
       parseDimension(payload.height, 'height')

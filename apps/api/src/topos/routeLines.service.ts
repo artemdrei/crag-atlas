@@ -9,26 +9,16 @@ import {
   writeFailed
 } from '../common/exceptions/database.exception';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
-import type { GradeScale } from '../common/utils/grade';
 import { userClient } from '../common/utils/userClient';
 import { publicSupabase } from '../config/supabase.client';
+import {
+  ROUTE_LINE_COLUMNS,
+  type RouteLineRow,
+  toRouteLineDto
+} from './routeLine.mapper';
 import type { RouteLineDto, SaveRouteLineDto } from './topos.types';
 
-const COLUMNS =
-  'id_route, id_topo, points, bolts, anchor, label_offset_x, label_offset_y, routes (name, grade, grade_scale)';
-
 const MAX_BOLTS = 60;
-
-interface RouteLineRow {
-  id_route: string;
-  id_topo: string;
-  points: number[][];
-  bolts: number[][] | null;
-  anchor: number[] | null;
-  label_offset_x: number;
-  label_offset_y: number;
-  routes: { name: string; grade: string; grade_scale: GradeScale } | null;
-}
 
 @Injectable()
 export class RouteLinesService {
@@ -50,6 +40,8 @@ export class RouteLinesService {
 
     const anchor = payload.anchor ? readPoint(payload.anchor, 'anchor') : null;
 
+    await this.assertSameSector(idRoute, idTopo);
+
     const { data, error } = await userClient(authUser)
       .from('route_lines')
       .upsert(
@@ -62,9 +54,9 @@ export class RouteLinesService {
           label_offset_x: readOffset(payload.labelOffsetX),
           label_offset_y: readOffset(payload.labelOffsetY)
         },
-        { onConflict: 'id_route,id_topo' }
+        { onConflict: 'id_route' }
       )
-      .select(COLUMNS)
+      .select(ROUTE_LINE_COLUMNS)
       .single<RouteLineRow>();
 
     if (error) {
@@ -72,6 +64,25 @@ export class RouteLinesService {
     }
 
     return toRouteLineDto(data);
+  }
+
+  /** A line hangs on a photo of the route's own sector — the editor only ever
+      offers those, so a mismatch means the call did not come from it. */
+  private async assertSameSector(
+    idRoute: string,
+    idTopo: string
+  ): Promise<void> {
+    const [route, topo] = await Promise.all([
+      sectorOf('routes', idRoute, 'route'),
+      sectorOf('topos', idTopo, 'photo')
+    ]);
+
+    if (route !== topo) {
+      throw new ValidationException(
+        'A line only lives on a photo of its own sector',
+        'LINE_FOREIGN_SECTOR'
+      );
+    }
   }
 
   async remove(
@@ -116,6 +127,35 @@ export class RouteLinesService {
     }
   }
 }
+
+const sectorOf = async (
+  table: 'routes' | 'topos',
+  id: string,
+  label: 'route' | 'photo'
+): Promise<string> => {
+  const { data, error } = await publicSupabase()
+    .from(table)
+    .select('id_sector')
+    .eq('id', id)
+    .maybeSingle<{ id_sector: string }>();
+
+  if (error) {
+    throw readFailed(
+      `Could not load the ${label}`,
+      'LINE_SECTOR_READ_FAILED',
+      error
+    );
+  }
+
+  if (!data) {
+    throw new NotFoundException(
+      `No such ${label}`,
+      'LINE_SECTOR_TARGET_NOT_FOUND'
+    );
+  }
+
+  return data.id_sector;
+};
 
 const readPoints = (points: number[][] | undefined): number[][] => {
   if (!Array.isArray(points) || points.length < 2) {
@@ -162,16 +202,3 @@ const readOffset = (value: number | undefined): number => {
 
   return value;
 };
-
-const toRouteLineDto = (row: RouteLineRow): RouteLineDto => ({
-  idRoute: row.id_route,
-  idTopo: row.id_topo,
-  routeName: row.routes?.name ?? '',
-  grade: row.routes?.grade ?? '',
-  gradeScale: row.routes?.grade_scale ?? 'french',
-  points: row.points,
-  bolts: row.bolts ?? [],
-  anchor: row.anchor,
-  labelOffsetX: row.label_offset_x,
-  labelOffsetY: row.label_offset_y
-});

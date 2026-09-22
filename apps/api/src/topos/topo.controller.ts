@@ -4,7 +4,6 @@ import {
   Delete,
   HttpCode,
   Param,
-  Patch,
   Put,
   Query,
   UploadedFile,
@@ -29,22 +28,12 @@ import {
   type UploadedPhoto
 } from '../common/utils/photoStorage';
 import { ToposService } from './topos.service';
-import { TopoDto, UpdateTopoDto } from './topos.types';
+import { TopoDto } from './topos.types';
 
 @Controller('topos')
 @UseGuards(SupabaseAuthGuard, AdminGuard)
 export class TopoController {
   constructor(private readonly toposService: ToposService) {}
-
-  @Patch(':idTopo')
-  @ApiOkResponse({ type: TopoDto })
-  update(
-    @CurrentUser() authUser: AuthUser,
-    @Param('idTopo') idTopo: string,
-    @Body() payload: UpdateTopoDto
-  ): Promise<TopoDto> {
-    return this.toposService.update(authUser, idTopo, payload);
-  }
 
   @Put(':idTopo/photo')
   @UseInterceptors(
