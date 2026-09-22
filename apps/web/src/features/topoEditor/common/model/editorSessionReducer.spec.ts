@@ -1,6 +1,12 @@
 import type { Route, Topo } from '@crag-atlas/api';
 import { describe, expect, it } from 'vitest';
 
+import type {
+  EditableLine,
+  EditableTopo,
+  RouteDraft,
+  TopoEditorSession
+} from '../entities';
 import { EMPTY_SESSION } from '../entities';
 import type { EditorAction } from './editorActions';
 import { HISTORY_SKIPPED_ACTIONS } from './editorActions';
@@ -65,6 +71,36 @@ const hydrated = (
 const run = (session = hydrated(), ...actions: EditorAction[]) =>
   actions.reduce(editorSessionReducer, session);
 
+// The fixtures below put these in place, so a miss is a broken test rather
+// than a case the assertion has to handle.
+const topoOf = (session: TopoEditorSession, idTopo = 'photo'): EditableTopo => {
+  const topo = session.topos[idTopo];
+
+  if (!topo) throw new Error(`the session has no topo "${idTopo}"`);
+
+  return topo;
+};
+
+const lineOf = (
+  session: TopoEditorSession,
+  idRoute = 'alpha',
+  idTopo = 'photo'
+): EditableLine => {
+  const line = topoOf(session, idTopo).lines[idRoute];
+
+  if (!line) throw new Error(`topo "${idTopo}" has no line for "${idRoute}"`);
+
+  return line;
+};
+
+const routeOf = (session: TopoEditorSession, idRoute: string): RouteDraft => {
+  const route = session.routes[idRoute];
+
+  if (!route) throw new Error(`the session has no route "${idRoute}"`);
+
+  return route;
+};
+
 describe('editorSessionReducer', () => {
   it('selects the first photo on hydration', () => {
     expect(hydrated().idActiveTopo).toBe('photo');
@@ -76,7 +112,7 @@ describe('editorSessionReducer', () => {
       [0.2, 0.9]
     ]);
 
-    expect(session.topos.photo.lines.alpha.points).toEqual([
+    expect(lineOf(session).points).toEqual([
       [0.2, 0.9],
       [0.2, 0.1]
     ]);
@@ -90,7 +126,7 @@ describe('editorSessionReducer', () => {
       { type: 'DELETE_POINT', index: 2 }
     );
 
-    expect(session.topos.photo.lines.alpha.points).toHaveLength(3);
+    expect(lineOf(session).points).toHaveLength(3);
   });
 
   it('deletes an interior point', () => {
@@ -100,7 +136,7 @@ describe('editorSessionReducer', () => {
       { type: 'DELETE_POINT', index: 1 }
     );
 
-    expect(session.topos.photo.lines.alpha.points).toEqual([
+    expect(lineOf(session).points).toEqual([
       [0.2, 0.9],
       [0.2, 0.1]
     ]);
@@ -116,7 +152,7 @@ describe('editorSessionReducer', () => {
       { type: 'DELETE_POINT', index: 1 }
     );
 
-    expect(session.topos.photo.lines.alpha.points).toHaveLength(2);
+    expect(lineOf(session).points).toHaveLength(2);
   });
 
   it('marks geometry edits dirty and clears them on save', () => {
@@ -145,7 +181,7 @@ describe('editorSessionReducer', () => {
       { type: 'INSERT_POINT', index: 1, point: [0.2, 0.75] }
     );
 
-    const line = session.topos.photo.lines.alpha;
+    const line = lineOf(session);
 
     expect(line.points).toHaveLength(4);
     expect(line.kinds).toEqual(['plain', 'plain', 'plain', 'anchor']);
@@ -159,11 +195,7 @@ describe('editorSessionReducer', () => {
       { type: 'SET_POINT_KIND', index: 1, kind: 'anchor' }
     );
 
-    expect(session.topos.photo.lines.alpha.kinds).toEqual([
-      'plain',
-      'anchor',
-      'plain'
-    ]);
+    expect(lineOf(session).kinds).toEqual(['plain', 'anchor', 'plain']);
   });
 
   it('appends a point to the top of the line', () => {
@@ -173,7 +205,7 @@ describe('editorSessionReducer', () => {
       { type: 'APPEND_POINT', point: [0.25, 0.05] }
     );
 
-    const line = session.topos.photo.lines.alpha;
+    const line = lineOf(session);
 
     expect(line.points[line.points.length - 1]).toEqual([0.25, 0.05]);
     expect(line.kinds).toHaveLength(line.points.length);
@@ -186,7 +218,7 @@ describe('editorSessionReducer', () => {
       patch: { name: 'Renamed' }
     });
 
-    expect(session.routes.beta.name).toBe('Renamed');
+    expect(routeOf(session, 'beta').name).toBe('Renamed');
     expect(isRouteDirty(session, 'beta')).toBe(true);
   });
 
@@ -222,12 +254,8 @@ describe('editorSessionReducer', () => {
       routes: [route('alpha'), route('beta')]
     });
 
-    expect(reverted.topos.photo.lines.alpha.kinds).toEqual([
-      'plain',
-      'plain',
-      'plain'
-    ]);
-    expect(reverted.routes.beta.name).toBe('Kept');
+    expect(lineOf(reverted).kinds).toEqual(['plain', 'plain', 'plain']);
+    expect(routeOf(reverted, 'beta').name).toBe('Kept');
   });
 
   it('never records a line removal in history', () => {
@@ -241,7 +269,7 @@ describe('editorSessionReducer', () => {
       idDraft: 'draft'
     });
 
-    expect(session.routes.draft.isNew).toBe(true);
+    expect(routeOf(session, 'draft').isNew).toBe(true);
     expect(session.idSelectedRoute).toBe('draft');
     expect(isRouteDirty(session, 'draft')).toBe(true);
   });
@@ -263,8 +291,8 @@ describe('editorSessionReducer', () => {
     expect(created.routes.draft).toBeUndefined();
     expect(created.routeOrder).toContain('real');
     expect(created.idSelectedRoute).toBe('real');
-    expect(created.topos.photo.lines.real.points).toHaveLength(2);
-    expect(created.topos.photo.lines.draft).toBeUndefined();
+    expect(lineOf(created, 'real').points).toHaveLength(2);
+    expect(topoOf(created).lines.draft).toBeUndefined();
     expect(isRouteDirty(created, 'real')).toBe(false);
   });
 
@@ -275,7 +303,7 @@ describe('editorSessionReducer', () => {
     });
 
     expect(session.routes.alpha).toBeUndefined();
-    expect(session.topos.photo.lines.alpha).toBeUndefined();
+    expect(topoOf(session).lines.alpha).toBeUndefined();
     expect(session.routeOrder).toEqual(['beta']);
   });
 
@@ -293,8 +321,8 @@ describe('editorSessionReducer', () => {
     );
 
     expect(session.order).toEqual(['b', 'a']);
-    expect(session.topos.b.sortOrder).toBe(0);
-    expect(session.topos.a.sortOrder).toBe(1);
+    expect(topoOf(session, 'b').sortOrder).toBe(0);
+    expect(topoOf(session, 'a').sortOrder).toBe(1);
   });
 
   it('keeps unsaved lines when photos are refetched', () => {
@@ -314,6 +342,6 @@ describe('editorSessionReducer', () => {
       ]
     });
 
-    expect(refetched.topos.photo.lines.alpha.kinds[1]).toBe('bolt');
+    expect(lineOf(refetched).kinds[1]).toBe('bolt');
   });
 });
