@@ -17,19 +17,19 @@ export const RouteStats = ({
 }: Props) => (
   <RowStyled className={className}>
     <TileStyled isCompact={!!isCompact}>
-      <ValueStyled variant="h5">{ascentsCount}</ValueStyled>
       <Typography variant="caption" color="text.secondary">
         <Trans>ascents</Trans>
       </Typography>
+      <ValueStyled variant="h5">{ascentsCount}</ValueStyled>
     </TileStyled>
     {!!onsightCount && (
       <TileStyled isCompact={!!isCompact}>
-        <ValueStyled variant="h5">
-          {Math.round((onsightCount / ascentsCount) * 100)}%
-        </ValueStyled>
         <Typography variant="caption" color="text.secondary">
           <Trans>onsight</Trans>
         </Typography>
+        <ValueStyled variant="h5">
+          {Math.round((onsightCount / ascentsCount) * 100)}%
+        </ValueStyled>
       </TileStyled>
     )}
   </RowStyled>

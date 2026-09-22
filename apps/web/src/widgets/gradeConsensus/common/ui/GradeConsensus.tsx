@@ -33,34 +33,36 @@ export const GradeConsensus = ({
   return (
     <CardStyled className={className} isCompact={!!isCompact}>
       <HeaderRowStyled>
-        <TitleStyled variant="overline" color="text.secondary">
+        <Typography variant="caption" color="text.secondary">
           <Trans>Grade consensus</Trans>
-        </TitleStyled>
+        </Typography>
         <Typography variant="caption" color="text.secondary">
           <Plural value={total} one="# vote" other="# votes" />
         </Typography>
       </HeaderRowStyled>
-      <BarsRowStyled>
-        {buckets.map(({ id, votes }) => (
-          <ColumnStyled key={id}>
-            <BarStyled
-              share={top ? votes / top : 0}
-              isConsensus={votes === top}
-            >
-              <VotesStyled isConsensus={votes === top}>{votes}</VotesStyled>
-            </BarStyled>
-          </ColumnStyled>
-        ))}
-      </BarsRowStyled>
-      <LabelsRowStyled>
-        {buckets.map(({ id, label }) => (
-          <ColumnStyled key={id}>
-            <Typography variant="caption" color="text.secondary">
-              {label}
-            </Typography>
-          </ColumnStyled>
-        ))}
-      </LabelsRowStyled>
+      <ChartStyled>
+        <BarsRowStyled>
+          {buckets.map(({ id, votes }) => (
+            <ColumnStyled key={id}>
+              <BarStyled
+                share={top ? votes / top : 0}
+                isConsensus={votes === top}
+              >
+                <VotesStyled isConsensus={votes === top}>{votes}</VotesStyled>
+              </BarStyled>
+            </ColumnStyled>
+          ))}
+        </BarsRowStyled>
+        <LabelsRowStyled>
+          {buckets.map(({ id, label }) => (
+            <ColumnStyled key={id}>
+              <Typography variant="caption" color="text.secondary">
+                {label}
+              </Typography>
+            </ColumnStyled>
+          ))}
+        </LabelsRowStyled>
+      </ChartStyled>
     </CardStyled>
   );
 };
@@ -83,8 +85,10 @@ const HeaderRowStyled = styled('div')`
   gap: ${({ theme }) => theme.spacing(1)};
 `;
 
-const TitleStyled = styled(Typography)`
-  letter-spacing: 0.08em;
+const ChartStyled = styled('div')`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing(0.5)};
 `;
 
 const BarsRowStyled = styled('div')`
