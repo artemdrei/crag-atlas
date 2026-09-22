@@ -10,6 +10,7 @@ export const typography = {
   h2: { fontFamily: fontFamily.display, fontWeight: 700 },
   h3: { fontFamily: fontFamily.display, fontWeight: 700 },
   h4: { fontFamily: fontFamily.display, fontWeight: 700 },
+  h5: { fontFamily: fontFamily.display, fontWeight: 700 },
   subtitle1: { fontWeight: 700 },
   subtitle2: { fontWeight: 700 }
 } as const;

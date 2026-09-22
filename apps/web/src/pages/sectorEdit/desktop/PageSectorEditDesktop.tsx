@@ -2,14 +2,6 @@ import { useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import CloseIcon from '@mui/icons-material/Close';
-import Button from '@mui/material/Button';
-import Chip from '@mui/material/Chip';
-import IconButton from '@mui/material/IconButton';
-import Stack from '@mui/material/Stack';
-import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
 
 import { useModal } from '@web/app/providers';
 import { buildSectorPath } from '@web/app/router/routes';
@@ -19,7 +11,8 @@ import {
   useTopoEditorActions,
   useTopoEditorSession
 } from '@web/features/topoEditor';
-import { ApiFeedback } from '@web/shared/ui';
+import { useWarnOnUnload } from '@web/shared/lib';
+import { ApiFeedback, EditorPageShell } from '@web/shared/ui';
 
 import { useSectorEditorData } from '../common';
 
@@ -64,29 +57,13 @@ export const PageSectorEditDesktop = () => {
     dispatch({ type: 'TOPOS_REPLACED', topos });
   }, [isLoading, topos, dispatch]);
 
-  useEffect(() => {
-    if (!isDirty) return;
-
-    const warn = (event: BeforeUnloadEvent) => event.preventDefault();
-
-    window.addEventListener('beforeunload', warn);
-
-    return () => window.removeEventListener('beforeunload', warn);
-  }, [isDirty]);
+  useWarnOnUnload(isDirty);
 
   return (
-    <PageStyled spacing={1}>
-      <TopBarStyled>
-        <IconButton aria-label={t`Back to the sector`} onClick={leave}>
-          <ArrowBackIcon fontSize="small" />
-        </IconButton>
-        <Chip
-          size="small"
-          color="primary"
-          variant="outlined"
-          label={t`Editor`}
-        />
-        <TitleStyled variant="subtitle1">
+    <EditorPageShell
+      backLabel={t`Back to the sector`}
+      title={
+        <>
           {sector?.name ?? '…'} ·{' '}
           <Plural
             value={routes.length}
@@ -95,16 +72,10 @@ export const PageSectorEditDesktop = () => {
             many="# routes"
             other="# routes"
           />
-        </TitleStyled>
-        <Button
-          size="small"
-          variant="outlined"
-          startIcon={<CloseIcon fontSize="small" />}
-          onClick={leave}
-        >
-          <Trans>Close the editor</Trans>
-        </Button>
-      </TopBarStyled>
+        </>
+      }
+      onLeave={leave}
+    >
       <ApiFeedback
         isLoading={isLoading}
         failure={failure}
@@ -118,26 +89,6 @@ export const PageSectorEditDesktop = () => {
           actions={actions}
         />
       )}
-    </PageStyled>
+    </EditorPageShell>
   );
 };
-
-const TopBarStyled = styled('div')`
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing(1.5)};
-`;
-
-const TitleStyled = styled(Typography)`
-  flex-grow: 1;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-`;
-
-const PageStyled = styled(Stack)`
-  height: 100%;
-  overflow: hidden;
-  padding: ${({ theme }) => theme.spacing(2, 3, 3)};
-`;

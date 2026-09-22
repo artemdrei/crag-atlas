@@ -4,14 +4,19 @@ import { useNavigate, useParams } from 'react-router';
 import { Trans, useLingui } from '@lingui/react/macro';
 import CloseIcon from '@mui/icons-material/Close';
 import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { buildSectorPath, ROUTES } from '@web/app/router/routes';
 import { EditToggleButton } from '@web/features/catalogEdit';
 import { useGridColumns } from '@web/shared/lib';
-import { ApiFeedback, GridColumnsMenu, PageBreadcrumbs } from '@web/shared/ui';
+import {
+  ApiFeedback,
+  CatalogColumns,
+  GridColumnsMenu,
+  PageBreadcrumbs,
+  PageShell
+} from '@web/shared/ui';
 
 import { SectorsList, useApiGetRegion, useApiGetSectors } from '../common';
 import { RegionEditSidebar } from './ui';
@@ -37,7 +42,7 @@ export const PageRegionDesktop = () => {
   );
 
   return (
-    <PageStyled spacing={1}>
+    <PageShell spacing={1}>
       <HeaderRowStyled>
         <PageBreadcrumbs
           items={[
@@ -70,7 +75,7 @@ export const PageRegionDesktop = () => {
         failure={failure}
         loadingLabel={<Trans>Loading sectors…</Trans>}
       />
-      <ColumnsStyled isEditing={isEditing}>
+      <CatalogColumns isEditing={isEditing}>
         <SectorsList
           sectors={sectors}
           idSelectedSector={isEditing ? idSelectedSector : undefined}
@@ -90,8 +95,8 @@ export const PageRegionDesktop = () => {
             onDirtyChange={setIsSelectedDirty}
           />
         )}
-      </ColumnsStyled>
-    </PageStyled>
+      </CatalogColumns>
+    </PageShell>
   );
 };
 
@@ -100,22 +105,4 @@ const HeaderRowStyled = styled('div')`
   align-items: center;
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacing(2)};
-`;
-
-// The sidebar takes a fixed slice, so the cards keep whatever is left rather
-// than reflowing to a different column width as it opens.
-const ColumnsStyled = styled('div', {
-  shouldForwardProp: (prop) => prop !== 'isEditing'
-})<{ isEditing: boolean }>`
-  display: grid;
-  grid-template-columns: ${({ isEditing }) =>
-    isEditing ? 'minmax(0, 1fr) 360px' : 'minmax(0, 1fr)'};
-  gap: ${({ theme }) => theme.spacing(3)};
-  align-items: start;
-  /* The header rows sit close together; the cards need air under them. */
-  padding-top: ${({ theme }) => theme.spacing(1)};
-`;
-
-const PageStyled = styled(Stack)`
-  padding: ${({ theme }) => theme.spacing(2, 3, 3)};
 `;

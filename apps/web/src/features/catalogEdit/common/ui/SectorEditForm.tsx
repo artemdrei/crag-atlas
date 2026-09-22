@@ -3,6 +3,7 @@ import { type FormEvent, useEffect, useState } from 'react';
 import type { Sector } from '@crag-atlas/api';
 import { useLingui } from '@lingui/react/macro';
 
+import { toast } from '@web/shared/lib';
 import { ChangedTextField } from '@web/shared/ui';
 
 import { useApiUpdateSector } from '../hooks';
@@ -31,7 +32,10 @@ export const SectorEditForm = ({ sector, onClose, onDirtyChange }: Props) => {
   const { isPending, updateSector } = useApiUpdateSector({
     idSector: sector.id,
     idRegion: sector.idRegion,
-    onSaved: onClose
+    onSaved: () => {
+      toast.success(t`Sector saved`);
+      onClose?.();
+    }
   });
 
   const handleSubmit = (event: FormEvent) => {

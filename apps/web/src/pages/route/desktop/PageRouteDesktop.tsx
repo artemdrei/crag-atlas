@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from 'react-router';
 
 import { Trans, useLingui } from '@lingui/react/macro';
-import Stack from '@mui/material/Stack';
 import { styled, useTheme } from '@mui/material/styles';
 
 import { useModal } from '@web/app/providers';
@@ -12,9 +11,14 @@ import {
   ROUTES
 } from '@web/app/router/routes';
 import { EditToggleButton } from '@web/features/catalogEdit';
-import { TopoImage, useRouteTopo } from '@web/features/topo';
+import { TopoImage, usePhotoLabel, useRouteTopo } from '@web/features/topo';
 import { getGradeColor } from '@web/shared/theme/palette';
-import { ApiFeedback, PageBreadcrumbs, PhotoPlaceholder } from '@web/shared/ui';
+import {
+  ApiFeedback,
+  PageBreadcrumbs,
+  PageShell,
+  PhotoPlaceholder
+} from '@web/shared/ui';
 import { GradeConsensus } from '@web/widgets/gradeConsensus';
 
 import {
@@ -33,7 +37,8 @@ export const PageRouteDesktop = () => {
   const navigate = useNavigate();
   const { openModal } = useModal();
   const { route, isLoading, failure } = useApiGetRoute(idRoute);
-  const { topo, lines, numberOf } = useRouteTopo(idSector, idRoute);
+  const { topo, photoIndex, lines, numberOf } = useRouteTopo(idSector, idRoute);
+  const photoLabel = usePhotoLabel();
 
   const colorOf = () =>
     getGradeColor(theme.palette.grade, route?.grade, route?.gradeScale);
@@ -43,7 +48,7 @@ export const PageRouteDesktop = () => {
 
     openModal('VIEW_TOPO_PHOTO', {
       photoUrl: topo.photoUrl,
-      label: topo.label,
+      label: photoLabel(photoIndex),
       lines,
       numberOf,
       colorOf
@@ -51,7 +56,7 @@ export const PageRouteDesktop = () => {
   };
 
   return (
-    <PageStyled spacing={2}>
+    <PageShell spacing={2}>
       <HeaderRowStyled>
         <PageBreadcrumbs
           items={[
@@ -88,7 +93,7 @@ export const PageRouteDesktop = () => {
               >
                 <TopoImage
                   photoUrl={topo.photoUrl}
-                  label={topo.label}
+                  label={photoLabel(photoIndex)}
                   lines={lines}
                   numberOf={numberOf}
                   colorOf={colorOf}
@@ -125,7 +130,7 @@ export const PageRouteDesktop = () => {
           </ActionsStyled>
         </ColumnsStyled>
       )}
-    </PageStyled>
+    </PageShell>
   );
 };
 
@@ -207,8 +212,4 @@ const ActionsStyled = styled('div')`
   ${({ theme }) => theme.breakpoints.down('lg')} {
     position: static;
   }
-`;
-
-const PageStyled = styled(Stack)`
-  padding: ${({ theme }) => theme.spacing(2, 3, 3)};
 `;

@@ -1,7 +1,6 @@
 import { useParams } from 'react-router';
 
 import { Trans, useLingui } from '@lingui/react/macro';
-import Stack from '@mui/material/Stack';
 import { styled, useTheme } from '@mui/material/styles';
 
 import { useModal } from '@web/app/providers';
@@ -10,9 +9,14 @@ import {
   buildSectorPath,
   ROUTES
 } from '@web/app/router/routes';
-import { TopoImage, useRouteTopo } from '@web/features/topo';
+import { TopoImage, usePhotoLabel, useRouteTopo } from '@web/features/topo';
 import { getGradeColor } from '@web/shared/theme/palette';
-import { ApiFeedback, PageBreadcrumbs, PhotoPlaceholder } from '@web/shared/ui';
+import {
+  ApiFeedback,
+  PageBreadcrumbs,
+  PageShell,
+  PhotoPlaceholder
+} from '@web/shared/ui';
 import { GradeConsensus } from '@web/widgets/gradeConsensus';
 
 import {
@@ -30,7 +34,8 @@ export const PageRouteMobile = () => {
   const theme = useTheme();
   const { openModal } = useModal();
   const { route, isLoading, failure } = useApiGetRoute(idRoute);
-  const { topo, lines, numberOf } = useRouteTopo(idSector, idRoute);
+  const { topo, photoIndex, lines, numberOf } = useRouteTopo(idSector, idRoute);
+  const photoLabel = usePhotoLabel();
 
   const colorOf = () =>
     getGradeColor(theme.palette.grade, route?.grade, route?.gradeScale);
@@ -40,7 +45,7 @@ export const PageRouteMobile = () => {
 
     openModal('VIEW_TOPO_PHOTO', {
       photoUrl: topo.photoUrl,
-      label: topo.label,
+      label: photoLabel(photoIndex),
       lines,
       numberOf,
       colorOf
@@ -48,7 +53,7 @@ export const PageRouteMobile = () => {
   };
 
   return (
-    <PageStyled spacing={2}>
+    <PageShell spacing={2} isCompact>
       <HeaderRowStyled>
         <PageBreadcrumbs
           maxItems={2}
@@ -79,7 +84,7 @@ export const PageRouteMobile = () => {
               >
                 <TopoImage
                   photoUrl={topo.photoUrl}
-                  label={topo.label}
+                  label={photoLabel(photoIndex)}
                   lines={lines}
                   numberOf={numberOf}
                   colorOf={colorOf}
@@ -116,7 +121,7 @@ export const PageRouteMobile = () => {
           </ActionBarStyled>
         </>
       )}
-    </PageStyled>
+    </PageShell>
   );
 };
 
@@ -168,8 +173,4 @@ const ActionBarStyled = styled('div')`
   flex-direction: column;
   padding-bottom: ${({ theme }) => theme.spacing(1)};
   background: ${({ theme }) => theme.palette.background.default};
-`;
-
-const PageStyled = styled(Stack)`
-  padding: ${({ theme }) => theme.spacing(2)};
 `;

@@ -54,7 +54,7 @@ export const SectorPhotoPicker = ({ idSector }: Props) => {
     <>
       <PickerStyled type="button" onClick={() => inputRef.current?.click()}>
         {cover ? (
-          <img src={cover.photoUrl} alt={cover.label} />
+          <img src={cover.photoUrl} alt={t`Sector cover`} />
         ) : (
           <PlaceholderStyled>
             <AddPhotoAlternateOutlinedIcon fontSize="small" />

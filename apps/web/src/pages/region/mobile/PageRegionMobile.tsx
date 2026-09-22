@@ -1,12 +1,10 @@
 import { useNavigate, useParams } from 'react-router';
 
 import { Trans, useLingui } from '@lingui/react/macro';
-import Stack from '@mui/material/Stack';
-import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { buildSectorPath, ROUTES } from '@web/app/router/routes';
-import { ApiFeedback, PageBreadcrumbs } from '@web/shared/ui';
+import { ApiFeedback, PageBreadcrumbs, PageShell } from '@web/shared/ui';
 
 import { SectorsList, useApiGetRegion, useApiGetSectors } from '../common';
 
@@ -18,7 +16,7 @@ export const PageRegionMobile = () => {
   const { sectors, isLoading, failure } = useApiGetSectors(idRegion);
 
   return (
-    <PageStyled spacing={2}>
+    <PageShell spacing={2} isCompact>
       <PageBreadcrumbs
         maxItems={2}
         items={[
@@ -36,10 +34,6 @@ export const PageRegionMobile = () => {
         sectors={sectors}
         onSelect={(sector) => navigate(buildSectorPath(idRegion, sector.id))}
       />
-    </PageStyled>
+    </PageShell>
   );
 };
-
-const PageStyled = styled(Stack)`
-  padding: ${({ theme }) => theme.spacing(2)};
-`;

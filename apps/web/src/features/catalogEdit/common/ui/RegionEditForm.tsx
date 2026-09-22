@@ -3,6 +3,7 @@ import { type FormEvent, useEffect, useState } from 'react';
 import type { Region } from '@crag-atlas/api';
 import { useLingui } from '@lingui/react/macro';
 
+import { toast } from '@web/shared/lib';
 import { ChangedTextField } from '@web/shared/ui';
 
 import { useApiUpdateRegion } from '../hooks';
@@ -11,9 +12,7 @@ import { EditFormStyled } from './EditFormStyled';
 
 export interface Props {
   region: Region;
-  /** Omitted in the sidebar, where the form is a permanent panel. */
   onClose?: () => void;
-  /** Lets the grid outside mark the card this form is holding edits for. */
   onDirtyChange?: (isDirty: boolean) => void;
 }
 
@@ -34,7 +33,10 @@ export const RegionEditForm = ({ region, onClose, onDirtyChange }: Props) => {
 
   const { isPending, updateRegion } = useApiUpdateRegion({
     idRegion: region.id,
-    onSaved: onClose
+    onSaved: () => {
+      toast.success(t`Region saved`);
+      onClose?.();
+    }
   });
 
   const handleSubmit = (event: FormEvent) => {
