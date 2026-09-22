@@ -4,7 +4,6 @@ import { useNavigate, useParams } from 'react-router';
 import { Trans, useLingui } from '@lingui/react/macro';
 import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
 import { styled, useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
@@ -22,8 +21,9 @@ import {
   useApiGetTopos,
   useTopoGallery
 } from '@web/features/topo';
+import { useSearchParamList } from '@web/shared/lib';
 import { getGradeColor } from '@web/shared/theme/palette';
-import { ApiFeedback, PageBreadcrumbs } from '@web/shared/ui';
+import { ApiFeedback, PageBreadcrumbs, PageShell } from '@web/shared/ui';
 
 import type { Route } from '../common';
 import {
@@ -31,6 +31,7 @@ import {
   RoutesPanelHeader,
   useApiGetRoutes,
   useApiGetSector,
+  useGradeFilter,
   useRoutesByTopo,
   useSectorSelection
 } from '../common';
@@ -43,7 +44,17 @@ export const PageSectorDesktop = () => {
   const { sector } = useApiGetSector(idSector);
   const { routes, isLoading, failure } = useApiGetRoutes(idSector);
   const { topos } = useApiGetTopos(idSector);
-  const { idActiveTopo, selectTopo } = useTopoGallery({ topos });
+  const [selectedGrades, selectGrades] = useSearchParamList('grades');
+  const { toggleGrade, clearGrades, visibleRoutes, visibleTopos } =
+    useGradeFilter({
+      routes,
+      topos,
+      selectedGrades,
+      onSelectGrades: selectGrades
+    });
+  const { idActiveTopo, selectTopo } = useTopoGallery({
+    topos: visibleTopos
+  });
   const { idHighlightedRoute, highlightRoute } = useSectorSelection();
   const { hasRole } = useUser();
 
@@ -56,7 +67,11 @@ export const PageSectorDesktop = () => {
     [topos, routes]
   );
 
-  const groups = useRoutesByTopo({ routes, topos, numberOf });
+  const groups = useRoutesByTopo({
+    routes: visibleRoutes,
+    topos: visibleTopos,
+    numberOf
+  });
 
   const colorOf = (idRoute: string) => {
     const route = routes.find(({ id }) => id === idRoute);
@@ -65,7 +80,7 @@ export const PageSectorDesktop = () => {
   };
 
   const openRoute = (route: Route) => {
-    const topo = findTopoOfRoute(topos, route.id);
+    const topo = findTopoOfRoute(visibleTopos, route.id);
 
     if (topo && topo.id !== idActiveTopo) {
       selectTopo(topo.id);
@@ -84,7 +99,7 @@ export const PageSectorDesktop = () => {
   };
 
   return (
-    <PageStyled spacing={1}>
+    <PageShell spacing={1} isFixedHeight>
       <HeaderRowStyled>
         <PageBreadcrumbs
           items={[
@@ -111,7 +126,7 @@ export const PageSectorDesktop = () => {
       )}
       <ColumnsStyled>
         <TopoGalleryDesktop
-          topos={topos}
+          topos={visibleTopos}
           idActiveTopo={idActiveTopo}
           idHighlightedRoute={idHighlightedRoute}
           colorOf={colorOf}
@@ -121,7 +136,13 @@ export const PageSectorDesktop = () => {
           onHoverRoute={highlightRoute}
         />
         <PanelStyled>
-          <RoutesPanelHeader routesCount={routes.length} />
+          <RoutesPanelHeader
+            routesCount={visibleRoutes.length}
+            gradeHistogram={sector?.gradeHistogram ?? []}
+            selectedGrades={selectedGrades}
+            onToggleGrade={toggleGrade}
+            onClearGrades={clearGrades}
+          />
           <ApiFeedback
             isLoading={isLoading}
             failure={failure}
@@ -138,7 +159,7 @@ export const PageSectorDesktop = () => {
           </ScrollAreaStyled>
         </PanelStyled>
       </ColumnsStyled>
-    </PageStyled>
+    </PageShell>
   );
 };
 
@@ -173,10 +194,4 @@ const ScrollAreaStyled = styled('div')`
   flex-grow: 1;
   min-height: 0;
   overflow-y: auto;
-`;
-
-const PageStyled = styled(Stack)`
-  height: 100%;
-  overflow: hidden;
-  padding: ${({ theme }) => theme.spacing(2, 3, 3)};
 `;

@@ -9,4 +9,5 @@ export { sleep } from './sleep';
 export { toast } from './toast';
 export type { GridColumns } from './useGridColumns';
 export { GRID_COLUMN_CHOICES, useGridColumns } from './useGridColumns';
+export { useSearchParamList } from './useSearchParamList';
 export { useWarnOnUnload } from './useWarnOnUnload';
