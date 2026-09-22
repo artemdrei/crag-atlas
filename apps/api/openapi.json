@@ -944,6 +944,63 @@
         "tags": ["Comments"]
       }
     },
+    "/routes/{idRoute}/comments/{idComment}": {
+      "patch": {
+        "operationId": "CommentsController_update",
+        "parameters": [
+          {
+            "name": "idComment",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCommentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommentDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Comments"]
+      },
+      "delete": {
+        "operationId": "CommentsController_remove",
+        "parameters": [
+          {
+            "name": "idComment",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": ["Comments"]
+      }
+    },
     "/routes/{idRoute}/media": {
       "get": {
         "operationId": "MediaController_findByRoute",
@@ -1865,6 +1922,15 @@
         ]
       },
       "CreateCommentDto": {
+        "type": "object",
+        "properties": {
+          "body": {
+            "type": "string"
+          }
+        },
+        "required": ["body"]
+      },
+      "UpdateCommentDto": {
         "type": "object",
         "properties": {
           "body": {

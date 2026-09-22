@@ -27,3 +27,8 @@ export class CreateCommentDto {
   @ApiProperty()
   body!: string;
 }
+
+export class UpdateCommentDto {
+  @ApiProperty()
+  body!: string;
+}

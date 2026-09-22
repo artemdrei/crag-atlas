@@ -260,6 +260,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/routes/{idRoute}/comments/{idComment}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["CommentsController_remove"];
+        options?: never;
+        head?: never;
+        patch: operations["CommentsController_update"];
+        trace?: never;
+    };
     "/routes/{idRoute}/media": {
         parameters: {
             query?: never;
@@ -534,6 +550,9 @@ export interface components {
             createdAt: string;
         };
         CreateCommentDto: {
+            body: string;
+        };
+        UpdateCommentDto: {
             body: string;
         };
         MediaDto: {
@@ -1206,6 +1225,50 @@ export interface operations {
         };
         responses: {
             201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CommentDto"];
+                };
+            };
+        };
+    };
+    CommentsController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idComment: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CommentsController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idComment: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateCommentDto"];
+            };
+        };
+        responses: {
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };

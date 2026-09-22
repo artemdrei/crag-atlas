@@ -18,6 +18,7 @@ export type UpdateMe = components['schemas']['UpdateMeDto'];
 export type Topo = components['schemas']['TopoDto'];
 export type RouteComment = components['schemas']['CommentDto'];
 export type CreateRouteComment = components['schemas']['CreateCommentDto'];
+export type UpdateRouteComment = components['schemas']['UpdateCommentDto'];
 export type RouteMedia = components['schemas']['MediaDto'];
 export type CreateRouteMedia = components['schemas']['CreateMediaDto'];
 export type RouteLine = components['schemas']['RouteLineDto'];
