@@ -12,3 +12,4 @@ export type { OrderableTopo } from './orderRoutes';
 export { orderRoutes } from './orderRoutes';
 export { pointerToPhoto, toleranceOf } from './pointerToPhoto';
 export { smoothPath } from './smoothPath';
+export { toPairs } from './toPairs';

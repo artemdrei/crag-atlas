@@ -1,3 +1,5 @@
+import { toPairs } from './toPairs';
+
 export interface HittableLine {
   idRoute: string;
   points: number[][];
@@ -5,7 +7,7 @@ export interface HittableLine {
 
 export type Point = [number, number];
 
-const distance = (from: number[], to: number[]): number =>
+const distance = (from: Point, to: Point): number =>
   Math.hypot(to[0] - from[0], to[1] - from[1]);
 
 export interface SegmentHit {
@@ -16,14 +18,14 @@ export interface SegmentHit {
 
 /** Tested against the chord, not the rendered curve: they differ by a pixel. */
 export const findNearestPoint = (
-  points: number[][],
+  points: readonly number[][],
   target: Point,
   tolerance: number
 ): number => {
   let best = -1;
   let bestDistance = tolerance;
 
-  points.forEach((point, index) => {
+  toPairs(points).forEach((point, index) => {
     const gap = distance(point, target);
 
     if (gap <= bestDistance) {
@@ -36,18 +38,20 @@ export const findNearestPoint = (
 };
 
 export const findNearestSegment = (
-  points: number[][],
+  points: readonly number[][],
   target: Point,
   tolerance: number
 ): SegmentHit | undefined => {
+  const pairs = toPairs(points);
   let best: SegmentHit | undefined;
 
-  for (let index = 0; index < points.length - 1; index += 1) {
-    const projection = projectOntoSegment(
-      target,
-      points[index],
-      points[index + 1]
-    );
+  for (let index = 0; index < pairs.length - 1; index += 1) {
+    const from = pairs[index];
+    const to = pairs[index + 1];
+
+    if (!from || !to) continue;
+
+    const projection = projectOntoSegment(target, from, to);
     const gap = distance(projection, target);
 
     if (gap <= tolerance && (!best || gap < best.distance)) {
@@ -77,9 +81,9 @@ export const findNearestLine = (
 };
 
 export const projectOntoSegment = (
-  point: number[],
-  from: number[],
-  to: number[]
+  point: Point,
+  from: Point,
+  to: Point
 ): Point => {
   const spanX = to[0] - from[0];
   const spanY = to[1] - from[1];
@@ -96,5 +100,5 @@ export const projectOntoSegment = (
     )
   );
 
-  return [from[0] + t * spanX, from[1] + t * spanY] as Point;
+  return [from[0] + t * spanX, from[1] + t * spanY];
 };

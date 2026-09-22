@@ -1,25 +1,32 @@
+import type { Point } from './hitTest';
+import { toPairs } from './toPairs';
+
 /**
  * Centripetal Catmull-Rom as cubic Beziers: it interpolates, so the curve
  * passes through every stored point and no line drifts off the rock. Uniform
  * would self-intersect on the sharp turns a traverse makes.
  */
-export const smoothPath = (points: number[][]): string => {
-  if (points.length < 2) return '';
+export const smoothPath = (input: readonly number[][]): string => {
+  const points = toPairs(input);
+  const [head, next] = points;
 
-  const start = `M${format(points[0])}`;
+  if (!head || !next) return '';
 
-  if (points.length === 2) return `${start} L${format(points[1])}`;
+  const start = `M${format(head)}`;
 
-  const padded = [points[0], ...points, points[points.length - 1]];
+  if (points.length === 2) return `${start} L${format(next)}`;
+
+  const tail = points[points.length - 1] ?? head;
+  const padded: Point[] = [head, ...points, tail];
   const segments: string[] = [];
 
   for (let index = 1; index < padded.length - 2; index += 1) {
-    const [first, second, third, fourth] = [
-      padded[index - 1],
-      padded[index],
-      padded[index + 1],
-      padded[index + 2]
-    ];
+    const first = padded[index - 1];
+    const second = padded[index];
+    const third = padded[index + 1];
+    const fourth = padded[index + 2];
+
+    if (!first || !second || !third || !fourth) continue;
 
     const firstSpan = span(first, second);
     const secondSpan = span(second, third);
@@ -36,28 +43,30 @@ export const smoothPath = (points: number[][]): string => {
 
 const ALPHA = 0.5;
 
-const span = (from: number[], to: number[]): number =>
+const span = (from: Point, to: Point): number =>
   Math.hypot(to[0] - from[0], to[1] - from[1]) ** ALPHA;
 
 const controlPoint = (
-  outer: number[],
-  from: number[],
-  to: number[],
+  outer: Point,
+  from: Point,
+  to: Point,
   outerSpan: number,
   innerSpan: number
-): number[] => {
+): Point => {
   if (outerSpan === 0 || innerSpan === 0) return from;
 
-  return [0, 1].map((axis) => {
+  const along = (axis: 0 | 1) => {
     const tangent =
       (from[axis] - outer[axis]) / outerSpan -
       (to[axis] - outer[axis]) / (outerSpan + innerSpan) +
       (to[axis] - from[axis]) / innerSpan;
 
     return from[axis] + (tangent * innerSpan) / 3;
-  });
+  };
+
+  return [along(0), along(1)];
 };
 
-const format = ([x, y]: number[]): string => `${round(x)} ${round(y)}`;
+const format = ([x, y]: Point): string => `${round(x)} ${round(y)}`;
 
 const round = (value: number): number => Math.round(value * 1e5) / 1e5;

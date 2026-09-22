@@ -13,7 +13,8 @@ import {
   lineOpacity,
   pointerToPhoto,
   smoothPath,
-  toleranceOf
+  toleranceOf,
+  toPairs
 } from '../lib';
 import { TopoPointMark } from './TopoPointMark';
 import { TopoRouteBadge } from './TopoRouteBadge';
@@ -141,8 +142,10 @@ export const TopoImage = ({
             hasHighlight
           );
 
+          const anchor = line.anchor ? toPairs([line.anchor])[0] : undefined;
+
           return [
-            ...line.bolts.map(([x, y]) => (
+            ...toPairs(line.bolts).map(([x, y]) => (
               <TopoPointMark
                 key={`bolt-${line.idRoute}-${x}-${y}`}
                 kind="bolt"
@@ -152,13 +155,13 @@ export const TopoImage = ({
                 opacity={alpha}
               />
             )),
-            ...(line.anchor
+            ...(anchor
               ? [
                   <TopoPointMark
                     key={`anchor-${line.idRoute}`}
                     kind="anchor"
-                    x={line.anchor[0]}
-                    y={line.anchor[1]}
+                    x={anchor[0]}
+                    y={anchor[1]}
                     color={lineColor}
                     opacity={alpha}
                   />
@@ -168,11 +171,14 @@ export const TopoImage = ({
         })}
       {isLoaded &&
         numberOf &&
-        lines.map((line) =>
-          numberOf[line.idRoute] && line.points.length > 0 ? (
+        lines.map((line) => {
+          const number = numberOf[line.idRoute];
+          const [start] = toPairs(line.points);
+
+          return number && start ? (
             <TopoRouteBadge
               key={line.idRoute}
-              number={numberOf[line.idRoute]}
+              number={number}
               grade={line.grade}
               gradeScale={line.gradeScale}
               name={
@@ -180,8 +186,8 @@ export const TopoImage = ({
                   ? line.routeName
                   : undefined
               }
-              x={line.points[0][0] + line.labelOffsetX}
-              y={line.points[0][1] + line.labelOffsetY}
+              x={start[0] + line.labelOffsetX}
+              y={start[1] + line.labelOffsetY}
               isHighlighted={idHighlightedRoute === line.idRoute}
               isDimmed={hasHighlight && idHighlightedRoute !== line.idRoute}
               onSelect={
@@ -191,8 +197,8 @@ export const TopoImage = ({
                 onHoverRoute?.(isOver ? line.idRoute : undefined)
               }
             />
-          ) : null
-        )}
+          ) : null;
+        })}
     </FrameStyled>
   );
 };

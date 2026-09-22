@@ -10,13 +10,14 @@ export const orderRoutes = (
 ): Record<string, number> => {
   const placed = topos
     .flatMap((topo) =>
-      topo.lines
-        .filter((line) => line.points.length > 0)
-        .map((line) => ({
-          idRoute: line.idRoute,
-          sortOrder: topo.sortOrder,
-          x: line.points[0][0]
-        }))
+      topo.lines.flatMap((line) => {
+        const [start] = line.points;
+        const [x] = start ?? [];
+
+        return x === undefined
+          ? []
+          : [{ idRoute: line.idRoute, sortOrder: topo.sortOrder, x }];
+      })
     )
     .sort((left, right) =>
       left.sortOrder === right.sortOrder
