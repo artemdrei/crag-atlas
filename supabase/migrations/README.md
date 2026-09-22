@@ -34,3 +34,4 @@ Apply a migration in the Supabase dashboard (SQL Editor) or with
 | 023 | `023_tighten_storage_and_grants.sql` | Drop the storage listing policies; revoke EXECUTE on the sign-up trigger |
 | 024 | `024_drop_topo_label.sql` | Drop `topos.label`: a photo is named by its position |
 | 025 | `025_one_line_per_route.sql` | `route_lines` is keyed by the route alone: one line per route, moved instead of copied |
+| 026 | `026_grade_histogram.sql` | Grade spread per climbing type on both stats views |

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import type { GradeHistogramGroupDto } from '../common/dto/gradeHistogram.dto';
 import {
   NotFoundException,
   ValidationException
@@ -21,7 +22,7 @@ import type {
 // The region name rides along: ids are uuids, so a page opened by URL has no
 // label to show in its breadcrumbs otherwise.
 const COLUMNS =
-  'id, id_region, name, description, route_count, grade_min, grade_min_scale, grade_max, grade_max_scale, regions (name), topos (storage_path, sort_order)';
+  'id, id_region, name, description, route_count, grade_min, grade_min_scale, grade_max, grade_max_scale, grade_histogram, regions (name), topos (storage_path, sort_order)';
 
 interface SectorRow {
   id: string;
@@ -33,6 +34,7 @@ interface SectorRow {
   grade_min_scale: GradeScale | null;
   grade_max: string | null;
   grade_max_scale: GradeScale | null;
+  grade_histogram: GradeHistogramGroupDto[];
   regions: { name: string } | null;
   topos: { storage_path: string; sort_order: number }[];
 }
@@ -158,7 +160,8 @@ const toSectorDto = (row: SectorRow): SectorDto => ({
   gradeMin: row.grade_min,
   gradeMinScale: row.grade_min_scale,
   gradeMax: row.grade_max,
-  gradeMaxScale: row.grade_max_scale
+  gradeMaxScale: row.grade_max_scale,
+  gradeHistogram: row.grade_histogram
 });
 
 const toPhotoUrl = (row: SectorRow): string | null => {

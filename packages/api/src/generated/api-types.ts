@@ -196,22 +196,6 @@ export interface paths {
         patch: operations["ToposController_reorder"];
         trace?: never;
     };
-    "/topos/{idTopo}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete: operations["TopoController_remove"];
-        options?: never;
-        head?: never;
-        patch: operations["TopoController_update"];
-        trace?: never;
-    };
     "/topos/{idTopo}/photo": {
         parameters: {
             query?: never;
@@ -223,6 +207,22 @@ export interface paths {
         put: operations["TopoController_replacePhoto"];
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/topos/{idTopo}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["TopoController_remove"];
         options?: never;
         head?: never;
         patch?: never;
@@ -301,6 +301,24 @@ export interface components {
             /** @enum {string} */
             gradeScaleBoulder?: "font" | "vscale";
         };
+        GradeCountDto: {
+            grade: string;
+            /**
+             * @description The system this grade is written in; readers convert it
+             * @enum {string}
+             */
+            scale: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux" | "font" | "vscale";
+            /** @description Routes listed at this exact grade */
+            count: number;
+        };
+        GradeHistogramGroupDto: {
+            /** @enum {string} */
+            type: "sport" | "trad" | "boulder";
+            /** @description Routes of this type; the buckets sum to it */
+            routeCount: number;
+            /** @description Easiest first; mixed scales are possible within one group */
+            grades: components["schemas"]["GradeCountDto"][];
+        };
         RegionDto: {
             id: string;
             name: string;
@@ -323,6 +341,8 @@ export interface components {
              * @enum {string|null}
              */
             gradeMaxScale?: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux" | "font" | "vscale" | null;
+            /** @description Grade spread, one group per climbing type; empty when there are no routes */
+            gradeHistogram: components["schemas"]["GradeHistogramGroupDto"][];
         };
         CreateRegionDto: {
             name: string;
@@ -359,6 +379,8 @@ export interface components {
              * @enum {string|null}
              */
             gradeMaxScale?: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux" | "font" | "vscale" | null;
+            /** @description Grade spread, one group per climbing type; empty when there are no routes */
+            gradeHistogram: components["schemas"]["GradeHistogramGroupDto"][];
         };
         CreateSectorDto: {
             name: string;
@@ -477,7 +499,6 @@ export interface components {
         };
         TopoDto: {
             id: string;
-            label: string;
             photoUrl: string;
             /** @description Lowest first; the lowest is the sector cover */
             sortOrder: number;
@@ -492,9 +513,6 @@ export interface components {
         };
         ReorderToposDto: {
             items: components["schemas"]["TopoOrderDto"][];
-        };
-        UpdateTopoDto: {
-            label: string;
         };
         SaveRouteLineDto: {
             /** @description Control points as 0..1 fractions, at least two, first one at the start of the route */
@@ -1013,7 +1031,6 @@ export interface operations {
                 "multipart/form-data": {
                     /** Format: binary */
                     file: string;
-                    label?: string;
                     width: number;
                     height: number;
                 };
@@ -1055,52 +1072,6 @@ export interface operations {
             };
         };
     };
-    TopoController_remove: {
-        parameters: {
-            query: {
-                force: string;
-            };
-            header?: never;
-            path: {
-                idTopo: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    TopoController_update: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                idTopo: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateTopoDto"];
-            };
-        };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["TopoDto"];
-                };
-            };
-        };
-    };
     TopoController_replacePhoto: {
         parameters: {
             query?: never;
@@ -1128,6 +1099,27 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["TopoDto"];
                 };
+            };
+        };
+    };
+    TopoController_remove: {
+        parameters: {
+            query: {
+                force: string;
+            };
+            header?: never;
+            path: {
+                idTopo: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

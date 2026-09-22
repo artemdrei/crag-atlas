@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
+import { GradeHistogramGroupDto } from '../common/dto/gradeHistogram.dto';
 import type { GradeScale } from '../common/utils/grade';
 import { GRADE_SCALES } from '../common/utils/grade';
 
@@ -56,6 +57,14 @@ export class RegionDto {
     description: 'System gradeMax is written in'
   })
   gradeMaxScale?: GradeScale | null;
+
+  @ApiProperty({
+    type: GradeHistogramGroupDto,
+    isArray: true,
+    description:
+      'Grade spread, one group per climbing type; empty when there are no routes'
+  })
+  gradeHistogram!: GradeHistogramGroupDto[];
 }
 
 export class CreateRegionDto {

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import type { GradeHistogramGroupDto } from '../common/dto/gradeHistogram.dto';
 import {
   AppException,
   NotFoundException,
@@ -21,7 +22,7 @@ import {
 import { userClient } from '../common/utils/userClient';
 import { publicSupabase, storagePublicUrl } from '../config/supabase.client';
 
-export const REGIONS_BUCKET = 'regions';
+const REGIONS_BUCKET = 'regions';
 
 import type {
   CreateRegionDto,
@@ -32,7 +33,7 @@ import type {
 // Counts and grade ranges are derived, so reads come from the view and writes
 // go to the table underneath it.
 const COLUMNS =
-  'id, name, province, rock_type, photo_path, sector_count, route_count, grade_min, grade_min_scale, grade_max, grade_max_scale';
+  'id, name, province, rock_type, photo_path, sector_count, route_count, grade_min, grade_min_scale, grade_max, grade_max_scale, grade_histogram';
 
 interface RegionRow {
   id: string;
@@ -46,6 +47,7 @@ interface RegionRow {
   grade_min_scale: GradeScale | null;
   grade_max: string | null;
   grade_max_scale: GradeScale | null;
+  grade_histogram: GradeHistogramGroupDto[];
 }
 
 @Injectable()
@@ -209,5 +211,6 @@ const toRegionDto = (row: RegionRow): RegionDto => ({
   gradeMin: row.grade_min,
   gradeMinScale: row.grade_min_scale,
   gradeMax: row.grade_max,
-  gradeMaxScale: row.grade_max_scale
+  gradeMaxScale: row.grade_max_scale,
+  gradeHistogram: row.grade_histogram
 });

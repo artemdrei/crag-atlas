@@ -657,9 +657,6 @@
                     "type": "string",
                     "format": "binary"
                   },
-                  "label": {
-                    "type": "string"
-                  },
                   "width": {
                     "type": "integer"
                   },
@@ -727,71 +724,6 @@
         "tags": ["Topos"]
       }
     },
-    "/topos/{idTopo}": {
-      "patch": {
-        "operationId": "TopoController_update",
-        "parameters": [
-          {
-            "name": "idTopo",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateTopoDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TopoDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": ["Topo"]
-      },
-      "delete": {
-        "operationId": "TopoController_remove",
-        "parameters": [
-          {
-            "name": "idTopo",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "force",
-            "required": true,
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": ""
-          }
-        },
-        "tags": ["Topo"]
-      }
-    },
     "/topos/{idTopo}/photo": {
       "put": {
         "operationId": "TopoController_replacePhoto",
@@ -838,6 +770,35 @@
                 }
               }
             }
+          }
+        },
+        "tags": ["Topo"]
+      }
+    },
+    "/topos/{idTopo}": {
+      "delete": {
+        "operationId": "TopoController_remove",
+        "parameters": [
+          {
+            "name": "idTopo",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "force",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
           }
         },
         "tags": ["Topo"]
@@ -1118,6 +1079,55 @@
           }
         }
       },
+      "GradeCountDto": {
+        "type": "object",
+        "properties": {
+          "grade": {
+            "type": "string"
+          },
+          "scale": {
+            "type": "string",
+            "enum": [
+              "french",
+              "yds",
+              "uiaa",
+              "saxon",
+              "ewbank",
+              "norwegian",
+              "brazilian_crux",
+              "font",
+              "vscale"
+            ],
+            "description": "The system this grade is written in; readers convert it"
+          },
+          "count": {
+            "type": "number",
+            "description": "Routes listed at this exact grade"
+          }
+        },
+        "required": ["grade", "scale", "count"]
+      },
+      "GradeHistogramGroupDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["sport", "trad", "boulder"]
+          },
+          "routeCount": {
+            "type": "number",
+            "description": "Routes of this type; the buckets sum to it"
+          },
+          "grades": {
+            "description": "Easiest first; mixed scales are possible within one group",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GradeCountDto"
+            }
+          }
+        },
+        "required": ["type", "routeCount", "grades"]
+      },
       "RegionDto": {
         "type": "object",
         "properties": {
@@ -1184,6 +1194,13 @@
             ],
             "nullable": true,
             "description": "System gradeMax is written in"
+          },
+          "gradeHistogram": {
+            "description": "Grade spread, one group per climbing type; empty when there are no routes",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GradeHistogramGroupDto"
+            }
           }
         },
         "required": [
@@ -1192,7 +1209,8 @@
           "province",
           "rockType",
           "sectorCount",
-          "routeCount"
+          "routeCount",
+          "gradeHistogram"
         ]
       },
       "CreateRegionDto": {
@@ -1299,6 +1317,13 @@
             ],
             "nullable": true,
             "description": "System gradeMax is written in"
+          },
+          "gradeHistogram": {
+            "description": "Grade spread, one group per climbing type; empty when there are no routes",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GradeHistogramGroupDto"
+            }
           }
         },
         "required": [
@@ -1307,7 +1332,8 @@
           "regionName",
           "name",
           "description",
-          "routeCount"
+          "routeCount",
+          "gradeHistogram"
         ]
       },
       "CreateSectorDto": {
@@ -1714,9 +1740,6 @@
           "id": {
             "type": "string"
           },
-          "label": {
-            "type": "string"
-          },
           "photoUrl": {
             "type": "string"
           },
@@ -1740,7 +1763,7 @@
             }
           }
         },
-        "required": ["id", "label", "photoUrl", "sortOrder", "lines"]
+        "required": ["id", "photoUrl", "sortOrder", "lines"]
       },
       "TopoOrderDto": {
         "type": "object",
@@ -1765,15 +1788,6 @@
           }
         },
         "required": ["items"]
-      },
-      "UpdateTopoDto": {
-        "type": "object",
-        "properties": {
-          "label": {
-            "type": "string"
-          }
-        },
-        "required": ["label"]
       },
       "SaveRouteLineDto": {
         "type": "object",
