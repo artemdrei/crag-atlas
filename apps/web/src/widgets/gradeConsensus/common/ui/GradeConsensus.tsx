@@ -41,7 +41,7 @@ export const GradeConsensus = ({
         </Typography>
       </HeaderRowStyled>
       <BarsRowStyled>
-        {buckets.map(({ id, label, votes }) => (
+        {buckets.map(({ id, votes }) => (
           <ColumnStyled key={id}>
             <BarStyled
               share={top ? votes / top : 0}
@@ -49,12 +49,18 @@ export const GradeConsensus = ({
             >
               <VotesStyled isConsensus={votes === top}>{votes}</VotesStyled>
             </BarStyled>
+          </ColumnStyled>
+        ))}
+      </BarsRowStyled>
+      <LabelsRowStyled>
+        {buckets.map(({ id, label }) => (
+          <ColumnStyled key={id}>
             <Typography variant="caption" color="text.secondary">
               {label}
             </Typography>
           </ColumnStyled>
         ))}
-      </BarsRowStyled>
+      </LabelsRowStyled>
     </CardStyled>
   );
 };
@@ -85,6 +91,11 @@ const BarsRowStyled = styled('div')`
   display: flex;
   align-items: flex-end;
   gap: ${({ theme }) => theme.spacing(1)};
+  border-bottom: 1px solid ${({ theme }) => theme.palette.divider};
+`;
+
+const LabelsRowStyled = styled(BarsRowStyled)`
+  border-bottom: none;
 `;
 
 const ColumnStyled = styled('div')`
@@ -115,7 +126,8 @@ const BarStyled = styled('div', {
   justify-content: center;
   width: 100%;
   height: ${({ share }) => `${Math.max(share * 72, 32)}px`};
-  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
+  border-radius: ${({ theme }) =>
+    `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0 0`};
   background: ${({ theme, isConsensus }) =>
     isConsensus ? theme.palette.secondary.main : theme.palette.action.selected};
 `;
