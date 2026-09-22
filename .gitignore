@@ -4,6 +4,7 @@ dist
 .env
 .env.local
 *.tsbuildinfo
+supabase/.temp
 .DS_Store
 coverage
 docs-private/
