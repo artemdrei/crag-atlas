@@ -20,12 +20,23 @@ export interface ModalRegistration<K extends ID_MODAL = ID_MODAL> {
   Component: LazyExoticComponent<AnyModalComponent> | AnyModalComponent;
 }
 
+/** Where a menu-shaped modal drops from; surfaces that fill the screen ignore it. */
+export interface ModalAnchor {
+  top: number;
+  left: number;
+}
+
+export interface ModalOptions {
+  /** The element the modal belongs to; the provider measures it. */
+  anchorEl?: HTMLElement | null;
+}
+
 export interface ModalContextValue {
   openModal: <K extends ID_MODAL>(
     idModal: K,
     ...args: ModalPayloadMap[K] extends undefined
-      ? []
-      : [data: ModalPayloadMap[K]]
+      ? [options?: ModalOptions]
+      : [data: ModalPayloadMap[K], options?: ModalOptions]
   ) => void;
   closeModal: (idModal: ID_MODAL) => void;
   getOpenedModals: () => ID_MODAL[];

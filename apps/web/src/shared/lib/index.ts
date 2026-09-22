@@ -1,5 +1,6 @@
 export { digitsOnly } from './digitsOnly';
 export { formatBytes, savedPercent, signedPercent } from './formatBytes';
+export { formatDateTime } from './formatDateTime';
 export { getInitials } from './getInitials';
 export * from './grade';
 export type { CompressedPhoto } from './imageToWebp';

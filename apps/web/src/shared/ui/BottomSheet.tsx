@@ -2,14 +2,16 @@ import type { ReactNode } from 'react';
 import { Sheet } from 'react-modal-sheet';
 
 import { alpha, styled, useTheme } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
 
 export interface Props {
+  title?: string;
   isOpen: boolean;
   children: ReactNode;
   onClose: () => void;
 }
 
-export const BottomSheet = ({ isOpen, children, onClose }: Props) => {
+export const BottomSheet = ({ title, isOpen, children, onClose }: Props) => {
   const theme = useTheme();
 
   return (
@@ -26,13 +28,20 @@ export const BottomSheet = ({ isOpen, children, onClose }: Props) => {
     >
       <Sheet.Container>
         <Sheet.Header />
-        <Sheet.Content>{children}</Sheet.Content>
+        <Sheet.Content>
+          {title && <TitleStyled variant="h6">{title}</TitleStyled>}
+          {children}
+        </Sheet.Content>
       </Sheet.Container>
 
       <Sheet.Backdrop onTap={onClose} />
     </SheetStyled>
   );
 };
+
+const TitleStyled = styled(Typography)`
+  margin-bottom: ${({ theme }) => theme.spacing(1)};
+`;
 
 // react-modal-sheet renders its own DOM, so its classes are the only hook for
 // theming it.

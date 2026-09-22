@@ -1,7 +1,9 @@
 export { AppProviders } from './AppProviders';
 export type {
   ID_MODAL,
+  ModalAnchor,
   ModalContextValue,
+  ModalOptions,
   ModalPayloadMap,
   ModalRegistration
 } from './modalProvider';

@@ -1,6 +1,4 @@
-import { Trans, useLingui } from '@lingui/react/macro';
-import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
+import { useLingui } from '@lingui/react/macro';
 
 import { useModal } from '@web/app/providers';
 import { toast } from '@web/shared/lib';
@@ -27,10 +25,7 @@ const LogTickSheet = ({ open, idRoute }: Props) => {
   });
 
   return (
-    <BottomSheet isOpen={open} onClose={close}>
-      <TitleStyled variant="h6">
-        <Trans>Log ascent</Trans>
-      </TitleStyled>
+    <BottomSheet title={t`Log ascent`} isOpen={open} onClose={close}>
       <TickForm
         isPending={isPending}
         onSubmit={(payload) => createTick({ ...payload, idRoute })}
@@ -39,9 +34,5 @@ const LogTickSheet = ({ open, idRoute }: Props) => {
     </BottomSheet>
   );
 };
-
-const TitleStyled = styled(Typography)`
-  margin-bottom: ${({ theme }) => theme.spacing(1)};
-`;
 
 export default LogTickSheet;

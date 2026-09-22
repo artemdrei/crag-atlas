@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router';
 
 import { Trans, useLingui } from '@lingui/react/macro';
 import AppBar from '@mui/material/AppBar';
-import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
@@ -12,8 +11,8 @@ import Typography from '@mui/material/Typography';
 
 import { useProfileIdentity, useUser } from '@web/app/providers';
 import { ROUTES } from '@web/app/router/routes';
-import { getInitials } from '@web/shared/lib';
 import { CONTENT_MAX_WIDTH } from '@web/shared/theme/layout';
+import { UserAvatar } from '@web/shared/ui';
 
 export const AppHeaderDesktop = () => {
   const { t } = useLingui();
@@ -59,9 +58,7 @@ export const AppHeaderDesktop = () => {
               aria-label={t`Profile`}
               onClick={() => navigate(ROUTES.PROFILE)}
             >
-              <AvatarStyled src={avatarUrl} alt={displayName}>
-                {getInitials(displayName)}
-              </AvatarStyled>
+              <AvatarStyled name={displayName} avatarUrl={avatarUrl} />
             </IconButton>
           ) : (
             <Button variant="outlined" onClick={() => navigate(ROUTES.LOGIN)}>
@@ -88,12 +85,10 @@ const LogoStyled = styled(Typography)`
   cursor: pointer;
 ` as typeof Typography;
 
-const SpacerStyled = styled(Box)`
-  flex-grow: 1;
+const AvatarStyled = styled(UserAvatar)`
+  font-size: ${({ theme }) => theme.typography.body2.fontSize};
 `;
 
-const AvatarStyled = styled(Avatar)`
-  width: 32px;
-  height: 32px;
-  font-size: ${({ theme }) => theme.typography.body2.fontSize};
+const SpacerStyled = styled(Box)`
+  flex-grow: 1;
 `;
