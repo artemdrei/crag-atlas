@@ -2,7 +2,8 @@ import { type FormEvent, useEffect, useState } from 'react';
 
 import type { Region } from '@crag-atlas/api';
 import { useLingui } from '@lingui/react/macro';
-import TextField from '@mui/material/TextField';
+
+import { ChangedTextField } from '@web/shared/ui';
 
 import { useApiUpdateRegion } from '../hooks';
 import { EditActions } from './EditActions';
@@ -43,22 +44,25 @@ export const RegionEditForm = ({ region, onClose, onDirtyChange }: Props) => {
 
   return (
     <EditFormStyled onSubmit={handleSubmit}>
-      <TextField
+      <ChangedTextField
         fullWidth
         label={t`Name`}
         value={name}
+        isChanged={name !== region.name}
         onChange={(event) => setName(event.target.value)}
       />
-      <TextField
+      <ChangedTextField
         fullWidth
         label={t`Province`}
         value={province}
+        isChanged={province !== region.province}
         onChange={(event) => setProvince(event.target.value)}
       />
-      <TextField
+      <ChangedTextField
         fullWidth
         label={t`Rock type`}
         value={rockType}
+        isChanged={rockType !== region.rockType}
         onChange={(event) => setRockType(event.target.value)}
       />
       <EditActions isPending={isPending} onCancel={onClose} />

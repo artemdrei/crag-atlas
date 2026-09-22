@@ -2,7 +2,8 @@ import { type FormEvent, useEffect, useState } from 'react';
 
 import type { Sector } from '@crag-atlas/api';
 import { useLingui } from '@lingui/react/macro';
-import TextField from '@mui/material/TextField';
+
+import { ChangedTextField } from '@web/shared/ui';
 
 import { useApiUpdateSector } from '../hooks';
 import { EditActions } from './EditActions';
@@ -44,18 +45,20 @@ export const SectorEditForm = ({ sector, onClose, onDirtyChange }: Props) => {
 
   return (
     <EditFormStyled onSubmit={handleSubmit}>
-      <TextField
+      <ChangedTextField
         fullWidth
         label={t`Name`}
         value={name}
+        isChanged={name !== sector.name}
         onChange={(event) => setName(event.target.value)}
       />
-      <TextField
+      <ChangedTextField
         fullWidth
         multiline
         minRows={2}
         label={t`Description`}
         value={description}
+        isChanged={description !== sector.description}
         onChange={(event) => setDescription(event.target.value)}
       />
       <EditActions isPending={isPending} onCancel={onClose} />

@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import type { SaveRouteLine, Topo } from '@crag-atlas/api';
+import type { Route, SaveRouteLine, Topo } from '@crag-atlas/api';
 import { resolveFailureMessage, toFailure } from '@crag-atlas/utils';
 
 import { useModal } from '@web/app/providers';
@@ -27,9 +27,15 @@ export interface Params {
   idSector: string;
   editor: TopoEditorSessionApi;
   topos: Topo[];
+  routes: Route[];
 }
 
-export const useTopoEditorActions = ({ idSector, editor, topos }: Params) => {
+export const useTopoEditorActions = ({
+  idSector,
+  editor,
+  topos,
+  routes
+}: Params) => {
   const { openModal } = useModal();
   const { session, dispatch, resetHistory } = editor;
 
@@ -117,6 +123,12 @@ export const useTopoEditorActions = ({ idSector, editor, topos }: Params) => {
       toast.error(resolveFailureMessage(toFailure(error)));
     }
   }, [session, topos, deleteRouteLine, dispatch, resetHistory]);
+
+  const resetRoute = useCallback(
+    (idRoute: string) =>
+      dispatch({ type: 'REVERT_ROUTE', idRoute, topos, routes }),
+    [dispatch, topos, routes]
+  );
 
   const addRoute = useCallback(
     () => dispatch({ type: 'ADD_ROUTE', idDraft: crypto.randomUUID() }),
@@ -242,6 +254,7 @@ export const useTopoEditorActions = ({ idSector, editor, topos }: Params) => {
     saveRoute,
     removeLine,
     addRoute,
+    resetRoute,
     removeRoute,
     addPhoto,
     replacePhoto,

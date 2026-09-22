@@ -32,7 +32,7 @@ export const PageRouteEditDesktop = () => {
   // session is hydrated with all of it even though one route is edited.
   const { routes, topos, isLoading, failure } = useSectorEditorData(idSector);
   const editor = useTopoEditorSession();
-  const actions = useTopoEditorActions({ idSector, editor, topos });
+  const actions = useTopoEditorActions({ idSector, editor, topos, routes });
   const { session, dispatch } = editor;
 
   const route = session.routes[idRoute];
@@ -121,6 +121,7 @@ export const PageRouteEditDesktop = () => {
       {!isLoading && !failure && route && (
         <TopoEditorRouteDesktop
           idRoute={idRoute}
+          savedRoutes={routes}
           editor={editor}
           actions={actions}
           onDeleted={() => navigate(buildSectorPath(idRegion, idSector))}

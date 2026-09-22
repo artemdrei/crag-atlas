@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 
-import type { Sector } from '@crag-atlas/api';
+import type { Route, Sector } from '@crag-atlas/api';
 import { Trans, useLingui } from '@lingui/react/macro';
 import AddIcon from '@mui/icons-material/Add';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -14,7 +14,7 @@ import Typography from '@mui/material/Typography';
 import { SectorEditForm } from '@web/features/catalogEdit';
 
 import type { RouteDraft, TopoEditorSessionApi } from '../common';
-import { isRouteDirty } from '../common';
+import { changedRouteFields, dirtyRouteIds, isRouteDirty } from '../common';
 import type { TopoEditorActions } from './hooks';
 import { useEditorHotkeys, useTopoEditorDerived } from './hooks';
 import {
@@ -32,11 +32,18 @@ export interface RouteGroupDraft {
 
 export interface Props {
   sector?: Sector;
+  /** What the server holds, so an edited field can say it differs. */
+  savedRoutes: Route[];
   editor: TopoEditorSessionApi;
   actions: TopoEditorActions;
 }
 
-export const TopoEditorDesktop = ({ sector, editor, actions }: Props) => {
+export const TopoEditorDesktop = ({
+  sector,
+  savedRoutes,
+  editor,
+  actions
+}: Props) => {
   const { t } = useLingui();
   const { session, dispatch, beginGesture, endGesture, undo, redo } = editor;
   const { numberOf, gradeOf, gradeScaleOf, nameOf, colorOf, selectRoute } =
@@ -164,6 +171,7 @@ export const TopoEditorDesktop = ({ sector, editor, actions }: Props) => {
         <TopoEditorRouteList
           groups={groups}
           numberOf={numberOf}
+          idsDirtyRoutes={dirtyRouteIds(session)}
           idSelectedRoute={session.idSelectedRoute}
           idHoveredRoute={idHoveredRoute}
           isBusy={actions.isBusy}
@@ -194,6 +202,10 @@ export const TopoEditorDesktop = ({ sector, editor, actions }: Props) => {
             hasLine={
               (activeTopo?.lines[selectedRoute.id]?.points.length ?? 0) > 0
             }
+            changed={changedRouteFields(
+              selectedRoute,
+              savedRoutes.find(({ id }) => id === selectedRoute.id)
+            )}
             isDirty={isRouteDirty(session, selectedRoute.id)}
             isBusy={actions.isBusy}
             isPreview={session.isPreview}
@@ -205,6 +217,7 @@ export const TopoEditorDesktop = ({ sector, editor, actions }: Props) => {
             onTogglePreview={() => dispatch({ type: 'TOGGLE_PREVIEW' })}
             onUndo={undo}
             onRedo={redo}
+            onReset={() => actions.resetRoute(selectedRoute.id)}
             onSave={() => actions.saveRoute(selectedRoute.id)}
             onRemoveLine={actions.removeLine}
             onDelete={() => actions.removeRoute(selectedRoute.id)}

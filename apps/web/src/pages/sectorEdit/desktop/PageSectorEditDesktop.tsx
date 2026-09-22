@@ -31,7 +31,7 @@ export const PageSectorEditDesktop = () => {
   const { sector, routes, topos, isLoading, failure } =
     useSectorEditorData(idSector);
   const editor = useTopoEditorSession();
-  const actions = useTopoEditorActions({ idSector, editor, topos });
+  const actions = useTopoEditorActions({ idSector, editor, topos, routes });
   const { session, dispatch } = editor;
 
   const isDirty = hasUnsavedChanges(session);
@@ -113,6 +113,7 @@ export const PageSectorEditDesktop = () => {
       {!isLoading && !failure && (
         <TopoEditorDesktop
           sector={sector ?? undefined}
+          savedRoutes={routes}
           editor={editor}
           actions={actions}
         />

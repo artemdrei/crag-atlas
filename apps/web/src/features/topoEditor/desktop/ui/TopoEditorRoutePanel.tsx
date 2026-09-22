@@ -1,6 +1,7 @@
 import type { GradeScale, Route } from '@crag-atlas/api';
 import { Trans, useLingui } from '@lingui/react/macro';
 import RedoIcon from '@mui/icons-material/Redo';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import UndoIcon from '@mui/icons-material/Undo';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Button from '@mui/material/Button';
@@ -8,7 +9,6 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import { styled } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Tooltip from '@mui/material/Tooltip';
@@ -23,11 +23,13 @@ import {
   gradeScaleName,
   gradeScalesForType
 } from '@web/shared/lib';
+import { ChangedTextField } from '@web/shared/ui';
 
-import type { RouteDraft } from '../../common';
+import type { ChangedRouteFields, RouteDraft } from '../../common';
 
 export interface Props {
   route: RouteDraft;
+  changed: ChangedRouteFields;
   number?: number;
   hasLine: boolean;
   isDirty: boolean;
@@ -39,6 +41,7 @@ export interface Props {
   onTogglePreview: () => void;
   onUndo: () => void;
   onRedo: () => void;
+  onReset: () => void;
   onSave: () => void;
   onRemoveLine: () => void;
   onDelete: () => void;
@@ -46,6 +49,7 @@ export interface Props {
 
 export const TopoEditorRoutePanel = ({
   route,
+  changed,
   number,
   hasLine,
   isDirty,
@@ -57,6 +61,7 @@ export const TopoEditorRoutePanel = ({
   onTogglePreview,
   onUndo,
   onRedo,
+  onReset,
   onSave,
   onRemoveLine,
   onDelete
@@ -107,16 +112,18 @@ export const TopoEditorRoutePanel = ({
           <Trans>Route not on the wall yet</Trans>
         )}
       </Typography>
-      <TextField
+      <ChangedTextField
         size="small"
         label={t`Name`}
         value={route.name}
+        isChanged={changed.name}
         onChange={({ target }) => onChange({ name: target.value })}
       />
       <Divider />
-      <ToggleButtonGroup
+      <TypeGroupStyled
         exclusive
         size="small"
+        data-changed={changed.type || undefined}
         value={route.type}
         onChange={(_event, type: Route['type'] | null) =>
           type && changeType(type)
@@ -128,13 +135,14 @@ export const TopoEditorRoutePanel = ({
         <ToggleButton value="boulder">
           <Trans>Boulder</Trans>
         </ToggleButton>
-      </ToggleButtonGroup>
+      </TypeGroupStyled>
       <RowStyled>
-        <TextField
+        <ChangedTextField
           select
           size="small"
           label={t`System`}
           value={route.gradeScale}
+          isChanged={changed.gradeScale}
           onChange={({ target }) => changeScale(target.value as GradeScale)}
         >
           {gradeScalesForType(route.type).map((scale) => (
@@ -142,12 +150,13 @@ export const TopoEditorRoutePanel = ({
               {`${gradeScaleName(scale)} (${gradeScaleExample(scale)})`}
             </MenuItem>
           ))}
-        </TextField>
-        <TextField
+        </ChangedTextField>
+        <ChangedTextField
           select
           size="small"
           label={t`Grade`}
           value={route.grade}
+          isChanged={changed.grade}
           onChange={({ target }) => onChange({ grade: target.value })}
         >
           {gradeOptions(route.gradeScale).map((grade) => (
@@ -155,21 +164,23 @@ export const TopoEditorRoutePanel = ({
               {grade}
             </MenuItem>
           ))}
-        </TextField>
-        <TextField
+        </ChangedTextField>
+        <ChangedTextField
           size="small"
           label={t`Length, m`}
           value={route.length}
+          isChanged={changed.length}
           slotProps={{ htmlInput: { inputMode: 'numeric' } }}
           onChange={({ target }) =>
             onChange({ length: digitsOnly(target.value) })
           }
         />
         {route.type === 'sport' && (
-          <TextField
+          <ChangedTextField
             size="small"
             label={t`Bolts`}
             value={route.boltsCount}
+            isChanged={changed.boltsCount}
             slotProps={{ htmlInput: { inputMode: 'numeric' } }}
             onChange={({ target }) =>
               onChange({ boltsCount: digitsOnly(target.value) })
@@ -178,12 +189,13 @@ export const TopoEditorRoutePanel = ({
         )}
       </RowStyled>
       <Divider />
-      <TextField
+      <ChangedTextField
         size="small"
         multiline
         minRows={3}
         label={t`Description`}
         value={route.description}
+        isChanged={changed.description}
         onChange={({ target }) => onChange({ description: target.value })}
       />
       <HistoryRowStyled>
@@ -208,6 +220,18 @@ export const TopoEditorRoutePanel = ({
               onClick={onRedo}
             >
               <RedoIcon fontSize="small" />
+            </IconButton>
+          </span>
+        </Tooltip>
+        <Divider orientation="vertical" flexItem />
+        <Tooltip title={t`Reset to the saved state`}>
+          <span>
+            <IconButton
+              aria-label={t`Reset to the saved state`}
+              disabled={!isDirty || route.isNew || isBusy}
+              onClick={onReset}
+            >
+              <RestartAltIcon fontSize="small" />
             </IconButton>
           </span>
         </Tooltip>
@@ -298,5 +322,11 @@ const DangerButtonStyled = styled(Button)`
 
   &:disabled {
     opacity: 0.25;
+  }
+`;
+
+const TypeGroupStyled = styled(ToggleButtonGroup)`
+  &[data-changed] .MuiToggleButton-root {
+    border-color: ${({ theme }) => theme.palette.warning.main};
   }
 `;

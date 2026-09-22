@@ -1,17 +1,20 @@
 import { useCallback, useState } from 'react';
 
+import type { Route } from '@crag-atlas/api';
 import { Trans } from '@lingui/react/macro';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import type { TopoEditorSessionApi } from '../common';
-import { isRouteDirty } from '../common';
+import { changedRouteFields, isRouteDirty } from '../common';
 import type { TopoEditorActions } from './hooks';
 import { useEditorHotkeys, useTopoEditorDerived } from './hooks';
 import { TopoEditorRoutePanel, TopoEditStage, TopoThumbRail } from './ui';
 
 export interface Props {
   idRoute: string;
+  /** What the server holds, so an edited field can say it differs. */
+  savedRoutes: Route[];
   editor: TopoEditorSessionApi;
   actions: TopoEditorActions;
   onDeleted: () => void;
@@ -21,6 +24,7 @@ export interface Props {
     photos, and everything the sector owns is edited there, not here. */
 export const TopoEditorRouteDesktop = ({
   idRoute,
+  savedRoutes,
   editor,
   actions,
   onDeleted
@@ -96,6 +100,10 @@ export const TopoEditorRouteDesktop = ({
           route={route}
           number={numberOf[idRoute]}
           hasLine={(activeTopo?.lines[idRoute]?.points.length ?? 0) > 0}
+          changed={changedRouteFields(
+            route,
+            savedRoutes.find(({ id }) => id === idRoute)
+          )}
           isDirty={isRouteDirty(session, idRoute)}
           isBusy={actions.isBusy}
           isPreview={session.isPreview}
@@ -105,6 +113,7 @@ export const TopoEditorRouteDesktop = ({
           onTogglePreview={() => dispatch({ type: 'TOGGLE_PREVIEW' })}
           onUndo={undo}
           onRedo={redo}
+          onReset={() => actions.resetRoute(idRoute)}
           onSave={() => actions.saveRoute(idRoute)}
           onRemoveLine={actions.removeLine}
           onDelete={handleDeleteRoute}

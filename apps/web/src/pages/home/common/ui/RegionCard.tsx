@@ -1,10 +1,9 @@
-import { Trans } from '@lingui/react/macro';
 import CardActionArea from '@mui/material/CardActionArea';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { useGradeRange } from '@web/shared/lib';
-import { GradeBadge, PhotoPlaceholder } from '@web/shared/ui';
+import { GradeBadge, PhotoPlaceholder, UnsavedBadge } from '@web/shared/ui';
 
 import type { Region } from '../entities';
 
@@ -25,6 +24,7 @@ export const RegionCard = ({
 
   return (
     <CardAreaStyled isSelected={!!isSelected} onClick={() => onSelect(region)}>
+      {isUnsaved && <UnsavedBadge />}
       <ThumbnailStyled>
         {region.photoUrl ? (
           <PhotoStyled src={region.photoUrl} alt={region.name} />
@@ -37,11 +37,6 @@ export const RegionCard = ({
           <Typography variant="subtitle1" noWrap>
             {region.name}
           </Typography>
-          {isUnsaved && (
-            <Typography variant="caption" color="warning.main">
-              <Trans>Unsaved</Trans>
-            </Typography>
-          )}
         </HeaderRowStyled>
         <Typography variant="body2" color="text.secondary">
           {region.province} · {region.rockType}
@@ -69,7 +64,7 @@ const CardAreaStyled = styled(CardActionArea, {
   border: 1px solid
     ${({ theme, isSelected }) =>
       isSelected ? theme.palette.primary.main : theme.palette.divider};
-  overflow: hidden;
+  position: relative;
   padding: ${({ theme }) => theme.spacing(1.5)};
 `;
 
