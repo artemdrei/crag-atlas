@@ -14,8 +14,6 @@ export interface Props {
   areHandlesHidden?: boolean;
   colorOf: (idRoute: string) => string | undefined;
   onPointDown: (index: number, event: ReactPointerEvent) => void;
-  onPointMove: (event: ReactPointerEvent) => void;
-  onPointUp: (event: ReactPointerEvent) => void;
 }
 
 export const HANDLE_CLASS = 'topoEditHandle';
@@ -27,9 +25,7 @@ export const TopoEditMarkers = ({
   idSelectedPoint,
   areHandlesHidden,
   colorOf,
-  onPointDown,
-  onPointMove,
-  onPointUp
+  onPointDown
 }: Props) => (
   <LayerStyled>
     {lines.flatMap((line) => {
@@ -47,7 +43,7 @@ export const TopoEditMarkers = ({
 
           return (
             <TopoPointMark
-              // biome-ignore lint/suspicious/noArrayIndexKey: a coordinate key remounts the handle on every pointermove and kills its pointer capture mid-drag
+              // biome-ignore lint/suspicious/noArrayIndexKey: a coordinate key would remount the handle on every pointermove
               key={`${line.idRoute}-${index}`}
               className={isEditable ? HANDLE_CLASS : undefined}
               kind={kind === 'plain' ? 'handle' : kind}
@@ -62,8 +58,6 @@ export const TopoEditMarkers = ({
                   ? (event: ReactPointerEvent) => onPointDown(index, event)
                   : undefined
               }
-              onPointerMove={isEditable ? onPointMove : undefined}
-              onPointerUp={isEditable ? onPointUp : undefined}
             />
           );
         })

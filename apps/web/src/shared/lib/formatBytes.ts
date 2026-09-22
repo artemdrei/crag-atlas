@@ -15,3 +15,7 @@ export const formatBytes = (bytes: number, locale: string): string => {
 
 export const savedPercent = (before: number, after: number): number =>
   before > 0 ? Math.round(((before - after) / before) * 100) : 0;
+
+/** A size change reads as a saving or a growth, never as a negative saving. */
+export const signedPercent = (percent: number): string =>
+  percent >= 0 ? `−${percent}%` : `+${-percent}%`;

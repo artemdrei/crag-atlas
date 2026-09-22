@@ -5,5 +5,7 @@ export { useApiDeleteTopo } from './useApiDeleteTopo';
 export { useApiReorderTopos } from './useApiReorderTopos';
 export { useApiSaveRouteLine } from './useApiSaveRouteLine';
 export { useApiUpdateRoute } from './useApiUpdateRoute';
+export type { TopoEditorActions } from './useTopoEditorActions';
+export { useTopoEditorActions } from './useTopoEditorActions';
 export type { TopoEditorSessionApi } from './useTopoEditorSession';
 export { useTopoEditorSession } from './useTopoEditorSession';

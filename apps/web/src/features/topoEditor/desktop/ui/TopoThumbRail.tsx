@@ -20,6 +20,8 @@ import AddIcon from '@mui/icons-material/Add';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
+import { usePhotoLabel } from '@web/features/topo';
+
 import type { EditableTopo } from '../../common';
 import { ThumbStyled, TopoThumb } from './TopoThumb';
 
@@ -54,6 +56,7 @@ export const TopoThumbRail = ({
   onSelect
 }: Props) => {
   const { t } = useLingui();
+  const photoLabel = usePhotoLabel();
   const [idDragged, setIdDragged] = useState<string>();
   const addRef = useRef<HTMLInputElement>(null);
   const replaceRef = useRef<HTMLInputElement>(null);
@@ -70,12 +73,9 @@ export const TopoThumbRail = ({
 
   const dragged = topos.find(({ id }) => id === idDragged);
 
-  // A uuid tells a screen-reader user nothing; the label does.
-  const nameOf = (id: string | number) => {
-    const index = topos.findIndex((topo) => topo.id === String(id));
-
-    return topos[index]?.label || t`photo ${index + 1}`;
-  };
+  // A uuid tells a screen-reader user nothing; the position does.
+  const nameOf = (id: string | number) =>
+    photoLabel(topos.findIndex((topo) => topo.id === String(id)));
 
   const handleDragStart = ({ active }: DragStartEvent) =>
     setIdDragged(String(active.id));
@@ -129,6 +129,7 @@ export const TopoThumbRail = ({
             <TopoThumb
               key={topo.id}
               topo={topo}
+              label={photoLabel(index)}
               mode={
                 mode.kind === 'manage'
                   ? {
@@ -183,7 +184,7 @@ export const TopoThumbRail = ({
       <DragOverlay>
         {dragged && (
           <ThumbStyled isActive>
-            <img src={dragged.photoUrl} alt={dragged.label} />
+            <img src={dragged.photoUrl} alt={nameOf(dragged.id)} />
           </ThumbStyled>
         )}
       </DragOverlay>
@@ -193,6 +194,9 @@ export const TopoThumbRail = ({
 
 const RailStyled = styled('div')`
   display: flex;
+  /* A flex item shrinks by default, and a squeezed rail clips the thumbs
+     instead of the stage above it giving up the space. */
+  flex: 0 0 auto;
   gap: ${({ theme }) => theme.spacing(1)};
   /* Room for the insertion line, which the scroller would otherwise clip. */
   padding: 0 6px ${({ theme }) => theme.spacing(0.5)};

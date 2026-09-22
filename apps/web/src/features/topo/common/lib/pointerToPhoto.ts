@@ -3,14 +3,15 @@ import type { Point } from './hitTest';
 const clamp01 = (value: number): number => Math.min(1, Math.max(0, value));
 
 /**
- * The rect is read per event, never cached: zooming mid-drag moves it.
+ * Both take the rect rather than the element: a handler needs the point and
+ * the tolerance together, and reading it twice costs two layout flushes per
+ * pointer event. The caller reads it per event, never caches it — zooming
+ * mid-drag moves it.
  */
 export const pointerToPhoto = (
   event: { clientX: number; clientY: number },
-  element: Element
+  rect: DOMRect
 ): Point => {
-  const rect = element.getBoundingClientRect();
-
   if (rect.width === 0 || rect.height === 0) return [0, 0];
 
   return [
@@ -19,8 +20,5 @@ export const pointerToPhoto = (
   ];
 };
 
-export const toleranceOf = (element: Element, pixels: number): number => {
-  const { width } = element.getBoundingClientRect();
-
-  return width === 0 ? 0 : pixels / width;
-};
+export const toleranceOf = (rect: DOMRect, pixels: number): number =>
+  rect.width === 0 ? 0 : pixels / rect.width;

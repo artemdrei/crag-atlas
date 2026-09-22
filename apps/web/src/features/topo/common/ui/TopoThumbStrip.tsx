@@ -3,36 +3,45 @@ import ButtonBase from '@mui/material/ButtonBase';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
+import { usePhotoLabel } from '../hooks';
+
 export interface Props {
   topos: Topo[];
   idActiveTopo?: string;
   onSelect: (idTopo: string) => void;
 }
 
-export const TopoThumbStrip = ({ topos, idActiveTopo, onSelect }: Props) => (
-  <StripStyled>
-    {topos.map((topo) => (
-      <ThumbStyled
-        key={topo.id}
-        isActive={topo.id === idActiveTopo}
-        onClick={() => onSelect(topo.id)}
-      >
-        <ThumbImageStyled
-          src={topo.photoUrl}
-          alt={topo.label}
-          loading="lazy"
-          decoding="async"
-        />
-        <ThumbLabelStyled variant="caption" noWrap>
-          {topo.label}
-        </ThumbLabelStyled>
-      </ThumbStyled>
-    ))}
-  </StripStyled>
-);
+export const TopoThumbStrip = ({ topos, idActiveTopo, onSelect }: Props) => {
+  const photoLabel = usePhotoLabel();
+
+  return (
+    <StripStyled>
+      {topos.map((topo, index) => (
+        <ThumbStyled
+          key={topo.id}
+          isActive={topo.id === idActiveTopo}
+          onClick={() => onSelect(topo.id)}
+        >
+          <ThumbImageStyled
+            src={topo.photoUrl}
+            alt={photoLabel(index)}
+            loading="lazy"
+            decoding="async"
+          />
+          <ThumbLabelStyled variant="caption" noWrap>
+            {photoLabel(index)}
+          </ThumbLabelStyled>
+        </ThumbStyled>
+      ))}
+    </StripStyled>
+  );
+};
 
 const StripStyled = styled('div')`
   display: flex;
+  /* A flex item shrinks by default, and a squeezed strip clips the square
+     thumbs instead of the stage above it giving up the space. */
+  flex: 0 0 auto;
   gap: ${({ theme }) => theme.spacing(1)};
   overflow-x: auto;
   scroll-snap-type: x mandatory;

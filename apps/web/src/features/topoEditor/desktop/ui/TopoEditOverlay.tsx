@@ -1,8 +1,10 @@
+import { memo, useMemo } from 'react';
+
 import { styled } from '@mui/material/styles';
 
 import { lineOpacity, smoothPath } from '@web/features/topo';
 
-import type { EditableLine } from '../../common';
+import type { EditableLine, Point } from '../../common';
 
 export interface Props {
   lines: EditableLine[];
@@ -25,23 +27,47 @@ export const TopoEditOverlay = ({
         const isFocused =
           line.idRoute === idSelectedRoute || line.idRoute === idHoveredRoute;
 
-        const path = smoothPath(line.points);
-
         return (
-          <g key={line.idRoute}>
-            {isFocused && <OutlineStyled d={path} />}
-            <PathStyled
-              d={path}
-              lineColor={colorOf(line.idRoute)}
-              isSelected={isFocused}
-              lineAlpha={lineOpacity(isFocused, hasFocus)}
-            />
-          </g>
+          <EditLine
+            key={line.idRoute}
+            points={line.points}
+            lineColor={colorOf(line.idRoute)}
+            isFocused={isFocused}
+            lineAlpha={lineOpacity(isFocused, hasFocus)}
+          />
         );
       })}
     </>
   );
 };
+
+interface EditLineProps {
+  points: Point[];
+  lineColor?: string;
+  isFocused: boolean;
+  lineAlpha: number;
+}
+
+// Dragging a point re-renders the whole overlay; without this the spline is
+// rebuilt for every line on the photo on every pointermove, not just the
+// dragged one. The reducer keeps untouched lines' points identical.
+const EditLine = memo(
+  ({ points, lineColor, isFocused, lineAlpha }: EditLineProps) => {
+    const path = useMemo(() => smoothPath(points), [points]);
+
+    return (
+      <g>
+        {isFocused && <OutlineStyled d={path} />}
+        <PathStyled
+          d={path}
+          lineColor={lineColor}
+          isSelected={isFocused}
+          lineAlpha={lineAlpha}
+        />
+      </g>
+    );
+  }
+);
 
 const OutlineStyled = styled('path')`
   fill: none;

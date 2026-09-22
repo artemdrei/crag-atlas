@@ -4,7 +4,12 @@ import Typography from '@mui/material/Typography';
 import { PhotoPlaceholder } from '@web/shared/ui';
 
 import type { TopoGalleryProps } from '../common';
-import { TopoThumbStrip, TopoZoomControls, TopoZoomStage } from '../common';
+import {
+  TopoThumbStrip,
+  TopoZoomControls,
+  TopoZoomStage,
+  usePhotoLabel
+} from '../common';
 
 export const TopoGalleryDesktop = ({
   topos,
@@ -16,14 +21,16 @@ export const TopoGalleryDesktop = ({
   onSelectRoute,
   onHoverRoute
 }: TopoGalleryProps) => {
-  const activeTopo = topos.find(({ id }) => id === idActiveTopo);
+  const photoLabel = usePhotoLabel();
+  const idxActiveTopo = topos.findIndex(({ id }) => id === idActiveTopo);
+  const activeTopo = topos[idxActiveTopo];
 
   return (
     <GalleryStyled>
       {activeTopo ? (
         <ZoomStageStyled
           photoUrl={activeTopo.photoUrl}
-          label={activeTopo.label}
+          label={photoLabel(idxActiveTopo)}
           lines={activeTopo.lines}
           idHighlightedRoute={idHighlightedRoute}
           colorOf={colorOf}
@@ -31,7 +38,9 @@ export const TopoGalleryDesktop = ({
           onSelectRoute={onSelectRoute}
           onHoverRoute={onHoverRoute}
         >
-          <CaptionStyled variant="caption">{activeTopo.label}</CaptionStyled>
+          <CaptionStyled variant="caption">
+            {photoLabel(idxActiveTopo)}
+          </CaptionStyled>
           <TopoZoomControls />
         </ZoomStageStyled>
       ) : (

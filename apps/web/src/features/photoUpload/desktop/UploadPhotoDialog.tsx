@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { type ReactNode, useMemo, useState } from 'react';
 
 import { resolveFailureMessage, toFailure } from '@crag-atlas/utils';
 import { Trans, useLingui } from '@lingui/react/macro';
@@ -13,7 +13,12 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { useModal } from '@web/app/providers';
-import { formatBytes, savedPercent, toast } from '@web/shared/lib';
+import {
+  formatBytes,
+  savedPercent,
+  signedPercent,
+  toast
+} from '@web/shared/lib';
 
 import type { CompressedPick, PhotoComparison } from '../common';
 import {
@@ -36,56 +41,194 @@ export interface ReplacedTopo {
   hasLines: boolean;
 }
 
-export interface TopoTarget {
+interface TopoTarget {
   kind: 'topo';
   idSector: string;
 }
 
-export interface RegionTarget {
+interface RegionTarget {
   kind: 'region';
   idRegion: string;
   photoUrl?: string | null;
 }
 
-export type Props = { open: boolean } & (
-  | { target: TopoTarget; files: File[]; replacing?: ReplacedTopo }
-  | { target: RegionTarget; file: File }
-);
+interface TopoUpload {
+  target: TopoTarget;
+  files: File[];
+  replacing?: ReplacedTopo;
+  open: boolean;
+}
 
-const UploadPhotoDialog = (props: Props) => {
-  const { t, i18n } = useLingui();
-  const { closeModal } = useModal();
-  const [idxShown, setIdxShown] = useState(0);
-  const [uploaded, setUploaded] = useState(0);
+interface RegionUpload {
+  target: RegionTarget;
+  file: File;
+  open: boolean;
+}
 
-  const isRegion = props.target.kind === 'region';
+export type Props = TopoUpload | RegionUpload;
 
-  // The compression effect keys off the array, so a fresh `[file]` every render
-  // would restart it forever.
-  const files = useMemo(
-    () =>
-      isRegion
-        ? [(props as { file: File }).file]
-        : (props as { files: File[] }).files,
-    [isRegion, props]
+/**
+ * TypeScript cannot narrow the union on `target.kind` — the discriminant is a
+ * level down. This is the one place that says which branch we are in; past it
+ * both halves carry real ids instead of a cast.
+ */
+const isRegionUpload = (props: Props): props is RegionUpload =>
+  props.target.kind === 'region';
+
+const UploadPhotoDialog = (props: Props) =>
+  isRegionUpload(props) ? (
+    <UploadRegionPhoto
+      target={props.target}
+      file={props.file}
+      open={props.open}
+    />
+  ) : (
+    <UploadTopoPhoto
+      target={props.target}
+      files={props.files}
+      replacing={props.replacing}
+      open={props.open}
+    />
   );
 
-  const { isCompressing, picks } = usePhotoCompression(files);
+export default UploadPhotoDialog;
 
-  const replacing = isRegion
-    ? undefined
-    : (props as { replacing?: ReplacedTopo }).replacing;
+/** A region has one cover, so there is nothing to batch and nothing to skip. */
+const UploadRegionPhoto = ({ target, file, open }: RegionUpload) => {
+  const { t } = useLingui();
+  // The compression effect keys off the array, so a fresh `[file]` every render
+  // would restart it forever.
+  const files = useMemo(() => [file], [file]);
+
+  const { isPending, replaceRegionPhoto } = useApiReplaceRegionPhoto({
+    idRegion: target.idRegion
+  });
+
+  const currentUrl = target.photoUrl ?? undefined;
+
+  const upload = async ([first]: SendablePick[]) => {
+    if (!first) return;
+
+    await replaceRegionPhoto(first.comparison.blob);
+    toast.success(currentUrl ? t`Photo replaced` : t`Photo uploaded`);
+  };
+
+  return (
+    <UploadDialogBody
+      currentUrl={currentUrl}
+      files={files}
+      title={
+        currentUrl ? (
+          <Trans>Replace the cover photo</Trans>
+        ) : (
+          <Trans>Add a cover photo</Trans>
+        )
+      }
+      isBatch={false}
+      isBusy={isPending}
+      open={open}
+      onUpload={upload}
+    />
+  );
+};
+
+/** A sector takes any number of photos, and replacing one keeps its lines. */
+const UploadTopoPhoto = ({ target, files, replacing, open }: TopoUpload) => {
+  const { t } = useLingui();
+  const [uploaded, setUploaded] = useState(0);
 
   const { isPending: isUploading, uploadTopo } = useApiUploadTopo({
-    idSector: isRegion ? '' : (props.target as TopoTarget).idSector
+    idSector: target.idSector
   });
   const { isPending: isReplacing, replaceTopoPhoto } = useApiReplaceTopoPhoto({
-    idSector: isRegion ? '' : (props.target as TopoTarget).idSector
+    idSector: target.idSector
   });
-  const { isPending: isReplacingCover, replaceRegionPhoto } =
-    useApiReplaceRegionPhoto({
-      idRegion: isRegion ? (props.target as RegionTarget).idRegion : ''
-    });
+
+  const upload = async (sendable: SendablePick[]) => {
+    if (replacing) {
+      const [first] = sendable;
+
+      if (!first) return;
+
+      const { blob, compressed } = first.comparison;
+
+      await replaceTopoPhoto({
+        idTopo: replacing.idTopo,
+        blob,
+        width: compressed.width,
+        height: compressed.height
+      });
+      toast.success(t`Photo replaced`);
+
+      return;
+    }
+
+    // One request at a time: a photo's place in the sector is the order it
+    // arrived in, and parallel uploads would shuffle it.
+    for (const { comparison: photo } of sendable) {
+      await uploadTopo({
+        blob: photo.blob,
+        width: photo.compressed.width,
+        height: photo.compressed.height
+      });
+      setUploaded((count) => count + 1);
+    }
+
+    toast.success(sendable.length > 1 ? t`Photos uploaded` : t`Photo uploaded`);
+  };
+
+  return (
+    <UploadDialogBody
+      currentUrl={replacing?.photoUrl}
+      files={files}
+      replacing={replacing}
+      title={
+        replacing ? (
+          <Trans>Replace photo</Trans>
+        ) : files.length > 1 ? (
+          <Trans>Add {files.length} photos</Trans>
+        ) : (
+          <Trans>Add photo</Trans>
+        )
+      }
+      isBatch
+      isBusy={isUploading || isReplacing}
+      open={open}
+      uploaded={uploaded}
+      onUpload={upload}
+    />
+  );
+};
+
+interface UploadDialogBodyProps {
+  currentUrl?: string;
+  files: File[];
+  replacing?: ReplacedTopo;
+  title: ReactNode;
+  /** A sector upload words its warnings for many files; a cover does not. */
+  isBatch: boolean;
+  isBusy: boolean;
+  open: boolean;
+  uploaded?: number;
+  onUpload: (sendable: SendablePick[]) => Promise<void>;
+}
+
+const UploadDialogBody = ({
+  currentUrl,
+  files,
+  replacing,
+  title,
+  isBatch,
+  isBusy,
+  open,
+  uploaded = 0,
+  onUpload
+}: UploadDialogBodyProps) => {
+  const { i18n } = useLingui();
+  const { closeModal } = useModal();
+  const [idxShown, setIdxShown] = useState(0);
+
+  const { isCompressing, picks } = usePhotoCompression(files);
 
   const close = () => closeModal('UPLOAD_PHOTO');
 
@@ -104,14 +247,11 @@ const UploadPhotoDialog = (props: Props) => {
     (sum, { comparison: photo }) => sum + photo.compressed.bytes,
     0
   );
+  const isUploadingBatch = isBusy && sendable.length > 1;
   const savedAll = savedPercent(before, after);
   const saved = comparison
     ? savedPercent(comparison.original.bytes, comparison.compressed.bytes)
     : 0;
-
-  const currentUrl = isRegion
-    ? ((props.target as RegionTarget).photoUrl ?? undefined)
-    : replacing?.photoUrl;
 
   const drifts =
     !!replacing &&
@@ -119,45 +259,12 @@ const UploadPhotoDialog = (props: Props) => {
     !!comparison &&
     Math.abs(comparison.ratio - replacing.ratio) / replacing.ratio >
       ASPECT_TOLERANCE;
-  const isBusy = isUploading || isReplacing || isReplacingCover;
 
   const upload = async () => {
-    const [firstSendable] = sendable;
-
-    if (!firstSendable) return;
+    if (sendable.length === 0) return;
 
     try {
-      if (isRegion) {
-        await replaceRegionPhoto(firstSendable.comparison.blob);
-        toast.success(currentUrl ? t`Photo replaced` : t`Photo uploaded`);
-      } else if (replacing) {
-        const { blob, compressed } = firstSendable.comparison;
-
-        await replaceTopoPhoto({
-          idTopo: replacing.idTopo,
-          blob,
-          width: compressed.width,
-          height: compressed.height
-        });
-        toast.success(t`Photo replaced`);
-      } else {
-        // One request at a time: a photo's place in the sector is the order it
-        // arrived in, and parallel uploads would shuffle it.
-        for (const { file, comparison: photo } of sendable) {
-          await uploadTopo({
-            blob: photo.blob,
-            label: file.name,
-            width: photo.compressed.width,
-            height: photo.compressed.height
-          });
-          setUploaded((count) => count + 1);
-        }
-
-        toast.success(
-          sendable.length > 1 ? t`Photos uploaded` : t`Photo uploaded`
-        );
-      }
-
+      await onUpload(sendable);
       close();
     } catch (error) {
       toast.error(resolveFailureMessage(toFailure(error)));
@@ -165,18 +272,8 @@ const UploadPhotoDialog = (props: Props) => {
   };
 
   return (
-    <Dialog fullWidth maxWidth="lg" open={props.open} onClose={close}>
-      <DialogTitle>
-        {isRegion && currentUrl && <Trans>Replace the cover photo</Trans>}
-        {isRegion && !currentUrl && <Trans>Add a cover photo</Trans>}
-        {!isRegion && replacing && <Trans>Replace photo</Trans>}
-        {!isRegion && !replacing && files.length > 1 && (
-          <Trans>Add {files.length} photos</Trans>
-        )}
-        {!isRegion && !replacing && files.length === 1 && (
-          <Trans>Add photo</Trans>
-        )}
-      </DialogTitle>
+    <Dialog fullWidth maxWidth="lg" open={open} onClose={close}>
+      <DialogTitle>{title}</DialogTitle>
       <DialogContent>
         {!comparison && (
           <PendingStyled>
@@ -188,7 +285,7 @@ const UploadPhotoDialog = (props: Props) => {
         )}
         {comparison && (
           <>
-            {!isRegion && files.length > 1 && (
+            {files.length > 1 && (
               <PickStripStyled>
                 {picks.map((pick, index) => (
                   <PickStyled
@@ -227,41 +324,40 @@ const UploadPhotoDialog = (props: Props) => {
                 {formatBytes(comparison.compressed.bytes, i18n.locale)}
               </AfterStyled>{' '}
               <SavedStyled isSmaller={saved >= 0}>
-                {saved >= 0 ? `−${saved}%` : `+${-saved}%`}
+                {signedPercent(saved)}
               </SavedStyled>
               <BeforeStyled>{' · WebP'}</BeforeStyled>
             </SummaryStyled>
-            {!isRegion && sendable.length > 1 && (
+            {sendable.length > 1 && (
               <TotalStyled variant="caption" color="text.secondary">
                 <Trans>
                   All {sendable.length}: {formatBytes(before, i18n.locale)} →{' '}
-                  {formatBytes(after, i18n.locale)} (
-                  {savedAll >= 0 ? `−${savedAll}%` : `+${-savedAll}%`})
+                  {formatBytes(after, i18n.locale)} ({signedPercent(savedAll)})
                 </Trans>
               </TotalStyled>
             )}
             {oversized > 0 && (
               <Alert severity="error">
-                {isRegion ? (
-                  <Trans>
-                    This photo stays over{' '}
-                    {formatBytes(MAX_PHOTO_BYTES, i18n.locale)} even compressed.
-                  </Trans>
-                ) : (
+                {isBatch ? (
                   <Trans>
                     {oversized} photo(s) stay over{' '}
                     {formatBytes(MAX_PHOTO_BYTES, i18n.locale)} even compressed
                     and will be skipped.
+                  </Trans>
+                ) : (
+                  <Trans>
+                    This photo stays over{' '}
+                    {formatBytes(MAX_PHOTO_BYTES, i18n.locale)} even compressed.
                   </Trans>
                 )}
               </Alert>
             )}
             {failed > 0 && (
               <Alert severity="warning">
-                {isRegion ? (
-                  <Trans>This file could not be read as a photo.</Trans>
-                ) : (
+                {isBatch ? (
                   <Trans>{failed} file(s) could not be read as photos.</Trans>
+                ) : (
+                  <Trans>This file could not be read as a photo.</Trans>
                 )}
               </Alert>
             )}
@@ -293,26 +389,22 @@ const UploadPhotoDialog = (props: Props) => {
           disabled={sendable.length === 0 || isCompressing || isBusy}
           onClick={upload}
         >
-          {isBusy && !isRegion && sendable.length > 1 && (
+          {isUploadingBatch ? (
             <Trans>
               Uploading {uploaded} of {sendable.length}…
             </Trans>
+          ) : currentUrl ? (
+            <Trans>Replace photo</Trans>
+          ) : sendable.length > 1 ? (
+            <Trans>Upload {sendable.length} photos</Trans>
+          ) : (
+            <Trans>Upload</Trans>
           )}
-          {!(isBusy && !isRegion && sendable.length > 1) &&
-            (currentUrl ? (
-              <Trans>Replace photo</Trans>
-            ) : isRegion || sendable.length === 1 ? (
-              <Trans>Upload</Trans>
-            ) : (
-              <Trans>Upload {sendable.length} photos</Trans>
-            ))}
         </Button>
       </DialogActions>
     </Dialog>
   );
 };
-
-export default UploadPhotoDialog;
 
 type SendablePick = CompressedPick & { comparison: PhotoComparison };
 

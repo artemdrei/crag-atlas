@@ -14,8 +14,6 @@ export interface Props {
   isInteractive?: boolean;
   className?: string;
   onPointerDown?: (event: ReactPointerEvent) => void;
-  onPointerMove?: (event: ReactPointerEvent) => void;
-  onPointerUp?: (event: ReactPointerEvent) => void;
 }
 
 export const TopoPointMark = ({
@@ -27,38 +25,30 @@ export const TopoPointMark = ({
   isSelected,
   isInteractive,
   className,
-  onPointerDown,
-  onPointerMove,
-  onPointerUp
+  onPointerDown
 }: Props) => (
   <MarkStyled
     className={className}
-    x={x}
-    y={y}
+    // Coordinates move with every frame of a drag; through the template they
+    // would mint a fresh emotion class per frame.
+    style={{ left: `${x * 100}%`, top: `${y * 100}%` }}
     kind={kind}
     markColor={color}
     opacity={opacity}
     isSelected={!!isSelected}
     isInteractive={!!isInteractive}
     onPointerDown={onPointerDown}
-    onPointerMove={onPointerMove}
-    onPointerUp={onPointerUp}
-    onPointerCancel={onPointerUp}
   />
 );
 
 const MarkStyled = styled('div', {
   shouldForwardProp: (prop) =>
-    prop !== 'x' &&
-    prop !== 'y' &&
     prop !== 'kind' &&
     prop !== 'markColor' &&
     prop !== 'opacity' &&
     prop !== 'isSelected' &&
     prop !== 'isInteractive'
 })<{
-  x: number;
-  y: number;
   kind: TopoMarkKind;
   markColor?: string;
   opacity: number;
@@ -66,8 +56,6 @@ const MarkStyled = styled('div', {
   isInteractive: boolean;
 }>`
   position: absolute;
-  left: ${({ x }) => x * 100}%;
-  top: ${({ y }) => y * 100}%;
   width: 22px;
   height: 22px;
   margin: -11px 0 0 -11px;

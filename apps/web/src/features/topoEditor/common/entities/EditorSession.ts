@@ -14,7 +14,6 @@ export interface EditableLine {
 
 export interface EditableTopo {
   id: string;
-  label: string;
   photoUrl: string;
   sortOrder: number;
   width?: number | null;

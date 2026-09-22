@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { formatBytes, savedPercent } from './formatBytes';
+import { formatBytes, savedPercent, signedPercent } from './formatBytes';
 
 describe('formatBytes', () => {
   it('keeps anything under a megabyte in kilobytes', () => {
@@ -31,5 +31,19 @@ describe('savedPercent', () => {
 
   it('survives an empty original', () => {
     expect(savedPercent(0, 0)).toBe(0);
+  });
+});
+
+describe('signedPercent', () => {
+  it('reads a saving as a minus', () => {
+    expect(signedPercent(90)).toBe('−90%');
+  });
+
+  it('reads a growth as a plus', () => {
+    expect(signedPercent(-50)).toBe('+50%');
+  });
+
+  it('reads no change as a minus zero, not a plus', () => {
+    expect(signedPercent(0)).toBe('−0%');
   });
 });

@@ -1,13 +1,19 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import type { Route } from '@crag-atlas/api';
 import { Trans } from '@lingui/react/macro';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import type { TopoEditorSessionApi } from '../common';
-import { changedRouteFields, isRouteDirty, orderedTopos } from '../common';
-import type { TopoEditorActions } from './hooks';
+import { usePhotoLabel } from '@web/features/topo';
+
+import type { TopoEditorActions, TopoEditorSessionApi } from '../common';
+import {
+  changedRouteFields,
+  isRouteDirty,
+  orderedTopos,
+  photoOf
+} from '../common';
 import { useEditorHotkeys, useTopoEditorDerived } from './hooks';
 import { TopoEditorRoutePanel, TopoEditStage, TopoThumbRail } from './ui';
 
@@ -39,6 +45,20 @@ export const TopoEditorRouteDesktop = ({
     : undefined;
   const route = session.routes[idRoute];
 
+  // Named by position, the same way the sector editor groups them.
+  const photoLabel = usePhotoLabel();
+
+  const topos = useMemo(
+    () => orderedTopos(session.order, session.topos),
+    [session.order, session.topos]
+  );
+
+  const photos = useMemo(
+    () =>
+      topos.map((topo, index) => ({ id: topo.id, label: photoLabel(index) })),
+    [topos, photoLabel]
+  );
+
   const handleDeletePoint = useCallback(() => {
     if (session.idSelectedPoint !== undefined) {
       dispatch({ type: 'DELETE_POINT', index: session.idSelectedPoint });
@@ -65,6 +85,7 @@ export const TopoEditorRouteDesktop = ({
         {activeTopo ? (
           <StageStyled
             topo={activeTopo}
+            label={photoLabel(session.order.indexOf(activeTopo.id))}
             session={session}
             access={{ kind: 'route', idRoute }}
             numberOf={numberOf}
@@ -88,7 +109,7 @@ export const TopoEditorRouteDesktop = ({
           </EmptyPhotoStyled>
         )}
         <TopoThumbRail
-          topos={orderedTopos(session.order, session.topos)}
+          topos={topos}
           idActiveTopo={session.idActiveTopo}
           mode={{ kind: 'browse' }}
           isBusy={actions.isBusy}
@@ -115,6 +136,11 @@ export const TopoEditorRouteDesktop = ({
           onRedo={redo}
           onReset={() => actions.resetRoute(idRoute)}
           onSave={() => actions.saveRoute(idRoute)}
+          photos={photos}
+          idPhoto={photoOf(session, idRoute)}
+          onMoveToPhoto={(idTopo) =>
+            dispatch({ type: 'MOVE_LINE', idRoute, idTopo })
+          }
           onRemoveLine={actions.removeLine}
           onDelete={handleDeleteRoute}
         />

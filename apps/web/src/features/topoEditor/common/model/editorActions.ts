@@ -15,6 +15,7 @@ export type EditorAction =
   | { type: 'SET_POINT_KIND'; index: number; kind: PointKind }
   | { type: 'MOVE_LABEL'; offset: Point }
   | { type: 'DELETE_LINE' }
+  | { type: 'MOVE_LINE'; idRoute: string; idTopo: string }
   | { type: 'EDIT_ROUTE'; idRoute: string; patch: Partial<RouteDraft> }
   | { type: 'ADD_ROUTE'; idDraft: string }
   | { type: 'ROUTE_CREATED'; idDraft: string; route: Route }

@@ -2,26 +2,21 @@ import { useCallback } from 'react';
 
 import type { Route, SaveRouteLine, Topo } from '@crag-atlas/api';
 import { resolveFailureMessage, toFailure } from '@crag-atlas/utils';
+import { useLingui } from '@lingui/react/macro';
 
 import { useModal } from '@web/app/providers';
 import { toast } from '@web/shared/lib';
 
-import type {
-  EditableLine,
-  TopoEditorSession,
-  TopoEditorSessionApi
-} from '../../common';
-import {
-  anchorOf,
-  boltsOf,
-  useApiCreateRoute,
-  useApiDeleteRoute,
-  useApiDeleteRouteLine,
-  useApiDeleteTopo,
-  useApiReorderTopos,
-  useApiSaveRouteLine,
-  useApiUpdateRoute
-} from '../../common';
+import type { EditableLine } from '../entities';
+import { anchorOf, boltsOf } from '../lib';
+import { useApiCreateRoute } from './useApiCreateRoute';
+import { useApiDeleteRoute } from './useApiDeleteRoute';
+import { useApiDeleteRouteLine } from './useApiDeleteRouteLine';
+import { useApiDeleteTopo } from './useApiDeleteTopo';
+import { useApiReorderTopos } from './useApiReorderTopos';
+import { useApiSaveRouteLine } from './useApiSaveRouteLine';
+import { useApiUpdateRoute } from './useApiUpdateRoute';
+import type { TopoEditorSessionApi } from './useTopoEditorSession';
 
 export interface Params {
   idSector: string;
@@ -36,6 +31,7 @@ export const useTopoEditorActions = ({
   topos,
   routes
 }: Params) => {
+  const { t } = useLingui();
   const { openModal } = useModal();
   const { session, dispatch, resetHistory } = editor;
 
@@ -93,11 +89,20 @@ export const useTopoEditorActions = ({
         }
 
         dispatch({ type: 'ROUTE_SAVED', idRoute: idSaved });
+        toast.success(t`Route saved`);
       } catch (error) {
         toast.error(resolveFailureMessage(toFailure(error)));
       }
     },
-    [session, dispatch, resetHistory, createRoute, updateRoute, saveRouteLine]
+    [
+      t,
+      session,
+      dispatch,
+      resetHistory,
+      createRoute,
+      updateRoute,
+      saveRouteLine
+    ]
   );
 
   const removeLine = useCallback(async () => {
@@ -240,13 +245,14 @@ export const useTopoEditorActions = ({
         await reorderTopos({
           items: order.map((id, sortOrder) => ({ idTopo: id, sortOrder }))
         });
+        toast.success(t`Photo order saved`);
       } catch (error) {
         // The strip already moved, so a failed save has to move it back.
         dispatch({ type: 'REORDER_TOPOS', order: previous });
         toast.error(resolveFailureMessage(toFailure(error)));
       }
     },
-    [session.order, dispatch, reorderTopos]
+    [t, session.order, dispatch, reorderTopos]
   );
 
   return {
@@ -278,5 +284,3 @@ const toNumber = (value: string): number | null => {
 };
 
 export type TopoEditorActions = ReturnType<typeof useTopoEditorActions>;
-
-export type { TopoEditorSession };

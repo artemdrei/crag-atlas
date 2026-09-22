@@ -1,5 +1,6 @@
 import {
   type PointerEvent as ReactPointerEvent,
+  useMemo,
   useRef,
   useState
 } from 'react';
@@ -56,6 +57,13 @@ export const TopoImage = ({
     (line) => line.idRoute === idHighlightedRoute
   );
 
+  // Hovering changes opacity, not geometry — without this every hover re-runs
+  // the spline for every line on the photo.
+  const paths = useMemo(
+    () => new Map(lines.map((line) => [line.idRoute, smoothPath(line.points)])),
+    [lines]
+  );
+
   return (
     <FrameStyled isContained={!!isContained && !!ratio} ratio={ratio}>
       <ImageStyled
@@ -88,11 +96,13 @@ export const TopoImage = ({
         onPointerMove={(event: ReactPointerEvent<SVGSVGElement>) => {
           if (!onHoverRoute || !overlayRef.current) return;
 
+          const rect = overlayRef.current.getBoundingClientRect();
+
           onHoverRoute(
             findNearestLine(
               lines,
-              pointerToPhoto(event, overlayRef.current),
-              toleranceOf(overlayRef.current, HOVER_TOLERANCE)
+              pointerToPhoto(event, rect),
+              toleranceOf(rect, HOVER_TOLERANCE)
             )
           );
         }}
@@ -107,10 +117,11 @@ export const TopoImage = ({
 
           if (travel > TAP_SLOP) return;
 
+          const rect = overlayRef.current.getBoundingClientRect();
           const idRoute = findNearestLine(
             lines,
-            pointerToPhoto(event, overlayRef.current),
-            toleranceOf(overlayRef.current, HOVER_TOLERANCE)
+            pointerToPhoto(event, rect),
+            toleranceOf(rect, HOVER_TOLERANCE)
           );
 
           if (idRoute) onSelectRoute(idRoute);
@@ -119,7 +130,7 @@ export const TopoImage = ({
         <title>{label}</title>
         {lines.map((line) => {
           const isHighlighted = idHighlightedRoute === line.idRoute;
-          const path = smoothPath(line.points);
+          const path = paths.get(line.idRoute) ?? '';
 
           return (
             <g key={line.idRoute}>

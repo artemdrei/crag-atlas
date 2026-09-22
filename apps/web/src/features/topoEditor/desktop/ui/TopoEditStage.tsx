@@ -1,6 +1,7 @@
 import {
   type PropsWithChildren,
   type PointerEvent as ReactPointerEvent,
+  useEffect,
   useRef,
   useState
 } from 'react';
@@ -17,6 +18,7 @@ import {
   TopoZoomControls,
   toleranceOf
 } from '@web/features/topo';
+import { ZoomStageShell } from '@web/shared/ui';
 
 import type {
   EditableTopo,
@@ -36,6 +38,7 @@ export type StageAccess =
 
 export interface Props {
   topo: EditableTopo;
+  label: string;
   session: TopoEditorSession;
   idHoveredRoute?: string;
   access: StageAccess;
@@ -63,6 +66,7 @@ type Drag =
 
 export const TopoEditStage = ({
   topo,
+  label,
   session,
   idHoveredRoute,
   access,
@@ -78,7 +82,7 @@ export const TopoEditStage = ({
   className,
   children
 }: PropsWithChildren<Props>) => {
-  const [ratio, setRatio] = useState<number>();
+  const [isPhotoLoaded, setIsPhotoLoaded] = useState(false);
   const [isZoomed, setIsZoomed] = useState(false);
   const [menu, setMenu] = useState<{
     index: number;
@@ -87,6 +91,19 @@ export const TopoEditStage = ({
   }>();
   const overlayRef = useRef<SVGSVGElement>(null);
   const dragRef = useRef<Drag | undefined>(undefined);
+  const frameRef = useRef<number | undefined>(undefined);
+  const pointerRef = useRef<{ clientX: number; clientY: number } | undefined>(
+    undefined
+  );
+  const lines = Object.values(topo.lines);
+
+  useEffect(
+    () => () => {
+      if (frameRef.current !== undefined)
+        cancelAnimationFrame(frameRef.current);
+    },
+    []
+  );
 
   const selected = session.idSelectedRoute
     ? topo.lines[session.idSelectedRoute]
@@ -98,8 +115,9 @@ export const TopoEditStage = ({
   const handleOverlayDown = (event: ReactPointerEvent<SVGSVGElement>) => {
     if (session.isPreview || event.button !== 0 || !overlayRef.current) return;
 
-    const point = pointerToPhoto(event, overlayRef.current);
-    const tolerance = toleranceOf(overlayRef.current, LINE_TOLERANCE);
+    const rect = overlayRef.current.getBoundingClientRect();
+    const point = pointerToPhoto(event, rect);
+    const tolerance = toleranceOf(rect, LINE_TOLERANCE);
 
     if (selected && selected.points.length >= 2) {
       const hit = findNearestSegment(selected.points, point, tolerance);
@@ -116,9 +134,7 @@ export const TopoEditStage = ({
     }
 
     const idRoute = findNearestLine(
-      Object.values(topo.lines).filter(
-        (line) => line.idRoute !== session.idSelectedRoute
-      ),
+      lines.filter((line) => line.idRoute !== session.idSelectedRoute),
       point,
       tolerance
     );
@@ -135,24 +151,33 @@ export const TopoEditStage = ({
   };
 
   const handleOverlayHover = (event: ReactPointerEvent<SVGSVGElement>) => {
-    if (dragRef.current || session.isPreview || !overlayRef.current) return;
+    if (session.isPreview || !overlayRef.current) return;
 
-    const point = pointerToPhoto(event, overlayRef.current);
+    const rect = overlayRef.current.getBoundingClientRect();
     const idRoute = findNearestLine(
-      Object.values(topo.lines),
-      point,
-      toleranceOf(overlayRef.current, LINE_TOLERANCE)
+      lines,
+      pointerToPhoto(event, rect),
+      toleranceOf(rect, LINE_TOLERANCE)
     );
 
     onHoverRoute(idRoute && isEditable(idRoute) ? idRoute : undefined);
   };
 
-  const handleDragMove = (event: ReactPointerEvent) => {
+  /** One action per frame: the browser fires pointermove far more often than
+      it paints, and both actions set an absolute position, so a move the
+      frame never reached is simply overwritten by the next one. */
+  const flushDrag = () => {
+    frameRef.current = undefined;
+
     const drag = dragRef.current;
+    const pointer = pointerRef.current;
 
-    if (!drag || !overlayRef.current) return;
+    if (!drag || !pointer || !overlayRef.current) return;
 
-    const point = pointerToPhoto(event, overlayRef.current);
+    const point = pointerToPhoto(
+      pointer,
+      overlayRef.current.getBoundingClientRect()
+    );
 
     if (drag.kind === 'point') {
       onAction({ type: 'MOVE_POINT', index: drag.index, point });
@@ -166,11 +191,44 @@ export const TopoEditStage = ({
     });
   };
 
-  const handleDragEnd = (event: ReactPointerEvent) => {
+  const handleDragMove = (event: ReactPointerEvent) => {
+    if (!dragRef.current) return;
+
+    pointerRef.current = { clientX: event.clientX, clientY: event.clientY };
+
+    if (frameRef.current === undefined) {
+      frameRef.current = requestAnimationFrame(flushDrag);
+    }
+  };
+
+  const endDrag = (): Drag | undefined => {
+    if (frameRef.current !== undefined) {
+      cancelAnimationFrame(frameRef.current);
+      flushDrag();
+    }
+
     const drag = dragRef.current;
 
     dragRef.current = undefined;
-    onGestureEnd();
+    pointerRef.current = undefined;
+
+    if (drag) onGestureEnd();
+
+    return drag;
+  };
+
+  const handleOverlayMove = (event: ReactPointerEvent<SVGSVGElement>) => {
+    if (dragRef.current) {
+      handleDragMove(event);
+
+      return;
+    }
+
+    handleOverlayHover(event);
+  };
+
+  const handleDragEnd = (event: ReactPointerEvent) => {
+    const drag = endDrag();
 
     if (drag?.kind !== 'point') return;
 
@@ -184,6 +242,13 @@ export const TopoEditStage = ({
     }
   };
 
+  /** The overlay holds the capture, never the marker or the badge that was
+      pressed: those re-render through the drag, and a node that goes away
+      takes the rest of the gesture with it. */
+  const captureDrag = (event: ReactPointerEvent) => {
+    overlayRef.current?.setPointerCapture(event.pointerId);
+  };
+
   const handlePointDown = (index: number, event: ReactPointerEvent) => {
     event.stopPropagation();
     onGestureStart();
@@ -193,8 +258,7 @@ export const TopoEditStage = ({
       from: { x: event.clientX, y: event.clientY }
     };
     onAction({ type: 'SELECT_POINT', index });
-    // On the marker itself, so the drag survives it re-rendering mid-move.
-    event.currentTarget.setPointerCapture(event.pointerId);
+    captureDrag(event);
   };
 
   const handleLabelDown = (
@@ -208,11 +272,11 @@ export const TopoEditStage = ({
     onAction({ type: 'SELECT_ROUTE', idRoute });
     onGestureStart();
     dragRef.current = { kind: 'label', origin };
-    event.currentTarget.setPointerCapture(event.pointerId);
+    captureDrag(event);
   };
 
   return (
-    <StageStyled className={className}>
+    <ZoomStageShell className={className}>
       <TransformWrapper
         key={topo.id}
         minScale={MIN_SCALE}
@@ -232,16 +296,12 @@ export const TopoEditStage = ({
         onTransform={(_ref, state) => setIsZoomed(state.scale > MIN_SCALE)}
       >
         <TransformComponent>
-          <FrameStyled ratio={ratio}>
+          <FrameStyled isPhotoLoaded={isPhotoLoaded}>
             <ImageStyled
               src={topo.photoUrl}
-              alt={topo.label}
+              alt={label}
               decoding="async"
-              onLoad={({ currentTarget }) =>
-                setRatio(
-                  currentTarget.naturalWidth / currentTarget.naturalHeight
-                )
-              }
+              onLoad={() => setIsPhotoLoaded(true)}
             />
             <OverlayStyled
               ref={overlayRef}
@@ -249,29 +309,34 @@ export const TopoEditStage = ({
               preserveAspectRatio="none"
               isDrawing={!!session.idSelectedRoute && !session.isPreview}
               onPointerDown={handleOverlayDown}
-              onPointerMove={handleOverlayHover}
-              onPointerLeave={() => onHoverRoute(undefined)}
+              onPointerMove={handleOverlayMove}
+              onPointerUp={handleDragEnd}
+              onPointerCancel={handleDragEnd}
+              // The capture can be taken away mid-drag; without this the
+              // gesture would stay open and the next hover would keep moving.
+              onLostPointerCapture={() => endDrag()}
+              onPointerLeave={() => {
+                if (!dragRef.current) onHoverRoute(undefined);
+              }}
             >
-              <title>{topo.label}</title>
+              <title>{label}</title>
               <TopoEditOverlay
-                lines={Object.values(topo.lines)}
+                lines={lines}
                 idSelectedRoute={session.idSelectedRoute}
                 idHoveredRoute={idHoveredRoute}
                 colorOf={colorOf}
               />
             </OverlayStyled>
             <TopoEditMarkers
-              lines={Object.values(topo.lines)}
+              lines={lines}
               idSelectedRoute={session.idSelectedRoute}
               idHoveredRoute={idHoveredRoute}
               idSelectedPoint={session.idSelectedPoint}
               areHandlesHidden={session.isPreview}
               colorOf={colorOf}
               onPointDown={handlePointDown}
-              onPointMove={handleDragMove}
-              onPointUp={handleDragEnd}
             />
-            {Object.values(topo.lines).map((line) => {
+            {lines.map((line) => {
               const number = numberOf[line.idRoute];
               const [start] = line.points;
 
@@ -281,16 +346,13 @@ export const TopoEditStage = ({
                   onPointerDown={(event) =>
                     handleLabelDown(line.idRoute, start, event)
                   }
-                  onPointerMove={handleDragMove}
-                  onPointerUp={handleDragEnd}
-                  onPointerCancel={handleDragEnd}
                 >
                   <TopoRouteBadge
                     number={number}
                     grade={gradeOf(line.idRoute)}
                     gradeScale={gradeScaleOf(line.idRoute)}
                     name={
-                      Object.keys(topo.lines).length === 1 ||
+                      lines.length === 1 ||
                       line.idRoute === session.idSelectedRoute ||
                       line.idRoute === idHoveredRoute
                         ? nameOf(line.idRoute)
@@ -344,42 +406,20 @@ export const TopoEditStage = ({
           onClose={() => setMenu(undefined)}
         />
       )}
-    </StageStyled>
+    </ZoomStageShell>
   );
 };
 
 const FALLBACK_RATIO = '4 / 3';
 
-const StageStyled = styled('div')`
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  padding: ${({ theme }) => theme.spacing(1)};
-  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
-
-  & .react-transform-wrapper,
-  & .react-transform-component {
-    width: 100%;
-    height: 100%;
-  }
-
-  & .react-transform-component {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-`;
-
 const FrameStyled = styled('div', {
-  shouldForwardProp: (prop) => prop !== 'ratio'
-})<{ ratio?: number }>`
+  shouldForwardProp: (prop) => prop !== 'isPhotoLoaded'
+})<{ isPhotoLoaded: boolean }>`
   position: relative;
   display: inline-flex;
   max-width: 100%;
   max-height: 100%;
-  aspect-ratio: ${({ ratio }) => (ratio ? 'auto' : FALLBACK_RATIO)};
+  aspect-ratio: ${({ isPhotoLoaded }) => (isPhotoLoaded ? 'auto' : FALLBACK_RATIO)};
   background: ${({ theme }) => theme.palette.action.hover};
 `;
 

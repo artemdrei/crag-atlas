@@ -57,6 +57,4 @@ const GroupStyled = styled('div')`
 
 const LabelStyled = styled(Typography)`
   padding-bottom: ${({ theme }) => theme.spacing(0.5)};
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
 `;

@@ -14,24 +14,23 @@ export type {
 } from './common';
 export {
   findNearestLine,
-  findNearestPoint,
   findNearestSegment,
   findTopoOfRoute,
   lineOpacity,
   normalizeLineDirection,
   orderRoutes,
   pointerToPhoto,
-  projectOntoSegment,
   smoothPath,
+  sortByNumber,
   TopoImage,
   TopoPhotoViewer,
   TopoPointMark,
   TopoRouteBadge,
-  TopoThumbStrip,
   TopoZoomControls,
   TopoZoomStage,
   toleranceOf,
   useApiGetTopos,
+  usePhotoLabel,
   useRouteTopo,
   useTopoGallery
 } from './common';

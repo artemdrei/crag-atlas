@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 import { PhotoPlaceholder } from '@web/shared/ui';
 
 import type { TopoGalleryProps } from '../common';
-import { TopoThumbStrip, TopoZoomStage } from '../common';
+import { TopoThumbStrip, TopoZoomStage, usePhotoLabel } from '../common';
 
 export const TopoGalleryMobile = ({
   topos,
@@ -15,14 +15,16 @@ export const TopoGalleryMobile = ({
   onSelectRoute,
   onHoverRoute
 }: TopoGalleryProps) => {
-  const activeTopo = topos.find(({ id }) => id === idActiveTopo);
+  const photoLabel = usePhotoLabel();
+  const idxActiveTopo = topos.findIndex(({ id }) => id === idActiveTopo);
+  const activeTopo = topos[idxActiveTopo];
 
   return (
     <GalleryStyled>
       {activeTopo ? (
         <ZoomStageStyled
           photoUrl={activeTopo.photoUrl}
-          label={activeTopo.label}
+          label={photoLabel(idxActiveTopo)}
           lines={activeTopo.lines}
           idHighlightedRoute={idHighlightedRoute}
           colorOf={colorOf}

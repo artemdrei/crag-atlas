@@ -123,6 +123,9 @@ export const editorSessionReducer = (
         return { ...topo, lines };
       });
 
+    case 'MOVE_LINE':
+      return moveLine(session, action.idRoute, action.idTopo);
+
     case 'EDIT_ROUTE': {
       const route = session.routes[action.idRoute];
 
@@ -242,7 +245,6 @@ const replaceTopos = (
 
 const toEditableTopo = (topo: Topo): EditableTopo => ({
   id: topo.id,
-  label: topo.label,
   photoUrl: topo.photoUrl,
   sortOrder: topo.sortOrder,
   width: topo.width,
@@ -300,6 +302,14 @@ const withLine = (
     };
   });
 
+const mapTopos = (
+  topos: Record<string, EditableTopo>,
+  change: (topo: EditableTopo) => EditableTopo
+): Record<string, EditableTopo> =>
+  Object.fromEntries(
+    Object.entries(topos).map(([id, topo]) => [id, change(topo)])
+  );
+
 const withTopo = (
   session: TopoEditorSession,
   change: (topo: EditableTopo) => EditableTopo
@@ -326,13 +336,11 @@ const removeRoute = (
     ...session,
     routes,
     routeOrder: session.routeOrder.filter((id) => id !== idRoute),
-    topos: Object.fromEntries(
-      Object.entries(session.topos).map(([id, topo]) => {
-        const { [idRoute]: _line, ...lines } = topo.lines;
+    topos: mapTopos(session.topos, (topo) => {
+      const { [idRoute]: _line, ...lines } = topo.lines;
 
-        return [id, { ...topo, lines }];
-      })
-    ),
+      return { ...topo, lines };
+    }),
     idSelectedRoute:
       session.idSelectedRoute === idRoute ? undefined : session.idSelectedRoute
   };
@@ -345,21 +353,54 @@ const restoreRoute = (
 ): TopoEditorSession => ({
   ...session,
   routes: restored(session.routes, idRoute, server.routes[idRoute]),
-  topos: Object.fromEntries(
-    Object.entries(session.topos).map(([id, topo]) => {
-      const serverLine = server.topos[id]?.lines[idRoute];
-      const { [idRoute]: _line, ...lines } = topo.lines;
+  topos: mapTopos(session.topos, (topo) => {
+    const serverLine = server.topos[topo.id]?.lines[idRoute];
+    const { [idRoute]: _line, ...lines } = topo.lines;
 
-      return [
-        id,
-        {
-          ...topo,
-          lines: serverLine ? { ...lines, [idRoute]: serverLine } : lines
-        }
-      ];
-    })
-  )
+    return {
+      ...topo,
+      lines: serverLine ? { ...lines, [idRoute]: serverLine } : lines
+    };
+  })
 });
+
+/** The line keeps its points; only the photo it hangs on changes. Nothing is
+    copied, so the route never shows up on two photos at once.
+
+    A drop that lands on another photo opens the route for editing there: the
+    fractions now read against a different image, so the line almost always
+    needs redrawing, and the user is already looking at it. A drop back onto
+    the photo the line is on leaves the session untouched. */
+const moveLine = (
+  session: TopoEditorSession,
+  idRoute: string,
+  idTopo: string
+): TopoEditorSession => {
+  const target = session.topos[idTopo];
+  const from = Object.values(session.topos).find(
+    (topo) => topo.id !== idTopo && !!topo.lines[idRoute]
+  );
+  const line = from?.lines[idRoute];
+
+  if (!target || !from || !line) return session;
+
+  const { [idRoute]: _moved, ...rest } = from.lines;
+
+  return {
+    ...session,
+    idActiveTopo: idTopo,
+    idSelectedRoute: idRoute,
+    ...noSelection,
+    topos: {
+      ...session.topos,
+      [from.id]: { ...from, lines: rest },
+      [idTopo]: {
+        ...target,
+        lines: { ...target.lines, [idRoute]: { ...line, isDirty: true } }
+      }
+    }
+  };
+};
 
 /** A route the server has never seen leaves the map rather than sitting in it
     as an undefined value. */
@@ -388,25 +429,20 @@ const renameRoute = (
     routeOrder: session.routeOrder.map((id) =>
       id === idDraft ? route.id : id
     ),
-    topos: Object.fromEntries(
-      Object.entries(session.topos).map(([id, topo]) => {
-        const line = topo.lines[idDraft];
-        const { [idDraft]: _line, ...lines } = topo.lines;
+    topos: mapTopos(session.topos, (topo) => {
+      const line = topo.lines[idDraft];
+      const { [idDraft]: _line, ...lines } = topo.lines;
 
-        return [
-          id,
-          {
-            ...topo,
-            lines: line
-              ? {
-                  ...lines,
-                  [route.id]: { ...line, idRoute: route.id, isDirty: false }
-                }
-              : lines
-          }
-        ];
-      })
-    ),
+      return {
+        ...topo,
+        lines: line
+          ? {
+              ...lines,
+              [route.id]: { ...line, idRoute: route.id, isDirty: false }
+            }
+          : lines
+      };
+    }),
     idSelectedRoute:
       session.idSelectedRoute === idDraft ? route.id : session.idSelectedRoute
   };
@@ -423,21 +459,19 @@ const markSaved = (
     routes: saved
       ? { ...session.routes, [idRoute]: { ...saved, isDirty: false } }
       : session.routes,
-    topos: Object.fromEntries(
-      Object.entries(session.topos).map(([id, topo]) => {
-        const line = topo.lines[idRoute];
+    topos: mapTopos(session.topos, (topo) => {
+      const line = topo.lines[idRoute];
 
-        return [
-          id,
-          line
-            ? {
-                ...topo,
-                lines: { ...topo.lines, [idRoute]: { ...line, isDirty: false } }
-              }
-            : topo
-        ];
-      })
-    )
+      return line
+        ? {
+            ...topo,
+            lines: {
+              ...topo.lines,
+              [idRoute]: { ...line, isDirty: false }
+            }
+          }
+        : topo;
+    })
   };
 };
 

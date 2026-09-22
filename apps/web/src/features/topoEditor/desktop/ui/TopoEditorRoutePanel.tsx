@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 import type { GradeScale, Route } from '@crag-atlas/api';
 import { Trans, useLingui } from '@lingui/react/macro';
 import RedoIcon from '@mui/icons-material/Redo';
@@ -9,6 +11,7 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import { styled } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Tooltip from '@mui/material/Tooltip';
@@ -27,9 +30,18 @@ import { ChangedTextField } from '@web/shared/ui';
 
 import type { ChangedRouteFields, RouteDraft } from '../../common';
 
+export interface PhotoOption {
+  id: string;
+  label: string;
+}
+
 export interface Props {
   route: RouteDraft;
   changed: ChangedRouteFields;
+  /** Every photo of the sector, in the order the rail shows them. */
+  photos: PhotoOption[];
+  /** The photo this route's line hangs on, if it is drawn anywhere. */
+  idPhoto?: string;
   number?: number;
   hasLine: boolean;
   isDirty: boolean;
@@ -44,12 +56,15 @@ export interface Props {
   onReset: () => void;
   onSave: () => void;
   onRemoveLine: () => void;
+  onMoveToPhoto: (idTopo: string) => void;
   onDelete: () => void;
 }
 
 export const TopoEditorRoutePanel = ({
   route,
   changed,
+  photos,
+  idPhoto,
   number,
   hasLine,
   isDirty,
@@ -64,6 +79,7 @@ export const TopoEditorRoutePanel = ({
   onReset,
   onSave,
   onRemoveLine,
+  onMoveToPhoto,
   onDelete
 }: Props) => {
   const { t } = useLingui();
@@ -103,6 +119,37 @@ export const TopoEditorRoutePanel = ({
 
   return (
     <PanelStyled>
+      <HistoryRowStyled>
+        <HistoryButton
+          label={t`Undo`}
+          icon={<UndoIcon fontSize="small" />}
+          isDisabled={!canUndo}
+          onClick={onUndo}
+        />
+        <HistoryButton
+          label={t`Redo`}
+          icon={<RedoIcon fontSize="small" />}
+          isDisabled={!canRedo}
+          onClick={onRedo}
+        />
+        <Divider orientation="vertical" flexItem />
+        <HistoryButton
+          label={t`Reset to the saved state`}
+          icon={<RestartAltIcon fontSize="small" />}
+          isDisabled={!isDirty || route.isNew || isBusy}
+          onClick={onReset}
+        />
+        <Divider orientation="vertical" flexItem />
+        <Tooltip title={t`Reader view`}>
+          <PreviewButtonStyled
+            aria-label={t`Reader view`}
+            isActive={isPreview}
+            onClick={onTogglePreview}
+          >
+            <VisibilityIcon fontSize="small" />
+          </PreviewButtonStyled>
+        </Tooltip>
+      </HistoryRowStyled>
       <Typography variant="subtitle2">
         {route.isNew ? (
           <Trans>New route</Trans>
@@ -119,6 +166,25 @@ export const TopoEditorRoutePanel = ({
         isChanged={changed.name}
         onChange={({ target }) => onChange({ name: target.value })}
       />
+      <TextField
+        select
+        size="small"
+        label={t`Photo`}
+        value={idPhoto ?? ''}
+        disabled={!idPhoto || isBusy}
+        helperText={
+          idPhoto
+            ? t`The line moves as it is — redraw it on the new photo.`
+            : t`Draw the route first, then it can move between photos.`
+        }
+        onChange={({ target }) => onMoveToPhoto(target.value)}
+      >
+        {photos.map((photo) => (
+          <MenuItem key={photo.id} value={photo.id}>
+            {photo.label}
+          </MenuItem>
+        ))}
+      </TextField>
       <Divider />
       <TypeGroupStyled
         exclusive
@@ -198,54 +264,6 @@ export const TopoEditorRoutePanel = ({
         isChanged={changed.description}
         onChange={({ target }) => onChange({ description: target.value })}
       />
-      <HistoryRowStyled>
-        {/* A disabled button fires no pointer events, so the tooltip needs a
-            wrapper that still does. */}
-        <Tooltip title={t`Undo`}>
-          <span>
-            <IconButton
-              aria-label={t`Undo`}
-              disabled={!canUndo}
-              onClick={onUndo}
-            >
-              <UndoIcon fontSize="small" />
-            </IconButton>
-          </span>
-        </Tooltip>
-        <Tooltip title={t`Redo`}>
-          <span>
-            <IconButton
-              aria-label={t`Redo`}
-              disabled={!canRedo}
-              onClick={onRedo}
-            >
-              <RedoIcon fontSize="small" />
-            </IconButton>
-          </span>
-        </Tooltip>
-        <Divider orientation="vertical" flexItem />
-        <Tooltip title={t`Reset to the saved state`}>
-          <span>
-            <IconButton
-              aria-label={t`Reset to the saved state`}
-              disabled={!isDirty || route.isNew || isBusy}
-              onClick={onReset}
-            >
-              <RestartAltIcon fontSize="small" />
-            </IconButton>
-          </span>
-        </Tooltip>
-        <Divider orientation="vertical" flexItem />
-        <Tooltip title={t`Reader view`}>
-          <IconButton
-            aria-label={t`Reader view`}
-            color={isPreview ? 'primary' : 'default'}
-            onClick={onTogglePreview}
-          >
-            <VisibilityIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
-      </HistoryRowStyled>
       <Typography variant="caption" color="text.secondary">
         <Trans>Saved changes go live for everyone straight away.</Trans>
       </Typography>
@@ -276,6 +294,30 @@ export const TopoEditorRoutePanel = ({
   );
 };
 
+interface HistoryButtonProps {
+  label: string;
+  icon: ReactNode;
+  isDisabled: boolean;
+  onClick: () => void;
+}
+
+// A disabled button fires no pointer events, so the tooltip needs a wrapper
+// that still does.
+const HistoryButton = ({
+  label,
+  icon,
+  isDisabled,
+  onClick
+}: HistoryButtonProps) => (
+  <Tooltip title={label}>
+    <span>
+      <IconButton aria-label={label} disabled={isDisabled} onClick={onClick}>
+        {icon}
+      </IconButton>
+    </span>
+  </Tooltip>
+);
+
 const PanelStyled = styled('div')`
   display: flex;
   flex-direction: column;
@@ -301,8 +343,17 @@ const HistoryRowStyled = styled('div')`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing(0.5)};
-  padding-top: ${({ theme }) => theme.spacing(1)};
-  border-top: 1px solid ${({ theme }) => theme.palette.divider};
+  padding-bottom: ${({ theme }) => theme.spacing(1)};
+  border-bottom: 1px solid ${({ theme }) => theme.palette.divider};
+`;
+
+// A toggle that is off should not read as lit: off matches the muted icons
+// beside it, on goes full-contrast.
+const PreviewButtonStyled = styled(IconButton, {
+  shouldForwardProp: (prop) => prop !== 'isActive'
+})<{ isActive: boolean }>`
+  color: ${({ theme, isActive }) =>
+    isActive ? theme.palette.text.primary : theme.palette.action.disabled};
 `;
 
 const DangerRowStyled = styled('div')`

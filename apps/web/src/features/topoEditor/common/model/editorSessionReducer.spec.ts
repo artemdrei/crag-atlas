@@ -68,6 +68,30 @@ const hydrated = (
     routes: [route('alpha'), route('beta')]
   });
 
+const bare = (id: string): Topo =>
+  ({
+    id,
+    label: id,
+    photoUrl: `https://example.test/${id}.webp`,
+    sortOrder: 1,
+    width: 1600,
+    height: 1200,
+    lines: []
+  }) as Topo;
+
+const twoPhotos = () =>
+  editorSessionReducer(EMPTY_SESSION, {
+    type: 'SESSION_HYDRATED',
+    topos: [
+      topo('photo', [
+        [0.2, 0.9],
+        [0.2, 0.1]
+      ]),
+      bare('other')
+    ],
+    routes: [route('alpha'), route('beta')]
+  });
+
 const run = (session = hydrated(), ...actions: EditorAction[]) =>
   actions.reduce(editorSessionReducer, session);
 
@@ -313,8 +337,8 @@ describe('editorSessionReducer', () => {
         ...hydrated(),
         order: ['a', 'b'],
         topos: {
-          a: { id: 'a', label: 'a', photoUrl: '', sortOrder: 0, lines: {} },
-          b: { id: 'b', label: 'b', photoUrl: '', sortOrder: 1, lines: {} }
+          a: { id: 'a', photoUrl: '', sortOrder: 0, lines: {} },
+          b: { id: 'b', photoUrl: '', sortOrder: 1, lines: {} }
         }
       },
       { type: 'REORDER_TOPOS', order: ['b', 'a'] }
@@ -323,6 +347,31 @@ describe('editorSessionReducer', () => {
     expect(session.order).toEqual(['b', 'a']);
     expect(topoOf(session, 'b').sortOrder).toBe(0);
     expect(topoOf(session, 'a').sortOrder).toBe(1);
+  });
+
+  it('opens the route on the photo it was dropped onto', () => {
+    const session = editorSessionReducer(twoPhotos(), {
+      type: 'MOVE_LINE',
+      idRoute: 'alpha',
+      idTopo: 'other'
+    });
+
+    expect(session.idActiveTopo).toBe('other');
+    expect(session.idSelectedRoute).toBe('alpha');
+    expect(topoOf(session, 'photo').lines.alpha).toBeUndefined();
+    expect(lineOf(session, 'alpha', 'other').isDirty).toBe(true);
+  });
+
+  it('leaves the session alone when the line is dropped back where it was', () => {
+    const before = twoPhotos();
+
+    const session = editorSessionReducer(before, {
+      type: 'MOVE_LINE',
+      idRoute: 'alpha',
+      idTopo: 'photo'
+    });
+
+    expect(session).toBe(before);
   });
 
   it('keeps unsaved lines when photos are refetched', () => {

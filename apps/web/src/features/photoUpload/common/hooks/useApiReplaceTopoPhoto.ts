@@ -1,7 +1,7 @@
 import type { Topo } from '@crag-atlas/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { apiUpload, QUERY_KEYS } from '@web/shared/api';
+import { apiUpload, invalidateToposAndRegions } from '@web/shared/api';
 
 import { toPhotoForm } from './useApiUploadTopo';
 
@@ -26,13 +26,7 @@ export const useApiReplaceTopoPhoto = ({ idSector }: Params) => {
         `/topos/${idTopo}/photo`,
         toPhotoForm(blob, { width, height })
       ),
-    onSuccess: () =>
-      Promise.all([
-        queryClient.invalidateQueries({ queryKey: QUERY_KEYS.topos(idSector) }),
-        // A sector's card shows its first photo, and that card is listed under
-        // a region this hook has no id for.
-        queryClient.invalidateQueries({ queryKey: QUERY_KEYS.regions() })
-      ])
+    onSuccess: () => invalidateToposAndRegions(queryClient, idSector)
   });
 
   return { isPending, replaceTopoPhoto: mutateAsync };

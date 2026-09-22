@@ -4,15 +4,14 @@ import type { ModalRegistration } from '@web/app/providers';
 
 import './types';
 
-export type { TopoEditorSessionApi } from './common';
+export type { TopoEditorActions, TopoEditorSessionApi } from './common';
 export {
   dirtyRouteIds,
   hasUnsavedChanges,
   isRouteDirty,
+  useTopoEditorActions,
   useTopoEditorSession
 } from './common';
-export type { TopoEditorActions } from './desktop/hooks';
-export { useTopoEditorActions } from './desktop/hooks';
 export { TopoEditorDesktop } from './desktop/TopoEditorDesktop';
 export { TopoEditorRouteDesktop } from './desktop/TopoEditorRouteDesktop';
 

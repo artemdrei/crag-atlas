@@ -21,6 +21,7 @@ export type ThumbMode =
 
 export interface Props {
   topo: EditableTopo;
+  label: string;
   mode: ThumbMode;
   isCover: boolean;
   isActive: boolean;
@@ -30,6 +31,7 @@ export interface Props {
 
 export const TopoThumb = ({
   topo,
+  label,
   mode,
   isCover,
   isActive,
@@ -70,7 +72,7 @@ export const TopoThumb = ({
       {...attributes}
       {...listeners}
     >
-      <img src={topo.photoUrl} alt={topo.label} />
+      <img src={topo.photoUrl} alt={label} />
       {isCover && (
         <CoverStyled variant="caption">
           <Trans>Cover</Trans>

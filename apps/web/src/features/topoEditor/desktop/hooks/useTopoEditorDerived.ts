@@ -15,16 +15,20 @@ export const useTopoEditorDerived = ({
 }: Pick<TopoEditorSessionApi, 'session' | 'dispatch'>) => {
   const theme = useTheme();
 
-  const numberOf = useMemo(
+  // One adapter for both `orderRoutes` and `findTopoOfRoute`: rebuilding it
+  // per call would run once per pointer move while a point is dragged.
+  const toposWithLines = useMemo(
     () =>
-      orderRoutes(
-        orderedTopos(session.order, session.topos).map((topo) => ({
-          sortOrder: topo.sortOrder,
-          lines: Object.values(topo.lines)
-        })),
-        session.routeOrder
-      ),
-    [session.order, session.topos, session.routeOrder]
+      orderedTopos(session.order, session.topos).map((topo) => ({
+        ...topo,
+        lines: Object.values(topo.lines)
+      })),
+    [session.order, session.topos]
+  );
+
+  const numberOf = useMemo(
+    () => orderRoutes(toposWithLines, session.routeOrder),
+    [toposWithLines, session.routeOrder]
   );
 
   const gradeOf = useCallback(
@@ -55,13 +59,7 @@ export const useTopoEditorDerived = ({
 
   const selectRoute = useCallback(
     (idRoute: string) => {
-      const topo = findTopoOfRoute(
-        orderedTopos(session.order, session.topos).map((item) => ({
-          ...item,
-          lines: Object.values(item.lines)
-        })),
-        idRoute
-      );
+      const topo = findTopoOfRoute(toposWithLines, idRoute);
 
       if (topo && topo.id !== session.idActiveTopo) {
         dispatch({ type: 'SELECT_TOPO', idTopo: topo.id });
@@ -69,7 +67,7 @@ export const useTopoEditorDerived = ({
 
       dispatch({ type: 'SELECT_ROUTE', idRoute });
     },
-    [session.order, session.topos, session.idActiveTopo, dispatch]
+    [toposWithLines, session.idActiveTopo, dispatch]
   );
 
   return { numberOf, gradeOf, gradeScaleOf, nameOf, colorOf, selectRoute };

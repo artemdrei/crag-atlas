@@ -12,15 +12,20 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { SectorEditForm } from '@web/features/catalogEdit';
+import { sortByNumber, usePhotoLabel } from '@web/features/topo';
 
-import type { RouteDraft, TopoEditorSessionApi } from '../common';
+import type {
+  RouteDraft,
+  TopoEditorActions,
+  TopoEditorSessionApi
+} from '../common';
 import {
   changedRouteFields,
   dirtyRouteIds,
   isRouteDirty,
-  orderedTopos
+  orderedTopos,
+  photoOf
 } from '../common';
-import type { TopoEditorActions } from './hooks';
 import { useEditorHotkeys, useTopoEditorDerived } from './hooks';
 import {
   TopoEditorRouteList,
@@ -28,6 +33,10 @@ import {
   TopoEditStage,
   TopoThumbRail
 } from './ui';
+
+/** The trailing group, for routes no photo carries yet. Not a photo, so it is
+    neither a move target nor an option in the photo select. */
+export const REST_GROUP = 'rest';
 
 export interface RouteGroupDraft {
   id: string;
@@ -65,33 +74,34 @@ export const TopoEditorDesktop = ({
     ? session.routes[session.idSelectedRoute]
     : undefined;
 
+  // The select names photos by position, the same way the list groups them.
+  const photoLabel = usePhotoLabel();
+
+  const topos = useMemo(
+    () => orderedTopos(session.order, session.topos),
+    [session.order, session.topos]
+  );
+
   // Same shape as the reader sees: photo by photo, each route in the order it
   // is numbered on the rock, and whatever is not drawn yet at the end.
   const groups = useMemo(() => {
-    const byNumber = (routes: RouteDraft[]) =>
-      [...routes].sort(
-        (left, right) =>
-          (numberOf[left.id] ?? Number.MAX_SAFE_INTEGER) -
-          (numberOf[right.id] ?? Number.MAX_SAFE_INTEGER)
-      );
-
     const placed = new Set<string>();
     const grouped: RouteGroupDraft[] = [];
 
-    for (const topo of orderedTopos(session.order, session.topos)) {
+    for (const [index, topo] of topos.entries()) {
       const drawn = Object.values(topo.lines)
         .filter((line) => line.points.length > 0)
         .flatMap((line) => session.routes[line.idRoute] ?? []);
 
       for (const route of drawn) placed.add(route.id);
 
-      if (drawn.length > 0) {
-        grouped.push({
-          id: topo.id,
-          label: topo.label,
-          routes: byNumber(drawn)
-        });
-      }
+      // Every photo gets a heading, empty ones included: an empty group is
+      // where a route is dropped to move it onto that photo.
+      grouped.push({
+        id: topo.id,
+        label: photoLabel(index),
+        routes: sortByNumber(drawn, numberOf)
+      });
     }
 
     const rest = session.routeOrder
@@ -100,21 +110,19 @@ export const TopoEditorDesktop = ({
 
     if (rest.length > 0) {
       grouped.push({
-        id: 'rest',
-        label: t`Not on a photo`,
-        routes: byNumber(rest)
+        id: REST_GROUP,
+        label: t`Not on a photo yet`,
+        routes: sortByNumber(rest, numberOf)
       });
     }
 
     return grouped;
-  }, [
-    session.order,
-    session.topos,
-    session.routes,
-    session.routeOrder,
-    numberOf,
-    t
-  ]);
+  }, [topos, session.routes, session.routeOrder, numberOf, photoLabel, t]);
+
+  // Every photo is an option; only the trailing "not drawn yet" group is not.
+  const photos = groups.filter((group) => group.id !== REST_GROUP);
+
+  const idsDirtyRoutes = new Set(dirtyRouteIds(session));
 
   const handleDelete = useCallback(() => {
     if (session.idSelectedPoint !== undefined) {
@@ -136,6 +144,7 @@ export const TopoEditorDesktop = ({
         {activeTopo ? (
           <StageStyled
             topo={activeTopo}
+            label={photoLabel(session.order.indexOf(activeTopo.id))}
             session={session}
             access={{ kind: 'sector' }}
             numberOf={numberOf}
@@ -157,7 +166,7 @@ export const TopoEditorDesktop = ({
           </EmptyPhotoStyled>
         )}
         <TopoThumbRail
-          topos={orderedTopos(session.order, session.topos)}
+          topos={topos}
           idActiveTopo={session.idActiveTopo}
           mode={{
             kind: 'manage',
@@ -174,12 +183,15 @@ export const TopoEditorDesktop = ({
         <TopoEditorRouteList
           groups={groups}
           numberOf={numberOf}
-          idsDirtyRoutes={dirtyRouteIds(session)}
+          idsDirtyRoutes={idsDirtyRoutes}
           idSelectedRoute={session.idSelectedRoute}
           idHoveredRoute={idHoveredRoute}
           isBusy={actions.isBusy}
           onSelect={selectRoute}
           onHover={setIdHoveredRoute}
+          onMoveToPhoto={(idRoute, idTopo) =>
+            dispatch({ type: 'MOVE_LINE', idRoute, idTopo })
+          }
           onAdd={actions.addRoute}
         />
       </ColumnStyled>
@@ -222,6 +234,11 @@ export const TopoEditorDesktop = ({
             onRedo={redo}
             onReset={() => actions.resetRoute(selectedRoute.id)}
             onSave={() => actions.saveRoute(selectedRoute.id)}
+            photos={photos}
+            idPhoto={photoOf(session, selectedRoute.id)}
+            onMoveToPhoto={(idTopo) =>
+              dispatch({ type: 'MOVE_LINE', idRoute: selectedRoute.id, idTopo })
+            }
             onRemoveLine={actions.removeLine}
             onDelete={() => actions.removeRoute(selectedRoute.id)}
           />

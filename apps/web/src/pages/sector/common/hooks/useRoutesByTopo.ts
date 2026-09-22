@@ -3,6 +3,8 @@ import { useMemo } from 'react';
 import type { Topo } from '@crag-atlas/api';
 import { useLingui } from '@lingui/react/macro';
 
+import { sortByNumber, usePhotoLabel } from '@web/features/topo';
+
 import type { Route } from '../entities';
 
 export interface RouteGroup {
@@ -23,20 +25,14 @@ export const useRoutesByTopo = ({
   numberOf
 }: Params): RouteGroup[] => {
   const { t } = useLingui();
+  const photoLabel = usePhotoLabel();
 
   return useMemo(() => {
-    const byNumber = (group: Route[]) =>
-      [...group].sort(
-        (left, right) =>
-          (numberOf[left.id] ?? Number.MAX_SAFE_INTEGER) -
-          (numberOf[right.id] ?? Number.MAX_SAFE_INTEGER)
-      );
-
     const byId = new Map(routes.map((route) => [route.id, route]));
     const grouped: RouteGroup[] = [];
     const placed = new Set<string>();
 
-    for (const topo of topos) {
+    for (const [index, topo] of topos.entries()) {
       const topoRoutes = topo.lines
         .map((line) => byId.get(line.idRoute))
         .filter((route): route is Route => !!route);
@@ -46,8 +42,8 @@ export const useRoutesByTopo = ({
       if (topoRoutes.length > 0) {
         grouped.push({
           id: topo.id,
-          label: topo.label,
-          routes: byNumber(topoRoutes)
+          label: photoLabel(index),
+          routes: sortByNumber(topoRoutes, numberOf)
         });
       }
     }
@@ -58,10 +54,10 @@ export const useRoutesByTopo = ({
       grouped.push({
         id: 'rest',
         label: t`Not on a photo`,
-        routes: byNumber(rest)
+        routes: sortByNumber(rest, numberOf)
       });
     }
 
     return grouped;
-  }, [routes, topos, numberOf, t]);
+  }, [routes, topos, numberOf, t, photoLabel]);
 };

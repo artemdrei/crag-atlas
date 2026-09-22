@@ -26,17 +26,18 @@ export const orderRoutes = (
     );
 
   const numbers: Record<string, number> = {};
+  let next = 1;
 
   for (const line of placed) {
     if (numbers[line.idRoute]) continue;
 
-    numbers[line.idRoute] = Object.keys(numbers).length + 1;
+    numbers[line.idRoute] = next++;
   }
 
   for (const idRoute of idRestRoutes) {
     if (numbers[idRoute]) continue;
 
-    numbers[idRoute] = Object.keys(numbers).length + 1;
+    numbers[idRoute] = next++;
   }
 
   return numbers;
