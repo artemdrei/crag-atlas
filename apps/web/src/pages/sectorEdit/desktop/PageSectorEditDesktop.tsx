@@ -11,6 +11,7 @@ import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
+import { useModal } from '@web/app/providers';
 import { buildSectorPath } from '@web/app/router/routes';
 import {
   hasUnsavedChanges,
@@ -26,6 +27,7 @@ export const PageSectorEditDesktop = () => {
   const { t } = useLingui();
   const { idRegion = '', idSector = '' } = useParams();
   const navigate = useNavigate();
+  const { openModal } = useModal();
   const { sector, routes, topos, isLoading, failure } =
     useSectorEditorData(idSector);
   const editor = useTopoEditorSession();
@@ -35,9 +37,15 @@ export const PageSectorEditDesktop = () => {
   const isDirty = hasUnsavedChanges(session);
 
   const leave = () => {
-    if (isDirty && !window.confirm(t`Leave with unsaved changes?`)) return;
+    const go = () => navigate(buildSectorPath(idRegion, idSector));
 
-    navigate(buildSectorPath(idRegion, idSector));
+    if (!isDirty) {
+      go();
+
+      return;
+    }
+
+    openModal('LEAVE_EDITOR', { onConfirm: go });
   };
 
   // An empty sector is legitimate, so emptiness cannot mean "not hydrated".

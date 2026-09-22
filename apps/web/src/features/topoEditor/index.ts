@@ -28,5 +28,9 @@ export const topoEditorDesktopRegistrations: ModalRegistration[] = [
   {
     id: 'DELETE_ROUTE',
     Component: lazy(() => import('./desktop/DeleteRouteDialog'))
+  },
+  {
+    id: 'LEAVE_EDITOR',
+    Component: lazy(() => import('./desktop/LeaveEditorDialog'))
   }
 ];

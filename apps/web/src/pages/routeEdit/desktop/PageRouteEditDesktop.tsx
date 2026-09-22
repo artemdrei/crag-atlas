@@ -11,6 +11,7 @@ import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
+import { useModal } from '@web/app/providers';
 import { buildRoutePath, buildSectorPath } from '@web/app/router/routes';
 import { findTopoOfRoute } from '@web/features/topo';
 import {
@@ -26,6 +27,7 @@ export const PageRouteEditDesktop = () => {
   const { t } = useLingui();
   const { idRegion = '', idSector = '', idRoute = '' } = useParams();
   const navigate = useNavigate();
+  const { openModal } = useModal();
   // The numbering readers see is computed across the whole sector, so the
   // session is hydrated with all of it even though one route is edited.
   const { routes, topos, isLoading, failure } = useSectorEditorData(idSector);
@@ -37,9 +39,15 @@ export const PageRouteEditDesktop = () => {
   const isDirty = isRouteDirty(session, idRoute);
 
   const leave = () => {
-    if (isDirty && !window.confirm(t`Leave with unsaved changes?`)) return;
+    const go = () => navigate(buildRoutePath(idRegion, idSector, idRoute));
 
-    navigate(buildRoutePath(idRegion, idSector, idRoute));
+    if (!isDirty) {
+      go();
+
+      return;
+    }
+
+    openModal('LEAVE_EDITOR', { onConfirm: go });
   };
 
   // An empty sector is legitimate, so emptiness cannot mean "not hydrated".

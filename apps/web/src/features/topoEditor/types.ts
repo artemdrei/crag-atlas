@@ -11,5 +11,6 @@ declare module '@web/app/providers/modalProvider/types' {
       isNew: boolean;
       onConfirm: () => void;
     };
+    LEAVE_EDITOR: { onConfirm: () => void };
   }
 }
