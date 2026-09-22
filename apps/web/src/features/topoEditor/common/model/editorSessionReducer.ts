@@ -35,10 +35,11 @@ export const editorSessionReducer = (
         ...session,
         order: action.order,
         topos: Object.fromEntries(
-          action.order.map((id, sortOrder) => [
-            id,
-            { ...session.topos[id], sortOrder }
-          ])
+          action.order.flatMap((id, sortOrder) => {
+            const topo = session.topos[id];
+
+            return topo ? [[id, { ...topo, sortOrder }] as const] : [];
+          })
         )
       };
 
@@ -122,18 +123,19 @@ export const editorSessionReducer = (
         return { ...topo, lines };
       });
 
-    case 'EDIT_ROUTE':
+    case 'EDIT_ROUTE': {
+      const route = session.routes[action.idRoute];
+
+      if (!route) return session;
+
       return {
         ...session,
         routes: {
           ...session.routes,
-          [action.idRoute]: {
-            ...session.routes[action.idRoute],
-            ...action.patch,
-            isDirty: true
-          }
+          [action.idRoute]: { ...route, ...action.patch, isDirty: true }
         }
       };
+    }
 
     case 'ADD_ROUTE':
       return {
@@ -342,7 +344,7 @@ const restoreRoute = (
   idRoute: string
 ): TopoEditorSession => ({
   ...session,
-  routes: { ...session.routes, [idRoute]: server.routes[idRoute] },
+  routes: restored(session.routes, idRoute, server.routes[idRoute]),
   topos: Object.fromEntries(
     Object.entries(session.topos).map(([id, topo]) => {
       const serverLine = server.topos[id]?.lines[idRoute];
@@ -358,6 +360,20 @@ const restoreRoute = (
     })
   )
 });
+
+/** A route the server has never seen leaves the map rather than sitting in it
+    as an undefined value. */
+const restored = (
+  routes: Record<string, RouteDraft>,
+  idRoute: string,
+  saved: RouteDraft | undefined
+): Record<string, RouteDraft> => {
+  if (saved) return { ...routes, [idRoute]: saved };
+
+  const { [idRoute]: _dropped, ...rest } = routes;
+
+  return rest;
+};
 
 const renameRoute = (
   session: TopoEditorSession,
@@ -399,28 +415,31 @@ const renameRoute = (
 const markSaved = (
   session: TopoEditorSession,
   idRoute: string
-): TopoEditorSession => ({
-  ...session,
-  routes: {
-    ...session.routes,
-    [idRoute]: { ...session.routes[idRoute], isDirty: false }
-  },
-  topos: Object.fromEntries(
-    Object.entries(session.topos).map(([id, topo]) => {
-      const line = topo.lines[idRoute];
+): TopoEditorSession => {
+  const saved = session.routes[idRoute];
 
-      return [
-        id,
-        line
-          ? {
-              ...topo,
-              lines: { ...topo.lines, [idRoute]: { ...line, isDirty: false } }
-            }
-          : topo
-      ];
-    })
-  )
-});
+  return {
+    ...session,
+    routes: saved
+      ? { ...session.routes, [idRoute]: { ...saved, isDirty: false } }
+      : session.routes,
+    topos: Object.fromEntries(
+      Object.entries(session.topos).map(([id, topo]) => {
+        const line = topo.lines[idRoute];
+
+        return [
+          id,
+          line
+            ? {
+                ...topo,
+                lines: { ...topo.lines, [idRoute]: { ...line, isDirty: false } }
+              }
+            : topo
+        ];
+      })
+    )
+  };
+};
 
 export const isRouteDirty = (
   session: TopoEditorSession,
