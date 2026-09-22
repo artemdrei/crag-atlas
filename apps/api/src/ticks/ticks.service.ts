@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
 import { ValidationException } from '../common/exceptions/app.exception';
 import {
@@ -8,7 +7,7 @@ import {
 } from '../common/exceptions/database.exception';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
 import type { GradeScale } from '../common/utils/grade';
-import { supabaseConfig } from '../config/supabase.config';
+import { userClient } from '../common/utils/userClient';
 import { ASCENT_STYLES, type CreateTickDto, type TickDto } from './ticks.types';
 
 // The catalog rows come back embedded through the ticks → routes → sectors
@@ -38,7 +37,7 @@ export class TicksService {
   async findMine(authUser: AuthUser, idRoute?: string): Promise<TickDto[]> {
     // No filter on id_user: the RLS select policy already scopes this to the
     // caller, and a second filter would only hide a policy regression.
-    const query = this.userClient(authUser)
+    const query = userClient(authUser)
       .from('ticks')
       .select(COLUMNS)
       .order('climbed_at', { ascending: false });
@@ -70,7 +69,7 @@ export class TicksService {
       );
     }
 
-    const { data, error } = await this.userClient(authUser)
+    const { data, error } = await userClient(authUser)
       .from('ticks')
       .insert({
         // Taken from the verified token, never from the body — RLS checks the
@@ -94,16 +93,6 @@ export class TicksService {
     }
 
     return toTickDto(data);
-  }
-
-  /** Calls the database as the user, so their RLS policies still apply. */
-  private userClient({ accessToken }: AuthUser): SupabaseClient {
-    const { url, anonKey } = supabaseConfig();
-
-    return createClient(url, anonKey, {
-      global: { headers: { Authorization: `Bearer ${accessToken}` } },
-      auth: { persistSession: false, autoRefreshToken: false }
-    });
   }
 }
 

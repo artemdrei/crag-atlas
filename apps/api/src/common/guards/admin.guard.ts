@@ -1,9 +1,8 @@
 import type { CanActivate, ExecutionContext } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
-import { createClient } from '@supabase/supabase-js';
 
-import { supabaseConfig } from '../../config/supabase.config';
 import { AppException } from '../exceptions/app.exception';
+import { userClient } from '../utils/userClient';
 import type { RequestWithAuthUser } from './supabaseAuth.guard';
 
 /**
@@ -21,13 +20,7 @@ export class AdminGuard implements CanActivate {
     if (!authUser)
       throw new AppException('Not authenticated', 401, 'UNAUTHORIZED');
 
-    const { url, anonKey } = supabaseConfig();
-    const client = createClient(url, anonKey, {
-      global: { headers: { Authorization: `Bearer ${authUser.accessToken}` } },
-      auth: { persistSession: false, autoRefreshToken: false }
-    });
-
-    const { data } = await client
+    const { data } = await userClient(authUser)
       .from('user_roles')
       .select('role')
       .eq('id_user', authUser.idUser)

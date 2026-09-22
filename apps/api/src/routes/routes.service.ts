@@ -207,10 +207,7 @@ export class RoutesService {
       .from('routes')
       .update({
         name: payload.name,
-        ...(await gradeColumns(
-          payload.grade?.trim() ?? '',
-          payload.gradeScale
-        )),
+        ...gradeColumns(payload.grade?.trim() ?? '', payload.gradeScale),
         type: payload.type,
         length: payload.length ?? null,
         bolts_count: payload.boltsCount ?? null,

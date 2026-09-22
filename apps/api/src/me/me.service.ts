@@ -21,19 +21,22 @@ interface PreferencesRow {
 @Injectable()
 export class MeService {
   async findMe(authUser: AuthUser): Promise<MeDto> {
+    const client = userClient(authUser);
+
     // Asking as the user: the select policy only ever returns their own row,
     // so a missing row and "not an admin" are the same answer.
-    const { data } = await userClient(authUser)
-      .from('user_roles')
-      .select('role')
-      .eq('role', 'admin')
-      .maybeSingle();
-
-    const { data: preferences } = await userClient(authUser)
-      .from('users')
-      .select('grade_scale_route, grade_scale_boulder')
-      .eq('id', authUser.idUser)
-      .maybeSingle<PreferencesRow>();
+    const [{ data }, { data: preferences }] = await Promise.all([
+      client
+        .from('user_roles')
+        .select('role')
+        .eq('role', 'admin')
+        .maybeSingle(),
+      client
+        .from('users')
+        .select('grade_scale_route, grade_scale_boulder')
+        .eq('id', authUser.idUser)
+        .maybeSingle<PreferencesRow>()
+    ]);
 
     return {
       idUser: authUser.idUser,

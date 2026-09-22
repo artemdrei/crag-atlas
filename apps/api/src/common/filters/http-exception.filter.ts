@@ -4,7 +4,7 @@ import { Catch, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { AppException } from '../exceptions/app.exception';
 import { DatabaseException } from '../exceptions/database.exception';
 
-export const ERROR_RESPONSE_MESSAGE_500 = 'Internal server error';
+const ERROR_RESPONSE_MESSAGE_500 = 'Internal server error';
 
 export interface ErrorResponseBody {
   success: false;
