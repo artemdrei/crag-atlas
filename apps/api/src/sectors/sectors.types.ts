@@ -65,6 +65,24 @@ export class SectorDto {
       'Grade spread, one group per climbing type; empty when there are no routes'
   })
   gradeHistogram!: GradeHistogramGroupDto[];
+
+  @ApiProperty({ type: Number, required: false, nullable: true })
+  lat?: number | null;
+
+  @ApiProperty({ type: Number, required: false, nullable: true })
+  lng?: number | null;
+
+  @ApiProperty({
+    description:
+      'Out of the catalog, because it carries the mark or an ancestor does'
+  })
+  isArchived!: boolean;
+
+  @ApiProperty({
+    description:
+      'Deleted directly, so restoring this row is what brings it back'
+  })
+  isDeleted!: boolean;
 }
 
 export class CreateSectorDto {
@@ -81,4 +99,10 @@ export class UpdateSectorDto {
 
   @ApiProperty({ type: String, required: false, nullable: true })
   description?: string | null;
+
+  @ApiProperty({ type: Number, required: false, nullable: true })
+  lat?: number | null;
+
+  @ApiProperty({ type: Number, required: false, nullable: true })
+  lng?: number | null;
 }

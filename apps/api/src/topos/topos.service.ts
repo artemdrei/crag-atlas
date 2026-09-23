@@ -20,6 +20,7 @@ import {
 import { userClient } from '../common/utils/userClient';
 import { publicSupabase, storagePublicUrl } from '../config/supabase.client';
 import {
+  liveRouteLines,
   ROUTE_LINE_COLUMNS,
   type RouteLineRow,
   toRouteLineDto
@@ -54,7 +55,7 @@ export class ToposService {
       throw readFailed('Could not load the photos', 'TOPOS_READ_FAILED', error);
     }
 
-    return data.map(toTopoDto);
+    return data.map(withLiveLines).map(toTopoDto);
   }
 
   async create(
@@ -221,7 +222,7 @@ export class ToposService {
       );
     }
 
-    return data;
+    return withLiveLines(data);
   }
 
   private async nextSortOrder(idSector: string): Promise<number> {
@@ -244,6 +245,11 @@ export class ToposService {
     return data ? data.sort_order + 1 : 0;
   }
 }
+
+const withLiveLines = (row: TopoRow): TopoRow => ({
+  ...row,
+  route_lines: liveRouteLines(row.route_lines)
+});
 
 const toTopoDto = (row: TopoRow): TopoDto => ({
   id: row.id,

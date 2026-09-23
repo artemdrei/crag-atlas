@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
+import type { ClimberContentDto } from '../common/dto/climberContent.dto';
 import {
-  AppException,
   NotFoundException,
   ValidationException
 } from '../common/exceptions/app.exception';
@@ -10,6 +10,13 @@ import {
   writeFailed
 } from '../common/exceptions/database.exception';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
+import type { ArchiveTarget } from '../common/utils/archive';
+import {
+  archiveRow,
+  eraseArchivedRow,
+  restoreRow
+} from '../common/utils/archive';
+import { countClimberContent } from '../common/utils/climberContent';
 import type { GradeScale } from '../common/utils/grade';
 import {
   gradeScore,
@@ -28,7 +35,7 @@ import type {
 import { ROUTE_TYPES } from './routes.types';
 
 const COLUMNS =
-  'id, id_sector, name, grade, grade_scale, type, length, bolts_count, rating, ascents_count, onsight_count, votes_soft, votes_neutral, votes_hard, description, sectors (name, id_region, regions (name))';
+  'id, id_sector, name, grade, grade_scale, type, length, bolts_count, rating, rating_votes, ascents_count_total, onsight_count_total, votes_soft_total, votes_neutral_total, votes_hard_total, description, is_archived, deleted_at, sectors (name, id_region, regions (name))';
 
 interface RouteRow {
   id: string;
@@ -40,12 +47,15 @@ interface RouteRow {
   length: number | null;
   bolts_count: number | null;
   rating: number | null;
-  ascents_count: number | null;
-  onsight_count: number | null;
-  votes_soft: number | null;
-  votes_neutral: number | null;
-  votes_hard: number | null;
+  rating_votes: number | null;
+  ascents_count_total: number | null;
+  onsight_count_total: number | null;
+  votes_soft_total: number | null;
+  votes_neutral_total: number | null;
+  votes_hard_total: number | null;
   description: string;
+  is_archived: boolean;
+  deleted_at: string | null;
   sectors: {
     name: string;
     id_region: string;
@@ -53,16 +63,29 @@ interface RouteRow {
   } | null;
 }
 
+const TARGET: ArchiveTarget = {
+  table: 'routes',
+  entity: 'ROUTE',
+  noun: 'route'
+};
+
 @Injectable()
 export class RoutesService {
   async findBySector(
     idSector: string,
-    filter: RouteFilterQuery = {}
+    filter: RouteFilterQuery = {},
+    isArchiveOnly = false
   ): Promise<RouteDto[]> {
     let query = publicSupabase()
-      .from('routes')
+      .from('routes_with_stats')
       .select(COLUMNS)
       .eq('id_sector', idSector);
+
+    // Own mark either way: an archived sector's page still lists its routes,
+    // and its archive holds the routes deleted from it.
+    query = isArchiveOnly
+      ? query.not('deleted_at', 'is', null)
+      : query.is('deleted_at', null);
 
     if (filter.type) {
       query = query.eq('type', filter.type);
@@ -93,7 +116,7 @@ export class RoutesService {
 
   async findOne(idRoute: string): Promise<RouteDto> {
     const { data, error } = await publicSupabase()
-      .from('routes')
+      .from('routes_with_stats')
       .select(COLUMNS)
       .eq('id', idRoute)
       .maybeSingle<RouteRow>();
@@ -160,42 +183,8 @@ export class RoutesService {
     return this.findOne(data.id);
   }
 
-  async remove(authUser: AuthUser, idRoute: string): Promise<void> {
-    // Ticks are other users' logbooks; say so instead of leaking an FK error.
-    const { count, error: ticksError } = await publicSupabase()
-      .from('ticks')
-      .select('id', { count: 'exact', head: true })
-      .eq('id_route', idRoute);
-
-    if (ticksError) {
-      throw readFailed(
-        'Could not check the logged ascents',
-        'ROUTE_TICKS_READ_FAILED',
-        ticksError
-      );
-    }
-
-    if (count && count > 0) {
-      throw new AppException(
-        'This route has logged ascents',
-        409,
-        'ROUTE_HAS_TICKS',
-        { ticksCount: count }
-      );
-    }
-
-    const { error } = await userClient(authUser)
-      .from('routes')
-      .delete()
-      .eq('id', idRoute);
-
-    if (error) {
-      throw writeFailed(
-        'Could not delete the route',
-        'ROUTE_DELETE_FAILED',
-        error
-      );
-    }
+  async climberContent(idRoute: string): Promise<ClimberContentDto> {
+    return countClimberContent(publicSupabase(), { idRoute });
   }
 
   async update(
@@ -224,6 +213,19 @@ export class RoutesService {
     }
 
     return this.findOne(idRoute);
+  }
+  async remove(authUser: AuthUser, idRoute: string): Promise<void> {
+    return archiveRow(userClient(authUser), TARGET, idRoute);
+  }
+
+  async restore(authUser: AuthUser, idRoute: string): Promise<RouteDto> {
+    await restoreRow(userClient(authUser), TARGET, idRoute);
+
+    return this.findOne(idRoute);
+  }
+
+  async purge(authUser: AuthUser, idRoute: string): Promise<void> {
+    return eraseArchivedRow(userClient(authUser), TARGET, idRoute);
   }
 }
 
@@ -310,10 +312,13 @@ const toRouteDto = (row: RouteRow): RouteDto => ({
   length: row.length,
   boltsCount: row.bolts_count,
   rating: row.rating,
-  ascentsCount: row.ascents_count,
-  onsightCount: row.onsight_count,
-  votesSoft: row.votes_soft,
-  votesNeutral: row.votes_neutral,
-  votesHard: row.votes_hard,
-  description: row.description
+  ratingVotes: row.rating_votes,
+  ascentsCount: row.ascents_count_total,
+  onsightCount: row.onsight_count_total,
+  votesSoft: row.votes_soft_total,
+  votesNeutral: row.votes_neutral_total,
+  votesHard: row.votes_hard_total,
+  description: row.description,
+  isArchived: row.is_archived,
+  isDeleted: !!row.deleted_at
 });

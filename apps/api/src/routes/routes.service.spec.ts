@@ -15,6 +15,7 @@ vi.mock('../config/supabase.client', () => ({
     const builder = {
       select: () => builder,
       eq: () => builder,
+      is: () => builder,
       order: () => builder,
       returns: () => Promise.resolve(result),
       maybeSingle: () => Promise.resolve(result)
@@ -34,6 +35,8 @@ const ROUTE_ROW = {
   length: 20,
   bolts_count: 8,
   description: 'Технічний вихід.',
+  is_archived: false,
+  deleted_at: null,
   sectors: {
     name: 'Бастіон',
     id_region: 'kamianets',
@@ -66,7 +69,9 @@ describe('RoutesService', () => {
         type: 'sport',
         length: 20,
         boltsCount: 8,
-        description: 'Технічний вихід.'
+        description: 'Технічний вихід.',
+        isArchived: false,
+        isDeleted: false
       });
     });
 
@@ -88,6 +93,34 @@ describe('RoutesService', () => {
       result = { data: null, error: null };
 
       await expect(service.findOne('nope')).rejects.toThrow(NotFoundException);
+    });
+
+    it('flags a route archived through its sector, not deleted itself', async () => {
+      result = {
+        data: { ...ROUTE_ROW, is_archived: true, deleted_at: null },
+        error: null
+      };
+
+      await expect(service.findOne('mizerna-lohika')).resolves.toMatchObject({
+        isArchived: true,
+        isDeleted: false
+      });
+    });
+
+    it('flags a route deleted on its own as both', async () => {
+      result = {
+        data: {
+          ...ROUTE_ROW,
+          is_archived: true,
+          deleted_at: '2026-09-23T00:00:00Z'
+        },
+        error: null
+      };
+
+      await expect(service.findOne('mizerna-lohika')).resolves.toMatchObject({
+        isArchived: true,
+        isDeleted: true
+      });
     });
   });
 });

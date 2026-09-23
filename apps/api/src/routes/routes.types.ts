@@ -49,6 +49,14 @@ export class RouteDto {
   })
   rating?: number | null;
 
+  @ApiProperty({
+    type: Number,
+    required: false,
+    nullable: true,
+    description: 'How many ratings that average stands on'
+  })
+  ratingVotes?: number | null;
+
   @ApiProperty({ type: Number, required: false, nullable: true })
   ascentsCount?: number | null;
 
@@ -71,6 +79,18 @@ export class RouteDto {
 
   @ApiProperty()
   description!: string;
+
+  @ApiProperty({
+    description:
+      'Out of the catalog, because it carries the mark or an ancestor does'
+  })
+  isArchived!: boolean;
+
+  @ApiProperty({
+    description:
+      'Deleted directly, so restoring this row is what brings it back'
+  })
+  isDeleted!: boolean;
 }
 
 /**

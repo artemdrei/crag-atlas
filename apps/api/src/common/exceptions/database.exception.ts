@@ -43,3 +43,11 @@ export const writeFailed = (
   code: string,
   cause?: DatabaseError
 ): DatabaseException => new DatabaseException(message, 400, code, cause);
+
+// A row somebody else still points at. 23503 is the only SQLSTATE we branch
+// on: purging a catalog row is refused while anybody's ascent references it,
+// and the restrict is the last line of defence for that.
+export const FOREIGN_KEY_VIOLATION = '23503';
+
+export const isReferenced = (error?: DatabaseError): boolean =>
+  error?.code === FOREIGN_KEY_VIOLATION;

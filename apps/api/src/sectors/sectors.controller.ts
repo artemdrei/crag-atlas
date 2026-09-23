@@ -18,6 +18,13 @@ export class SectorsController {
     return this.sectorsService.findByRegion(idRegion);
   }
 
+  @Get('archived')
+  @UseGuards(SupabaseAuthGuard, AdminGuard)
+  @ApiOkResponse({ type: SectorDto, isArray: true })
+  findArchived(@Param('idRegion') idRegion: string): Promise<SectorDto[]> {
+    return this.sectorsService.findByRegion(idRegion, true);
+  }
+
   @Post()
   @UseGuards(SupabaseAuthGuard, AdminGuard)
   @ApiCreatedResponse({ type: SectorDto })

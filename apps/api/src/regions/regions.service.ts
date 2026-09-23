@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import type { ClimberContentDto } from '../common/dto/climberContent.dto';
 import type { GradeHistogramGroupDto } from '../common/dto/gradeHistogram.dto';
 import {
   AppException,
@@ -11,6 +12,13 @@ import {
   writeFailed
 } from '../common/exceptions/database.exception';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
+import type { ArchiveTarget } from '../common/utils/archive';
+import {
+  archiveRow,
+  eraseArchivedRow,
+  restoreRow
+} from '../common/utils/archive';
+import { countClimberContent } from '../common/utils/climberContent';
 import type { GradeScale } from '../common/utils/grade';
 import type { UploadedPhoto } from '../common/utils/photoStorage';
 import {
@@ -33,7 +41,7 @@ import type {
 // Counts and grade ranges are derived, so reads come from the view and writes
 // go to the table underneath it.
 const COLUMNS =
-  'id, name, province, rock_type, photo_path, sector_count, route_count, grade_min, grade_min_scale, grade_max, grade_max_scale, grade_histogram';
+  'id, name, province, rock_type, photo_path, sector_count, route_count, grade_min, grade_min_scale, grade_max, grade_max_scale, grade_histogram, is_archived, deleted_at';
 
 interface RegionRow {
   id: string;
@@ -48,16 +56,28 @@ interface RegionRow {
   grade_max: string | null;
   grade_max_scale: GradeScale | null;
   grade_histogram: GradeHistogramGroupDto[];
+  is_archived: boolean;
+  deleted_at: string | null;
 }
+
+const TARGET: ArchiveTarget = {
+  table: 'regions',
+  entity: 'REGION',
+  noun: 'region'
+};
 
 @Injectable()
 export class RegionsService {
-  async findAll(): Promise<RegionDto[]> {
-    const { data, error } = await publicSupabase()
+  async findAll(isArchiveOnly = false): Promise<RegionDto[]> {
+    const query = publicSupabase()
       .from('regions_with_stats')
       .select(COLUMNS)
-      .order('name')
-      .returns<RegionRow[]>();
+      .order('name');
+
+    const { data, error } = await (isArchiveOnly
+      ? query.not('deleted_at', 'is', null)
+      : query.is('deleted_at', null)
+    ).returns<RegionRow[]>();
 
     if (error) {
       throw readFailed(
@@ -196,6 +216,24 @@ export class RegionsService {
 
     return this.findOne(idRegion);
   }
+
+  async climberContent(idRegion: string): Promise<ClimberContentDto> {
+    return countClimberContent(publicSupabase(), { idRegion });
+  }
+
+  async remove(authUser: AuthUser, idRegion: string): Promise<void> {
+    return archiveRow(userClient(authUser), TARGET, idRegion);
+  }
+
+  async restore(authUser: AuthUser, idRegion: string): Promise<RegionDto> {
+    await restoreRow(userClient(authUser), TARGET, idRegion);
+
+    return this.findOne(idRegion);
+  }
+
+  async purge(authUser: AuthUser, idRegion: string): Promise<void> {
+    return eraseArchivedRow(userClient(authUser), TARGET, idRegion);
+  }
 }
 
 const toRegionDto = (row: RegionRow): RegionDto => ({
@@ -212,5 +250,7 @@ const toRegionDto = (row: RegionRow): RegionDto => ({
   gradeMinScale: row.grade_min_scale,
   gradeMax: row.grade_max,
   gradeMaxScale: row.grade_max_scale,
-  gradeHistogram: row.grade_histogram
+  gradeHistogram: row.grade_histogram,
+  isArchived: row.is_archived,
+  isDeleted: !!row.deleted_at
 });

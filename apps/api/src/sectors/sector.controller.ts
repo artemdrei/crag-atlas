@@ -1,7 +1,18 @@
-import { Body, Controller, Get, Param, Patch, UseGuards } from '@nestjs/common';
-import { ApiOkResponse } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Patch,
+  Post,
+  UseGuards
+} from '@nestjs/common';
+import { ApiNoContentResponse, ApiOkResponse } from '@nestjs/swagger';
 
 import { CurrentUser } from '../common/decorators/authUser.decorator';
+import { ClimberContentDto } from '../common/dto/climberContent.dto';
 import { AdminGuard } from '../common/guards/admin.guard';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
 import { SupabaseAuthGuard } from '../common/guards/supabaseAuth.guard';
@@ -29,5 +40,46 @@ export class SectorController {
     @Body() payload: UpdateSectorDto
   ): Promise<SectorDto> {
     return this.sectorsService.update(authUser, idSector, payload);
+  }
+
+  @Post(':idSector/restore')
+  @UseGuards(SupabaseAuthGuard, AdminGuard)
+  @ApiOkResponse({ type: SectorDto })
+  restore(
+    @CurrentUser() authUser: AuthUser,
+    @Param('idSector') idSector: string
+  ): Promise<SectorDto> {
+    return this.sectorsService.restore(authUser, idSector);
+  }
+
+  @Get(':idSector/content')
+  @UseGuards(SupabaseAuthGuard, AdminGuard)
+  @ApiOkResponse({ type: ClimberContentDto })
+  climberContent(
+    @Param('idSector') idSector: string
+  ): Promise<ClimberContentDto> {
+    return this.sectorsService.climberContent(idSector);
+  }
+
+  @Delete(':idSector/permanent')
+  @UseGuards(SupabaseAuthGuard, AdminGuard)
+  @HttpCode(204)
+  @ApiNoContentResponse()
+  purge(
+    @CurrentUser() authUser: AuthUser,
+    @Param('idSector') idSector: string
+  ): Promise<void> {
+    return this.sectorsService.purge(authUser, idSector);
+  }
+
+  @Delete(':idSector')
+  @UseGuards(SupabaseAuthGuard, AdminGuard)
+  @HttpCode(204)
+  @ApiNoContentResponse()
+  remove(
+    @CurrentUser() authUser: AuthUser,
+    @Param('idSector') idSector: string
+  ): Promise<void> {
+    return this.sectorsService.remove(authUser, idSector);
   }
 }

@@ -29,6 +29,13 @@ export class RoutesController {
     return this.routesService.findBySector(idSector, filter);
   }
 
+  @Get('archived')
+  @UseGuards(SupabaseAuthGuard, AdminGuard)
+  @ApiOkResponse({ type: RouteDto, isArray: true })
+  findArchived(@Param('idSector') idSector: string): Promise<RouteDto[]> {
+    return this.routesService.findBySector(idSector, {}, true);
+  }
+
   @Post()
   @UseGuards(SupabaseAuthGuard, AdminGuard)
   @ApiCreatedResponse({ type: RouteDto })
