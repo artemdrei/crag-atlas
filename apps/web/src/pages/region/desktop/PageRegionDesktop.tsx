@@ -1,48 +1,85 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import { Trans, useLingui } from '@lingui/react/macro';
-import CloseIcon from '@mui/icons-material/Close';
-import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
+import { useEditModeInUrl } from '@web/app/providers';
 import { buildSectorPath, ROUTES } from '@web/app/router/routes';
-import { EditToggleButton } from '@web/features/catalogEdit';
+import { CatalogEditActions } from '@web/features/catalogEdit';
+import type { Coords } from '@web/features/sectorMap';
+import {
+  mapSectors,
+  SectorMapDesktop,
+  sectorPinColors,
+  sectorPoint
+} from '@web/features/sectorMap';
 import { useGridColumns } from '@web/shared/lib';
 import {
   ApiFeedback,
-  CatalogColumns,
   GridColumnsMenu,
   PageBreadcrumbs,
   PageShell
 } from '@web/shared/ui';
 
-import { SectorsList, useApiGetRegion, useApiGetSectors } from '../common';
-import { RegionEditSidebar } from './ui';
+import {
+  ArchivedRegionNotice,
+  SectorsList,
+  useApiGetRegion,
+  useApiGetSectors
+} from '../common';
+import { RegionEditSection, RegionEditSidebar } from './ui';
 
 export const PageRegionDesktop = () => {
   const { t } = useLingui();
+  const theme = useTheme();
   const { idRegion = '' } = useParams();
   const navigate = useNavigate();
-  const { region } = useApiGetRegion(idRegion);
-  const [isEditing, setIsEditing] = useState(false);
+  const { region, failure: regionFailure } = useApiGetRegion(idRegion);
+  const { isEditing, isArchiveShown, setIsEditing, setIsArchiveShown } =
+    useEditModeInUrl();
   const [idSelectedSector, setIdSelectedSector] = useState<string>();
   const [isSelectedDirty, setIsSelectedDirty] = useState(false);
+  const [draftPoint, setDraftPoint] = useState<Coords>();
+  const { sectors, isLoading, failure } = useApiGetSectors(
+    idRegion,
+    isArchiveShown
+  );
 
   // No form is mounted once nothing is selected, so nothing would ever report
   // the edits as gone.
   const selectSector = (idSector?: string) => {
     setIdSelectedSector(idSector);
     setIsSelectedDirty(false);
+    setDraftPoint(sectorPoint(sectors.find(({ id }) => id === idSector)));
   };
-  const { sectors, isLoading, failure } = useApiGetSectors(idRegion);
   const { columns, changeColumns } = useGridColumns(
     'crag-atlas:sector-columns'
   );
 
+  // The pin has to follow the cursor before the form is saved, so the selected
+  // sector renders from the draft instead of from what the server knows.
+  const mapped = useMemo(
+    () =>
+      mapSectors(
+        sectors,
+        isEditing && idSelectedSector
+          ? { idSector: idSelectedSector, point: draftPoint }
+          : undefined
+      ),
+    [sectors, isEditing, idSelectedSector, draftPoint]
+  );
+
+  const pinColors = useMemo(
+    () => sectorPinColors(mapped, theme.palette.sectorPin),
+    [mapped, theme.palette.sectorPin]
+  );
+
+  const selectedSector = sectors.find(({ id }) => id === idSelectedSector);
+
   return (
-    <PageShell spacing={1}>
+    <PageShell spacing={1} isFixedHeight>
       <HeaderRowStyled>
         <PageBreadcrumbs
           items={[
@@ -50,55 +87,79 @@ export const PageRegionDesktop = () => {
             { label: region?.name ?? '…' }
           ]}
         />
-        {isEditing ? (
-          <Button
-            size="small"
-            variant="outlined"
-            startIcon={<CloseIcon fontSize="small" />}
-            onClick={() => {
-              setIsEditing(false);
-              selectSector(undefined);
-            }}
-          >
-            <Trans>Close editing</Trans>
-          </Button>
-        ) : (
-          <EditToggleButton onClick={() => setIsEditing(true)} />
-        )}
+        <CatalogEditActions
+          isEditing={isEditing}
+          isArchiveShown={isArchiveShown}
+          canEdit={!region?.isArchived}
+          onEdit={() => setIsEditing(true)}
+          onClose={() => {
+            setIsEditing(false);
+            selectSector(undefined);
+          }}
+          onToggleArchive={() => setIsArchiveShown(!isArchiveShown)}
+        />
       </HeaderRowStyled>
+      {region?.isArchived && <ArchivedRegionNotice />}
       <HeaderRowStyled>
         <Typography variant="h4">{region?.name ?? '…'}</Typography>
         <GridColumnsMenu columns={columns} onChange={changeColumns} />
       </HeaderRowStyled>
       <ApiFeedback
         isLoading={isLoading}
-        failure={failure}
+        failure={regionFailure ?? failure}
         loadingLabel={<Trans>Loading sectors…</Trans>}
       />
-      <CatalogColumns isEditing={isEditing}>
-        <SectorsList
-          sectors={sectors}
-          idSelectedSector={isEditing ? idSelectedSector : undefined}
-          idDirtySector={isSelectedDirty ? idSelectedSector : undefined}
-          columns={columns}
-          onSelect={(sector) =>
-            isEditing
-              ? selectSector(sector.id)
-              : navigate(buildSectorPath(idRegion, sector.id))
+      <BodyStyled>
+        <SectorMapDesktop
+          mapped={mapped}
+          selectedSector={selectedSector}
+          aside={
+            isEditing && (
+              <>
+                <RegionEditSection region={region ?? undefined} />
+                <RegionEditSidebar
+                  region={region ?? undefined}
+                  selectedSector={selectedSector}
+                  point={draftPoint}
+                  onSelectSector={selectSector}
+                  onChangePoint={setDraftPoint}
+                  onDirtyChange={setIsSelectedDirty}
+                />
+              </>
+            )
           }
+          mainFooter={
+            <SectorsList
+              sectors={sectors}
+              pinColors={pinColors}
+              idSelectedSector={idSelectedSector}
+              idDirtySector={isSelectedDirty ? idSelectedSector : undefined}
+              columns={columns}
+              isEditing={isEditing}
+              onSelect={(sector) =>
+                isEditing
+                  ? selectSector(sector.id)
+                  : navigate(buildSectorPath(idRegion, sector.id))
+              }
+            />
+          }
+          isEditing={isEditing}
+          onOpenSector={(idSector) =>
+            navigate(buildSectorPath(idRegion, idSector))
+          }
+          onSelectSector={selectSector}
+          onPlacePoint={setDraftPoint}
         />
-        {isEditing && (
-          <RegionEditSidebar
-            region={region ?? undefined}
-            selectedSector={sectors.find(({ id }) => id === idSelectedSector)}
-            onSelectSector={selectSector}
-            onDirtyChange={setIsSelectedDirty}
-          />
-        )}
-      </CatalogColumns>
+      </BodyStyled>
     </PageShell>
   );
 };
+
+const BodyStyled = styled('div')`
+  flex-grow: 1;
+  min-height: 0;
+  padding-top: ${({ theme }) => theme.spacing(1)};
+`;
 
 const HeaderRowStyled = styled('div')`
   display: flex;

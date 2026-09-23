@@ -18,7 +18,9 @@ export const useApiUpdateRegion = ({ idRegion, onSaved }: Params) => {
       apiPatch<Region>(`/regions/${idRegion}`, payload),
     onSuccess: (region) => {
       queryClient.setQueryData(QUERY_KEYS.region(idRegion), region);
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.regions() });
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.regionList(false)
+      });
       onSaved?.();
     },
     onError: (error) => toast.error(resolveFailureMessage(toFailure(error)))

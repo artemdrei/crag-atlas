@@ -24,12 +24,17 @@ const readStoredMode = (): ThemeMode => {
 };
 
 export const ThemeModeProvider = ({
+  isEditing,
   children
 }: {
+  isEditing?: boolean;
   children: React.ReactNode;
 }) => {
   const [mode, setMode] = useState<ThemeMode>(readStoredMode);
-  const theme = useMemo(() => createAppTheme(mode), [mode]);
+  const theme = useMemo(
+    () => createAppTheme(mode, isEditing),
+    [mode, isEditing]
+  );
 
   const toggle = () => {
     setMode((prev) => {

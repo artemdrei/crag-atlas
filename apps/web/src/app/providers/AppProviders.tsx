@@ -8,6 +8,7 @@ import { activateLocale, i18n, readStoredLocale } from '@web/shared/i18n/i18n';
 import { ThemeModeProvider } from '@web/shared/theme/ThemeModeProvider';
 
 import { AppToastProvider } from './AppToastProvider';
+import { EditModeProvider, useEditMode } from './EditModeProvider';
 import type { ModalRegistration } from './modalProvider';
 import { ModalProvider } from './modalProvider';
 import { UserProvider } from './UserProvider';
@@ -18,6 +19,14 @@ export interface Props {
   modalRegistrations: ModalRegistration[];
   children: React.ReactNode;
 }
+
+const ThemedApp = ({ children }: { children: React.ReactNode }) => {
+  const { isEditing } = useEditMode();
+
+  return (
+    <ThemeModeProvider isEditing={isEditing}>{children}</ThemeModeProvider>
+  );
+};
 
 export const AppProviders = ({ modalRegistrations, children }: Props) => {
   const [ready, setReady] = useState(false);
@@ -31,15 +40,17 @@ export const AppProviders = ({ modalRegistrations, children }: Props) => {
   return (
     <QueryClientProvider client={queryClient}>
       <I18nProvider i18n={i18n}>
-        <ThemeModeProvider>
-          <AppToastProvider>
-            <UserProvider>
-              <ModalProvider registrations={modalRegistrations}>
-                {children}
-              </ModalProvider>
-            </UserProvider>
-          </AppToastProvider>
-        </ThemeModeProvider>
+        <EditModeProvider>
+          <ThemedApp>
+            <AppToastProvider>
+              <UserProvider>
+                <ModalProvider registrations={modalRegistrations}>
+                  {children}
+                </ModalProvider>
+              </UserProvider>
+            </AppToastProvider>
+          </ThemedApp>
+        </EditModeProvider>
       </I18nProvider>
     </QueryClientProvider>
   );

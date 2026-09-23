@@ -1,27 +1,41 @@
-import { createTheme } from '@mui/material/styles';
+import { alpha, createTheme } from '@mui/material/styles';
 
-import type { AscentStyleTone, GradeColor, GradeTone } from './palette';
-import { palette } from './palette';
+import type { AscentTypeTone, GradeColor, GradeTone } from './palette';
+import { resolvePalette } from './palette';
 import { typography } from './typography';
 
 declare module '@mui/material/styles' {
   interface Palette {
     grade: Record<GradeTone, GradeColor>;
-    ascentStyle: Record<AscentStyleTone, GradeColor>;
+    ascentType: Record<AscentTypeTone, GradeColor>;
+    sectorPin: string[];
   }
 
   interface PaletteOptions {
     grade?: Record<GradeTone, GradeColor>;
-    ascentStyle?: Record<AscentStyleTone, GradeColor>;
+    ascentType?: Record<AscentTypeTone, GradeColor>;
+    sectorPin?: string[];
   }
 }
 
-export const createAppTheme = (mode: 'light' | 'dark') =>
+export const createAppTheme = (mode: 'light' | 'dark', isEditing = false) =>
   createTheme({
-    palette: { mode, ...palette[mode] },
+    palette: { mode, ...resolvePalette(mode, isEditing) },
     typography,
     shape: { borderRadius: mode === 'dark' ? 12 : 10 },
     components: {
+      MuiBackdrop: {
+        styleOverrides: {
+          // Menus and popovers ride on an invisible backdrop; only the ones
+          // meant to dim the page get the deeper tint.
+          root: ({ ownerState, theme }) =>
+            ownerState.invisible
+              ? {}
+              : {
+                  backgroundColor: alpha(theme.palette.common.black, 0.72)
+                }
+        }
+      },
       MuiButton: {
         styleOverrides: {
           root: { textTransform: 'capitalize' }

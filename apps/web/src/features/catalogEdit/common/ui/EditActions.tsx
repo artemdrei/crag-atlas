@@ -1,18 +1,21 @@
+import type { ReactNode } from 'react';
+
 import { Trans } from '@lingui/react/macro';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 
 export interface Props {
   isPending: boolean;
-  /** Left out where the form is always on screen and has nothing to close. */
   onCancel?: () => void;
+  leftAction?: ReactNode;
 }
 
-export const EditActions = ({ isPending, onCancel }: Props) => (
+export const EditActions = ({ isPending, onCancel, leftAction }: Props) => (
   <ActionsStyled>
+    {leftAction && <LeftSlotStyled>{leftAction}</LeftSlotStyled>}
     {onCancel && (
       <Button type="button" onClick={onCancel}>
-        <Trans>Cancel</Trans>
+        <Trans>Close</Trans>
       </Button>
     )}
     <Button type="submit" variant="contained" disabled={isPending}>
@@ -23,6 +26,11 @@ export const EditActions = ({ isPending, onCancel }: Props) => (
 
 const ActionsStyled = styled('div')`
   display: flex;
+  align-items: center;
   justify-content: flex-end;
   gap: ${({ theme }) => theme.spacing(1)};
+`;
+
+const LeftSlotStyled = styled('div')`
+  margin-right: auto;
 `;

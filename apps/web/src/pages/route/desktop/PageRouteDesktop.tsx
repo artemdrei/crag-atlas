@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { styled, useTheme } from '@mui/material/styles';
 
-import { useModal } from '@web/app/providers';
+import { useModal, useUser } from '@web/app/providers';
 import {
   buildRegionPath,
   buildRouteEditPath,
@@ -22,6 +22,8 @@ import {
 import { GradeConsensus } from '@web/widgets/gradeConsensus';
 
 import {
+  ArchivedRouteActions,
+  ArchivedRouteNotice,
   LogTickButton,
   MyAscentsCard,
   RouteDetails,
@@ -36,6 +38,7 @@ export const PageRouteDesktop = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const { openModal } = useModal();
+  const { hasRole } = useUser();
   const { route, isLoading, failure } = useApiGetRoute(idRoute);
   const { topo, photoIndex, lines, numberOf } = useRouteTopo(idSector, idRoute);
   const photoLabel = usePhotoLabel();
@@ -69,7 +72,7 @@ export const PageRouteDesktop = () => {
             { label: route?.name ?? '…' }
           ]}
         />
-        {route && (
+        {route && !route.isArchived && (
           <EditToggleButton
             onClick={() =>
               navigate(buildRouteEditPath(idRegion, idSector, idRoute))
@@ -84,6 +87,7 @@ export const PageRouteDesktop = () => {
       />
       {route && (
         <ColumnsStyled>
+          {route.isArchived && <NoticeStyled />}
           <PhotoStyled>
             {topo ? (
               <PhotoButtonStyled
@@ -125,7 +129,18 @@ export const PageRouteDesktop = () => {
             <RouteTabs idRoute={route.id} />
           </MainColumnStyled>
           <ActionsStyled>
-            <LogTickButton idRoute={route.id} />
+            {route.isDeleted && hasRole('admin') && (
+              <ArchivedRouteActions route={route} />
+            )}
+            {!route.isArchived && (
+              <LogTickButton
+                idRoute={route.id}
+                routeName={route.name}
+                routeGrade={route.grade}
+                routeGradeScale={route.gradeScale}
+                place={`${route.sectorName}, ${route.regionName}`}
+              />
+            )}
             <MyAscentsCard idRoute={route.id} />
           </ActionsStyled>
         </ColumnsStyled>
@@ -139,6 +154,10 @@ const HeaderRowStyled = styled('div')`
   align-items: center;
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacing(2)};
+`;
+
+const NoticeStyled = styled(ArchivedRouteNotice)`
+  grid-column: 1 / -1;
 `;
 
 const ColumnsStyled = styled('div')`

@@ -7,7 +7,6 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Button from '@mui/material/Button';
 import ButtonBase from '@mui/material/ButtonBase';
 import Collapse from '@mui/material/Collapse';
-import Divider from '@mui/material/Divider';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
@@ -28,6 +27,7 @@ import {
 } from '../common';
 import { useEditorHotkeys, useTopoEditorDerived } from './hooks';
 import {
+  TopoEditorArchivedRoutes,
   TopoEditorRouteList,
   TopoEditorRoutePanel,
   TopoEditStage,
@@ -48,15 +48,24 @@ export interface Props {
   sector?: Sector;
   /** What the server holds, so an edited field can say it differs. */
   savedRoutes: Route[];
+  /** Kept out of the session on purpose — see TopoEditorArchivedRoutes. */
+  archivedRoutes: Route[];
   editor: TopoEditorSessionApi;
   actions: TopoEditorActions;
+  isArchiveShown: boolean;
+  onRestoreRoute: (idRoute: string) => void;
+  onEraseRoute: (route: Route) => void;
 }
 
 export const TopoEditorDesktop = ({
   sector,
   savedRoutes,
+  archivedRoutes,
   editor,
-  actions
+  actions,
+  isArchiveShown,
+  onRestoreRoute,
+  onEraseRoute
 }: Props) => {
   const { t } = useLingui();
   const { session, dispatch, beginGesture, endGesture, undo, redo } = editor;
@@ -139,7 +148,7 @@ export const TopoEditorDesktop = ({
   });
 
   return (
-    <LayoutStyled>
+    <LayoutStyled isArchiveShown={isArchiveShown}>
       <StageColumnStyled>
         {activeTopo ? (
           <StageStyled
@@ -180,98 +189,123 @@ export const TopoEditorDesktop = ({
         />
       </StageColumnStyled>
       <ColumnStyled>
-        <TopoEditorRouteList
-          groups={groups}
-          numberOf={numberOf}
-          idsDirtyRoutes={idsDirtyRoutes}
-          idSelectedRoute={session.idSelectedRoute}
-          idHoveredRoute={idHoveredRoute}
-          isBusy={actions.isBusy}
-          onSelect={selectRoute}
-          onHover={setIdHoveredRoute}
-          onMoveToPhoto={(idRoute, idTopo) =>
-            dispatch({ type: 'MOVE_LINE', idRoute, idTopo })
-          }
-          onAdd={actions.addRoute}
-        />
-      </ColumnStyled>
-      <ColumnStyled>
-        <SectionToggleStyled
-          type="button"
-          aria-expanded={isSectorOpen}
-          onClick={() => setIsSectorOpen((open) => !open)}
-        >
-          <Typography variant="subtitle2">
-            <Trans>Sector</Trans>
-          </Typography>
-          <ExpandMoreIcon fontSize="small" />
-        </SectionToggleStyled>
-        <Collapse in={isSectorOpen} unmountOnExit>
-          {sector && <SectorEditForm sector={sector} />}
-        </Collapse>
-        <Divider />
-        {selectedRoute && (
-          <TopoEditorRoutePanel
-            route={selectedRoute}
-            number={numberOf[selectedRoute.id]}
-            hasLine={
-              (activeTopo?.lines[selectedRoute.id]?.points.length ?? 0) > 0
-            }
-            changed={changedRouteFields(
-              selectedRoute,
-              savedRoutes.find(({ id }) => id === selectedRoute.id)
-            )}
-            isDirty={isRouteDirty(session, selectedRoute.id)}
+        {isArchiveShown ? (
+          <TopoEditorArchivedRoutes
+            routes={archivedRoutes}
             isBusy={actions.isBusy}
-            isPreview={session.isPreview}
-            canUndo={editor.canUndo}
-            canRedo={editor.canRedo}
-            onChange={(patch) =>
-              dispatch({ type: 'EDIT_ROUTE', idRoute: selectedRoute.id, patch })
+            onRestore={onRestoreRoute}
+            onErase={onEraseRoute}
+          />
+        ) : (
+          <TopoEditorRouteList
+            groups={groups}
+            numberOf={numberOf}
+            idsDirtyRoutes={idsDirtyRoutes}
+            idSelectedRoute={session.idSelectedRoute}
+            idHoveredRoute={idHoveredRoute}
+            onSelect={selectRoute}
+            onHover={setIdHoveredRoute}
+            onMoveToPhoto={(idRoute, idTopo) =>
+              dispatch({ type: 'MOVE_LINE', idRoute, idTopo })
             }
-            onTogglePreview={() => dispatch({ type: 'TOGGLE_PREVIEW' })}
-            onUndo={undo}
-            onRedo={redo}
-            onReset={() => actions.resetRoute(selectedRoute.id)}
-            onSave={() => actions.saveRoute(selectedRoute.id)}
-            photos={photos}
-            idPhoto={photoOf(session, selectedRoute.id)}
-            onMoveToPhoto={(idTopo) =>
-              dispatch({ type: 'MOVE_LINE', idRoute: selectedRoute.id, idTopo })
-            }
-            onRemoveLine={actions.removeLine}
-            onDelete={() => actions.removeRoute(selectedRoute.id)}
           />
         )}
-        {!selectedRoute && (
-          <HintStyled>
-            <span aria-hidden="true">👈</span>
-            <Typography variant="body2" color="text.secondary">
-              <Trans>Pick a route on the left to edit it.</Trans>
-            </Typography>
-            <CenteredStyled variant="body2" color="text.secondary">
-              <Trans>Or</Trans>
-            </CenteredStyled>
-            <Button
-              fullWidth
-              size="small"
-              variant="outlined"
-              startIcon={<AddIcon fontSize="small" />}
-              disabled={actions.isBusy}
-              onClick={actions.addRoute}
-            >
-              <Trans>Add route</Trans>
-            </Button>
-          </HintStyled>
-        )}
       </ColumnStyled>
+      {!isArchiveShown && (
+        <ColumnStyled>
+          <SectorSectionStyled>
+            <SectionToggleStyled
+              type="button"
+              aria-expanded={isSectorOpen}
+              onClick={() => setIsSectorOpen((open) => !open)}
+            >
+              <Typography variant="subtitle2">
+                <Trans>Sector</Trans>
+              </Typography>
+              <ExpandMoreIcon fontSize="small" />
+            </SectionToggleStyled>
+            <Collapse in={isSectorOpen} unmountOnExit>
+              <SectorFormStyled>
+                {sector && <SectorEditForm sector={sector} />}
+              </SectorFormStyled>
+            </Collapse>
+          </SectorSectionStyled>
+          {selectedRoute && (
+            <TopoEditorRoutePanel
+              route={selectedRoute}
+              number={numberOf[selectedRoute.id]}
+              hasLine={
+                (activeTopo?.lines[selectedRoute.id]?.points.length ?? 0) > 0
+              }
+              changed={changedRouteFields(
+                selectedRoute,
+                savedRoutes.find(({ id }) => id === selectedRoute.id)
+              )}
+              isDirty={isRouteDirty(session, selectedRoute.id)}
+              isBusy={actions.isBusy}
+              isPreview={session.isPreview}
+              canUndo={editor.canUndo}
+              canRedo={editor.canRedo}
+              onChange={(patch) =>
+                dispatch({
+                  type: 'EDIT_ROUTE',
+                  idRoute: selectedRoute.id,
+                  patch
+                })
+              }
+              onTogglePreview={() => dispatch({ type: 'TOGGLE_PREVIEW' })}
+              onUndo={undo}
+              onRedo={redo}
+              onReset={() => actions.resetRoute(selectedRoute.id)}
+              onSave={() => actions.saveRoute(selectedRoute.id)}
+              photos={photos}
+              idPhoto={photoOf(session, selectedRoute.id)}
+              onMoveToPhoto={(idTopo) =>
+                dispatch({
+                  type: 'MOVE_LINE',
+                  idRoute: selectedRoute.id,
+                  idTopo
+                })
+              }
+              onRemoveLine={actions.removeLine}
+              onDelete={() => actions.removeRoute(selectedRoute.id)}
+            />
+          )}
+          {!selectedRoute && (
+            <HintStyled>
+              <span aria-hidden="true">👈</span>
+              <Typography variant="body2" color="text.secondary">
+                <Trans>Pick a route on the left to edit it.</Trans>
+              </Typography>
+              <CenteredStyled variant="body2" color="text.secondary">
+                <Trans>Or</Trans>
+              </CenteredStyled>
+              <Button
+                fullWidth
+                size="small"
+                variant="outlined"
+                startIcon={<AddIcon fontSize="small" />}
+                disabled={actions.isBusy}
+                onClick={actions.addRoute}
+              >
+                <Trans>Add route</Trans>
+              </Button>
+            </HintStyled>
+          )}
+        </ColumnStyled>
+      )}
     </LayoutStyled>
   );
 };
 
-const LayoutStyled = styled('div')`
+// The archive has nothing to select, so the panel that edits a selection
+// leaves and gives its width to the list.
+const LayoutStyled = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'isArchiveShown'
+})<{ isArchiveShown: boolean }>`
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 320px 360px;
+  grid-template-columns: ${({ isArchiveShown }) =>
+    isArchiveShown ? 'minmax(0, 1fr) 480px' : 'minmax(0, 1fr) 320px 360px'};
   gap: ${({ theme }) => theme.spacing(2)};
   flex-grow: 1;
   min-height: 0;
@@ -297,6 +331,20 @@ const EmptyPhotoStyled = styled('div')`
   flex-grow: 1;
   align-items: center;
   justify-content: center;
+`;
+
+// Its own block rather than a heading followed by a rule: the open form ends
+// with a Save of its own, and the panel below opens with a toolbar — without a
+// boundary that belongs to the section, the two rows read as one.
+const SectorSectionStyled = styled('div')`
+  display: flex;
+  flex-direction: column;
+  padding-bottom: ${({ theme }) => theme.spacing(2)};
+  border-bottom: 1px solid ${({ theme }) => theme.palette.divider};
+`;
+
+const SectorFormStyled = styled('div')`
+  padding-top: ${({ theme }) => theme.spacing(2)};
 `;
 
 const SectionToggleStyled = styled(ButtonBase)`

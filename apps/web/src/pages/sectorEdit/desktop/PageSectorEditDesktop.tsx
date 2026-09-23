@@ -1,31 +1,45 @@
 import { useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
-import { Plural, Trans, useLingui } from '@lingui/react/macro';
+import type { Route } from '@crag-atlas/api';
+import { Plural, Trans } from '@lingui/react/macro';
 
-import { useModal } from '@web/app/providers';
+import { useEditModeWhileMounted, useModal } from '@web/app/providers';
 import { buildSectorPath } from '@web/app/router/routes';
+import { useApiArchiveAction } from '@web/features/catalogEdit';
 import {
   hasUnsavedChanges,
   TopoEditorDesktop,
   useTopoEditorActions,
   useTopoEditorSession
 } from '@web/features/topoEditor';
-import { useWarnOnUnload } from '@web/shared/lib';
-import { ApiFeedback, EditorPageShell } from '@web/shared/ui';
+import { useSearchParamFlags, useWarnOnUnload } from '@web/shared/lib';
+import { ApiFeedback, ArchivedToggle, EditorPageShell } from '@web/shared/ui';
 
 import { useSectorEditorData } from '../common';
 
 export const PageSectorEditDesktop = () => {
-  const { t } = useLingui();
+  useEditModeWhileMounted();
   const { idRegion = '', idSector = '' } = useParams();
   const navigate = useNavigate();
   const { openModal } = useModal();
-  const { sector, routes, topos, isLoading, failure } =
-    useSectorEditorData(idSector);
+  const [{ archive: isArchiveShown }, setFlags] = useSearchParamFlags([
+    'archive'
+  ]);
+  const { sector, routes, archivedRoutes, topos, isLoading, failure } =
+    useSectorEditorData(idSector, isArchiveShown);
+  // An empty sector is legitimate, so emptiness cannot mean "not hydrated".
+  const hasHydrated = useRef(false);
   const editor = useTopoEditorSession();
   const actions = useTopoEditorActions({ idSector, editor, topos, routes });
   const { session, dispatch } = editor;
+  const { run: restoreRoute } = useApiArchiveAction<Route>('restore', {
+    scope: 'routes',
+    onDone: (route) => dispatch({ type: 'ROUTE_RESTORED', route })
+  });
+  const { run: eraseRoute } = useApiArchiveAction('erase', {
+    scope: 'routes'
+  });
 
   const isDirty = hasUnsavedChanges(session);
 
@@ -40,9 +54,6 @@ export const PageSectorEditDesktop = () => {
 
     openModal('LEAVE_EDITOR', { onConfirm: go });
   };
-
-  // An empty sector is legitimate, so emptiness cannot mean "not hydrated".
-  const hasHydrated = useRef(false);
 
   useEffect(() => {
     if (isLoading || hasHydrated.current) return;
@@ -61,7 +72,6 @@ export const PageSectorEditDesktop = () => {
 
   return (
     <EditorPageShell
-      backLabel={t`Back to the sector`}
       title={
         <>
           {sector?.name ?? '…'} ·{' '}
@@ -74,6 +84,12 @@ export const PageSectorEditDesktop = () => {
           />
         </>
       }
+      actions={
+        <ArchivedToggle
+          isOn={isArchiveShown}
+          onToggle={() => setFlags({ archive: !isArchiveShown })}
+        />
+      }
       onLeave={leave}
     >
       <ApiFeedback
@@ -85,8 +101,17 @@ export const PageSectorEditDesktop = () => {
         <TopoEditorDesktop
           sector={sector ?? undefined}
           savedRoutes={routes}
+          archivedRoutes={archivedRoutes}
           editor={editor}
           actions={actions}
+          isArchiveShown={isArchiveShown}
+          onRestoreRoute={restoreRoute}
+          onEraseRoute={(route) =>
+            openModal('PURGE_CATALOG_ITEM', {
+              name: route.name,
+              onConfirm: () => eraseRoute(route.id)
+            })
+          }
         />
       )}
     </EditorPageShell>

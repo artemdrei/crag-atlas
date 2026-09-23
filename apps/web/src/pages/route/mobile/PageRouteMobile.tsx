@@ -20,6 +20,7 @@ import {
 import { GradeConsensus } from '@web/widgets/gradeConsensus';
 
 import {
+  ArchivedRouteNotice,
   LogTickButton,
   MyAscentsCard,
   RouteDetails,
@@ -75,6 +76,7 @@ export const PageRouteMobile = () => {
       />
       {route && (
         <>
+          {route.isArchived && <ArchivedRouteNotice />}
           <PhotoStyled>
             {topo ? (
               <PhotoButtonStyled
@@ -116,9 +118,17 @@ export const PageRouteMobile = () => {
           </StatsRowStyled>
           <RouteTabs idRoute={route.id} />
           <MyAscentsCard idRoute={route.id} />
-          <ActionBarStyled>
-            <LogTickButton idRoute={route.id} />
-          </ActionBarStyled>
+          {!route.isArchived && (
+            <ActionBarStyled>
+              <LogTickButton
+                idRoute={route.id}
+                routeName={route.name}
+                routeGrade={route.grade}
+                routeGradeScale={route.gradeScale}
+                place={`${route.sectorName}, ${route.regionName}`}
+              />
+            </ActionBarStyled>
+          )}
         </>
       )}
     </PageShell>

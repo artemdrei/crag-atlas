@@ -1,7 +1,10 @@
 import { useApiGetTopos } from '@web/features/topo';
 import { useApiGetRoutes, useApiGetSector } from '@web/pages/sector';
 
-export const useSectorEditorData = (idSector: string) => {
+export const useSectorEditorData = (
+  idSector: string,
+  isArchiveShown = false
+) => {
   const {
     sector,
     isLoading: isSectorLoading,
@@ -12,6 +15,11 @@ export const useSectorEditorData = (idSector: string) => {
     isLoading: areRoutesLoading,
     failure: routesFailure
   } = useApiGetRoutes(idSector);
+  const { routes: archivedRoutes } = useApiGetRoutes(
+    idSector,
+    true,
+    isArchiveShown
+  );
   const {
     topos,
     isLoading: areToposLoading,
@@ -21,6 +29,7 @@ export const useSectorEditorData = (idSector: string) => {
   return {
     sector,
     routes,
+    archivedRoutes,
     topos,
     isLoading: isSectorLoading || areRoutesLoading || areToposLoading,
     failure: sectorFailure ?? routesFailure ?? toposFailure

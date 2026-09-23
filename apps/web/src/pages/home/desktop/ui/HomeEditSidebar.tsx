@@ -8,6 +8,8 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import {
+  ArchivedRegionPanel,
+  ArchiveRegionButton,
   RegionCreateForm,
   RegionEditForm,
   RegionPhotoPicker
@@ -28,58 +30,74 @@ export const HomeEditSidebar = ({
 }: Props) => {
   const [isAdding, setIsAdding] = useState(false);
 
+  if (isAdding) {
+    return (
+      <SidebarStyled>
+        <BackButtonStyled
+          size="small"
+          startIcon={<ArrowBackIcon fontSize="small" />}
+          onClick={() => setIsAdding(false)}
+        >
+          <Trans>Back</Trans>
+        </BackButtonStyled>
+        <RegionCreateForm />
+      </SidebarStyled>
+    );
+  }
+
+  if (selectedRegion?.isDeleted) {
+    return (
+      <SidebarStyled>
+        <ArchivedRegionPanel
+          region={selectedRegion}
+          onDone={() => onSelectRegion(undefined)}
+        />
+      </SidebarStyled>
+    );
+  }
+
+  if (selectedRegion) {
+    return (
+      <SidebarStyled>
+        <RegionPhotoPicker
+          idRegion={selectedRegion.id}
+          photoUrl={selectedRegion.photoUrl}
+        />
+        {/* Seeded from props once, so another region needs another instance. */}
+        <RegionEditForm
+          key={selectedRegion.id}
+          region={selectedRegion}
+          onDirtyChange={onDirtyChange}
+          leftAction={
+            <ArchiveRegionButton
+              region={selectedRegion}
+              onArchived={() => onSelectRegion(undefined)}
+            />
+          }
+        />
+      </SidebarStyled>
+    );
+  }
+
   return (
     <SidebarStyled>
-      {isAdding ? (
-        <>
-          <BackButtonStyled
-            size="small"
-            startIcon={<ArrowBackIcon fontSize="small" />}
-            onClick={() => setIsAdding(false)}
-          >
-            <Trans>Back</Trans>
-          </BackButtonStyled>
-          <RegionCreateForm />
-        </>
-      ) : selectedRegion ? (
-        <>
-          <BackButtonStyled
-            size="small"
-            startIcon={<ArrowBackIcon fontSize="small" />}
-            onClick={() => onSelectRegion(undefined)}
-          >
-            <Trans>All regions</Trans>
-          </BackButtonStyled>
-          <RegionPhotoPicker
-            idRegion={selectedRegion.id}
-            photoUrl={selectedRegion.photoUrl}
-          />
-          {/* Seeded from props once, so another region needs another instance. */}
-          <RegionEditForm
-            key={selectedRegion.id}
-            region={selectedRegion}
-            onDirtyChange={onDirtyChange}
-          />
-        </>
-      ) : (
-        <HintStyled>
-          <span aria-hidden="true">👈</span>
-          <Typography variant="body2" color="text.secondary">
-            <Trans>Pick a region on the left to edit it.</Trans>
-          </Typography>
-          <CenteredStyled variant="body2" color="text.secondary">
-            <Trans>Or</Trans>
-          </CenteredStyled>
-          <Button
-            fullWidth
-            variant="outlined"
-            startIcon={<AddIcon fontSize="small" />}
-            onClick={() => setIsAdding(true)}
-          >
-            <Trans>Add region</Trans>
-          </Button>
-        </HintStyled>
-      )}
+      <HintStyled>
+        <span aria-hidden="true">👈</span>
+        <Typography variant="body2" color="text.secondary">
+          <Trans>Pick a region on the left to edit it.</Trans>
+        </Typography>
+        <CenteredStyled variant="body2" color="text.secondary">
+          <Trans>Or</Trans>
+        </CenteredStyled>
+        <Button
+          fullWidth
+          variant="outlined"
+          startIcon={<AddIcon fontSize="small" />}
+          onClick={() => setIsAdding(true)}
+        >
+          <Trans>Add region</Trans>
+        </Button>
+      </HintStyled>
     </SidebarStyled>
   );
 };

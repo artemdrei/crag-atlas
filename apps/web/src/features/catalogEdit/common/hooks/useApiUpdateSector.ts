@@ -7,11 +7,10 @@ import { toast } from '@web/shared/lib';
 
 export interface Params {
   idSector: string;
-  idRegion: string;
   onSaved?: () => void;
 }
 
-export const useApiUpdateSector = ({ idSector, idRegion, onSaved }: Params) => {
+export const useApiUpdateSector = ({ idSector, onSaved }: Params) => {
   const queryClient = useQueryClient();
 
   const { isPending, mutate } = useMutation({
@@ -19,7 +18,9 @@ export const useApiUpdateSector = ({ idSector, idRegion, onSaved }: Params) => {
       apiPatch<Sector>(`/sectors/${idSector}`, payload),
     onSuccess: (sector) => {
       queryClient.setQueryData(QUERY_KEYS.sector(idSector), sector);
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.sectors(idRegion) });
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.region(sector.idRegion)
+      });
       onSaved?.();
     },
     onError: (error) => toast.error(resolveFailureMessage(toFailure(error)))

@@ -1,3 +1,10 @@
+export { ArchivedItemPanel } from './ArchivedItemPanel';
+export { ArchivedRegionPanel } from './ArchivedRegionPanel';
+export { ArchivedSectorPanel } from './ArchivedSectorPanel';
+export { ArchiveRegionButton } from './ArchiveRegionButton';
+export { ArchiveSectorButton } from './ArchiveSectorButton';
+export { CatalogEditActions } from './CatalogEditActions';
+export { ClimberContentNote } from './ClimberContentNote';
 export { EditToggleButton } from './EditToggleButton';
 export { RegionCreateForm } from './RegionCreateForm';
 export { RegionEditForm } from './RegionEditForm';

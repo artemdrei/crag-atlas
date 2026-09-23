@@ -1,5 +1,6 @@
 import { type FormEvent, useState } from 'react';
 
+import type { Sector } from '@crag-atlas/api';
 import { Trans, useLingui } from '@lingui/react/macro';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -11,9 +12,10 @@ import { EditFormStyled } from './EditFormStyled';
 
 export interface Props {
   idRegion: string;
+  onCreated?: (sector: Sector) => void;
 }
 
-export const SectorCreateForm = ({ idRegion }: Props) => {
+export const SectorCreateForm = ({ idRegion, onCreated }: Props) => {
   const { t } = useLingui();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -24,6 +26,7 @@ export const SectorCreateForm = ({ idRegion }: Props) => {
       setName('');
       setDescription('');
       toast.success(t`Sector ${sector.name} created`);
+      onCreated?.(sector);
     }
   });
 

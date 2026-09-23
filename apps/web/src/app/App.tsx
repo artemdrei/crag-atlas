@@ -2,6 +2,7 @@ import { lazy } from 'react';
 import { isMobile } from 'react-device-detect';
 
 import { AppProviders } from '@web/app/providers';
+import { catalogEditDesktopRegistrations } from '@web/features/catalogEdit';
 import {
   logTickDesktopRegistrations,
   logTickMobileRegistrations
@@ -25,6 +26,7 @@ const AppMobile = lazy(() => import('./mobile/AppMobile'));
 const AppDesktop = lazy(() => import('./desktop/AppDesktop'));
 
 const desktopRegistrations = [
+  ...catalogEditDesktopRegistrations,
   ...logTickDesktopRegistrations,
   ...topoDesktopRegistrations,
   ...topoEditorDesktopRegistrations,

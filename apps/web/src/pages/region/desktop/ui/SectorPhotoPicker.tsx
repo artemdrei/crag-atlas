@@ -85,14 +85,13 @@ export const SectorPhotoPicker = ({ idSector }: Props) => {
   );
 };
 
-// A square slot the whole photo fits inside: the panel keeps its height
-// whatever the shot's proportions, and nothing gets cropped away.
 const PickerStyled = styled('button')`
   display: flex;
+  flex: none;
   align-items: center;
   justify-content: center;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 3 / 2;
   padding: 0;
   overflow: hidden;
   cursor: pointer;

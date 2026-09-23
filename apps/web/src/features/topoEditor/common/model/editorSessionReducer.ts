@@ -165,6 +165,9 @@ export const editorSessionReducer = (
     case 'ROUTE_CREATED':
       return renameRoute(session, action.idDraft, action.route);
 
+    case 'ROUTE_RESTORED':
+      return addRoute(session, action.route);
+
     case 'REMOVE_ROUTE':
       return removeRoute(session, action.idRoute);
 
@@ -415,6 +418,19 @@ const restored = (
 
   return rest;
 };
+
+// The server put the route back in the sector, so the session takes it as it
+// stands — no line yet, and nothing the editor holds is touched.
+const addRoute = (
+  session: TopoEditorSession,
+  route: Route
+): TopoEditorSession => ({
+  ...session,
+  routes: { ...session.routes, [route.id]: toRouteDraft(route) },
+  routeOrder: session.routeOrder.includes(route.id)
+    ? session.routeOrder
+    : [...session.routeOrder, route.id]
+});
 
 const renameRoute = (
   session: TopoEditorSession,

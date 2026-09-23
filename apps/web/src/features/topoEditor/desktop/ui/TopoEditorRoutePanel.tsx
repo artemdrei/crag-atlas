@@ -26,7 +26,7 @@ import {
   gradeScaleName,
   gradeScalesForType
 } from '@web/shared/lib';
-import { ChangedTextField } from '@web/shared/ui';
+import { ChangedTextField, DangerButton } from '@web/shared/ui';
 
 import type { ChangedRouteFields, RouteDraft } from '../../common';
 
@@ -95,8 +95,10 @@ export const TopoEditorRoutePanel = ({
     });
 
   const askDelete = () =>
-    openModal('DELETE_ROUTE', {
+    openModal('ARCHIVE_ROUTE', {
       routeName: route.name.trim() || t`This route`,
+      grade: route.grade,
+      gradeScale: route.gradeScale,
       isNew: route.isNew,
       onConfirm: onDelete
     });
@@ -174,7 +176,7 @@ export const TopoEditorRoutePanel = ({
         disabled={!idPhoto || isBusy}
         helperText={
           idPhoto
-            ? t`The line moves as it is — redraw it on the new photo.`
+            ? undefined
             : t`Draw the route first, then it can move between photos.`
         }
         onChange={({ target }) => onMoveToPhoto(target.value)}
@@ -287,7 +289,7 @@ export const TopoEditorRoutePanel = ({
           <Trans>Delete line</Trans>
         </DangerButtonStyled>
         <DangerButtonStyled color="error" disabled={isBusy} onClick={askDelete}>
-          <Trans>Delete route</Trans>
+          <Trans>Archive route</Trans>
         </DangerButtonStyled>
       </DangerRowStyled>
     </PanelStyled>
@@ -361,19 +363,9 @@ const DangerRowStyled = styled('div')`
   gap: ${({ theme }) => theme.spacing(1)};
 `;
 
-const DangerButtonStyled = styled(Button)`
+const DangerButtonStyled = styled(DangerButton)`
   flex: 1 1 50%;
   min-width: 0;
-  opacity: 0.5;
-  transition: opacity 0.15s ease-out;
-
-  &:hover {
-    opacity: 1;
-  }
-
-  &:disabled {
-    opacity: 0.25;
-  }
 `;
 
 const TypeGroupStyled = styled(ToggleButtonGroup)`

@@ -16,8 +16,9 @@ export const useApiUpdateRoute = () => {
       apiPatch<Route>(`/routes/${idRoute}`, payload),
     onSuccess: (route) => {
       queryClient.setQueryData(QUERY_KEYS.route(route.id), route);
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.regions() });
       queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.routes(route.idSector)
+        queryKey: QUERY_KEYS.sector(route.idSector)
       });
     }
   });

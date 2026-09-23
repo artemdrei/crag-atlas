@@ -393,4 +393,30 @@ describe('editorSessionReducer', () => {
 
     expect(lineOf(refetched).kinds[1]).toBe('bolt');
   });
+
+  it('takes a restored route into the session without touching the rest', () => {
+    const edited = run(
+      hydrated(),
+      { type: 'SELECT_ROUTE', idRoute: 'alpha' },
+      { type: 'EDIT_ROUTE', idRoute: 'alpha', patch: { name: 'Renamed' } }
+    );
+
+    const withRestored = editorSessionReducer(edited, {
+      type: 'ROUTE_RESTORED',
+      route: route('gamma')
+    });
+
+    expect(withRestored.routes.gamma?.name).toBe('gamma');
+    expect(withRestored.routeOrder).toContain('gamma');
+    expect(withRestored.routes.alpha?.name).toBe('Renamed');
+  });
+
+  it('does not add a restored route to the order twice', () => {
+    const once = editorSessionReducer(hydrated(), {
+      type: 'ROUTE_RESTORED',
+      route: route('alpha')
+    });
+
+    expect(once.routeOrder.filter((id) => id === 'alpha')).toHaveLength(1);
+  });
 });

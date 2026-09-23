@@ -1,4 +1,4 @@
-import { type FormEvent, useEffect, useState } from 'react';
+import { type FormEvent, type ReactNode, useEffect, useState } from 'react';
 
 import type { Sector } from '@crag-atlas/api';
 import { useLingui } from '@lingui/react/macro';
@@ -12,18 +12,30 @@ import { EditFormStyled } from './EditFormStyled';
 
 export interface Props {
   sector: Sector;
-  /** Omitted inside the editor, where the form is a permanent panel. */
+  point?: { lat: number; lng: number };
+  children?: ReactNode;
   onClose?: () => void;
-  /** Lets the list outside mark the row this form is holding edits for. */
   onDirtyChange?: (isDirty: boolean) => void;
+  leftAction?: ReactNode;
 }
 
-export const SectorEditForm = ({ sector, onClose, onDirtyChange }: Props) => {
+export const SectorEditForm = ({
+  sector,
+  point,
+  children,
+  onClose,
+  onDirtyChange,
+  leftAction
+}: Props) => {
   const { t } = useLingui();
   const [name, setName] = useState(sector.name);
   const [description, setDescription] = useState(sector.description);
 
-  const isDirty = name !== sector.name || description !== sector.description;
+  const isDirty =
+    name !== sector.name ||
+    description !== sector.description ||
+    (point?.lat ?? null) !== (sector.lat ?? null) ||
+    (point?.lng ?? null) !== (sector.lng ?? null);
 
   useEffect(() => {
     onDirtyChange?.(isDirty);
@@ -31,7 +43,6 @@ export const SectorEditForm = ({ sector, onClose, onDirtyChange }: Props) => {
 
   const { isPending, updateSector } = useApiUpdateSector({
     idSector: sector.id,
-    idRegion: sector.idRegion,
     onSaved: () => {
       toast.success(t`Sector saved`);
       onClose?.();
@@ -43,7 +54,9 @@ export const SectorEditForm = ({ sector, onClose, onDirtyChange }: Props) => {
 
     updateSector({
       name: name.trim(),
-      description: description.trim()
+      description: description.trim(),
+      lat: point?.lat ?? null,
+      lng: point?.lng ?? null
     });
   };
 
@@ -65,7 +78,12 @@ export const SectorEditForm = ({ sector, onClose, onDirtyChange }: Props) => {
         isChanged={description !== sector.description}
         onChange={(event) => setDescription(event.target.value)}
       />
-      <EditActions isPending={isPending} onCancel={onClose} />
+      {children}
+      <EditActions
+        isPending={isPending}
+        onCancel={onClose}
+        leftAction={leftAction}
+      />
     </EditFormStyled>
   );
 };

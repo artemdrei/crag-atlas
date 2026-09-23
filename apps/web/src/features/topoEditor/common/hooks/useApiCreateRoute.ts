@@ -13,8 +13,10 @@ export const useApiCreateRoute = ({ idSector }: Params) => {
   const { isPending, mutateAsync } = useMutation({
     mutationFn: (payload: CreateRoute) =>
       apiPost<Route>(`/sectors/${idSector}/routes`, payload),
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.routes(idSector) })
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.sector(idSector) });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.regions() });
+    }
   });
 
   return { isPending, createRoute: mutateAsync };

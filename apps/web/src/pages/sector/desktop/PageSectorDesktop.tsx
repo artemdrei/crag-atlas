@@ -14,6 +14,7 @@ import {
   buildSectorEditPath,
   ROUTES
 } from '@web/app/router/routes';
+import { SectorDirectionsButton, sectorPoint } from '@web/features/sectorMap';
 import {
   findTopoOfRoute,
   orderRoutes,
@@ -27,6 +28,7 @@ import { ApiFeedback, PageBreadcrumbs, PageShell } from '@web/shared/ui';
 
 import type { Route } from '../common';
 import {
+  ArchivedSectorNotice,
   RoutesList,
   RoutesPanelHeader,
   useApiGetRoutes,
@@ -41,6 +43,7 @@ export const PageSectorDesktop = () => {
   const theme = useTheme();
   const { idRegion = '', idSector = '' } = useParams();
   const navigate = useNavigate();
+  const { hasRole } = useUser();
   const { sector } = useApiGetSector(idSector);
   const { routes, isLoading, failure } = useApiGetRoutes(idSector);
   const { topos } = useApiGetTopos(idSector);
@@ -56,7 +59,6 @@ export const PageSectorDesktop = () => {
     topos: visibleTopos
   });
   const { idHighlightedRoute, highlightRoute } = useSectorSelection();
-  const { hasRole } = useUser();
 
   const numberOf = useMemo(
     () =>
@@ -108,33 +110,44 @@ export const PageSectorDesktop = () => {
             { label: sector?.name ?? '…' }
           ]}
         />
-        {hasRole('admin') && (
-          <Button
-            size="small"
-            variant="outlined"
-            startIcon={<EditIcon />}
-            onClick={() => navigate(buildSectorEditPath(idRegion, idSector))}
-          >
-            <Trans>Edit</Trans>
-          </Button>
-        )}
+        <ActionsStyled>
+          {hasRole('admin') && !sector?.isArchived && (
+            <Button
+              size="small"
+              variant="outlined"
+              startIcon={<EditIcon />}
+              onClick={() => navigate(buildSectorEditPath(idRegion, idSector))}
+            >
+              <Trans>Edit</Trans>
+            </Button>
+          )}
+        </ActionsStyled>
       </HeaderRowStyled>
-      {sector?.description && (
-        <Typography variant="body2" color="text.secondary">
-          {sector.description}
-        </Typography>
-      )}
+      {sector?.isArchived && <ArchivedSectorNotice />}
       <ColumnsStyled>
-        <TopoGalleryDesktop
-          topos={visibleTopos}
-          idActiveTopo={idActiveTopo}
-          idHighlightedRoute={idHighlightedRoute}
-          colorOf={colorOf}
-          numberOf={numberOf}
-          onSelectTopo={selectTopo}
-          onSelectRoute={openRouteById}
-          onHoverRoute={highlightRoute}
-        />
+        <MainColumnStyled>
+          <TitleRowStyled>
+            <Typography variant="h4">{sector?.name ?? '…'}</Typography>
+            <SectorDirectionsButton point={sectorPoint(sector)} />
+          </TitleRowStyled>
+          {sector?.description && (
+            <Typography variant="body2" color="text.secondary">
+              {sector.description}
+            </Typography>
+          )}
+          <GalleryAreaStyled>
+            <TopoGalleryDesktop
+              topos={visibleTopos}
+              idActiveTopo={idActiveTopo}
+              idHighlightedRoute={idHighlightedRoute}
+              colorOf={colorOf}
+              numberOf={numberOf}
+              onSelectTopo={selectTopo}
+              onSelectRoute={openRouteById}
+              onHoverRoute={highlightRoute}
+            />
+          </GalleryAreaStyled>
+        </MainColumnStyled>
         <PanelStyled>
           <RoutesPanelHeader
             routesCount={visibleRoutes.length}
@@ -170,6 +183,27 @@ const HeaderRowStyled = styled('div')`
   gap: ${({ theme }) => theme.spacing(2)};
 `;
 
+const TitleRowStyled = styled('div')`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: ${({ theme }) => theme.spacing(2)};
+
+  & > *:first-of-type {
+    min-width: 0;
+  }
+
+  & > *:last-child {
+    flex: none;
+  }
+`;
+
+const ActionsStyled = styled('div')`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing(1)};
+`;
+
 const ColumnsStyled = styled('div')`
   display: grid;
   grid-template-columns: minmax(0, 1fr) 480px;
@@ -177,6 +211,21 @@ const ColumnsStyled = styled('div')`
   align-items: stretch;
   flex-grow: 1;
   min-height: 0;
+`;
+
+const MainColumnStyled = styled('div')`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing(1)};
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+`;
+
+const GalleryAreaStyled = styled('div')`
+  flex-grow: 1;
+  min-height: 0;
+  margin-top: ${({ theme }) => theme.spacing(1)};
 `;
 
 const PanelStyled = styled('div')`

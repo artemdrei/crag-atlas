@@ -20,6 +20,7 @@ export type EditorAction =
   | { type: 'ADD_ROUTE'; idDraft: string }
   | { type: 'ROUTE_CREATED'; idDraft: string; route: Route }
   | { type: 'REMOVE_ROUTE'; idRoute: string }
+  | { type: 'ROUTE_RESTORED'; route: Route }
   | { type: 'REVERT_ROUTE'; idRoute: string; topos: Topo[]; routes: Route[] }
   | { type: 'ROUTE_SAVED'; idRoute: string }
   | { type: 'TOPOS_REPLACED'; topos: Topo[] }
@@ -39,5 +40,6 @@ export const HISTORY_SKIPPED_ACTIONS = new Set<EditorAction['type']>([
   'REORDER_TOPOS',
   'ROUTE_CREATED',
   'DELETE_LINE',
-  'REMOVE_ROUTE'
+  'REMOVE_ROUTE',
+  'ROUTE_RESTORED'
 ]);

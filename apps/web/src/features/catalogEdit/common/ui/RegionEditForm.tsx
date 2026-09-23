@@ -1,4 +1,4 @@
-import { type FormEvent, useEffect, useState } from 'react';
+import { type FormEvent, type ReactNode, useEffect, useState } from 'react';
 
 import type { Region } from '@crag-atlas/api';
 import { useLingui } from '@lingui/react/macro';
@@ -14,9 +14,15 @@ export interface Props {
   region: Region;
   onClose?: () => void;
   onDirtyChange?: (isDirty: boolean) => void;
+  leftAction?: ReactNode;
 }
 
-export const RegionEditForm = ({ region, onClose, onDirtyChange }: Props) => {
+export const RegionEditForm = ({
+  region,
+  onClose,
+  onDirtyChange,
+  leftAction
+}: Props) => {
   const { t } = useLingui();
   const [name, setName] = useState(region.name);
   const [province, setProvince] = useState(region.province);
@@ -67,7 +73,11 @@ export const RegionEditForm = ({ region, onClose, onDirtyChange }: Props) => {
         isChanged={rockType !== region.rockType}
         onChange={(event) => setRockType(event.target.value)}
       />
-      <EditActions isPending={isPending} onCancel={onClose} />
+      <EditActions
+        isPending={isPending}
+        onCancel={onClose}
+        leftAction={leftAction}
+      />
     </EditFormStyled>
   );
 };

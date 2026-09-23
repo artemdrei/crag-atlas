@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router';
 import { Trans, useLingui } from '@lingui/react/macro';
 import Typography from '@mui/material/Typography';
 
-import { useModal } from '@web/app/providers';
+import { useEditModeWhileMounted, useModal } from '@web/app/providers';
 import { buildRoutePath, buildSectorPath } from '@web/app/router/routes';
 import { findTopoOfRoute } from '@web/features/topo';
 import {
@@ -18,6 +18,7 @@ import { useWarnOnUnload } from '@web/shared/lib';
 import { ApiFeedback, EditorPageShell } from '@web/shared/ui';
 
 export const PageRouteEditDesktop = () => {
+  useEditModeWhileMounted();
   const { t } = useLingui();
   const { idRegion = '', idSector = '', idRoute = '' } = useParams();
   const navigate = useNavigate();
@@ -72,7 +73,6 @@ export const PageRouteEditDesktop = () => {
 
   return (
     <EditorPageShell
-      backLabel={t`Back to the route`}
       title={route ? `${route.name || t`New route`} · ${route.grade}` : '…'}
       onLeave={leave}
     >

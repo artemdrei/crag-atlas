@@ -20,7 +20,9 @@ export const useApiReplaceRegionPhoto = ({ idRegion }: Params) => {
     onSuccess: (region) => {
       queryClient.setQueryData(QUERY_KEYS.region(idRegion), region);
 
-      return queryClient.invalidateQueries({ queryKey: QUERY_KEYS.regions() });
+      return queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.regionList(false)
+      });
     }
   });
 

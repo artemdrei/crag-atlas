@@ -7,10 +7,18 @@ import {
 
 import type { Route } from '../entities';
 
-export const useApiGetRoutes = (idSector: string) => {
+export const useApiGetRoutes = (
+  idSector: string,
+  isArchiveOnly = false,
+  isEnabled = true
+) => {
   const { data, isLoading, failure } = useApiQuery({
-    queryKey: QUERY_KEYS.routes(idSector),
-    queryFn: () => apiGet<Route[]>(`/sectors/${idSector}/routes`)
+    queryKey: QUERY_KEYS.routeList(idSector, isArchiveOnly),
+    queryFn: () =>
+      apiGet<Route[]>(
+        `/sectors/${idSector}/routes${isArchiveOnly ? '/archived' : ''}`
+      ),
+    enabled: isEnabled
   });
 
   useSeedDetailCache(data, QUERY_KEYS.route);

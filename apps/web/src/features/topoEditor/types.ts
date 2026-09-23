@@ -1,13 +1,13 @@
-// Without a top-level export this file would be a script, and the block below
-// would replace the payload map instead of merging into it.
-export {};
+import type { GradeScale } from '@crag-atlas/api';
 
 declare module '@web/app/providers/modalProvider/types' {
   interface ModalPayloadMap {
     DELETE_TOPO_LINE: { routeName: string; onConfirm: () => void };
     DELETE_TOPO_PHOTO: { routeNames: string; onConfirm: () => void };
-    DELETE_ROUTE: {
+    ARCHIVE_ROUTE: {
       routeName: string;
+      grade: string;
+      gradeScale: GradeScale;
       isNew: boolean;
       onConfirm: () => void;
     };

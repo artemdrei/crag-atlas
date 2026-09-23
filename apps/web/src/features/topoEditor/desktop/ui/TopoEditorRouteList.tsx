@@ -15,8 +15,6 @@ import {
 } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
 import { Trans, useLingui } from '@lingui/react/macro';
-import AddIcon from '@mui/icons-material/Add';
-import Button from '@mui/material/Button';
 import ButtonBase from '@mui/material/ButtonBase';
 import { alpha, styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
@@ -35,11 +33,9 @@ export interface Props {
   idsDirtyRoutes: ReadonlySet<string>;
   idSelectedRoute?: string;
   idHoveredRoute?: string;
-  isBusy: boolean;
   onSelect: (idRoute: string) => void;
   onHover: (idRoute?: string) => void;
   onMoveToPhoto: (idRoute: string, idTopo: string) => void;
-  onAdd: () => void;
 }
 
 /** Below this the pointer is clicking the row, not dragging it. */
@@ -51,11 +47,9 @@ export const TopoEditorRouteList = ({
   idsDirtyRoutes,
   idSelectedRoute,
   idHoveredRoute,
-  isBusy,
   onSelect,
   onHover,
-  onMoveToPhoto,
-  onAdd
+  onMoveToPhoto
 }: Props) => {
   const { t } = useLingui();
   const [idDragged, setIdDragged] = useState<string>();
@@ -138,15 +132,6 @@ export const TopoEditorRouteList = ({
           <Typography variant="subtitle2">
             <Trans>Routes</Trans>
           </Typography>
-          <Button
-            size="small"
-            variant="outlined"
-            startIcon={<AddIcon fontSize="small" />}
-            disabled={isBusy}
-            onClick={onAdd}
-          >
-            <Trans>Add</Trans>
-          </Button>
         </HeaderStyled>
         {routes.length === 0 && (
           <Typography variant="body2" color="text.secondary">

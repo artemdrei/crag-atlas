@@ -14,7 +14,12 @@ export interface GradeColor {
   text: string;
 }
 
-export type AscentStyleTone = Tick['ascentStyle'];
+export type AscentTypeTone = Tick['ascentType'];
+
+interface Neutrals {
+  background: { default: string; paper: string };
+  divider: string;
+}
 
 // Distinct hue per level, the way gyms colour-code walls: green → yellow →
 // red → purple → black. Every badge is a solid fill of the same intensity;
@@ -40,9 +45,9 @@ const grade: Record<'light' | 'dark', Record<GradeTone, GradeColor>> = {
 
 // Ascent styles read as a scale of cleanliness: the ground-up styles share a
 // green, the rehearsed ones cool down, and an attempt stays amber.
-const ascentStyle: Record<
+const ascentType: Record<
   'light' | 'dark',
-  Record<AscentStyleTone, GradeColor>
+  Record<AscentTypeTone, GradeColor>
 > = {
   light: {
     onsight: { background: '#2E9E4F', text: '#FFFFFF' },
@@ -62,6 +67,25 @@ const ascentStyle: Record<
   }
 };
 
+// Sector pins need hues that read apart from one another on a map, not a
+// meaning of their own: the palette is cycled by the sector's position in the
+// list, so the dot beside a name and its pin always match.
+const sectorPin: Record<'light' | 'dark', string[]> = {
+  light: ['#C25A2A', '#B8963E', '#2E8E93', '#7B3FBF', '#2E9E4F', '#4A6BB5'],
+  dark: ['#E2703A', '#E8C55A', '#62C2C7', '#9B5BE0', '#3FAF63', '#8FB0F0']
+};
+
+const editing: Record<'light' | 'dark', Neutrals> = {
+  light: {
+    background: { default: '#F9E1DB', paper: '#FFF1ED' },
+    divider: '#E9C4BB'
+  },
+  dark: {
+    background: { default: '#1F0910', paper: '#33131E' },
+    divider: '#4E2130'
+  }
+};
+
 export const palette = {
   light: {
     background: { default: '#F6F1E9', paper: '#FFFFFF' },
@@ -70,7 +94,8 @@ export const palette = {
     secondary: { main: '#B8963E' },
     divider: '#E4DACB',
     grade: grade.light,
-    ascentStyle: ascentStyle.light
+    ascentType: ascentType.light,
+    sectorPin: sectorPin.light
   },
   dark: {
     background: { default: '#0B0A09', paper: '#1B1815' },
@@ -79,9 +104,13 @@ export const palette = {
     secondary: { main: '#E8C55A' },
     divider: '#2A2521',
     grade: grade.dark,
-    ascentStyle: ascentStyle.dark
+    ascentType: ascentType.dark,
+    sectorPin: sectorPin.dark
   }
 } as const;
+
+export const resolvePalette = (mode: 'light' | 'dark', isEditing: boolean) =>
+  isEditing ? { ...palette[mode], ...editing[mode] } : palette[mode];
 
 // A range spans several levels, so colouring it by one of them would lie —
 // it gets the neutral tone, as does anything unreadable. Everything below 5

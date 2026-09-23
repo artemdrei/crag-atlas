@@ -18,7 +18,10 @@ export const useApiCreateSector = ({ idRegion, onCreated }: Params) => {
       apiPost<Sector>(`/regions/${idRegion}/sectors`, payload),
     onSuccess: (sector) => {
       queryClient.setQueryData(QUERY_KEYS.sector(sector.id), sector);
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.sectors(idRegion) });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.region(idRegion) });
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.regionList(false)
+      });
       onCreated?.(sector);
     },
     onError: (error) => toast.error(resolveFailureMessage(toFailure(error)))

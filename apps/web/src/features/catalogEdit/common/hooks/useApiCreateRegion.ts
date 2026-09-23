@@ -16,7 +16,9 @@ export const useApiCreateRegion = ({ onCreated }: Params = {}) => {
     mutationFn: (payload: CreateRegion) => apiPost<Region>('/regions', payload),
     onSuccess: (region) => {
       queryClient.setQueryData(QUERY_KEYS.region(region.id), region);
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.regions() });
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.regionList(false)
+      });
       onCreated?.(region);
     },
     onError: (error) => toast.error(resolveFailureMessage(toFailure(error)))

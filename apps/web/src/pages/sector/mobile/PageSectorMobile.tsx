@@ -10,6 +10,7 @@ import {
   buildRoutePath,
   ROUTES
 } from '@web/app/router/routes';
+import { SectorDirectionsButton, sectorPoint } from '@web/features/sectorMap';
 import {
   orderRoutes,
   TopoGalleryMobile,
@@ -22,6 +23,7 @@ import { ApiFeedback, PageBreadcrumbs, PageShell } from '@web/shared/ui';
 
 import type { Route } from '../common';
 import {
+  ArchivedSectorNotice,
   RoutesList,
   RoutesPanelHeader,
   useApiGetRoutes,
@@ -91,6 +93,11 @@ export const PageSectorMobile = () => {
           ]}
         />
       </HeaderRowStyled>
+      {sector?.isArchived && <ArchivedSectorNotice />}
+      <TitleRowStyled>
+        <Typography variant="h5">{sector?.name ?? '…'}</Typography>
+        <SectorDirectionsButton point={sectorPoint(sector)} />
+      </TitleRowStyled>
       {sector?.description && (
         <Typography variant="body2" color="text.secondary">
           {sector.description}
@@ -121,6 +128,21 @@ export const PageSectorMobile = () => {
     </PageShell>
   );
 };
+
+const TitleRowStyled = styled('div')`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: ${({ theme }) => theme.spacing(1.5)};
+
+  & > *:first-of-type {
+    min-width: 0;
+  }
+
+  & > *:last-child {
+    flex: none;
+  }
+`;
 
 const HeaderRowStyled = styled('div')`
   display: flex;

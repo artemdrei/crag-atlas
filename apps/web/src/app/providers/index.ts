@@ -1,4 +1,8 @@
 export { AppProviders } from './AppProviders';
+export {
+  useEditModeInUrl,
+  useEditModeWhileMounted
+} from './EditModeProvider';
 export type {
   ID_MODAL,
   ModalAnchor,

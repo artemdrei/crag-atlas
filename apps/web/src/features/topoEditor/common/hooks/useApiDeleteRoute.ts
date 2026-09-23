@@ -12,8 +12,8 @@ export const useApiDeleteRoute = ({ idSector }: Params) => {
   const { isPending, mutateAsync } = useMutation({
     mutationFn: (idRoute: string) => apiDelete(`/routes/${idRoute}`),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.routes(idSector) });
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.topos(idSector) });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.sector(idSector) });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.regions() });
     }
   });
 
