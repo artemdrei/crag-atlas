@@ -11,6 +11,11 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
+#. placeholder {0}: content.ascents
+#: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:36
+msgid "{0, plural, one {# ascent} few {# ascents} many {# ascents} other {# ascents}}"
+msgstr "{0, plural, one {# ascent} few {# ascents} many {# ascents} other {# ascents}}"
+
 #. placeholder {0}: route.ascentsCount
 #: src/pages/sector/common/ui/RouteCard.tsx:55
 msgid "{0, plural, one {# ascent} other {# ascents}}"
@@ -21,35 +26,66 @@ msgstr "{0, plural, one {# ascent} other {# ascents}}"
 msgid "{0, plural, one {# bolt} other {# bolts}}"
 msgstr "{0, plural, one {# bolt} other {# bolts}}"
 
+#. placeholder {0}: content.comments
+#: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:49
+msgid "{0, plural, one {# comment} few {# comments} many {# comments} other {# comments}}"
+msgstr "{0, plural, one {# comment} few {# comments} many {# comments} other {# comments}}"
+
+#. placeholder {0}: content.comments
+#: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:28
+#~ msgid "{0, plural, one {# comment} other {# comments}}"
+#~ msgstr "{0, plural, one {# comment} other {# comments}}"
+
 #. placeholder {0}: ticks.length
-#: src/pages/route/common/ui/MyAscentsCard.tsx:25
+#: src/pages/route/common/ui/MyAscentsCard.tsx:26
 msgid "{0, plural, one {# entry} other {# entries}}"
 msgstr "{0, plural, one {# entry} other {# entries}}"
+
+#. placeholder {0}: content.media
+#: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:62
+msgid "{0, plural, one {# photo or link} few {# photos or links} many {# photos or links} other {# photos or links}}"
+msgstr "{0, plural, one {# photo or link} few {# photos or links} many {# photos or links} other {# photos or links}}"
+
+#. placeholder {0}: content.media
+#: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:30
+#~ msgid "{0, plural, one {# photo or link} other {# photos or links}}"
+#~ msgstr "{0, plural, one {# photo or link} other {# photos or links}}"
 
 #. placeholder {0}: group.routeCount
 #. placeholder {0}: routes.length
 #. placeholder {0}: sector.routeCount
-#: src/pages/region/common/ui/SectorCard.tsx:41
-#: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:68
+#: src/features/sectorMap/common/ui/SectorPointCard.tsx:19
+#: src/pages/region/common/ui/SectorCard.tsx:53
+#: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:78
 #: src/widgets/gradeHistogram/common/ui/GradeHistogram.tsx:53
 msgid "{0, plural, one {# route} few {# routes} many {# routes} other {# routes}}"
 msgstr "{0, plural, one {# route} few {# routes} many {# routes} other {# routes}}"
 
 #. placeholder {0}: tick.attempts
-#: src/pages/route/common/ui/MyAscentsCard.tsx:36
+#: src/pages/logbook/common/ui/TickCard.tsx:69
+msgid "{0, plural, one {# try} few {# tries} many {# tries} other {# tries}}"
+msgstr "{0, plural, one {# try} few {# tries} many {# tries} other {# tries}}"
+
+#. placeholder {0}: tick.attempts
+#: src/pages/route/common/ui/MyAscentsCard.tsx:37
 msgid "{0, plural, one {# try} other {# tries}}"
 msgstr "{0, plural, one {# try} other {# tries}}"
 
 #. placeholder {0}: tick.attempts
-#: src/pages/logbook/common/ui/TickCard.tsx:39
-msgid "{0} attempts"
-msgstr "{0} attempts"
+#: src/pages/logbook/common/ui/TickCard.tsx:43
+#~ msgid "{0} attempts"
+#~ msgstr "{0} attempts"
 
 #. placeholder {0}: route.length
 #: src/pages/route/common/ui/RouteDetails.tsx:39
 #: src/pages/sector/common/ui/RouteCard.tsx:62
 msgid "{0} m"
 msgstr "{0} m"
+
+#. placeholder {0}: mapped.length
+#: src/features/sectorMap/common/ui/SectorMapList.tsx:48
+#~ msgid "{0} on the map"
+#~ msgstr "{0} on the map"
 
 #. placeholder {0}: routes.length
 #: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:93
@@ -69,21 +105,125 @@ msgstr "{failed} file(s) could not be read as photos."
 msgid "{oversized} photo(s) stay over {0} even compressed and will be skipped."
 msgstr "{oversized} photo(s) stay over {0} even compressed and will be skipped."
 
-#: src/features/topoEditor/desktop/DeleteRouteDialog.tsx:43
-msgid "{routeName} disappears from the catalog together with its lines on every photo, for everyone, straight away. This cannot be undone."
-msgstr "{routeName} disappears from the catalog together with its lines on every photo, for everyone, straight away. This cannot be undone."
+#: src/features/catalogEdit/desktop/DeleteRegionDialog.tsx:50
+#~ msgid "{region} is empty, so only the region itself and its photo leave the catalog."
+#~ msgstr "{region} is empty, so only the region itself and its photo leave the catalog."
 
-#: src/features/topoEditor/desktop/DeleteRouteDialog.tsx:38
-msgid "{routeName} was never saved, so it just disappears from this panel."
-msgstr "{routeName} was never saved, so it just disappears from this panel."
+#: src/features/catalogEdit/desktop/ArchiveRegionDialog.tsx:37
+msgid "{region} is empty, so only the region itself and its photo leave the catalog. You can bring it back from the archive."
+msgstr "{region} is empty, so only the region itself and its photo leave the catalog. You can bring it back from the archive."
+
+#: src/features/catalogEdit/desktop/ArchiveRegionDialog.tsx:31
+msgid "{region} leaves the catalog for everyone, together with its sectors and their routes. Nothing is erased: everything climbers left stays, and you can bring the region back from the archive."
+msgstr "{region} leaves the catalog for everyone, together with its sectors and their routes. Nothing is erased: everything climbers left stays, and you can bring the region back from the archive."
+
+#: src/features/catalogEdit/desktop/DeleteRegionDialog.tsx:44
+#~ msgid "{region} leaves the catalog for everyone, together with its sectors and their routes. The ascents, photos, links and comments climbers left on those routes stay where they are."
+#~ msgstr "{region} leaves the catalog for everyone, together with its sectors and their routes. The ascents, photos, links and comments climbers left on those routes stay where they are."
+
+#: src/features/topoEditor/desktop/DeleteRouteDialog.tsx:60
+#~ msgid "{route} and its lines on every photo disappear for everyone straight away. This cannot be undone."
+#~ msgstr "{route} and its lines on every photo disappear for everyone straight away. This cannot be undone."
+
+#: src/features/topoEditor/desktop/ArchiveRouteDialog.tsx:48
+msgid "{route} leaves the catalog for everyone, together with its lines on every photo. Nothing is erased: the ascents, photos, links and comments on it stay, and you can bring the route back from the archive."
+msgstr "{route} leaves the catalog for everyone, together with its lines on every photo. Nothing is erased: the ascents, photos, links and comments on it stay, and you can bring the route back from the archive."
+
+#: src/features/topoEditor/desktop/DeleteRouteDialog.tsx:60
+#~ msgid "{route} leaves the catalog for everyone, together with its lines on every photo. The ascents, photos, links and comments climbers left on it stay where they are."
+#~ msgstr "{route} leaves the catalog for everyone, together with its lines on every photo. The ascents, photos, links and comments climbers left on it stay where they are."
+
+#: src/features/topoEditor/desktop/ArchiveRouteDialog.tsx:44
+msgid "{route} was never saved, so it just disappears from this panel."
+msgstr "{route} was never saved, so it just disappears from this panel."
+
+#: src/features/topoEditor/desktop/DeleteRouteDialog.tsx:41
+#~ msgid "{routeName} and its lines on every photo disappear for everyone straight away. This cannot be undone."
+#~ msgstr "{routeName} and its lines on every photo disappear for everyone straight away. This cannot be undone."
+
+#: src/features/topoEditor/desktop/DeleteRouteDialog.tsx:43
+#~ msgid "{routeName} disappears from the catalog together with its lines on every photo, for everyone, straight away. This cannot be undone."
+#~ msgstr "{routeName} disappears from the catalog together with its lines on every photo, for everyone, straight away. This cannot be undone."
+
+#: src/features/topoEditor/desktop/DeleteRouteDialog.tsx:36
+#~ msgid "{routeName} was never saved, so it just disappears from this panel."
+#~ msgstr "{routeName} was never saved, so it just disappears from this panel."
+
+#: src/features/catalogEdit/desktop/DeleteSectorDialog.tsx:43
+#~ msgid "{routesCount, plural, one {{sectorName} has # route.} few {{sectorName} has # routes.} many {{sectorName} has # routes.} other {{sectorName} has # routes.}}"
+#~ msgstr "{routesCount, plural, one {{sectorName} has # route.} few {{sectorName} has # routes.} many {{sectorName} has # routes.} other {{sectorName} has # routes.}}"
 
 #: src/pages/sector/common/ui/RoutesPanelHeader.tsx:27
 msgid "{routesCount, plural, one {# route} other {# routes}}"
 msgstr "{routesCount, plural, one {# route} other {# routes}}"
 
+#: src/features/catalogEdit/desktop/DeleteSectorDialog.tsx:52
+#~ msgid "{routesCount, plural, one {The sector holds # route.} few {The sector holds # routes.} many {The sector holds # routes.} other {The sector holds # routes.}}"
+#~ msgstr "{routesCount, plural, one {The sector holds # route.} few {The sector holds # routes.} many {The sector holds # routes.} other {The sector holds # routes.}}"
+
+#: src/features/catalogEdit/desktop/DeleteSectorDialog.tsx:66
+#~ msgid "{sector} is empty, so only the sector itself and its photos go. It disappears for everyone straight away, and this cannot be undone."
+#~ msgstr "{sector} is empty, so only the sector itself and its photos go. It disappears for everyone straight away, and this cannot be undone."
+
+#: src/features/catalogEdit/desktop/DeleteSectorDialog.tsx:50
+#~ msgid "{sector} is empty, so only the sector itself and its photos leave the catalog."
+#~ msgstr "{sector} is empty, so only the sector itself and its photos leave the catalog."
+
+#: src/features/catalogEdit/desktop/ArchiveSectorDialog.tsx:37
+msgid "{sector} is empty, so only the sector itself and its photos leave the catalog. You can bring it back from the archive."
+msgstr "{sector} is empty, so only the sector itself and its photos leave the catalog. You can bring it back from the archive."
+
+#: src/features/catalogEdit/desktop/DeleteSectorDialog.tsx:43
+#~ msgid "{sector} is not empty"
+#~ msgstr "{sector} is not empty"
+
+#: src/features/catalogEdit/desktop/ArchiveSectorDialog.tsx:31
+msgid "{sector} leaves the catalog for everyone, together with its routes. Nothing is erased: everything climbers left stays, and you can bring the sector back from the archive."
+msgstr "{sector} leaves the catalog for everyone, together with its routes. Nothing is erased: everything climbers left stays, and you can bring the sector back from the archive."
+
+#: src/features/catalogEdit/desktop/DeleteSectorDialog.tsx:44
+#~ msgid "{sector} leaves the catalog for everyone, together with its routes. The ascents, photos, links and comments climbers left on those routes stay where they are."
+#~ msgstr "{sector} leaves the catalog for everyone, together with its routes. The ascents, photos, links and comments climbers left on those routes stay where they are."
+
+#: src/features/catalogEdit/desktop/DeleteSectorDialog.tsx:36
+#~ msgid "{sectorName} disappears from the region together with its photos, for everyone, straight away. This cannot be undone."
+#~ msgstr "{sectorName} disappears from the region together with its photos, for everyone, straight away. This cannot be undone."
+
+#: src/features/catalogEdit/desktop/DeleteSectorDialog.tsx:64
+#~ msgid "{sectorName} is empty, so only the sector itself and its photos go. It disappears for everyone straight away, and this cannot be undone."
+#~ msgstr "{sectorName} is empty, so only the sector itself and its photos go. It disappears for everyone straight away, and this cannot be undone."
+
+#: src/features/catalogEdit/desktop/DeleteSectorDialog.tsx:41
+#~ msgid "{sectorName} is not empty"
+#~ msgstr "{sectorName} is not empty"
+
+#: src/features/logTick/common/ui/TickForm.tsx:130
+msgid "{stars} of 5"
+msgstr "{stars} of 5"
+
+#: src/features/sectorMap/common/ui/SectorMapList.tsx:38
+#~ msgid "{total, plural, one {# sector} few {# sectors} many {# sectors} other {# sectors}}"
+#~ msgstr "{total, plural, one {# sector} few {# sectors} many {# sectors} other {# sectors}}"
+
 #: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:40
 msgid "{total, plural, one {# vote} other {# votes}}"
 msgstr "{total, plural, one {# vote} other {# votes}}"
+
+#: src/features/catalogEdit/desktop/PurgeDialog.tsx:35
+#~ msgid "<0>{name}</0> and everything under it are removed from the database. This one cannot be undone. If anybody has logged an ascent here, nothing is erased and you are told so."
+#~ msgstr "<0>{name}</0> and everything under it are removed from the database. This one cannot be undone. If anybody has logged an ascent here, nothing is erased and you are told so."
+
+#: src/features/catalogEdit/desktop/PurgeDialog.tsx:24
+msgid "<0>{name}</0> and whatever catalog rows sit under it are dropped from the database. Climbers left nothing here, so none of their work goes with it — but this one cannot be undone."
+msgstr "<0>{name}</0> and whatever catalog rows sit under it are dropped from the database. Climbers left nothing here, so none of their work goes with it — but this one cannot be undone."
+
+#: src/features/catalogEdit/desktop/PurgeDialog.tsx:35
+#~ msgid "<0>{name}</0> is empty — no ascents, comments or photos were ever left here. Erasing drops it from the database for good, and this one cannot be undone."
+#~ msgstr "<0>{name}</0> is empty — no ascents, comments or photos were ever left here. Erasing drops it from the database for good, and this one cannot be undone."
+
+#: src/features/catalogEdit/desktop/PurgeDialog.tsx:35
+#~ msgid "<0>{name}</0> is removed from the database, and this one cannot be undone. Nothing climbers made is at risk: an ascent, a comment or a photo anywhere inside stops the erase, and you are told so instead."
+#~ msgstr "<0>{name}</0> is removed from the database, and this one cannot be undone. Nothing climbers made is at risk: an ascent, a comment or a photo anywhere inside stops the erase, and you are told so instead."
 
 #: src/features/topoEditor/desktop/ui/PhotoCompare.tsx:56
 #~ msgid "1:1"
@@ -94,10 +234,18 @@ msgstr "{total, plural, one {# vote} other {# votes}}"
 #~ msgstr "A route someone has logged an ascent of cannot be deleted — their logbook would lose an entry."
 
 #: src/features/topoEditor/desktop/DeleteRouteDialog.tsx:51
-msgid "A route with logged ascents cannot be deleted: those ascents stay in people's logbooks."
-msgstr "A route with logged ascents cannot be deleted: those ascents stay in people's logbooks."
+#~ msgid "A route with logged ascents cannot be deleted: those ascents stay in people's logbooks."
+#~ msgstr "A route with logged ascents cannot be deleted: those ascents stay in people's logbooks."
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:148
+#: src/features/catalogEdit/desktop/DeleteSectorDialog.tsx:42
+#~ msgid "A sector that still has routes cannot be deleted: delete the routes first, so no logged ascent disappears with them."
+#~ msgstr "A sector that still has routes cannot be deleted: delete the routes first, so no logged ascent disappears with them."
+
+#: src/features/catalogEdit/desktop/DeleteSectorDialog.tsx:42
+#~ msgid "A sector that still has routes cannot be deleted: they would be deleted along with it, and their lines, comments and photos too. Delete the routes first."
+#~ msgstr "A sector that still has routes cannot be deleted: they would be deleted along with it, and their lines, comments and photos too. Delete the routes first."
+
+#: src/features/logTick/common/ui/TickMediaField.tsx:73
 msgid "Add"
 msgstr "Add"
 
@@ -117,26 +265,28 @@ msgstr "Add a cover photo"
 msgid "Add a photo"
 msgstr "Add a photo"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:164
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:173
 msgid "Add a photo to start drawing routes on it."
 msgstr "Add a photo to start drawing routes on it."
 
+#: src/features/logTick/common/ui/TickMediaField.tsx:83
+#: src/features/logTick/common/ui/TickMediaField.tsx:91
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:191
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:161
 msgid "Add photo"
 msgstr "Add photo"
 
 #: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:65
-#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:79
+#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:88
 msgid "Add region"
 msgstr "Add region"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:263
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:291
 msgid "Add route"
 msgstr "Add route"
 
-#: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:62
-#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:100
+#: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:65
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:113
 msgid "Add sector"
 msgstr "Add sector"
 
@@ -148,58 +298,100 @@ msgstr "Add sector"
 msgid "All {0}: {1} → {2} ({3})"
 msgstr "All {0}: {1} → {2} ({3})"
 
-#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:51
-msgid "All regions"
-msgstr "All regions"
+#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:53
+#~ msgid "All regions"
+#~ msgstr "All regions"
 
-#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:75
-msgid "All sectors"
-msgstr "All sectors"
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:51
+#~ msgid "All sectors"
+#~ msgstr "All sectors"
 
 #: src/features/topoEditor/desktop/ui/TopoPointMenu.tsx:46
 msgid "Anchor"
 msgstr "Anchor"
+
+#: src/shared/ui/ArchivedToggle.tsx:17
+msgid "Archive"
+msgstr "Archive"
+
+#: src/features/catalogEdit/common/ui/ArchiveRegionButton.tsx:36
+#: src/features/catalogEdit/desktop/ArchiveRegionDialog.tsx:26
+msgid "Archive region"
+msgstr "Archive region"
+
+#: src/features/topoEditor/desktop/ArchiveRouteDialog.tsx:39
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:292
+msgid "Archive route"
+msgstr "Archive route"
+
+#: src/features/catalogEdit/common/ui/ArchiveSectorButton.tsx:36
+#: src/features/catalogEdit/desktop/ArchiveSectorDialog.tsx:26
+msgid "Archive sector"
+msgstr "Archive sector"
+
+#: src/features/topoEditor/desktop/ui/TopoEditorArchivedRoutes.tsx:27
+msgid "Archived routes"
+msgstr "Archived routes"
 
 #: src/pages/profile/common/ui/GradeScaleSetting.tsx:36
 #: src/pages/profile/common/ui/GradeScaleSetting.tsx:56
 #~ msgid "As written"
 #~ msgstr "As written"
 
-#: src/features/logTick/desktop/LogTickDialog.tsx:24
-#: src/features/logTick/mobile/LogTickSheet.tsx:22
+#: src/features/logTick/common/ui/TickActionsButton.tsx:25
+msgid "Ascent actions"
+msgstr "Ascent actions"
+
+#: src/features/logTick/common/hooks/useRemoveTick.ts:17
+msgid "Ascent deleted"
+msgstr "Ascent deleted"
+
+#: src/features/logTick/common/hooks/useLogTick.ts:22
 msgid "Ascent logged"
 msgstr "Ascent logged"
+
+#: src/features/logTick/common/hooks/useEditTick.ts:19
+msgid "Ascent saved"
+msgstr "Ascent saved"
+
+#: src/features/logTick/common/ui/AscentTypeChoice.tsx:20
+msgid "Ascent type"
+msgstr "Ascent type"
 
 #: src/pages/route/common/ui/RouteStats.tsx:21
 msgid "ascents"
 msgstr "ascents"
 
-#: src/shared/ui/AscentStyleLabel.tsx:29
+#: src/shared/ui/AscentTypeLabel.tsx:29
 msgid "Attempt"
 msgstr "Attempt"
 
-#: src/features/logTick/common/ui/TickForm.tsx:71
-msgid "Attempts"
-msgstr "Attempts"
+#: src/features/logTick/common/ui/TickForm.tsx:78
+#~ msgid "Attempts"
+#~ msgstr "Attempts"
 
-#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:40
-#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:64
+#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:42
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:50
 msgid "Back"
 msgstr "Back"
 
-#: src/pages/routeEdit/desktop/PageRouteEditDesktop.tsx:75
-msgid "Back to the route"
-msgstr "Back to the route"
+#: src/shared/ui/ArchivedToggle.tsx:17
+msgid "Back to the catalog"
+msgstr "Back to the catalog"
 
-#: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:64
-msgid "Back to the sector"
-msgstr "Back to the sector"
+#: src/pages/routeEdit/desktop/PageRouteEditDesktop.tsx:76
+#~ msgid "Back to the route"
+#~ msgstr "Back to the route"
+
+#: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:65
+#~ msgid "Back to the sector"
+#~ msgstr "Back to the sector"
 
 #: src/features/topoEditor/desktop/ui/TopoPointMenu.tsx:38
 msgid "Bolt"
 msgstr "Bolt"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:247
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:249
 msgid "Bolts"
 msgstr "Bolts"
 
@@ -207,7 +399,7 @@ msgstr "Bolts"
 #~ msgid "Both panes scroll together."
 #~ msgstr "Both panes scroll together."
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:202
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:204
 msgid "Boulder"
 msgstr "Boulder"
 
@@ -215,14 +407,14 @@ msgstr "Boulder"
 msgid "Bouldering"
 msgstr "Bouldering"
 
-#: src/features/catalogEdit/common/ui/EditActions.tsx:15
-#: src/features/logTick/common/ui/TickForm.tsx:88
+#: src/features/logTick/common/ui/DeleteTickActions.tsx:17
+#: src/features/logTick/common/ui/TickForm.tsx:166
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:385
 #: src/features/routeComment/common/ui/DeleteRouteCommentActions.tsx:17
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:46
 #: src/features/topoEditor/desktop/DeleteLineDialog.tsx:42
 #: src/features/topoEditor/desktop/DeletePhotoDialog.tsx:43
-#: src/features/topoEditor/desktop/DeleteRouteDialog.tsx:60
+#: src/shared/ui/ConfirmDialog.tsx:37
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -234,6 +426,14 @@ msgstr "Cards per row"
 #~ msgid "Changes published"
 #~ msgstr "Changes published"
 
+#: src/features/sectorMap/common/ui/SectorPointEditor.tsx:71
+msgid "Clear"
+msgstr "Clear"
+
+#: src/features/sectorMap/common/ui/SectorPointEditor.tsx:46
+msgid "Click the map, or paste coordinates from Google Maps."
+msgstr "Click the map, or paste coordinates from Google Maps."
+
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:120
 #~ msgid "Click the photo to add a point, click a point to set it."
 #~ msgstr "Click the photo to add a point, click a point to set it."
@@ -242,18 +442,26 @@ msgstr "Cards per row"
 #~ msgid "Click the photo to add a point, click a point to set what it is."
 #~ msgstr "Click the photo to add a point, click a point to set what it is."
 
-#: src/features/topo/desktop/TopoPhotoDialog.tsx:37
+#: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:21
+msgid "Climbers left nothing here — no ascents, no comments, no photos."
+msgstr "Climbers left nothing here — no ascents, no comments, no photos."
+
+#: src/features/catalogEdit/common/ui/EditActions.tsx:18
+#: src/features/topo/desktop/TopoPhotoDialog.tsx:36
 msgid "Close"
 msgstr "Close"
 
-#: src/pages/home/desktop/PageHomeDesktop.tsx:58
-#: src/pages/region/desktop/PageRegionDesktop.tsx:63
+#: src/features/catalogEdit/common/ui/CatalogEditActions.tsx:38
 msgid "Close editing"
 msgstr "Close editing"
 
-#: src/shared/ui/EditorPageShell.tsx:49
+#: src/shared/ui/EditorPageShell.tsx:35
 msgid "Close the editor"
 msgstr "Close the editor"
+
+#: src/features/logTick/common/ui/TickForm.tsx:140
+msgid "Comment"
+msgstr "Comment"
 
 #: src/features/routeComment/common/ui/RouteCommentItem.tsx:50
 msgid "Comment actions"
@@ -271,11 +479,15 @@ msgstr "Comment saved"
 msgid "Comments"
 msgstr "Comments"
 
-#: src/features/photoUpload/desktop/ui/PhotoCompare.tsx:74
+#: src/pages/logbook/common/ui/LogbookTabs.tsx:22
+msgid "Community feed"
+msgstr "Community feed"
+
+#: src/features/photoUpload/desktop/ui/PhotoCompare.tsx:75
 msgid "Compressed"
 msgstr "Compressed"
 
-#: src/features/photoUpload/desktop/ui/PhotoCompare.tsx:75
+#: src/features/photoUpload/desktop/ui/PhotoCompare.tsx:76
 msgid "Compressed photo"
 msgstr "Compressed photo"
 
@@ -296,11 +508,19 @@ msgstr "Continue"
 msgid "Continue with Google"
 msgstr "Continue with Google"
 
+#: src/features/sectorMap/common/ui/SectorPointEditor.tsx:53
+msgid "Coordinates"
+msgstr "Coordinates"
+
+#: src/features/sectorMap/common/ui/SectorMapCanvas.tsx:66
+msgid "Could not read your location."
+msgstr "Could not read your location."
+
 #: src/features/topoEditor/desktop/ui/TopoThumb.tsx:78
 msgid "Cover"
 msgstr "Cover"
 
-#: src/app/mobile/layout/AppBottomNavigation.tsx:29
+#: src/app/mobile/layout/AppBottomNavigation.tsx:28
 msgid "Crags"
 msgstr "Crags"
 
@@ -308,7 +528,7 @@ msgstr "Crags"
 #~ msgid "Create a new one"
 #~ msgstr "Create a new one"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:276
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:278
 msgid "Create route"
 msgstr "Create route"
 
@@ -320,14 +540,21 @@ msgstr "Current photo"
 msgid "Dark"
 msgstr "Dark"
 
-#: src/features/logTick/common/ui/TickForm.tsx:48
+#: src/features/logTick/common/ui/TickForm.tsx:98
 msgid "Date"
 msgstr "Date"
 
+#: src/features/logTick/common/ui/DeleteTickActions.tsx:26
+#: src/features/logTick/common/ui/TickMenuItems.tsx:34
+#: src/features/routeComment/common/hooks/useRouteCommentMenuItems.tsx:45
 #: src/features/routeComment/common/ui/DeleteRouteCommentActions.tsx:26
-#: src/features/routeComment/common/ui/RouteCommentMenuItems.tsx:45
 msgid "Delete"
 msgstr "Delete"
+
+#: src/features/logTick/desktop/DeleteTickDialog.tsx:21
+#: src/features/logTick/mobile/DeleteTickSheet.tsx:19
+msgid "Delete ascent"
+msgstr "Delete ascent"
 
 #: src/features/routeComment/desktop/DeleteRouteCommentDialog.tsx:25
 #: src/features/routeComment/mobile/DeleteRouteCommentSheet.tsx:23
@@ -335,7 +562,7 @@ msgid "Delete comment"
 msgstr "Delete comment"
 
 #: src/features/topoEditor/desktop/DeleteLineDialog.tsx:45
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:287
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:289
 msgid "Delete line"
 msgstr "Delete line"
 
@@ -349,10 +576,20 @@ msgstr "Delete photo"
 msgid "Delete point"
 msgstr "Delete point"
 
-#: src/features/topoEditor/desktop/DeleteRouteDialog.tsx:63
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:290
-msgid "Delete route"
-msgstr "Delete route"
+#: src/features/catalogEdit/common/ui/DeleteRegionButton.tsx:36
+#: src/features/catalogEdit/desktop/DeleteRegionDialog.tsx:62
+#~ msgid "Delete region"
+#~ msgstr "Delete region"
+
+#: src/features/topoEditor/desktop/DeleteRouteDialog.tsx:73
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:292
+#~ msgid "Delete route"
+#~ msgstr "Delete route"
+
+#: src/features/catalogEdit/desktop/DeleteSectorDialog.tsx:62
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:149
+#~ msgid "Delete sector"
+#~ msgstr "Delete sector"
 
 #: src/features/topoEditor/desktop/DeleteLineDialog.tsx:30
 msgid "Delete the line?"
@@ -362,19 +599,44 @@ msgstr "Delete the line?"
 msgid "Delete the photo?"
 msgstr "Delete the photo?"
 
-#: src/features/topoEditor/desktop/DeleteRouteDialog.tsx:33
-msgid "Delete the route?"
-msgstr "Delete the route?"
+#: src/features/catalogEdit/desktop/DeleteRegionDialog.tsx:39
+#~ msgid "Delete the region?"
+#~ msgstr "Delete the region?"
 
+#: src/features/topoEditor/desktop/DeleteRouteDialog.tsx:51
+#~ msgid "Delete the route?"
+#~ msgstr "Delete the route?"
+
+#: src/features/catalogEdit/desktop/DeleteSectorDialog.tsx:39
+#~ msgid "Delete the sector?"
+#~ msgstr "Delete the sector?"
+
+#: src/features/catalogEdit/desktop/DeleteSectorDialog.tsx:59
+#~ msgid "Deleting the sector would take everything in it — the routes, the lines drawn on its photos, the comments and the media. Delete the routes first, one by one."
+#~ msgstr "Deleting the sector would take everything in it — the routes, the lines drawn on its photos, the comments and the media. Delete the routes first, one by one."
+
+#: src/features/catalogEdit/desktop/DeleteSectorDialog.tsx:50
+#~ msgid "Deleting the sector would take them with it, and their lines, comments and photos too. Delete the routes first, one by one."
+#~ msgstr "Deleting the sector would take them with it, and their lines, comments and photos too. Delete the routes first, one by one."
+
+#: src/features/logTick/common/ui/DeleteTickActions.tsx:26
 #: src/features/routeComment/common/ui/DeleteRouteCommentActions.tsx:26
 msgid "Deleting…"
 msgstr "Deleting…"
 
-#: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:53
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:63
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:262
+#: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:56
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:76
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:264
 msgid "Description"
 msgstr "Description"
+
+#: src/features/logTick/common/ui/TickForm.tsx:126
+msgid "Did you like it?"
+msgstr "Did you like it?"
+
+#: src/features/sectorMap/common/ui/SectorDirectionsButton.tsx:24
+msgid "Directions"
+msgstr "Directions"
 
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:105
 #~ msgid "Discard changes"
@@ -384,18 +646,18 @@ msgstr "Description"
 #~ msgid "Done"
 #~ msgstr "Done"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:166
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:151
 msgid "Drag a route here"
 msgstr "Drag a route here"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:126
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:127
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:120
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:121
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:115
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:116
 msgid "Drag cancelled"
 msgstr "Drag cancelled"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:178
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:180
 msgid "Draw the route first, then it can move between photos."
 msgstr "Draw the route first, then it can move between photos."
 
@@ -405,10 +667,16 @@ msgid "Dropped on {0}"
 msgstr "Dropped on {0}"
 
 #: src/features/catalogEdit/common/ui/EditToggleButton.tsx:24
-#: src/features/routeComment/common/ui/RouteCommentMenuItems.tsx:35
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:118
+#: src/features/logTick/common/ui/TickMenuItems.tsx:28
+#: src/features/routeComment/common/hooks/useRouteCommentMenuItems.tsx:35
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:121
 msgid "Edit"
 msgstr "Edit"
+
+#: src/features/logTick/desktop/EditTickDialog.tsx:20
+#: src/features/logTick/mobile/EditTickSheet.tsx:18
+#~ msgid "Edit ascent"
+#~ msgstr "Edit ascent"
 
 #: src/features/routeComment/desktop/EditRouteCommentDialog.tsx:25
 #: src/features/routeComment/mobile/EditRouteCommentSheet.tsx:22
@@ -420,8 +688,8 @@ msgstr "Edit comment"
 #~ msgstr "Edit topo"
 
 #: src/shared/ui/EditorPageShell.tsx:40
-msgid "Editor"
-msgstr "Editor"
+#~ msgid "Editor"
+#~ msgstr "Editor"
 
 #: src/pages/login/common/ui/EmailOtpForm.tsx:62
 msgid "Enter code"
@@ -431,10 +699,35 @@ msgstr "Enter code"
 msgid "Enter email address"
 msgstr "Enter email address"
 
+#: src/features/catalogEdit/common/ui/ArchivedItemPanel.tsx:64
+#: src/features/catalogEdit/desktop/PurgeDialog.tsx:20
+#: src/features/topoEditor/desktop/ui/TopoEditorArchivedRoutes.tsx:58
+msgid "Erase for good"
+msgstr "Erase for good"
+
+#: src/features/catalogEdit/desktop/PurgeDialog.tsx:19
+msgid "Erase for good?"
+msgstr "Erase for good?"
+
+#. placeholder {0}: sector.routeCount
+#: src/features/catalogEdit/common/ui/ArchivedSectorPanel.tsx:23
+msgid "Erasing takes {0, plural, one {# route} few {# routes} many {# routes} other {# routes}} with it."
+msgstr "Erasing takes {0, plural, one {# route} few {# routes} many {# routes} other {# routes}} with it."
+
+#. placeholder {0}: region.sectorCount
+#. placeholder {1}: region.routeCount
+#: src/features/catalogEdit/common/ui/ArchivedRegionPanel.tsx:24
+msgid "Erasing takes {0, plural, one {# sector} few {# sectors} many {# sectors} other {# sectors}} and {1, plural, one {# route} few {# routes} many {# routes} other {# routes}} with it."
+msgstr "Erasing takes {0, plural, one {# sector} few {# sectors} many {# sectors} other {# sectors}} and {1, plural, one {# route} few {# routes} many {# routes} other {# routes}} with it."
+
 #. placeholder {0}: formatBytes(MAX_PHOTO_BYTES, i18n.locale)
 #: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:136
 #~ msgid "Even compressed this photo is over {0}. Pick a smaller one."
 #~ msgstr "Even compressed this photo is over {0}. Pick a smaller one."
+
+#: src/features/logTick/common/ui/GradeFeelChoice.tsx:32
+#~ msgid "Fair"
+#~ msgstr "Fair"
 
 #: src/pages/home/common/ui/HomeHeading.tsx:6
 msgid "Find your next climb"
@@ -448,11 +741,11 @@ msgstr "Find your next climb"
 msgid "Fit the photo"
 msgstr "Fit the photo"
 
-#: src/shared/ui/AscentStyleLabel.tsx:25
+#: src/shared/ui/AscentTypeLabel.tsx:25
 msgid "Flash"
 msgstr "Flash"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:223
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:225
 msgid "Grade"
 msgstr "Grade"
 
@@ -476,13 +769,45 @@ msgstr "Grade system — routes"
 #~ msgid "Grid"
 #~ msgstr "Grid"
 
+#: src/features/logTick/common/ui/GradeOpinionChoice.tsx:26
+#~ msgid "Hard"
+#~ msgstr "Hard"
+
 #: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:28
 msgid "harder"
 msgstr "harder"
 
+#: src/features/logTick/common/ui/GradeFeelChoice.tsx:57
+msgid "Harder"
+msgstr "Harder"
+
+#: src/shared/ui/ArchivedToggle.tsx:17
+#~ msgid "Hide archived"
+#~ msgstr "Hide archived"
+
+#: src/features/logTick/common/ui/TickForm.tsx:107
+msgid "How did you climb it?"
+msgstr "How did you climb it?"
+
+#: src/features/logTick/common/ui/TickForm.tsx:116
+msgid "How hard is the route?"
+msgstr "How hard is the route?"
+
+#: src/features/logTick/common/ui/TickForm.tsx:124
+#~ msgid "How it felt"
+#~ msgstr "How it felt"
+
+#: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:83
+msgid "It is out of the catalog, and a direct link still opens everything on it."
+msgstr "It is out of the catalog, and a direct link still opens everything on it."
+
 #: src/features/topoEditor/desktop/LeaveEditorDialog.tsx:41
 msgid "Keep editing"
 msgstr "Keep editing"
+
+#: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:22
+#~ msgid "Kept for good — climbers left"
+#~ msgstr "Kept for good — climbers left"
 
 #: src/pages/profile/common/ui/LocaleSetting.tsx:20
 msgid "Language"
@@ -501,7 +826,7 @@ msgstr "Leave"
 msgid "Leave without saving?"
 msgstr "Leave without saving?"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:236
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:238
 msgid "Length, m"
 msgstr "Length, m"
 
@@ -513,12 +838,17 @@ msgstr "Light"
 #~ msgid "Line"
 #~ msgstr "Line"
 
+#: src/features/logTick/common/ui/TickForm.tsx:114
+#~ msgid "Line quality"
+#~ msgstr "Line quality"
+
 #: src/pages/region/common/ui/SectorViewToggle.tsx:55
 #~ msgid "List"
 #~ msgstr "List"
 
-#: src/pages/logbook/desktop/PageLogbookDesktop.tsx:19
-#: src/pages/logbook/mobile/PageLogbookMobile.tsx:19
+#: src/pages/logbook/common/ui/TicksFeed.tsx:24
+#: src/pages/logbook/desktop/PageLogbookDesktop.tsx:34
+#: src/pages/logbook/mobile/PageLogbookMobile.tsx:28
 msgid "Loading ascents…"
 msgstr "Loading ascents…"
 
@@ -530,23 +860,23 @@ msgstr "Loading comments…"
 msgid "Loading media…"
 msgstr "Loading media…"
 
-#: src/pages/home/desktop/PageHomeDesktop.tsx:72
+#: src/pages/home/desktop/PageHomeDesktop.tsx:65
 #: src/pages/home/mobile/PageHomeMobile.tsx:20
 msgid "Loading regions…"
 msgstr "Loading regions…"
 
-#: src/pages/route/desktop/PageRouteDesktop.tsx:83
-#: src/pages/route/mobile/PageRouteMobile.tsx:74
+#: src/pages/route/desktop/PageRouteDesktop.tsx:86
+#: src/pages/route/mobile/PageRouteMobile.tsx:75
 msgid "Loading route…"
 msgstr "Loading route…"
 
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:149
-#: src/pages/sector/mobile/PageSectorMobile.tsx:117
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:162
+#: src/pages/sector/mobile/PageSectorMobile.tsx:124
 msgid "Loading routes…"
 msgstr "Loading routes…"
 
-#: src/pages/region/desktop/PageRegionDesktop.tsx:76
-#: src/pages/region/mobile/PageRegionMobile.tsx:31
+#: src/pages/region/desktop/PageRegionDesktop.tsx:110
+#: src/pages/region/mobile/PageRegionMobile.tsx:51
 msgid "Loading sectors…"
 msgstr "Loading sectors…"
 
@@ -554,24 +884,30 @@ msgstr "Loading sectors…"
 msgid "Loading the route…"
 msgstr "Loading the route…"
 
-#: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:82
+#: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:98
 msgid "Loading the sector…"
 msgstr "Loading the sector…"
 
-#: src/features/logTick/common/ui/TickForm.tsx:91
-#: src/features/logTick/desktop/LogTickDialog.tsx:32
-#: src/features/logTick/mobile/LogTickSheet.tsx:28
-#: src/pages/route/common/ui/LogTickButton.tsx:30
+#: src/pages/logbook/common/ui/TicksFeed.tsx:40
+msgid "Loading…"
+msgstr "Loading…"
+
+#: src/features/sectorMap/common/ui/SectorMapCanvas.tsx:65
+msgid "Location is blocked for this site. Allow it in the browser to see where you are."
+msgstr "Location is blocked for this site. Allow it in the browser to see where you are."
+
+#: src/features/logTick/common/ui/TickForm.tsx:174
+#: src/pages/route/common/ui/LogTickButton.tsx:43
 msgid "Log ascent"
 msgstr "Log ascent"
 
-#: src/app/mobile/layout/AppBottomNavigation.tsx:40
+#: src/app/mobile/layout/AppBottomNavigation.tsx:34
 msgid "Logbook"
 msgstr "Logbook"
 
 #: src/app/mobile/layout/AppBottomNavigation.tsx:35
-msgid "Map"
-msgstr "Map"
+#~ msgid "Map"
+#~ msgstr "Map"
 
 #: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:167
 #~ msgid "More quality keeps more rock texture and costs more bytes."
@@ -585,26 +921,39 @@ msgstr "Map"
 #~ msgid "Move photo later"
 #~ msgstr "Move photo later"
 
+#: src/features/catalogEdit/desktop/ArchiveRegionDialog.tsx:25
+msgid "Move the region to the archive?"
+msgstr "Move the region to the archive?"
+
+#: src/features/topoEditor/desktop/ArchiveRouteDialog.tsx:38
+msgid "Move the route to the archive?"
+msgstr "Move the route to the archive?"
+
+#: src/features/catalogEdit/desktop/ArchiveSectorDialog.tsx:25
+msgid "Move the sector to the archive?"
+msgstr "Move the sector to the archive?"
+
 #. placeholder {0}: nameOf(over.id)
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:126
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:120
 msgid "Moved to {0}"
 msgstr "Moved to {0}"
 
-#: src/pages/route/common/ui/MyAscentsCard.tsx:22
+#: src/pages/logbook/common/ui/LogbookTabs.tsx:21
+#: src/pages/route/common/ui/MyAscentsCard.tsx:23
 msgid "My ascents"
 msgstr "My ascents"
 
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:42
-#: src/pages/logbook/desktop/PageLogbookDesktop.tsx:14
-#: src/pages/logbook/mobile/PageLogbookMobile.tsx:14
+#: src/pages/logbook/desktop/PageLogbookDesktop.tsx:22
+#: src/pages/logbook/mobile/PageLogbookMobile.tsx:18
 msgid "My logbook"
 msgstr "My logbook"
 
 #: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:42
-#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:51
-#: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:44
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:54
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:164
+#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:57
+#: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:47
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:67
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:166
 msgid "Name"
 msgstr "Name"
 
@@ -612,7 +961,7 @@ msgstr "Name"
 msgid "New photo"
 msgstr "New photo"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:155
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:157
 #: src/pages/routeEdit/desktop/PageRouteEditDesktop.tsx:76
 msgid "New route"
 msgstr "New route"
@@ -621,7 +970,7 @@ msgstr "New route"
 #~ msgid "New sector"
 #~ msgstr "New sector"
 
-#: src/pages/logbook/common/ui/TicksList.tsx:17
+#: src/pages/logbook/common/ui/TicksList.tsx:18
 msgid "No ascents logged yet."
 msgstr "No ascents logged yet."
 
@@ -633,7 +982,7 @@ msgstr "No comments yet — be the first to add beta."
 #~ msgid "No photo yet"
 #~ msgstr "No photo yet"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:153
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:138
 msgid "No routes yet — add the first one, then drag it onto the photo it is drawn on."
 msgstr "No routes yet — add the first one, then drag it onto the photo it is drawn on."
 
@@ -649,20 +998,40 @@ msgstr "No topo yet"
 msgid "No videos or photos yet."
 msgstr "No videos or photos yet."
 
+#: src/features/logTick/common/ui/PartnerPicker.tsx:35
+msgid "Nobody found"
+msgstr "Nobody found"
+
+#: src/pages/logbook/common/ui/TicksFeed.tsx:28
+msgid "Nobody has logged an ascent yet."
+msgstr "Nobody has logged an ascent yet."
+
 #: src/pages/sector/common/hooks/useRoutesByTopo.ts:56
 msgid "Not on a photo"
 msgstr "Not on a photo"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:114
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:123
 msgid "Not on a photo yet"
 msgstr "Not on a photo yet"
 
-#: src/features/logTick/common/ui/TickForm.tsx:81
-msgid "Note"
-msgstr "Note"
+#: src/pages/region/common/ui/SectorCard.tsx:44
+msgid "not on the map"
+msgstr "not on the map"
+
+#: src/features/logTick/common/ui/TickForm.tsx:132
+#~ msgid "Note"
+#~ msgstr "Note"
+
+#: src/features/topoEditor/desktop/ui/TopoEditorArchivedRoutes.tsx:32
+msgid "Nothing archived here — every route is in the catalog."
+msgstr "Nothing archived here — every route is in the catalog."
+
+#: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:18
+#~ msgid "Nothing was ever logged or written here, so it can go."
+#~ msgstr "Nothing was ever logged or written here, so it can go."
 
 #. placeholder {0}: nameOf(over.id)
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:124
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:118
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:113
 msgid "Now over {0}"
 msgstr "Now over {0}"
@@ -671,16 +1040,33 @@ msgstr "Now over {0}"
 #~ msgid "On this photo"
 #~ msgstr "On this photo"
 
+#: src/features/logTick/common/ui/AttemptsStepper.tsx:26
+msgid "One less try"
+msgstr "One less try"
+
+#: src/features/logTick/common/ui/AttemptsStepper.tsx:46
+msgid "One more try"
+msgstr "One more try"
+
+#: src/features/logTick/common/ui/TickMediaField.tsx:60
+msgid "Only YouTube and Instagram links."
+msgstr "Only YouTube and Instagram links."
+
 #: src/pages/route/common/ui/RouteStats.tsx:28
 msgid "onsight"
 msgstr "onsight"
 
-#: src/shared/ui/AscentStyleLabel.tsx:24
+#: src/shared/ui/AscentTypeLabel.tsx:24
 msgid "Onsight"
 msgstr "Onsight"
 
-#: src/pages/route/desktop/PageRouteDesktop.tsx:91
-#: src/pages/route/mobile/PageRouteMobile.tsx:82
+#: src/features/sectorMap/common/ui/SectorPointCard.tsx:29
+#: src/features/sectorMap/mobile/SectorMapMobile.tsx:55
+msgid "Open sector"
+msgstr "Open sector"
+
+#: src/pages/route/desktop/PageRouteDesktop.tsx:95
+#: src/pages/route/mobile/PageRouteMobile.tsx:84
 msgid "Open the photo"
 msgstr "Open the photo"
 
@@ -688,9 +1074,9 @@ msgstr "Open the photo"
 msgid "or"
 msgstr "or"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:253
-#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:71
-#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:92
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:281
+#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:80
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:105
 msgid "Or"
 msgstr "Or"
 
@@ -698,11 +1084,11 @@ msgstr "Or"
 #~ msgid "Or create a new one."
 #~ msgstr "Or create a new one."
 
-#: src/features/photoUpload/desktop/ui/PhotoCompare.tsx:66
+#: src/features/photoUpload/desktop/ui/PhotoCompare.tsx:67
 msgid "Original"
 msgstr "Original"
 
-#: src/features/photoUpload/desktop/ui/PhotoCompare.tsx:67
+#: src/features/photoUpload/desktop/ui/PhotoCompare.tsx:68
 msgid "Original photo"
 msgstr "Original photo"
 
@@ -710,7 +1096,11 @@ msgstr "Original photo"
 #~ msgid "Other routes"
 #~ msgstr "Other routes"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:172
+#: src/features/logTick/common/ui/PartnerPicker.tsx:46
+msgid "Partner"
+msgstr "Partner"
+
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:174
 msgid "Photo"
 msgstr "Photo"
 
@@ -723,6 +1113,10 @@ msgstr "Photo"
 #: src/features/topo/common/hooks/usePhotoLabel.ts:10
 msgid "Photo {0}"
 msgstr "Photo {0}"
+
+#: src/features/logTick/common/ui/TickForm.tsx:156
+msgid "Photo and video"
+msgstr "Photo and video"
 
 #: src/features/topoEditor/common/hooks/useTopoEditorActions.ts:248
 msgid "Photo order saved"
@@ -742,11 +1136,11 @@ msgstr "Photo uploaded"
 msgid "Photos uploaded"
 msgstr "Photos uploaded"
 
-#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:68
+#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:77
 msgid "Pick a region on the left to edit it."
 msgstr "Pick a region on the left to edit it."
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:250
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:278
 msgid "Pick a route on the left to edit it."
 msgstr "Pick a route on the left to edit it."
 
@@ -754,7 +1148,7 @@ msgstr "Pick a route on the left to edit it."
 #~ msgid "Pick a route to draw, or click a line on the photo."
 #~ msgstr "Pick a route to draw, or click a line on the photo."
 
-#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:89
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:102
 msgid "Pick a sector on the left to edit it."
 msgstr "Pick a sector on the left to edit it."
 
@@ -762,13 +1156,17 @@ msgstr "Pick a sector on the left to edit it."
 #~ msgid "Pick a sector to edit it."
 #~ msgstr "Pick a sector to edit it."
 
+#: src/features/sectorMap/desktop/SectorMapDesktop.tsx:94
+#~ msgid "Pick a sector to place its point."
+#~ msgstr "Pick a sector to place its point."
+
 #. placeholder {0}: nameOf(active.id)
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:122
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:116
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:111
 msgid "Picked up {0}"
 msgstr "Picked up {0}"
 
-#: src/features/photoUpload/desktop/ui/PhotoCompare.tsx:60
+#: src/features/photoUpload/desktop/ui/PhotoCompare.tsx:61
 msgid "Pinch or double-click to zoom — both panes follow the same view."
 msgstr "Pinch or double-click to zoom — both panes follow the same view."
 
@@ -784,15 +1182,19 @@ msgstr "Plain point"
 msgid "Post"
 msgstr "Post"
 
+#: src/features/logTick/common/ui/TickForm.tsx:145
+msgid "Private comment"
+msgstr "Private comment"
+
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:58
-#: src/app/mobile/layout/AppBottomNavigation.tsx:48
+#: src/app/mobile/layout/AppBottomNavigation.tsx:42
 #: src/pages/profile/desktop/PageProfileDesktop.tsx:21
 #: src/pages/profile/mobile/PageProfileMobile.tsx:21
 msgid "Profile"
 msgstr "Profile"
 
 #: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:49
-#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:58
+#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:64
 msgid "Province"
 msgstr "Province"
 
@@ -804,16 +1206,16 @@ msgstr "Province"
 #~ msgid "Quality"
 #~ msgstr "Quality"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:143
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:145
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:147
 msgid "Reader view"
 msgstr "Reader view"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:130
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:132
 msgid "Redo"
 msgstr "Redo"
 
-#: src/shared/ui/AscentStyleLabel.tsx:27
+#: src/shared/ui/AscentTypeLabel.tsx:27
 msgid "Redpoint"
 msgstr "Redpoint"
 
@@ -821,7 +1223,7 @@ msgstr "Redpoint"
 #~ msgid "Redraw line"
 #~ msgstr "Redraw line"
 
-#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:49
+#: src/pages/region/desktop/ui/RegionEditSection.tsx:29
 msgid "Region"
 msgstr "Region"
 
@@ -830,18 +1232,18 @@ msgstr "Region"
 msgid "Region {0} created"
 msgstr "Region {0} created"
 
-#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:37
+#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:43
 msgid "Region saved"
 msgstr "Region saved"
 
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:34
 #: src/pages/home/desktop/PageHomeDesktop.tsx:46
-#: src/pages/region/desktop/PageRegionDesktop.tsx:49
-#: src/pages/region/mobile/PageRegionMobile.tsx:23
-#: src/pages/route/desktop/PageRouteDesktop.tsx:63
-#: src/pages/route/mobile/PageRouteMobile.tsx:61
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:106
-#: src/pages/sector/mobile/PageSectorMobile.tsx:88
+#: src/pages/region/desktop/PageRegionDesktop.tsx:86
+#: src/pages/region/mobile/PageRegionMobile.tsx:42
+#: src/pages/route/desktop/PageRouteDesktop.tsx:66
+#: src/pages/route/mobile/PageRouteMobile.tsx:62
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:108
+#: src/pages/sector/mobile/PageSectorMobile.tsx:90
 msgid "Regions"
 msgstr "Regions"
 
@@ -852,6 +1254,10 @@ msgstr "Reload"
 #: src/features/topoEditor/desktop/ui/TopoEditorToolbar.tsx:51
 #~ msgid "Remove line"
 #~ msgstr "Remove line"
+
+#: src/features/sectorMap/common/ui/SectorPointEditor.tsx:71
+#~ msgid "Remove point"
+#~ msgstr "Remove point"
 
 #: src/features/topoEditor/desktop/ui/TopoFileStrip.tsx:78
 #~ msgid "Replace"
@@ -885,24 +1291,48 @@ msgstr "Resend code"
 msgid "Reset filters"
 msgstr "Reset filters"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:137
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:139
 msgid "Reset to the saved state"
 msgstr "Reset to the saved state"
 
-#: src/shared/ui/AscentStyleLabel.tsx:26
+#: src/shared/ui/RestoreButton.tsx:19
+msgid "Restore"
+msgstr "Restore"
+
+#: src/features/catalogEdit/common/ui/ArchivedSectorPanel.tsx:17
+msgid "Restoring brings back its routes, except the ones archived on their own."
+msgstr "Restoring brings back its routes, except the ones archived on their own."
+
+#: src/features/catalogEdit/common/ui/ArchivedSectorPanel.tsx:38
+#~ msgid "Restoring brings back its routes, except the ones deleted on their own."
+#~ msgstr "Restoring brings back its routes, except the ones deleted on their own."
+
+#: src/features/catalogEdit/common/ui/ArchivedRegionPanel.tsx:17
+msgid "Restoring brings back its sectors and routes, except the ones archived on their own."
+msgstr "Restoring brings back its sectors and routes, except the ones archived on their own."
+
+#: src/features/catalogEdit/common/ui/ArchivedRegionPanel.tsx:38
+#~ msgid "Restoring brings back its sectors and routes, except the ones deleted on their own."
+#~ msgstr "Restoring brings back its sectors and routes, except the ones deleted on their own."
+
+#: src/pages/route/common/ui/ArchivedRouteActions.tsx:23
+msgid "Restoring puts it back in its sector, lines and all."
+msgstr "Restoring puts it back in its sector, lines and all."
+
+#: src/shared/ui/AscentTypeLabel.tsx:26
 msgid "Retro flash"
 msgstr "Retro flash"
 
 #: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:56
-#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:65
+#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:71
 msgid "Rock type"
 msgstr "Rock type"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:157
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:159
 msgid "Route №{number}"
 msgstr "Route №{number}"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:159
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:161
 msgid "Route not on the wall yet"
 msgstr "Route not on the wall yet"
 
@@ -910,17 +1340,18 @@ msgstr "Route not on the wall yet"
 msgid "Route saved"
 msgstr "Route saved"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:139
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:133
 msgid "Routes"
 msgstr "Routes"
 
-#: src/features/catalogEdit/common/ui/EditActions.tsx:19
+#: src/features/catalogEdit/common/ui/EditActions.tsx:22
+#: src/features/logTick/common/ui/TickForm.tsx:172
 #: src/features/routeComment/desktop/EditRouteCommentDialog.tsx:29
 #: src/features/routeComment/mobile/EditRouteCommentSheet.tsx:24
 msgid "Save"
 msgstr "Save"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:278
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:280
 msgid "Save changes"
 msgstr "Save changes"
 
@@ -928,22 +1359,26 @@ msgstr "Save changes"
 #~ msgid "Save route"
 #~ msgstr "Save route"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:268
+#: src/features/topoEditor/desktop/ui/TopoEditorArchivedRoutes.tsx:38
+#~ msgid "Save your changes first to restore a route."
+#~ msgstr "Save your changes first to restore a route."
+
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:270
 msgid "Saved changes go live for everyone straight away."
 msgstr "Saved changes go live for everyone straight away."
 
-#: src/features/catalogEdit/common/ui/EditActions.tsx:19
-#: src/features/logTick/common/ui/TickForm.tsx:91
+#: src/features/catalogEdit/common/ui/EditActions.tsx:22
+#: src/features/logTick/common/ui/TickForm.tsx:170
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:54
 msgid "Saving…"
 msgstr "Saving…"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:205
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:223
 msgid "Sector"
 msgstr "Sector"
 
 #. placeholder {0}: sector.name
-#: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:26
+#: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:28
 msgid "Sector {0} created"
 msgstr "Sector {0} created"
 
@@ -951,7 +1386,7 @@ msgstr "Sector {0} created"
 msgid "Sector cover"
 msgstr "Sector cover"
 
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:36
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:47
 msgid "Sector saved"
 msgstr "Sector saved"
 
@@ -967,6 +1402,18 @@ msgstr "Sector saved"
 msgid "Sending code…"
 msgstr "Sending code…"
 
+#: src/features/logTick/common/ui/TickForm.tsx:135
+msgid "Share your thoughts"
+msgstr "Share your thoughts"
+
+#: src/shared/ui/ArchivedToggle.tsx:17
+#~ msgid "Show archived"
+#~ msgstr "Show archived"
+
+#: src/pages/logbook/common/ui/TicksFeed.tsx:40
+msgid "Show more"
+msgstr "Show more"
+
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:65
 msgid "Sign in"
 msgstr "Sign in"
@@ -979,24 +1426,32 @@ msgstr "Sign in to log your sends"
 msgid "Sign out"
 msgstr "Sign out"
 
+#: src/features/logTick/common/ui/GradeOpinionChoice.tsx:22
+#~ msgid "Soft"
+#~ msgstr "Soft"
+
 #: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:26
 msgid "softer"
 msgstr "softer"
+
+#: src/features/logTick/common/ui/GradeFeelChoice.tsx:36
+msgid "Softer"
+msgstr "Softer"
 
 #: src/app/ui/errorBoundary/ErrorFallback.tsx:13
 msgid "Something went wrong"
 msgstr "Something went wrong"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:199
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:201
 #: src/widgets/gradeHistogram/common/ui/GradeHistogram.tsx:36
 msgid "Sport"
 msgstr "Sport"
 
-#: src/features/logTick/common/ui/TickForm.tsx:57
-msgid "Style"
-msgstr "Style"
+#: src/features/logTick/common/ui/AscentStyleChoice.tsx:24
+#~ msgid "Style"
+#~ msgstr "Style"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:209
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:211
 msgid "System"
 msgstr "System"
 
@@ -1012,9 +1467,9 @@ msgstr "The edits you have not saved yet are dropped, and the catalog keeps what
 msgid "The line drawn for {routeName} disappears from this photo, for everyone, straight away. You can draw it again."
 msgstr "The line drawn for {routeName} disappears from this photo, for everyone, straight away. You can draw it again."
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:177
-msgid "The line moves as it is — redraw it on the new photo."
-msgstr "The line moves as it is — redraw it on the new photo."
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:179
+#~ msgid "The line moves as it is — redraw it on the new photo."
+#~ msgstr "The line moves as it is — redraw it on the new photo."
 
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:373
 msgid "The lines are kept. The proportions match, so they should land where they are now — check them after replacing."
@@ -1036,6 +1491,10 @@ msgstr "The new photo has different proportions. The lines are kept, but they wi
 msgid "The sector has no photo yet — add one in the sector editor."
 msgstr "The sector has no photo yet — add one in the sector editor."
 
+#: src/features/catalogEdit/desktop/DeleteSectorDialog.tsx:39
+#~ msgid "The sector is not empty"
+#~ msgstr "The sector is not empty"
+
 #: src/pages/sectorEdit/mobile/PageSectorEditMobile.tsx:8
 #~ msgid "The topo editor is available on a desktop screen."
 #~ msgstr "The topo editor is available on a desktop screen."
@@ -1044,6 +1503,8 @@ msgstr "The sector has no photo yet — add one in the sector editor."
 msgid "Theme"
 msgstr "Theme"
 
+#: src/features/logTick/desktop/DeleteTickDialog.tsx:25
+#: src/features/logTick/mobile/DeleteTickSheet.tsx:21
 #: src/features/routeComment/desktop/DeleteRouteCommentDialog.tsx:29
 #: src/features/routeComment/mobile/DeleteRouteCommentSheet.tsx:25
 msgid "This cannot be undone."
@@ -1052,6 +1513,10 @@ msgstr "This cannot be undone."
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:360
 msgid "This file could not be read as a photo."
 msgstr "This file could not be read as a photo."
+
+#: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:75
+msgid "This one stays — climbers left"
+msgstr "This one stays — climbers left"
 
 #. placeholder {0}: affected.join(', ')
 #: src/features/topoEditor/desktop/hooks/useTopoEditorActions.ts:185
@@ -1067,6 +1532,19 @@ msgstr "This photo carries the lines of: {routeNames}. It disappears from the se
 msgid "This photo stays over {0} even compressed."
 msgstr "This photo stays over {0} even compressed."
 
+#: src/pages/region/common/ui/ArchivedRegionNotice.tsx:11
+msgid "This region is in the archive, so it is out of the catalog. Its sectors, routes and everything climbers left on them — ascents, photos, links and comments — are still here."
+msgstr "This region is in the archive, so it is out of the catalog. Its sectors, routes and everything climbers left on them — ascents, photos, links and comments — are still here."
+
+#: src/features/catalogEdit/common/ui/RestoreRegionPanel.tsx:23
+#~ msgid "This region is out of the catalog. Restoring it brings back its sectors and routes, except the ones deleted on their own."
+#~ msgstr "This region is out of the catalog. Restoring it brings back its sectors and routes, except the ones deleted on their own."
+
+#: src/pages/region/desktop/PageRegionDesktop.tsx:115
+#: src/pages/region/mobile/PageRegionMobile.tsx:52
+#~ msgid "This region was removed from the catalog. Its sectors, routes and everything climbers left on them — ascents, photos, links and comments — are still here."
+#~ msgstr "This region was removed from the catalog. Its sectors, routes and everything climbers left on them — ascents, photos, links and comments — are still here."
+
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:93
 msgid "this route"
 msgstr "this route"
@@ -1075,15 +1553,37 @@ msgstr "this route"
 msgid "This route"
 msgstr "This route"
 
+#: src/pages/route/common/ui/ArchivedRouteNotice.tsx:11
+msgid "This route is in the archive, so it is out of the catalog. Everything climbers left on it — ascents, photos, links and comments — is still here."
+msgstr "This route is in the archive, so it is out of the catalog. Everything climbers left on it — ascents, photos, links and comments — is still here."
+
 #: src/pages/routeEdit/desktop/PageRouteEditDesktop.tsx:86
 msgid "This route is not in the sector any more."
 msgstr "This route is not in the sector any more."
+
+#: src/pages/route/desktop/PageRouteDesktop.tsx:92
+#: src/pages/route/mobile/PageRouteMobile.tsx:81
+#~ msgid "This route was removed from the catalog. Everything climbers left on it — ascents, photos, links and comments — is still here."
+#~ msgstr "This route was removed from the catalog. Everything climbers left on it — ascents, photos, links and comments — is still here."
 
 #: src/app/ui/errorBoundary/ErrorFallback.tsx:16
 msgid "This screen could not be drawn. Reloading usually gets past it."
 msgstr "This screen could not be drawn. Reloading usually gets past it."
 
-#: src/shared/ui/AscentStyleLabel.tsx:28
+#: src/pages/sector/common/ui/ArchivedSectorNotice.tsx:11
+msgid "This sector is in the archive, so it is out of the catalog. Its routes and everything climbers left on them — ascents, photos, links and comments — are still here."
+msgstr "This sector is in the archive, so it is out of the catalog. Its routes and everything climbers left on them — ascents, photos, links and comments — are still here."
+
+#: src/features/catalogEdit/common/ui/RestoreSectorPanel.tsx:23
+#~ msgid "This sector is out of the catalog. Restoring it brings back its routes, except the ones deleted on their own."
+#~ msgstr "This sector is out of the catalog. Restoring it brings back its routes, except the ones deleted on their own."
+
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:143
+#: src/pages/sector/mobile/PageSectorMobile.tsx:102
+#~ msgid "This sector was removed from the catalog. Its routes and everything climbers left on them — ascents, photos, links and comments — are still here."
+#~ msgstr "This sector was removed from the catalog. Its routes and everything climbers left on them — ascents, photos, links and comments — are still here."
+
+#: src/shared/ui/AscentTypeLabel.tsx:28
 msgid "Top rope"
 msgstr "Top rope"
 
@@ -1104,13 +1604,25 @@ msgstr "Top rope"
 msgid "Trad"
 msgstr "Trad"
 
+#: src/features/logTick/common/ui/AttemptsStepper.tsx:35
+msgid "Tries"
+msgstr "Tries"
+
 #: src/features/catalogEdit/common/ui/RouteEditForm.tsx:94
 #~ msgid "Type"
 #~ msgstr "Type"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:124
+#: src/features/logTick/common/ui/PartnerPicker.tsx:34
+msgid "Type at least {MIN_SEARCH_LENGTH} letters of a name"
+msgstr "Type at least {MIN_SEARCH_LENGTH} letters of a name"
+
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:126
 msgid "Undo"
 msgstr "Undo"
+
+#: src/features/sectorMap/common/ui/SectorPointEditor.tsx:57
+msgid "Unreadable. A short maps.app.goo.gl link carries no coordinates — use \"Copy coordinates\" instead."
+msgstr "Unreadable. A short maps.app.goo.gl link carries no coordinates — use \"Copy coordinates\" instead."
 
 #: src/shared/ui/UnsavedBadge.tsx:8
 msgid "Unsaved"
@@ -1146,14 +1658,30 @@ msgstr "Verifying…"
 msgid "Video and photo"
 msgstr "Video and photo"
 
+#: src/features/catalogEdit/desktop/DeleteSectorDialog.tsx:80
+#~ msgid "View routes"
+#~ msgstr "View routes"
+
 #. placeholder {0}: email.trim()
 #: src/pages/login/common/ui/EmailOtpForm.tsx:53
 msgid "We sent a code to <0>{0}</0>"
 msgstr "We sent a code to <0>{0}</0>"
 
+#: src/features/logTick/common/ui/TickForm.tsx:92
+msgid "When did you climb it?"
+msgstr "When did you climb it?"
+
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:39
 msgid "Your beta"
 msgstr "Your beta"
+
+#: src/features/logTick/common/ui/GradeFeelChoice.tsx:44
+msgid "Your grade"
+msgstr "Your grade"
+
+#: src/features/logTick/common/ui/TickMediaField.tsx:57
+msgid "YouTube or Instagram link"
+msgstr "YouTube or Instagram link"
 
 #: src/features/topo/common/ui/TopoZoomControls.tsx:31
 msgid "Zoom in"
