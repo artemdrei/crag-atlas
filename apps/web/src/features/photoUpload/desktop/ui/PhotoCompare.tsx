@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 
 import { TopoZoomControls } from '@web/features/topo';
 import { formatBytes } from '@web/shared/lib';
+import { photoFrame } from '@web/shared/theme/photoFrame';
 
 import type { PhotoVersion } from '../../common';
 
@@ -178,4 +179,5 @@ const ImageStyled = styled('img')`
   max-width: 100%;
   max-height: min(52vh, 460px);
   object-fit: contain;
+  ${({ theme }) => photoFrame(theme)}
 `;

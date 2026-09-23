@@ -9,6 +9,8 @@ import type { RouteLine } from '@crag-atlas/api';
 import CircularProgress from '@mui/material/CircularProgress';
 import { styled } from '@mui/material/styles';
 
+import { photoFrame } from '@web/shared/theme/photoFrame';
+
 import {
   findNearestLine,
   lineOpacity,
@@ -244,6 +246,7 @@ const ImageStyled = styled('img', {
   height: ${({ isContained }) => (isContained ? '100%' : 'auto')};
   opacity: ${({ isLoaded }) => (isLoaded ? 1 : 0)};
   transition: opacity 0.2s ease-out;
+  ${({ theme }) => photoFrame(theme)}
 `;
 
 const LoaderStyled = styled('div')`

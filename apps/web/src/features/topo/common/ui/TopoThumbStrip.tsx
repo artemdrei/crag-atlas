@@ -3,6 +3,8 @@ import ButtonBase from '@mui/material/ButtonBase';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
+import { photoFrame } from '@web/shared/theme/photoFrame';
+
 import { usePhotoLabel } from '../hooks';
 
 export interface Props {
@@ -76,8 +78,8 @@ const ThumbImageStyled = styled('img')`
   width: 100%;
   aspect-ratio: 1;
   object-fit: contain;
-  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
   background: ${({ theme }) => theme.palette.action.hover};
+  ${({ theme }) => photoFrame(theme)}
 `;
 
 const ThumbLabelStyled = styled(Typography)`

@@ -3,6 +3,8 @@ import type { PropsWithChildren } from 'react';
 import CardActionArea from '@mui/material/CardActionArea';
 import { styled } from '@mui/material/styles';
 
+import { photoFrame } from '@web/shared/theme/photoFrame';
+
 import { PhotoPlaceholder } from './PhotoPlaceholder';
 import { UnsavedBadge } from './UnsavedBadge';
 
@@ -62,7 +64,7 @@ const PhotoStyled = styled('img')`
   width: 100%;
   aspect-ratio: 1 / 1;
   object-fit: contain;
-  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
+  ${({ theme }) => photoFrame(theme)}
 `;
 
 const BodyStyled = styled('div')`

@@ -18,6 +18,7 @@ import {
   TopoZoomControls,
   toleranceOf
 } from '@web/features/topo';
+import { photoFrame } from '@web/shared/theme/photoFrame';
 import { ZoomStageShell } from '@web/shared/ui';
 
 import type {
@@ -429,6 +430,7 @@ const ImageStyled = styled('img')`
   height: auto;
   max-width: 100%;
   max-height: 100%;
+  ${({ theme }) => photoFrame(theme)}
 `;
 
 const OverlayStyled = styled('svg', {

@@ -25,8 +25,7 @@ const TopoPhotoDialog = ({ open, ...photo }: Props) => {
 
   return (
     <Dialog
-      fullWidth
-      maxWidth="xl"
+      maxWidth={false}
       open={open}
       // The zoom layer measures itself on mount; a growing box measures wrong.
       transitionDuration={0}
@@ -46,9 +45,9 @@ export default TopoPhotoDialog;
 
 const BodyStyled = styled('div')`
   position: relative;
+  width: min(92vw, 1400px);
   height: min(88vh, 1100px);
   padding: ${({ theme }) => theme.spacing(2)};
-  background: ${({ theme }) => theme.palette.background.default};
 `;
 
 const CloseButtonStyled = styled(IconButton)`
