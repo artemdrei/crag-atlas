@@ -6,20 +6,29 @@ import {
   writeFailed
 } from '../common/exceptions/database.exception';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
+import {
+  assertWebp,
+  buildPhotoPath,
+  removePhoto,
+  type UploadedPhoto,
+  uploadPhoto
+} from '../common/utils/photoStorage';
 import { userClient } from '../common/utils/userClient';
-import { publicSupabase } from '../config/supabase.client';
+import { publicSupabase, storagePublicUrl } from '../config/supabase.client';
 import type { CreateMediaDto, MediaDto } from './media.types';
-import { MEDIA_KINDS } from './media.types';
+import { MEDIA_BUCKET, MEDIA_KINDS } from './media.types';
 
 const COLUMNS =
-  'id, id_route, id_user, kind, url, title, duration_seconds, created_at, users (display_name)';
+  'id, id_route, id_tick, id_user, kind, url, storage_path, title, duration_seconds, created_at, users (display_name)';
 
 interface MediaRow {
   id: string;
   id_route: string;
+  id_tick: string | null;
+  storage_path: string | null;
   id_user: string;
   kind: MediaDto['kind'];
-  url: string;
+  url: string | null;
   title: string;
   duration_seconds: number | null;
   created_at: string;
@@ -72,6 +81,7 @@ export class MediaService {
       .from('route_media')
       .insert({
         id_route: idRoute,
+        id_tick: payload.idTick ?? null,
         id_user: authUser.idUser,
         kind: payload.kind,
         url,
@@ -85,6 +95,46 @@ export class MediaService {
       throw writeFailed(
         'Could not add the media',
         'MEDIA_CREATE_FAILED',
+        error
+      );
+    }
+
+    return toMediaDto(data);
+  }
+
+  async createPhoto(
+    authUser: AuthUser,
+    idRoute: string,
+    photo: UploadedPhoto,
+    idTick?: string
+  ): Promise<MediaDto> {
+    assertWebp(photo);
+
+    const client = userClient(authUser);
+    const path = buildPhotoPath(idRoute);
+
+    await uploadPhoto(client, MEDIA_BUCKET, path, photo);
+
+    const { data, error } = await client
+      .from('route_media')
+      .insert({
+        id_route: idRoute,
+        id_tick: idTick ?? null,
+        id_user: authUser.idUser,
+        kind: 'photo',
+        url: null,
+        storage_path: path,
+        title: ''
+      })
+      .select(COLUMNS)
+      .single<MediaRow>();
+
+    if (error) {
+      await removePhoto(client, MEDIA_BUCKET, path);
+
+      throw writeFailed(
+        'Could not add the photo',
+        'MEDIA_PHOTO_CREATE_FAILED',
         error
       );
     }
@@ -106,10 +156,11 @@ const isHttpUrl = (value: string): boolean => {
 const toMediaDto = (row: MediaRow): MediaDto => ({
   id: row.id,
   idRoute: row.id_route,
+  idTick: row.id_tick,
   idUser: row.id_user,
   authorName: row.users?.display_name ?? '',
   kind: row.kind,
-  url: row.url,
+  url: row.url ?? storagePublicUrl(MEDIA_BUCKET, row.storage_path ?? ''),
   title: row.title,
   durationSeconds: row.duration_seconds,
   createdAt: row.created_at

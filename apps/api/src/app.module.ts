@@ -10,6 +10,7 @@ import { RoutesModule } from './routes/routes.module';
 import { SectorsModule } from './sectors/sectors.module';
 import { TicksModule } from './ticks/ticks.module';
 import { ToposModule } from './topos/topos.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ToposModule } from './topos/topos.module';
     RoutesModule,
     TicksModule,
     ToposModule,
+    UsersModule,
     CommentsModule,
     MediaModule
   ]

@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
+export const MEDIA_BUCKET = 'media';
+
 export const MEDIA_KINDS = ['video', 'photo'] as const;
 
 export type MediaKind = (typeof MEDIA_KINDS)[number];
@@ -29,6 +31,9 @@ export class MediaDto {
   @ApiProperty({ type: Number, required: false, nullable: true })
   durationSeconds?: number | null;
 
+  @ApiProperty({ type: String, required: false, nullable: true })
+  idTick?: string | null;
+
   @ApiProperty({ description: 'ISO timestamp' })
   createdAt!: string;
 }
@@ -36,6 +41,9 @@ export class MediaDto {
 export class CreateMediaDto {
   @ApiProperty({ enum: MEDIA_KINDS })
   kind!: MediaKind;
+
+  @ApiProperty({ type: String, required: false, nullable: true })
+  idTick?: string | null;
 
   @ApiProperty()
   url!: string;
