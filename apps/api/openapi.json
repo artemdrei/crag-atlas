@@ -108,6 +108,28 @@
         "tags": ["Regions"]
       }
     },
+    "/regions/archived": {
+      "get": {
+        "operationId": "RegionsController_findArchived",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RegionDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Regions"]
+      }
+    },
     "/regions/{idRegion}": {
       "get": {
         "operationId": "RegionsController_findOne",
@@ -170,6 +192,25 @@
           }
         },
         "tags": ["Regions"]
+      },
+      "delete": {
+        "operationId": "RegionsController_remove",
+        "parameters": [
+          {
+            "name": "idRegion",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": ["Regions"]
       }
     },
     "/regions/{idRegion}/photo": {
@@ -212,6 +253,83 @@
                 }
               }
             }
+          }
+        },
+        "tags": ["Regions"]
+      }
+    },
+    "/regions/{idRegion}/restore": {
+      "post": {
+        "operationId": "RegionsController_restore",
+        "parameters": [
+          {
+            "name": "idRegion",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegionDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Regions"]
+      }
+    },
+    "/regions/{idRegion}/content": {
+      "get": {
+        "operationId": "RegionsController_climberContent",
+        "parameters": [
+          {
+            "name": "idRegion",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClimberContentDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Regions"]
+      }
+    },
+    "/regions/{idRegion}/permanent": {
+      "delete": {
+        "operationId": "RegionsController_purge",
+        "parameters": [
+          {
+            "name": "idRegion",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
           }
         },
         "tags": ["Regions"]
@@ -284,6 +402,37 @@
         "tags": ["Sectors"]
       }
     },
+    "/regions/{idRegion}/sectors/archived": {
+      "get": {
+        "operationId": "SectorsController_findArchived",
+        "parameters": [
+          {
+            "name": "idRegion",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SectorDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Sectors"]
+      }
+    },
     "/sectors/{idSector}": {
       "get": {
         "operationId": "SectorController_findOne",
@@ -343,6 +492,102 @@
                 }
               }
             }
+          }
+        },
+        "tags": ["Sector"]
+      },
+      "delete": {
+        "operationId": "SectorController_remove",
+        "parameters": [
+          {
+            "name": "idSector",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": ["Sector"]
+      }
+    },
+    "/sectors/{idSector}/restore": {
+      "post": {
+        "operationId": "SectorController_restore",
+        "parameters": [
+          {
+            "name": "idSector",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SectorDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Sector"]
+      }
+    },
+    "/sectors/{idSector}/content": {
+      "get": {
+        "operationId": "SectorController_climberContent",
+        "parameters": [
+          {
+            "name": "idSector",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClimberContentDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Sector"]
+      }
+    },
+    "/sectors/{idSector}/permanent": {
+      "delete": {
+        "operationId": "SectorController_purge",
+        "parameters": [
+          {
+            "name": "idSector",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
           }
         },
         "tags": ["Sector"]
@@ -462,6 +707,37 @@
         "tags": ["Routes"]
       }
     },
+    "/sectors/{idSector}/routes/archived": {
+      "get": {
+        "operationId": "RoutesController_findArchived",
+        "parameters": [
+          {
+            "name": "idSector",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RouteDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Routes"]
+      }
+    },
     "/routes/{idRoute}": {
       "get": {
         "operationId": "RouteController_findOne",
@@ -545,6 +821,83 @@
         "tags": ["Route"]
       }
     },
+    "/routes/{idRoute}/restore": {
+      "post": {
+        "operationId": "RouteController_restore",
+        "parameters": [
+          {
+            "name": "idRoute",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RouteDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Route"]
+      }
+    },
+    "/routes/{idRoute}/content": {
+      "get": {
+        "operationId": "RouteController_climberContent",
+        "parameters": [
+          {
+            "name": "idRoute",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClimberContentDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Route"]
+      }
+    },
+    "/routes/{idRoute}/permanent": {
+      "delete": {
+        "operationId": "RouteController_purge",
+        "parameters": [
+          {
+            "name": "idRoute",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": ["Route"]
+      }
+    },
     "/ticks": {
       "get": {
         "operationId": "TicksController_findMine",
@@ -598,6 +951,99 @@
                 }
               }
             }
+          }
+        },
+        "tags": ["Ticks"]
+      }
+    },
+    "/ticks/feed": {
+      "get": {
+        "operationId": "TicksController_findFeed",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TickFeedPageDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Ticks"]
+      }
+    },
+    "/ticks/{idTick}": {
+      "patch": {
+        "operationId": "TicksController_update",
+        "parameters": [
+          {
+            "name": "idTick",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTickDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TickDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Ticks"]
+      },
+      "delete": {
+        "operationId": "TicksController_remove",
+        "parameters": [
+          {
+            "name": "idTick",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
           }
         },
         "tags": ["Ticks"]
@@ -877,6 +1323,37 @@
         "tags": ["RouteLine"]
       }
     },
+    "/users": {
+      "get": {
+        "operationId": "UsersController_search",
+        "parameters": [
+          {
+            "name": "q",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserSummaryDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Users"]
+      }
+    },
     "/routes/{idRoute}/comments": {
       "get": {
         "operationId": "CommentsController_findByRoute",
@@ -1049,6 +1526,59 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/CreateMediaDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Media"]
+      }
+    },
+    "/routes/{idRoute}/media/photo": {
+      "post": {
+        "operationId": "MediaController_createPhoto",
+        "parameters": [
+          {
+            "name": "idRoute",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idTick",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["file"],
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
               }
             }
           }
@@ -1258,6 +1788,14 @@
             "items": {
               "$ref": "#/components/schemas/GradeHistogramGroupDto"
             }
+          },
+          "isArchived": {
+            "type": "boolean",
+            "description": "Out of the catalog, because it carries the mark or an ancestor does"
+          },
+          "isDeleted": {
+            "type": "boolean",
+            "description": "Deleted directly, so restoring this row is what brings it back"
           }
         },
         "required": [
@@ -1267,7 +1805,9 @@
           "rockType",
           "sectorCount",
           "routeCount",
-          "gradeHistogram"
+          "gradeHistogram",
+          "isArchived",
+          "isDeleted"
         ]
       },
       "CreateRegionDto": {
@@ -1306,6 +1846,21 @@
           }
         },
         "required": ["name", "province", "rockType"]
+      },
+      "ClimberContentDto": {
+        "type": "object",
+        "properties": {
+          "ascents": {
+            "type": "number"
+          },
+          "comments": {
+            "type": "number"
+          },
+          "media": {
+            "type": "number"
+          }
+        },
+        "required": ["ascents", "comments", "media"]
       },
       "SectorDto": {
         "type": "object",
@@ -1381,6 +1936,22 @@
             "items": {
               "$ref": "#/components/schemas/GradeHistogramGroupDto"
             }
+          },
+          "lat": {
+            "type": "number",
+            "nullable": true
+          },
+          "lng": {
+            "type": "number",
+            "nullable": true
+          },
+          "isArchived": {
+            "type": "boolean",
+            "description": "Out of the catalog, because it carries the mark or an ancestor does"
+          },
+          "isDeleted": {
+            "type": "boolean",
+            "description": "Deleted directly, so restoring this row is what brings it back"
           }
         },
         "required": [
@@ -1390,7 +1961,9 @@
           "name",
           "description",
           "routeCount",
-          "gradeHistogram"
+          "gradeHistogram",
+          "isArchived",
+          "isDeleted"
         ]
       },
       "CreateSectorDto": {
@@ -1414,6 +1987,14 @@
           },
           "description": {
             "type": "string",
+            "nullable": true
+          },
+          "lat": {
+            "type": "number",
+            "nullable": true
+          },
+          "lng": {
+            "type": "number",
             "nullable": true
           }
         },
@@ -1476,6 +2057,11 @@
             "nullable": true,
             "description": "Community rating, 0..5"
           },
+          "ratingVotes": {
+            "type": "number",
+            "nullable": true,
+            "description": "How many ratings that average stands on"
+          },
           "ascentsCount": {
             "type": "number",
             "nullable": true
@@ -1499,6 +2085,14 @@
           },
           "description": {
             "type": "string"
+          },
+          "isArchived": {
+            "type": "boolean",
+            "description": "Out of the catalog, because it carries the mark or an ancestor does"
+          },
+          "isDeleted": {
+            "type": "boolean",
+            "description": "Deleted directly, so restoring this row is what brings it back"
           }
         },
         "required": [
@@ -1511,7 +2105,9 @@
           "grade",
           "gradeScale",
           "type",
-          "description"
+          "description",
+          "isArchived",
+          "isDeleted"
         ]
       },
       "CreateRouteDto": {
@@ -1600,6 +2196,22 @@
         },
         "required": ["name", "grade", "gradeScale", "type"]
       },
+      "TickMediaDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": ["video", "photo"]
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": ["id", "kind", "url"]
+      },
       "TickDto": {
         "type": "object",
         "properties": {
@@ -1611,6 +2223,15 @@
           },
           "idRoute": {
             "type": "string"
+          },
+          "idSector": {
+            "type": "string",
+            "nullable": true,
+            "description": "With idRegion, the pair a link back to the route needs"
+          },
+          "idRegion": {
+            "type": "string",
+            "nullable": true
           },
           "routeName": {
             "type": "string",
@@ -1641,7 +2262,7 @@
             "type": "string",
             "nullable": true
           },
-          "ascentStyle": {
+          "ascentType": {
             "type": "string",
             "enum": [
               "onsight",
@@ -1664,6 +2285,45 @@
             "type": "string",
             "nullable": true
           },
+          "rating": {
+            "type": "number",
+            "nullable": true
+          },
+          "gradeOpinion": {
+            "type": "string",
+            "enum": ["soft", "neutral", "hard"],
+            "nullable": true
+          },
+          "gradeVote": {
+            "type": "string",
+            "nullable": true
+          },
+          "notePrivate": {
+            "type": "boolean",
+            "description": "A private note is empty for everyone else"
+          },
+          "idPartner": {
+            "type": "string",
+            "nullable": true
+          },
+          "partnerName": {
+            "type": "string",
+            "nullable": true
+          },
+          "authorName": {
+            "type": "string",
+            "nullable": true
+          },
+          "avatarUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "media": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TickMediaDto"
+            }
+          },
           "createdAt": {
             "type": "string"
           },
@@ -1675,11 +2335,29 @@
           "id",
           "idUser",
           "idRoute",
-          "ascentStyle",
+          "ascentType",
           "climbedAt",
+          "notePrivate",
           "createdAt",
           "updatedAt"
         ]
+      },
+      "TickFeedPageDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TickDto"
+            }
+          },
+          "nextCursor": {
+            "type": "string",
+            "nullable": true,
+            "description": "Pass back as `cursor` to get the next page"
+          }
+        },
+        "required": ["items"]
       },
       "CreateTickDto": {
         "type": "object",
@@ -1687,7 +2365,7 @@
           "idRoute": {
             "type": "string"
           },
-          "ascentStyle": {
+          "ascentType": {
             "type": "string",
             "enum": [
               "onsight",
@@ -1709,9 +2387,77 @@
           "note": {
             "type": "string",
             "nullable": true
+          },
+          "rating": {
+            "type": "number",
+            "nullable": true
+          },
+          "gradeOpinion": {
+            "type": "string",
+            "enum": ["soft", "neutral", "hard"],
+            "nullable": true
+          },
+          "idPartner": {
+            "type": "string",
+            "nullable": true
+          },
+          "gradeVote": {
+            "type": "string",
+            "nullable": true
+          },
+          "notePrivate": {
+            "type": "boolean"
           }
         },
-        "required": ["idRoute", "ascentStyle"]
+        "required": ["idRoute", "ascentType"]
+      },
+      "UpdateTickDto": {
+        "type": "object",
+        "properties": {
+          "ascentType": {
+            "type": "string",
+            "enum": [
+              "onsight",
+              "flash",
+              "retro_flash",
+              "redpoint",
+              "toprope",
+              "attempt"
+            ]
+          },
+          "climbedAt": {
+            "type": "string",
+            "description": "ISO date, e.g. 2026-09-19"
+          },
+          "attempts": {
+            "type": "number",
+            "nullable": true
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          },
+          "rating": {
+            "type": "number",
+            "nullable": true
+          },
+          "gradeOpinion": {
+            "type": "string",
+            "enum": ["soft", "neutral", "hard"],
+            "nullable": true
+          },
+          "idPartner": {
+            "type": "string",
+            "nullable": true
+          },
+          "gradeVote": {
+            "type": "string",
+            "nullable": true
+          },
+          "notePrivate": {
+            "type": "boolean"
+          }
+        }
       },
       "RouteLineDto": {
         "type": "object",
@@ -1884,6 +2630,22 @@
         },
         "required": ["points"]
       },
+      "UserSummaryDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": ["id", "displayName"]
+      },
       "CommentDto": {
         "type": "object",
         "properties": {
@@ -1969,6 +2731,10 @@
             "type": "number",
             "nullable": true
           },
+          "idTick": {
+            "type": "string",
+            "nullable": true
+          },
           "createdAt": {
             "type": "string",
             "description": "ISO timestamp"
@@ -1991,6 +2757,10 @@
           "kind": {
             "type": "string",
             "enum": ["video", "photo"]
+          },
+          "idTick": {
+            "type": "string",
+            "nullable": true
           },
           "url": {
             "type": "string"

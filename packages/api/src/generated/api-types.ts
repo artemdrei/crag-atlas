@@ -52,6 +52,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/regions/archived": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["RegionsController_findArchived"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/regions/{idRegion}": {
         parameters: {
             query?: never;
@@ -62,7 +78,7 @@ export interface paths {
         get: operations["RegionsController_findOne"];
         put?: never;
         post?: never;
-        delete?: never;
+        delete: operations["RegionsController_remove"];
         options?: never;
         head?: never;
         patch: operations["RegionsController_update"];
@@ -84,6 +100,54 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/regions/{idRegion}/restore": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["RegionsController_restore"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/regions/{idRegion}/content": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["RegionsController_climberContent"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/regions/{idRegion}/permanent": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["RegionsController_purge"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/regions/{idRegion}/sectors": {
         parameters: {
             query?: never;
@@ -100,6 +164,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/regions/{idRegion}/sectors/archived": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["SectorsController_findArchived"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/sectors/{idSector}": {
         parameters: {
             query?: never;
@@ -110,10 +190,58 @@ export interface paths {
         get: operations["SectorController_findOne"];
         put?: never;
         post?: never;
-        delete?: never;
+        delete: operations["SectorController_remove"];
         options?: never;
         head?: never;
         patch: operations["SectorController_update"];
+        trace?: never;
+    };
+    "/sectors/{idSector}/restore": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["SectorController_restore"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/sectors/{idSector}/content": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["SectorController_climberContent"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/sectors/{idSector}/permanent": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["SectorController_purge"];
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/sectors/{idSector}/routes": {
@@ -126,6 +254,22 @@ export interface paths {
         get: operations["RoutesController_findBySector"];
         put?: never;
         post: operations["RoutesController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/sectors/{idSector}/routes/archived": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["RoutesController_findArchived"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -148,6 +292,54 @@ export interface paths {
         patch: operations["RouteController_update"];
         trace?: never;
     };
+    "/routes/{idRoute}/restore": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["RouteController_restore"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/routes/{idRoute}/content": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["RouteController_climberContent"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/routes/{idRoute}/permanent": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["RouteController_purge"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/ticks": {
         parameters: {
             query?: never;
@@ -162,6 +354,38 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/ticks/feed": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["TicksController_findFeed"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/ticks/{idTick}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["TicksController_remove"];
+        options?: never;
+        head?: never;
+        patch: operations["TicksController_update"];
         trace?: never;
     };
     "/sectors/{idSector}/topos": {
@@ -244,6 +468,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["UsersController_search"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/routes/{idRoute}/comments": {
         parameters: {
             query?: never;
@@ -286,6 +526,22 @@ export interface paths {
         get: operations["MediaController_findByRoute"];
         put?: never;
         post: operations["MediaController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/routes/{idRoute}/media/photo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["MediaController_createPhoto"];
         delete?: never;
         options?: never;
         head?: never;
@@ -359,6 +615,10 @@ export interface components {
             gradeMaxScale?: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux" | "font" | "vscale" | null;
             /** @description Grade spread, one group per climbing type; empty when there are no routes */
             gradeHistogram: components["schemas"]["GradeHistogramGroupDto"][];
+            /** @description Out of the catalog, because it carries the mark or an ancestor does */
+            isArchived: boolean;
+            /** @description Deleted directly, so restoring this row is what brings it back */
+            isDeleted: boolean;
         };
         CreateRegionDto: {
             name: string;
@@ -371,6 +631,11 @@ export interface components {
             rockType: string;
             /** @description Cover photo; null until an admin uploads one */
             photoUrl?: string | null;
+        };
+        ClimberContentDto: {
+            ascents: number;
+            comments: number;
+            media: number;
         };
         SectorDto: {
             id: string;
@@ -397,6 +662,12 @@ export interface components {
             gradeMaxScale?: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux" | "font" | "vscale" | null;
             /** @description Grade spread, one group per climbing type; empty when there are no routes */
             gradeHistogram: components["schemas"]["GradeHistogramGroupDto"][];
+            lat?: number | null;
+            lng?: number | null;
+            /** @description Out of the catalog, because it carries the mark or an ancestor does */
+            isArchived: boolean;
+            /** @description Deleted directly, so restoring this row is what brings it back */
+            isDeleted: boolean;
         };
         CreateSectorDto: {
             name: string;
@@ -405,6 +676,8 @@ export interface components {
         UpdateSectorDto: {
             name: string;
             description?: string | null;
+            lat?: number | null;
+            lng?: number | null;
         };
         RouteDto: {
             id: string;
@@ -426,6 +699,8 @@ export interface components {
             boltsCount?: number | null;
             /** @description Community rating, 0..5 */
             rating?: number | null;
+            /** @description How many ratings that average stands on */
+            ratingVotes?: number | null;
             ascentsCount?: number | null;
             onsightCount?: number | null;
             /** @description Votes saying the grade is soft */
@@ -433,6 +708,10 @@ export interface components {
             votesNeutral?: number | null;
             votesHard?: number | null;
             description: string;
+            /** @description Out of the catalog, because it carries the mark or an ancestor does */
+            isArchived: boolean;
+            /** @description Deleted directly, so restoring this row is what brings it back */
+            isDeleted: boolean;
         };
         CreateRouteDto: {
             name: string;
@@ -462,10 +741,19 @@ export interface components {
             boltsCount?: number | null;
             description?: string | null;
         };
+        TickMediaDto: {
+            id: string;
+            /** @enum {string} */
+            kind: "video" | "photo";
+            url: string;
+        };
         TickDto: {
             id: string;
             idUser: string;
             idRoute: string;
+            /** @description With idRegion, the pair a link back to the route needs */
+            idSector?: string | null;
+            idRegion?: string | null;
             /** @description Resolved from the route catalog; null if the route is gone */
             routeName?: string | null;
             routeGrade?: string | null;
@@ -476,22 +764,58 @@ export interface components {
             routeGradeScale?: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux" | "font" | "vscale" | null;
             sectorName?: string | null;
             /** @enum {string} */
-            ascentStyle: "onsight" | "flash" | "retro_flash" | "redpoint" | "toprope" | "attempt";
+            ascentType: "onsight" | "flash" | "retro_flash" | "redpoint" | "toprope" | "attempt";
             /** @description ISO date, e.g. 2026-09-19 */
             climbedAt: string;
             attempts?: number | null;
             note?: string | null;
+            rating?: number | null;
+            /** @enum {string|null} */
+            gradeOpinion?: "soft" | "neutral" | "hard" | null;
+            gradeVote?: string | null;
+            /** @description A private note is empty for everyone else */
+            notePrivate: boolean;
+            idPartner?: string | null;
+            partnerName?: string | null;
+            authorName?: string | null;
+            avatarUrl?: string | null;
+            media?: components["schemas"]["TickMediaDto"][];
             createdAt: string;
             updatedAt: string;
+        };
+        TickFeedPageDto: {
+            items: components["schemas"]["TickDto"][];
+            /** @description Pass back as `cursor` to get the next page */
+            nextCursor?: string | null;
         };
         CreateTickDto: {
             idRoute: string;
             /** @enum {string} */
-            ascentStyle: "onsight" | "flash" | "retro_flash" | "redpoint" | "toprope" | "attempt";
+            ascentType: "onsight" | "flash" | "retro_flash" | "redpoint" | "toprope" | "attempt";
             /** @description ISO date; defaults to today */
             climbedAt?: string;
             attempts?: number | null;
             note?: string | null;
+            rating?: number | null;
+            /** @enum {string|null} */
+            gradeOpinion?: "soft" | "neutral" | "hard" | null;
+            idPartner?: string | null;
+            gradeVote?: string | null;
+            notePrivate?: boolean;
+        };
+        UpdateTickDto: {
+            /** @enum {string} */
+            ascentType?: "onsight" | "flash" | "retro_flash" | "redpoint" | "toprope" | "attempt";
+            /** @description ISO date, e.g. 2026-09-19 */
+            climbedAt?: string;
+            attempts?: number | null;
+            note?: string | null;
+            rating?: number | null;
+            /** @enum {string|null} */
+            gradeOpinion?: "soft" | "neutral" | "hard" | null;
+            idPartner?: string | null;
+            gradeVote?: string | null;
+            notePrivate?: boolean;
         };
         RouteLineDto: {
             idRoute: string;
@@ -538,6 +862,11 @@ export interface components {
             labelOffsetX?: number;
             labelOffsetY?: number;
         };
+        UserSummaryDto: {
+            id: string;
+            displayName: string;
+            avatarUrl?: string | null;
+        };
         CommentDto: {
             id: string;
             idRoute: string;
@@ -566,12 +895,14 @@ export interface components {
             url: string;
             title: string;
             durationSeconds?: number | null;
+            idTick?: string | null;
             /** @description ISO timestamp */
             createdAt: string;
         };
         CreateMediaDto: {
             /** @enum {string} */
             kind: "video" | "photo";
+            idTick?: string | null;
             url: string;
             title?: string | null;
             durationSeconds?: number | null;
@@ -686,6 +1017,25 @@ export interface operations {
             };
         };
     };
+    RegionsController_findArchived: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RegionDto"][];
+                };
+            };
+        };
+    };
     RegionsController_findOne: {
         parameters: {
             query?: never;
@@ -704,6 +1054,25 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["RegionDto"];
                 };
+            };
+        };
+    };
+    RegionsController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idRegion: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -760,6 +1129,67 @@ export interface operations {
             };
         };
     };
+    RegionsController_restore: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idRegion: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RegionDto"];
+                };
+            };
+        };
+    };
+    RegionsController_climberContent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idRegion: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClimberContentDto"];
+                };
+            };
+        };
+    };
+    RegionsController_purge: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idRegion: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     SectorsController_findByRegion: {
         parameters: {
             query?: never;
@@ -806,6 +1236,27 @@ export interface operations {
             };
         };
     };
+    SectorsController_findArchived: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idRegion: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SectorDto"][];
+                };
+            };
+        };
+    };
     SectorController_findOne: {
         parameters: {
             query?: never;
@@ -824,6 +1275,25 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["SectorDto"];
                 };
+            };
+        };
+    };
+    SectorController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idSector: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -849,6 +1319,67 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["SectorDto"];
                 };
+            };
+        };
+    };
+    SectorController_restore: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idSector: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SectorDto"];
+                };
+            };
+        };
+    };
+    SectorController_climberContent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idSector: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClimberContentDto"];
+                };
+            };
+        };
+    };
+    SectorController_purge: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idSector: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -902,6 +1433,27 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["RouteDto"];
+                };
+            };
+        };
+    };
+    RoutesController_findArchived: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idSector: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RouteDto"][];
                 };
             };
         };
@@ -971,6 +1523,67 @@ export interface operations {
             };
         };
     };
+    RouteController_restore: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idRoute: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RouteDto"];
+                };
+            };
+        };
+    };
+    RouteController_climberContent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idRoute: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClimberContentDto"];
+                };
+            };
+        };
+    };
+    RouteController_purge: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idRoute: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     TicksController_findMine: {
         parameters: {
             query?: {
@@ -1006,6 +1619,72 @@ export interface operations {
         };
         responses: {
             201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TickDto"];
+                };
+            };
+        };
+    };
+    TicksController_findFeed: {
+        parameters: {
+            query?: {
+                limit?: string;
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TickFeedPageDto"];
+                };
+            };
+        };
+    };
+    TicksController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idTick: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    TicksController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idTick: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateTickDto"];
+            };
+        };
+        responses: {
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -1188,6 +1867,27 @@ export interface operations {
             };
         };
     };
+    UsersController_search: {
+        parameters: {
+            query?: {
+                q?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserSummaryDto"][];
+                };
+            };
+        };
+    };
     CommentsController_findByRoute: {
         parameters: {
             query?: never;
@@ -1311,6 +2011,36 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["CreateMediaDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaDto"];
+                };
+            };
+        };
+    };
+    MediaController_createPhoto: {
+        parameters: {
+            query: {
+                idTick: string;
+            };
+            header?: never;
+            path: {
+                idRoute: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": {
+                    /** Format: binary */
+                    file: string;
+                };
             };
         };
         responses: {
