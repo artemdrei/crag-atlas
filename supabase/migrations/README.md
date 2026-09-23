@@ -35,3 +35,11 @@ Apply a migration in the Supabase dashboard (SQL Editor) or with
 | 024 | `024_drop_topo_label.sql` | Drop `topos.label`: a photo is named by its position |
 | 025 | `025_one_line_per_route.sql` | `route_lines` is keyed by the route alone: one line per route, moved instead of copied |
 | 026 | `026_grade_histogram.sql` | Grade spread per climbing type on both stats views |
+| 027 | `027_public_ticks.sql` | Ticks readable by everyone; author FK and feed index |
+| 028 | `028_tick_details.sql` | Tick rating, grade vote and partner; route stats carry on from the imported numbers; media can belong to a tick |
+| 029 | `029_tick_grade_vote.sql` | `ascent_style` becomes `ascent_type`; the grade a tick proposes, and a note only its author sees |
+| 030 | `030_media_bucket.sql` | The `media` bucket and its policies: any climber uploads a photo, only its owner removes it |
+| 031 | `031_sector_coords.sql` | Sector coordinates, and the stats view rebuilt to carry them |
+| 032 | `032_soft_delete_catalog.sql` | `deleted_at` on regions, sectors and routes; `is_archived` derived from a row's ancestors in the stats views |
+| 033 | `033_protect_climber_content.sql` | Comments and media hold a route back the way ascents already did: erasing for good cannot destroy a climber's work |
+| 034 | `034_climber_content.sql` | `climber_content()`: what climbers left under a catalog row, in one query |

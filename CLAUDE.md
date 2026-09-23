@@ -130,9 +130,13 @@ regenerate.
 - **No over-engineering** — implement exactly what was asked. No abstractions
   for hypothetical future use, no patterns where plain code works.
 - **Clarify before assuming** — if requirements are unclear, ask. Don't guess.
-- **Minimal comments** — comment only when critically necessary: a non-obvious
-  footgun, a workaround with a reason, or intent the code can't express. No
-  comments that restate what the code already says.
+- **Almost no comments.** The default is none. A comment is allowed only when
+  the code cannot say it: a footgun that will be "fixed" back without the
+  warning, a workaround whose reason is invisible, a constraint from outside
+  the file. Everything else — what a prop is for, what a hook does, why a
+  layout is a flex column, a summary of the function below — is noise and must
+  not be written. JSDoc on props, components and hooks counts as noise too.
+  If a comment explains *what* the code does, delete it and name things better.
 - Open source means code quality is also documentation: prefer clear names and
   small functions over comments explaining unclear ones.
 
