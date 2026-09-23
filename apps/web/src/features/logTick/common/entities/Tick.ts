@@ -1,1 +1,7 @@
-export type { CreateTick, Tick } from '@crag-atlas/api';
+export type {
+  CreateTick,
+  GradeOpinion,
+  Tick,
+  TickMedia,
+  UpdateTick
+} from '@crag-atlas/api';

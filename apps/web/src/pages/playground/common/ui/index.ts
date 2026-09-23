@@ -1,4 +1,4 @@
-export { AscentStylePlayground } from './AscentStylePlayground';
+export { AscentTypePlayground } from './AscentTypePlayground';
 export { ControlsPlayground } from './ControlsPlayground';
 export { FeedbackPlayground } from './FeedbackPlayground';
 export { GradePlayground } from './GradePlayground';

@@ -1,40 +1,41 @@
-import { Trans, useLingui } from '@lingui/react/macro';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { useModal } from '@web/app/providers';
-import { toast } from '@web/shared/lib';
+import type { TickHeader } from '../common';
+import { TickForm, TickFormHeader, useLogTick } from '../common';
 
-import { TickForm, useApiCreateTick } from '../common';
-
-export interface Props {
+export interface Props extends TickHeader {
   open: boolean;
   idRoute: string;
 }
 
-const LogTickDialog = ({ open, idRoute }: Props) => {
-  const { t } = useLingui();
-  const { closeModal } = useModal();
-
-  const close = () => closeModal('LOG_TICK');
-
-  const { isPending, createTick } = useApiCreateTick({
-    onCreated: () => {
-      toast.success(t`Ascent logged`);
-      close();
-    }
-  });
+const LogTickDialog = ({
+  open,
+  idRoute,
+  routeName,
+  routeGrade,
+  routeGradeScale,
+  place
+}: Props) => {
+  const { isPending, close, save } = useLogTick(idRoute);
 
   return (
-    <Dialog fullWidth maxWidth="xs" open={open} onClose={close}>
+    <Dialog fullWidth maxWidth="sm" open={open} onClose={close}>
       <DialogTitle>
-        <Trans>Log ascent</Trans>
+        <TickFormHeader
+          routeName={routeName}
+          routeGrade={routeGrade}
+          routeGradeScale={routeGradeScale}
+          place={place}
+        />
       </DialogTitle>
       <DialogContent>
         <TickForm
+          routeGrade={routeGrade}
+          routeGradeScale={routeGradeScale}
           isPending={isPending}
-          onSubmit={(payload) => createTick({ ...payload, idRoute })}
+          onSubmit={save}
           onCancel={close}
         />
       </DialogContent>

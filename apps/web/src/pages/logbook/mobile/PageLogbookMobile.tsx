@@ -1,11 +1,15 @@
+import { useState } from 'react';
+
 import { Trans } from '@lingui/react/macro';
 import Typography from '@mui/material/Typography';
 
 import { ApiFeedback, PageShell } from '@web/shared/ui';
 
-import { TicksList, useApiGetTicks } from '../common';
+import type { LogbookTab } from '../common';
+import { LogbookTabs, TicksFeed, TicksList, useApiGetTicks } from '../common';
 
 export const PageLogbookMobile = () => {
+  const [tab, setTab] = useState<LogbookTab>('mine');
   const { ticks, isLoading, failure } = useApiGetTicks();
 
   return (
@@ -13,12 +17,21 @@ export const PageLogbookMobile = () => {
       <Typography variant="h5">
         <Trans>My logbook</Trans>
       </Typography>
-      <ApiFeedback
-        isLoading={isLoading}
-        failure={failure}
-        loadingLabel={<Trans>Loading ascents…</Trans>}
-      />
-      <TicksList ticks={ticks} isLoading={isLoading} />
+
+      <LogbookTabs tab={tab} onChange={setTab} />
+
+      {tab === 'mine' ? (
+        <>
+          <ApiFeedback
+            isLoading={isLoading}
+            failure={failure}
+            loadingLabel={<Trans>Loading ascents…</Trans>}
+          />
+          <TicksList ticks={ticks} isLoading={isLoading} />
+        </>
+      ) : (
+        <TicksFeed />
+      )}
     </PageShell>
   );
 };

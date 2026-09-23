@@ -2,7 +2,8 @@ import { Plural, Trans } from '@lingui/react/macro';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import { AscentStyleBadge } from '@web/shared/ui';
+import { TickActionsButton } from '@web/features/logTick';
+import { AscentTypeBadge } from '@web/shared/ui';
 
 import { useApiGetRouteTicks } from '../hooks';
 
@@ -28,7 +29,7 @@ export const MyAscentsCard = ({ idRoute }: Props) => {
       {ticks.map((tick) => (
         <EntryStyled key={tick.id}>
           <EntryHeaderStyled>
-            <AscentStyleBadge ascentStyle={tick.ascentStyle} />
+            <AscentTypeBadge ascentType={tick.ascentType} />
             <Typography variant="body2">{tick.climbedAt}</Typography>
             <SpacerStyled />
             {!!tick.attempts && (
@@ -36,6 +37,7 @@ export const MyAscentsCard = ({ idRoute }: Props) => {
                 <Plural value={tick.attempts} one="# try" other="# tries" />
               </Typography>
             )}
+            <TickActionsButton tick={tick} />
           </EntryHeaderStyled>
           {!!tick.note && (
             <Typography variant="body2" color="text.secondary">

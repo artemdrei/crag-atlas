@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import {
-  AscentStylePlayground,
+  AscentTypePlayground,
   ControlsPlayground,
   FeedbackPlayground,
   GradePlayground,
@@ -20,7 +20,7 @@ export const PagePlaygroundMobile = () => (
     <ToastPlayground />
     <ModalPlayground />
     <GradePlayground />
-    <AscentStylePlayground />
+    <AscentTypePlayground />
     <FeedbackPlayground />
     <ControlsPlayground />
   </PageStyled>

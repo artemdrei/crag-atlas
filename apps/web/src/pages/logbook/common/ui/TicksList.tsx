@@ -7,10 +7,11 @@ import { TickCard } from './TickCard';
 
 export interface Props {
   ticks: Tick[];
+  columns?: number;
   isLoading: boolean;
 }
 
-export const TicksList = ({ ticks, isLoading }: Props) => {
+export const TicksList = ({ ticks, columns = 1, isLoading }: Props) => {
   if (!isLoading && ticks.length === 0) {
     return (
       <Typography color="text.secondary">
@@ -20,7 +21,7 @@ export const TicksList = ({ ticks, isLoading }: Props) => {
   }
 
   return (
-    <ListStyled>
+    <ListStyled columns={columns}>
       {ticks.map((tick) => (
         <TickCard key={tick.id} tick={tick} />
       ))}
@@ -28,8 +29,11 @@ export const TicksList = ({ ticks, isLoading }: Props) => {
   );
 };
 
-const ListStyled = styled('div')`
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(1.5)};
+const ListStyled = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'columns'
+})<{ columns: number }>`
+  display: grid;
+  grid-template-columns: repeat(${({ columns }) => columns}, minmax(0, 1fr));
+  gap: ${({ theme }) => theme.spacing(2.5)};
+  align-items: start;
 `;

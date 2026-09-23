@@ -1,9 +1,9 @@
 import type { Tick } from '@crag-atlas/api';
 import { useLingui } from '@lingui/react/macro';
 
-export type AscentStyle = Tick['ascentStyle'];
+export type AscentType = Tick['ascentType'];
 
-export const ASCENT_STYLES: AscentStyle[] = [
+export const ASCENT_TYPES: AscentType[] = [
   'onsight',
   'flash',
   'retro_flash',
@@ -13,14 +13,14 @@ export const ASCENT_STYLES: AscentStyle[] = [
 ];
 
 export interface Props {
-  ascentStyle: AscentStyle;
+  ascentType: AscentType;
 }
 
 /** The stored value is data; only its label is UI copy. */
-export const AscentStyleLabel = ({ ascentStyle }: Props) => {
+export const AscentTypeLabel = ({ ascentType }: Props) => {
   const { t } = useLingui();
 
-  const labels: Record<AscentStyle, string> = {
+  const labels: Record<AscentType, string> = {
     onsight: t`Onsight`,
     flash: t`Flash`,
     retro_flash: t`Retro flash`,
@@ -29,5 +29,5 @@ export const AscentStyleLabel = ({ ascentStyle }: Props) => {
     attempt: t`Attempt`
   };
 
-  return <>{labels[ascentStyle]}</>;
+  return <>{labels[ascentType]}</>;
 };

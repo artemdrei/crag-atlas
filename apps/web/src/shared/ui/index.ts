@@ -1,10 +1,10 @@
 export { ApiFeedback } from './ApiFeedback';
-export { AscentStyleBadge } from './AscentStyleBadge';
+export { AscentTypeBadge } from './AscentTypeBadge';
 export {
-  ASCENT_STYLES,
-  type AscentStyle,
-  AscentStyleLabel
-} from './AscentStyleLabel';
+  ASCENT_TYPES,
+  type AscentType,
+  AscentTypeLabel
+} from './AscentTypeLabel';
 export { BottomSheet } from './BottomSheet';
 export { CatalogCard } from './CatalogCard';
 export { CatalogColumns } from './CatalogColumns';

@@ -1,34 +1,36 @@
-import { useLingui } from '@lingui/react/macro';
-
-import { useModal } from '@web/app/providers';
-import { toast } from '@web/shared/lib';
 import { BottomSheet } from '@web/shared/ui';
 
-import { TickForm, useApiCreateTick } from '../common';
+import type { TickHeader } from '../common';
+import { TickForm, TickFormHeader, useLogTick } from '../common';
 
-export interface Props {
+export interface Props extends TickHeader {
   open: boolean;
   idRoute: string;
 }
 
-const LogTickSheet = ({ open, idRoute }: Props) => {
-  const { t } = useLingui();
-  const { closeModal } = useModal();
-
-  const close = () => closeModal('LOG_TICK');
-
-  const { isPending, createTick } = useApiCreateTick({
-    onCreated: () => {
-      toast.success(t`Ascent logged`);
-      close();
-    }
-  });
+const LogTickSheet = ({
+  open,
+  idRoute,
+  routeName,
+  routeGrade,
+  routeGradeScale,
+  place
+}: Props) => {
+  const { isPending, close, save } = useLogTick(idRoute);
 
   return (
-    <BottomSheet title={t`Log ascent`} isOpen={open} onClose={close}>
+    <BottomSheet isOpen={open} onClose={close}>
+      <TickFormHeader
+        routeName={routeName}
+        routeGrade={routeGrade}
+        routeGradeScale={routeGradeScale}
+        place={place}
+      />
       <TickForm
+        routeGrade={routeGrade}
+        routeGradeScale={routeGradeScale}
         isPending={isPending}
-        onSubmit={(payload) => createTick({ ...payload, idRoute })}
+        onSubmit={save}
         onCancel={close}
       />
     </BottomSheet>

@@ -5,12 +5,19 @@ import Button from '@mui/material/Button';
 
 import { useModal, useUser } from '@web/app/providers';
 import { ROUTES } from '@web/app/router/routes';
+import type { TickHeader } from '@web/features/logTick';
 
-export interface Props {
+export interface Props extends TickHeader {
   idRoute: string;
 }
 
-export const LogTickButton = ({ idRoute }: Props) => {
+export const LogTickButton = ({
+  idRoute,
+  routeName,
+  routeGrade,
+  routeGradeScale,
+  place
+}: Props) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { isAuthenticated } = useUser();
@@ -22,7 +29,13 @@ export const LogTickButton = ({ idRoute }: Props) => {
       return;
     }
 
-    openModal('LOG_TICK', { idRoute });
+    openModal('LOG_TICK', {
+      idRoute,
+      routeName,
+      routeGrade,
+      routeGradeScale,
+      place
+    });
   };
 
   return (
