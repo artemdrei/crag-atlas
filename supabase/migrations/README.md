@@ -43,3 +43,5 @@ Apply a migration in the Supabase dashboard (SQL Editor) or with
 | 032 | `032_soft_delete_catalog.sql` | `deleted_at` on regions, sectors and routes; `is_archived` derived from a row's ancestors in the stats views |
 | 033 | `033_protect_climber_content.sql` | Comments and media hold a route back the way ascents already did: erasing for good cannot destroy a climber's work |
 | 034 | `034_climber_content.sql` | `climber_content()`: what climbers left under a catalog row, in one query |
+| 035 | `035_media_url_optional.sql` | `route_media.url` may be null for an upload; a row carries a url or a storage path, never both |
+| 036 | `036_validate_media_url_or_path.sql` | The 035 check covers the rows already there, now that they are known to be clean |
