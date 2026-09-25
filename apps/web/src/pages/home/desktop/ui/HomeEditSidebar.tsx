@@ -18,12 +18,14 @@ import type { Region } from '../../common';
 
 export interface Props {
   selectedRegion?: Region;
+  isArchiveShown: boolean;
   onSelectRegion: (idRegion?: string) => void;
   onDirtyChange: (isDirty: boolean) => void;
 }
 
 export const HomeEditSidebar = ({
   selectedRegion,
+  isArchiveShown,
   onSelectRegion,
   onDirtyChange
 }: Props) => {
@@ -76,19 +78,27 @@ export const HomeEditSidebar = ({
       <HintStyled>
         <span aria-hidden="true">👈</span>
         <Typography variant="body2" color="text.secondary">
-          <Trans>Pick a region on the left to edit it.</Trans>
+          {isArchiveShown ? (
+            <Trans>Pick an archived region on the left to restore it.</Trans>
+          ) : (
+            <Trans>Pick a region on the left to edit it.</Trans>
+          )}
         </Typography>
-        <CenteredStyled variant="body2" color="text.secondary">
-          <Trans>Or</Trans>
-        </CenteredStyled>
-        <Button
-          fullWidth
-          variant="outlined"
-          startIcon={<AddIcon fontSize="small" />}
-          onClick={() => setIsAdding(true)}
-        >
-          <Trans>Add region</Trans>
-        </Button>
+        {!isArchiveShown && (
+          <>
+            <CenteredStyled variant="body2" color="text.secondary">
+              <Trans>Or</Trans>
+            </CenteredStyled>
+            <Button
+              fullWidth
+              variant="outlined"
+              startIcon={<AddIcon fontSize="small" />}
+              onClick={() => setIsAdding(true)}
+            >
+              <Trans>Add region</Trans>
+            </Button>
+          </>
+        )}
       </HintStyled>
     </SidebarStyled>
   );

@@ -23,6 +23,7 @@ export interface Props {
   region?: Region;
   selectedSector?: Sector;
   point?: Coords;
+  isArchiveShown: boolean;
   onSelectSector: (idSector?: string) => void;
   onChangePoint: (point?: Coords) => void;
   onDirtyChange: (isDirty: boolean) => void;
@@ -32,6 +33,7 @@ export const RegionEditSidebar = ({
   region,
   selectedSector,
   point,
+  isArchiveShown,
   onSelectSector,
   onChangePoint,
   onDirtyChange
@@ -92,19 +94,27 @@ export const RegionEditSidebar = ({
       <HintStyled>
         <span aria-hidden="true">👈</span>
         <Typography variant="body2" color="text.secondary">
-          <Trans>Pick a sector on the left to edit it.</Trans>
+          {isArchiveShown ? (
+            <Trans>Pick an archived sector on the left to restore it.</Trans>
+          ) : (
+            <Trans>Pick a sector on the left to edit it.</Trans>
+          )}
         </Typography>
-        <CenteredStyled variant="body2" color="text.secondary">
-          <Trans>Or</Trans>
-        </CenteredStyled>
-        <Button
-          fullWidth
-          variant="outlined"
-          startIcon={<AddIcon fontSize="small" />}
-          onClick={() => setIsAdding(true)}
-        >
-          <Trans>Add sector</Trans>
-        </Button>
+        {!isArchiveShown && (
+          <>
+            <CenteredStyled variant="body2" color="text.secondary">
+              <Trans>Or</Trans>
+            </CenteredStyled>
+            <Button
+              fullWidth
+              variant="outlined"
+              startIcon={<AddIcon fontSize="small" />}
+              onClick={() => setIsAdding(true)}
+            >
+              <Trans>Add sector</Trans>
+            </Button>
+          </>
+        )}
       </HintStyled>
     </SidebarStyled>
   );

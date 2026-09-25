@@ -85,6 +85,7 @@ export const PageHomeDesktop = () => {
         {isEditing && (
           <HomeEditSidebar
             selectedRegion={regions.find(({ id }) => id === idSelectedRegion)}
+            isArchiveShown={isArchiveShown}
             onSelectRegion={selectRegion}
             onDirtyChange={setIsSelectedDirty}
           />

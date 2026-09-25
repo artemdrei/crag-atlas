@@ -121,6 +121,7 @@ export const PageRegionDesktop = () => {
                   region={region ?? undefined}
                   selectedSector={selectedSector}
                   point={draftPoint}
+                  isArchiveShown={isArchiveShown}
                   onSelectSector={selectSector}
                   onChangePoint={setDraftPoint}
                   onDirtyChange={setIsSelectedDirty}
