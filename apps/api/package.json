@@ -6,6 +6,7 @@
     "dev": "PORT=4001 nest start --watch",
     "build": "nest build",
     "test": "vitest run",
+    "test:integration": "vitest run --config vitest.integration.config.ts",
     "gen:contracts": "ts-node scripts/generate-openapi.ts"
   },
   "dependencies": {

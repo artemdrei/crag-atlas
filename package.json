@@ -9,6 +9,7 @@
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "test": "turbo run test",
+    "test:integration": "turbo run test:integration",
     "dev": "turbo run dev --filter=web --filter=api",
     "dev:web": "turbo run dev --filter=web",
     "build:web": "turbo run build --filter=web",
