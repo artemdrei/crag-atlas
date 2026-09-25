@@ -7,6 +7,7 @@ export default defineConfig({
   testDir: './specs',
   testMatch: '**/*.e2e.ts',
   globalSetup: './setup/globalSetup.ts',
+  globalTeardown: './setup/globalTeardown.ts',
   // Erase is irreversible and the scenarios share one catalog, so they run one
   // at a time. The suite is small enough that parallelism would buy minutes at
   // the cost of every flake being a fixture collision.
