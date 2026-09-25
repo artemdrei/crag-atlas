@@ -277,7 +277,7 @@ msgid "Add photo"
 msgstr "Add photo"
 
 #: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:65
-#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:88
+#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:98
 msgid "Add region"
 msgstr "Add region"
 
@@ -285,8 +285,8 @@ msgstr "Add region"
 msgid "Add route"
 msgstr "Add route"
 
-#: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:65
-#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:113
+#: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:62
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:114
 msgid "Add sector"
 msgstr "Add sector"
 
@@ -329,7 +329,7 @@ msgstr "Archive route"
 msgid "Archive sector"
 msgstr "Archive sector"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorArchivedRoutes.tsx:27
+#: src/features/topoEditor/desktop/ui/TopoEditorArchivedRoutes.tsx:32
 msgid "Archived routes"
 msgstr "Archived routes"
 
@@ -370,10 +370,10 @@ msgstr "Attempt"
 #~ msgid "Attempts"
 #~ msgstr "Attempts"
 
-#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:42
-#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:50
-msgid "Back"
-msgstr "Back"
+#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:43
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:52
+#~ msgid "Back"
+#~ msgstr "Back"
 
 #: src/shared/ui/ArchivedToggle.tsx:17
 msgid "Back to the catalog"
@@ -407,6 +407,10 @@ msgstr "Boulder"
 msgid "Bouldering"
 msgstr "Bouldering"
 
+#: src/shared/ui/PageBreadcrumbs.tsx:27
+msgid "Breadcrumb"
+msgstr "Breadcrumb"
+
 #: src/features/logTick/common/ui/DeleteTickActions.tsx:17
 #: src/features/logTick/common/ui/TickForm.tsx:166
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:385
@@ -415,6 +419,7 @@ msgstr "Bouldering"
 #: src/features/topoEditor/desktop/DeleteLineDialog.tsx:42
 #: src/features/topoEditor/desktop/DeletePhotoDialog.tsx:43
 #: src/shared/ui/ConfirmDialog.tsx:37
+#: src/widgets/routeMedia/common/ui/DeleteRouteMediaActions.tsx:17
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -446,7 +451,7 @@ msgstr "Click the map, or paste coordinates from Google Maps."
 msgid "Climbers left nothing here — no ascents, no comments, no photos."
 msgstr "Climbers left nothing here — no ascents, no comments, no photos."
 
-#: src/features/catalogEdit/common/ui/EditActions.tsx:18
+#: src/features/catalogEdit/common/ui/EditActions.tsx:26
 #: src/features/topo/desktop/TopoPhotoDialog.tsx:36
 msgid "Close"
 msgstr "Close"
@@ -455,7 +460,7 @@ msgstr "Close"
 msgid "Close editing"
 msgstr "Close editing"
 
-#: src/shared/ui/EditorPageShell.tsx:35
+#: src/shared/ui/EditorPageShell.tsx:34
 msgid "Close the editor"
 msgstr "Close the editor"
 
@@ -512,7 +517,7 @@ msgstr "Continue with Google"
 msgid "Coordinates"
 msgstr "Coordinates"
 
-#: src/features/sectorMap/common/ui/SectorMapCanvas.tsx:66
+#: src/features/sectorMap/common/ui/SectorMapCanvas.tsx:71
 msgid "Could not read your location."
 msgstr "Could not read your location."
 
@@ -520,7 +525,7 @@ msgstr "Could not read your location."
 msgid "Cover"
 msgstr "Cover"
 
-#: src/app/mobile/layout/AppBottomNavigation.tsx:28
+#: src/app/mobile/layout/AppBottomNavigation.tsx:29
 msgid "Crags"
 msgstr "Crags"
 
@@ -548,6 +553,7 @@ msgstr "Date"
 #: src/features/logTick/common/ui/TickMenuItems.tsx:34
 #: src/features/routeComment/common/hooks/useRouteCommentMenuItems.tsx:45
 #: src/features/routeComment/common/ui/DeleteRouteCommentActions.tsx:26
+#: src/widgets/routeMedia/common/ui/DeleteRouteMediaActions.tsx:26
 msgid "Delete"
 msgstr "Delete"
 
@@ -565,6 +571,12 @@ msgstr "Delete comment"
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:289
 msgid "Delete line"
 msgstr "Delete line"
+
+#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:62
+#: src/widgets/routeMedia/desktop/DeleteRouteMediaDialog.tsx:25
+#: src/widgets/routeMedia/mobile/DeleteRouteMediaSheet.tsx:23
+msgid "Delete media"
+msgstr "Delete media"
 
 #: src/features/topoEditor/desktop/DeletePhotoDialog.tsx:46
 #: src/features/topoEditor/desktop/ui/TopoThumb.tsx:98
@@ -621,10 +633,11 @@ msgstr "Delete the photo?"
 
 #: src/features/logTick/common/ui/DeleteTickActions.tsx:26
 #: src/features/routeComment/common/ui/DeleteRouteCommentActions.tsx:26
+#: src/widgets/routeMedia/common/ui/DeleteRouteMediaActions.tsx:26
 msgid "Deleting…"
 msgstr "Deleting…"
 
-#: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:56
+#: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:57
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:76
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:264
 msgid "Description"
@@ -701,7 +714,7 @@ msgstr "Enter email address"
 
 #: src/features/catalogEdit/common/ui/ArchivedItemPanel.tsx:64
 #: src/features/catalogEdit/desktop/PurgeDialog.tsx:20
-#: src/features/topoEditor/desktop/ui/TopoEditorArchivedRoutes.tsx:58
+#: src/features/topoEditor/desktop/ui/TopoEditorArchivedRoutes.tsx:86
 msgid "Erase for good"
 msgstr "Erase for good"
 
@@ -757,11 +770,13 @@ msgstr "Grade consensus"
 #~ msgid "Grade system"
 #~ msgstr "Grade system"
 
-#: src/pages/profile/common/ui/GradeScaleSetting.tsx:38
+#: src/pages/profile/common/ui/GradeScaleSetting.tsx:41
+#: src/pages/profile/common/ui/GradeScaleSetting.tsx:45
 msgid "Grade system — boulder"
 msgstr "Grade system — boulder"
 
-#: src/pages/profile/common/ui/GradeScaleSetting.tsx:22
+#: src/pages/profile/common/ui/GradeScaleSetting.tsx:23
+#: src/pages/profile/common/ui/GradeScaleSetting.tsx:28
 msgid "Grade system — routes"
 msgstr "Grade system — routes"
 
@@ -809,7 +824,8 @@ msgstr "Keep editing"
 #~ msgid "Kept for good — climbers left"
 #~ msgstr "Kept for good — climbers left"
 
-#: src/pages/profile/common/ui/LocaleSetting.tsx:20
+#: src/pages/profile/common/ui/LocaleSetting.tsx:21
+#: src/pages/profile/common/ui/LocaleSetting.tsx:26
 msgid "Language"
 msgstr "Language"
 
@@ -856,7 +872,7 @@ msgstr "Loading ascents…"
 msgid "Loading comments…"
 msgstr "Loading comments…"
 
-#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:23
+#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:29
 msgid "Loading media…"
 msgstr "Loading media…"
 
@@ -892,7 +908,7 @@ msgstr "Loading the sector…"
 msgid "Loading…"
 msgstr "Loading…"
 
-#: src/features/sectorMap/common/ui/SectorMapCanvas.tsx:65
+#: src/features/sectorMap/common/ui/SectorMapCanvas.tsx:70
 msgid "Location is blocked for this site. Allow it in the browser to see where you are."
 msgstr "Location is blocked for this site. Allow it in the browser to see where you are."
 
@@ -901,13 +917,17 @@ msgstr "Location is blocked for this site. Allow it in the browser to see where 
 msgid "Log ascent"
 msgstr "Log ascent"
 
-#: src/app/mobile/layout/AppBottomNavigation.tsx:34
+#: src/app/mobile/layout/AppBottomNavigation.tsx:36
 msgid "Logbook"
 msgstr "Logbook"
 
 #: src/app/mobile/layout/AppBottomNavigation.tsx:35
 #~ msgid "Map"
 #~ msgstr "Map"
+
+#: src/widgets/routeMedia/common/hooks/useRemoveRouteMedia.ts:23
+msgid "Media deleted"
+msgstr "Media deleted"
 
 #: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:167
 #~ msgid "More quality keeps more rock texture and costs more bytes."
@@ -943,15 +963,15 @@ msgstr "Moved to {0}"
 msgid "My ascents"
 msgstr "My ascents"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:42
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:40
 #: src/pages/logbook/desktop/PageLogbookDesktop.tsx:22
 #: src/pages/logbook/mobile/PageLogbookMobile.tsx:18
 msgid "My logbook"
 msgstr "My logbook"
 
-#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:42
+#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:46
 #: src/features/catalogEdit/common/ui/RegionEditForm.tsx:57
-#: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:47
+#: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:48
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:67
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:166
 msgid "Name"
@@ -994,7 +1014,7 @@ msgstr "No routes yet — add the first one, then drag it onto the photo it is d
 msgid "No topo yet"
 msgstr "No topo yet"
 
-#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:27
+#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:33
 msgid "No videos or photos yet."
 msgstr "No videos or photos yet."
 
@@ -1022,7 +1042,7 @@ msgstr "not on the map"
 #~ msgid "Note"
 #~ msgstr "Note"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorArchivedRoutes.tsx:32
+#: src/features/topoEditor/desktop/ui/TopoEditorArchivedRoutes.tsx:37
 msgid "Nothing archived here — every route is in the catalog."
 msgstr "Nothing archived here — every route is in the catalog."
 
@@ -1075,8 +1095,8 @@ msgid "or"
 msgstr "or"
 
 #: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:281
-#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:80
-#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:105
+#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:90
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:106
 msgid "Or"
 msgstr "Or"
 
@@ -1136,7 +1156,7 @@ msgstr "Photo uploaded"
 msgid "Photos uploaded"
 msgstr "Photos uploaded"
 
-#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:77
+#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:84
 msgid "Pick a region on the left to edit it."
 msgstr "Pick a region on the left to edit it."
 
@@ -1148,7 +1168,7 @@ msgstr "Pick a route on the left to edit it."
 #~ msgid "Pick a route to draw, or click a line on the photo."
 #~ msgstr "Pick a route to draw, or click a line on the photo."
 
-#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:102
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:100
 msgid "Pick a sector on the left to edit it."
 msgstr "Pick a sector on the left to edit it."
 
@@ -1159,6 +1179,14 @@ msgstr "Pick a sector on the left to edit it."
 #: src/features/sectorMap/desktop/SectorMapDesktop.tsx:94
 #~ msgid "Pick a sector to place its point."
 #~ msgstr "Pick a sector to place its point."
+
+#: src/pages/home/desktop/ui/HomeEditSidebar.tsx:82
+msgid "Pick an archived region on the left to restore it."
+msgstr "Pick an archived region on the left to restore it."
+
+#: src/pages/region/desktop/ui/RegionEditSidebar.tsx:98
+msgid "Pick an archived sector on the left to restore it."
+msgstr "Pick an archived sector on the left to restore it."
 
 #. placeholder {0}: nameOf(active.id)
 #: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:116
@@ -1186,14 +1214,14 @@ msgstr "Post"
 msgid "Private comment"
 msgstr "Private comment"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:58
-#: src/app/mobile/layout/AppBottomNavigation.tsx:42
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:56
+#: src/app/mobile/layout/AppBottomNavigation.tsx:43
 #: src/pages/profile/desktop/PageProfileDesktop.tsx:21
 #: src/pages/profile/mobile/PageProfileMobile.tsx:21
 msgid "Profile"
 msgstr "Profile"
 
-#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:49
+#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:53
 #: src/features/catalogEdit/common/ui/RegionEditForm.tsx:64
 msgid "Province"
 msgstr "Province"
@@ -1228,7 +1256,7 @@ msgid "Region"
 msgstr "Region"
 
 #. placeholder {0}: region.name
-#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:23
+#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:27
 msgid "Region {0} created"
 msgstr "Region {0} created"
 
@@ -1236,7 +1264,7 @@ msgstr "Region {0} created"
 msgid "Region saved"
 msgstr "Region saved"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:34
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:33
 #: src/pages/home/desktop/PageHomeDesktop.tsx:46
 #: src/pages/region/desktop/PageRegionDesktop.tsx:86
 #: src/pages/region/mobile/PageRegionMobile.tsx:42
@@ -1323,7 +1351,7 @@ msgstr "Restoring puts it back in its sector, lines and all."
 msgid "Retro flash"
 msgstr "Retro flash"
 
-#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:56
+#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:60
 #: src/features/catalogEdit/common/ui/RegionEditForm.tsx:71
 msgid "Rock type"
 msgstr "Rock type"
@@ -1344,7 +1372,7 @@ msgstr "Route saved"
 msgid "Routes"
 msgstr "Routes"
 
-#: src/features/catalogEdit/common/ui/EditActions.tsx:22
+#: src/features/catalogEdit/common/ui/EditActions.tsx:35
 #: src/features/logTick/common/ui/TickForm.tsx:172
 #: src/features/routeComment/desktop/EditRouteCommentDialog.tsx:29
 #: src/features/routeComment/mobile/EditRouteCommentSheet.tsx:24
@@ -1367,7 +1395,7 @@ msgstr "Save changes"
 msgid "Saved changes go live for everyone straight away."
 msgstr "Saved changes go live for everyone straight away."
 
-#: src/features/catalogEdit/common/ui/EditActions.tsx:22
+#: src/features/catalogEdit/common/ui/EditActions.tsx:35
 #: src/features/logTick/common/ui/TickForm.tsx:170
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:54
 msgid "Saving…"
@@ -1378,7 +1406,7 @@ msgid "Sector"
 msgstr "Sector"
 
 #. placeholder {0}: sector.name
-#: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:28
+#: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:29
 msgid "Sector {0} created"
 msgstr "Sector {0} created"
 
@@ -1414,7 +1442,7 @@ msgstr "Share your thoughts"
 msgid "Show more"
 msgstr "Show more"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:65
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:64
 msgid "Sign in"
 msgstr "Sign in"
 
@@ -1507,6 +1535,8 @@ msgstr "Theme"
 #: src/features/logTick/mobile/DeleteTickSheet.tsx:21
 #: src/features/routeComment/desktop/DeleteRouteCommentDialog.tsx:29
 #: src/features/routeComment/mobile/DeleteRouteCommentSheet.tsx:25
+#: src/widgets/routeMedia/desktop/DeleteRouteMediaDialog.tsx:29
+#: src/widgets/routeMedia/mobile/DeleteRouteMediaSheet.tsx:25
 msgid "This cannot be undone."
 msgstr "This cannot be undone."
 
