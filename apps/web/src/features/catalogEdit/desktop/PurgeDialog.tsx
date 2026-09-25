@@ -16,15 +16,16 @@ const PurgeDialog = ({ name, open, onConfirm }: Props) => {
     <ConfirmDialog
       isDestructive
       open={open}
-      title={<Trans>Erase for good?</Trans>}
+      title={<Trans>Erase this from the database?</Trans>}
       confirmLabel={<Trans>Erase for good</Trans>}
       onConfirm={onConfirm}
       onClose={() => closeModal('PURGE_CATALOG_ITEM')}
     >
       <Trans>
-        <SubjectStyled>{name}</SubjectStyled> and whatever catalog rows sit
-        under it are dropped from the database. Climbers left nothing here, so
-        none of their work goes with it — but this one cannot be undone.
+        <SubjectStyled>{name}</SubjectStyled> and everything filed under it
+        leave the database for good — the archive will have nothing left to
+        bring back. Climbers left nothing here, so none of their work goes with
+        it.
       </Trans>
     </ConfirmDialog>
   );
