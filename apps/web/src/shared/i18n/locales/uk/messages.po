@@ -199,13 +199,17 @@ msgstr "{stars} з 5"
 msgid "{total, plural, one {# vote} other {# votes}}"
 msgstr "{total, plural, one {# голос} few {# голоси} many {# голосів} other {# голосу}}"
 
+#: src/features/catalogEdit/desktop/PurgeDialog.tsx:24
+msgid "<0>{name}</0> and everything filed under it leave the database for good — the archive will have nothing left to bring back. Climbers left nothing here, so none of their work goes with it."
+msgstr "<0>{name}</0> і все, що всередині, назавжди зникне з бази — в архіві не лишиться чого повертати. Скелелази тут нічого не лишали, тож їхня робота не постраждає."
+
 #: src/features/catalogEdit/desktop/PurgeDialog.tsx:35
 #~ msgid "<0>{name}</0> and everything under it are removed from the database. This one cannot be undone. If anybody has logged an ascent here, nothing is erased and you are told so."
 #~ msgstr "<0>{name}</0> і все, що всередині, буде стерто з бази. Оце вже не скасувати. Якщо хтось записав тут пролаз, нічого не зітреться і ти про це дізнаєшся."
 
 #: src/features/catalogEdit/desktop/PurgeDialog.tsx:24
-msgid "<0>{name}</0> and whatever catalog rows sit under it are dropped from the database. Climbers left nothing here, so none of their work goes with it — but this one cannot be undone."
-msgstr "<0>{name}</0> і всі каталожні записи всередині буде прибрано з бази. Скелелази тут нічого не лишали, тож їхня робота не постраждає — але оце вже не скасувати."
+#~ msgid "<0>{name}</0> and whatever catalog rows sit under it are dropped from the database. Climbers left nothing here, so none of their work goes with it — but this one cannot be undone."
+#~ msgstr "<0>{name}</0> і всі каталожні записи всередині буде прибрано з бази. Скелелази тут нічого не лишали, тож їхня робота не постраждає — але оце вже не скасувати."
 
 #: src/features/catalogEdit/desktop/PurgeDialog.tsx:35
 #~ msgid "<0>{name}</0> is empty — no ascents, comments or photos were ever left here. Erasing drops it from the database for good, and this one cannot be undone."
@@ -709,8 +713,12 @@ msgid "Erase for good"
 msgstr "Стерти назавжди"
 
 #: src/features/catalogEdit/desktop/PurgeDialog.tsx:19
-msgid "Erase for good?"
-msgstr "Стерти назавжди?"
+#~ msgid "Erase for good?"
+#~ msgstr "Стерти назавжди?"
+
+#: src/features/catalogEdit/desktop/PurgeDialog.tsx:19
+msgid "Erase this from the database?"
+msgstr "Стерти це з бази?"
 
 #. placeholder {0}: sector.routeCount
 #: src/features/catalogEdit/common/ui/ArchivedSectorPanel.tsx:23
