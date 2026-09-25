@@ -45,3 +45,4 @@ Apply a migration in the Supabase dashboard (SQL Editor) or with
 | 034 | `034_climber_content.sql` | `climber_content()`: what climbers left under a catalog row, in one query |
 | 035 | `035_media_url_optional.sql` | `route_media.url` may be null for an upload; a row carries a url or a storage path, never both |
 | 036 | `036_validate_media_url_or_path.sql` | The 035 check covers the rows already there, now that they are known to be clean |
+| 037 | `037_media_delete_needs_select.sql` | Storage may see a media object to delete it: the owner's own, an admin's any |

@@ -111,22 +111,15 @@ test('the upload refuses anything that is not a WebP', async () => {
   expect(await response.json()).toMatchObject({ code: 'PHOTO_NOT_WEBP' });
 });
 
-// Marked failing on purpose: the media bucket has no select policy, so the
-// storage API cannot see the object it is asked to delete and the service only
-// logs a warning. The day that is fixed this test starts passing and the suite
-// goes red — the reminder to delete this marker. See docs/testing.
-test.fail(
-  'the file behind a deleted photo should leave the bucket',
-  async () => {
-    const route = await makeRoute(sector.id, 'Media-Route-Orphan');
-    const uploaded = await addPhoto(route.id);
+test('the file behind a deleted photo leaves the bucket', async () => {
+  const route = await makeRoute(sector.id, 'Media-Route-Orphan');
+  const uploaded = await addPhoto(route.id);
 
-    expect((await fetch(uploaded.url)).status).toBe(200);
+  expect((await fetch(uploaded.url)).status).toBe(200);
 
-    await api.delete(`/routes/${route.id}/media/${uploaded.id}`);
+  await api.delete(`/routes/${route.id}/media/${uploaded.id}`);
 
-    await expect
-      .poll(async () => (await fetch(uploaded.url)).status, { timeout: 5_000 })
-      .not.toBe(200);
-  }
-);
+  await expect
+    .poll(async () => (await fetch(uploaded.url)).status, { timeout: 5_000 })
+    .not.toBe(200);
+});
