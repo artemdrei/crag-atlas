@@ -13,20 +13,19 @@ export const useSearchParamList = (
     [raw]
   );
 
+  // Pushed, not replaced: the address is the filter, so going back has to
+  // land on the one before it rather than wipe the step out of history.
   const setValues = useCallback(
     (next: string[]) => {
-      setSearchParams(
-        (params) => {
-          if (next.length === 0) {
-            params.delete(key);
-          } else {
-            params.set(key, next.join(','));
-          }
+      setSearchParams((params) => {
+        if (next.length === 0) {
+          params.delete(key);
+        } else {
+          params.set(key, next.join(','));
+        }
 
-          return params;
-        },
-        { replace: true }
-      );
+        return params;
+      });
     },
     [key, setSearchParams]
   );
