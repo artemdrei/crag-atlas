@@ -73,15 +73,29 @@ export const uploadPhoto = async (
   }
 };
 
-/** Best effort: an orphaned object costs kilobytes, a false error costs trust. */
+/**
+ * Best effort: an orphaned object costs kilobytes, a false error costs trust.
+ * Logged as an error rather than a warning, though — a delete that silently
+ * left the file behind is how the public bucket kept serving deleted photos.
+ */
 export const removePhoto = async (
   client: SupabaseClient,
   bucket: string,
   path: string
+): Promise<void> => removePhotos(client, bucket, [path]);
+
+export const removePhotos = async (
+  client: SupabaseClient,
+  bucket: string,
+  paths: string[]
 ): Promise<void> => {
-  const { error } = await client.storage.from(bucket).remove([path]);
+  if (paths.length === 0) return;
+
+  const { error } = await client.storage.from(bucket).remove(paths);
 
   if (error) {
-    logger.warn(`Orphaned object "${bucket}/${path}": ${error.message}`);
+    logger.error(
+      `Orphaned ${paths.length} object(s) in "${bucket}": ${error.message}`
+    );
   }
 };

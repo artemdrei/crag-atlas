@@ -17,6 +17,10 @@ import {
   eraseArchivedRow,
   restoreRow
 } from '../common/utils/archive';
+import {
+  findPhotosUnder,
+  removeCatalogPhotos
+} from '../common/utils/catalogPhotos';
 import { countClimberContent } from '../common/utils/climberContent';
 import type { GradeScale } from '../common/utils/grade';
 import type { UploadedPhoto } from '../common/utils/photoStorage';
@@ -238,7 +242,13 @@ export class RegionsService {
   }
 
   async purge(authUser: AuthUser, idRegion: string): Promise<void> {
-    return eraseArchivedRow(userClient(authUser), TARGET, idRegion);
+    const client = userClient(authUser);
+    // Read before the erase: the rows below carry the only reference to their
+    // files, and a cascade deletes them without telling storage.
+    const photos = await findPhotosUnder(client, { idRegion });
+
+    await eraseArchivedRow(client, TARGET, idRegion);
+    await removeCatalogPhotos(client, photos);
   }
 }
 

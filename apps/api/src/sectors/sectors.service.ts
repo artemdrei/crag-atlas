@@ -17,6 +17,10 @@ import {
   eraseArchivedRow,
   restoreRow
 } from '../common/utils/archive';
+import {
+  findPhotosUnder,
+  removeCatalogPhotos
+} from '../common/utils/catalogPhotos';
 import { countClimberContent } from '../common/utils/climberContent';
 import type { GradeScale } from '../common/utils/grade';
 import { userClient } from '../common/utils/userClient';
@@ -192,7 +196,13 @@ export class SectorsService {
   }
 
   async purge(authUser: AuthUser, idSector: string): Promise<void> {
-    return eraseArchivedRow(userClient(authUser), TARGET, idSector);
+    const client = userClient(authUser);
+    // Read before the erase: the rows below carry the only reference to their
+    // files, and a cascade deletes them without telling storage.
+    const photos = await findPhotosUnder(client, { idSector });
+
+    await eraseArchivedRow(client, TARGET, idSector);
+    await removeCatalogPhotos(client, photos);
   }
 }
 

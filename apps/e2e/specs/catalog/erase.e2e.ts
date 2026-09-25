@@ -5,6 +5,7 @@ import type { Row } from '../../fixtures/catalog';
 import {
   addAscent,
   addComment,
+  addTopo,
   cleanup,
   makeRegion,
   makeRoute,
@@ -257,4 +258,50 @@ test('the topo editor cannot erase a route that still has an ascent', async ({
   await expect(
     page.getByRole('button', { name: 'Erase for good' })
   ).toBeDisabled();
+});
+
+test('erasing a sector takes its photos out of the bucket', async () => {
+  const doomed = await makeSector(region.id, 'Erase-Sector-With-Photo');
+  const topo = await addTopo(doomed.id);
+  const photoUrl = (
+    await api.get<{ id: string; photoUrl: string }[]>(
+      `/sectors/${doomed.id}/topos`
+    )
+  ).find(({ id }) => id === topo.id)?.photoUrl;
+
+  if (!photoUrl) throw new Error('The fixture photo was not uploaded');
+
+  expect((await fetch(photoUrl)).status).toBe(200);
+
+  await api.delete(`/sectors/${doomed.id}`);
+  await api.delete(`/sectors/${doomed.id}/permanent`);
+
+  await expectErased(`/sectors/${doomed.id}`);
+
+  // The rows go by a SQL cascade, which knows nothing about storage — so the
+  // file has to be taken out by whoever ran the erase.
+  await expect
+    .poll(async () => (await fetch(photoUrl)).status, { timeout: 5_000 })
+    .not.toBe(200);
+});
+
+test('erasing a region takes the photos two levels down', async () => {
+  const doomed = await makeRegion('Erase-Region-With-Photo');
+  const sectorOfIt = await makeSector(doomed.id, 'Erase-Sector-Under-Region');
+  const topo = await addTopo(sectorOfIt.id);
+  const photoUrl = (
+    await api.get<{ id: string; photoUrl: string }[]>(
+      `/sectors/${sectorOfIt.id}/topos`
+    )
+  ).find(({ id }) => id === topo.id)?.photoUrl;
+
+  if (!photoUrl) throw new Error('The fixture photo was not uploaded');
+
+  await api.delete(`/regions/${doomed.id}`);
+  await api.delete(`/regions/${doomed.id}/permanent`);
+
+  await expectErased(`/regions/${doomed.id}`);
+  await expect
+    .poll(async () => (await fetch(photoUrl)).status, { timeout: 5_000 })
+    .not.toBe(200);
 });
