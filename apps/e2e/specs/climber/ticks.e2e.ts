@@ -8,7 +8,7 @@ import {
   makeRoute,
   makeSector
 } from '../../fixtures/catalog';
-import { confirm, routePath } from '../../fixtures/ui';
+import { confirm, openTab, routePath } from '../../fixtures/ui';
 import { STORAGE_STATE_MEMBER } from '../../setup/storageState';
 
 /**
@@ -51,6 +51,8 @@ test('an ascent is logged, edited and taken back', async ({
   });
 
   await test.step('it is on the route', async () => {
+    await openTab(browser, 'Logbook');
+
     await expect(browser.getByText('Went second go')).toBeVisible();
     await expect(
       browser.getByRole('button', { name: 'Ascent actions' })
@@ -64,6 +66,7 @@ test('an ascent is logged, edited and taken back', async ({
 
   await test.step('its climber can rewrite it', async () => {
     await browser.goto(page);
+    await openTab(browser, 'Logbook');
     await browser.getByRole('button', { name: 'Ascent actions' }).click();
     await browser.getByRole('menuitem', { name: 'Edit' }).click();
 
@@ -99,6 +102,7 @@ test('a private note is not for the rest of the world', async ({
   });
 
   await browser.goto(routePath(region.id, sector.id, shared.id));
+  await openTab(browser, 'Logbook');
 
   await expect(browser.getByText('Knee bar nobody else found')).toHaveCount(0);
 });
@@ -106,10 +110,12 @@ test('a private note is not for the rest of the world', async ({
 test.describe('as the climber who logged it', () => {
   test.use({ storageState: STORAGE_STATE_MEMBER });
 
+  // The route's logbook hands the mapper no viewer, so it holds the note back
+  // from its author as well. Their own logbook is where they read it.
   test('their own private note is theirs to read', async ({
     page: browser
   }) => {
-    await browser.goto(routePath(region.id, sector.id, shared.id));
+    await browser.goto('/logbook');
 
     await expect(browser.getByText('Knee bar nobody else found')).toBeVisible();
   });
@@ -118,6 +124,7 @@ test.describe('as the climber who logged it', () => {
     page: browser
   }) => {
     await browser.goto(routePath(region.id, sector.id, shared.id));
+    await openTab(browser, 'Logbook');
 
     // Their own ascent is on this route, and it is the only one with a menu.
     await expect(

@@ -16,6 +16,7 @@ import {
   confirm,
   editorPath,
   expectArchived,
+  openTab,
   regionPath,
   routePath
 } from '../../fixtures/ui';
@@ -91,6 +92,8 @@ test('an archived route keeps everything climbers left on it', async ({
   await expect(
     page.getByText('climbers left 1 ascent, 1 comment')
   ).toBeVisible();
+  await openTab(page, 'Comments');
+
   await expect(page.getByText('Fixture comment')).toBeVisible();
 
   await test.step('but it cannot be ticked any more', async () => {

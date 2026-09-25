@@ -8,7 +8,7 @@ import {
   makeRoute,
   makeSector
 } from '../../fixtures/catalog';
-import { confirm, routePath } from '../../fixtures/ui';
+import { confirm, openTab, routePath } from '../../fixtures/ui';
 import { STORAGE_STATE_MEMBER } from '../../setup/storageState';
 
 /**
@@ -35,6 +35,7 @@ test('beta is posted, edited and taken back by its author', async ({
   page: browser
 }) => {
   await browser.goto(page);
+  await openTab(browser, 'Comments');
 
   const composer = browser.getByRole('textbox', { name: 'Your beta' });
   const post = browser.getByRole('button', { name: 'Post' });
@@ -93,6 +94,7 @@ test('an admin may remove somebody else’s beta, but not rewrite it', async ({
   });
 
   await browser.goto(page);
+  await openTab(browser, 'Comments');
   await browser.getByRole('button', { name: 'Comment actions' }).click();
 
   await expect(browser.getByRole('menuitem', { name: 'Edit' })).toHaveCount(0);
@@ -117,6 +119,7 @@ test.describe('as an ordinary climber', () => {
     });
 
     await browser.goto(page);
+    await openTab(browser, 'Comments');
 
     await expect(browser.getByText('Written by the admin')).toBeVisible();
     await expect(browser.getByText('Written by the climber')).toBeVisible();

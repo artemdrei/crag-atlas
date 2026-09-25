@@ -15,10 +15,12 @@ What the database decides is checked a layer down, in
 | `specs/topo/lines.e2e.ts` | Drawing a route on a photo, moving a point, undo/redo, deleting a line |
 | `specs/climber/ticks.e2e.ts` | Logging, editing and deleting an ascent, and who may read a private note |
 | `specs/climber/comments.e2e.ts` | Posting beta, and who may rewrite or remove it |
+| `specs/climber/routeMedia.e2e.ts` | Hanging a link or a photo on a route, the mark it leaves on the list, and what the frame is pointed at |
+| `specs/climber/routeLogbook.e2e.ts` | The route's own logbook: everyone's ascents, and the note it holds back from everyone |
 | `specs/catalog/browse.e2e.ts` | Walking down to a route and back, and the grade filter |
 | `specs/access/permissions.e2e.ts` | What a visitor, a climber and an admin are each offered |
 | `specs/app/preferences.e2e.ts` | Language and theme, and that both survive a reload |
-| `specs/mobile/*.e2e.ts` | The phone's own tree: bottom navigation, sheets, topo gallery, and what a visitor is offered |
+| `specs/mobile/*.e2e.ts` | The phone's own tree: bottom navigation, sheets, topo gallery, the media sheet, and what a visitor is offered |
 
 Still manual: drag gestures and the tick form's optional fields. See
 [`backlog.md`](./backlog.md).
@@ -54,9 +56,8 @@ pnpm --filter @crag-atlas/e2e test:e2e
 
 `pnpm test` runs neither: unit tests must stay runnable without a database.
 
-Both suites are green as of this writing: 6 integration tests and 66 browser
-scenarios — 55 on a desktop Chrome, 11 on an iPhone 17 — about two minutes for
-the browser half.
+The browser suite is green as of this writing: 76 scenarios — 63 on a desktop
+Chrome, 13 on an iPhone 17 — in about two minutes.
 
 ## How the suite gets in
 
@@ -85,10 +86,15 @@ the browser half.
   the specs poll the API for the row to disappear rather than reading it once —
   the row leaving the archive list happens before the request lands.
 
-Files uploaded by earlier runs stay in the storage volume even after
-`supabase db reset` — the reset empties the database, including
-`storage.objects`, but not the volume's files. `supabase stop --no-backup`
-removes the volume with them.
+Nothing has to be cleaned by hand. Each spec erases its own rows, the API takes
+every file out with the row it belonged to, and `setup/globalTeardown.ts`
+sweeps whatever a spec that died halfway left behind — any object in the three
+buckets that no row points at, on the local stack only.
+
+One thing the sweep cannot reach: `supabase db reset` empties the database,
+`storage.objects` included, but leaves the files themselves in the volume,
+where nothing references them any more. `supabase stop --no-backup` removes
+the volume with them.
 
 `[analytics]` is off in `supabase/config.toml`: its vector container
 bind-mounts the host docker socket, which a VM-backed runtime such as colima

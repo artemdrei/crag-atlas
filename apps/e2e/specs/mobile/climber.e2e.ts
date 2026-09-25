@@ -8,7 +8,7 @@ import {
   makeRoute,
   makeSector
 } from '../../fixtures/catalog';
-import { routePath } from '../../fixtures/ui';
+import { openTab, routePath } from '../../fixtures/ui';
 import { STORAGE_STATE_MEMBER } from '../../setup/storageState';
 
 /**
@@ -50,6 +50,8 @@ test('an ascent is logged from a sheet and taken back from one', async ({
   });
 
   await test.step('and the ascent is on the route', async () => {
+    await openTab(phone, 'Logbook');
+
     await expect(phone.getByText('Sent before the rain')).toBeVisible();
   });
 
@@ -71,7 +73,7 @@ test('beta is written and rewritten from the phone', async ({
   page: phone
 }) => {
   await phone.goto(page);
-  await phone.getByRole('tab', { name: 'Comments' }).click();
+  await openTab(phone, 'Comments');
 
   await phone
     .getByRole('textbox', { name: 'Your beta' })
@@ -104,7 +106,7 @@ test('an admin may act on every comment here as well', async ({
   });
 
   await phone.goto(page);
-  await phone.getByRole('tab', { name: 'Comments' }).click();
+  await openTab(phone, 'Comments');
 
   await expect(phone.getByText('Left by another climber')).toBeVisible();
 
@@ -119,7 +121,7 @@ test.describe('as an ordinary climber', () => {
 
   test('only their own beta carries a menu', async ({ page: phone }) => {
     await phone.goto(page);
-    await phone.getByRole('tab', { name: 'Comments' }).click();
+    await openTab(phone, 'Comments');
 
     await expect(
       phone.getByRole('button', { name: 'Comment actions' })

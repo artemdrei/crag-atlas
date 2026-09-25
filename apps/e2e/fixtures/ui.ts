@@ -47,6 +47,24 @@ export const editorPath = (
     isArchiveShown ? '?archive=1' : ''
   }`;
 
+/**
+ * A tab on the route page. The strip mounts before the app has finished
+ * attaching its handlers, so a click that lands too early is swallowed and
+ * the page stays on the tab it opened with — the click is repeated until the
+ * tab is the selected one.
+ */
+export const openTab = async (page: Page, name: string) => {
+  const tab = page.getByRole('tab', { name });
+
+  await expect(async () => {
+    await tab.click();
+    await expect(tab).toHaveAttribute('aria-selected', 'true');
+  }).toPass({ timeout: 15_000 });
+};
+
+export const sectorPath = (idRegion: string, idSector: string) =>
+  `/regions/${idRegion}/sectors/${idSector}`;
+
 export const routePath = (
   idRegion: string,
   idSector: string,

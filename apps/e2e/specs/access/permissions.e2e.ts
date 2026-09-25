@@ -8,7 +8,7 @@ import {
   makeRoute,
   makeSector
 } from '../../fixtures/catalog';
-import { editorPath, regionPath, routePath } from '../../fixtures/ui';
+import { editorPath, openTab, regionPath, routePath } from '../../fixtures/ui';
 import { env } from '../../setup/env';
 import { STORAGE_STATE_MEMBER } from '../../setup/storageState';
 
@@ -79,6 +79,9 @@ test.describe('a climber who is not an admin', () => {
     await expect(
       page.getByRole('button', { name: 'Log ascent' })
     ).toBeVisible();
+
+    await openTab(page, 'Comments');
+
     await expect(
       page.getByRole('textbox', { name: 'Your beta' })
     ).toBeVisible();

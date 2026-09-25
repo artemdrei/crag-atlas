@@ -41,7 +41,8 @@ Two places in this suite sit at that last step, on purpose:
 - **Test titles are sentences**, not ids. The flow inside one is spelled out
   with `test.step`, which is what the report and the trace show.
 - **Each file builds the fixture it needs** from the builders in
-  `fixtures/catalog.ts` and ends with `cleanup`.
+  `fixtures/catalog.ts` and ends with `cleanup`. Files follow their rows out;
+  a global teardown sweeps any object left behind by a spec that crashed.
 - **Fixture names never contain one another.** Rows are found on screen by
   name, and the match is a substring.
 - **Source strings are English.** `globalSetup` pins the locale to `en`, so a

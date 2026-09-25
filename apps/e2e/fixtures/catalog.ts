@@ -85,11 +85,11 @@ export const addAscent = (idRoute: string) =>
 export const addComment = (idRoute: string) =>
   api.post(`/routes/${idRoute}/comments`, { body: 'Fixture comment' });
 
-export const addLink = (idRoute: string) =>
-  api.post(`/routes/${idRoute}/media`, {
-    kind: 'video',
-    url: 'https://example.com/fixture-video'
-  });
+export const addLink = (
+  idRoute: string,
+  url = 'https://example.com/fixture-video'
+) =>
+  api.post<{ id: string }>(`/routes/${idRoute}/media`, { kind: 'video', url });
 
 /** An upload rather than a link: it puts a real object in the media bucket. */
 export const addPhoto = (idRoute: string) =>

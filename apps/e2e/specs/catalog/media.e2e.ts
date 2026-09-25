@@ -14,6 +14,7 @@ import {
   confirm,
   editorPath,
   expectErased,
+  openTab,
   routePath
 } from '../../fixtures/ui';
 
@@ -54,7 +55,7 @@ test('a link holds a route back until it is deleted', async ({ page }) => {
   // No reload between deleting the link and reading the note.
   await test.step('delete it from the route page', async () => {
     await page.goto(routePath(region.id, sector.id, linked.id));
-    await page.getByRole('tab', { name: 'Video and photo' }).click();
+    await openTab(page, 'Video and photo');
     await page.getByRole('button', { name: 'Delete media' }).first().click();
     await confirm(page, 'Delete');
   });
@@ -83,7 +84,7 @@ test('an uploaded photo behaves the same way', async ({ page }) => {
   await expect(page.getByText('climbers left 1 photo or link')).toBeVisible();
 
   await page.goto(routePath(region.id, sector.id, photographed.id));
-  await page.getByRole('tab', { name: 'Video and photo' }).click();
+  await openTab(page, 'Video and photo');
   await page.getByRole('button', { name: 'Delete media' }).first().click();
   await confirm(page, 'Delete');
 
