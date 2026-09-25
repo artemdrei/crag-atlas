@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/react/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 
@@ -14,12 +14,16 @@ const LOCALE_LABELS: Record<Locale, string> = {
 };
 
 export const LocaleSetting = () => {
+  const { t } = useLingui();
   const { locale, changeLocale } = useLocaleSetting();
 
   return (
     <ProfileSettingRow label={<Trans>Language</Trans>}>
       <Select
         size="small"
+        // The row's label sits beside the control, not on it, so the control
+        // needs a name of its own for anyone not reading the screen.
+        inputProps={{ 'aria-label': t`Language` }}
         value={locale}
         onChange={(event) => changeLocale(event.target.value as Locale)}
       >

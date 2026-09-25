@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from 'react-router';
+import { Link, useLocation } from 'react-router';
 
 import { Trans } from '@lingui/react/macro';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
@@ -13,7 +13,6 @@ import { useUser } from '@web/app/providers';
 import { ROUTES } from '@web/app/router/routes';
 
 export const AppBottomNavigation = () => {
-  const navigate = useNavigate();
   const location = useLocation();
   const { isAuthenticated } = useUser();
 
@@ -24,27 +23,28 @@ export const AppBottomNavigation = () => {
   return (
     <NavPaperStyled elevation={2}>
       <BottomNavigationStyled showLabels value={section ?? ROUTES.INDEX}>
+        {/* Links, not buttons: each one goes to a page, and a signed-out
+            reader is sent to the sign-in page rather than nowhere. */}
         <BottomNavigationAction
           label={<Trans>Crags</Trans>}
           value={ROUTES.INDEX}
           icon={<TerrainIcon />}
-          onClick={() => navigate(ROUTES.INDEX)}
+          component={Link}
+          to={ROUTES.INDEX}
         />
         <BottomNavigationAction
           label={<Trans>Logbook</Trans>}
           value={ROUTES.LOGBOOK}
           icon={<BookmarkIcon />}
-          onClick={() =>
-            navigate(isAuthenticated ? ROUTES.LOGBOOK : ROUTES.LOGIN)
-          }
+          component={Link}
+          to={isAuthenticated ? ROUTES.LOGBOOK : ROUTES.LOGIN}
         />
         <BottomNavigationAction
           label={<Trans>Profile</Trans>}
           value={ROUTES.PROFILE}
           icon={<PersonIcon />}
-          onClick={() =>
-            navigate(isAuthenticated ? ROUTES.PROFILE : ROUTES.LOGIN)
-          }
+          component={Link}
+          to={isAuthenticated ? ROUTES.PROFILE : ROUTES.LOGIN}
         />
       </BottomNavigationStyled>
     </NavPaperStyled>

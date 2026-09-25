@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
 import { Trans, useLingui } from '@lingui/react/macro';
 import AppBar from '@mui/material/AppBar';
@@ -23,21 +23,19 @@ export const AppHeaderDesktop = () => {
   return (
     <HeaderStyled position="static" color="transparent" elevation={0}>
       <ToolbarStyled>
-        <LogoStyled
-          variant="h6"
-          component="span"
-          onClick={() => navigate(ROUTES.INDEX)}
-        >
+        {/* Anything that takes the reader to another page is a link: it
+            reads as one, opens in a new tab, and can be followed without a
+            mouse. */}
+        <LogoStyled variant="h6" component={Link} to={ROUTES.INDEX}>
           Crag Atlas
         </LogoStyled>
-        <Button color="inherit" onClick={() => navigate(ROUTES.INDEX)}>
+        <Button color="inherit" component={Link} to={ROUTES.INDEX}>
           <Trans>Regions</Trans>
         </Button>
         <Button
           color="inherit"
-          onClick={() =>
-            navigate(isAuthenticated ? ROUTES.LOGBOOK : ROUTES.LOGIN)
-          }
+          component={Link}
+          to={isAuthenticated ? ROUTES.LOGBOOK : ROUTES.LOGIN}
         >
           <Trans>My logbook</Trans>
         </Button>
@@ -56,12 +54,13 @@ export const AppHeaderDesktop = () => {
           (isAuthenticated ? (
             <IconButton
               aria-label={t`Profile`}
-              onClick={() => navigate(ROUTES.PROFILE)}
+              component={Link}
+              to={ROUTES.PROFILE}
             >
               <AvatarStyled name={displayName} avatarUrl={avatarUrl} />
             </IconButton>
           ) : (
-            <Button variant="outlined" onClick={() => navigate(ROUTES.LOGIN)}>
+            <Button variant="outlined" component={Link} to={ROUTES.LOGIN}>
               <Trans>Sign in</Trans>
             </Button>
           ))}
