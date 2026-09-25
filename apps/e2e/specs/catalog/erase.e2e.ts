@@ -117,7 +117,7 @@ test('erasing a sector takes the routes under it', async ({ page }) => {
   await test.step('the dialog does not repeat the number', async () => {
     await page.getByRole('button', { name: 'Erase for good' }).click();
     await expect(
-      page.getByText('and whatever catalog rows sit under it are dropped')
+      page.getByText('and everything filed under it leave the database')
     ).toBeVisible();
     await confirm(page, 'Erase for good');
   });
