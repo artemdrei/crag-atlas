@@ -35,7 +35,7 @@ import type {
 import { ROUTE_TYPES } from './routes.types';
 
 const COLUMNS =
-  'id, id_sector, name, grade, grade_scale, type, length, bolts_count, rating, rating_votes, ascents_count_total, onsight_count_total, votes_soft_total, votes_neutral_total, votes_hard_total, description, is_archived, deleted_at, sectors (name, id_region, regions (name))';
+  'id, id_sector, name, grade, grade_scale, type, length, bolts_count, rating, rating_votes, ascents_count_total, onsight_count_total, votes_soft_total, votes_neutral_total, votes_hard_total, has_photo, has_video, description, is_archived, deleted_at, sectors (name, id_region, regions (name))';
 
 interface RouteRow {
   id: string;
@@ -53,6 +53,8 @@ interface RouteRow {
   votes_soft_total: number | null;
   votes_neutral_total: number | null;
   votes_hard_total: number | null;
+  has_photo: boolean;
+  has_video: boolean;
   description: string;
   is_archived: boolean;
   deleted_at: string | null;
@@ -318,6 +320,8 @@ const toRouteDto = (row: RouteRow): RouteDto => ({
   votesSoft: row.votes_soft_total,
   votesNeutral: row.votes_neutral_total,
   votesHard: row.votes_hard_total,
+  hasPhoto: row.has_photo,
+  hasVideo: row.has_video,
   description: row.description,
   isArchived: row.is_archived,
   isDeleted: !!row.deleted_at

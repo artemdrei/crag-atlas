@@ -388,6 +388,22 @@ export interface paths {
         patch: operations["TicksController_update"];
         trace?: never;
     };
+    "/routes/{idRoute}/ticks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["RouteTicksController_findByRoute"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/sectors/{idSector}/topos": {
         parameters: {
             query?: never;
@@ -723,6 +739,10 @@ export interface components {
             votesSoft?: number | null;
             votesNeutral?: number | null;
             votesHard?: number | null;
+            /** @description A photo hangs on this route */
+            hasPhoto: boolean;
+            /** @description A video hangs on this route */
+            hasVideo: boolean;
             description: string;
             /** @description Out of the catalog, because it carries the mark or an ancestor does */
             isArchived: boolean;
@@ -796,6 +816,10 @@ export interface components {
             authorName?: string | null;
             avatarUrl?: string | null;
             media?: components["schemas"]["TickMediaDto"][];
+            /** @description What the community makes of the route, 0..5 */
+            routeRating?: number | null;
+            routeHasPhoto?: boolean;
+            routeHasVideo?: boolean;
             createdAt: string;
             updatedAt: string;
         };
@@ -1706,6 +1730,27 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["TickDto"];
+                };
+            };
+        };
+    };
+    RouteTicksController_findByRoute: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idRoute: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TickDto"][];
                 };
             };
         };

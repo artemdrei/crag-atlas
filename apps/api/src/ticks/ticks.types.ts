@@ -111,6 +111,24 @@ export class TickDto {
   @ApiProperty({ type: [TickMediaDto], required: false })
   media?: TickMediaDto[];
 
+  // The three below describe the route, not the ascent. Only the logbook and
+  // the feed (GET /ticks, GET /ticks/feed) carry them, because only their
+  // cards show them; every other response leaves them out rather than paying
+  // for a second query nobody reads.
+  @ApiProperty({
+    type: Number,
+    required: false,
+    nullable: true,
+    description: 'What the community makes of the route, 0..5'
+  })
+  routeRating?: number | null;
+
+  @ApiProperty({ required: false })
+  routeHasPhoto?: boolean;
+
+  @ApiProperty({ required: false })
+  routeHasVideo?: boolean;
+
   @ApiProperty()
   createdAt!: string;
 

@@ -1049,6 +1049,37 @@
         "tags": ["Ticks"]
       }
     },
+    "/routes/{idRoute}/ticks": {
+      "get": {
+        "operationId": "RouteTicksController_findByRoute",
+        "parameters": [
+          {
+            "name": "idRoute",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TickDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["RouteTicks"]
+      }
+    },
     "/sectors/{idSector}/topos": {
       "get": {
         "operationId": "ToposController_findBySector",
@@ -2104,6 +2135,14 @@
             "type": "number",
             "nullable": true
           },
+          "hasPhoto": {
+            "type": "boolean",
+            "description": "A photo hangs on this route"
+          },
+          "hasVideo": {
+            "type": "boolean",
+            "description": "A video hangs on this route"
+          },
           "description": {
             "type": "string"
           },
@@ -2126,6 +2165,8 @@
           "grade",
           "gradeScale",
           "type",
+          "hasPhoto",
+          "hasVideo",
           "description",
           "isArchived",
           "isDeleted"
@@ -2344,6 +2385,17 @@
             "items": {
               "$ref": "#/components/schemas/TickMediaDto"
             }
+          },
+          "routeRating": {
+            "type": "number",
+            "nullable": true,
+            "description": "What the community makes of the route, 0..5"
+          },
+          "routeHasPhoto": {
+            "type": "boolean"
+          },
+          "routeHasVideo": {
+            "type": "boolean"
           },
           "createdAt": {
             "type": "string"

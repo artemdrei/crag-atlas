@@ -11,7 +11,7 @@ import {
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
 import type { GradeScale } from '../common/utils/grade';
 import { userClient } from '../common/utils/userClient';
-import { storagePublicUrl } from '../config/supabase.client';
+import { publicSupabase, storagePublicUrl } from '../config/supabase.client';
 import { MEDIA_BUCKET } from '../media/media.types';
 import {
   ASCENT_TYPES,
@@ -83,7 +83,30 @@ export class TicksService {
       );
     }
 
-    return data.map((row) => toTickDto(row, authUser.idUser));
+    return toTickDtos(data, authUser.idUser);
+  }
+
+  // Everyone's ascents on one route, for anyone looking at it. No viewer id
+  // reaches the mapper, so a private note stays hidden even from its author
+  // here — their own logbook is where they read it back.
+  async findByRoute(idRoute: string): Promise<TickDto[]> {
+    const { data, error } = await publicSupabase()
+      .from('ticks')
+      .select(COLUMNS)
+      .eq('id_route', idRoute)
+      .order('climbed_at', { ascending: false })
+      .order('id', { ascending: false })
+      .returns<TickRow[]>();
+
+    if (error) {
+      throw readFailed(
+        'Could not load the ascents',
+        'TICKS_ROUTE_READ_FAILED',
+        error
+      );
+    }
+
+    return data.map((row) => toTickDto(row, ''));
   }
 
   async create(authUser: AuthUser, payload: CreateTickDto): Promise<TickDto> {
@@ -159,7 +182,7 @@ export class TicksService {
     const last = items[items.length - 1];
 
     return {
-      items: items.map((row) => toTickDto(row, authUser.idUser)),
+      items: await toTickDtos(items, authUser.idUser),
       nextCursor:
         data.length > pageSize && last ? `${last.climbed_at}|${last.id}` : null
     };
@@ -235,7 +258,66 @@ const toTickColumns = (payload: CreateTickDto | UpdateTickDto) => ({
 // A private note must never leave the API for anyone but its author: the
 // select policy publishes every tick row, so this is the only thing holding
 // it back. Required, not optional, so a new caller cannot forget it.
-const toTickDto = (row: TickRow, idViewer: string): TickDto => ({
+interface RouteMarks {
+  hasPhoto: boolean;
+  hasVideo: boolean;
+  rating: number | null;
+}
+
+const toTickDtos = async (
+  rows: TickRow[],
+  idViewer: string
+): Promise<TickDto[]> => {
+  const marks = await routeMarks(rows.map((row) => row.id_route));
+
+  return rows.map((row) => toTickDto(row, idViewer, marks.get(row.id_route)));
+};
+
+const routeMarks = async (
+  idRoutes: string[]
+): Promise<Map<string, RouteMarks>> => {
+  const unique = [...new Set(idRoutes)];
+  const marks = new Map<string, RouteMarks>();
+
+  if (unique.length === 0) return marks;
+
+  const { data, error } = await publicSupabase()
+    .from('routes_with_stats')
+    .select('id, rating, has_photo, has_video')
+    .in('id', unique)
+    .returns<
+      {
+        id: string;
+        rating: number | null;
+        has_photo: boolean;
+        has_video: boolean;
+      }[]
+    >();
+
+  if (error) {
+    throw readFailed(
+      'Could not load the route marks',
+      'TICKS_ROUTE_MARKS_FAILED',
+      error
+    );
+  }
+
+  for (const row of data) {
+    marks.set(row.id, {
+      hasPhoto: row.has_photo,
+      hasVideo: row.has_video,
+      rating: row.rating
+    });
+  }
+
+  return marks;
+};
+
+const toTickDto = (
+  row: TickRow,
+  idViewer: string,
+  marks?: RouteMarks
+): TickDto => ({
   id: row.id,
   idUser: row.id_user,
   idRoute: row.id_route,
@@ -257,6 +339,9 @@ const toTickDto = (row: TickRow, idViewer: string): TickDto => ({
   partnerName: row.partner?.display_name ?? null,
   authorName: row.users?.display_name ?? null,
   avatarUrl: row.users?.avatar_url ?? null,
+  routeRating: marks?.rating ?? null,
+  routeHasPhoto: marks?.hasPhoto,
+  routeHasVideo: marks?.hasVideo,
   media: (row.route_media ?? []).map((media) => ({
     id: media.id,
     kind: media.kind,

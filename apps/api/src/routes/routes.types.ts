@@ -77,6 +77,12 @@ export class RouteDto {
   @ApiProperty({ type: Number, required: false, nullable: true })
   votesHard?: number | null;
 
+  @ApiProperty({ description: 'A photo hangs on this route' })
+  hasPhoto!: boolean;
+
+  @ApiProperty({ description: 'A video hangs on this route' })
+  hasVideo!: boolean;
+
   @ApiProperty()
   description!: string;
 
