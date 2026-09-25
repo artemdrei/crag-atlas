@@ -1,15 +1,19 @@
 import { type FormEvent, useState } from 'react';
 
 import { Trans, useLingui } from '@lingui/react/macro';
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
 import { toast } from '@web/shared/lib';
 
 import { useApiCreateRegion } from '../hooks';
+import { EditActions } from './EditActions';
 import { EditFormStyled } from './EditFormStyled';
 
-export const RegionCreateForm = () => {
+export interface Props {
+  onClose?: () => void;
+}
+
+export const RegionCreateForm = ({ onClose }: Props) => {
   const { t } = useLingui();
   const [name, setName] = useState('');
   const [province, setProvince] = useState('');
@@ -57,13 +61,12 @@ export const RegionCreateForm = () => {
         value={rockType}
         onChange={(event) => setRockType(event.target.value)}
       />
-      <Button
-        type="submit"
-        variant="contained"
-        disabled={!name.trim() || isPending}
-      >
-        <Trans>Add region</Trans>
-      </Button>
+      <EditActions
+        submitLabel={<Trans>Add region</Trans>}
+        isPending={isPending}
+        isDisabled={!name.trim()}
+        onCancel={onClose}
+      />
     </EditFormStyled>
   );
 };

@@ -3,7 +3,6 @@ import { useState } from 'react';
 import type { Region } from '@crag-atlas/api';
 import { Trans } from '@lingui/react/macro';
 import AddIcon from '@mui/icons-material/Add';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
@@ -42,19 +41,13 @@ export const RegionEditSidebar = ({
   if (isAdding && region) {
     return (
       <SidebarStyled>
-        <BackButtonStyled
-          size="small"
-          startIcon={<ArrowBackIcon fontSize="small" />}
-          onClick={() => setIsAdding(false)}
-        >
-          <Trans>Back</Trans>
-        </BackButtonStyled>
         <SectorCreateForm
           idRegion={region.id}
           onCreated={(sector) => {
             setIsAdding(false);
             onSelectSector(sector.id);
           }}
+          onClose={() => setIsAdding(false)}
         />
       </SidebarStyled>
     );
@@ -125,11 +118,6 @@ const SidebarStyled = styled('div')`
   padding: ${({ theme }) => theme.spacing(2)};
   border: 1px solid ${({ theme }) => theme.palette.divider};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
-`;
-
-// A direct child of the column would stretch, which centres its label.
-const BackButtonStyled = styled(Button)`
-  align-self: flex-start;
 `;
 
 const HintStyled = styled('div')`

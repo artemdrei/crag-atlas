@@ -5,12 +5,20 @@ import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 
 export interface Props {
-  isPending: boolean;
-  onCancel?: () => void;
+  submitLabel?: ReactNode;
   leftAction?: ReactNode;
+  isPending: boolean;
+  isDisabled?: boolean;
+  onCancel?: () => void;
 }
 
-export const EditActions = ({ isPending, onCancel, leftAction }: Props) => (
+export const EditActions = ({
+  submitLabel,
+  leftAction,
+  isPending,
+  isDisabled,
+  onCancel
+}: Props) => (
   <ActionsStyled>
     {leftAction && <LeftSlotStyled>{leftAction}</LeftSlotStyled>}
     {onCancel && (
@@ -18,8 +26,13 @@ export const EditActions = ({ isPending, onCancel, leftAction }: Props) => (
         <Trans>Close</Trans>
       </Button>
     )}
-    <Button type="submit" variant="contained" disabled={isPending}>
-      {isPending ? <Trans>Saving…</Trans> : <Trans>Save</Trans>}
+    <Button
+      type="submit"
+      variant="contained"
+      disabled={isPending || isDisabled}
+    >
+      {submitLabel ??
+        (isPending ? <Trans>Saving…</Trans> : <Trans>Save</Trans>)}
     </Button>
   </ActionsStyled>
 );

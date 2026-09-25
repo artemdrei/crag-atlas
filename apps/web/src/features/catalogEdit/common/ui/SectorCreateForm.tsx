@@ -2,20 +2,21 @@ import { type FormEvent, useState } from 'react';
 
 import type { Sector } from '@crag-atlas/api';
 import { Trans, useLingui } from '@lingui/react/macro';
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
 import { toast } from '@web/shared/lib';
 
 import { useApiCreateSector } from '../hooks';
+import { EditActions } from './EditActions';
 import { EditFormStyled } from './EditFormStyled';
 
 export interface Props {
   idRegion: string;
   onCreated?: (sector: Sector) => void;
+  onClose?: () => void;
 }
 
-export const SectorCreateForm = ({ idRegion, onCreated }: Props) => {
+export const SectorCreateForm = ({ idRegion, onCreated, onClose }: Props) => {
   const { t } = useLingui();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -57,13 +58,12 @@ export const SectorCreateForm = ({ idRegion, onCreated }: Props) => {
         value={description}
         onChange={(event) => setDescription(event.target.value)}
       />
-      <Button
-        type="submit"
-        variant="contained"
-        disabled={!name.trim() || isPending}
-      >
-        <Trans>Add sector</Trans>
-      </Button>
+      <EditActions
+        submitLabel={<Trans>Add sector</Trans>}
+        isPending={isPending}
+        isDisabled={!name.trim()}
+        onCancel={onClose}
+      />
     </EditFormStyled>
   );
 };
