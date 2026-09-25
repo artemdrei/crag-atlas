@@ -31,14 +31,6 @@ in `apps/e2e/specs/catalog/` — this page is what the code cannot say.
 
 ## Known gaps
 
-- **A deleted photo leaves its file behind.** The row goes, the object stays in
-  the public `media` bucket: 023 dropped the storage listing policies, so the
-  bucket has no `select` policy, the storage API cannot see the object it is
-  asked to delete, and `removePhoto` only logs a warning. The fix is a
-  decision — a `select` policy scoped to the bucket, or deleting the object
-  with a service-role client inside `media.service.remove`. A `test.fail` in
-  `media.e2e.ts` holds the place: it goes green, and the suite red, the day
-  somebody fixes it.
 - **Backend messages reach the user untranslated.** When the API refuses an
   erase, the toast shows the server's English string inside a Ukrainian UI.
   With the button correctly disabled this is a safety net, but it applies to
@@ -50,6 +42,18 @@ in `apps/e2e/specs/catalog/` — this page is what the code cannot say.
   ever driven by a test.
 
 ## Regression guards
+
+**A deleted photo must take its file with it.** Storage checks `select` before
+it deletes an object, and 023 had dropped every listing policy from the `media`
+bucket, so the delete was answered "not found" and only logged a warning while
+the public URL kept serving the file. Fixed by `037_media_delete_needs_select.sql`
+with a policy scoped to the uploader and admins. Guarded by *the file behind a
+deleted photo leaves the bucket*.
+
+**An erased catalog row must take its photos with it.** Its descendants go by a
+SQL cascade, which cannot reach storage, so `purge` reads every `storage_path`
+under the row before the erase and removes the objects after it. Guarded by the
+two scenarios that erase a sector and a region carrying a photo.
 
 **The content count must be scoped, not global.** `climber_content` takes
 `id_region` / `id_sector` / `id_route`, which are also column names on the

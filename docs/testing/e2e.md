@@ -54,11 +54,9 @@ pnpm --filter @crag-atlas/e2e test:e2e
 
 `pnpm test` runs neither: unit tests must stay runnable without a database.
 
-Both suites are green as of this writing: 6 integration tests and 61 browser
-scenarios — 53 on a desktop Chrome, 8 on an iPhone 17 — about two minutes for
-the browser half. One of the 19 is a
-`test.fail`: it describes the storage cleanup that does not happen yet, and it
-is the alarm that goes off when somebody fixes it.
+Both suites are green as of this writing: 6 integration tests and 66 browser
+scenarios — 55 on a desktop Chrome, 11 on an iPhone 17 — about two minutes for
+the browser half.
 
 ## How the suite gets in
 
@@ -87,9 +85,10 @@ is the alarm that goes off when somebody fixes it.
   the specs poll the API for the row to disappear rather than reading it once —
   the row leaving the archive list happens before the request lands.
 
-Each run leaves two objects in the local `media` bucket — the files of the
-photos it deletes. That is the storage bug the `test.fail` describes, not a
-teardown mistake; `supabase db reset` clears them when it bothers you.
+Files uploaded by earlier runs stay in the storage volume even after
+`supabase db reset` — the reset empties the database, including
+`storage.objects`, but not the volume's files. `supabase stop --no-backup`
+removes the volume with them.
 
 `[analytics]` is off in `supabase/config.toml`: its vector container
 bind-mounts the host docker socket, which a VM-backed runtime such as colima
