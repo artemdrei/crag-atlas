@@ -25,6 +25,11 @@ const STYLE_URL = {
 
 const SELECTED_CLASS = 'is-selected';
 
+// GeolocationPositionError.PERMISSION_DENIED. The interface constant is not
+// reliably reachable through the event MapLibre hands over, so the value is
+// named here instead.
+const PERMISSION_DENIED = 1;
+
 const UKRAINE_CENTER: [number, number] = [31.17, 48.38];
 const UKRAINE_ZOOM = 5;
 const SECTOR_ZOOM = 13;
@@ -88,8 +93,8 @@ export const SectorMapCanvas = ({
     map.addControl(new NavigationControl({ showCompass: false }), 'top-right');
     const geolocate = new GeolocateControl({});
 
-    geolocate.on('error', (error: GeolocationPositionError) =>
-      latestRef.current.onLocateError(error.code === error.PERMISSION_DENIED)
+    geolocate.on('error', (event: unknown) =>
+      latestRef.current.onLocateError(isPermissionDenied(event))
     );
     map.addControl(geolocate, 'top-right');
 
@@ -220,6 +225,15 @@ export const SectorMapCanvas = ({
     </ShellStyled>
   );
 };
+
+// MapLibre wraps the browser's GeolocationPositionError in an event of its
+// own and copies the properties across, so `code` is there at runtime while
+// the event's declared type promises nothing about it.
+const isPermissionDenied = (event: unknown): boolean =>
+  typeof event === 'object' &&
+  event !== null &&
+  'code' in event &&
+  (event as { code: unknown }).code === PERMISSION_DENIED;
 
 const ShellStyled = styled('div', {
   shouldForwardProp: (prop) => prop !== 'isEditing'
