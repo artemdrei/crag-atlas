@@ -21,6 +21,10 @@ import {
   playgroundDesktopRegistrations,
   playgroundMobileRegistrations
 } from '@web/pages/playground/registrations';
+import {
+  routeMediaDesktopRegistrations,
+  routeMediaMobileRegistrations
+} from '@web/widgets/routeMedia';
 
 const AppMobile = lazy(() => import('./mobile/AppMobile'));
 const AppDesktop = lazy(() => import('./desktop/AppDesktop'));
@@ -32,6 +36,7 @@ const desktopRegistrations = [
   ...topoEditorDesktopRegistrations,
   ...photoUploadDesktopRegistrations,
   ...routeCommentDesktopRegistrations,
+  ...routeMediaDesktopRegistrations,
   ...playgroundDesktopRegistrations
 ];
 
@@ -39,6 +44,7 @@ const mobileRegistrations = [
   ...logTickMobileRegistrations,
   ...topoMobileRegistrations,
   ...routeCommentMobileRegistrations,
+  ...routeMediaMobileRegistrations,
   ...playgroundMobileRegistrations
 ];
 
