@@ -88,7 +88,7 @@ export class TicksService {
 
   async create(authUser: AuthUser, payload: CreateTickDto): Promise<TickDto> {
     if (!payload.idRoute?.trim()) {
-      throw new ValidationException('idRoute is required');
+      throw new ValidationException('An idRoute is required');
     }
 
     assertAscentType(payload.ascentType);
@@ -141,7 +141,7 @@ export class TicksService {
       const [climbedAt, id] = cursor.split('|');
 
       if (!climbedAt || !id) {
-        throw new ValidationException('cursor is malformed');
+        throw new ValidationException('The cursor is malformed');
       }
 
       query = query.or(
@@ -217,7 +217,7 @@ export class TicksService {
 const assertAscentType = (value: TickDto['ascentType']) => {
   if (!ASCENT_TYPES.includes(value)) {
     throw new ValidationException(
-      `ascentType must be one of: ${ASCENT_TYPES.join(', ')}`
+      `An ascentType must be one of: ${ASCENT_TYPES.join(', ')}`
     );
   }
 };

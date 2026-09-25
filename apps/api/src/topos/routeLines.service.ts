@@ -149,7 +149,7 @@ const sectorOf = async (
 
   if (!data) {
     throw new NotFoundException(
-      `No such ${label}`,
+      `That ${label} does not exist`,
       'LINE_SECTOR_TARGET_NOT_FOUND'
     );
   }

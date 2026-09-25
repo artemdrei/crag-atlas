@@ -222,7 +222,7 @@ const toPoint = ({ lat, lng }: UpdateSectorDto): Coords => {
 
   if (!isInRange) {
     throw new ValidationException(
-      'The point is outside the world',
+      'A point needs a latitude of -90..90 and a longitude of -180..180',
       'SECTOR_POINT_OUT_OF_RANGE'
     );
   }
