@@ -16,6 +16,9 @@ export const useApiDeleteTick = ({ idTick, onDeleted }: Params) => {
     mutationFn: () => apiDelete(`/ticks/${idTick}`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ticks() });
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.climberContents()
+      });
       onDeleted();
     },
     onError: (error) => toast.error(resolveFailureMessage(toFailure(error)))

@@ -19,6 +19,9 @@ export const useApiCreateTick = ({ onCreated }: Params) => {
       // The logbook is another slice's query; its key lives in shared/api so
       // both sides can name the same cache entry.
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ticks() });
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.climberContents()
+      });
       onCreated(tick);
     },
     onError: (error) => toast.error(resolveFailureMessage(toFailure(error)))

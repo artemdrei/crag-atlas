@@ -23,6 +23,9 @@ export const useApiDeleteRouteComment = ({
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.routeComments(idRoute)
       });
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.climberContents()
+      });
       onDeleted();
     },
     onError: (error) => toast.error(resolveFailureMessage(toFailure(error)))

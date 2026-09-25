@@ -18,6 +18,9 @@ export const useApiUpdateTick = ({ idTick, onSaved }: Params) => {
       apiPatch<Tick>(`/ticks/${idTick}`, payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ticks() });
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.climberContents()
+      });
       onSaved();
     },
     onError: (error) => toast.error(resolveFailureMessage(toFailure(error)))

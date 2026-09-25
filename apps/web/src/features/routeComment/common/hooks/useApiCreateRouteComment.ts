@@ -21,6 +21,9 @@ export const useApiCreateRouteComment = ({ idRoute, onCreated }: Params) => {
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.routeComments(idRoute)
       });
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.climberContents()
+      });
       onCreated();
     },
     onError: (error) => toast.error(resolveFailureMessage(toFailure(error)))
