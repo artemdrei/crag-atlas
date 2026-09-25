@@ -8,10 +8,16 @@ import { TickCard } from './TickCard';
 export interface Props {
   ticks: Tick[];
   columns?: number;
+  isCommunity?: boolean;
   isLoading: boolean;
 }
 
-export const TicksList = ({ ticks, columns = 1, isLoading }: Props) => {
+export const TicksList = ({
+  ticks,
+  columns = 1,
+  isCommunity,
+  isLoading
+}: Props) => {
   if (!isLoading && ticks.length === 0) {
     return (
       <Typography color="text.secondary">
@@ -23,7 +29,7 @@ export const TicksList = ({ ticks, columns = 1, isLoading }: Props) => {
   return (
     <ListStyled columns={columns}>
       {ticks.map((tick) => (
-        <TickCard key={tick.id} tick={tick} />
+        <TickCard key={tick.id} tick={tick} isCommunity={isCommunity} />
       ))}
     </ListStyled>
   );

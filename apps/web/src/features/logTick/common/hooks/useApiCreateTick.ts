@@ -7,7 +7,7 @@ import { toast } from '@web/shared/lib';
 import type { CreateTick, Tick } from '../entities';
 
 export interface Params {
-  onCreated: (tick: Tick) => void;
+  onCreated: (tick: Tick) => void | Promise<void>;
 }
 
 export const useApiCreateTick = ({ onCreated }: Params) => {
@@ -15,14 +15,13 @@ export const useApiCreateTick = ({ onCreated }: Params) => {
 
   const { isPending, mutate } = useMutation({
     mutationFn: (payload: CreateTick) => apiPost<Tick>('/ticks', payload),
-    onSuccess: (tick) => {
-      // The logbook is another slice's query; its key lives in shared/api so
-      // both sides can name the same cache entry.
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ticks() });
+    // Awaited: the mutation stays pending while the callback uploads the
+    // media that belongs to this tick, so the form cannot be submitted twice.
+    onSuccess: async (tick) => {
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.climberContents()
       });
-      onCreated(tick);
+      await onCreated(tick);
     },
     onError: (error) => toast.error(resolveFailureMessage(toFailure(error)))
   });

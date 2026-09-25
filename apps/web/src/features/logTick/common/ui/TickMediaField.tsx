@@ -8,8 +8,9 @@ import Chip from '@mui/material/Chip';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 
+import { parseMediaLink } from '@web/shared/lib';
+
 import type { PendingMedia } from '../entities';
-import { parseMediaLink } from '../lib';
 
 export interface Props {
   media?: TickMedia[];
@@ -24,9 +25,9 @@ export const TickMediaField = ({ media = [], pending, onChange }: Props) => {
   const [isInvalid, setIsInvalid] = useState(false);
 
   const addLink = () => {
-    const url = parseMediaLink(draft);
+    const link = parseMediaLink(draft);
 
-    if (!url) {
+    if (!link) {
       setIsInvalid(true);
 
       return;
@@ -34,7 +35,7 @@ export const TickMediaField = ({ media = [], pending, onChange }: Props) => {
 
     setDraft('');
     setIsInvalid(false);
-    onChange({ ...pending, links: [...pending.links, url] });
+    onChange({ ...pending, links: [...pending.links, link.url] });
   };
 
   const addFiles = (event: ChangeEvent<HTMLInputElement>) => {

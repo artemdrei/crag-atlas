@@ -6,6 +6,13 @@ export * from './grade';
 export type { CompressedPhoto } from './imageToWebp';
 export { imageToWebp } from './imageToWebp';
 export { isSafeHttpUrl } from './isSafeHttpUrl';
+export type { MediaLink, MediaProvider } from './mediaLink';
+export {
+  mediaEmbedUrl,
+  mediaThumbnailOf,
+  mediaThumbnailUrl,
+  parseMediaLink
+} from './mediaLink';
 export { sleep } from './sleep';
 export { toast } from './toast';
 export type { GridColumns } from './useGridColumns';

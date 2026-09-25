@@ -17,7 +17,7 @@ msgid "{0, plural, one {# ascent} few {# ascents} many {# ascents} other {# asce
 msgstr "{0, plural, one {# пролаз} few {# пролази} many {# пролазів} other {# пролази}}"
 
 #. placeholder {0}: route.ascentsCount
-#: src/pages/sector/common/ui/RouteCard.tsx:55
+#: src/pages/sector/common/ui/RouteCard.tsx:56
 msgid "{0, plural, one {# ascent} other {# ascents}}"
 msgstr "{0, plural, one {# пролаз} few {# пролази} many {# пролазів} other {# пролаза}}"
 
@@ -33,8 +33,8 @@ msgstr "{0, plural, one {# коментар} few {# коментарі} many {# 
 
 #. placeholder {0}: ticks.length
 #: src/pages/route/common/ui/MyAscentsCard.tsx:26
-msgid "{0, plural, one {# entry} other {# entries}}"
-msgstr "{0, plural, one {# запис} few {# записи} many {# записів} other {# запису}}"
+#~ msgid "{0, plural, one {# entry} other {# entries}}"
+#~ msgstr "{0, plural, one {# запис} few {# записи} many {# записів} other {# запису}}"
 
 #. placeholder {0}: content.media
 #: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:62
@@ -52,12 +52,12 @@ msgid "{0, plural, one {# route} few {# routes} many {# routes} other {# routes}
 msgstr "{0, plural, one {# маршрут} few {# маршрути} many {# маршрутів} other {# маршрутів}}"
 
 #. placeholder {0}: tick.attempts
-#: src/pages/logbook/common/ui/TickCard.tsx:69
+#: src/pages/logbook/common/ui/TickCard.tsx:82
 msgid "{0, plural, one {# try} few {# tries} many {# tries} other {# tries}}"
 msgstr "{0, plural, one {# спроба} few {# спроби} many {# спроб} other {# спроби}}"
 
 #. placeholder {0}: tick.attempts
-#: src/pages/route/common/ui/MyAscentsCard.tsx:37
+#: src/pages/route/common/ui/RouteLogbook.tsx:51
 msgid "{0, plural, one {# try} other {# tries}}"
 msgstr "{0, plural, one {# спроба} few {# спроби} many {# спроб} other {# спроби}}"
 
@@ -68,7 +68,7 @@ msgstr "{0, plural, one {# спроба} few {# спроби} many {# спроб
 
 #. placeholder {0}: route.length
 #: src/pages/route/common/ui/RouteDetails.tsx:39
-#: src/pages/sector/common/ui/RouteCard.tsx:62
+#: src/pages/sector/common/ui/RouteCard.tsx:63
 msgid "{0} m"
 msgstr "{0} м"
 
@@ -239,7 +239,8 @@ msgstr "<0>{name}</0> і все, що всередині, назавжди зн�
 #~ msgid "A sector that still has routes cannot be deleted: they would be deleted along with it, and their lines, comments and photos too. Delete the routes first."
 #~ msgstr "Сектор із маршрутами видалити не можна: вони зникли б разом із ним, а з ними лінії на фото, коментарі та медіа. Спершу видали маршрути."
 
-#: src/features/logTick/common/ui/TickMediaField.tsx:73
+#: src/features/logTick/common/ui/TickMediaField.tsx:74
+#: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:95
 msgid "Add"
 msgstr "Додати"
 
@@ -263,10 +264,12 @@ msgstr "Додати фото"
 msgid "Add a photo to start drawing routes on it."
 msgstr "Додайте фото, щоб малювати на ньому маршрути."
 
-#: src/features/logTick/common/ui/TickMediaField.tsx:83
-#: src/features/logTick/common/ui/TickMediaField.tsx:91
+#: src/features/logTick/common/ui/TickMediaField.tsx:84
+#: src/features/logTick/common/ui/TickMediaField.tsx:92
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:191
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:161
+#: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:74
+#: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:82
 msgid "Add photo"
 msgstr "Додати фото"
 
@@ -283,6 +286,15 @@ msgstr "Додати маршрут"
 #: src/pages/region/desktop/ui/RegionEditSidebar.tsx:114
 msgid "Add sector"
 msgstr "Додати сектор"
+
+#: src/widgets/routeMedia/desktop/AddRouteMediaDialog.tsx:19
+#: src/widgets/routeMedia/mobile/AddRouteMediaSheet.tsx:17
+msgid "Add video or photo"
+msgstr "Додати відео або фото"
+
+#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:98
+msgid "Add yours"
+msgstr "Додати своє"
 
 #. placeholder {0}: sendable.length
 #. placeholder {1}: formatBytes(before, i18n.locale)
@@ -340,11 +352,11 @@ msgstr "Дії з пролазом"
 msgid "Ascent deleted"
 msgstr "Пролаз видалено"
 
-#: src/features/logTick/common/hooks/useLogTick.ts:22
+#: src/features/logTick/common/hooks/useLogTick.ts:32
 msgid "Ascent logged"
 msgstr "Пролаз записано"
 
-#: src/features/logTick/common/hooks/useEditTick.ts:19
+#: src/features/logTick/common/hooks/useEditTick.ts:30
 msgid "Ascent saved"
 msgstr "Пролаз збережено"
 
@@ -413,6 +425,7 @@ msgstr "Навігаційний ланцюжок"
 #: src/features/topoEditor/desktop/DeleteLineDialog.tsx:42
 #: src/features/topoEditor/desktop/DeletePhotoDialog.tsx:43
 #: src/shared/ui/ConfirmDialog.tsx:37
+#: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:88
 #: src/widgets/routeMedia/common/ui/DeleteRouteMediaActions.tsx:17
 msgid "Cancel"
 msgstr "Скасувати"
@@ -447,6 +460,10 @@ msgstr "Скелелази тут нічого не лишали — ні про
 
 #: src/features/catalogEdit/common/ui/EditActions.tsx:26
 #: src/features/topo/desktop/TopoPhotoDialog.tsx:36
+#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:31
+#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:39
+#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:31
+#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:39
 msgid "Close"
 msgstr "Закрити"
 
@@ -474,7 +491,7 @@ msgstr "Коментар видалено"
 msgid "Comment saved"
 msgstr "Коментар збережено"
 
-#: src/pages/route/common/ui/RouteTabs.tsx:24
+#: src/pages/route/common/ui/RouteTabs.tsx:35
 msgid "Comments"
 msgstr "Коментарі"
 
@@ -566,7 +583,7 @@ msgstr "Видалити коментар"
 msgid "Delete line"
 msgstr "Видалити лінію"
 
-#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:62
+#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:80
 #: src/widgets/routeMedia/desktop/DeleteRouteMediaDialog.tsx:25
 #: src/widgets/routeMedia/mobile/DeleteRouteMediaSheet.tsx:23
 msgid "Delete media"
@@ -794,6 +811,14 @@ msgstr "жорсткіше"
 msgid "Harder"
 msgstr "Жорсткіше"
 
+#: src/shared/ui/MediaBadge.tsx:19
+msgid "Has photo"
+msgstr "Є фото"
+
+#: src/shared/ui/MediaBadge.tsx:15
+msgid "Has video"
+msgstr "Є відео"
+
 #: src/shared/ui/ArchivedToggle.tsx:17
 #~ msgid "Hide archived"
 #~ msgstr "Сховати архівні"
@@ -863,6 +888,7 @@ msgstr "Світла"
 #: src/pages/logbook/common/ui/TicksFeed.tsx:24
 #: src/pages/logbook/desktop/PageLogbookDesktop.tsx:34
 #: src/pages/logbook/mobile/PageLogbookMobile.tsx:28
+#: src/pages/route/common/ui/RouteLogbook.tsx:25
 msgid "Loading ascents…"
 msgstr "Завантажуємо пролази…"
 
@@ -870,7 +896,7 @@ msgstr "Завантажуємо пролази…"
 msgid "Loading comments…"
 msgstr "Завантаження коментарів…"
 
-#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:29
+#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:32
 msgid "Loading media…"
 msgstr "Завантаження медіа…"
 
@@ -879,8 +905,8 @@ msgstr "Завантаження медіа…"
 msgid "Loading regions…"
 msgstr "Завантаження регіонів…"
 
-#: src/pages/route/desktop/PageRouteDesktop.tsx:86
-#: src/pages/route/mobile/PageRouteMobile.tsx:75
+#: src/pages/route/desktop/PageRouteDesktop.tsx:85
+#: src/pages/route/mobile/PageRouteMobile.tsx:74
 msgid "Loading route…"
 msgstr "Завантаження маршруту…"
 
@@ -902,7 +928,7 @@ msgstr "Завантаження маршруту…"
 msgid "Loading the sector…"
 msgstr "Завантаження сектора…"
 
-#: src/pages/logbook/common/ui/TicksFeed.tsx:40
+#: src/pages/logbook/common/ui/TicksFeed.tsx:45
 msgid "Loading…"
 msgstr "Завантаження…"
 
@@ -916,12 +942,17 @@ msgid "Log ascent"
 msgstr "Відмітити пролаз"
 
 #: src/app/mobile/layout/AppBottomNavigation.tsx:36
+#: src/pages/route/common/ui/RouteTabs.tsx:36
 msgid "Logbook"
 msgstr "Логбук"
 
 #: src/app/mobile/layout/AppBottomNavigation.tsx:35
 #~ msgid "Map"
 #~ msgstr "Карта"
+
+#: src/widgets/routeMedia/common/hooks/useAddRouteMedia.ts:17
+msgid "Media added"
+msgstr "Медіа додано"
 
 #: src/widgets/routeMedia/common/hooks/useRemoveRouteMedia.ts:23
 msgid "Media deleted"
@@ -957,7 +988,6 @@ msgid "Moved to {0}"
 msgstr "Перенесено на {0}"
 
 #: src/pages/logbook/common/ui/LogbookTabs.tsx:21
-#: src/pages/route/common/ui/MyAscentsCard.tsx:23
 msgid "My ascents"
 msgstr "Мої пролази"
 
@@ -988,7 +1018,7 @@ msgstr "Новий маршрут"
 #~ msgid "New sector"
 #~ msgstr "Новий сектор"
 
-#: src/pages/logbook/common/ui/TicksList.tsx:18
+#: src/pages/logbook/common/ui/TicksList.tsx:24
 msgid "No ascents logged yet."
 msgstr "Поки що жодного пролазу."
 
@@ -1012,7 +1042,7 @@ msgstr "Маршрутів ще немає — додайте перший, а �
 msgid "No topo yet"
 msgstr "Топо ще немає"
 
-#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:33
+#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:36
 msgid "No videos or photos yet."
 msgstr "Відео та фото ще немає."
 
@@ -1023,6 +1053,10 @@ msgstr "Нікого не знайдено"
 #: src/pages/logbook/common/ui/TicksFeed.tsx:28
 msgid "Nobody has logged an ascent yet."
 msgstr "Ще ніхто не записав жодного пролазу."
+
+#: src/pages/route/common/ui/RouteLogbook.tsx:29
+msgid "Nobody has logged this route yet."
+msgstr "Цей маршрут ще ніхто не відмітив."
 
 #: src/pages/sector/common/hooks/useRoutesByTopo.ts:56
 msgid "Not on a photo"
@@ -1066,7 +1100,8 @@ msgstr "На спробу менше"
 msgid "One more try"
 msgstr "На спробу більше"
 
-#: src/features/logTick/common/ui/TickMediaField.tsx:60
+#: src/features/logTick/common/ui/TickMediaField.tsx:61
+#: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:55
 msgid "Only YouTube and Instagram links."
 msgstr "Лише посилання на YouTube або Instagram."
 
@@ -1083,8 +1118,8 @@ msgstr "Онсайт"
 msgid "Open sector"
 msgstr "Відкрити сектор"
 
-#: src/pages/route/desktop/PageRouteDesktop.tsx:95
-#: src/pages/route/mobile/PageRouteMobile.tsx:84
+#: src/pages/route/desktop/PageRouteDesktop.tsx:94
+#: src/pages/route/mobile/PageRouteMobile.tsx:83
 msgid "Open the photo"
 msgstr "Відкрити фото"
 
@@ -1131,6 +1166,10 @@ msgstr "Фото"
 #: src/features/topo/common/hooks/usePhotoLabel.ts:10
 msgid "Photo {0}"
 msgstr "Фото {0}"
+
+#: src/widgets/routeMedia/common/ui/RouteMediaGallery.tsx:48
+msgid "Photo {position}"
+msgstr "Фото {position}"
 
 #: src/features/logTick/common/ui/TickForm.tsx:156
 msgid "Photo and video"
@@ -1266,8 +1305,8 @@ msgstr "Регіон збережено"
 #: src/pages/home/desktop/PageHomeDesktop.tsx:46
 #: src/pages/region/desktop/PageRegionDesktop.tsx:86
 #: src/pages/region/mobile/PageRegionMobile.tsx:42
-#: src/pages/route/desktop/PageRouteDesktop.tsx:66
-#: src/pages/route/mobile/PageRouteMobile.tsx:62
+#: src/pages/route/desktop/PageRouteDesktop.tsx:65
+#: src/pages/route/mobile/PageRouteMobile.tsx:61
 #: src/pages/sector/desktop/PageSectorDesktop.tsx:108
 #: src/pages/sector/mobile/PageSectorMobile.tsx:90
 msgid "Regions"
@@ -1392,6 +1431,7 @@ msgstr "Збережені зміни одразу стають видимими
 #: src/features/catalogEdit/common/ui/EditActions.tsx:35
 #: src/features/logTick/common/ui/TickForm.tsx:170
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:54
+#: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:95
 msgid "Saving…"
 msgstr "Зберігаємо…"
 
@@ -1432,7 +1472,7 @@ msgstr "Що скажеш?"
 #~ msgid "Show archived"
 #~ msgstr "Показати архівні"
 
-#: src/pages/logbook/common/ui/TicksFeed.tsx:40
+#: src/pages/logbook/common/ui/TicksFeed.tsx:45
 msgid "Show more"
 msgstr "Показати ще"
 
@@ -1537,6 +1577,10 @@ msgstr "Цю дію не можна скасувати."
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:360
 msgid "This file could not be read as a photo."
 msgstr "Не вдалося прочитати цей файл як фото."
+
+#: src/widgets/routeMedia/common/ui/RouteMediaGallery.tsx:39
+msgid "This media is gone."
+msgstr "Цього медіа вже немає."
 
 #: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:75
 msgid "This one stays — climbers left"
@@ -1678,9 +1722,21 @@ msgstr "Інший email"
 msgid "Verifying…"
 msgstr "Перевіряємо…"
 
-#: src/pages/route/common/ui/RouteTabs.tsx:25
+#: src/widgets/routeMedia/common/ui/RouteMediaGallery.tsx:48
+msgid "Video {position}"
+msgstr "Відео {position}"
+
+#: src/pages/route/common/ui/RouteTabs.tsx:32
+#: src/widgets/routeMedia/common/ui/RouteMediaButton.tsx:30
+#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:29
+#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:29
 msgid "Video and photo"
 msgstr "Відео та фото"
+
+#. placeholder {0}: media.length
+#: src/pages/route/common/ui/RouteTabs.tsx:31
+msgid "Video and photo ({0})"
+msgstr "Відео та фото ({0})"
 
 #: src/features/catalogEdit/desktop/DeleteSectorDialog.tsx:80
 #~ msgid "View routes"
@@ -1703,7 +1759,8 @@ msgstr "Твоя бета"
 msgid "Your grade"
 msgstr "Твій грейд"
 
-#: src/features/logTick/common/ui/TickMediaField.tsx:57
+#: src/features/logTick/common/ui/TickMediaField.tsx:58
+#: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:53
 msgid "YouTube or Instagram link"
 msgstr "Посилання на YouTube або Instagram"
 

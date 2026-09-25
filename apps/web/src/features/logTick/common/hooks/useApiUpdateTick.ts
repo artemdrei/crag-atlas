@@ -7,7 +7,7 @@ import { toast } from '@web/shared/lib';
 
 export interface Params {
   idTick: string;
-  onSaved: () => void;
+  onSaved: () => void | Promise<void>;
 }
 
 export const useApiUpdateTick = ({ idTick, onSaved }: Params) => {
@@ -16,12 +16,14 @@ export const useApiUpdateTick = ({ idTick, onSaved }: Params) => {
   const { isPending, mutate } = useMutation({
     mutationFn: (payload: UpdateTick) =>
       apiPatch<Tick>(`/ticks/${idTick}`, payload),
-    onSuccess: () => {
+    // Awaited: the mutation stays pending while the callback uploads the
+    // media that belongs to this tick, so the form cannot be submitted twice.
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ticks() });
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.climberContents()
       });
-      onSaved();
+      await onSaved();
     },
     onError: (error) => toast.error(resolveFailureMessage(toFailure(error)))
   });

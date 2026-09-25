@@ -1,7 +1,7 @@
 import { resolveFailureMessage, toFailure } from '@crag-atlas/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { apiDelete, QUERY_KEYS } from '@web/shared/api';
+import { apiDelete, invalidateRouteLists, QUERY_KEYS } from '@web/shared/api';
 import { toast } from '@web/shared/lib';
 
 export interface Params {
@@ -28,6 +28,7 @@ export const useApiDeleteRouteMedia = ({
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.climberContents()
       });
+      invalidateRouteLists(queryClient);
       onDeleted();
     },
     onError: (error) => toast.error(resolveFailureMessage(toFailure(error)))

@@ -17,6 +17,7 @@ export { EditorPageShell } from './EditorPageShell';
 export { FormActions } from './FormActions';
 export { GradeBadge } from './GradeBadge';
 export { GridColumnsMenu } from './GridColumnsMenu';
+export { MediaBadge } from './MediaBadge';
 export { type Crumb, PageBreadcrumbs } from './PageBreadcrumbs';
 export { PageShell } from './PageShell';
 export { PhotoPlaceholder } from './PhotoPlaceholder';

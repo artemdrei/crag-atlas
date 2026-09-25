@@ -22,7 +22,6 @@ import { GradeConsensus } from '@web/widgets/gradeConsensus';
 import {
   ArchivedRouteNotice,
   LogTickButton,
-  MyAscentsCard,
   RouteDetails,
   RouteStats,
   RouteTabs,
@@ -117,7 +116,6 @@ export const PageRouteMobile = () => {
             )}
           </StatsRowStyled>
           <RouteTabs idRoute={route.id} />
-          <MyAscentsCard idRoute={route.id} />
           {!route.isArchived && (
             <ActionBarStyled>
               <LogTickButton

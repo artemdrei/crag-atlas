@@ -6,6 +6,7 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { GradeBadge } from '@web/shared/ui';
+import { RouteMediaButton } from '@web/widgets/routeMedia';
 
 import type { Route } from '../entities';
 
@@ -68,8 +69,14 @@ export const RouteCard = ({
             )}
           </MetaStyled>
         </TextStyled>
-        <GradeBadge grade={route.grade} scale={route.gradeScale} />
       </CardAreaStyled>
+      {/* Outside the action area: a button nested in a button is invalid. */}
+      <RouteMediaButton
+        idRoute={route.id}
+        hasPhoto={route.hasPhoto}
+        hasVideo={route.hasVideo}
+      />
+      <GradeBadge grade={route.grade} scale={route.gradeScale} />
     </RowStyled>
   );
 };
@@ -90,6 +97,8 @@ const RowStyled = styled('div', {
 `;
 
 const CardAreaStyled = styled(CardActionArea)`
+  flex: 1;
+  min-width: 0;
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing(1.5)};

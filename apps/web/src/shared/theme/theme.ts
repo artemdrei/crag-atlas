@@ -36,6 +36,22 @@ export const createAppTheme = (mode: 'light' | 'dark', isEditing = false) =>
                 }
         }
       },
+      MuiDialog: {
+        styleOverrides: {
+          // A phone has no room for the 32px MUI leaves around a dialog: the
+          // gutter here is the one every modal on a narrow screen gets.
+          paper: ({ ownerState, theme }) =>
+            ownerState.fullScreen
+              ? {}
+              : {
+                  [theme.breakpoints.down('sm')]: {
+                    margin: theme.spacing(2),
+                    width: `calc(100% - ${theme.spacing(4)})`,
+                    maxWidth: `calc(100% - ${theme.spacing(4)})`
+                  }
+                }
+        }
+      },
       MuiButton: {
         styleOverrides: {
           root: { textTransform: 'capitalize' }

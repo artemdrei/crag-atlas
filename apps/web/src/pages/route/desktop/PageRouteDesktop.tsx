@@ -25,7 +25,6 @@ import {
   ArchivedRouteActions,
   ArchivedRouteNotice,
   LogTickButton,
-  MyAscentsCard,
   RouteDetails,
   RouteStats,
   RouteTabs,
@@ -141,7 +140,6 @@ export const PageRouteDesktop = () => {
                 place={`${route.sectorName}, ${route.regionName}`}
               />
             )}
-            <MyAscentsCard idRoute={route.id} />
           </ActionsStyled>
         </ColumnsStyled>
       )}

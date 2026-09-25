@@ -1,2 +1,2 @@
 export * from './useApiGetRoute';
-export * from './useApiGetRouteTicks';
+export * from './useApiGetRouteLogbook';

@@ -28,7 +28,12 @@ export const TicksFeed = ({ columns }: Props) => {
           <Trans>Nobody has logged an ascent yet.</Trans>
         </Typography>
       ) : (
-        <TicksList ticks={ticks} columns={columns} isLoading={isLoading} />
+        <TicksList
+          ticks={ticks}
+          columns={columns}
+          isCommunity
+          isLoading={isLoading}
+        />
       )}
       {hasMore && (
         <MoreRowStyled>
