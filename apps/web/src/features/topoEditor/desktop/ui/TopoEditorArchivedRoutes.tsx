@@ -4,6 +4,11 @@ import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
+import {
+  ClimberContentNote,
+  isErasable,
+  useApiGetClimberContent
+} from '@web/features/catalogEdit';
 import { RestoreButton } from '@web/shared/ui';
 
 export interface Props {
@@ -33,36 +38,57 @@ export const TopoEditorArchivedRoutes = ({
       </Typography>
     ) : (
       routes.map((route) => (
-        <RowStyled key={route.id}>
-          <TitleRowStyled>
-            <NameStyled variant="body2" noWrap>
-              {route.name}
-            </NameStyled>
-            <Typography variant="body2" color="text.secondary">
-              {route.grade}
-            </Typography>
-          </TitleRowStyled>
-          <ActionsStyled>
-            <RestoreButton
-              isPending={isBusy}
-              onClick={() => onRestore(route.id)}
-            />
-            <Button
-              type="button"
-              size="small"
-              color="error"
-              variant="outlined"
-              disabled={isBusy}
-              onClick={() => onErase(route)}
-            >
-              <Trans>Erase for good</Trans>
-            </Button>
-          </ActionsStyled>
-        </RowStyled>
+        <ArchivedRouteRow
+          key={route.id}
+          route={route}
+          isBusy={isBusy}
+          onRestore={onRestore}
+          onErase={onErase}
+        />
       ))
     )}
   </ListStyled>
 );
+
+interface RowProps {
+  route: Route;
+  isBusy: boolean;
+  onRestore: (idRoute: string) => void;
+  onErase: (route: Route) => void;
+}
+
+// Each row asks for its own counts: the erase offer is only honest once the
+// server has said whether climbers left anything on that route.
+const ArchivedRouteRow = ({ route, isBusy, onRestore, onErase }: RowProps) => {
+  const { content } = useApiGetClimberContent('routes', route.id);
+
+  return (
+    <RowStyled>
+      <TitleRowStyled>
+        <NameStyled variant="body2" noWrap>
+          {route.name}
+        </NameStyled>
+        <Typography variant="body2" color="text.secondary">
+          {route.grade}
+        </Typography>
+      </TitleRowStyled>
+      <ClimberContentNote content={content} />
+      <ActionsStyled>
+        <RestoreButton isPending={isBusy} onClick={() => onRestore(route.id)} />
+        <Button
+          type="button"
+          size="small"
+          color="error"
+          variant="outlined"
+          disabled={isBusy || !isErasable(content)}
+          onClick={() => onErase(route)}
+        >
+          <Trans>Erase for good</Trans>
+        </Button>
+      </ActionsStyled>
+    </RowStyled>
+  );
+};
 
 const ListStyled = styled('div')`
   display: flex;
