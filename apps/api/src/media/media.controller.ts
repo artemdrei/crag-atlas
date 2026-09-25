@@ -1,14 +1,20 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  HttpCode,
   Param,
   Post,
   Query,
   UploadedFile,
   UseGuards
 } from '@nestjs/common';
-import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiNoContentResponse,
+  ApiOkResponse
+} from '@nestjs/swagger';
 
 import { CurrentUser } from '../common/decorators/authUser.decorator';
 import { PhotoUpload } from '../common/decorators/photoUpload.decorator';
@@ -50,5 +56,16 @@ export class MediaController {
     @Query('idTick') idTick?: string
   ): Promise<MediaDto> {
     return this.mediaService.createPhoto(authUser, idRoute, file, idTick);
+  }
+
+  @Delete(':idMedia')
+  @UseGuards(SupabaseAuthGuard)
+  @HttpCode(204)
+  @ApiNoContentResponse()
+  remove(
+    @CurrentUser() authUser: AuthUser,
+    @Param('idMedia') idMedia: string
+  ): Promise<void> {
+    return this.mediaService.remove(authUser, idMedia);
   }
 }

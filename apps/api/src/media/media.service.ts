@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 
-import { ValidationException } from '../common/exceptions/app.exception';
+import {
+  NotFoundException,
+  ValidationException
+} from '../common/exceptions/app.exception';
 import {
   readFailed,
   writeFailed
@@ -140,6 +143,38 @@ export class MediaService {
     }
 
     return toMediaDto(data);
+  }
+
+  async remove(authUser: AuthUser, idMedia: string): Promise<void> {
+    const client = userClient(authUser);
+
+    // The row comes back so its object can follow it out; the bucket is
+    // public, so a photo left behind stays downloadable by anyone who ever
+    // saw its URL.
+    const { data, error } = await client
+      .from('route_media')
+      .delete()
+      .eq('id', idMedia)
+      .select('storage_path')
+      .maybeSingle<{ storage_path: string | null }>();
+
+    if (error) {
+      throw writeFailed(
+        'Could not delete the media',
+        'MEDIA_DELETE_FAILED',
+        error
+      );
+    }
+
+    // Someone else's media is invisible to this policy, so a missing row
+    // means "not yours" and "not there" alike — the caller learns neither.
+    if (!data) {
+      throw new NotFoundException('Media not found', 'MEDIA_NOT_FOUND');
+    }
+
+    if (data.storage_path) {
+      await removePhoto(client, MEDIA_BUCKET, data.storage_path);
+    }
   }
 }
 
