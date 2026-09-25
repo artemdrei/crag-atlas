@@ -30,19 +30,24 @@ export class DatabaseException extends AppException {
   }
 }
 
-/** Reads failed: nothing the reader did is wrong, so it is ours to own. */
-export const readFailed = (
+/**
+ * Both are 500s, and the pair of names only says which half of a service the
+ * query sat in. Neither is a 4xx: every condition the caller could actually
+ * fix — a bad payload, a missing row, a row somebody still points at — is
+ * raised before the query runs, or right after it by its own exception. What
+ * reaches these two is a query that failed for a reason we have not named,
+ * which is ours, not theirs. The filter turns the text into a generic message
+ * on the way out and keeps `code` for the client to branch on.
+ */
+const queryFailed = (
   message: string,
   code: string,
   cause?: DatabaseError
 ): DatabaseException => new DatabaseException(message, 500, code, cause);
 
-/** Writes failed: usually a constraint or a policy, so the caller can act. */
-export const writeFailed = (
-  message: string,
-  code: string,
-  cause?: DatabaseError
-): DatabaseException => new DatabaseException(message, 400, code, cause);
+export const readFailed = queryFailed;
+
+export const writeFailed = queryFailed;
 
 // A row somebody else still points at. 23503 is the only SQLSTATE we branch
 // on: purging a catalog row is refused while anybody's ascent references it,

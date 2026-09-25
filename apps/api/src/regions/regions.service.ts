@@ -3,7 +3,6 @@ import { Injectable } from '@nestjs/common';
 import type { ClimberContentDto } from '../common/dto/climberContent.dto';
 import type { GradeHistogramGroupDto } from '../common/dto/gradeHistogram.dto';
 import {
-  AppException,
   NotFoundException,
   ValidationException
 } from '../common/exceptions/app.exception';
@@ -176,10 +175,17 @@ export class RegionsService {
     if (error || !data) {
       await removePhoto(client, REGIONS_BUCKET, path);
 
-      throw new AppException(
-        error?.message ?? 'Region not found',
-        error ? 400 : 404,
-        error?.code ?? 'REGION_PHOTO_FAILED'
+      if (error) {
+        throw writeFailed(
+          'Could not attach the photo to the region',
+          'REGION_PHOTO_FAILED',
+          error
+        );
+      }
+
+      throw new NotFoundException(
+        `Region "${idRegion}" not found`,
+        'REGION_NOT_FOUND'
       );
     }
 
