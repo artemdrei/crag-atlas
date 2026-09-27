@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField';
 import { toast } from '@web/shared/lib';
 
 import { useApiCreateRegion } from '../hooks';
+import { CountryPicker } from './CountryPicker';
 import { EditActions } from './EditActions';
 import { EditFormStyled } from './EditFormStyled';
 
@@ -17,12 +18,14 @@ export const RegionCreateForm = ({ onClose }: Props) => {
   const { t } = useLingui();
   const [name, setName] = useState('');
   const [province, setProvince] = useState('');
+  const [country, setCountry] = useState<string | null>(null);
   const [rockType, setRockType] = useState('');
 
   const { isPending, createRegion } = useApiCreateRegion({
     onCreated: (region) => {
       setName('');
       setProvince('');
+      setCountry(null);
       setRockType('');
       toast.success(t`Region ${region.name} created`);
     }
@@ -34,12 +37,14 @@ export const RegionCreateForm = ({ onClose }: Props) => {
     createRegion({
       name: name.trim(),
       province: province.trim(),
+      country,
       rockType: rockType.trim()
     });
   };
 
   return (
     <EditFormStyled onSubmit={handleSubmit}>
+      <CountryPicker isCompact value={country} onChange={setCountry} />
       <TextField
         fullWidth
         size="small"

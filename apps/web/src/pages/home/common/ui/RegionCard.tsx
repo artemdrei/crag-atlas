@@ -1,7 +1,8 @@
+import { useLingui } from '@lingui/react/macro';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import { useGradeRange } from '@web/shared/lib';
+import { countryName, useGradeRange } from '@web/shared/lib';
 import { CatalogCard, GradeBadge } from '@web/shared/ui';
 
 import type { Region } from '../entities';
@@ -19,7 +20,14 @@ export const RegionCard = ({
   isUnsaved,
   onSelect
 }: Props) => {
+  const { i18n } = useLingui();
   const gradeRange = useGradeRange(region);
+  const place = [
+    region.country && countryName(region.country, i18n.locale),
+    region.province
+  ]
+    .filter(Boolean)
+    .join(', ');
 
   return (
     <CatalogCard
@@ -35,12 +43,13 @@ export const RegionCard = ({
         </Typography>
       </HeaderRowStyled>
       <Typography variant="body2" color="text.secondary">
-        {region.province} · {region.rockType}
+        {place}
       </Typography>
       <FooterRowStyled>
         <GradeBadge grade={gradeRange} />
         <Typography variant="caption" color="text.secondary">
-          {region.routeCount} routes · {region.sectorCount} sectors
+          {region.rockType} · {region.routeCount} routes · {region.sectorCount}{' '}
+          sectors
         </Typography>
       </FooterRowStyled>
     </CatalogCard>

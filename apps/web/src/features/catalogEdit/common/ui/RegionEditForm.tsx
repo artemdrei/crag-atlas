@@ -7,6 +7,7 @@ import { toast } from '@web/shared/lib';
 import { ChangedTextField } from '@web/shared/ui';
 
 import { useApiUpdateRegion } from '../hooks';
+import { CountryPicker } from './CountryPicker';
 import { EditActions } from './EditActions';
 import { EditFormStyled } from './EditFormStyled';
 
@@ -26,11 +27,13 @@ export const RegionEditForm = ({
   const { t } = useLingui();
   const [name, setName] = useState(region.name);
   const [province, setProvince] = useState(region.province);
+  const [country, setCountry] = useState<string | null>(region.country ?? null);
   const [rockType, setRockType] = useState(region.rockType);
 
   const isDirty =
     name !== region.name ||
     province !== region.province ||
+    country !== (region.country ?? null) ||
     rockType !== region.rockType;
 
   useEffect(() => {
@@ -47,11 +50,16 @@ export const RegionEditForm = ({
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    updateRegion({ name: name.trim(), province, rockType });
+    updateRegion({ name: name.trim(), province, country, rockType });
   };
 
   return (
     <EditFormStyled onSubmit={handleSubmit}>
+      <CountryPicker
+        value={country}
+        isChanged={country !== (region.country ?? null)}
+        onChange={setCountry}
+      />
       <ChangedTextField
         fullWidth
         label={t`Name`}

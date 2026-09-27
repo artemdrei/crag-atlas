@@ -1,3 +1,4 @@
+export { countryCodes, countryName } from './countries';
 export { digitsOnly } from './digitsOnly';
 export { formatBytes, savedPercent, signedPercent } from './formatBytes';
 export { formatDateTime } from './formatDateTime';

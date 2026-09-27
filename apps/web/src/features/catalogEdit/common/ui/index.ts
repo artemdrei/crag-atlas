@@ -5,6 +5,7 @@ export { ArchiveRegionButton } from './ArchiveRegionButton';
 export { ArchiveSectorButton } from './ArchiveSectorButton';
 export { CatalogEditActions } from './CatalogEditActions';
 export { ClimberContentNote } from './ClimberContentNote';
+export { CountryPicker } from './CountryPicker';
 export { EditToggleButton } from './EditToggleButton';
 export { RegionCreateForm } from './RegionCreateForm';
 export { RegionEditForm } from './RegionEditForm';
