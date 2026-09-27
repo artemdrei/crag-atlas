@@ -134,6 +134,18 @@ export const resolveGradeTone = (
   return TONE_THRESHOLDS.find((level) => score >= level.score)?.tone ?? '5';
 };
 
+/**
+ * The tone's fill and the ink that reads on it swap roles with the mode: on a
+ * light ground the saturated fill is what reads, on a dark one the light ink.
+ */
+export const resolveAscentTypeInk = (
+  mode: 'light' | 'dark',
+  tone: AscentTypeTone
+): string =>
+  mode === 'dark'
+    ? ascentType.dark[tone].text
+    : ascentType.light[tone].background;
+
 /** Colour of a route's grade, for anything that is not a `GradeBadge`. */
 export const getGradeColor = (
   grades: Record<GradeTone, GradeColor>,
