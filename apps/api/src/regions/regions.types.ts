@@ -14,6 +14,14 @@ export class RegionDto {
   @ApiProperty()
   province!: string;
 
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description: 'ISO 3166-1 alpha-2 code; null until an admin picks one'
+  })
+  country?: string | null;
+
   @ApiProperty()
   rockType!: string;
 
@@ -86,6 +94,14 @@ export class CreateRegionDto {
   @ApiProperty({ type: String, required: false, nullable: true })
   province?: string | null;
 
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description: 'ISO 3166-1 alpha-2 code'
+  })
+  country?: string | null;
+
   @ApiProperty({ type: String, required: false, nullable: true })
   rockType?: string | null;
 }
@@ -96,6 +112,14 @@ export class UpdateRegionDto {
 
   @ApiProperty()
   province!: string;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description: 'ISO 3166-1 alpha-2 code'
+  })
+  country?: string | null;
 
   @ApiProperty()
   rockType!: string;

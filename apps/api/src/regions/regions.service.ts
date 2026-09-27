@@ -44,12 +44,13 @@ import type {
 // Counts and grade ranges are derived, so reads come from the view and writes
 // go to the table underneath it.
 const COLUMNS =
-  'id, name, province, rock_type, photo_path, sector_count, route_count, grade_min, grade_min_scale, grade_max, grade_max_scale, grade_histogram, is_archived, deleted_at';
+  'id, name, province, country, rock_type, photo_path, sector_count, route_count, grade_min, grade_min_scale, grade_max, grade_max_scale, grade_histogram, is_archived, deleted_at';
 
 interface RegionRow {
   id: string;
   name: string;
   province: string;
+  country: string | null;
   rock_type: string;
   photo_path: string | null;
   sector_count: number;
@@ -62,6 +63,25 @@ interface RegionRow {
   is_archived: boolean;
   deleted_at: string | null;
 }
+
+// The picker sends a code, but nothing stops a client from sending anything;
+// the column's own check would answer with a write error nobody can read.
+const normalizeCountry = (country?: string | null): string | null => {
+  const code = country?.trim().toUpperCase();
+
+  if (!code) {
+    return null;
+  }
+
+  if (!/^[A-Z]{2}$/.test(code)) {
+    throw new ValidationException(
+      'A country is an ISO 3166-1 alpha-2 code',
+      'REGION_COUNTRY_INVALID'
+    );
+  }
+
+  return code;
+};
 
 const TARGET: ArchiveTarget = {
   table: 'regions',
@@ -133,6 +153,7 @@ export class RegionsService {
       .insert({
         name,
         province: payload.province?.trim() ?? '',
+        country: normalizeCountry(payload.country),
         rock_type: payload.rockType?.trim() ?? ''
       })
       .select('id')
@@ -212,6 +233,7 @@ export class RegionsService {
       .update({
         name: payload.name,
         province: payload.province,
+        country: normalizeCountry(payload.country),
         rock_type: payload.rockType
       })
       .eq('id', idRegion);
@@ -256,6 +278,7 @@ const toRegionDto = (row: RegionRow): RegionDto => ({
   id: row.id,
   name: row.name,
   province: row.province,
+  country: row.country,
   rockType: row.rock_type,
   photoUrl: row.photo_path
     ? storagePublicUrl(REGIONS_BUCKET, row.photo_path)
