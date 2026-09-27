@@ -47,7 +47,10 @@ export const parseMediaLink = (value: string): MediaLink | undefined => {
   if (INSTAGRAM_HOSTS.includes(url.hostname)) {
     const [kind, code] = segments;
 
-    return INSTAGRAM_PATHS.includes(kind) && code && ID_PATTERN.test(code)
+    return kind &&
+      INSTAGRAM_PATHS.includes(kind) &&
+      code &&
+      ID_PATTERN.test(code)
       ? { provider: 'instagram', id: code, url: url.toString() }
       : undefined;
   }
