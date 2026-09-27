@@ -1,22 +1,61 @@
+import type { TickPage } from '@crag-atlas/api';
+import { toFailure } from '@crag-atlas/utils';
+import { useInfiniteQuery } from '@tanstack/react-query';
+
 import { useUser } from '@web/app/providers';
-import { apiGet, QUERY_KEYS, useApiQuery } from '@web/shared/api';
+import { apiGet, QUERY_KEYS } from '@web/shared/api';
 
-import type { Tick } from '../entities';
+import type { AscentFilter, Discipline, TickSort } from '../entities';
 
-export const useApiGetTicks = () => {
+export interface Params {
+  discipline: Discipline;
+  ascentType: AscentFilter;
+  sort: TickSort;
+}
+
+const buildQuery = ({ discipline, ascentType, sort }: Params, offset: number) =>
+  new URLSearchParams({
+    discipline,
+    sort,
+    offset: String(offset),
+    ...(ascentType === 'all' ? {} : { ascentType })
+  }).toString();
+
+export const useApiGetTicks = (params: Params) => {
   const { isAuthenticated, isLoading: isSessionLoading } = useUser();
 
-  const { data, isLoading, failure } = useApiQuery({
-    queryKey: QUERY_KEYS.ticks(),
-    queryFn: () => apiGet<Tick[]>('/ticks'),
-    // Without the session the request is a guaranteed 401; the page shows
-    // loading until it resolves rather than an error it cannot act on.
+  const {
+    data,
+    error,
+    isLoading,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage
+  } = useInfiniteQuery({
+    queryKey: QUERY_KEYS.ticksPage(buildQuery(params, 0)),
+    queryFn: ({ pageParam }) =>
+      apiGet<TickPage>(`/ticks?${buildQuery(params, pageParam)}`),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => lastPage.nextOffset ?? undefined,
     enabled: isAuthenticated
   });
 
+  const pages = data?.pages ?? [];
+  // A tick logged while pages are loaded shifts every offset below it, so the
+  // refetch can hand the same row back twice.
+  const ticks = [
+    ...new Map(
+      pages.flatMap((page) => page.items).map((tick) => [tick.id, tick])
+    ).values()
+  ];
+
   return {
-    ticks: data ?? [],
+    ticks,
+    total: pages[0]?.total ?? 0,
     isLoading: isSessionLoading || isLoading,
-    failure
+    isLoadingMore: isFetchingNextPage,
+    hasMore: !!hasNextPage,
+    failure: error ? toFailure(error) : null,
+    loadMore: fetchNextPage
   };
 };

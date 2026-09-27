@@ -12,7 +12,9 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. placeholder {0}: content.ascents
+#. placeholder {0}: ungraded.length
 #: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:36
+#: src/pages/logbook/common/ui/TicksGroupedList.tsx:53
 msgid "{0, plural, one {# ascent} few {# ascents} many {# ascents} other {# ascents}}"
 msgstr "{0, plural, one {# ascent} few {# ascents} many {# ascents} other {# ascents}}"
 
@@ -62,9 +64,9 @@ msgid "{0, plural, one {# route} few {# routes} many {# routes} other {# routes}
 msgstr "{0, plural, one {# route} few {# routes} many {# routes} other {# routes}}"
 
 #. placeholder {0}: tick.attempts
-#: src/pages/logbook/common/ui/TickCard.tsx:82
-msgid "{0, plural, one {# try} few {# tries} many {# tries} other {# tries}}"
-msgstr "{0, plural, one {# try} few {# tries} many {# tries} other {# tries}}"
+#: src/pages/logbook/common/ui/TickCard.tsx:78
+#~ msgid "{0, plural, one {# try} few {# tries} many {# tries} other {# tries}}"
+#~ msgstr "{0, plural, one {# try} few {# tries} many {# tries} other {# tries}}"
 
 #. placeholder {0}: tick.attempts
 #: src/pages/route/common/ui/RouteLogbook.tsx:51
@@ -201,6 +203,10 @@ msgstr "{sector} leaves the catalog for everyone, together with its routes. Noth
 msgid "{stars} of 5"
 msgstr "{stars} of 5"
 
+#: src/pages/logbook/common/ui/TicksGroupedList.tsx:31
+msgid "{total, plural, one {# ascent} few {# ascents} many {# ascents} other {# ascents}}"
+msgstr "{total, plural, one {# ascent} few {# ascents} many {# ascents} other {# ascents}}"
+
 #: src/features/sectorMap/common/ui/SectorMapList.tsx:38
 #~ msgid "{total, plural, one {# sector} few {# sectors} many {# sectors} other {# sectors}}"
 #~ msgstr "{total, plural, one {# sector} few {# sectors} many {# sectors} other {# sectors}}"
@@ -283,7 +289,7 @@ msgstr "Add a photo to start drawing routes on it."
 msgid "Add photo"
 msgstr "Add photo"
 
-#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:65
+#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:70
 #: src/pages/home/desktop/ui/HomeEditSidebar.tsx:98
 msgid "Add region"
 msgstr "Add region"
@@ -306,6 +312,10 @@ msgstr "Add video or photo"
 msgid "Add yours"
 msgstr "Add yours"
 
+#: src/pages/logbook/common/ui/AscentTypeFilter.tsx:38
+msgid "All"
+msgstr "All"
+
 #. placeholder {0}: sendable.length
 #. placeholder {1}: formatBytes(before, i18n.locale)
 #. placeholder {2}: formatBytes(after, i18n.locale)
@@ -314,6 +324,10 @@ msgstr "Add yours"
 msgid "All {0}: {1} → {2} ({3})"
 msgstr "All {0}: {1} → {2} ({3})"
 
+#: src/pages/logbook/common/ui/GradeChart.tsx:27
+msgid "All ascents by grade"
+msgstr "All ascents by grade"
+
 #: src/pages/home/desktop/ui/HomeEditSidebar.tsx:53
 #~ msgid "All regions"
 #~ msgstr "All regions"
@@ -321,6 +335,10 @@ msgstr "All {0}: {1} → {2} ({3})"
 #: src/pages/region/desktop/ui/RegionEditSidebar.tsx:51
 #~ msgid "All sectors"
 #~ msgstr "All sectors"
+
+#: src/pages/logbook/common/ui/LogbookFilterFields.tsx:53
+msgid "All styles"
+msgstr "All styles"
 
 #: src/features/topoEditor/desktop/ui/TopoPointMenu.tsx:46
 msgid "Anchor"
@@ -362,7 +380,7 @@ msgstr "Ascent actions"
 msgid "Ascent deleted"
 msgstr "Ascent deleted"
 
-#: src/features/logTick/common/hooks/useLogTick.ts:32
+#: src/features/logTick/common/hooks/useLogTick.ts:30
 msgid "Ascent logged"
 msgstr "Ascent logged"
 
@@ -371,6 +389,7 @@ msgid "Ascent saved"
 msgstr "Ascent saved"
 
 #: src/features/logTick/common/ui/AscentTypeChoice.tsx:20
+#: src/pages/logbook/common/ui/LogbookFilterFields.tsx:46
 msgid "Ascent type"
 msgstr "Ascent type"
 
@@ -403,6 +422,10 @@ msgstr "Back to the catalog"
 #~ msgid "Back to the sector"
 #~ msgstr "Back to the sector"
 
+#: src/pages/logbook/common/ui/TickCard.tsx:117
+msgid "Belayer"
+msgstr "Belayer"
+
 #: src/features/topoEditor/desktop/ui/TopoPointMenu.tsx:38
 msgid "Bolt"
 msgstr "Bolt"
@@ -419,6 +442,7 @@ msgstr "Bolts"
 msgid "Boulder"
 msgstr "Boulder"
 
+#: src/pages/logbook/common/ui/DisciplineTabs.tsx:36
 #: src/widgets/gradeHistogram/common/ui/GradeHistogram.tsx:38
 msgid "Bouldering"
 msgstr "Bouldering"
@@ -501,7 +525,7 @@ msgstr "Comment deleted"
 msgid "Comment saved"
 msgstr "Comment saved"
 
-#: src/pages/route/common/ui/RouteTabs.tsx:35
+#: src/pages/route/common/ui/RouteTabs.tsx:33
 msgid "Comments"
 msgstr "Comments"
 
@@ -542,6 +566,10 @@ msgstr "Coordinates"
 msgid "Could not read your location."
 msgstr "Could not read your location."
 
+#: src/features/catalogEdit/common/ui/CountryPicker.tsx:37
+msgid "Country"
+msgstr "Country"
+
 #: src/features/topoEditor/desktop/ui/TopoThumb.tsx:78
 msgid "Cover"
 msgstr "Cover"
@@ -567,6 +595,7 @@ msgid "Dark"
 msgstr "Dark"
 
 #: src/features/logTick/common/ui/TickForm.tsx:98
+#: src/pages/logbook/common/ui/LogbookFilterFields.tsx:39
 msgid "Date"
 msgstr "Date"
 
@@ -767,6 +796,12 @@ msgstr "Erasing takes {0, plural, one {# sector} few {# sectors} many {# sectors
 #~ msgid "Fair"
 #~ msgstr "Fair"
 
+#: src/pages/logbook/desktop/LogbookFiltersButton.tsx:33
+#: src/pages/logbook/mobile/LogbookFiltersButton.tsx:31
+#: src/pages/logbook/mobile/LogbookFiltersButton.tsx:37
+msgid "Filters"
+msgstr "Filters"
+
 #: src/pages/home/common/ui/HomeHeading.tsx:6
 msgid "Find your next climb"
 msgstr "Find your next climb"
@@ -784,6 +819,7 @@ msgid "Flash"
 msgstr "Flash"
 
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:225
+#: src/pages/logbook/common/ui/LogbookFilterFields.tsx:36
 msgid "Grade"
 msgstr "Grade"
 
@@ -821,11 +857,11 @@ msgstr "harder"
 msgid "Harder"
 msgstr "Harder"
 
-#: src/shared/ui/MediaBadge.tsx:19
+#: src/shared/ui/MediaBadge.tsx:18
 msgid "Has photo"
 msgstr "Has photo"
 
-#: src/shared/ui/MediaBadge.tsx:15
+#: src/shared/ui/MediaBadge.tsx:14
 msgid "Has video"
 msgstr "Has video"
 
@@ -896,8 +932,8 @@ msgstr "Light"
 #~ msgstr "List"
 
 #: src/pages/logbook/common/ui/TicksFeed.tsx:24
-#: src/pages/logbook/desktop/PageLogbookDesktop.tsx:34
-#: src/pages/logbook/mobile/PageLogbookMobile.tsx:28
+#: src/pages/logbook/desktop/PageLogbookDesktop.tsx:76
+#: src/pages/logbook/mobile/PageLogbookMobile.tsx:66
 #: src/pages/route/common/ui/RouteLogbook.tsx:25
 msgid "Loading ascents…"
 msgstr "Loading ascents…"
@@ -909,6 +945,10 @@ msgstr "Loading comments…"
 #: src/widgets/routeMedia/common/ui/RouteMedia.tsx:32
 msgid "Loading media…"
 msgstr "Loading media…"
+
+#: src/pages/logbook/common/ui/LoadMoreOnScroll.tsx:45
+msgid "Loading more…"
+msgstr "Loading more…"
 
 #: src/pages/home/desktop/PageHomeDesktop.tsx:65
 #: src/pages/home/mobile/PageHomeMobile.tsx:20
@@ -952,7 +992,7 @@ msgid "Log ascent"
 msgstr "Log ascent"
 
 #: src/app/mobile/layout/AppBottomNavigation.tsx:36
-#: src/pages/route/common/ui/RouteTabs.tsx:36
+#: src/pages/route/common/ui/RouteTabs.tsx:34
 msgid "Logbook"
 msgstr "Logbook"
 
@@ -1002,13 +1042,13 @@ msgid "My ascents"
 msgstr "My ascents"
 
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:40
-#: src/pages/logbook/desktop/PageLogbookDesktop.tsx:22
-#: src/pages/logbook/mobile/PageLogbookMobile.tsx:18
+#: src/pages/logbook/desktop/PageLogbookDesktop.tsx:43
+#: src/pages/logbook/mobile/PageLogbookMobile.tsx:40
 msgid "My logbook"
 msgstr "My logbook"
 
-#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:46
-#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:57
+#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:51
+#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:65
 #: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:48
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:67
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:166
@@ -1028,6 +1068,7 @@ msgstr "New route"
 #~ msgid "New sector"
 #~ msgstr "New sector"
 
+#: src/pages/logbook/common/ui/TicksGroupedList.tsx:19
 #: src/pages/logbook/common/ui/TicksList.tsx:24
 msgid "No ascents logged yet."
 msgstr "No ascents logged yet."
@@ -1035,6 +1076,10 @@ msgstr "No ascents logged yet."
 #: src/widgets/routeComments/common/ui/RouteComments.tsx:30
 msgid "No comments yet — be the first to add beta."
 msgstr "No comments yet — be the first to add beta."
+
+#: src/features/catalogEdit/common/ui/CountryPicker.tsx:33
+msgid "No country found"
+msgstr "No country found"
 
 #: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:113
 #~ msgid "No photo yet"
@@ -1268,8 +1313,8 @@ msgstr "Private comment"
 msgid "Profile"
 msgstr "Profile"
 
-#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:53
-#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:64
+#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:58
+#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:72
 msgid "Province"
 msgstr "Province"
 
@@ -1303,11 +1348,11 @@ msgid "Region"
 msgstr "Region"
 
 #. placeholder {0}: region.name
-#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:27
+#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:30
 msgid "Region {0} created"
 msgstr "Region {0} created"
 
-#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:43
+#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:46
 msgid "Region saved"
 msgstr "Region saved"
 
@@ -1398,8 +1443,8 @@ msgstr "Restoring puts it back in its sector, lines and all."
 msgid "Retro flash"
 msgstr "Retro flash"
 
-#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:60
-#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:71
+#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:65
+#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:79
 msgid "Rock type"
 msgstr "Rock type"
 
@@ -1518,7 +1563,12 @@ msgstr "Softer"
 msgid "Something went wrong"
 msgstr "Something went wrong"
 
+#: src/pages/logbook/common/ui/LogbookFilterFields.tsx:31
+msgid "Sort by"
+msgstr "Sort by"
+
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:201
+#: src/pages/logbook/common/ui/DisciplineTabs.tsx:27
 #: src/widgets/gradeHistogram/common/ui/GradeHistogram.tsx:36
 msgid "Sport"
 msgstr "Sport"
@@ -1740,8 +1790,8 @@ msgstr "Verifying…"
 msgid "Video {position}"
 msgstr "Video {position}"
 
-#: src/pages/route/common/ui/RouteTabs.tsx:32
-#: src/widgets/routeMedia/common/ui/RouteMediaButton.tsx:30
+#: src/pages/route/common/ui/RouteTabs.tsx:30
+#: src/widgets/routeMedia/common/ui/RouteMediaButton.tsx:22
 #: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:29
 #: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:29
 msgid "Video and photo"
@@ -1749,8 +1799,12 @@ msgstr "Video and photo"
 
 #. placeholder {0}: media.length
 #: src/pages/route/common/ui/RouteTabs.tsx:31
-msgid "Video and photo ({0})"
-msgstr "Video and photo ({0})"
+#~ msgid "Video and photo ({0})"
+#~ msgstr "Video and photo ({0})"
+
+#: src/pages/route/common/ui/RouteTabs.tsx:30
+msgid "Video and photo ({mediaCount})"
+msgstr "Video and photo ({mediaCount})"
 
 #: src/features/catalogEdit/desktop/DeleteSectorDialog.tsx:80
 #~ msgid "View routes"
@@ -1764,6 +1818,10 @@ msgstr "We sent a code to <0>{0}</0>"
 #: src/features/logTick/common/ui/TickForm.tsx:92
 msgid "When did you climb it?"
 msgstr "When did you climb it?"
+
+#: src/pages/logbook/common/ui/TicksGroupedList.tsx:50
+msgid "Without a grade"
+msgstr "Without a grade"
 
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:39
 msgid "Your beta"
