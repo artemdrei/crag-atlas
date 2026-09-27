@@ -74,8 +74,57 @@ const saveSession = async (
   );
 };
 
+/**
+ * What a run that died halfway left in the catalog. Cleanup only knows the rows
+ * the current run made, so a crashed `afterAll` poisons every run after it:
+ * leftover fixtures answer to the same locators the specs look for.
+ *
+ * Ticks, comments and media hold their route back (`on delete restrict`), so
+ * they go first; regions take the sectors and routes with them.
+ */
+const sweepFixtures = async (): Promise<void> => {
+  const client = serviceClient();
+
+  const ids = async (
+    table: string,
+    column: string,
+    parents: string[]
+  ): Promise<string[]> => {
+    if (parents.length === 0) return [];
+
+    const { data } = await client
+      .from(table)
+      .select('id')
+      .in(column, parents)
+      .returns<{ id: string }[]>();
+
+    return (data ?? []).map((row) => row.id);
+  };
+
+  const { data: regions } = await client
+    .from('regions')
+    .select('id')
+    .like('name', 'TEST-%')
+    .returns<{ id: string }[]>();
+
+  const idRegions = (regions ?? []).map((row) => row.id);
+
+  if (idRegions.length === 0) return;
+
+  const idSectors = await ids('sectors', 'id_region', idRegions);
+  const idRoutes = await ids('routes', 'id_sector', idSectors);
+
+  for (const table of ['ticks', 'route_comments', 'route_media'])
+    if (idRoutes.length > 0)
+      await client.from(table).delete().in('id_route', idRoutes);
+
+  await client.from('regions').delete().in('id', idRegions);
+};
+
 const globalSetup = async () => {
   assertLocalStack();
+
+  await sweepFixtures();
 
   const idAdmin = await findOrCreate(env.adminEmail, env.adminPassword);
 

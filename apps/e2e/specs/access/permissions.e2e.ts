@@ -59,7 +59,9 @@ test.describe('a visitor who has not signed in', () => {
 
     await test.step('and the catalog cannot be edited', async () => {
       await page.goto('/');
-      await expect(page.getByRole('button', { name: 'Edit' })).toHaveCount(0);
+      await expect(
+        page.getByRole('button', { name: 'Edit', exact: true })
+      ).toHaveCount(0);
     });
   });
 
@@ -88,7 +90,9 @@ test.describe('a climber who is not an admin', () => {
 
     await test.step('no edit mode anywhere in the catalog', async () => {
       await page.goto('/');
-      await expect(page.getByRole('button', { name: 'Edit' })).toHaveCount(0);
+      await expect(
+        page.getByRole('button', { name: 'Edit', exact: true })
+      ).toHaveCount(0);
 
       await page.goto(regionPath(region.id));
       await expect(
@@ -114,7 +118,9 @@ test.describe('a climber who is not an admin', () => {
 test('an admin is offered all of it', async ({ page }) => {
   await page.goto('/');
 
-  await expect(page.getByRole('button', { name: 'Edit' })).toBeVisible();
+  await expect(
+    page.getByRole('button', { name: 'Edit', exact: true })
+  ).toBeVisible();
 
   // Something only an admin's browser context can reach: the archive view
   // behind edit mode. The API call below would pass whatever the browser is

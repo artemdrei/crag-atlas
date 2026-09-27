@@ -125,19 +125,14 @@ const forget = async (call: Promise<unknown>) => {
 };
 
 const eraseRoute = async (id: string) => {
-  // An ascent belongs to whoever logged it: `GET /ticks` is a logbook, so each
-  // account has to be asked for its own and delete them itself.
-  for (const [client, ticks] of [
-    [
-      api,
-      await api.get<{ id: string }[]>(`/ticks?idRoute=${id}`).catch(() => [])
-    ],
-    [
-      member,
-      await member.get<{ id: string }[]>(`/ticks?idRoute=${id}`).catch(() => [])
-    ]
-  ] as const)
-    for (const tick of ticks) await forget(client.delete(`/ticks/${tick.id}`));
+  // The route's ascents come from everyone, but `DELETE /ticks/:id` only obeys
+  // the account that logged one, so each is offered to both and the refusal is
+  // swallowed.
+  for (const tick of await api
+    .get<{ id: string }[]>(`/routes/${id}/ticks`)
+    .catch(() => []))
+    for (const client of [api, member])
+      await forget(client.delete(`/ticks/${tick.id}`));
 
   for (const comment of await api
     .get<{ id: string }[]>(`/routes/${id}/comments`)
