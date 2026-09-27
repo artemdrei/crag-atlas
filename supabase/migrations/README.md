@@ -47,3 +47,4 @@ Apply a migration in the Supabase dashboard (SQL Editor) or with
 | 036 | `036_validate_media_url_or_path.sql` | The 035 check covers the rows already there, now that they are known to be clean |
 | 037 | `037_media_delete_needs_select.sql` | Storage may see a media object to delete it: the owner's own, an admin's any |
 | 038 | `038_route_media_flags.sql` | `has_photo` and `has_video` on the route stats view, so a list can mark a route without fetching its media |
+| 039 | `039_region_country.sql` | `regions.country` (ISO 3166-1 alpha-2) and the stats view rebuilt to carry it |
