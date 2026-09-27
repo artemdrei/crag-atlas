@@ -72,6 +72,17 @@ export class TickDto {
   @ApiProperty({ type: String, required: false, nullable: true })
   sectorName?: string | null;
 
+  @ApiProperty({ type: String, required: false, nullable: true })
+  regionName?: string | null;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description: "ISO 3166-1 alpha-2 code of the region's country"
+  })
+  regionCountry?: string | null;
+
   @ApiProperty({ enum: ASCENT_TYPES })
   ascentType!: AscentType;
 
@@ -191,6 +202,57 @@ export class UpdateTickDto {
 
   @ApiProperty({ type: Boolean, required: false })
   notePrivate?: boolean;
+}
+
+export const TICK_SORTS = ['date', 'grade'] as const;
+
+export type TickSort = (typeof TICK_SORTS)[number];
+
+export const DISCIPLINES = ['sport', 'boulder'] as const;
+
+export type Discipline = (typeof DISCIPLINES)[number];
+
+export class TickPageDto {
+  @ApiProperty({ type: [TickDto] })
+  items!: TickDto[];
+
+  @ApiProperty({
+    description: 'Ascents the filter matches, not just this page'
+  })
+  total!: number;
+
+  @ApiProperty({
+    type: Number,
+    required: false,
+    nullable: true,
+    description: 'Pass back as `offset` to get the next page; null when done'
+  })
+  nextOffset?: number | null;
+}
+
+export class TickGradeCountDto {
+  @ApiProperty()
+  grade!: string;
+
+  @ApiProperty({ enum: GRADE_SCALES })
+  scale!: GradeScale;
+
+  @ApiProperty({ enum: ASCENT_TYPES })
+  ascentType!: AscentType;
+
+  @ApiProperty()
+  count!: number;
+}
+
+export class TickStatsDto {
+  @ApiProperty({ description: 'Every sport ascent, whatever the list shows' })
+  sportCount!: number;
+
+  @ApiProperty()
+  boulderCount!: number;
+
+  @ApiProperty({ type: [TickGradeCountDto] })
+  grades!: TickGradeCountDto[];
 }
 
 export class TickFeedPageDto {

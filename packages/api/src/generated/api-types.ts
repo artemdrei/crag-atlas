@@ -356,6 +356,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/ticks/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["TicksController_stats"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/ticks/feed": {
         parameters: {
             query?: never;
@@ -627,6 +643,8 @@ export interface components {
             id: string;
             name: string;
             province: string;
+            /** @description ISO 3166-1 alpha-2 code; null until an admin picks one */
+            country?: string | null;
             rockType: string;
             /** @description Cover photo; null until an admin uploads one */
             photoUrl?: string | null;
@@ -655,11 +673,15 @@ export interface components {
         CreateRegionDto: {
             name: string;
             province?: string | null;
+            /** @description ISO 3166-1 alpha-2 code */
+            country?: string | null;
             rockType?: string | null;
         };
         UpdateRegionDto: {
             name: string;
             province: string;
+            /** @description ISO 3166-1 alpha-2 code */
+            country?: string | null;
             rockType: string;
             /** @description Cover photo; null until an admin uploads one */
             photoUrl?: string | null;
@@ -799,6 +821,9 @@ export interface components {
              */
             routeGradeScale?: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux" | "font" | "vscale" | null;
             sectorName?: string | null;
+            regionName?: string | null;
+            /** @description ISO 3166-1 alpha-2 code of the region's country */
+            regionCountry?: string | null;
             /** @enum {string} */
             ascentType: "onsight" | "flash" | "retro_flash" | "redpoint" | "toprope" | "attempt";
             /** @description ISO date, e.g. 2026-09-19 */
@@ -822,6 +847,27 @@ export interface components {
             routeHasVideo?: boolean;
             createdAt: string;
             updatedAt: string;
+        };
+        TickPageDto: {
+            items: components["schemas"]["TickDto"][];
+            /** @description Ascents the filter matches, not just this page */
+            total: number;
+            /** @description Pass back as `offset` to get the next page; null when done */
+            nextOffset?: number | null;
+        };
+        TickGradeCountDto: {
+            grade: string;
+            /** @enum {string} */
+            scale: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux" | "font" | "vscale";
+            /** @enum {string} */
+            ascentType: "onsight" | "flash" | "retro_flash" | "redpoint" | "toprope" | "attempt";
+            count: number;
+        };
+        TickStatsDto: {
+            /** @description Every sport ascent, whatever the list shows */
+            sportCount: number;
+            boulderCount: number;
+            grades: components["schemas"]["TickGradeCountDto"][];
         };
         TickFeedPageDto: {
             items: components["schemas"]["TickDto"][];
@@ -1627,7 +1673,11 @@ export interface operations {
     TicksController_findMine: {
         parameters: {
             query?: {
-                idRoute?: string;
+                discipline?: "sport" | "boulder";
+                sort?: "date" | "grade";
+                limit?: string;
+                offset?: string;
+                ascentType?: "onsight" | "flash" | "retro_flash" | "redpoint" | "toprope" | "attempt";
             };
             header?: never;
             path?: never;
@@ -1640,7 +1690,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["TickDto"][];
+                    "application/json": components["schemas"]["TickPageDto"];
                 };
             };
         };
@@ -1664,6 +1714,25 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["TickDto"];
+                };
+            };
+        };
+    };
+    TicksController_stats: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TickStatsDto"];
                 };
             };
         };

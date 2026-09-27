@@ -903,10 +903,52 @@
         "operationId": "TicksController_findMine",
         "parameters": [
           {
-            "name": "idRoute",
+            "name": "discipline",
             "required": false,
             "in": "query",
             "schema": {
+              "enum": ["sport", "boulder"],
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": ["date", "grade"],
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ascentType",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "onsight",
+                "flash",
+                "retro_flash",
+                "redpoint",
+                "toprope",
+                "attempt"
+              ],
               "type": "string"
             }
           }
@@ -917,10 +959,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TickDto"
-                  }
+                  "$ref": "#/components/schemas/TickPageDto"
                 }
               }
             }
@@ -948,6 +987,25 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/TickDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Ticks"]
+      }
+    },
+    "/ticks/stats": {
+      "get": {
+        "operationId": "TicksController_stats",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TickStatsDto"
                 }
               }
             }
@@ -1779,6 +1837,11 @@
           "province": {
             "type": "string"
           },
+          "country": {
+            "type": "string",
+            "nullable": true,
+            "description": "ISO 3166-1 alpha-2 code; null until an admin picks one"
+          },
           "rockType": {
             "type": "string"
           },
@@ -1872,6 +1935,11 @@
             "type": "string",
             "nullable": true
           },
+          "country": {
+            "type": "string",
+            "nullable": true,
+            "description": "ISO 3166-1 alpha-2 code"
+          },
           "rockType": {
             "type": "string",
             "nullable": true
@@ -1887,6 +1955,11 @@
           },
           "province": {
             "type": "string"
+          },
+          "country": {
+            "type": "string",
+            "nullable": true,
+            "description": "ISO 3166-1 alpha-2 code"
           },
           "rockType": {
             "type": "string"
@@ -2324,6 +2397,15 @@
             "type": "string",
             "nullable": true
           },
+          "regionName": {
+            "type": "string",
+            "nullable": true
+          },
+          "regionCountry": {
+            "type": "string",
+            "nullable": true,
+            "description": "ISO 3166-1 alpha-2 code of the region's country"
+          },
           "ascentType": {
             "type": "string",
             "enum": [
@@ -2414,6 +2496,83 @@
           "createdAt",
           "updatedAt"
         ]
+      },
+      "TickPageDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TickDto"
+            }
+          },
+          "total": {
+            "type": "number",
+            "description": "Ascents the filter matches, not just this page"
+          },
+          "nextOffset": {
+            "type": "number",
+            "nullable": true,
+            "description": "Pass back as `offset` to get the next page; null when done"
+          }
+        },
+        "required": ["items", "total"]
+      },
+      "TickGradeCountDto": {
+        "type": "object",
+        "properties": {
+          "grade": {
+            "type": "string"
+          },
+          "scale": {
+            "type": "string",
+            "enum": [
+              "french",
+              "yds",
+              "uiaa",
+              "saxon",
+              "ewbank",
+              "norwegian",
+              "brazilian_crux",
+              "font",
+              "vscale"
+            ]
+          },
+          "ascentType": {
+            "type": "string",
+            "enum": [
+              "onsight",
+              "flash",
+              "retro_flash",
+              "redpoint",
+              "toprope",
+              "attempt"
+            ]
+          },
+          "count": {
+            "type": "number"
+          }
+        },
+        "required": ["grade", "scale", "ascentType", "count"]
+      },
+      "TickStatsDto": {
+        "type": "object",
+        "properties": {
+          "sportCount": {
+            "type": "number",
+            "description": "Every sport ascent, whatever the list shows"
+          },
+          "boulderCount": {
+            "type": "number"
+          },
+          "grades": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TickGradeCountDto"
+            }
+          }
+        },
+        "required": ["sportCount", "boulderCount", "grades"]
       },
       "TickFeedPageDto": {
         "type": "object",

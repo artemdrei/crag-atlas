@@ -16,16 +16,37 @@ import { MEDIA_BUCKET } from '../media/media.types';
 import {
   ASCENT_TYPES,
   type CreateTickDto,
+  DISCIPLINES,
+  type Discipline,
+  TICK_SORTS,
   type TickDto,
   type TickFeedPageDto,
+  type TickPageDto,
+  type TickSort,
+  type TickStatsDto,
   type UpdateTickDto
 } from './ticks.types';
+
+export interface TickPageParams {
+  discipline?: Discipline;
+  ascentType?: TickDto['ascentType'];
+  sort?: TickSort;
+  limit?: number;
+  offset?: number;
+}
+
+interface TickPageIds {
+  ids: string[];
+  total: number;
+}
 
 // The catalog rows come back embedded through the ticks → routes → sectors
 // foreign keys, so a logbook page is one query, not one per tick.
 const COLUMNS =
-  '*, routes (id_sector, name, grade, grade_scale, sectors (name, id_region)), users!ticks_id_user_fkey (display_name, avatar_url), partner:users!ticks_id_partner_fkey (display_name), route_media (id, kind, url, storage_path)';
+  '*, routes (id_sector, name, grade, grade_scale, sectors (name, id_region, regions (name, country))), users!ticks_id_user_fkey (display_name, avatar_url), partner:users!ticks_id_partner_fkey (display_name), route_media (id, kind, url, storage_path)';
 
+const PAGE_SIZE = 100;
+const MAX_PAGE_SIZE = 200;
 const FEED_PAGE_SIZE = 20;
 const MAX_FEED_PAGE_SIZE = 50;
 
@@ -44,7 +65,11 @@ interface TickRow {
     name: string;
     grade: string;
     grade_scale: GradeScale;
-    sectors: { name: string; id_region: string } | null;
+    sectors: {
+      name: string;
+      id_region: string;
+      regions: { name: string; country: string | null } | null;
+    } | null;
   } | null;
   rating: number | null;
   grade_opinion: TickDto['gradeOpinion'];
@@ -63,17 +88,89 @@ interface TickRow {
 
 @Injectable()
 export class TicksService {
-  async findMine(authUser: AuthUser, idRoute?: string): Promise<TickDto[]> {
-    const query = userClient(authUser)
+  // Which ids make up the page is decided in SQL, because the order the reader
+  // asked for lives on the route, not on the tick; the rows themselves are then
+  // read with their catalog and media in the one embedded select.
+  async findMine(
+    authUser: AuthUser,
+    params: TickPageParams = {}
+  ): Promise<TickPageDto> {
+    const limit = Math.min(
+      Math.max(Number(params.limit) || PAGE_SIZE, 1),
+      MAX_PAGE_SIZE
+    );
+    const offset = Math.max(Number(params.offset) || 0, 0);
+    const client = userClient(authUser);
+
+    if (params.ascentType) {
+      assertAscentType(params.ascentType);
+    }
+
+    if (params.discipline && !DISCIPLINES.includes(params.discipline)) {
+      throw new ValidationException('Unknown discipline');
+    }
+
+    if (params.sort && !TICK_SORTS.includes(params.sort)) {
+      throw new ValidationException('Unknown sort');
+    }
+
+    const { data, error: pageError } = await client.rpc('tick_page', {
+      id_user: authUser.idUser,
+      discipline: params.discipline ?? null,
+      ascent_type: params.ascentType ?? null,
+      sort: params.sort ?? 'date',
+      page_limit: limit,
+      page_offset: offset
+    });
+
+    if (pageError) {
+      throw readFailed(
+        'Could not load the logbook',
+        'TICKS_READ_FAILED',
+        pageError
+      );
+    }
+
+    const page = data as TickPageIds;
+    const items = await this.findByIds(authUser, page.ids);
+
+    return {
+      items,
+      total: page.total,
+      nextOffset:
+        offset + page.ids.length < page.total ? offset + page.ids.length : null
+    };
+  }
+
+  async stats(authUser: AuthUser): Promise<TickStatsDto> {
+    const { data, error } = await userClient(authUser).rpc('tick_stats', {
+      id_user: authUser.idUser
+    });
+
+    if (error) {
+      throw readFailed(
+        'Could not load the logbook stats',
+        'TICK_STATS_READ_FAILED',
+        error
+      );
+    }
+
+    return data as TickStatsDto;
+  }
+
+  private async findByIds(
+    authUser: AuthUser,
+    ids: string[]
+  ): Promise<TickDto[]> {
+    if (ids.length === 0) {
+      return [];
+    }
+
+    const { data, error } = await userClient(authUser)
       .from('ticks')
       .select(COLUMNS)
-      .eq('id_user', authUser.idUser)
-      .order('climbed_at', { ascending: false });
-
-    const { data, error } = await (idRoute
-      ? query.eq('id_route', idRoute)
-      : query
-    ).returns<TickRow[]>();
+      .in('id', ids)
+      .returns<TickRow[]>();
 
     if (error) {
       throw readFailed(
@@ -83,7 +180,14 @@ export class TicksService {
       );
     }
 
-    return toTickDtos(data, authUser.idUser);
+    // `in` answers in whatever order it likes; the page order is the one SQL
+    // already decided.
+    const byId = new Map(data.map((row) => [row.id, row]));
+
+    return toTickDtos(
+      ids.map((id) => byId.get(id)).filter((row): row is TickRow => !!row),
+      authUser.idUser
+    );
   }
 
   // Everyone's ascents on one route, for anyone looking at it. No viewer id
@@ -327,6 +431,8 @@ const toTickDto = (
   routeGrade: row.routes?.grade ?? null,
   routeGradeScale: row.routes?.grade_scale ?? null,
   sectorName: row.routes?.sectors?.name ?? null,
+  regionName: row.routes?.sectors?.regions?.name ?? null,
+  regionCountry: row.routes?.sectors?.regions?.country ?? null,
   ascentType: row.ascent_type,
   climbedAt: row.climbed_at,
   attempts: row.attempts,

@@ -22,9 +22,16 @@ import type { AuthUser } from '../common/guards/supabaseAuth.guard';
 import { SupabaseAuthGuard } from '../common/guards/supabaseAuth.guard';
 import { TicksService } from './ticks.service';
 import {
+  ASCENT_TYPES,
   CreateTickDto,
+  DISCIPLINES,
+  type Discipline,
+  TICK_SORTS,
   TickDto,
   TickFeedPageDto,
+  TickPageDto,
+  type TickSort,
+  TickStatsDto,
   UpdateTickDto
 } from './ticks.types';
 
@@ -34,13 +41,33 @@ export class TicksController {
   constructor(private readonly ticksService: TicksService) {}
 
   @Get()
-  @ApiOkResponse({ type: [TickDto] })
-  @ApiQuery({ name: 'idRoute', required: false })
+  @ApiOkResponse({ type: TickPageDto })
+  @ApiQuery({ name: 'discipline', required: false, enum: DISCIPLINES })
+  @ApiQuery({ name: 'ascentType', required: false, enum: ASCENT_TYPES })
+  @ApiQuery({ name: 'sort', required: false, enum: TICK_SORTS })
+  @ApiQuery({ name: 'limit', required: false })
+  @ApiQuery({ name: 'offset', required: false })
   findMine(
     @CurrentUser() authUser: AuthUser,
-    @Query('idRoute') idRoute?: string
-  ): Promise<TickDto[]> {
-    return this.ticksService.findMine(authUser, idRoute);
+    @Query('discipline') discipline?: Discipline,
+    @Query('ascentType') ascentType?: TickDto['ascentType'],
+    @Query('sort') sort?: TickSort,
+    @Query('limit') limit?: string,
+    @Query('offset') offset?: string
+  ): Promise<TickPageDto> {
+    return this.ticksService.findMine(authUser, {
+      discipline,
+      ascentType,
+      sort,
+      limit: Number(limit) || undefined,
+      offset: Number(offset) || undefined
+    });
+  }
+
+  @Get('stats')
+  @ApiOkResponse({ type: TickStatsDto })
+  stats(@CurrentUser() authUser: AuthUser): Promise<TickStatsDto> {
+    return this.ticksService.stats(authUser);
   }
 
   @Get('feed')
