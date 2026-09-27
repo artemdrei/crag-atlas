@@ -21,6 +21,7 @@ export { MediaBadge } from './MediaBadge';
 export { type Crumb, PageBreadcrumbs } from './PageBreadcrumbs';
 export { PageShell } from './PageShell';
 export { PhotoPlaceholder } from './PhotoPlaceholder';
+export { type PillTabOption, PillTabs } from './PillTabs';
 export { RestoreButton } from './RestoreButton';
 export { UnsavedBadge } from './UnsavedBadge';
 export { UserAvatar } from './UserAvatar';

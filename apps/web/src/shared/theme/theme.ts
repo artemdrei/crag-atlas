@@ -61,6 +61,11 @@ export const createAppTheme = (mode: 'light' | 'dark', isEditing = false) =>
         styleOverrides: {
           root: { textTransform: 'capitalize' }
         }
+      },
+      MuiTab: {
+        styleOverrides: {
+          root: { textTransform: 'capitalize' }
+        }
       }
     }
   });
