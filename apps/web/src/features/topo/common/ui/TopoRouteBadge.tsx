@@ -39,15 +39,18 @@ export const TopoRouteBadge = ({
 
   return (
     <BadgeStyled
-      type="button"
+      // Without a listener it is a label, and the photo under it is itself a
+      // button on the route page — a button inside a button is invalid.
+      as={onSelect ? 'button' : 'span'}
+      type={onSelect ? 'button' : undefined}
       x={x}
       y={y}
       alignment={alignment}
       isDimmed={!!isDimmed}
+      isStatic={!onSelect}
       onClick={onSelect}
       onPointerEnter={() => onHover?.(true)}
       onPointerLeave={() => onHover?.(false)}
-      disabled={!onSelect}
     >
       <NumberStyled tone={tone} isHighlighted={!!isHighlighted}>
         {number}
@@ -77,8 +80,18 @@ const TRANSFORMS: Record<Alignment, string> = {
 
 const BadgeStyled = styled('button', {
   shouldForwardProp: (prop) =>
-    prop !== 'x' && prop !== 'y' && prop !== 'alignment' && prop !== 'isDimmed'
-})<{ x: number; y: number; alignment: Alignment; isDimmed: boolean }>`
+    prop !== 'x' &&
+    prop !== 'y' &&
+    prop !== 'alignment' &&
+    prop !== 'isDimmed' &&
+    prop !== 'isStatic'
+})<{
+  x: number;
+  y: number;
+  alignment: Alignment;
+  isDimmed: boolean;
+  isStatic: boolean;
+}>`
   position: absolute;
   left: ${({ x }) => x * 100}%;
   top: ${({ y }) => y * 100}%;
@@ -91,15 +104,12 @@ const BadgeStyled = styled('button', {
   padding: 0;
   border: none;
   background: none;
-  cursor: pointer;
   opacity: ${({ isDimmed }) => (isDimmed ? 0.35 : 1)};
   transition: opacity 0.15s ease-out;
 
   /* A label, not a control: it must not eat a click meant for the photo. */
-  &:disabled {
-    cursor: inherit;
-    pointer-events: none;
-  }
+  cursor: ${({ isStatic }) => (isStatic ? 'inherit' : 'pointer')};
+  pointer-events: ${({ isStatic }) => (isStatic ? 'none' : 'auto')};
 `;
 
 const NumberStyled = styled('span', {
