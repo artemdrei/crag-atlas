@@ -59,6 +59,52 @@
         "tags": ["Me"]
       }
     },
+    "/me/photo": {
+      "put": {
+        "operationId": "MeController_replacePhoto",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["file"],
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Me"]
+      },
+      "delete": {
+        "operationId": "MeController_removePhoto",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": ["Me"]
+      }
+    },
     "/regions": {
       "get": {
         "operationId": "RegionsController_findAll",
@@ -1752,6 +1798,11 @@
         "properties": {
           "idUser": {
             "type": "string"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "The picture they uploaded, or the one their provider gave"
           },
           "isAdmin": {
             "type": "boolean",

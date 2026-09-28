@@ -36,6 +36,22 @@ export interface paths {
         patch: operations["MeController_update"];
         trace?: never;
     };
+    "/me/photo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["MeController_replacePhoto"];
+        post?: never;
+        delete: operations["MeController_removePhoto"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/regions": {
         parameters: {
             query?: never;
@@ -618,6 +634,8 @@ export interface components {
     schemas: {
         MeDto: {
             idUser: string;
+            /** @description The picture they uploaded, or the one their provider gave */
+            avatarUrl?: string | null;
             /** @description Mirrors the user_roles row the RLS checks */
             isAdmin: boolean;
             /**
@@ -1133,6 +1151,49 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["MeDto"];
                 };
+            };
+        };
+    };
+    MeController_replacePhoto: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": {
+                    /** Format: binary */
+                    file: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeDto"];
+                };
+            };
+        };
+    };
+    MeController_removePhoto: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

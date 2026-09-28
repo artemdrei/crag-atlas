@@ -1,9 +1,21 @@
-import { Body, Controller, Get, Patch, UseGuards } from '@nestjs/common';
-import { ApiOkResponse } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Patch,
+  Put,
+  UploadedFile,
+  UseGuards
+} from '@nestjs/common';
+import { ApiNoContentResponse, ApiOkResponse } from '@nestjs/swagger';
 
 import { CurrentUser } from '../common/decorators/authUser.decorator';
+import { PhotoUpload } from '../common/decorators/photoUpload.decorator';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
 import { SupabaseAuthGuard } from '../common/guards/supabaseAuth.guard';
+import type { UploadedPhoto } from '../common/utils/photoStorage';
 import { MeService } from './me.service';
 import { MeDto, UpdateMeDto } from './me.types';
 
@@ -25,5 +37,22 @@ export class MeController {
     @Body() payload: UpdateMeDto
   ): Promise<MeDto> {
     return this.meService.update(authUser, payload);
+  }
+
+  @Put('photo')
+  @PhotoUpload()
+  @ApiOkResponse({ type: MeDto })
+  replacePhoto(
+    @CurrentUser() authUser: AuthUser,
+    @UploadedFile() file: UploadedPhoto
+  ): Promise<MeDto> {
+    return this.meService.replacePhoto(authUser, file);
+  }
+
+  @Delete('photo')
+  @HttpCode(204)
+  @ApiNoContentResponse()
+  removePhoto(@CurrentUser() authUser: AuthUser): Promise<void> {
+    return this.meService.removePhoto(authUser);
   }
 }
