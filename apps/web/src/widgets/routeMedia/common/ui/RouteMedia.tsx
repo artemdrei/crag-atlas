@@ -109,6 +109,9 @@ const formatDuration = (seconds?: number | null) => {
   return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
 };
 
+const TILE_WIDTH = 240;
+const TILE_RATIO = '16 / 10';
+
 const StripStyled = styled('div')`
   display: flex;
   gap: ${({ theme }) => theme.spacing(2)};
@@ -128,7 +131,7 @@ const ItemStyled = styled('div')`
 
 const CardStyled = styled('button')`
   display: block;
-  width: 240px;
+  width: ${TILE_WIDTH}px;
   padding: 0;
   text-align: left;
   color: inherit;
@@ -146,7 +149,11 @@ const AddCardStyled = styled('button')`
   align-items: center;
   justify-content: center;
   gap: ${({ theme }) => theme.spacing(1)};
-  width: 240px;
+  width: ${TILE_WIDTH}px;
+  /* Alone in the strip it has no sibling to stretch against, and without a
+     shape of its own it collapses onto its label. */
+  min-height: calc(${TILE_WIDTH}px / (${TILE_RATIO}));
+  padding: ${({ theme }) => theme.spacing(2)};
   color: ${({ theme }) => theme.palette.text.secondary};
   cursor: pointer;
   background: none;
@@ -177,7 +184,7 @@ const ThumbnailStyled = styled('div')`
   display: flex;
   align-items: center;
   justify-content: center;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: ${TILE_RATIO};
   color: ${({ theme }) => theme.palette.text.secondary};
   background: ${({ theme }) => theme.palette.action.hover};
 `;
