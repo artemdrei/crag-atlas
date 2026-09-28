@@ -196,7 +196,7 @@ msgstr "{sector} зникне з каталогу для всіх разом з�
 #~ msgid "{sectorName} is not empty"
 #~ msgstr "{sectorName} не порожній"
 
-#: src/features/logTick/common/ui/TickForm.tsx:130
+#: src/features/logTick/common/ui/TickForm.tsx:134
 msgid "{stars} of 5"
 msgstr "{stars} з 5"
 
@@ -467,7 +467,7 @@ msgstr "Навігаційний ланцюжок"
 
 #: src/features/catalogEdit/common/ui/EditActions.tsx:32
 #: src/features/logTick/common/ui/DeleteTickActions.tsx:17
-#: src/features/logTick/common/ui/TickForm.tsx:166
+#: src/features/logTick/common/ui/TickForm.tsx:170
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:385
 #: src/features/routeComment/common/ui/DeleteRouteCommentActions.tsx:17
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:46
@@ -523,7 +523,7 @@ msgstr "Закрити редагування"
 msgid "Close the editor"
 msgstr "Закрити редагування"
 
-#: src/features/logTick/common/ui/TickForm.tsx:140
+#: src/features/logTick/common/ui/TickForm.tsx:144
 msgid "Comment"
 msgstr "Коментар"
 
@@ -580,7 +580,7 @@ msgstr "Координати"
 msgid "Could not read your location."
 msgstr "Не вдалося визначити твоє місце."
 
-#: src/features/catalogEdit/common/ui/CountryPicker.tsx:38
+#: src/features/catalogEdit/common/ui/CountryPicker.tsx:36
 msgid "Country"
 msgstr "Країна"
 
@@ -707,7 +707,7 @@ msgstr "Видаляємо…"
 msgid "Description"
 msgstr "Опис"
 
-#: src/features/logTick/common/ui/TickForm.tsx:126
+#: src/features/logTick/common/ui/TickForm.tsx:130
 msgid "Did you like it?"
 msgstr "Як тобі маршрут?"
 
@@ -747,7 +747,7 @@ msgstr "Відпущено на {0}"
 #: src/features/logTick/common/ui/TickMenuItems.tsx:28
 #: src/features/routeComment/common/hooks/useRouteCommentMenuItems.tsx:35
 #: src/pages/sector/desktop/PageSectorDesktop.tsx:125
-#: src/shared/ui/CatalogCardMenu.tsx:56
+#: src/shared/ui/CatalogCardMenu.tsx:86
 msgid "Edit"
 msgstr "Редагувати"
 
@@ -884,11 +884,11 @@ msgstr "Є відео"
 #~ msgid "Hide archived"
 #~ msgstr "Сховати архівні"
 
-#: src/features/logTick/common/ui/TickForm.tsx:107
+#: src/features/logTick/common/ui/TickForm.tsx:111
 msgid "How did you climb it?"
 msgstr "Як ти це проліз?"
 
-#: src/features/logTick/common/ui/TickForm.tsx:116
+#: src/features/logTick/common/ui/TickForm.tsx:120
 msgid "How hard is the route?"
 msgstr "Складність маршруту"
 
@@ -1035,7 +1035,7 @@ msgstr "Завантаження…"
 msgid "Location is blocked for this site. Allow it in the browser to see where you are."
 msgstr "Геолокацію для цього сайту заблоковано. Дозволь її в браузері, щоб бачити, де ти."
 
-#: src/features/logTick/common/ui/TickForm.tsx:174
+#: src/features/logTick/common/ui/TickForm.tsx:178
 #: src/pages/route/common/ui/LogTickButton.tsx:43
 msgid "Log ascent"
 msgstr "Відмітити пролаз"
@@ -1127,7 +1127,7 @@ msgstr "Поки що жодного пролазу."
 msgid "No comments yet — be the first to add beta."
 msgstr "Коментарів ще немає — додай бету першим."
 
-#: src/features/catalogEdit/common/ui/CountryPicker.tsx:33
+#: src/features/catalogEdit/common/ui/CountryPicker.tsx:31
 msgid "No country found"
 msgstr "Країну не знайдено"
 
@@ -1151,7 +1151,7 @@ msgstr "Топо ще немає"
 msgid "No videos or photos yet."
 msgstr "Відео та фото ще немає."
 
-#: src/features/logTick/common/ui/PartnerPicker.tsx:35
+#: src/features/climberPicker/common/ui/ClimberPicker.tsx:38
 msgid "Nobody found"
 msgstr "Нікого не знайдено"
 
@@ -1262,7 +1262,7 @@ msgstr "Оригінальне фото"
 #~ msgid "Other routes"
 #~ msgstr "Інші маршрути"
 
-#: src/features/logTick/common/ui/PartnerPicker.tsx:46
+#: src/features/logTick/common/ui/TickForm.tsx:105
 msgid "Partner"
 msgstr "Партнер"
 
@@ -1284,7 +1284,7 @@ msgstr "Фото {0}"
 msgid "Photo {position}"
 msgstr "Фото {position}"
 
-#: src/features/logTick/common/ui/TickForm.tsx:156
+#: src/features/logTick/common/ui/TickForm.tsx:160
 msgid "Photo and video"
 msgstr "Фото та відео"
 
@@ -1360,7 +1360,7 @@ msgstr "Звичайна точка"
 msgid "Post"
 msgstr "Опублікувати"
 
-#: src/features/logTick/common/ui/TickForm.tsx:145
+#: src/features/logTick/common/ui/TickForm.tsx:149
 msgid "Private comment"
 msgstr "Приватний коментар"
 
@@ -1525,7 +1525,7 @@ msgid "Routes"
 msgstr "Маршрути"
 
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:172
+#: src/features/logTick/common/ui/TickForm.tsx:176
 #: src/features/routeComment/desktop/EditRouteCommentDialog.tsx:29
 #: src/features/routeComment/mobile/EditRouteCommentSheet.tsx:24
 msgid "Save"
@@ -1544,7 +1544,7 @@ msgid "Saved changes go live for everyone straight away."
 msgstr "Збережені зміни одразу стають видимими всім."
 
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:170
+#: src/features/logTick/common/ui/TickForm.tsx:174
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:54
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:95
 msgid "Saving…"
@@ -1587,7 +1587,7 @@ msgstr "Сектори"
 msgid "Sending code…"
 msgstr "Надсилаємо код…"
 
-#: src/features/logTick/common/ui/TickForm.tsx:135
+#: src/features/logTick/common/ui/TickForm.tsx:139
 msgid "Share your thoughts"
 msgstr "Що скажеш?"
 
@@ -1599,7 +1599,7 @@ msgstr "Що скажеш?"
 msgid "Show more"
 msgstr "Показати ще"
 
-#: src/shared/ui/CatalogCardMenu.tsx:49
+#: src/shared/ui/CatalogCardMenu.tsx:79
 msgid "Show on map"
 msgstr "Показати на карті"
 
@@ -1832,7 +1832,7 @@ msgstr "Спроб"
 msgid "Type at least {MIN_SEARCH_LENGTH} letters"
 msgstr "Введи щонайменше {MIN_SEARCH_LENGTH} літери"
 
-#: src/features/logTick/common/ui/PartnerPicker.tsx:34
+#: src/features/climberPicker/common/ui/ClimberPicker.tsx:37
 msgid "Type at least {MIN_SEARCH_LENGTH} letters of a name"
 msgstr "Введи щонайменше {MIN_SEARCH_LENGTH} літери імені"
 

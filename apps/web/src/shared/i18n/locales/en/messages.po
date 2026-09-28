@@ -206,7 +206,7 @@ msgstr "{sector} leaves the catalog for everyone, together with its routes. Noth
 #~ msgid "{sectorName} is not empty"
 #~ msgstr "{sectorName} is not empty"
 
-#: src/features/logTick/common/ui/TickForm.tsx:130
+#: src/features/logTick/common/ui/TickForm.tsx:134
 msgid "{stars} of 5"
 msgstr "{stars} of 5"
 
@@ -477,7 +477,7 @@ msgstr "Breadcrumb"
 
 #: src/features/catalogEdit/common/ui/EditActions.tsx:32
 #: src/features/logTick/common/ui/DeleteTickActions.tsx:17
-#: src/features/logTick/common/ui/TickForm.tsx:166
+#: src/features/logTick/common/ui/TickForm.tsx:170
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:385
 #: src/features/routeComment/common/ui/DeleteRouteCommentActions.tsx:17
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:46
@@ -533,7 +533,7 @@ msgstr "Close editing"
 msgid "Close the editor"
 msgstr "Close the editor"
 
-#: src/features/logTick/common/ui/TickForm.tsx:140
+#: src/features/logTick/common/ui/TickForm.tsx:144
 msgid "Comment"
 msgstr "Comment"
 
@@ -590,7 +590,7 @@ msgstr "Coordinates"
 msgid "Could not read your location."
 msgstr "Could not read your location."
 
-#: src/features/catalogEdit/common/ui/CountryPicker.tsx:38
+#: src/features/catalogEdit/common/ui/CountryPicker.tsx:36
 msgid "Country"
 msgstr "Country"
 
@@ -717,7 +717,7 @@ msgstr "Deleting…"
 msgid "Description"
 msgstr "Description"
 
-#: src/features/logTick/common/ui/TickForm.tsx:126
+#: src/features/logTick/common/ui/TickForm.tsx:130
 msgid "Did you like it?"
 msgstr "Did you like it?"
 
@@ -757,7 +757,7 @@ msgstr "Dropped on {0}"
 #: src/features/logTick/common/ui/TickMenuItems.tsx:28
 #: src/features/routeComment/common/hooks/useRouteCommentMenuItems.tsx:35
 #: src/pages/sector/desktop/PageSectorDesktop.tsx:125
-#: src/shared/ui/CatalogCardMenu.tsx:56
+#: src/shared/ui/CatalogCardMenu.tsx:86
 msgid "Edit"
 msgstr "Edit"
 
@@ -894,11 +894,11 @@ msgstr "Has video"
 #~ msgid "Hide archived"
 #~ msgstr "Hide archived"
 
-#: src/features/logTick/common/ui/TickForm.tsx:107
+#: src/features/logTick/common/ui/TickForm.tsx:111
 msgid "How did you climb it?"
 msgstr "How did you climb it?"
 
-#: src/features/logTick/common/ui/TickForm.tsx:116
+#: src/features/logTick/common/ui/TickForm.tsx:120
 msgid "How hard is the route?"
 msgstr "How hard is the route?"
 
@@ -1045,7 +1045,7 @@ msgstr "Loading…"
 msgid "Location is blocked for this site. Allow it in the browser to see where you are."
 msgstr "Location is blocked for this site. Allow it in the browser to see where you are."
 
-#: src/features/logTick/common/ui/TickForm.tsx:174
+#: src/features/logTick/common/ui/TickForm.tsx:178
 #: src/pages/route/common/ui/LogTickButton.tsx:43
 msgid "Log ascent"
 msgstr "Log ascent"
@@ -1137,7 +1137,7 @@ msgstr "No ascents logged yet."
 msgid "No comments yet — be the first to add beta."
 msgstr "No comments yet — be the first to add beta."
 
-#: src/features/catalogEdit/common/ui/CountryPicker.tsx:33
+#: src/features/catalogEdit/common/ui/CountryPicker.tsx:31
 msgid "No country found"
 msgstr "No country found"
 
@@ -1161,7 +1161,7 @@ msgstr "No topo yet"
 msgid "No videos or photos yet."
 msgstr "No videos or photos yet."
 
-#: src/features/logTick/common/ui/PartnerPicker.tsx:35
+#: src/features/climberPicker/common/ui/ClimberPicker.tsx:38
 msgid "Nobody found"
 msgstr "Nobody found"
 
@@ -1272,7 +1272,7 @@ msgstr "Original photo"
 #~ msgid "Other routes"
 #~ msgstr "Other routes"
 
-#: src/features/logTick/common/ui/PartnerPicker.tsx:46
+#: src/features/logTick/common/ui/TickForm.tsx:105
 msgid "Partner"
 msgstr "Partner"
 
@@ -1294,7 +1294,7 @@ msgstr "Photo {0}"
 msgid "Photo {position}"
 msgstr "Photo {position}"
 
-#: src/features/logTick/common/ui/TickForm.tsx:156
+#: src/features/logTick/common/ui/TickForm.tsx:160
 msgid "Photo and video"
 msgstr "Photo and video"
 
@@ -1370,7 +1370,7 @@ msgstr "Plain point"
 msgid "Post"
 msgstr "Post"
 
-#: src/features/logTick/common/ui/TickForm.tsx:145
+#: src/features/logTick/common/ui/TickForm.tsx:149
 msgid "Private comment"
 msgstr "Private comment"
 
@@ -1535,7 +1535,7 @@ msgid "Routes"
 msgstr "Routes"
 
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:172
+#: src/features/logTick/common/ui/TickForm.tsx:176
 #: src/features/routeComment/desktop/EditRouteCommentDialog.tsx:29
 #: src/features/routeComment/mobile/EditRouteCommentSheet.tsx:24
 msgid "Save"
@@ -1558,7 +1558,7 @@ msgid "Saved changes go live for everyone straight away."
 msgstr "Saved changes go live for everyone straight away."
 
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:170
+#: src/features/logTick/common/ui/TickForm.tsx:174
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:54
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:95
 msgid "Saving…"
@@ -1601,7 +1601,7 @@ msgstr "Sectors"
 msgid "Sending code…"
 msgstr "Sending code…"
 
-#: src/features/logTick/common/ui/TickForm.tsx:135
+#: src/features/logTick/common/ui/TickForm.tsx:139
 msgid "Share your thoughts"
 msgstr "Share your thoughts"
 
@@ -1613,7 +1613,7 @@ msgstr "Share your thoughts"
 msgid "Show more"
 msgstr "Show more"
 
-#: src/shared/ui/CatalogCardMenu.tsx:49
+#: src/shared/ui/CatalogCardMenu.tsx:79
 msgid "Show on map"
 msgstr "Show on map"
 
@@ -1846,7 +1846,7 @@ msgstr "Tries"
 msgid "Type at least {MIN_SEARCH_LENGTH} letters"
 msgstr "Type at least {MIN_SEARCH_LENGTH} letters"
 
-#: src/features/logTick/common/ui/PartnerPicker.tsx:34
+#: src/features/climberPicker/common/ui/ClimberPicker.tsx:37
 msgid "Type at least {MIN_SEARCH_LENGTH} letters of a name"
 msgstr "Type at least {MIN_SEARCH_LENGTH} letters of a name"
 

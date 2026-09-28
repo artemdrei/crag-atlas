@@ -9,13 +9,13 @@ import Rating from '@mui/material/Rating';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 
+import { ClimberPicker } from '@web/features/climberPicker';
 import type { AscentType } from '@web/shared/ui';
 
 import type { CreateTick, GradeOpinion, PendingMedia, Tick } from '../entities';
 import { AscentTypeChoice } from './AscentTypeChoice';
 import { AttemptsStepper } from './AttemptsStepper';
 import { GradeFeelChoice } from './GradeFeelChoice';
-import { PartnerPicker } from './PartnerPicker';
 import { TickFormSection } from './TickFormSection';
 import { TickMediaField } from './TickMediaField';
 
@@ -100,7 +100,11 @@ export const TickForm = ({
             slotProps={{ inputLabel: { shrink: true } }}
             onChange={(event) => setClimbedAt(event.target.value)}
           />
-          <PartnerPicker value={partner} onChange={setPartner} />
+          <ClimberPicker
+            value={partner}
+            label={t`Partner`}
+            onChange={setPartner}
+          />
         </RowStyled>
       </TickFormSection>
 
