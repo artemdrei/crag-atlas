@@ -9,6 +9,7 @@ export interface Props {
   leftAction?: ReactNode;
   isPending: boolean;
   isDisabled?: boolean;
+  isCancelDisabled?: boolean;
   onCancel?: () => void;
 }
 
@@ -17,13 +18,18 @@ export const EditActions = ({
   leftAction,
   isPending,
   isDisabled,
+  isCancelDisabled,
   onCancel
 }: Props) => (
   <ActionsStyled>
     {leftAction && <LeftSlotStyled>{leftAction}</LeftSlotStyled>}
     {onCancel && (
-      <Button type="button" onClick={onCancel}>
-        <Trans>Close</Trans>
+      <Button
+        type="button"
+        disabled={isPending || isCancelDisabled}
+        onClick={onCancel}
+      >
+        <Trans>Cancel</Trans>
       </Button>
     )}
     <Button
@@ -37,11 +43,19 @@ export const EditActions = ({
   </ActionsStyled>
 );
 
+// The sidebar it sits in is the scrolling column, so the row rides its bottom
+// edge and the fields pass under it.
 const ActionsStyled = styled('div')`
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: ${({ theme }) => theme.spacing(1)};
+  padding-top: ${({ theme }) => theme.spacing(1.5)};
+  background-color: ${({ theme }) => theme.palette.background.default};
+  border-top: 1px solid ${({ theme }) => theme.palette.divider};
 `;
 
 const LeftSlotStyled = styled('div')`

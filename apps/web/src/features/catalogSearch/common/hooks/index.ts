@@ -1,0 +1,1 @@
+export { useApiSearchCatalog } from './useApiSearchCatalog';

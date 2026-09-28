@@ -138,6 +138,38 @@
       }
     },
     {
+      "includes": ["apps/web/src/features/**/*.{ts,tsx}"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "patterns": [
+                  {
+                    "group": ["@mui/*/*/*"],
+                    "message": "Avoid deep @mui imports."
+                  },
+                  {
+                    "group": ["../../../*", "../../../**"],
+                    "message": "Avoid deep relative imports (3+ levels up). Use @web/* instead."
+                  },
+                  {
+                    "group": ["@web/features/*/**"],
+                    "message": "Features communicate only through their root barrel: @web/features/<name>."
+                  },
+                  {
+                    "group": ["@web/widgets/**", "@web/pages/**"],
+                    "message": "Widgets compose features, and pages compose both — a feature must not import either."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "includes": ["apps/api/**/*.ts"],
       "linter": {
         "rules": {

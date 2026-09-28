@@ -1,1 +1,0 @@
-export { GradeHistogram } from './GradeHistogram';

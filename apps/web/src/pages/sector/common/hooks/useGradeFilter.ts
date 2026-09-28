@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react';
 
 import type { Topo } from '@crag-atlas/api';
 
-import { gradeKey } from '@web/widgets/gradeHistogram';
+import { gradeKey } from '@web/shared/lib';
 
 import type { Route } from '../entities';
 

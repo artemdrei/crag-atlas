@@ -1,17 +1,18 @@
-import { useState } from 'react';
+import { useMemo } from 'react';
 import { useNavigate } from 'react-router';
 
 import { Trans, useLingui } from '@lingui/react/macro';
 import { styled } from '@mui/material/styles';
 
-import { useEditModeInUrl } from '@web/app/providers';
+import { useEditModeInUrl, useUser } from '@web/app/providers';
 import { buildRegionPath } from '@web/app/router/routes';
 import { CatalogEditActions } from '@web/features/catalogEdit';
-import { useGridColumns } from '@web/shared/lib';
+import { CatalogSearchDesktop } from '@web/features/catalogSearch';
+import { mapRegions, RegionMapDesktop } from '@web/features/regionMap';
+import { useCatalogSelection } from '@web/shared/lib';
 import {
   ApiFeedback,
-  CatalogColumns,
-  GridColumnsMenu,
+  CatalogExplorerLayout,
   PageBreadcrumbs,
   PageShell
 } from '@web/shared/ui';
@@ -22,24 +23,34 @@ import { HomeEditSidebar } from './ui';
 export const PageHomeDesktop = () => {
   const { t } = useLingui();
   const navigate = useNavigate();
+  const { hasRole } = useUser();
   const { isEditing, isArchiveShown, setIsEditing, setIsArchiveShown } =
     useEditModeInUrl();
   const { regions, isLoading, failure } = useApiGetRegions(isArchiveShown);
-  const [idSelectedRegion, setIdSelectedRegion] = useState<string>();
-  const [isSelectedDirty, setIsSelectedDirty] = useState(false);
+  const {
+    idSelected: idSelectedRegion,
+    isDirty: isSelectedDirty,
+    draftPoint,
+    select: selectRegion,
+    setIsDirty: setIsSelectedDirty,
+    setDraftPoint
+  } = useCatalogSelection(regions, isEditing);
 
-  // No form is mounted once nothing is selected, so nothing would ever report
-  // the edits as gone.
-  const selectRegion = (idRegion?: string) => {
-    setIdSelectedRegion(idRegion);
-    setIsSelectedDirty(false);
-  };
-  const { columns, changeColumns } = useGridColumns(
-    'crag-atlas:region-columns'
+  const selectedRegion = regions.find(({ id }) => id === idSelectedRegion);
+  // The pin has to follow the cursor before the form is saved, so the selected
+  // region renders from the draft instead of from what the server knows.
+  const mapped = useMemo(
+    () =>
+      mapRegions(
+        regions,
+        isEditing && idSelectedRegion
+          ? { id: idSelectedRegion, point: draftPoint }
+          : undefined
+      ),
+    [regions, isEditing, idSelectedRegion, draftPoint]
   );
-
   return (
-    <PageShell spacing={1}>
+    <PageShell spacing={1} isFixedHeight>
       <HeaderRowStyled>
         {/* The same trail every deeper screen has, so the header does not
             shift as the reader walks down into a region. */}
@@ -50,55 +61,78 @@ export const PageHomeDesktop = () => {
           onEdit={() => setIsEditing(true)}
           onClose={() => {
             setIsEditing(false);
-            setIdSelectedRegion(undefined);
+            selectRegion(undefined);
           }}
           onToggleArchive={() => setIsArchiveShown(!isArchiveShown)}
         />
       </HeaderRowStyled>
-      <HeaderRowStyled>
-        <HomeHeading />
-        <GridColumnsMenu columns={columns} onChange={changeColumns} />
-      </HeaderRowStyled>
+      <HomeHeading />
       <ApiFeedback
         isLoading={isLoading}
         failure={failure}
         loadingLabel={<Trans>Loading regions…</Trans>}
       />
-      <CatalogColumns isEditing={isEditing}>
-        <GridAreaStyled
-          onClick={(event) => {
-            if (event.target === event.currentTarget) selectRegion(undefined);
-          }}
-        >
-          <RegionsGrid
-            regions={regions}
-            columns={columns}
-            idSelectedRegion={isEditing ? idSelectedRegion : undefined}
-            idDirtyRegion={isSelectedDirty ? idSelectedRegion : undefined}
-            onSelect={(region) =>
-              isEditing
-                ? selectRegion(region.id)
-                : navigate(buildRegionPath(region.id))
-            }
-          />
-        </GridAreaStyled>
-        {isEditing && (
-          <HomeEditSidebar
-            selectedRegion={regions.find(({ id }) => id === idSelectedRegion)}
-            isArchiveShown={isArchiveShown}
+      <CatalogExplorerLayout
+        search={<CatalogSearchDesktop />}
+        list={
+          <ListAreaStyled
+            onClick={(event) => {
+              if (event.target === event.currentTarget) selectRegion(undefined);
+            }}
+          >
+            <RegionsGrid
+              regions={regions}
+              idSelectedRegion={isEditing ? idSelectedRegion : undefined}
+              idDirtyRegion={isSelectedDirty ? idSelectedRegion : undefined}
+              onSelect={(region) =>
+                isEditing
+                  ? selectRegion(region.id)
+                  : navigate(buildRegionPath(region.id))
+              }
+              onShowOnMap={(region) => selectRegion(region.id)}
+              onEdit={
+                hasRole('admin')
+                  ? (region) => {
+                      selectRegion(region.id);
+                      setIsEditing(true);
+                    }
+                  : undefined
+              }
+            />
+          </ListAreaStyled>
+        }
+        map={
+          <RegionMapDesktop
+            mapped={mapped}
+            selectedRegion={selectedRegion}
+            draftPoint={draftPoint}
+            isEditing={isEditing}
+            onOpenRegion={(idRegion) => navigate(buildRegionPath(idRegion))}
             onSelectRegion={selectRegion}
-            onDirtyChange={setIsSelectedDirty}
+            onPlacePoint={setDraftPoint}
           />
-        )}
-      </CatalogColumns>
+        }
+        aside={
+          isEditing && (
+            <HomeEditSidebar
+              selectedRegion={selectedRegion}
+              point={draftPoint}
+              isArchiveShown={isArchiveShown}
+              onSelectRegion={selectRegion}
+              onChangePoint={setDraftPoint}
+              onDirtyChange={setIsSelectedDirty}
+            />
+          )
+        }
+      />
     </PageShell>
   );
 };
 
-// The empty page under the cards is what clears the selection, so it has to
+// The empty space under the cards is what clears the selection, so it has to
 // be a real surface rather than however tall the cards happen to be.
-const GridAreaStyled = styled('div')`
-  min-height: 60vh;
+const ListAreaStyled = styled('div')`
+  min-height: 100%;
 `;
 
 const HeaderRowStyled = styled('div')`

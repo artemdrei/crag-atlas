@@ -11,9 +11,10 @@ export interface Props {
   idSelectedSector?: string;
   /** The card whose form holds edits nobody saved yet. */
   idDirtySector?: string;
-  columns?: number;
   isEditing?: boolean;
   onSelect: (sector: Sector) => void;
+  onShowOnMap?: (sector: Sector) => void;
+  onEdit?: (sector: Sector) => void;
 }
 
 export const SectorsList = ({
@@ -21,9 +22,10 @@ export const SectorsList = ({
   pinColors,
   idSelectedSector,
   idDirtySector,
-  columns = 1,
   isEditing,
-  onSelect
+  onSelect,
+  onShowOnMap,
+  onEdit
 }: Props) => {
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -36,7 +38,7 @@ export const SectorsList = ({
   }, [idSelectedSector, sectors]);
 
   return (
-    <ListStyled ref={listRef} columns={columns}>
+    <ListStyled ref={listRef}>
       {sectors.map((sector) => (
         <SectorCard
           key={sector.id}
@@ -46,16 +48,16 @@ export const SectorsList = ({
           isMissingOnMap={isEditing && !pinColors?.[sector.id]}
           isUnsaved={sector.id === idDirtySector}
           onSelect={onSelect}
+          onShowOnMap={onShowOnMap}
+          onEdit={onEdit}
         />
       ))}
     </ListStyled>
   );
 };
 
-const ListStyled = styled('div', {
-  shouldForwardProp: (prop) => prop !== 'columns'
-})<{ columns: number }>`
+const ListStyled = styled('div')`
   display: grid;
-  grid-template-columns: repeat(${({ columns }) => columns}, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: ${({ theme }) => theme.spacing(1.5)};
 `;

@@ -6,6 +6,7 @@ import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { buildSectorPath, ROUTES } from '@web/app/router/routes';
+import { CatalogSearchMobile } from '@web/features/catalogSearch';
 import {
   mapSectors,
   SectorMapMobile,
@@ -44,7 +45,10 @@ export const PageRegionMobile = () => {
         ]}
       />
       {region?.isArchived && <ArchivedRegionNotice />}
-      <Typography variant="h5">{region?.name ?? '…'}</Typography>
+      <Typography variant="h5" noWrap>
+        {region?.name ?? '…'}
+      </Typography>
+      <CatalogSearchMobile />
       <ApiFeedback
         isLoading={isLoading}
         failure={regionFailure ?? failure}

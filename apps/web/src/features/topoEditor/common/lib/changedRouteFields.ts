@@ -6,6 +6,7 @@ export type ChangedRouteFields = {
   [K in keyof Pick<
     RouteDraft,
     | 'name'
+    | 'nameLocal'
     | 'grade'
     | 'gradeScale'
     | 'type'
@@ -17,6 +18,7 @@ export type ChangedRouteFields = {
 
 const NOTHING_CHANGED: ChangedRouteFields = {
   name: false,
+  nameLocal: false,
   grade: false,
   gradeScale: false,
   type: false,
@@ -34,6 +36,7 @@ export const changedRouteFields = (
 
   return {
     name: draft.name !== saved.name,
+    nameLocal: draft.nameLocal !== (saved.nameLocal ?? ''),
     grade: draft.grade !== saved.grade,
     gradeScale: draft.gradeScale !== saved.gradeScale,
     type: draft.type !== saved.type,

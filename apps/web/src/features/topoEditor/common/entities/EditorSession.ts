@@ -24,6 +24,7 @@ export interface EditableTopo {
 export interface RouteDraft {
   id: string;
   name: string;
+  nameLocal: string;
   grade: string;
   gradeScale: GradeScale;
   type: Route['type'];

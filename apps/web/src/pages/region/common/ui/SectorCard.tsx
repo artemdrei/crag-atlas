@@ -1,9 +1,8 @@
-import { Plural, Trans } from '@lingui/react/macro';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import { CatalogCard } from '@web/shared/ui';
-import { GradeHistogram } from '@web/widgets/gradeHistogram';
+import { CatalogCard, CatalogCardMenu, GradeHistogram } from '@web/shared/ui';
 
 import type { Sector } from '../entities';
 
@@ -14,6 +13,8 @@ export interface Props {
   isMissingOnMap?: boolean;
   isUnsaved?: boolean;
   onSelect: (sector: Sector) => void;
+  onShowOnMap?: (sector: Sector) => void;
+  onEdit?: (sector: Sector) => void;
 }
 
 export const SectorCard = ({
@@ -22,22 +23,35 @@ export const SectorCard = ({
   isSelected,
   isMissingOnMap,
   isUnsaved,
-  onSelect
+  onSelect,
+  onShowOnMap,
+  onEdit
 }: Props) => {
+  const { t } = useLingui();
+
   return (
     <CatalogCard
       alt={sector.name}
       photoUrl={sector.photoUrl}
       isSelected={isSelected}
       isUnsaved={isUnsaved}
+      actions={
+        onShowOnMap && (
+          <CatalogCardMenu
+            label={t`Actions for ${sector.name}`}
+            onShowOnMap={() => onShowOnMap(sector)}
+            onEdit={onEdit && (() => onEdit(sector))}
+          />
+        )
+      }
       onSelect={() => onSelect(sector)}
     >
       <HeaderRowStyled>
         <TitleStyled>
           {pinColor && <DotStyled color={pinColor} />}
-          <Typography variant="subtitle1" noWrap>
+          <NameStyled variant="subtitle1" noWrap>
             {sector.name}
-          </Typography>
+          </NameStyled>
         </TitleStyled>
         {isMissingOnMap && (
           <Typography variant="caption" color="text.secondary" noWrap>
@@ -71,6 +85,10 @@ const HeaderRowStyled = styled('div')`
   align-items: center;
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacing(1)};
+`;
+
+const NameStyled = styled(Typography)`
+  min-width: 0;
 `;
 
 const TitleStyled = styled('div')`

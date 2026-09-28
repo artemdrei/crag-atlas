@@ -4,8 +4,8 @@ import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import { sectorPoint } from '../lib';
-import { SectorDirectionsButton } from './SectorDirectionsButton';
+import { coordsOf } from '@web/shared/lib';
+import { DirectionsButton } from '@web/shared/ui';
 
 export interface Props {
   sector: Sector;
@@ -14,7 +14,9 @@ export interface Props {
 
 export const SectorPointCard = ({ sector, onOpen }: Props) => (
   <CardStyled>
-    <Typography variant="subtitle1">{sector.name}</Typography>
+    <Typography variant="subtitle1" noWrap>
+      {sector.name}
+    </Typography>
     <Typography variant="caption" color="text.secondary">
       <Plural
         value={sector.routeCount}
@@ -28,7 +30,7 @@ export const SectorPointCard = ({ sector, onOpen }: Props) => (
       <Button variant="contained" size="small" onClick={onOpen}>
         <Trans>Open sector</Trans>
       </Button>
-      <SectorDirectionsButton point={sectorPoint(sector)} />
+      <DirectionsButton point={coordsOf(sector)} />
     </ActionsStyled>
   </CardStyled>
 );

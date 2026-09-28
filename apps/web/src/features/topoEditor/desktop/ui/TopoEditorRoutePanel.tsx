@@ -21,12 +21,14 @@ import { useModal } from '@web/app/providers';
 import {
   defaultGradeScale,
   digitsOnly,
+  followLatin,
   gradeOptions,
   gradeScaleExample,
   gradeScaleName,
-  gradeScalesForType
+  gradeScalesForType,
+  isNameLatin
 } from '@web/shared/lib';
-import { ChangedTextField, DangerButton } from '@web/shared/ui';
+import { ChangedTextField, DangerButton, NameFields } from '@web/shared/ui';
 
 import type { ChangedRouteFields, RouteDraft } from '../../common';
 
@@ -84,7 +86,13 @@ export const TopoEditorRoutePanel = ({
 }: Props) => {
   const { t } = useLingui();
   const { openModal } = useModal();
-  const canSave = !!route.name.trim() && !!route.grade;
+
+  const isNameValid = isNameLatin(route.name);
+  const canSave =
+    !!route.name.trim() &&
+    !!route.nameLocal.trim() &&
+    isNameValid &&
+    !!route.grade;
 
   // Both deletions are immediate and public, so they go through a dialog that
   // spells out what disappears.
@@ -108,6 +116,10 @@ export const TopoEditorRoutePanel = ({
       gradeScale: next,
       grade: gradeOptions(next).includes(route.grade) ? route.grade : ''
     });
+  };
+
+  const changeLocalName = (value: string) => {
+    onChange(followLatin(route.name, route.nameLocal, value));
   };
 
   const changeType = (next: Route['type']) => {
@@ -161,12 +173,14 @@ export const TopoEditorRoutePanel = ({
           <Trans>Route not on the wall yet</Trans>
         )}
       </Typography>
-      <ChangedTextField
-        size="small"
-        label={t`Name`}
-        value={route.name}
-        isChanged={changed.name}
-        onChange={({ target }) => onChange({ name: target.value })}
+      <NameFields
+        name={route.name}
+        nameLocal={route.nameLocal}
+        isNameChanged={changed.name}
+        isNameLocalChanged={changed.nameLocal}
+        isCompact
+        onNameChange={(name) => onChange({ name })}
+        onNameLocalChange={changeLocalName}
       />
       <TextField
         select

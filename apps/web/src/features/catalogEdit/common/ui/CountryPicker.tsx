@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 import { useLingui } from '@lingui/react/macro';
 import Autocomplete from '@mui/material/Autocomplete';
 
@@ -19,8 +17,8 @@ export const CountryPicker = ({
   isCompact,
   onChange
 }: Props) => {
-  const { t, i18n } = useLingui();
-  const codes = useMemo(() => countryCodes(i18n.locale), [i18n.locale]);
+  const { t } = useLingui();
+  const codes = countryCodes();
 
   return (
     <Autocomplete
@@ -29,11 +27,12 @@ export const CountryPicker = ({
       size={isCompact ? 'small' : 'medium'}
       value={value || null}
       options={codes}
-      getOptionLabel={(code) => countryName(code, i18n.locale)}
+      getOptionLabel={(code) => countryName(code)}
       noOptionsText={t`No country found`}
       renderInput={(params) => (
         <ChangedTextField
           {...params}
+          required
           label={t`Country`}
           isChanged={isChanged}
         />

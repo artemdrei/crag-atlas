@@ -40,7 +40,7 @@ export const TickCard = ({ tick, isCommunity, isGradeHidden }: Props) => {
   const title = tick.routeName ?? tick.idRoute;
   const places: Place[] = [
     tick.regionCountry
-      ? { key: 'country', label: countryName(tick.regionCountry, i18n.locale) }
+      ? { key: 'country', label: countryName(tick.regionCountry) }
       : null,
     tick.regionName
       ? {

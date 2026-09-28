@@ -14,7 +14,6 @@ import {
   buildSectorEditPath,
   ROUTES
 } from '@web/app/router/routes';
-import { SectorDirectionsButton, sectorPoint } from '@web/features/sectorMap';
 import {
   findTopoOfRoute,
   orderRoutes,
@@ -22,9 +21,14 @@ import {
   useApiGetTopos,
   useTopoGallery
 } from '@web/features/topo';
-import { useSearchParamList } from '@web/shared/lib';
+import { coordsOf, useSearchParamList } from '@web/shared/lib';
 import { getGradeColor } from '@web/shared/theme/palette';
-import { ApiFeedback, PageBreadcrumbs, PageShell } from '@web/shared/ui';
+import {
+  ApiFeedback,
+  DirectionsButton,
+  PageBreadcrumbs,
+  PageShell
+} from '@web/shared/ui';
 
 import type { Route } from '../common';
 import {
@@ -127,8 +131,10 @@ export const PageSectorDesktop = () => {
       <ColumnsStyled>
         <MainColumnStyled>
           <TitleRowStyled>
-            <Typography variant="h4">{sector?.name ?? '…'}</Typography>
-            <SectorDirectionsButton point={sectorPoint(sector)} />
+            <Typography variant="h4" noWrap>
+              {sector?.name ?? '…'}
+            </Typography>
+            <DirectionsButton point={coordsOf(sector)} />
           </TitleRowStyled>
           {sector?.description && (
             <Typography variant="body2" color="text.secondary">

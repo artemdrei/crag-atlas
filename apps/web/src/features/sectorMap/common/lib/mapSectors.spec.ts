@@ -25,7 +25,7 @@ describe('mapSectors', () => {
 
   it('draws the override instead of the saved point', () => {
     const mapped = mapSectors([sectorOf('a', 1, 2)], {
-      idSector: 'a',
+      id: 'a',
       point: { lat: 5, lng: 6 }
     });
 
@@ -33,7 +33,7 @@ describe('mapSectors', () => {
   });
 
   it('drops the pin while the override carries no point', () => {
-    const mapped = mapSectors([sectorOf('a', 1, 2)], { idSector: 'a' });
+    const mapped = mapSectors([sectorOf('a', 1, 2)], { id: 'a' });
 
     expect(mapped).toEqual([]);
   });

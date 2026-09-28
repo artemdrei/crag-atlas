@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 
 import { ROUTES } from '@web/app/router/routes';
 import { ArchiveRegionButton, RegionEditForm } from '@web/features/catalogEdit';
-import { useStoredFlag } from '@web/shared/lib';
+import { coordsOf, useStoredFlag } from '@web/shared/lib';
 
 const STORAGE_KEY = 'crag-atlas:region-form-open';
 
@@ -34,6 +34,7 @@ export const RegionEditSection = ({ region }: Props) => {
         {region && (
           <RegionEditForm
             region={region}
+            point={coordsOf(region)}
             leftAction={
               <ArchiveRegionButton
                 region={region}

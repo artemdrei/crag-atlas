@@ -2,6 +2,8 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
 import { useSearchParamFlags } from '@web/shared/lib';
 
+import { useUser } from './UserProvider';
+
 interface EditModeContextValue {
   isEditing: boolean;
   setIsEditing: (isEditing: boolean) => void;
@@ -30,9 +32,11 @@ const EDITOR_FLAGS = ['edit', 'archive'] as const;
 // theme can tint.
 export const useEditModeInUrl = () => {
   const { setIsEditing: mirror } = useEditMode();
+  const { hasRole } = useUser();
   const [flags, setFlags] = useSearchParamFlags(EDITOR_FLAGS);
 
-  const isEditing = flags.edit;
+  // ?edit=1 is a URL anyone can type, and the editor is admin-only.
+  const isEditing = flags.edit && hasRole('admin');
 
   useEffect(() => {
     mirror(isEditing);
@@ -43,7 +47,7 @@ export const useEditModeInUrl = () => {
   return {
     isEditing,
     // A pasted ?archive=1 without ?edit=1 shows the catalog, not the archive.
-    isArchiveShown: flags.edit && flags.archive,
+    isArchiveShown: isEditing && flags.archive,
     // Closing the editor takes the archive with it, in one write: the archive
     // is a view inside editing, never a place to come back to without it.
     setIsEditing: (next: boolean) =>

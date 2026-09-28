@@ -148,6 +148,7 @@ export const editorSessionReducer = (
           [action.idDraft]: {
             id: action.idDraft,
             name: '',
+            nameLocal: '',
             grade: '',
             gradeScale: 'french',
             type: 'sport',
@@ -272,6 +273,7 @@ const toEditableLine = (line: Topo['lines'][number]): EditableLine => {
 const toRouteDraft = (route: Route): RouteDraft => ({
   id: route.id,
   name: route.name,
+  nameLocal: route.nameLocal ?? '',
   grade: route.grade,
   gradeScale: route.gradeScale,
   type: route.type,

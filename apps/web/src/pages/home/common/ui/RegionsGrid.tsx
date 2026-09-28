@@ -8,18 +8,20 @@ export interface Props {
   idSelectedRegion?: string;
   /** The card whose form holds edits nobody saved yet. */
   idDirtyRegion?: string;
-  columns?: number;
   onSelect: (region: Region) => void;
+  onShowOnMap?: (region: Region) => void;
+  onEdit?: (region: Region) => void;
 }
 
 export const RegionsGrid = ({
   regions,
   idSelectedRegion,
   idDirtyRegion,
-  columns = 1,
-  onSelect
+  onSelect,
+  onShowOnMap,
+  onEdit
 }: Props) => (
-  <GridStyled columns={columns}>
+  <GridStyled>
     {regions.map((region) => (
       <RegionCard
         key={region.id}
@@ -27,15 +29,15 @@ export const RegionsGrid = ({
         isSelected={region.id === idSelectedRegion}
         isUnsaved={region.id === idDirtyRegion}
         onSelect={onSelect}
+        onShowOnMap={onShowOnMap}
+        onEdit={onEdit}
       />
     ))}
   </GridStyled>
 );
 
-const GridStyled = styled('div', {
-  shouldForwardProp: (prop) => prop !== 'columns'
-})<{ columns: number }>`
+const GridStyled = styled('div')`
   display: grid;
-  grid-template-columns: repeat(${({ columns }) => columns}, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: ${({ theme }) => theme.spacing(2)};
 `;

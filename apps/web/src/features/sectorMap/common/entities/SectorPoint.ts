@@ -1,9 +1,6 @@
 import type { Sector } from '@crag-atlas/api';
 
-export interface Coords {
-  lat: number;
-  lng: number;
-}
+import type { Coords } from '@web/shared/types';
 
 export interface MappedSector {
   sector: Sector;

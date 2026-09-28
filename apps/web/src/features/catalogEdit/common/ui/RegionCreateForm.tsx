@@ -1,9 +1,11 @@
-import { type FormEvent, useState } from 'react';
+import { type FormEvent, type ReactNode, useState } from 'react';
 
 import { Trans, useLingui } from '@lingui/react/macro';
 import TextField from '@mui/material/TextField';
 
-import { toast } from '@web/shared/lib';
+import { toast, useLatinNames } from '@web/shared/lib';
+import type { Coords } from '@web/shared/types';
+import { NameFields } from '@web/shared/ui';
 
 import { useApiCreateRegion } from '../hooks';
 import { CountryPicker } from './CountryPicker';
@@ -11,53 +13,67 @@ import { EditActions } from './EditActions';
 import { EditFormStyled } from './EditFormStyled';
 
 export interface Props {
+  point?: Coords;
+  children?: ReactNode;
   onClose?: () => void;
+  onPointChange?: (point?: Coords) => void;
 }
 
-export const RegionCreateForm = ({ onClose }: Props) => {
+export const RegionCreateForm = ({
+  point,
+  children,
+  onClose,
+  onPointChange
+}: Props) => {
   const { t } = useLingui();
-  const [name, setName] = useState('');
-  const [province, setProvince] = useState('');
+  const { name, nameLocal, isNameLatin, setName, setNameLocal, resetNames } =
+    useLatinNames();
   const [country, setCountry] = useState<string | null>(null);
   const [rockType, setRockType] = useState('');
 
+  const isDirty = !!(name || nameLocal || country || rockType || point);
+
+  const clear = () => {
+    resetNames();
+    setCountry(null);
+    setRockType('');
+  };
+
   const { isPending, createRegion } = useApiCreateRegion({
     onCreated: (region) => {
-      setName('');
-      setProvince('');
-      setCountry(null);
-      setRockType('');
+      clear();
       toast.success(t`Region ${region.name} created`);
     }
   });
+
+  const handleCancel = () => {
+    clear();
+    onPointChange?.(undefined);
+    onClose?.();
+  };
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
     createRegion({
       name: name.trim(),
-      province: province.trim(),
+      nameLocal: nameLocal.trim() || null,
       country,
-      rockType: rockType.trim()
+      rockType: rockType.trim(),
+      lat: point?.lat ?? null,
+      lng: point?.lng ?? null
     });
   };
 
   return (
     <EditFormStyled onSubmit={handleSubmit}>
       <CountryPicker isCompact value={country} onChange={setCountry} />
-      <TextField
-        fullWidth
-        size="small"
-        label={t`Name`}
-        value={name}
-        onChange={(event) => setName(event.target.value)}
-      />
-      <TextField
-        fullWidth
-        size="small"
-        label={t`Province`}
-        value={province}
-        onChange={(event) => setProvince(event.target.value)}
+      <NameFields
+        name={name}
+        nameLocal={nameLocal}
+        isCompact
+        onNameChange={setName}
+        onNameLocalChange={setNameLocal}
       />
       <TextField
         fullWidth
@@ -66,11 +82,19 @@ export const RegionCreateForm = ({ onClose }: Props) => {
         value={rockType}
         onChange={(event) => setRockType(event.target.value)}
       />
+      {children}
       <EditActions
         submitLabel={<Trans>Add region</Trans>}
         isPending={isPending}
-        isDisabled={!name.trim()}
-        onCancel={onClose}
+        isDisabled={
+          !name.trim() ||
+          !nameLocal.trim() ||
+          !isNameLatin ||
+          !country ||
+          !point
+        }
+        isCancelDisabled={!isDirty && !onClose}
+        onCancel={handleCancel}
       />
     </EditFormStyled>
   );

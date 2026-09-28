@@ -1,0 +1,1 @@
+export { RegionPointCard } from './RegionPointCard';

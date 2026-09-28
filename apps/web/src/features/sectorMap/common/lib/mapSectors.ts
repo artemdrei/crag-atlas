@@ -1,12 +1,9 @@
 import type { Sector } from '@crag-atlas/api';
 
-import type { Coords, MappedSector } from '../entities';
-import { sectorPoint } from './sectorPoint';
+import { coordsOf } from '@web/shared/lib';
+import type { PointOverride } from '@web/shared/types';
 
-export interface PointOverride {
-  idSector: string;
-  point?: Coords;
-}
+import type { MappedSector } from '../entities';
 
 export const mapSectors = (
   sectors: Sector[],
@@ -14,7 +11,7 @@ export const mapSectors = (
 ): MappedSector[] =>
   sectors.flatMap((sector, toneIndex) => {
     const point =
-      override?.idSector === sector.id ? override.point : sectorPoint(sector);
+      override?.id === sector.id ? override.point : coordsOf(sector);
 
     return point ? [{ sector, point, toneIndex }] : [];
   });

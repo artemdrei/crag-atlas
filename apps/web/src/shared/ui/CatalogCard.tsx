@@ -1,4 +1,4 @@
-import type { PropsWithChildren } from 'react';
+import type { PropsWithChildren, ReactNode } from 'react';
 
 import CardActionArea from '@mui/material/CardActionArea';
 import { styled } from '@mui/material/styles';
@@ -13,6 +13,7 @@ export interface Props {
   photoUrl?: string | null;
   isSelected?: boolean;
   isUnsaved?: boolean;
+  actions?: ReactNode;
   onSelect: () => void;
 }
 
@@ -23,21 +24,46 @@ export const CatalogCard = ({
   photoUrl,
   isSelected,
   isUnsaved,
+  actions,
   children,
   onSelect
 }: PropsWithChildren<Props>) => (
-  <CardAreaStyled isSelected={!!isSelected} onClick={onSelect}>
-    {isUnsaved && <UnsavedBadge />}
-    <ThumbnailStyled>
-      {photoUrl ? (
-        <PhotoStyled src={photoUrl} alt={alt} />
-      ) : (
-        <PhotoPlaceholder />
-      )}
-    </ThumbnailStyled>
-    <BodyStyled>{children}</BodyStyled>
-  </CardAreaStyled>
+  <RootStyled>
+    <CardAreaStyled isSelected={!!isSelected} onClick={onSelect}>
+      {isUnsaved && <UnsavedBadge />}
+      <ThumbnailStyled>
+        {photoUrl ? (
+          <PhotoStyled src={photoUrl} alt={alt} />
+        ) : (
+          <PhotoPlaceholder />
+        )}
+      </ThumbnailStyled>
+      <BodyStyled>{children}</BodyStyled>
+    </CardAreaStyled>
+    {/* A sibling, never a child: the card is itself one big button. */}
+    {actions && <ActionsStyled data-card-actions>{actions}</ActionsStyled>}
+  </RootStyled>
 );
+
+// Emotion's component selectors need a babel plugin this app does not use, so
+// the reveal hangs off an attribute rather than off ActionsStyled itself.
+const RootStyled = styled('div')`
+  position: relative;
+
+  &:hover [data-card-actions],
+  &:focus-within [data-card-actions],
+  & [data-card-actions]:has([aria-expanded='true']) {
+    opacity: 1;
+  }
+`;
+
+const ActionsStyled = styled('div')`
+  position: absolute;
+  top: ${({ theme }) => theme.spacing(0.5)};
+  right: ${({ theme }) => theme.spacing(0.5)};
+  opacity: 0;
+  transition: ${({ theme }) => theme.transitions.create('opacity')};
+`;
 
 const CardAreaStyled = styled(CardActionArea, {
   shouldForwardProp: (prop) => prop !== 'isSelected'

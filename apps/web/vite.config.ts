@@ -1,7 +1,6 @@
 import { lingui, linguiTransformerBabelPreset } from '@lingui/vite-plugin';
 import babel from '@rolldown/plugin-babel';
 import react from '@vitejs/plugin-react';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 
 // Vite 8 compiles JSX with oxc, so @vitejs/plugin-react no longer runs Babel
@@ -14,9 +13,11 @@ export default defineConfig({
   plugins: [
     react(),
     babel({ presets: [linguiTransformerBabelPreset()] }),
-    lingui(),
-    tsconfigPaths()
+    lingui()
   ],
+  resolve: {
+    tsconfigPaths: true
+  },
   test: {
     environment: 'jsdom',
     setupFiles: './vitest.setup.ts',

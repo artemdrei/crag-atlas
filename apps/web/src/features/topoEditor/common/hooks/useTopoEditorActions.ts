@@ -55,6 +55,7 @@ export const useTopoEditorActions = ({
 
       const fields = {
         name: draft.name.trim(),
+        nameLocal: draft.nameLocal.trim() || null,
         grade: draft.grade,
         gradeScale: draft.gradeScale,
         type: draft.type,

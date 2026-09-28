@@ -18,7 +18,9 @@ export const RouteDetails = ({ route }: Props) => {
 
   return (
     <ContainerStyled>
-      <Typography variant="h4">{route.name}</Typography>
+      <Typography variant="h4" noWrap>
+        {route.name}
+      </Typography>
       <SummaryRowStyled>
         <GradeBadge grade={route.grade} scale={route.gradeScale} />
         <MetaStyled variant="body2" color="text.secondary">

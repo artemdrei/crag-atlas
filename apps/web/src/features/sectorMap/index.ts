@@ -1,10 +1,4 @@
-export type { Coords, MappedSector } from './common';
-export {
-  mapSectors,
-  SectorDirectionsButton,
-  SectorPointEditor,
-  sectorPinColors,
-  sectorPoint
-} from './common';
+export type { MappedSector } from './common';
+export { mapSectors, sectorPinColors } from './common';
 export { SectorMapDesktop } from './desktop/SectorMapDesktop';
 export { SectorMapMobile } from './mobile/SectorMapMobile';

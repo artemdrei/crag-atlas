@@ -13,8 +13,8 @@ import {
   SectorCreateForm,
   SectorEditForm
 } from '@web/features/catalogEdit';
-import type { Coords } from '@web/features/sectorMap';
-import { SectorPointEditor } from '@web/features/sectorMap';
+import type { Coords } from '@web/shared/types';
+import { PointEditor } from '@web/shared/ui';
 
 import type { Sector } from '../../common';
 import { SectorPhotoPicker } from './SectorPhotoPicker';
@@ -58,6 +58,19 @@ export const RegionEditSidebar = ({
   if (selectedSector) {
     return (
       <SidebarStyled>
+        {!isArchiveShown && region && (
+          <AddButtonStyled
+            fullWidth
+            variant="outlined"
+            startIcon={<AddIcon fontSize="small" />}
+            onClick={() => {
+              onSelectSector(undefined);
+              setIsAdding(true);
+            }}
+          >
+            <Trans>Add sector</Trans>
+          </AddButtonStyled>
+        )}
         {!selectedSector.isDeleted && (
           <SectorPhotoPicker idSector={selectedSector.id} />
         )}
@@ -75,6 +88,7 @@ export const RegionEditSidebar = ({
             point={point}
             onClose={() => onSelectSector(undefined)}
             onDirtyChange={onDirtyChange}
+            onPointChange={onChangePoint}
             leftAction={
               <ArchiveSectorButton
                 sector={selectedSector}
@@ -82,7 +96,7 @@ export const RegionEditSidebar = ({
               />
             }
           >
-            <SectorPointEditor point={point} onChange={onChangePoint} />
+            <PointEditor point={point} onChange={onChangePoint} />
           </SectorEditForm>
         )}
       </SidebarStyled>
@@ -128,6 +142,10 @@ const SidebarStyled = styled('div')`
   padding: ${({ theme }) => theme.spacing(2)};
   border: 1px solid ${({ theme }) => theme.palette.divider};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
+`;
+
+const AddButtonStyled = styled(Button)`
+  flex-shrink: 0;
 `;
 
 const HintStyled = styled('div')`

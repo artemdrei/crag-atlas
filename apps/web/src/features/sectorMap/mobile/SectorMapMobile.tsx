@@ -4,16 +4,13 @@ import { useState } from 'react';
 import type { Sector } from '@crag-atlas/api';
 import { Trans } from '@lingui/react/macro';
 import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 
-import { BottomSheet } from '@web/shared/ui';
+import { coordsOf } from '@web/shared/lib';
+import { BottomSheet, DirectionsButton, MapCanvas } from '@web/shared/ui';
 
 import type { MappedSector } from '../common';
-import {
-  SectorDirectionsButton,
-  SectorMapCanvas,
-  sectorPoint
-} from '../common';
+import { sectorMapPoints } from '../common';
 
 export interface Props {
   mapped: MappedSector[];
@@ -26,6 +23,7 @@ export const SectorMapMobile = ({
   renderSector,
   onOpenSector
 }: Props) => {
+  const theme = useTheme();
   const [idSelectedSector, setIdSelectedSector] = useState<string>();
   const selected = mapped.find(
     ({ sector }) => sector.id === idSelectedSector
@@ -33,9 +31,9 @@ export const SectorMapMobile = ({
 
   return (
     <MapAreaStyled>
-      <SectorMapCanvas
-        points={mapped}
-        idSelectedSector={idSelectedSector}
+      <MapCanvas
+        points={sectorMapPoints(mapped, theme.palette.sectorPin)}
+        idSelected={idSelectedSector}
         onSelect={setIdSelectedSector}
       />
 
@@ -47,7 +45,7 @@ export const SectorMapMobile = ({
           <>
             {renderSector(selected)}
             <ActionsStyled>
-              <SectorDirectionsButton point={sectorPoint(selected)} />
+              <DirectionsButton point={coordsOf(selected)} />
               <Button
                 variant="contained"
                 onClick={() => onOpenSector(selected.id)}

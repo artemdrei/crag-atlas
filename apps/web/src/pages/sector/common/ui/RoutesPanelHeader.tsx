@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import { GradeHistogram } from '@web/widgets/gradeHistogram';
+import { GradeHistogram } from '@web/shared/ui';
 
 export interface Props {
   routesCount: number;

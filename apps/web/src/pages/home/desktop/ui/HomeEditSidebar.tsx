@@ -13,20 +13,26 @@ import {
   RegionEditForm,
   RegionPhotoPicker
 } from '@web/features/catalogEdit';
+import type { Coords } from '@web/shared/types';
+import { PointEditor } from '@web/shared/ui';
 
 import type { Region } from '../../common';
 
 export interface Props {
   selectedRegion?: Region;
+  point?: Coords;
   isArchiveShown: boolean;
   onSelectRegion: (idRegion?: string) => void;
+  onChangePoint: (point?: Coords) => void;
   onDirtyChange: (isDirty: boolean) => void;
 }
 
 export const HomeEditSidebar = ({
   selectedRegion,
+  point,
   isArchiveShown,
   onSelectRegion,
+  onChangePoint,
   onDirtyChange
 }: Props) => {
   const [isAdding, setIsAdding] = useState(false);
@@ -34,7 +40,13 @@ export const HomeEditSidebar = ({
   if (isAdding) {
     return (
       <SidebarStyled>
-        <RegionCreateForm onClose={() => setIsAdding(false)} />
+        <RegionCreateForm
+          point={point}
+          onClose={() => setIsAdding(false)}
+          onPointChange={onChangePoint}
+        >
+          <PointEditor point={point} onChange={onChangePoint} />
+        </RegionCreateForm>
       </SidebarStyled>
     );
   }
@@ -53,6 +65,19 @@ export const HomeEditSidebar = ({
   if (selectedRegion) {
     return (
       <SidebarStyled>
+        {!isArchiveShown && (
+          <AddButtonStyled
+            fullWidth
+            variant="outlined"
+            startIcon={<AddIcon fontSize="small" />}
+            onClick={() => {
+              onSelectRegion(undefined);
+              setIsAdding(true);
+            }}
+          >
+            <Trans>Add region</Trans>
+          </AddButtonStyled>
+        )}
         <RegionPhotoPicker
           idRegion={selectedRegion.id}
           photoUrl={selectedRegion.photoUrl}
@@ -61,14 +86,19 @@ export const HomeEditSidebar = ({
         <RegionEditForm
           key={selectedRegion.id}
           region={selectedRegion}
+          point={point}
+          onClose={() => onSelectRegion(undefined)}
           onDirtyChange={onDirtyChange}
+          onPointChange={onChangePoint}
           leftAction={
             <ArchiveRegionButton
               region={selectedRegion}
               onArchived={() => onSelectRegion(undefined)}
             />
           }
-        />
+        >
+          <PointEditor point={point} onChange={onChangePoint} />
+        </RegionEditForm>
       </SidebarStyled>
     );
   }
@@ -112,6 +142,10 @@ const SidebarStyled = styled('div')`
   padding: ${({ theme }) => theme.spacing(2)};
   border: 1px solid ${({ theme }) => theme.palette.divider};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
+`;
+
+const AddButtonStyled = styled(Button)`
+  flex-shrink: 0;
 `;
 
 const HintStyled = styled('div')`
