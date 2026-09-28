@@ -5,6 +5,8 @@ import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
+import { Wordmark } from '@web/shared/ui';
+
 import { useGoogleLogin } from '../hooks';
 import { EmailOtpForm } from './EmailOtpForm';
 import { GoogleIcon } from './GoogleIcon';
@@ -19,7 +21,7 @@ export const LoginCard = ({ redirectPath, onVerified }: Props) => {
 
   return (
     <CardStyled elevation={0}>
-      <LogoStyled variant="h4">Crag Atlas</LogoStyled>
+      <LogoStyled variant="h4" />
 
       <TitleStyled variant="h6">
         <Trans>Sign in to log your sends</Trans>
@@ -54,9 +56,8 @@ const CardStyled = styled(Paper)`
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
 `;
 
-const LogoStyled = styled(Typography)`
+const LogoStyled = styled(Wordmark)`
   margin-bottom: ${({ theme }) => theme.spacing(3)};
-  font-weight: 700;
   text-align: center;
 `;
 

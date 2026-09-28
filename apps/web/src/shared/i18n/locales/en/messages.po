@@ -603,7 +603,7 @@ msgstr "Compressing the photo…"
 msgid "Continue"
 msgstr "Continue"
 
-#: src/pages/login/common/ui/LoginCard.tsx:37
+#: src/pages/login/common/ui/LoginCard.tsx:39
 msgid "Continue with Google"
 msgstr "Continue with Google"
 
@@ -1126,7 +1126,7 @@ msgstr "Moved to {0}"
 msgid "My ascents"
 msgstr "My ascents"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:40
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:37
 #: src/pages/logbook/desktop/PageLogbookDesktop.tsx:43
 #: src/pages/logbook/mobile/PageLogbookMobile.tsx:40
 msgid "My logbook"
@@ -1271,7 +1271,7 @@ msgstr "Open sector"
 msgid "Open the photo"
 msgstr "Open the photo"
 
-#: src/pages/login/common/ui/LoginCard.tsx:41
+#: src/pages/login/common/ui/LoginCard.tsx:43
 msgid "or"
 msgstr "or"
 
@@ -1403,7 +1403,7 @@ msgstr "Post"
 msgid "Private comment"
 msgstr "Private comment"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:56
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:53
 #: src/app/mobile/layout/AppBottomNavigation.tsx:43
 #: src/pages/profile/desktop/PageProfileDesktop.tsx:21
 #: src/pages/profile/mobile/PageProfileMobile.tsx:21
@@ -1453,7 +1453,7 @@ msgstr "Region {0} created"
 msgid "Region saved"
 msgstr "Region saved"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:33
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:30
 #: src/features/catalogSearch/common/ui/CatalogSearchResults.tsx:22
 #: src/pages/home/desktop/PageHomeDesktop.tsx:57
 #: src/pages/region/desktop/PageRegionDesktop.tsx:80
@@ -1646,11 +1646,11 @@ msgstr "Show more"
 msgid "Show on map"
 msgstr "Show on map"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:64
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:61
 msgid "Sign in"
 msgstr "Sign in"
 
-#: src/pages/login/common/ui/LoginCard.tsx:25
+#: src/pages/login/common/ui/LoginCard.tsx:27
 msgid "Sign in to log your sends"
 msgstr "Sign in to log your sends"
 

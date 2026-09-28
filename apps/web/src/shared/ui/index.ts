@@ -32,4 +32,5 @@ export { PointEditor } from './PointEditor';
 export { RestoreButton } from './RestoreButton';
 export { UnsavedBadge } from './UnsavedBadge';
 export { UserAvatar } from './UserAvatar';
+export { Wordmark } from './Wordmark';
 export { ZoomStageShell } from './ZoomStageShell';

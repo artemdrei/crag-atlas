@@ -593,7 +593,7 @@ msgstr "Стискаємо фото…"
 msgid "Continue"
 msgstr "Продовжити"
 
-#: src/pages/login/common/ui/LoginCard.tsx:37
+#: src/pages/login/common/ui/LoginCard.tsx:39
 msgid "Continue with Google"
 msgstr "Продовжити з Google"
 
@@ -1116,7 +1116,7 @@ msgstr "Перенесено на {0}"
 msgid "My ascents"
 msgstr "Мої пролази"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:40
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:37
 #: src/pages/logbook/desktop/PageLogbookDesktop.tsx:43
 #: src/pages/logbook/mobile/PageLogbookMobile.tsx:40
 msgid "My logbook"
@@ -1261,7 +1261,7 @@ msgstr "Відкрити сектор"
 msgid "Open the photo"
 msgstr "Відкрити фото"
 
-#: src/pages/login/common/ui/LoginCard.tsx:41
+#: src/pages/login/common/ui/LoginCard.tsx:43
 msgid "or"
 msgstr "або"
 
@@ -1393,7 +1393,7 @@ msgstr "Опублікувати"
 msgid "Private comment"
 msgstr "Приватний коментар"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:56
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:53
 #: src/app/mobile/layout/AppBottomNavigation.tsx:43
 #: src/pages/profile/desktop/PageProfileDesktop.tsx:21
 #: src/pages/profile/mobile/PageProfileMobile.tsx:21
@@ -1443,7 +1443,7 @@ msgstr "Регіон {0} створено"
 msgid "Region saved"
 msgstr "Регіон збережено"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:33
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:30
 #: src/features/catalogSearch/common/ui/CatalogSearchResults.tsx:22
 #: src/pages/home/desktop/PageHomeDesktop.tsx:57
 #: src/pages/region/desktop/PageRegionDesktop.tsx:80
@@ -1632,11 +1632,11 @@ msgstr "Показати ще"
 msgid "Show on map"
 msgstr "Показати на карті"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:64
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:61
 msgid "Sign in"
 msgstr "Увійти"
 
-#: src/pages/login/common/ui/LoginCard.tsx:25
+#: src/pages/login/common/ui/LoginCard.tsx:27
 msgid "Sign in to log your sends"
 msgstr "Увійдіть, щоб відмічати пролази"
 

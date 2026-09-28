@@ -7,12 +7,11 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 
 import { useProfileIdentity, useUser } from '@web/app/providers';
 import { ROUTES } from '@web/app/router/routes';
 import { CONTENT_MAX_WIDTH } from '@web/shared/theme/layout';
-import { UserAvatar } from '@web/shared/ui';
+import { UserAvatar, Wordmark } from '@web/shared/ui';
 
 export const AppHeaderDesktop = () => {
   const { t } = useLingui();
@@ -26,9 +25,7 @@ export const AppHeaderDesktop = () => {
         {/* Anything that takes the reader to another page is a link: it
             reads as one, opens in a new tab, and can be followed without a
             mouse. */}
-        <LogoStyled variant="h6" component={Link} to={ROUTES.INDEX}>
-          Crag Atlas
-        </LogoStyled>
+        <Wordmark to={ROUTES.INDEX} />
         <Button color="inherit" component={Link} to={ROUTES.INDEX}>
           <Trans>Regions</Trans>
         </Button>
@@ -79,10 +76,6 @@ const ToolbarStyled = styled(Toolbar)`
   max-width: ${CONTENT_MAX_WIDTH}px;
   margin: 0 auto;
 `;
-
-const LogoStyled = styled(Typography)`
-  cursor: pointer;
-` as typeof Typography;
 
 const AvatarStyled = styled(UserAvatar)`
   font-size: ${({ theme }) => theme.typography.body2.fontSize};
