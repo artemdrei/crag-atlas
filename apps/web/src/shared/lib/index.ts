@@ -36,6 +36,7 @@ export {
 export type { GridColumns } from './useGridColumns';
 export { GRID_COLUMN_CHOICES, useGridColumns } from './useGridColumns';
 export { useLatinNames } from './useLatinNames';
+export { useScrollTopOnNavigate } from './useScrollTopOnNavigate';
 export { useSearchParamFlags } from './useSearchParamFlags';
 export { useSearchParamList } from './useSearchParamList';
 export { useStoredFlag } from './useStoredFlag';
