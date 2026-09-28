@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { useLingui } from '@lingui/react/macro';
@@ -34,8 +34,28 @@ const PERMISSION_DENIED = 1;
 const SELECTED_ZOOM = 13;
 const FIT_PADDING = 64;
 
+// Well over MapLibre's own 500 ms: the flight from the world to one crag
+// crosses most of a continent, and at half a second that reads as a cut
+// rather than a journey.
+const ZOOM_DURATION = 1_200;
+
 // Clear of the marker, which hangs above the coordinate it marks.
 const DETAILS_OFFSET: [number, number] = [0, 12];
+
+// Which framings this tab has already flown to. The flight says where in the
+// world this is, which is worth 1.2 s on arrival and nothing on the way back —
+// and coming back remounts the component, so the memory has to outlive it.
+// A reload is a fresh arrival, so this is deliberately not persisted.
+const flownTo = new Set<string>();
+
+// The fit follows the points themselves, not the array holding them: every
+// call site builds that array inline, so identity changes on each parent
+// render while the framing it asks for is the same one.
+const framingKey = (points: MapPoint[], maxZoom: number): string =>
+  `${maxZoom}|${points
+    .map(({ id, point }) => `${id}:${point.lng},${point.lat}`)
+    .sort()
+    .join('|')}`;
 
 export interface Props {
   points: MapPoint[];
@@ -60,7 +80,10 @@ export const MapCanvas = ({
   const theme = useTheme();
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap>(null);
-  const hasFitRef = useRef(false);
+  const fittedKeyRef = useRef<string>(null);
+  // Fitting before the map has a canvas to measure computes the camera
+  // against nothing and the map stays on the world.
+  const [isReady, setIsReady] = useState(false);
   const markersRef = useRef(
     new Map<string, { marker: Marker; color: string }>()
   );
@@ -110,6 +133,8 @@ export const MapCanvas = ({
       latestRef.current.onLocateError(isPermissionDenied(event))
     );
     map.addControl(geolocate, 'top-right');
+
+    map.on('load', () => setIsReady(true));
 
     mapRef.current = map;
 
@@ -182,17 +207,35 @@ export const MapCanvas = ({
   useEffect(() => {
     const map = mapRef.current;
 
-    if (!map || hasFitRef.current || !points.length) return;
+    if (!map || !isReady || !points.length) return;
 
-    hasFitRef.current = true;
+    // The camera frames the catalog, and a point being placed is not part of
+    // it yet: every click would otherwise move the ground under the crosshair.
+    // The first framing still happens, so a map opened in this mode is not
+    // left on the world.
+    if (isEditing && fittedKeyRef.current) return;
+
+    const key = framingKey(points, selectedZoom);
+
+    // Already framed this way, so there is nothing to move the camera to —
+    // and moving it anyway would undo the reader's own pan and zoom.
+    if (key === fittedKeyRef.current) return;
+
+    fittedKeyRef.current = key;
 
     const bounds = points.reduce(
       (acc, { point }) => acc.extend([point.lng, point.lat]),
       new LngLatBounds()
     );
 
-    map.fitBounds(bounds, { padding: FIT_PADDING, maxZoom: selectedZoom });
-  }, [points, selectedZoom]);
+    map.fitBounds(bounds, {
+      padding: FIT_PADDING,
+      maxZoom: selectedZoom,
+      duration: flownTo.has(key) ? 0 : ZOOM_DURATION
+    });
+
+    flownTo.add(key);
+  }, [points, selectedZoom, isReady, isEditing]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -222,7 +265,8 @@ export const MapCanvas = ({
 
     map.easeTo({
       center: [selected.point.lng, selected.point.lat],
-      zoom: Math.max(map.getZoom(), selectedZoom)
+      zoom: Math.max(map.getZoom(), selectedZoom),
+      duration: ZOOM_DURATION
     });
   }, [idSelected, selectedZoom]);
 

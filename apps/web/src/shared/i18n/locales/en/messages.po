@@ -613,7 +613,7 @@ msgstr "Continue with Google"
 msgid "Coordinates"
 msgstr "Coordinates"
 
-#: src/shared/ui/MapCanvas.tsx:78
+#: src/shared/ui/MapCanvas.tsx:101
 msgid "Could not read your location."
 msgstr "Could not read your location."
 
@@ -1068,7 +1068,7 @@ msgstr "Loading…"
 #~ msgid "Local spelling"
 #~ msgstr "Local spelling"
 
-#: src/shared/ui/MapCanvas.tsx:77
+#: src/shared/ui/MapCanvas.tsx:100
 msgid "Location is blocked for this site. Allow it in the browser to see where you are."
 msgstr "Location is blocked for this site. Allow it in the browser to see where you are."
 

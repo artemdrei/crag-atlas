@@ -603,7 +603,7 @@ msgstr "Продовжити з Google"
 msgid "Coordinates"
 msgstr "Координати"
 
-#: src/shared/ui/MapCanvas.tsx:78
+#: src/shared/ui/MapCanvas.tsx:101
 msgid "Could not read your location."
 msgstr "Не вдалося визначити твоє місце."
 
@@ -1058,7 +1058,7 @@ msgstr "Завантаження…"
 #~ msgid "Local spelling"
 #~ msgstr "Місцеве написання"
 
-#: src/shared/ui/MapCanvas.tsx:77
+#: src/shared/ui/MapCanvas.tsx:100
 msgid "Location is blocked for this site. Allow it in the browser to see where you are."
 msgstr "Геолокацію для цього сайту заблоковано. Дозволь її в браузері, щоб бачити, де ти."
 
