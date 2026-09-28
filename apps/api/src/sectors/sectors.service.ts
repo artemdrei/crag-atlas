@@ -2,10 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import type { ClimberContentDto } from '../common/dto/climberContent.dto';
 import type { GradeHistogramGroupDto } from '../common/dto/gradeHistogram.dto';
-import {
-  NotFoundException,
-  ValidationException
-} from '../common/exceptions/app.exception';
+import { NotFoundException } from '../common/exceptions/app.exception';
 import {
   readFailed,
   writeFailed
@@ -23,6 +20,8 @@ import {
 } from '../common/utils/catalogPhotos';
 import { countClimberContent } from '../common/utils/climberContent';
 import type { GradeScale } from '../common/utils/grade';
+import { toLatinName, toLocalName } from '../common/utils/names';
+import { toPoint } from '../common/utils/point';
 import { userClient } from '../common/utils/userClient';
 import { publicSupabase, storagePublicUrl } from '../config/supabase.client';
 import type {
@@ -31,20 +30,16 @@ import type {
   UpdateSectorDto
 } from './sectors.types';
 
-interface Coords {
-  lat: number | null;
-  lng: number | null;
-}
-
 // The region name rides along: ids are uuids, so a page opened by URL has no
 // label to show in its breadcrumbs otherwise.
 const COLUMNS =
-  'id, id_region, name, description, lat, lng, route_count, grade_min, grade_min_scale, grade_max, grade_max_scale, grade_histogram, is_archived, deleted_at, regions (name), topos (storage_path, sort_order)';
+  'id, id_region, name, name_local, description, lat, lng, route_count, grade_min, grade_min_scale, grade_max, grade_max_scale, grade_histogram, is_archived, deleted_at, regions (name), topos (storage_path, sort_order)';
 
 interface SectorRow {
   id: string;
   id_region: string;
   name: string;
+  name_local: string | null;
   description: string;
   lat: number | null;
   lng: number | null;
@@ -126,17 +121,12 @@ export class SectorsService {
     idRegion: string,
     payload: CreateSectorDto
   ): Promise<SectorDto> {
-    const name = payload.name?.trim() ?? '';
-
-    if (!name) {
-      throw new ValidationException('A name is required', 'SECTOR_NAME_EMPTY');
-    }
-
     const { data, error } = await userClient(authUser)
       .from('sectors')
       .insert({
         id_region: idRegion,
-        name,
+        name: toLatinName(payload.name, TARGET.entity),
+        name_local: toLocalName(payload.nameLocal),
         description: payload.description?.trim() ?? ''
       })
       .select('id')
@@ -158,15 +148,13 @@ export class SectorsService {
     idSector: string,
     payload: UpdateSectorDto
   ): Promise<SectorDto> {
-    const point = toPoint(payload);
-
     const { error } = await userClient(authUser)
       .from('sectors')
       .update({
-        name: payload.name,
+        name: toLatinName(payload.name, TARGET.entity),
+        name_local: toLocalName(payload.nameLocal),
         description: payload.description ?? '',
-        lat: point.lat,
-        lng: point.lng
+        ...toPoint(payload, TARGET.entity)
       })
       .eq('id', idSector);
 
@@ -211,6 +199,7 @@ const toSectorDto = (row: SectorRow): SectorDto => ({
   idRegion: row.id_region,
   regionName: row.regions?.name ?? '',
   name: row.name,
+  nameLocal: row.name_local,
   photoUrl: toPhotoUrl(row),
   description: row.description,
   lat: row.lat,
@@ -224,21 +213,6 @@ const toSectorDto = (row: SectorRow): SectorDto => ({
   isArchived: row.is_archived,
   isDeleted: !!row.deleted_at
 });
-
-const toPoint = ({ lat, lng }: UpdateSectorDto): Coords => {
-  if (lat == null || lng == null) return { lat: null, lng: null };
-
-  const isInRange = lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180;
-
-  if (!isInRange) {
-    throw new ValidationException(
-      'A point needs a latitude of -90..90 and a longitude of -180..180',
-      'SECTOR_POINT_OUT_OF_RANGE'
-    );
-  }
-
-  return { lat, lng };
-};
 
 const toPhotoUrl = (row: SectorRow): string | null => {
   const [first] = [...row.topos].sort((a, b) => a.sort_order - b.sort_order);

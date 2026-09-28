@@ -28,7 +28,7 @@ describe('climber_content, scoped', () => {
   };
 
   const region = (name: string) =>
-    insert('regions', { name, province: 'Test', rock_type: 'Limestone' });
+    insert('regions', { name, rock_type: 'Limestone' });
 
   beforeAll(async () => {
     assertLocalStack();

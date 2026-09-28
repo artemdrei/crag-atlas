@@ -24,6 +24,7 @@ import {
   isGradeScale,
   isValidGrade
 } from '../common/utils/grade';
+import { toLatinName, toLocalName } from '../common/utils/names';
 import { userClient } from '../common/utils/userClient';
 import { publicSupabase } from '../config/supabase.client';
 import type {
@@ -35,12 +36,13 @@ import type {
 import { ROUTE_TYPES } from './routes.types';
 
 const COLUMNS =
-  'id, id_sector, name, grade, grade_scale, type, length, bolts_count, rating, rating_votes, ascents_count_total, onsight_count_total, votes_soft_total, votes_neutral_total, votes_hard_total, has_photo, has_video, description, is_archived, deleted_at, sectors (name, id_region, regions (name))';
+  'id, id_sector, name, name_local, grade, grade_scale, type, length, bolts_count, rating, rating_votes, ascents_count_total, onsight_count_total, votes_soft_total, votes_neutral_total, votes_hard_total, has_photo, has_video, description, is_archived, deleted_at, sectors (name, id_region, regions (name))';
 
 interface RouteRow {
   id: string;
   id_sector: string;
   name: string;
+  name_local: string | null;
   grade: string;
   grade_scale: GradeScale;
   type: RouteDto['type'];
@@ -142,12 +144,8 @@ export class RoutesService {
     idSector: string,
     payload: CreateRouteDto
   ): Promise<RouteDto> {
-    const name = payload.name?.trim() ?? '';
+    const name = toLatinName(payload.name, TARGET.entity);
     const grade = payload.grade?.trim() ?? '';
-
-    if (!name) {
-      throw new ValidationException('A name is required', 'ROUTE_NAME_EMPTY');
-    }
 
     if (!grade) {
       throw new ValidationException('A grade is required', 'ROUTE_GRADE_EMPTY');
@@ -165,6 +163,7 @@ export class RoutesService {
       .insert({
         id_sector: idSector,
         name,
+        name_local: toLocalName(payload.nameLocal),
         ...gradeColumns(grade, payload.gradeScale),
         type: payload.type,
         length: payload.length ?? null,
@@ -197,7 +196,8 @@ export class RoutesService {
     const { error } = await userClient(authUser)
       .from('routes')
       .update({
-        name: payload.name,
+        name: toLatinName(payload.name, TARGET.entity),
+        name_local: toLocalName(payload.nameLocal),
         ...gradeColumns(payload.grade?.trim() ?? '', payload.gradeScale),
         type: payload.type,
         length: payload.length ?? null,
@@ -308,6 +308,7 @@ const toRouteDto = (row: RouteRow): RouteDto => ({
   idRegion: row.sectors?.id_region ?? '',
   regionName: row.sectors?.regions?.name ?? '',
   name: row.name,
+  nameLocal: row.name_local,
   grade: row.grade,
   gradeScale: row.grade_scale,
   type: row.type,

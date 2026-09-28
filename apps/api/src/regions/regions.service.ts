@@ -23,6 +23,7 @@ import {
 } from '../common/utils/catalogPhotos';
 import { countClimberContent } from '../common/utils/climberContent';
 import type { GradeScale } from '../common/utils/grade';
+import { toLatinName, toLocalName } from '../common/utils/names';
 import type { UploadedPhoto } from '../common/utils/photoStorage';
 import {
   assertWebp,
@@ -30,6 +31,7 @@ import {
   removePhoto,
   uploadPhoto
 } from '../common/utils/photoStorage';
+import { toPoint } from '../common/utils/point';
 import { userClient } from '../common/utils/userClient';
 import { publicSupabase, storagePublicUrl } from '../config/supabase.client';
 
@@ -44,14 +46,16 @@ import type {
 // Counts and grade ranges are derived, so reads come from the view and writes
 // go to the table underneath it.
 const COLUMNS =
-  'id, name, province, country, rock_type, photo_path, sector_count, route_count, grade_min, grade_min_scale, grade_max, grade_max_scale, grade_histogram, is_archived, deleted_at';
+  'id, name, name_local, country, rock_type, lat, lng, photo_path, sector_count, route_count, grade_min, grade_min_scale, grade_max, grade_max_scale, grade_histogram, is_archived, deleted_at';
 
 interface RegionRow {
   id: string;
   name: string;
-  province: string;
+  name_local: string | null;
   country: string | null;
   rock_type: string;
+  lat: number | null;
+  lng: number | null;
   photo_path: string | null;
   sector_count: number;
   route_count: number;
@@ -142,19 +146,14 @@ export class RegionsService {
     authUser: AuthUser,
     payload: CreateRegionDto
   ): Promise<RegionDto> {
-    const name = payload.name?.trim() ?? '';
-
-    if (!name) {
-      throw new ValidationException('A name is required', 'REGION_NAME_EMPTY');
-    }
-
     const { data, error } = await userClient(authUser)
       .from('regions')
       .insert({
-        name,
-        province: payload.province?.trim() ?? '',
+        name: toLatinName(payload.name, TARGET.entity),
+        name_local: toLocalName(payload.nameLocal),
         country: normalizeCountry(payload.country),
-        rock_type: payload.rockType?.trim() ?? ''
+        rock_type: payload.rockType?.trim() ?? '',
+        ...toPoint(payload, TARGET.entity)
       })
       .select('id')
       .single<{ id: string }>();
@@ -231,10 +230,11 @@ export class RegionsService {
     const { error } = await userClient(authUser)
       .from('regions')
       .update({
-        name: payload.name,
-        province: payload.province,
+        name: toLatinName(payload.name, TARGET.entity),
+        name_local: toLocalName(payload.nameLocal),
         country: normalizeCountry(payload.country),
-        rock_type: payload.rockType
+        rock_type: payload.rockType,
+        ...toPoint(payload, TARGET.entity)
       })
       .eq('id', idRegion);
 
@@ -277,9 +277,11 @@ export class RegionsService {
 const toRegionDto = (row: RegionRow): RegionDto => ({
   id: row.id,
   name: row.name,
-  province: row.province,
+  nameLocal: row.name_local,
   country: row.country,
   rockType: row.rock_type,
+  lat: row.lat,
+  lng: row.lng,
   photoUrl: row.photo_path
     ? storagePublicUrl(REGIONS_BUCKET, row.photo_path)
     : null,

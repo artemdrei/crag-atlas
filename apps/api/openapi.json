@@ -898,6 +898,34 @@
         "tags": ["Route"]
       }
     },
+    "/catalog/search": {
+      "get": {
+        "operationId": "SearchController_search",
+        "parameters": [
+          {
+            "name": "query",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogSearchDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Search"]
+      }
+    },
     "/ticks": {
       "get": {
         "operationId": "TicksController_findMine",
@@ -1834,8 +1862,10 @@
           "name": {
             "type": "string"
           },
-          "province": {
-            "type": "string"
+          "nameLocal": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name in its own writing system; null when there is none"
           },
           "country": {
             "type": "string",
@@ -1844,6 +1874,14 @@
           },
           "rockType": {
             "type": "string"
+          },
+          "lat": {
+            "type": "number",
+            "nullable": true
+          },
+          "lng": {
+            "type": "number",
+            "nullable": true
           },
           "photoUrl": {
             "type": "string",
@@ -1916,7 +1954,6 @@
         "required": [
           "id",
           "name",
-          "province",
           "rockType",
           "sectorCount",
           "routeCount",
@@ -1931,9 +1968,10 @@
           "name": {
             "type": "string"
           },
-          "province": {
+          "nameLocal": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "description": "The name in its own writing system; null when there is none"
           },
           "country": {
             "type": "string",
@@ -1942,6 +1980,14 @@
           },
           "rockType": {
             "type": "string",
+            "nullable": true
+          },
+          "lat": {
+            "type": "number",
+            "nullable": true
+          },
+          "lng": {
+            "type": "number",
             "nullable": true
           }
         },
@@ -1953,8 +1999,10 @@
           "name": {
             "type": "string"
           },
-          "province": {
-            "type": "string"
+          "nameLocal": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name in its own writing system; null when there is none"
           },
           "country": {
             "type": "string",
@@ -1968,9 +2016,17 @@
             "type": "string",
             "nullable": true,
             "description": "Cover photo; null until an admin uploads one"
+          },
+          "lat": {
+            "type": "number",
+            "nullable": true
+          },
+          "lng": {
+            "type": "number",
+            "nullable": true
           }
         },
-        "required": ["name", "province", "rockType"]
+        "required": ["name", "rockType"]
       },
       "ClimberContentDto": {
         "type": "object",
@@ -2002,6 +2058,11 @@
           },
           "name": {
             "type": "string"
+          },
+          "nameLocal": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name in its own writing system; null when there is none"
           },
           "photoUrl": {
             "type": "string",
@@ -2097,6 +2158,11 @@
           "name": {
             "type": "string"
           },
+          "nameLocal": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name in its own writing system; null when there is none"
+          },
           "description": {
             "type": "string",
             "nullable": true
@@ -2109,6 +2175,11 @@
         "properties": {
           "name": {
             "type": "string"
+          },
+          "nameLocal": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name in its own writing system; null when there is none"
           },
           "description": {
             "type": "string",
@@ -2146,6 +2217,11 @@
           },
           "name": {
             "type": "string"
+          },
+          "nameLocal": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name in its own writing system; null when there is none"
           },
           "grade": {
             "type": "string"
@@ -2251,6 +2327,11 @@
           "name": {
             "type": "string"
           },
+          "nameLocal": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name in its own writing system; null when there is none"
+          },
           "grade": {
             "type": "string"
           },
@@ -2294,6 +2375,11 @@
           "name": {
             "type": "string"
           },
+          "nameLocal": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name in its own writing system; null when there is none"
+          },
           "grade": {
             "type": "string"
           },
@@ -2330,6 +2416,66 @@
           }
         },
         "required": ["name", "grade", "gradeScale", "type"]
+      },
+      "SearchHitDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "nameLocal": {
+            "type": "string",
+            "nullable": true
+          },
+          "idRegion": {
+            "type": "string",
+            "description": "The region the hit belongs to, or is"
+          },
+          "idSector": {
+            "type": "string",
+            "nullable": true
+          },
+          "idRoute": {
+            "type": "string",
+            "nullable": true
+          },
+          "regionName": {
+            "type": "string",
+            "nullable": true
+          },
+          "sectorName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": ["id", "name", "idRegion"]
+      },
+      "CatalogSearchDto": {
+        "type": "object",
+        "properties": {
+          "regions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SearchHitDto"
+            }
+          },
+          "sectors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SearchHitDto"
+            }
+          },
+          "routes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SearchHitDto"
+            }
+          }
+        },
+        "required": ["regions", "sectors", "routes"]
       },
       "TickMediaDto": {
         "type": "object",

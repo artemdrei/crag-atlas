@@ -21,6 +21,14 @@ export class SectorDto {
     type: String,
     required: false,
     nullable: true,
+    description: 'The name in its own writing system; null when there is none'
+  })
+  nameLocal?: string | null;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
     description: 'First topo photo, used as the card thumbnail'
   })
   photoUrl?: string | null;
@@ -89,6 +97,14 @@ export class CreateSectorDto {
   @ApiProperty()
   name!: string;
 
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description: 'The name in its own writing system; null when there is none'
+  })
+  nameLocal?: string | null;
+
   @ApiProperty({ type: String, required: false, nullable: true })
   description?: string | null;
 }
@@ -96,6 +112,14 @@ export class CreateSectorDto {
 export class UpdateSectorDto {
   @ApiProperty()
   name!: string;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description: 'The name in its own writing system; null when there is none'
+  })
+  nameLocal?: string | null;
 
   @ApiProperty({ type: String, required: false, nullable: true })
   description?: string | null;

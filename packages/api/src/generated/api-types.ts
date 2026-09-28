@@ -340,6 +340,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/catalog/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["SearchController_search"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/ticks": {
         parameters: {
             query?: never;
@@ -642,10 +658,13 @@ export interface components {
         RegionDto: {
             id: string;
             name: string;
-            province: string;
+            /** @description The name in its own writing system; null when there is none */
+            nameLocal?: string | null;
             /** @description ISO 3166-1 alpha-2 code; null until an admin picks one */
             country?: string | null;
             rockType: string;
+            lat?: number | null;
+            lng?: number | null;
             /** @description Cover photo; null until an admin uploads one */
             photoUrl?: string | null;
             sectorCount: number;
@@ -672,19 +691,25 @@ export interface components {
         };
         CreateRegionDto: {
             name: string;
-            province?: string | null;
+            /** @description The name in its own writing system; null when there is none */
+            nameLocal?: string | null;
             /** @description ISO 3166-1 alpha-2 code */
             country?: string | null;
             rockType?: string | null;
+            lat?: number | null;
+            lng?: number | null;
         };
         UpdateRegionDto: {
             name: string;
-            province: string;
+            /** @description The name in its own writing system; null when there is none */
+            nameLocal?: string | null;
             /** @description ISO 3166-1 alpha-2 code */
             country?: string | null;
             rockType: string;
             /** @description Cover photo; null until an admin uploads one */
             photoUrl?: string | null;
+            lat?: number | null;
+            lng?: number | null;
         };
         ClimberContentDto: {
             ascents: number;
@@ -697,6 +722,8 @@ export interface components {
             /** @description Label for breadcrumbs; ids carry no meaning */
             regionName: string;
             name: string;
+            /** @description The name in its own writing system; null when there is none */
+            nameLocal?: string | null;
             /** @description First topo photo, used as the card thumbnail */
             photoUrl?: string | null;
             description: string;
@@ -725,10 +752,14 @@ export interface components {
         };
         CreateSectorDto: {
             name: string;
+            /** @description The name in its own writing system; null when there is none */
+            nameLocal?: string | null;
             description?: string | null;
         };
         UpdateSectorDto: {
             name: string;
+            /** @description The name in its own writing system; null when there is none */
+            nameLocal?: string | null;
             description?: string | null;
             lat?: number | null;
             lng?: number | null;
@@ -741,6 +772,8 @@ export interface components {
             idRegion: string;
             regionName: string;
             name: string;
+            /** @description The name in its own writing system; null when there is none */
+            nameLocal?: string | null;
             grade: string;
             /**
              * @description The system the grade is written in; a grade alone is ambiguous
@@ -773,6 +806,8 @@ export interface components {
         };
         CreateRouteDto: {
             name: string;
+            /** @description The name in its own writing system; null when there is none */
+            nameLocal?: string | null;
             grade: string;
             /**
              * @description The system the grade is written in; a grade alone is ambiguous
@@ -787,6 +822,8 @@ export interface components {
         };
         UpdateRouteDto: {
             name: string;
+            /** @description The name in its own writing system; null when there is none */
+            nameLocal?: string | null;
             grade: string;
             /**
              * @description The system the grade is written in; a grade alone is ambiguous
@@ -798,6 +835,22 @@ export interface components {
             length?: number | null;
             boltsCount?: number | null;
             description?: string | null;
+        };
+        SearchHitDto: {
+            id: string;
+            name: string;
+            nameLocal?: string | null;
+            /** @description The region the hit belongs to, or is */
+            idRegion: string;
+            idSector?: string | null;
+            idRoute?: string | null;
+            regionName?: string | null;
+            sectorName?: string | null;
+        };
+        CatalogSearchDto: {
+            regions: components["schemas"]["SearchHitDto"][];
+            sectors: components["schemas"]["SearchHitDto"][];
+            routes: components["schemas"]["SearchHitDto"][];
         };
         TickMediaDto: {
             id: string;
@@ -1667,6 +1720,27 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    SearchController_search: {
+        parameters: {
+            query?: {
+                query?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CatalogSearchDto"];
+                };
             };
         };
     };

@@ -11,8 +11,13 @@ export class RegionDto {
   @ApiProperty()
   name!: string;
 
-  @ApiProperty()
-  province!: string;
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description: 'The name in its own writing system; null when there is none'
+  })
+  nameLocal?: string | null;
 
   @ApiProperty({
     type: String,
@@ -24,6 +29,12 @@ export class RegionDto {
 
   @ApiProperty()
   rockType!: string;
+
+  @ApiProperty({ type: Number, required: false, nullable: true })
+  lat?: number | null;
+
+  @ApiProperty({ type: Number, required: false, nullable: true })
+  lng?: number | null;
 
   @ApiProperty({
     type: String,
@@ -91,8 +102,13 @@ export class CreateRegionDto {
   @ApiProperty()
   name!: string;
 
-  @ApiProperty({ type: String, required: false, nullable: true })
-  province?: string | null;
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description: 'The name in its own writing system; null when there is none'
+  })
+  nameLocal?: string | null;
 
   @ApiProperty({
     type: String,
@@ -104,14 +120,25 @@ export class CreateRegionDto {
 
   @ApiProperty({ type: String, required: false, nullable: true })
   rockType?: string | null;
+
+  @ApiProperty({ type: Number, required: false, nullable: true })
+  lat?: number | null;
+
+  @ApiProperty({ type: Number, required: false, nullable: true })
+  lng?: number | null;
 }
 
 export class UpdateRegionDto {
   @ApiProperty()
   name!: string;
 
-  @ApiProperty()
-  province!: string;
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description: 'The name in its own writing system; null when there is none'
+  })
+  nameLocal?: string | null;
 
   @ApiProperty({
     type: String,
@@ -131,4 +158,10 @@ export class UpdateRegionDto {
     description: 'Cover photo; null until an admin uploads one'
   })
   photoUrl?: string | null;
+
+  @ApiProperty({ type: Number, required: false, nullable: true })
+  lat?: number | null;
+
+  @ApiProperty({ type: Number, required: false, nullable: true })
+  lng?: number | null;
 }

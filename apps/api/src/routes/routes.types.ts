@@ -22,6 +22,14 @@ export class RouteDto {
   @ApiProperty()
   name!: string;
 
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description: 'The name in its own writing system; null when there is none'
+  })
+  nameLocal?: string | null;
+
   @ApiProperty()
   grade!: string;
 
@@ -107,6 +115,14 @@ export class UpdateRouteDto {
   @ApiProperty()
   name!: string;
 
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description: 'The name in its own writing system; null when there is none'
+  })
+  nameLocal?: string | null;
+
   @ApiProperty()
   grade!: string;
 
@@ -133,6 +149,14 @@ export class UpdateRouteDto {
 export class CreateRouteDto {
   @ApiProperty()
   name!: string;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description: 'The name in its own writing system; null when there is none'
+  })
+  nameLocal?: string | null;
 
   @ApiProperty()
   grade!: string;

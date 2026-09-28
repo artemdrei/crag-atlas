@@ -31,7 +31,6 @@ describe('archive and erase, at the table level', () => {
 
     const region = await insert<{ id: string }>('regions', {
       name: `INT-${crypto.randomUUID()}`,
-      province: 'Test province',
       rock_type: 'Limestone'
     });
     const sector = await insert<{ id: string }>('sectors', {

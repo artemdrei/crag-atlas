@@ -7,6 +7,7 @@ import { MeModule } from './me/me.module';
 import { MediaModule } from './media/media.module';
 import { RegionsModule } from './regions/regions.module';
 import { RoutesModule } from './routes/routes.module';
+import { SearchModule } from './search/search.module';
 import { SectorsModule } from './sectors/sectors.module';
 import { TicksModule } from './ticks/ticks.module';
 import { ToposModule } from './topos/topos.module';
@@ -20,6 +21,7 @@ import { UsersModule } from './users/users.module';
     RegionsModule,
     SectorsModule,
     RoutesModule,
+    SearchModule,
     TicksModule,
     ToposModule,
     UsersModule,
