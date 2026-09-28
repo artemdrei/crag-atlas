@@ -2496,6 +2496,20 @@
           "sectorName": {
             "type": "string",
             "nullable": true
+          },
+          "grade": {
+            "type": "string",
+            "nullable": true,
+            "description": "Routes only; a grade alone is ambiguous without its scale"
+          },
+          "gradeScale": {
+            "type": "string",
+            "nullable": true
+          },
+          "rating": {
+            "type": "number",
+            "nullable": true,
+            "description": "Routes only; community rating, 0..5"
           }
         },
         "required": ["id", "name", "idRegion"]

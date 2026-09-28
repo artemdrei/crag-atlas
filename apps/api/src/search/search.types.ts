@@ -24,6 +24,25 @@ export class SearchHitDto {
 
   @ApiProperty({ type: String, required: false, nullable: true })
   sectorName?: string | null;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description: 'Routes only; a grade alone is ambiguous without its scale'
+  })
+  grade?: string | null;
+
+  @ApiProperty({ type: String, required: false, nullable: true })
+  gradeScale?: string | null;
+
+  @ApiProperty({
+    type: Number,
+    required: false,
+    nullable: true,
+    description: 'Routes only; community rating, 0..5'
+  })
+  rating?: number | null;
 }
 
 export class CatalogSearchDto {

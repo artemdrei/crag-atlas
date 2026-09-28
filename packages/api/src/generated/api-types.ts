@@ -863,6 +863,11 @@ export interface components {
             idRoute?: string | null;
             regionName?: string | null;
             sectorName?: string | null;
+            /** @description Routes only; a grade alone is ambiguous without its scale */
+            grade?: string | null;
+            gradeScale?: string | null;
+            /** @description Routes only; community rating, 0..5 */
+            rating?: number | null;
         };
         CatalogSearchDto: {
             regions: components["schemas"]["SearchHitDto"][];
