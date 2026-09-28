@@ -8,7 +8,13 @@ import {
   makeRoute,
   makeSector
 } from '../../fixtures/catalog';
-import { editorPath, openTab, regionPath, routePath } from '../../fixtures/ui';
+import {
+  card,
+  editorPath,
+  openTab,
+  regionPath,
+  routePath
+} from '../../fixtures/ui';
 import { env } from '../../setup/env';
 import { STORAGE_STATE_MEMBER } from '../../setup/storageState';
 
@@ -59,6 +65,7 @@ test.describe('a visitor who has not signed in', () => {
 
     await test.step('and the catalog cannot be edited', async () => {
       await page.goto('/');
+      await expect(card(page, region.name)).toBeVisible();
       await expect(
         page.getByRole('button', { name: 'Edit', exact: true })
       ).toHaveCount(0);
@@ -88,24 +95,48 @@ test.describe('a climber who is not an admin', () => {
       page.getByRole('textbox', { name: 'Your beta' })
     ).toBeVisible();
 
+    // Every step below asserts something is missing, so each one first waits
+    // for the screen it is judging to be on the page: an absence asserted
+    // against a blank page passes without testing anything.
     await test.step('no edit mode anywhere in the catalog', async () => {
       await page.goto('/');
+      await expect(card(page, region.name)).toBeVisible();
       await expect(
         page.getByRole('button', { name: 'Edit', exact: true })
       ).toHaveCount(0);
 
-      await page.goto(regionPath(region.id));
-      await expect(
-        page.getByRole('button', { name: 'Add sector' })
-      ).toHaveCount(0);
+      await test.step('not even with ?edit=1 typed into the URL', async () => {
+        await page.goto(regionPath(region.id));
+        await expect(
+          page.getByRole('heading', { name: region.name })
+        ).toBeVisible();
+        await expect(
+          page.getByRole('button', { name: 'Add sector' })
+        ).toHaveCount(0);
+        await expect(
+          page.getByRole('button', { name: 'Close editing' })
+        ).toHaveCount(0);
+      });
     });
 
     await test.step('and no way into the topo editor', async () => {
       await page.goto(editorPath(region.id, sector.id));
-      await expect(
-        page.getByRole('button', { name: 'Archive route' })
-      ).toHaveCount(0);
+      await expect(page).toHaveURL(/\/login/);
     });
+  });
+
+  test('the card menu offers the map, and nothing to edit with', async ({
+    page
+  }) => {
+    await page.goto('/');
+    await page
+      .getByRole('button', { name: `Actions for ${region.name}` })
+      .click();
+
+    await expect(
+      page.getByRole('menuitem', { name: 'Show on map' })
+    ).toBeVisible();
+    await expect(page.getByRole('menuitem', { name: 'Edit' })).toHaveCount(0);
   });
 
   test('is refused by the API as well', async () => {
@@ -126,7 +157,9 @@ test('an admin is offered all of it', async ({ page }) => {
   // behind edit mode. The API call below would pass whatever the browser is
   // signed in as, so it cannot stand in for this.
   await page.goto('/?edit=1');
-  await expect(page.getByRole('button', { name: 'Archive' })).toBeVisible();
+  await expect(
+    page.getByRole('button', { name: 'Archive', exact: true })
+  ).toBeVisible();
 
   const response = await api.raw('GET', `/regions/${region.id}`);
 

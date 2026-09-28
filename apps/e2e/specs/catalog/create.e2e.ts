@@ -19,9 +19,10 @@ import {
 } from '../../fixtures/ui';
 
 /**
- * Creating a catalog row. The forms are deliberately thin — a name is the only
- * thing a region or a sector insists on, a route also wants a grade — and what
- * they all share is that the button stays out of reach until they have it.
+ * Creating a catalog row. A region insists on both names, a country and a
+ * point on the map; a sector on both names; a route also wants a grade — and
+ * what they all share is that the button stays out of reach until they have
+ * it.
  */
 test.describe.configure({ mode: 'serial' });
 
@@ -35,7 +36,7 @@ test.beforeAll(async () => {
 
 test.afterAll(cleanup);
 
-test('a region cannot be created without a name', async ({ page }) => {
+test('a region cannot be created until it is complete', async ({ page }) => {
   const name = 'Create-Region-Made';
 
   await page.goto(catalogPath());
@@ -45,20 +46,32 @@ test('a region cannot be created without a name', async ({ page }) => {
   const submit = form.getByRole('button', { name: 'Add region' });
 
   await test.step('the button waits for a name', async () => {
-    await form.getByRole('textbox', { name: 'Province' }).fill('Test province');
     await form.getByRole('textbox', { name: 'Rock type' }).fill('Limestone');
     await expect(submit).toBeDisabled();
   });
 
   await test.step('and a name of spaces does not count', async () => {
-    await form.getByRole('textbox', { name: 'Name' }).fill('   ');
+    await form.getByRole('textbox', { name: 'Name', exact: true }).fill('   ');
     await expect(submit).toBeDisabled();
   });
 
-  await test.step('the name is trimmed on the way in', async () => {
+  await test.step('a name alone does not open the button either', async () => {
     await form
-      .getByRole('textbox', { name: 'Name' })
+      .getByRole('textbox', { name: 'Name', exact: true })
       .fill(`  ${fixtureName(name)}  `);
+    await expect(submit).toBeDisabled();
+  });
+
+  await test.step('a country is not enough without a point', async () => {
+    await form.getByRole('combobox', { name: 'Country' }).fill('Ukraine');
+    await page.getByRole('option', { name: 'Ukraine' }).click();
+    await expect(submit).toBeDisabled();
+  });
+
+  await test.step('the point completes it, and the name is trimmed', async () => {
+    await page
+      .getByRole('textbox', { name: 'Coordinates' })
+      .fill('48.68291, 26.56402');
     await expect(submit).toBeEnabled();
     await submit.click();
 
@@ -77,7 +90,7 @@ test('a region cannot be created without a name', async ({ page }) => {
   });
 });
 
-test('closing the create form makes nothing', async ({ page }) => {
+test('cancelling the create form makes nothing', async ({ page }) => {
   const name = fixtureName('Create-Region-Abandoned');
 
   await page.goto(catalogPath());
@@ -85,8 +98,8 @@ test('closing the create form makes nothing', async ({ page }) => {
 
   const form = formWith(page, 'Add region');
 
-  await form.getByRole('textbox', { name: 'Name' }).fill(name);
-  await form.getByRole('button', { name: 'Close' }).click();
+  await form.getByRole('textbox', { name: 'Name', exact: true }).fill(name);
+  await form.getByRole('button', { name: 'Cancel' }).click();
 
   await test.step('the sidebar is back to its hint', async () => {
     await expect(page.getByText('Pick a region on the left')).toBeVisible();
@@ -106,7 +119,9 @@ test('a new sector is the one being edited', async ({ page }) => {
 
   const form = formWith(page, 'Add sector');
 
-  await form.getByRole('textbox', { name: 'Name' }).fill(fixtureName(name));
+  await form
+    .getByRole('textbox', { name: 'Name', exact: true })
+    .fill(fixtureName(name));
   await form
     .getByRole('textbox', { name: 'Description' })
     .fill('Fixture description');
@@ -121,7 +136,10 @@ test('a new sector is the one being edited', async ({ page }) => {
       page.getByRole('button', { name: 'Archive sector' })
     ).toBeVisible();
     await expect(
-      formWith(page, 'Archive sector').getByRole('textbox', { name: 'Name' })
+      formWith(page, 'Archive sector').getByRole('textbox', {
+        name: 'Name',
+        exact: true
+      })
     ).toHaveValue(fixtureName(name));
   });
 
@@ -133,7 +151,9 @@ test('a route cannot be created without a grade', async ({ page }) => {
 
   await page.goto(editorPath(region.id, sector.id));
   await page.getByRole('button', { name: 'Add route' }).click();
-  await page.getByRole('textbox', { name: 'Name' }).fill(fixtureName(name));
+  await page
+    .getByRole('textbox', { name: 'Name', exact: true })
+    .fill(fixtureName(name));
 
   const create = page.getByRole('button', { name: 'Create route' });
 

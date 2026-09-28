@@ -210,3 +210,35 @@ test('restoring leaves separately archived rows archived', async ({ page }) => {
     await expect(page.getByText(route.name)).toBeVisible();
   });
 });
+
+test('the archive is a view inside editing, never a place of its own', async ({
+  page
+}) => {
+  const flagged = await makeRegion('Archive-Region-Flagged');
+
+  await api.delete(`/regions/${flagged.id}`);
+
+  await test.step('?archive=1 alone shows the catalog', async () => {
+    await page.goto('/?archive=1');
+
+    await expect(
+      page.getByRole('button', { name: 'Edit', exact: true })
+    ).toBeVisible();
+    await expect(card(page, flagged.name)).toHaveCount(0);
+  });
+
+  await test.step('it takes edit mode to reach the archived region', async () => {
+    await page.goto(catalogPath(true));
+    await expect(card(page, flagged.name)).toBeVisible();
+  });
+
+  await test.step('and closing editing takes the archive with it', async () => {
+    await page.getByRole('button', { name: 'Close editing' }).click();
+
+    await expect(page).not.toHaveURL(/edit=1/);
+    await expect(page).not.toHaveURL(/archive=1/);
+    await expect(card(page, flagged.name)).toHaveCount(0);
+  });
+
+  await api.post(`/regions/${flagged.id}/restore`);
+});

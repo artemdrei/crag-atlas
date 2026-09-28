@@ -46,7 +46,9 @@ test('a region being edited says so on its card, until it is saved', async ({
   const form = formWith(page, 'Archive region');
 
   await test.step('an edit marks the card', async () => {
-    await form.getByRole('textbox', { name: 'Name' }).fill(renamed);
+    await form
+      .getByRole('textbox', { name: 'Name', exact: true })
+      .fill(renamed);
     await expect(page.getByText('Unsaved')).toBeVisible();
   });
 
@@ -65,18 +67,18 @@ test('a region being edited says so on its card, until it is saved', async ({
   region.name = renamed;
 });
 
-// Only the sector form offers Close — a region is deselected by clicking the
-// page around its card, which is a different flow.
-test('closing a sector form drops the edit', async ({ page }) => {
+test('cancelling a sector form drops the edit and closes it', async ({
+  page
+}) => {
   await page.goto(regionPath(region.id));
   await card(page, sector.name).click();
 
   const form = formWith(page, 'Archive sector');
 
   await form
-    .getByRole('textbox', { name: 'Name' })
+    .getByRole('textbox', { name: 'Name', exact: true })
     .fill(fixtureName('Thrown-Away'));
-  await form.getByRole('button', { name: 'Close' }).click();
+  await form.getByRole('button', { name: 'Cancel' }).click();
 
   await page.goto(regionPath(region.id));
 
@@ -141,5 +143,54 @@ test('a route keeps the grade it is given', async ({ page }) => {
     await expect(page.getByRole('combobox', { name: 'Grade' })).toHaveText(
       '7a'
     );
+  });
+});
+
+test('a region cannot be saved once something it needs is cleared', async ({
+  page
+}) => {
+  await page.goto(catalogPath());
+  await card(page, region.name).click();
+
+  const form = formWith(page, 'Archive region');
+  const save = form.getByRole('button', { name: 'Save' });
+  const local = form.getByRole('textbox', { name: 'Name', exact: true });
+
+  await test.step('a region without its local name is not one', async () => {
+    await local.fill('');
+    await expect(save).toBeDisabled();
+  });
+
+  await test.step('putting it back opens the button again', async () => {
+    await local.fill(fixtureName('Edit-Region-Renamed-Again'));
+    await expect(save).toBeEnabled();
+  });
+
+  await test.step('and neither is one without a country', async () => {
+    // The picker only shows its clear button while it has the focus, so the
+    // field is clicked before the button is looked for — and the point editor
+    // below carries a Clear of its own, so the country's is the first.
+    await form.getByRole('combobox', { name: 'Country' }).click();
+    await form.getByRole('button', { name: 'Clear' }).first().click();
+    await expect(save).toBeDisabled();
+  });
+});
+
+test('the card menu is the other way into editing', async ({ page }) => {
+  await page.goto('/');
+  await page
+    .getByRole('button', { name: `Actions for ${region.name}` })
+    .click();
+  await page.getByRole('menuitem', { name: 'Edit' }).click();
+
+  await expect(page).toHaveURL(/[?&]edit=1/);
+
+  await test.step('with that region already in the form', async () => {
+    await expect(
+      formWith(page, 'Archive region').getByRole('textbox', {
+        name: 'Name',
+        exact: true
+      })
+    ).toHaveValue(region.name);
   });
 });

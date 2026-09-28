@@ -111,5 +111,10 @@ export const breadcrumb = (page: Page, name: string) =>
     .getByRole('navigation', { name: 'Breadcrumb' })
     .getByRole('link', { name });
 
+/**
+ * A catalog card. The card is itself one big button, and its menu of actions
+ * is a sibling rendered after it whose label repeats the row's name — so the
+ * card is the first match.
+ */
 export const card = (page: Page, name: string) =>
-  page.getByRole('button', { name: new RegExp(name) });
+  page.getByRole('button', { name: new RegExp(name) }).first();

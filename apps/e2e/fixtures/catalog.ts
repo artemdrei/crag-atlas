@@ -51,27 +51,45 @@ export const adoptSector = (idRegion: string, name: string) =>
 export const adoptRoute = (idSector: string, name: string) =>
   adopt('routes', `/sectors/${idSector}/routes`, name);
 
-export const makeRegion = (name: string) =>
+/**
+ * The local spelling defaults to the Latin name, which is what most specs
+ * want. A spec about search hands it a name in another alphabet instead — the
+ * only way to prove the catalog is found by either spelling.
+ */
+export const makeRegion = (name: string, nameLocal?: string) =>
   record(
     'regions',
     api.post<Row>('/regions', {
       name: `${prefix}-${name}`,
-      province: 'Test province',
-      rockType: 'Limestone'
+      nameLocal: nameLocal ?? `${prefix}-${name}`,
+      country: 'UA',
+      rockType: 'Limestone',
+      lat: 48.68291,
+      lng: 26.56402
     })
   );
 
-export const makeSector = (idRegion: string, name: string) =>
+export const makeSector = (
+  idRegion: string,
+  name: string,
+  nameLocal?: string
+) =>
   record(
     'sectors',
-    api.post<Row>(`/regions/${idRegion}/sectors`, { name: `${prefix}-${name}` })
+    api.post<Row>(`/regions/${idRegion}/sectors`, {
+      name: `${prefix}-${name}`,
+      nameLocal: nameLocal ?? `${prefix}-${name}`,
+      lat: 48.68291,
+      lng: 26.56402
+    })
   );
 
-export const makeRoute = (idSector: string, name: string) =>
+export const makeRoute = (idSector: string, name: string, nameLocal?: string) =>
   record(
     'routes',
     api.post<Row>(`/sectors/${idSector}/routes`, {
       name: `${prefix}-${name}`,
+      nameLocal: nameLocal ?? `${prefix}-${name}`,
       grade: '6a',
       gradeScale: 'french',
       type: 'sport'

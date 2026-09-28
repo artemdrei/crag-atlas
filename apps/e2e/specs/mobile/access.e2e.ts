@@ -7,7 +7,7 @@ import {
   makeRoute,
   makeSector
 } from '../../fixtures/catalog';
-import { routePath } from '../../fixtures/ui';
+import { card, routePath } from '../../fixtures/ui';
 
 /**
  * The phone has no edit mode at all — the catalog is changed from a desktop —
@@ -57,5 +57,7 @@ test.describe('a visitor who has not signed in', () => {
 test('an admin is given no edit mode on a phone', async ({ page: phone }) => {
   await phone.goto('/');
 
+  // The catalog has to be on screen before its missing button means anything.
+  await expect(card(phone, region.name)).toBeVisible();
   await expect(phone.getByRole('button', { name: 'Edit' })).toHaveCount(0);
 });
