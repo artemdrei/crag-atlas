@@ -10,7 +10,7 @@ import type {
   TopoEditorSession
 } from '../entities';
 import { EMPTY_SESSION } from '../entities';
-import { normalizePoint, toPointKinds } from '../lib';
+import { normalizePoint, toPointKinds, typedBolterName } from '../lib';
 import type { EditorAction } from './editorActions';
 
 const MIN_POINTS = 2;
@@ -154,6 +154,9 @@ export const editorSessionReducer = (
             type: 'sport',
             length: '',
             boltsCount: '',
+            bolter: null,
+            bolterName: '',
+            boltedYear: '',
             description: '',
             isNew: true,
             isDirty: true
@@ -279,6 +282,15 @@ const toRouteDraft = (route: Route): RouteDraft => ({
   type: route.type,
   length: route.length?.toString() ?? '',
   boltsCount: route.boltsCount?.toString() ?? '',
+  bolter: route.idBolter
+    ? {
+        id: route.idBolter,
+        displayName: route.bolterName ?? '',
+        avatarUrl: route.bolterAvatarUrl ?? null
+      }
+    : null,
+  bolterName: typedBolterName(route),
+  boltedYear: route.boltedYear?.toString() ?? '',
   description: route.description ?? '',
   isNew: false,
   isDirty: false

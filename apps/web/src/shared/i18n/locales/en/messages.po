@@ -24,7 +24,7 @@ msgid "{0, plural, one {# ascent} other {# ascents}}"
 msgstr "{0, plural, one {# ascent} other {# ascents}}"
 
 #. placeholder {0}: route.boltsCount
-#: src/pages/route/common/ui/RouteDetails.tsx:47
+#: src/pages/route/common/ui/RouteDetails.tsx:49
 msgid "{0, plural, one {# bolt} other {# bolts}}"
 msgstr "{0, plural, one {# bolt} other {# bolts}}"
 
@@ -86,7 +86,7 @@ msgstr "{0, plural, one {# try} other {# tries}}"
 #~ msgstr "{0} attempts"
 
 #. placeholder {0}: route.length
-#: src/pages/route/common/ui/RouteDetails.tsx:41
+#: src/pages/route/common/ui/RouteDetails.tsx:43
 #: src/pages/sector/common/ui/RouteCard.tsx:63
 msgid "{0} m"
 msgstr "{0} m"
@@ -370,7 +370,7 @@ msgid "Archive region"
 msgstr "Archive region"
 
 #: src/features/topoEditor/desktop/ArchiveRouteDialog.tsx:39
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:306
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:340
 msgid "Archive route"
 msgstr "Archive route"
 
@@ -454,7 +454,20 @@ msgstr "Belayer"
 msgid "Bolt"
 msgstr "Bolt"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:263
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:276
+msgid "Bolted by"
+msgstr "Bolted by"
+
+#: src/pages/route/common/ui/RouteDetails.tsx:59
+msgid "Bolted by:"
+msgstr "Bolted by:"
+
+#. placeholder {0}: route.boltedYear
+#: src/pages/route/common/ui/RouteDetails.tsx:74
+msgid "Bolted in {0}"
+msgstr "Bolted in {0}"
+
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:264
 msgid "Bolts"
 msgstr "Bolts"
 
@@ -462,7 +475,7 @@ msgstr "Bolts"
 #~ msgid "Both panes scroll together."
 #~ msgstr "Both panes scroll together."
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:218
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:219
 msgid "Boulder"
 msgstr "Boulder"
 
@@ -501,6 +514,10 @@ msgstr "Cards per row"
 msgid "Clear"
 msgstr "Clear"
 
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:292
+msgid "Clear the climber above to type a name"
+msgstr "Clear the climber above to type a name"
+
 #: src/shared/ui/PointEditor.tsx:46
 msgid "Click the map, or paste coordinates from Google Maps."
 msgstr "Click the map, or paste coordinates from Google Maps."
@@ -512,6 +529,10 @@ msgstr "Click the map, or paste coordinates from Google Maps."
 #: src/features/topoEditor/desktop/ui/TopoEditorToolbar.tsx:38
 #~ msgid "Click the photo to add a point, click a point to set what it is."
 #~ msgstr "Click the photo to add a point, click a point to set what it is."
+
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:280
+msgid "Climber with an account"
+msgstr "Climber with an account"
 
 #: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:21
 msgid "Climbers left nothing here — no ascents, no comments, no photos."
@@ -606,7 +627,7 @@ msgstr "Crags"
 #~ msgid "Create a new one"
 #~ msgstr "Create a new one"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:292
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:326
 msgid "Create route"
 msgstr "Create route"
 
@@ -642,7 +663,7 @@ msgid "Delete comment"
 msgstr "Delete comment"
 
 #: src/features/topoEditor/desktop/DeleteLineDialog.tsx:45
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:303
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:337
 msgid "Delete line"
 msgstr "Delete line"
 
@@ -713,7 +734,7 @@ msgstr "Deleting…"
 
 #: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:71
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:92
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:278
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:312
 msgid "Description"
 msgstr "Description"
 
@@ -744,7 +765,7 @@ msgstr "Drag a route here"
 msgid "Drag cancelled"
 msgstr "Drag cancelled"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:194
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:195
 msgid "Draw the route first, then it can move between photos."
 msgstr "Draw the route first, then it can move between photos."
 
@@ -843,7 +864,7 @@ msgstr "Fit the photo"
 msgid "Flash"
 msgstr "Flash"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:239
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:240
 #: src/pages/logbook/common/ui/LogbookFilterFields.tsx:36
 msgid "Grade"
 msgstr "Grade"
@@ -957,7 +978,7 @@ msgstr "Leave"
 msgid "Leave without saving?"
 msgstr "Leave without saving?"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:252
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:253
 msgid "Length, m"
 msgstr "Length, m"
 
@@ -1119,7 +1140,7 @@ msgstr "Name"
 msgid "New photo"
 msgstr "New photo"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:169
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:170
 #: src/pages/routeEdit/desktop/PageRouteEditDesktop.tsx:76
 msgid "New route"
 msgstr "New route"
@@ -1256,6 +1277,10 @@ msgstr "or"
 msgid "Or"
 msgstr "Or"
 
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:287
+msgid "Or a name"
+msgstr "Or a name"
+
 #: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:274
 #~ msgid "Or create a new one."
 #~ msgstr "Or create a new one."
@@ -1276,7 +1301,7 @@ msgstr "Original photo"
 msgid "Partner"
 msgstr "Partner"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:188
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:189
 msgid "Photo"
 msgstr "Photo"
 
@@ -1298,7 +1323,7 @@ msgstr "Photo {position}"
 msgid "Photo and video"
 msgstr "Photo and video"
 
-#: src/features/topoEditor/common/hooks/useTopoEditorActions.ts:249
+#: src/features/topoEditor/common/hooks/useTopoEditorActions.ts:252
 msgid "Photo order saved"
 msgstr "Photo order saved"
 
@@ -1394,12 +1419,12 @@ msgstr "Profile"
 #~ msgid "Quality"
 #~ msgstr "Quality"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:157
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:159
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:158
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:160
 msgid "Reader view"
 msgstr "Reader view"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:144
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:145
 msgid "Redo"
 msgstr "Redo"
 
@@ -1480,7 +1505,7 @@ msgstr "Resend code"
 msgid "Reset filters"
 msgstr "Reset filters"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:151
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:152
 msgid "Reset to the saved state"
 msgstr "Reset to the saved state"
 
@@ -1517,15 +1542,15 @@ msgstr "Retro flash"
 msgid "Rock type"
 msgstr "Rock type"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:171
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:172
 msgid "Route №{number}"
 msgstr "Route №{number}"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:173
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:174
 msgid "Route not on the wall yet"
 msgstr "Route not on the wall yet"
 
-#: src/features/topoEditor/common/hooks/useTopoEditorActions.ts:93
+#: src/features/topoEditor/common/hooks/useTopoEditorActions.ts:96
 msgid "Route saved"
 msgstr "Route saved"
 
@@ -1541,7 +1566,7 @@ msgstr "Routes"
 msgid "Save"
 msgstr "Save"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:294
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:328
 msgid "Save changes"
 msgstr "Save changes"
 
@@ -1553,7 +1578,7 @@ msgstr "Save changes"
 #~ msgid "Save your changes first to restore a route."
 #~ msgstr "Save your changes first to restore a route."
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:284
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:318
 msgid "Saved changes go live for everyone straight away."
 msgstr "Saved changes go live for everyone straight away."
 
@@ -1649,7 +1674,7 @@ msgstr "Something went wrong"
 msgid "Sort by"
 msgstr "Sort by"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:215
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:216
 #: src/pages/logbook/common/ui/DisciplineTabs.tsx:27
 #: src/shared/ui/GradeHistogram.tsx:34
 msgid "Sport"
@@ -1659,7 +1684,7 @@ msgstr "Sport"
 #~ msgid "Style"
 #~ msgstr "Style"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:225
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:226
 msgid "System"
 msgstr "System"
 
@@ -1763,11 +1788,11 @@ msgstr "This region is in the archive, so it is out of the catalog. Its sectors,
 #~ msgid "This region was removed from the catalog. Its sectors, routes and everything climbers left on them — ascents, photos, links and comments — are still here."
 #~ msgstr "This region was removed from the catalog. Its sectors, routes and everything climbers left on them — ascents, photos, links and comments — are still here."
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:101
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:102
 msgid "this route"
 msgstr "this route"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:107
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:108
 msgid "This route"
 msgstr "This route"
 
@@ -1850,7 +1875,7 @@ msgstr "Type at least {MIN_SEARCH_LENGTH} letters"
 msgid "Type at least {MIN_SEARCH_LENGTH} letters of a name"
 msgstr "Type at least {MIN_SEARCH_LENGTH} letters of a name"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:138
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:139
 msgid "Undo"
 msgstr "Undo"
 
@@ -1932,6 +1957,10 @@ msgstr "Write it in your own language — it will be searchable both in Latin an
 #: src/shared/ui/NameFields.tsx:57
 msgid "Written for you from the name above"
 msgstr "Written for you from the name above"
+
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:298
+msgid "Year"
+msgstr "Year"
 
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:39
 msgid "Your beta"

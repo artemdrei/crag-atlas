@@ -1,4 +1,4 @@
-import type { GradeScale, Route } from '@crag-atlas/api';
+import type { GradeScale, Route, UserSummary } from '@crag-atlas/api';
 
 export type Point = [number, number];
 
@@ -30,6 +30,11 @@ export interface RouteDraft {
   type: Route['type'];
   length: string;
   boltsCount: string;
+  // A climber with an account, or a typed name — never both, the way the
+  // column is written.
+  bolter: UserSummary | null;
+  bolterName: string;
+  boltedYear: string;
   description: string;
   isNew: boolean;
   isDirty: boolean;

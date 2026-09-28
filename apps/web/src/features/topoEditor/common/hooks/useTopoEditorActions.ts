@@ -61,6 +61,9 @@ export const useTopoEditorActions = ({
         type: draft.type,
         length: toNumber(draft.length),
         boltsCount: toNumber(draft.boltsCount),
+        idBolter: draft.bolter?.id ?? null,
+        bolterName: draft.bolterName.trim() || null,
+        boltedYear: toNumber(draft.boltedYear),
         description: draft.description
       };
 

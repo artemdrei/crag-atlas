@@ -18,6 +18,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 
 import { useModal } from '@web/app/providers';
+import { ClimberPicker } from '@web/features/climberPicker';
 import {
   defaultGradeScale,
   digitsOnly,
@@ -269,6 +270,39 @@ export const TopoEditorRoutePanel = ({
             }
           />
         )}
+      </RowStyled>
+      <Divider />
+      <Typography variant="overline" color="text.secondary">
+        <Trans>Bolted by</Trans>
+      </Typography>
+      <ClimberPicker
+        value={route.bolter}
+        label={t`Climber with an account`}
+        isChanged={changed.bolter}
+        onChange={(bolter) => onChange({ bolter, bolterName: '' })}
+      />
+      <RowStyled>
+        <ChangedTextField
+          size="small"
+          label={t`Or a name`}
+          value={route.bolterName}
+          isChanged={changed.bolterName}
+          disabled={!!route.bolter}
+          helperText={
+            route.bolter ? t`Clear the climber above to type a name` : undefined
+          }
+          onChange={({ target }) => onChange({ bolterName: target.value })}
+        />
+        <ChangedTextField
+          size="small"
+          label={t`Year`}
+          value={route.boltedYear}
+          isChanged={changed.boltedYear}
+          slotProps={{ htmlInput: { inputMode: 'numeric', maxLength: 4 } }}
+          onChange={({ target }) =>
+            onChange({ boltedYear: digitsOnly(target.value) })
+          }
+        />
       </RowStyled>
       <Divider />
       <ChangedTextField

@@ -24,7 +24,7 @@ msgid "{0, plural, one {# ascent} other {# ascents}}"
 msgstr "{0, plural, one {# пролаз} few {# пролази} many {# пролазів} other {# пролаза}}"
 
 #. placeholder {0}: route.boltsCount
-#: src/pages/route/common/ui/RouteDetails.tsx:47
+#: src/pages/route/common/ui/RouteDetails.tsx:49
 msgid "{0, plural, one {# bolt} other {# bolts}}"
 msgstr "{0, plural, one {# шлямбур} few {# шлямбури} many {# шлямбурів} other {# шлямбура}}"
 
@@ -76,7 +76,7 @@ msgstr "{0, plural, one {# спроба} few {# спроби} many {# спроб
 #~ msgstr "{0} спроб"
 
 #. placeholder {0}: route.length
-#: src/pages/route/common/ui/RouteDetails.tsx:41
+#: src/pages/route/common/ui/RouteDetails.tsx:43
 #: src/pages/sector/common/ui/RouteCard.tsx:63
 msgid "{0} m"
 msgstr "{0} м"
@@ -360,7 +360,7 @@ msgid "Archive region"
 msgstr "Архівувати регіон"
 
 #: src/features/topoEditor/desktop/ArchiveRouteDialog.tsx:39
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:306
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:340
 msgid "Archive route"
 msgstr "Архівувати маршрут"
 
@@ -444,7 +444,20 @@ msgstr "Страхуючий"
 msgid "Bolt"
 msgstr "Гак"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:263
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:276
+msgid "Bolted by"
+msgstr "Пробив"
+
+#: src/pages/route/common/ui/RouteDetails.tsx:59
+msgid "Bolted by:"
+msgstr "Пробив:"
+
+#. placeholder {0}: route.boltedYear
+#: src/pages/route/common/ui/RouteDetails.tsx:74
+msgid "Bolted in {0}"
+msgstr "Пробито {0}"
+
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:264
 msgid "Bolts"
 msgstr "Болти"
 
@@ -452,7 +465,7 @@ msgstr "Болти"
 #~ msgid "Both panes scroll together."
 #~ msgstr "Обидві панелі прокручуються разом."
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:218
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:219
 msgid "Boulder"
 msgstr "Болдер"
 
@@ -491,6 +504,10 @@ msgstr "Карток у рядку"
 msgid "Clear"
 msgstr "Очистити"
 
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:292
+msgid "Clear the climber above to type a name"
+msgstr "Очистіть вибір вище, щоб ввести ім'я"
+
 #: src/shared/ui/PointEditor.tsx:46
 msgid "Click the map, or paste coordinates from Google Maps."
 msgstr "Клікни по карті або встав координати з Google Maps."
@@ -502,6 +519,10 @@ msgstr "Клікни по карті або встав координати з G
 #: src/features/topoEditor/desktop/ui/TopoEditorToolbar.tsx:38
 #~ msgid "Click the photo to add a point, click a point to set what it is."
 #~ msgstr "Клацніть по фото, щоб додати точку; клацніть по точці, щоб задати її тип."
+
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:280
+msgid "Climber with an account"
+msgstr "Скелелаз з акаунтом"
 
 #: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:21
 msgid "Climbers left nothing here — no ascents, no comments, no photos."
@@ -596,7 +617,7 @@ msgstr "Скелі"
 #~ msgid "Create a new one"
 #~ msgstr "Створіть новий"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:292
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:326
 msgid "Create route"
 msgstr "Створити маршрут"
 
@@ -632,7 +653,7 @@ msgid "Delete comment"
 msgstr "Видалити коментар"
 
 #: src/features/topoEditor/desktop/DeleteLineDialog.tsx:45
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:303
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:337
 msgid "Delete line"
 msgstr "Видалити лінію"
 
@@ -703,7 +724,7 @@ msgstr "Видаляємо…"
 
 #: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:71
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:92
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:278
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:312
 msgid "Description"
 msgstr "Опис"
 
@@ -734,7 +755,7 @@ msgstr "Перетягніть сюди маршрут"
 msgid "Drag cancelled"
 msgstr "Перетягування скасовано"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:194
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:195
 msgid "Draw the route first, then it can move between photos."
 msgstr "Спершу намалюйте маршрут, тоді його можна переносити між фото."
 
@@ -833,7 +854,7 @@ msgstr "Вмістити фото"
 msgid "Flash"
 msgstr "Флеш"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:239
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:240
 #: src/pages/logbook/common/ui/LogbookFilterFields.tsx:36
 msgid "Grade"
 msgstr "Категорія"
@@ -947,7 +968,7 @@ msgstr "Вийти"
 msgid "Leave without saving?"
 msgstr "Вийти без збереження?"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:252
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:253
 msgid "Length, m"
 msgstr "Довжина, м"
 
@@ -1109,7 +1130,7 @@ msgstr "Назва"
 msgid "New photo"
 msgstr "Нове фото"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:169
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:170
 #: src/pages/routeEdit/desktop/PageRouteEditDesktop.tsx:76
 msgid "New route"
 msgstr "Новий маршрут"
@@ -1246,6 +1267,10 @@ msgstr "або"
 msgid "Or"
 msgstr "Або"
 
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:287
+msgid "Or a name"
+msgstr "Або ім'я"
+
 #: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:274
 #~ msgid "Or create a new one."
 #~ msgstr "Або створіть новий."
@@ -1266,7 +1291,7 @@ msgstr "Оригінальне фото"
 msgid "Partner"
 msgstr "Партнер"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:188
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:189
 msgid "Photo"
 msgstr "Фото"
 
@@ -1288,7 +1313,7 @@ msgstr "Фото {position}"
 msgid "Photo and video"
 msgstr "Фото та відео"
 
-#: src/features/topoEditor/common/hooks/useTopoEditorActions.ts:249
+#: src/features/topoEditor/common/hooks/useTopoEditorActions.ts:252
 msgid "Photo order saved"
 msgstr "Порядок фото збережено"
 
@@ -1384,12 +1409,12 @@ msgstr "Профіль"
 #~ msgid "Quality"
 #~ msgstr "Якість"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:157
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:159
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:158
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:160
 msgid "Reader view"
 msgstr "Як бачить користувач"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:144
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:145
 msgid "Redo"
 msgstr "Повторити"
 
@@ -1470,7 +1495,7 @@ msgstr "Надіслати код ще раз"
 msgid "Reset filters"
 msgstr "Скинути фільтри"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:151
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:152
 msgid "Reset to the saved state"
 msgstr "Скинути до збереженого стану"
 
@@ -1507,15 +1532,15 @@ msgstr "Ретрофлеш"
 msgid "Rock type"
 msgstr "Порода"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:171
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:172
 msgid "Route №{number}"
 msgstr "Маршрут №{number}"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:173
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:174
 msgid "Route not on the wall yet"
 msgstr "Маршрут ще не на стіні"
 
-#: src/features/topoEditor/common/hooks/useTopoEditorActions.ts:93
+#: src/features/topoEditor/common/hooks/useTopoEditorActions.ts:96
 msgid "Route saved"
 msgstr "Маршрут збережено"
 
@@ -1531,7 +1556,7 @@ msgstr "Маршрути"
 msgid "Save"
 msgstr "Зберегти"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:294
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:328
 msgid "Save changes"
 msgstr "Відредагувати"
 
@@ -1539,7 +1564,7 @@ msgstr "Відредагувати"
 #~ msgid "Save route"
 #~ msgstr "Зберегти маршрут"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:284
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:318
 msgid "Saved changes go live for everyone straight away."
 msgstr "Збережені зміни одразу стають видимими всім."
 
@@ -1635,7 +1660,7 @@ msgstr "Щось пішло не так"
 msgid "Sort by"
 msgstr "Сортування"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:215
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:216
 #: src/pages/logbook/common/ui/DisciplineTabs.tsx:27
 #: src/shared/ui/GradeHistogram.tsx:34
 msgid "Sport"
@@ -1645,7 +1670,7 @@ msgstr "Спорт"
 #~ msgid "Style"
 #~ msgstr "Стиль"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:225
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:226
 msgid "System"
 msgstr "Система"
 
@@ -1749,11 +1774,11 @@ msgstr "Цей регіон в архіві, тож поза каталогом.
 #~ msgid "This region was removed from the catalog. Its sectors, routes and everything climbers left on them — ascents, photos, links and comments — are still here."
 #~ msgstr "Цей регіон прибрали з каталогу. Його сектори, маршрути й усе, що лишили на них скелелази — пролази, фото, посилання й коментарі — досі тут."
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:101
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:102
 msgid "this route"
 msgstr "цього маршруту"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:107
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:108
 msgid "This route"
 msgstr "Цей маршрут"
 
@@ -1836,7 +1861,7 @@ msgstr "Введи щонайменше {MIN_SEARCH_LENGTH} літери"
 msgid "Type at least {MIN_SEARCH_LENGTH} letters of a name"
 msgstr "Введи щонайменше {MIN_SEARCH_LENGTH} літери імені"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:138
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:139
 msgid "Undo"
 msgstr "Скасувати"
 
@@ -1918,6 +1943,10 @@ msgstr "Напишіть рідною мовою — шукати можна б�
 #: src/shared/ui/NameFields.tsx:57
 msgid "Written for you from the name above"
 msgstr "Заповнено автоматично з назви вище"
+
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:298
+msgid "Year"
+msgstr "Рік"
 
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:39
 msgid "Your beta"

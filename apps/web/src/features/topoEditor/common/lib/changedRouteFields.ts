@@ -1,6 +1,7 @@
 import type { Route } from '@crag-atlas/api';
 
 import type { RouteDraft } from '../entities';
+import { typedBolterName } from './typedBolterName';
 
 export type ChangedRouteFields = {
   [K in keyof Pick<
@@ -12,6 +13,9 @@ export type ChangedRouteFields = {
     | 'type'
     | 'length'
     | 'boltsCount'
+    | 'bolter'
+    | 'bolterName'
+    | 'boltedYear'
     | 'description'
   >]: boolean;
 };
@@ -24,6 +28,9 @@ const NOTHING_CHANGED: ChangedRouteFields = {
   type: false,
   length: false,
   boltsCount: false,
+  bolter: false,
+  bolterName: false,
+  boltedYear: false,
   description: false
 };
 
@@ -42,6 +49,9 @@ export const changedRouteFields = (
     type: draft.type !== saved.type,
     length: draft.length !== numberText(saved.length),
     boltsCount: draft.boltsCount !== numberText(saved.boltsCount),
+    bolter: (draft.bolter?.id ?? null) !== (saved.idBolter ?? null),
+    bolterName: draft.bolterName !== typedBolterName(saved),
+    boltedYear: draft.boltedYear !== numberText(saved.boltedYear),
     description: draft.description !== (saved.description ?? '')
   };
 };
