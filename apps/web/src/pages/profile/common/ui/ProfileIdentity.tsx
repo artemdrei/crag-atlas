@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
@@ -7,11 +9,16 @@ export interface Props {
   email: string;
   name?: string;
   avatarUrl?: string;
+  avatar?: ReactNode;
 }
 
-export const ProfileIdentity = ({ email, name, avatarUrl }: Props) => (
+export const ProfileIdentity = ({ email, name, avatarUrl, avatar }: Props) => (
   <IdentityStyled>
-    <AvatarStyled name={name ?? email} avatarUrl={avatarUrl} size={80} />
+    <AvatarSlotStyled>
+      {avatar ?? (
+        <UserAvatar name={name ?? email} avatarUrl={avatarUrl} size={80} />
+      )}
+    </AvatarSlotStyled>
     {name && <Typography variant="h6">{name}</Typography>}
     <Typography variant="body2" color="text.secondary">
       {email}
@@ -27,6 +34,6 @@ const IdentityStyled = styled('div')`
   margin-bottom: ${({ theme }) => theme.spacing(3)};
 `;
 
-const AvatarStyled = styled(UserAvatar)`
+const AvatarSlotStyled = styled('div')`
   margin-bottom: ${({ theme }) => theme.spacing(1)};
 `;

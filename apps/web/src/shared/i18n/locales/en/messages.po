@@ -283,6 +283,10 @@ msgstr "Add {0} photos"
 msgid "Add a cover photo"
 msgstr "Add a cover photo"
 
+#: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:57
+#: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:72
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:61
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:76
 #: src/features/catalogEdit/desktop/ui/RegionPhotoPicker.tsx:33
 #: src/features/catalogEdit/desktop/ui/RegionPhotoPicker.tsx:43
 #: src/pages/region/desktop/ui/SectorPhotoPicker.tsx:62
@@ -506,9 +510,21 @@ msgstr "Cancel"
 msgid "Cards per row"
 msgstr "Cards per row"
 
+#: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:57
+#: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:72
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:61
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:76
+msgid "Change your photo"
+msgstr "Change your photo"
+
 #: src/features/topoEditor/desktop/hooks/useTopoEditorActions.ts:140
 #~ msgid "Changes published"
 #~ msgstr "Changes published"
+
+#: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:95
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:99
+msgid "Choose a photo"
+msgstr "Choose a photo"
 
 #: src/shared/ui/PointEditor.tsx:72
 msgid "Clear"
@@ -1246,6 +1262,11 @@ msgstr "One less try"
 msgid "One more try"
 msgstr "One more try"
 
+#: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:29
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:33
+msgid "Only an image can be used as a photo"
+msgstr "Only an image can be used as a photo"
+
 #: src/features/logTick/common/ui/TickMediaField.tsx:61
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:55
 msgid "Only YouTube and Instagram links."
@@ -1408,8 +1429,8 @@ msgstr "Private comment"
 
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:53
 #: src/app/mobile/layout/AppBottomNavigation.tsx:43
-#: src/pages/profile/desktop/PageProfileDesktop.tsx:21
-#: src/pages/profile/mobile/PageProfileMobile.tsx:21
+#: src/pages/profile/desktop/PageProfileDesktop.tsx:22
+#: src/pages/profile/mobile/PageProfileMobile.tsx:22
 msgid "Profile"
 msgstr "Profile"
 
@@ -1476,9 +1497,19 @@ msgstr "Reload"
 #~ msgid "Remove line"
 #~ msgstr "Remove line"
 
+#: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:71
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:75
+#~ msgid "Remove photo"
+#~ msgstr "Remove photo"
+
 #: src/features/sectorMap/common/ui/SectorPointEditor.tsx:71
 #~ msgid "Remove point"
 #~ msgstr "Remove point"
+
+#: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:82
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:86
+msgid "Remove your photo"
+msgstr "Remove your photo"
 
 #: src/features/topoEditor/desktop/ui/TopoFileStrip.tsx:78
 #~ msgid "Replace"
@@ -1980,6 +2011,16 @@ msgstr "Your grade"
 #: src/shared/ui/NameFields.tsx:58
 msgid "Your own spelling — the name above no longer changes it"
 msgstr "Your own spelling — the name above no longer changes it"
+
+#: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:45
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:49
+msgid "Your photo has been removed"
+msgstr "Your photo has been removed"
+
+#: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:36
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:40
+msgid "Your photo has been updated"
+msgstr "Your photo has been updated"
 
 #: src/features/logTick/common/ui/TickMediaField.tsx:58
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:53

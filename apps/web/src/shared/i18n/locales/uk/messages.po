@@ -273,6 +273,10 @@ msgstr "Додати {0} фото"
 msgid "Add a cover photo"
 msgstr "Додати обкладинку"
 
+#: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:57
+#: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:72
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:61
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:76
 #: src/features/catalogEdit/desktop/ui/RegionPhotoPicker.tsx:33
 #: src/features/catalogEdit/desktop/ui/RegionPhotoPicker.tsx:43
 #: src/pages/region/desktop/ui/SectorPhotoPicker.tsx:62
@@ -496,9 +500,21 @@ msgstr "Скасувати"
 msgid "Cards per row"
 msgstr "Карток у рядку"
 
+#: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:57
+#: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:72
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:61
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:76
+msgid "Change your photo"
+msgstr "Змінити фото"
+
 #: src/features/topoEditor/desktop/hooks/useTopoEditorActions.ts:140
 #~ msgid "Changes published"
 #~ msgstr "Зміни опубліковано"
+
+#: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:95
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:99
+msgid "Choose a photo"
+msgstr "Оберіть фото"
 
 #: src/shared/ui/PointEditor.tsx:72
 msgid "Clear"
@@ -1236,6 +1252,11 @@ msgstr "На спробу менше"
 msgid "One more try"
 msgstr "На спробу більше"
 
+#: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:29
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:33
+msgid "Only an image can be used as a photo"
+msgstr "Фото може бути лише зображенням"
+
 #: src/features/logTick/common/ui/TickMediaField.tsx:61
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:55
 msgid "Only YouTube and Instagram links."
@@ -1398,8 +1419,8 @@ msgstr "Приватний коментар"
 
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:53
 #: src/app/mobile/layout/AppBottomNavigation.tsx:43
-#: src/pages/profile/desktop/PageProfileDesktop.tsx:21
-#: src/pages/profile/mobile/PageProfileMobile.tsx:21
+#: src/pages/profile/desktop/PageProfileDesktop.tsx:22
+#: src/pages/profile/mobile/PageProfileMobile.tsx:22
 msgid "Profile"
 msgstr "Профіль"
 
@@ -1466,9 +1487,19 @@ msgstr "Перезавантажити"
 #~ msgid "Remove line"
 #~ msgstr "Прибрати лінію"
 
+#: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:71
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:75
+#~ msgid "Remove photo"
+#~ msgstr "Прибрати фото"
+
 #: src/features/sectorMap/common/ui/SectorPointEditor.tsx:71
 #~ msgid "Remove point"
 #~ msgstr "Прибрати точку"
+
+#: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:82
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:86
+msgid "Remove your photo"
+msgstr "Прибрати фото"
 
 #: src/features/topoEditor/desktop/ui/TopoFileStrip.tsx:78
 #~ msgid "Replace"
@@ -1966,6 +1997,16 @@ msgstr "Твій грейд"
 #: src/shared/ui/NameFields.tsx:58
 msgid "Your own spelling — the name above no longer changes it"
 msgstr "Власне написання — назва вище його більше не змінює"
+
+#: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:45
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:49
+msgid "Your photo has been removed"
+msgstr "Фото прибрано"
+
+#: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:36
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:40
+msgid "Your photo has been updated"
+msgstr "Фото оновлено"
 
 #: src/features/logTick/common/ui/TickMediaField.tsx:58
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:53

@@ -29,4 +29,17 @@ describe('ProfileIdentity', () => {
     expect(screen.getByText('CR')).toBeDefined();
     expect(screen.queryByRole('img')).toBeNull();
   });
+
+  it('renders the given avatar slot instead of the plain picture', () => {
+    renderWithTheme(
+      <ProfileIdentity
+        email="cragatlasapp@gmail.com"
+        avatarUrl="https://example.com/avatar.png"
+        avatar={<button type="button">Change your photo</button>}
+      />
+    );
+
+    expect(screen.getByText('Change your photo')).toBeDefined();
+    expect(screen.queryByRole('img')).toBeNull();
+  });
 });

@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { useProfileIdentity } from '@web/app/providers';
+import { AvatarPickerDesktop } from '@web/features/avatarUpload';
 
 import {
   GradeScaleSetting,
@@ -21,7 +22,13 @@ export const PageProfileDesktop = () => {
         <Trans>Profile</Trans>
       </Typography>
 
-      <ProfileIdentity email={email} name={name} avatarUrl={avatarUrl} />
+      <ProfileIdentity
+        email={email}
+        name={name}
+        avatar={
+          <AvatarPickerDesktop name={name ?? email} avatarUrl={avatarUrl} />
+        }
+      />
 
       <ThemeModeSetting />
       <LocaleSetting />
