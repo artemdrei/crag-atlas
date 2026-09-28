@@ -1,5 +1,9 @@
+import { useRef } from 'react';
+
 import { useLingui } from '@lingui/react/macro';
+import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
+import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 
@@ -13,13 +17,21 @@ export interface Props {
 
 export const CatalogSearchField = ({ value, onChange, onFocus }: Props) => {
   const { t } = useLingui();
+  const inputRef = useRef<HTMLInputElement>(null);
   const typed = value.trim().length;
+
+  // Clearing is the start of typing something else, so the caret stays put.
+  const handleClear = () => {
+    onChange('');
+    inputRef.current?.focus();
+  };
 
   return (
     <TextField
       fullWidth
       size="small"
       value={value}
+      inputRef={inputRef}
       placeholder={t`Search a region, sector or route`}
       // A blank helper text rather than none: the field must not resize the
       // column under it the moment the hint appears.
@@ -34,7 +46,19 @@ export const CatalogSearchField = ({ value, onChange, onFocus }: Props) => {
             <InputAdornment position="start">
               <SearchIcon fontSize="small" />
             </InputAdornment>
-          )
+          ),
+          endAdornment: value ? (
+            <InputAdornment position="end">
+              <IconButton
+                size="small"
+                edge="end"
+                aria-label={t`Clear the search`}
+                onClick={handleClear}
+              >
+                <ClearIcon fontSize="small" />
+              </IconButton>
+            </InputAdornment>
+          ) : undefined
         }
       }}
       onFocus={onFocus}

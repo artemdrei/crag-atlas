@@ -518,6 +518,10 @@ msgstr "Clear"
 msgid "Clear the climber above to type a name"
 msgstr "Clear the climber above to type a name"
 
+#: src/features/catalogSearch/common/ui/CatalogSearchField.tsx:55
+msgid "Clear the search"
+msgstr "Clear the search"
+
 #: src/shared/ui/PointEditor.tsx:46
 msgid "Click the map, or paste coordinates from Google Maps."
 msgstr "Click the map, or paste coordinates from Google Maps."
@@ -1589,7 +1593,7 @@ msgstr "Saved changes go live for everyone straight away."
 msgid "Saving…"
 msgstr "Saving…"
 
-#: src/features/catalogSearch/common/ui/CatalogSearchField.tsx:23
+#: src/features/catalogSearch/common/ui/CatalogSearchField.tsx:35
 msgid "Search a region, sector or route"
 msgstr "Search a region, sector or route"
 
@@ -1867,7 +1871,7 @@ msgstr "Tries"
 #~ msgid "Type"
 #~ msgstr "Type"
 
-#: src/features/catalogSearch/common/ui/CatalogSearchField.tsx:28
+#: src/features/catalogSearch/common/ui/CatalogSearchField.tsx:40
 msgid "Type at least {MIN_SEARCH_LENGTH} letters"
 msgstr "Type at least {MIN_SEARCH_LENGTH} letters"
 

@@ -508,6 +508,10 @@ msgstr "Очистити"
 msgid "Clear the climber above to type a name"
 msgstr "Очистіть вибір вище, щоб ввести ім'я"
 
+#: src/features/catalogSearch/common/ui/CatalogSearchField.tsx:55
+msgid "Clear the search"
+msgstr "Очистити пошук"
+
 #: src/shared/ui/PointEditor.tsx:46
 msgid "Click the map, or paste coordinates from Google Maps."
 msgstr "Клікни по карті або встав координати з Google Maps."
@@ -1575,7 +1579,7 @@ msgstr "Збережені зміни одразу стають видимими
 msgid "Saving…"
 msgstr "Зберігаємо…"
 
-#: src/features/catalogSearch/common/ui/CatalogSearchField.tsx:23
+#: src/features/catalogSearch/common/ui/CatalogSearchField.tsx:35
 msgid "Search a region, sector or route"
 msgstr "Пошук регіону, сектора або маршруту"
 
@@ -1853,7 +1857,7 @@ msgstr "Спроб"
 #~ msgid "Type"
 #~ msgstr "Тип"
 
-#: src/features/catalogSearch/common/ui/CatalogSearchField.tsx:28
+#: src/features/catalogSearch/common/ui/CatalogSearchField.tsx:40
 msgid "Type at least {MIN_SEARCH_LENGTH} letters"
 msgstr "Введи щонайменше {MIN_SEARCH_LENGTH} літери"
 
