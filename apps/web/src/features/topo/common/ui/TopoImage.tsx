@@ -223,16 +223,23 @@ const TAP_SLOP = 4;
 
 const FALLBACK_RATIO = '4 / 3';
 
-/* The frame takes the photo's ratio: any gap between the two boxes would
-   slide every line off the rock. */
+/* The frame is exactly the photo: any gap between the two boxes would slide
+   every line off the rock. Once the photo is measured it is the `img` that
+   holds the ratio — a frame given both a width and a height stops honouring
+   `aspect-ratio`, which is what squashed the photo when a fixed stage height
+   met a `max-width` clamp. */
 const FrameStyled = styled('div', {
   shouldForwardProp: (prop) => prop !== 'isContained' && prop !== 'ratio'
 })<{ isContained: boolean; ratio?: number }>`
   position: relative;
-  width: ${({ isContained }) => (isContained ? 'auto' : '100%')};
-  height: ${({ isContained }) => (isContained ? '100%' : 'auto')};
+  display: flex;
+  /* Stretch is the flex default and would pull the photo off its own
+     proportions whenever the frame is taller or wider than it. */
+  align-items: flex-start;
   max-width: 100%;
-  aspect-ratio: ${({ ratio }) => ratio ?? FALLBACK_RATIO};
+  width: ${({ isContained }) => (isContained ? 'auto' : '100%')};
+  aspect-ratio: ${({ isContained, ratio }) =>
+    isContained ? 'auto' : (ratio ?? FALLBACK_RATIO)};
   overflow: hidden;
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
   background: ${({ theme }) => theme.palette.action.hover};
@@ -242,8 +249,13 @@ const ImageStyled = styled('img', {
   shouldForwardProp: (prop) => prop !== 'isContained' && prop !== 'isLoaded'
 })<{ isContained: boolean; isLoaded: boolean }>`
   display: block;
-  width: 100%;
-  height: ${({ isContained }) => (isContained ? '100%' : 'auto')};
+  width: ${({ isContained }) => (isContained ? 'auto' : '100%')};
+  height: auto;
+  max-width: 100%;
+  /* A percentage here would resolve against a frame whose own height is
+     auto, which CSS treats as no limit at all — so the stage hands its
+     height down as a length instead. */
+  max-height: var(--topo-stage-height, none);
   opacity: ${({ isLoaded }) => (isLoaded ? 1 : 0)};
   transition: opacity 0.2s ease-out;
   ${({ theme }) => photoFrame(theme)}

@@ -197,8 +197,8 @@ const ConsensusStyled = styled(GradeConsensus)`
 
 const PhotoButtonStyled = styled('button')`
   position: relative;
-  display: inline-flex;
-  height: 100%;
+  display: flex;
+  align-items: flex-start;
   max-width: 100%;
   padding: 0;
   cursor: zoom-in;
@@ -207,11 +207,12 @@ const PhotoButtonStyled = styled('button')`
 `;
 
 const PhotoStyled = styled('div')`
+  --topo-stage-height: 320px;
   position: sticky;
   top: ${({ theme }) => theme.spacing(2)};
-  height: 320px;
+  height: var(--topo-stage-height);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 
   ${({ theme }) => theme.breakpoints.down('lg')} {
