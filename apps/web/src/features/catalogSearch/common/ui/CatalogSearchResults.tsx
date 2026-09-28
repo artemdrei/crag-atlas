@@ -1,10 +1,13 @@
 import type { CatalogSearch, SearchHit } from '@crag-atlas/api';
 import { Trans } from '@lingui/react/macro';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListSubheader from '@mui/material/ListSubheader';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+
+import { localNameOf } from '@web/shared/lib';
 
 import { searchHitTrail } from '../lib';
 
@@ -36,13 +39,23 @@ export const CatalogSearchResults = ({ results, isLoading, onPick }: Props) => {
           <SubheaderStyled disableSticky>{label}</SubheaderStyled>
           {hits.map((hit) => {
             const trail = searchHitTrail(hit);
+            const localName = localNameOf(hit.name, hit.nameLocal);
 
             return (
               <ListItemButton key={hit.id} onClick={() => onPick(hit)}>
                 <HitStyled>
-                  <Typography variant="body2" noWrap>
+                  <NameRowStyled variant="body2" noWrap>
                     {hit.name}
-                  </Typography>
+                    {!!localName && (
+                      <LocalNameStyled>({localName})</LocalNameStyled>
+                    )}
+                    {!!hit.rating && (
+                      <RatingStyled>
+                        <StarBorderIcon fontSize="inherit" />
+                        {hit.rating.toFixed(1)}
+                      </RatingStyled>
+                    )}
+                  </NameRowStyled>
                   {trail && (
                     <Typography variant="caption" color="text.secondary" noWrap>
                       {trail}
@@ -61,6 +74,23 @@ export const CatalogSearchResults = ({ results, isLoading, onPick }: Props) => {
 const SubheaderStyled = styled(ListSubheader)`
   background: transparent;
   line-height: 2;
+`;
+
+const LocalNameStyled = styled('span')`
+  color: ${({ theme }) => theme.palette.text.secondary};
+`;
+
+const NameRowStyled = styled(Typography)`
+  display: flex;
+  align-items: baseline;
+  gap: ${({ theme }) => theme.spacing(0.75)};
+`;
+
+const RatingStyled = styled('span')`
+  display: inline-flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing(0.25)};
+  color: ${({ theme }) => theme.palette.text.secondary};
 `;
 
 const HitStyled = styled('div')`

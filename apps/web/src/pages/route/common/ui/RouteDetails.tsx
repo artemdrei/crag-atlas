@@ -5,6 +5,7 @@ import Rating from '@mui/material/Rating';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
+import { localNameOf } from '@web/shared/lib';
 import { GradeBadge, UserAvatar } from '@web/shared/ui';
 
 import type { Route } from '../entities';
@@ -18,11 +19,20 @@ const AVATAR_SIZE = 22;
 export const RouteDetails = ({ route }: Props) => {
   const { t } = useLingui();
 
+  const localName = localNameOf(route.name, route.nameLocal);
+
   return (
     <ContainerStyled>
-      <Typography variant="h4" noWrap>
-        {route.name}
-      </Typography>
+      <TitleStyled>
+        <Typography variant="h4" noWrap>
+          {route.name}
+        </Typography>
+        {!!localName && (
+          <LocalNameStyled variant="subtitle1" color="text.secondary" noWrap>
+            {localName}
+          </LocalNameStyled>
+        )}
+      </TitleStyled>
       <SummaryRowStyled>
         <GradeBadge grade={route.grade} scale={route.gradeScale} />
         <MetaStyled variant="body2" color="text.secondary">
@@ -82,6 +92,18 @@ export const RouteDetails = ({ route }: Props) => {
     </ContainerStyled>
   );
 };
+
+// Its own line: a long local spelling beside the Latin one is what the title
+// truncates away, and it reads as a second title rather than a gloss.
+const TitleStyled = styled('div')`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing(0.25)};
+`;
+
+const LocalNameStyled = styled(Typography)`
+  line-height: 1.2;
+` as typeof Typography;
 
 const ContainerStyled = styled('div')`
   display: flex;

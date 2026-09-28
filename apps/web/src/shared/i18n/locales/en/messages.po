@@ -24,7 +24,7 @@ msgid "{0, plural, one {# ascent} other {# ascents}}"
 msgstr "{0, plural, one {# ascent} other {# ascents}}"
 
 #. placeholder {0}: route.boltsCount
-#: src/pages/route/common/ui/RouteDetails.tsx:49
+#: src/pages/route/common/ui/RouteDetails.tsx:59
 msgid "{0, plural, one {# bolt} other {# bolts}}"
 msgstr "{0, plural, one {# bolt} other {# bolts}}"
 
@@ -86,7 +86,7 @@ msgstr "{0, plural, one {# try} other {# tries}}"
 #~ msgstr "{0} attempts"
 
 #. placeholder {0}: route.length
-#: src/pages/route/common/ui/RouteDetails.tsx:43
+#: src/pages/route/common/ui/RouteDetails.tsx:53
 #: src/pages/sector/common/ui/RouteCard.tsx:63
 msgid "{0} m"
 msgstr "{0} m"
@@ -458,12 +458,12 @@ msgstr "Bolt"
 msgid "Bolted by"
 msgstr "Bolted by"
 
-#: src/pages/route/common/ui/RouteDetails.tsx:59
+#: src/pages/route/common/ui/RouteDetails.tsx:69
 msgid "Bolted by:"
 msgstr "Bolted by:"
 
 #. placeholder {0}: route.boltedYear
-#: src/pages/route/common/ui/RouteDetails.tsx:74
+#: src/pages/route/common/ui/RouteDetails.tsx:84
 msgid "Bolted in {0}"
 msgstr "Bolted in {0}"
 
@@ -1214,7 +1214,7 @@ msgstr "not on the map"
 msgid "Nothing archived here — every route is in the catalog."
 msgstr "Nothing archived here — every route is in the catalog."
 
-#: src/features/catalogSearch/common/ui/CatalogSearchResults.tsx:27
+#: src/features/catalogSearch/common/ui/CatalogSearchResults.tsx:30
 msgid "Nothing found"
 msgstr "Nothing found"
 
@@ -1450,7 +1450,7 @@ msgid "Region saved"
 msgstr "Region saved"
 
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:33
-#: src/features/catalogSearch/common/ui/CatalogSearchResults.tsx:19
+#: src/features/catalogSearch/common/ui/CatalogSearchResults.tsx:22
 #: src/pages/home/desktop/PageHomeDesktop.tsx:57
 #: src/pages/region/desktop/PageRegionDesktop.tsx:80
 #: src/pages/region/mobile/PageRegionMobile.tsx:43
@@ -1554,7 +1554,7 @@ msgstr "Route not on the wall yet"
 msgid "Route saved"
 msgstr "Route saved"
 
-#: src/features/catalogSearch/common/ui/CatalogSearchResults.tsx:21
+#: src/features/catalogSearch/common/ui/CatalogSearchResults.tsx:24
 #: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:133
 msgid "Routes"
 msgstr "Routes"
@@ -1593,7 +1593,7 @@ msgstr "Saving…"
 msgid "Search a region, sector or route"
 msgstr "Search a region, sector or route"
 
-#: src/features/catalogSearch/common/ui/CatalogSearchResults.tsx:27
+#: src/features/catalogSearch/common/ui/CatalogSearchResults.tsx:30
 msgid "Searching…"
 msgstr "Searching…"
 
@@ -1614,7 +1614,7 @@ msgstr "Sector cover"
 msgid "Sector saved"
 msgstr "Sector saved"
 
-#: src/features/catalogSearch/common/ui/CatalogSearchResults.tsx:20
+#: src/features/catalogSearch/common/ui/CatalogSearchResults.tsx:23
 msgid "Sectors"
 msgstr "Sectors"
 
