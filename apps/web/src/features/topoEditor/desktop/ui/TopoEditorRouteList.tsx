@@ -250,6 +250,10 @@ const GroupStyled = styled('div', {
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(0.5)};
+  /* The list scrolls, so it has a definite height, and a flex child of a
+     definite-height column shrinks below its own content by default: the
+     rows spill out of the group and land on the next one. */
+  flex-shrink: 0;
   /* An empty photo is a thin strip, so the drop area needs a floor. */
   min-height: ${({ theme }) => theme.spacing(5)};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
@@ -272,6 +276,7 @@ const GroupLabelStyled = styled(Typography)`
 
 const DropHintStyled = styled(Typography)`
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
   padding: ${({ theme }) => theme.spacing(1)};
@@ -296,6 +301,9 @@ const RowStyled = styled(ButtonBase, {
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing(1)};
+  /* Same reason as the group above: a row keeps its height or its label
+     prints over the row below it. */
+  flex-shrink: 0;
   padding: ${({ theme }) => theme.spacing(1, 1.5)};
   border: 1px solid
     ${({ theme, isSelected, isDirty }) =>
