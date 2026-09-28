@@ -2253,6 +2253,25 @@
             "type": "number",
             "nullable": true
           },
+          "idBolter": {
+            "type": "string",
+            "nullable": true,
+            "description": "The climber who bolted it, when they have an account here"
+          },
+          "bolterName": {
+            "type": "string",
+            "nullable": true,
+            "description": "Who bolted it, whether that name came from an account or was typed"
+          },
+          "bolterAvatarUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "boltedYear": {
+            "type": "number",
+            "nullable": true,
+            "description": "The year it was bolted; a guidebook rarely knows the day"
+          },
           "rating": {
             "type": "number",
             "nullable": true,
@@ -2362,6 +2381,20 @@
             "type": "number",
             "nullable": true
           },
+          "idBolter": {
+            "type": "string",
+            "nullable": true,
+            "description": "The climber who bolted it, when they have an account here"
+          },
+          "bolterName": {
+            "type": "string",
+            "nullable": true,
+            "description": "Who bolted it, when they have no account to point at"
+          },
+          "boltedYear": {
+            "type": "number",
+            "nullable": true
+          },
           "description": {
             "type": "string",
             "nullable": true
@@ -2407,6 +2440,20 @@
             "nullable": true
           },
           "boltsCount": {
+            "type": "number",
+            "nullable": true
+          },
+          "idBolter": {
+            "type": "string",
+            "nullable": true,
+            "description": "The climber who bolted it, when they have an account here"
+          },
+          "bolterName": {
+            "type": "string",
+            "nullable": true,
+            "description": "Who bolted it, when they have no account to point at"
+          },
+          "boltedYear": {
             "type": "number",
             "nullable": true
           },

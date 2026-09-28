@@ -784,6 +784,13 @@ export interface components {
             type: "sport" | "boulder";
             length?: number | null;
             boltsCount?: number | null;
+            /** @description The climber who bolted it, when they have an account here */
+            idBolter?: string | null;
+            /** @description Who bolted it, whether that name came from an account or was typed */
+            bolterName?: string | null;
+            bolterAvatarUrl?: string | null;
+            /** @description The year it was bolted; a guidebook rarely knows the day */
+            boltedYear?: number | null;
             /** @description Community rating, 0..5 */
             rating?: number | null;
             /** @description How many ratings that average stands on */
@@ -818,6 +825,11 @@ export interface components {
             type: "sport" | "boulder";
             length?: number | null;
             boltsCount?: number | null;
+            /** @description The climber who bolted it, when they have an account here */
+            idBolter?: string | null;
+            /** @description Who bolted it, when they have no account to point at */
+            bolterName?: string | null;
+            boltedYear?: number | null;
             description?: string | null;
         };
         UpdateRouteDto: {
@@ -834,6 +846,11 @@ export interface components {
             type: "sport" | "boulder";
             length?: number | null;
             boltsCount?: number | null;
+            /** @description The climber who bolted it, when they have an account here */
+            idBolter?: string | null;
+            /** @description Who bolted it, when they have no account to point at */
+            bolterName?: string | null;
+            boltedYear?: number | null;
             description?: string | null;
         };
         SearchHitDto: {

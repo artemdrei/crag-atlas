@@ -50,6 +50,34 @@ export class RouteDto {
   boltsCount?: number | null;
 
   @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description: 'The climber who bolted it, when they have an account here'
+  })
+  idBolter?: string | null;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description:
+      'Who bolted it, whether that name came from an account or was typed'
+  })
+  bolterName?: string | null;
+
+  @ApiProperty({ type: String, required: false, nullable: true })
+  bolterAvatarUrl?: string | null;
+
+  @ApiProperty({
+    type: Number,
+    required: false,
+    nullable: true,
+    description: 'The year it was bolted; a guidebook rarely knows the day'
+  })
+  boltedYear?: number | null;
+
+  @ApiProperty({
     type: Number,
     required: false,
     nullable: true,
@@ -142,6 +170,25 @@ export class UpdateRouteDto {
   @ApiProperty({ type: Number, required: false, nullable: true })
   boltsCount?: number | null;
 
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description: 'The climber who bolted it, when they have an account here'
+  })
+  idBolter?: string | null;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description: 'Who bolted it, when they have no account to point at'
+  })
+  bolterName?: string | null;
+
+  @ApiProperty({ type: Number, required: false, nullable: true })
+  boltedYear?: number | null;
+
   @ApiProperty({ type: String, required: false, nullable: true })
   description?: string | null;
 }
@@ -176,6 +223,25 @@ export class CreateRouteDto {
 
   @ApiProperty({ type: Number, required: false, nullable: true })
   boltsCount?: number | null;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description: 'The climber who bolted it, when they have an account here'
+  })
+  idBolter?: string | null;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description: 'Who bolted it, when they have no account to point at'
+  })
+  bolterName?: string | null;
+
+  @ApiProperty({ type: Number, required: false, nullable: true })
+  boltedYear?: number | null;
 
   @ApiProperty({ type: String, required: false, nullable: true })
   description?: string | null;
