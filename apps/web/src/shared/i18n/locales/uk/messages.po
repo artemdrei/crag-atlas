@@ -533,6 +533,8 @@ msgid "Climbers left nothing here — no ascents, no comments, no photos."
 msgstr "Скелелази тут нічого не лишали — ні пролазів, ні коментарів, ні фото."
 
 #: src/features/topo/desktop/TopoPhotoDialog.tsx:36
+#: src/features/topo/mobile/TopoPhotoModal.tsx:38
+#: src/features/topo/mobile/TopoPhotoModal.tsx:46
 #: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:31
 #: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:39
 #: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:31
@@ -1256,6 +1258,7 @@ msgstr "Відкрити регіон"
 msgid "Open sector"
 msgstr "Відкрити сектор"
 
+#: src/features/topo/mobile/TopoGalleryMobile.tsx:44
 #: src/pages/route/desktop/PageRouteDesktop.tsx:94
 #: src/pages/route/mobile/PageRouteMobile.tsx:83
 msgid "Open the photo"
