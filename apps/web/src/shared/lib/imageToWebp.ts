@@ -3,6 +3,12 @@ const MAX_EDGE = 2560;
 /** WebP at this quality is indistinguishable on rock texture at a fraction of the bytes. */
 const QUALITY = 0.82;
 
+export interface WebpOptions {
+  maxEdge?: number;
+  /** Takes the largest centred square of the source before scaling. */
+  isSquare?: boolean;
+}
+
 export interface CompressedPhoto {
   blob: Blob;
   width: number;
@@ -16,13 +22,17 @@ export interface CompressedPhoto {
  * Canvas rather than a compression library: the whole job is decode, scale,
  * encode, and a dependency for three calls is a dependency to keep updated.
  */
-export const imageToWebp = async (file: File): Promise<CompressedPhoto> => {
+export const imageToWebp = async (
+  file: File,
+  { maxEdge = MAX_EDGE, isSquare = false }: WebpOptions = {}
+): Promise<CompressedPhoto> => {
   const bitmap = await decode(file);
-  const scale = Math.min(1, MAX_EDGE / Math.max(bitmap.width, bitmap.height));
-  const width = Math.round(bitmap.width * scale);
-  const height = Math.round(bitmap.height * scale);
+  const source = isSquare ? centredSquare(bitmap) : fullFrame(bitmap);
+  const scale = Math.min(1, maxEdge / Math.max(source.width, source.height));
+  const width = Math.round(source.width * scale);
+  const height = Math.round(source.height * scale);
 
-  const blob = await encode(bitmap, width, height);
+  const blob = await encode(bitmap, source, width, height);
   const sourceWidth = bitmap.width;
   const sourceHeight = bitmap.height;
 
@@ -37,6 +47,31 @@ export const imageToWebp = async (file: File): Promise<CompressedPhoto> => {
     ratio: width / height,
     sourceWidth,
     sourceHeight
+  };
+};
+
+interface SourceRect {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+const fullFrame = ({ width, height }: ImageBitmap): SourceRect => ({
+  x: 0,
+  y: 0,
+  width,
+  height
+});
+
+const centredSquare = ({ width, height }: ImageBitmap): SourceRect => {
+  const edge = Math.min(width, height);
+
+  return {
+    x: Math.round((width - edge) / 2),
+    y: Math.round((height - edge) / 2),
+    width: edge,
+    height: edge
   };
 };
 
@@ -66,13 +101,14 @@ const decode = async (file: File): Promise<ImageBitmap> => {
 
 const encode = async (
   bitmap: CanvasImageSource,
+  source: SourceRect,
   width: number,
   height: number
 ): Promise<Blob> => {
   if ('OffscreenCanvas' in globalThis) {
     const canvas = new OffscreenCanvas(width, height);
 
-    draw(canvas.getContext('2d'), bitmap, width, height);
+    draw(canvas.getContext('2d'), bitmap, source, width, height);
 
     return canvas.convertToBlob({ type: 'image/webp', quality: QUALITY });
   }
@@ -81,7 +117,7 @@ const encode = async (
 
   canvas.width = width;
   canvas.height = height;
-  draw(canvas.getContext('2d'), bitmap, width, height);
+  draw(canvas.getContext('2d'), bitmap, source, width, height);
 
   return new Promise<Blob>((resolve, reject) => {
     canvas.toBlob(
@@ -98,11 +134,22 @@ const encode = async (
 const draw = (
   context: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D | null,
   bitmap: CanvasImageSource,
+  source: SourceRect,
   width: number,
   height: number
 ): void => {
   if (!context) throw new Error('This browser cannot encode the photo');
 
   context.imageSmoothingQuality = 'high';
-  context.drawImage(bitmap, 0, 0, width, height);
+  context.drawImage(
+    bitmap,
+    source.x,
+    source.y,
+    source.width,
+    source.height,
+    0,
+    0,
+    width,
+    height
+  );
 };
