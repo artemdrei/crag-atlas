@@ -171,6 +171,26 @@ Max two levels up (`../../x`). Deeper → use the `@web/*` alias.
 - The only exception is a bare `id` (a resource's own identifier) and
   third-party names we don't own (`getElementById`, OpenAPI's `operationId`).
 
+## Name Fields
+
+**`name` is Latin everywhere** — regions, sectors, routes. A catalog written
+in the language of the crag is one only locals can search.
+
+- `name_local` / `nameLocal` (nullable) holds the spelling locals use. It is
+  stored and searchable, but nothing renders it yet — the catalog shows the
+  Latin name alone. When it does get shown, it goes beside the Latin name,
+  never instead of it.
+- The accepted set is Latin script plus the punctuation and digits a name
+  carries — not ASCII: `Cesuse`, `Rodland` and `Misja pec` are wrong, `Céüse`,
+  `Rødland` and `Mišja peč` are right.
+- Enforced in three places that must stay in step: `isLatinName`
+  (`apps/api/src/common/utils/names.ts`), the same check in
+  `apps/web/src/shared/lib/toLatin.ts`, and the column constraints in
+  `002_catalog.sql`.
+- Transliteration is a `transliteration`-package helper in the editor, never a
+  per-language map of our own: it fills the Latin name from the local one
+  while nobody has written it themselves.
+
 ## Folder Naming
 
 All folders — camelCase. React components PascalCase, hooks `useX.ts`.

@@ -1,51 +1,25 @@
 # Migrations
 
 Plain SQL, applied in order. One file per change, named `NNN_short_name.sql`
-with a zero-padded sequence number — never renumbered, never edited once
-applied: a mistake is fixed by the next migration.
+with a zero-padded sequence number.
+
+The series was renumbered once, at the squash that collapsed the first 43
+incremental files into the seven below: they described a schema nobody had
+ever built in one pass, half of them undoing the other half. From here on the
+old rule stands again — never renumbered, never edited once applied. A mistake
+is fixed by the next migration.
 
 Apply a migration in the Supabase dashboard (SQL Editor) or with
 `psql "$DATABASE_URL" -f supabase/migrations/NNN_short_name.sql`.
+`supabase db reset` replays the whole series on the local stack. It ships no
+data: the catalog starts empty and is filled from the editor or by an import.
 
 | # | File | What it does |
 |---|------|--------------|
-| 001 | `001_create_ticks.sql` | `ticks` table (logged ascents) with per-user RLS |
-| 002 | `002_pin_function_search_path.sql` | Pin `search_path` on `set_updated_at` |
-| 003 | `003_create_catalog.sql` | `regions` / `sectors` / `routes`, public read-only |
-| 004 | `004_seed_catalog.sql` | Demo catalog moved over from the static JSON |
-| 005 | `005_link_ticks_to_routes.sql` | FK from `ticks.id_route` to `routes.id` |
-| 006 | `006_catalog_uuid_keys.sql` | Catalog keys become uuids; names stay labels |
-| 007 | `007_admin_role.sql` | `user_roles` + `is_admin()`; catalog writes for admins |
-| 008 | `008_computed_catalog_stats.sql` | Counts and grade ranges become views |
-| 009 | `009_topos.sql` | Sector topo photos, route lines, and the storage bucket |
-| 010 | `010_route_rating.sql` | Optional `routes.rating`, 0..5 |
-| 011 | `011_import_mist_route_details.sql` | Ratings and bolt counts for the Mist sector |
-| 012 | `012_drop_sector_approach_minutes.sql` | Empty: the drop it could not do moved to 019 |
-| 013 | `013_route_stats.sql` | Optional ascent, onsight and grade-vote counts |
-| 014 | `014_import_mist_route_stats.sql` | Those counts for the Mist sector |
-| 015 | `015_users.sql` | Public `users`, created for every sign-up |
-| 016 | `016_route_comments.sql` | Comments on a route, public read, own write |
-| 017 | `017_route_media.sql` | Videos and photos linked to a route |
-| 018 | `018_topo_editor.sql` | Photo dimensions, line bolts and anchor, label offsets |
-| 019 | `019_grade_scales.sql` | Grade scale per route, grade system per user; drops `sectors.approach_minutes`, which 012 could not |
-| 020 | `020_restore_view_security_invoker.sql` | Give the stats views back the setting 019 dropped |
-| 021 | `021_grade_scale_defaults.sql` | Grade preferences default to French and V Scale, never null |
-| 022 | `022_region_photo.sql` | Cover photo for a region, in its own bucket |
-| 023 | `023_tighten_storage_and_grants.sql` | Drop the storage listing policies; revoke EXECUTE on the sign-up trigger |
-| 024 | `024_drop_topo_label.sql` | Drop `topos.label`: a photo is named by its position |
-| 025 | `025_one_line_per_route.sql` | `route_lines` is keyed by the route alone: one line per route, moved instead of copied |
-| 026 | `026_grade_histogram.sql` | Grade spread per climbing type on both stats views |
-| 027 | `027_public_ticks.sql` | Ticks readable by everyone; author FK and feed index |
-| 028 | `028_tick_details.sql` | Tick rating, grade vote and partner; route stats carry on from the imported numbers; media can belong to a tick |
-| 029 | `029_tick_grade_vote.sql` | `ascent_style` becomes `ascent_type`; the grade a tick proposes, and a note only its author sees |
-| 030 | `030_media_bucket.sql` | The `media` bucket and its policies: any climber uploads a photo, only its owner removes it |
-| 031 | `031_sector_coords.sql` | Sector coordinates, and the stats view rebuilt to carry them |
-| 032 | `032_soft_delete_catalog.sql` | `deleted_at` on regions, sectors and routes; `is_archived` derived from a row's ancestors in the stats views |
-| 033 | `033_protect_climber_content.sql` | Comments and media hold a route back the way ascents already did: erasing for good cannot destroy a climber's work |
-| 034 | `034_climber_content.sql` | `climber_content()`: what climbers left under a catalog row, in one query |
-| 035 | `035_media_url_optional.sql` | `route_media.url` may be null for an upload; a row carries a url or a storage path, never both |
-| 036 | `036_validate_media_url_or_path.sql` | The 035 check covers the rows already there, now that they are known to be clean |
-| 037 | `037_media_delete_needs_select.sql` | Storage may see a media object to delete it: the owner's own, an admin's any |
-| 038 | `038_route_media_flags.sql` | `has_photo` and `has_video` on the route stats view, so a list can mark a route without fetching its media |
-| 039 | `039_region_country.sql` | `regions.country` (ISO 3166-1 alpha-2) and the stats view rebuilt to carry it |
-| 040 | `040_tick_paging.sql` | `tick_page()` and `tick_stats()`: a filtered, ordered page of a logbook and the spread of the whole of it |
+| 001 | `001_foundation.sql` | `pg_trgm`, `set_updated_at()`, `user_roles` and `is_admin()` — what the rest leans on |
+| 002 | `002_catalog.sql` | `regions` / `sectors` / `routes`: uuid keys, Latin `name` beside `name_local`, coordinates, grade scale and score, soft delete; public read, admin write |
+| 003 | `003_users.sql` | Public `users`, created for every sign-up, with the grade scales a climber reads in |
+| 004 | `004_ticks.sql` | Logged ascents: public to read, own to write, with rating, grade vote and partner |
+| 005 | `005_climber_content.sql` | `route_comments`, `route_media`, `topos` and `route_lines` — and the restrict that stops an erase destroying them |
+| 006 | `006_storage.sql` | The `topos`, `regions` and `media` buckets, and who may write to each |
+| 007 | `007_views_and_functions.sql` | The stats views behind every catalog page, plus `climber_content()`, `tick_page()`, `tick_stats()` and `catalog_search()` |

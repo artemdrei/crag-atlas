@@ -1,7 +1,0 @@
--- Approach time never made it into the UI and nobody maintains it; the walk-in
--- belongs to the sector description until there is a reason to model it.
---
--- This migration never ran: sectors_with_stats expands s.* and so depended on
--- the column, and Postgres refused the drop. It is kept as a placeholder so
--- the sequence stays intact; the drop itself lives in 019, where both views
--- are already down.

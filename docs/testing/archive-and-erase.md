@@ -23,10 +23,10 @@ in `apps/e2e/specs/catalog/` — this page is what the code cannot say.
 
 | Rule | Enforced by |
 |------|-------------|
-| Cascade of erase | `on delete cascade`, `006_catalog_uuid_keys.sql` |
-| Refusal while content points at a row | `on delete restrict`, `005`, `033` |
-| Derived `is_archived` | the stats views, `032_soft_delete_catalog.sql` |
-| What counts as content | `climber_content()`, `034_climber_content.sql` |
+| Cascade of erase | `on delete cascade`, `002_catalog.sql` |
+| Refusal while content points at a row | `on delete restrict`, `004`, `005` |
+| Derived `is_archived` | the stats views, `007_views_and_functions.sql` |
+| What counts as content | `climber_content()`, `007_views_and_functions.sql` |
 | Whether the button is offered | `ArchivedItemPanel`, `features/catalogEdit` |
 
 ## Known gaps
@@ -44,10 +44,10 @@ in `apps/e2e/specs/catalog/` — this page is what the code cannot say.
 ## Regression guards
 
 **A deleted photo must take its file with it.** Storage checks `select` before
-it deletes an object, and 023 had dropped every listing policy from the `media`
-bucket, so the delete was answered "not found" and only logged a warning while
-the public URL kept serving the file. Fixed by `037_media_delete_needs_select.sql`
-with a policy scoped to the uploader and admins. Guarded by *the file behind a
+it deletes an object, and the `media` bucket carried no listing policy, so the
+delete was answered "not found" and only logged a warning while the public URL
+kept serving the file. Fixed by `media_select_own` in `006_storage.sql`, scoped
+to the uploader and admins. Guarded by *the file behind a
 deleted photo leaves the bucket*.
 
 **An erased catalog row must take its photos with it.** Its descendants go by a
