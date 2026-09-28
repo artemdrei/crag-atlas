@@ -19,6 +19,11 @@ describe('getInitials', () => {
     expect(getInitials('crag.atlas@gmail.com')).toBe('CA');
   });
 
+  it('trims to one letter for a circle that cannot hold two', () => {
+    expect(getInitials('Stepan Bandera', 1)).toBe('S');
+    expect(getInitials('Crag', 1)).toBe('C');
+  });
+
   it('returns an empty string when there is nothing to take', () => {
     expect(getInitials('')).toBe('');
   });
