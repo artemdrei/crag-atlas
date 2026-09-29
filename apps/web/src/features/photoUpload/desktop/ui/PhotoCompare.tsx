@@ -14,6 +14,7 @@ import { formatBytes } from '@web/shared/lib';
 import { photoFrame } from '@web/shared/theme/photoFrame';
 
 import type { PhotoVersion } from '../../common';
+import { STAGE_HEIGHT, squareStage } from './stage';
 
 interface ViewTransform {
   scale: number;
@@ -56,7 +57,7 @@ export const PhotoCompare = ({ original, compressed }: Props) => {
   };
 
   return (
-    <>
+    <RegionStyled>
       <HintStyled variant="caption" color="text.secondary">
         <Trans>
           Pinch or double-click to zoom — both panes follow the same view.
@@ -81,7 +82,7 @@ export const PhotoCompare = ({ original, compressed }: Props) => {
           onTransform={(state) => mirror(compressedRef, state)}
         />
       </PairStyled>
-    </>
+    </RegionStyled>
   );
 };
 
@@ -135,6 +136,12 @@ const ComparePane = ({
   );
 };
 
+const RegionStyled = styled('div')`
+  display: flex;
+  flex-direction: column;
+  height: ${STAGE_HEIGHT};
+`;
+
 const HintStyled = styled(Typography)`
   display: block;
   margin-bottom: ${({ theme }) => theme.spacing(1)};
@@ -142,7 +149,9 @@ const HintStyled = styled(Typography)`
 
 const PairStyled = styled('div')`
   display: flex;
+  flex: 1 1 auto;
   gap: ${({ theme }) => theme.spacing(1.5)};
+  min-height: 0;
 `;
 
 const PaneStyled = styled('div')`
@@ -152,11 +161,14 @@ const PaneStyled = styled('div')`
   gap: ${({ theme }) => theme.spacing(0.5)};
   /* Without this a wide photo stretches the flex item past its share. */
   min-width: 0;
+  height: 100%;
 `;
+
+const OTHER_ROWS = '78px';
 
 const ViewportStyled = styled('div')`
   position: relative;
-  height: min(52vh, 460px);
+  ${squareStage(OTHER_ROWS)}
   overflow: hidden;
   background: ${({ theme }) => theme.palette.action.hover};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
@@ -177,7 +189,7 @@ const ViewportStyled = styled('div')`
 const ImageStyled = styled('img')`
   display: block;
   max-width: 100%;
-  max-height: min(52vh, 460px);
+  max-height: 100%;
   object-fit: contain;
   ${({ theme }) => photoFrame(theme)}
 `;

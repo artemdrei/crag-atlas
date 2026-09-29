@@ -2,6 +2,8 @@ import { Trans } from '@lingui/react/macro';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
+import { STAGE_HEIGHT, squareStage } from './stage';
+
 export interface Props {
   currentUrl: string;
   nextUrl: string;
@@ -10,7 +12,7 @@ export interface Props {
 export const PhotoSwap = ({ currentUrl, nextUrl }: Props) => (
   <PairStyled>
     <PaneStyled>
-      <Typography variant="subtitle2">
+      <Typography variant="subtitle1">
         <Trans>Current photo</Trans>
       </Typography>
       <ViewportStyled>
@@ -18,7 +20,7 @@ export const PhotoSwap = ({ currentUrl, nextUrl }: Props) => (
       </ViewportStyled>
     </PaneStyled>
     <PaneStyled>
-      <Typography variant="subtitle2" color="primary">
+      <Typography variant="subtitle1">
         <Trans>New photo</Trans>
       </Typography>
       <ViewportStyled>
@@ -32,6 +34,7 @@ const PairStyled = styled('div')`
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: ${({ theme }) => theme.spacing(2)};
+  height: ${STAGE_HEIGHT};
 `;
 
 const PaneStyled = styled('div')`
@@ -39,21 +42,24 @@ const PaneStyled = styled('div')`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(0.5)};
   min-width: 0;
+  height: 100%;
 `;
+
+const LABEL_ROW = '32px';
 
 const ViewportStyled = styled('div')`
   display: flex;
+  ${squareStage(LABEL_ROW)}
   align-items: center;
   justify-content: center;
-  height: min(46vh, 420px);
   overflow: hidden;
   border: 1px solid ${({ theme }) => theme.palette.divider};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
   background: ${({ theme }) => theme.palette.action.hover};
 
   & img {
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
   }
 `;

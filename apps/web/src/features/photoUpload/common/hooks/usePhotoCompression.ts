@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
+import type { SourceRect } from '@web/shared/lib';
 import { imageToWebp } from '@web/shared/lib';
 
 export interface PhotoVersion {
@@ -27,14 +28,12 @@ export interface PhotoCompressionState {
   picks: CompressedPick[];
 }
 
-/**
- * Object URLs rather than data URLs: base64 is a third heavier and a topo is
- * a ten-megapixel photo. Both are revoked when the dialog goes away.
- *
- * One photo at a time, published as each lands: a dozen phone shots decoded at
- * once is a dozen full-size bitmaps in memory.
- */
-export const usePhotoCompression = (files: File[]): PhotoCompressionState => {
+export interface PhotoCompression extends PhotoCompressionState {
+  // Re-read from the file, never from the last result, so crops do not stack.
+  applyCrop: (index: number, crop: SourceRect) => Promise<void>;
+}
+
+export const usePhotoCompression = (files: File[]): PhotoCompression => {
   const [state, setState] = useState<PhotoCompressionState>({
     isCompressing: true,
     picks: []
@@ -73,21 +72,58 @@ export const usePhotoCompression = (files: File[]): PhotoCompressionState => {
     []
   );
 
-  return state;
+  const picksRef = useRef(state.picks);
+  picksRef.current = state.picks;
+
+  const applyCrop = useCallback(
+    async (index: number, crop: SourceRect) => {
+      const file = files[index];
+      const previous = picksRef.current[index]?.comparison;
+
+      if (!file) return;
+
+      setState((current) => ({ ...current, isCompressing: true }));
+
+      const cropped = await compressOne(
+        file,
+        urls.current,
+        crop,
+        previous?.original.url
+      );
+
+      const stale = previous?.compressed.url;
+
+      if (stale) {
+        URL.revokeObjectURL(stale);
+        urls.current = urls.current.filter((url) => url !== stale);
+      }
+
+      setState((current) => ({
+        isCompressing: false,
+        picks: current.picks.map((pick, at) => (at === index ? cropped : pick))
+      }));
+    },
+    [files]
+  );
+
+  return { ...state, applyCrop };
 };
 
 const compressOne = async (
   file: File,
-  urls: string[]
+  urls: string[],
+  crop?: SourceRect,
+  keptOriginalUrl?: string
 ): Promise<CompressedPick> => {
   if (!file.type.startsWith('image/')) return { file, isFailed: true };
 
   try {
-    const photo = await imageToWebp(file);
-    const originalUrl = URL.createObjectURL(file);
+    const photo = await imageToWebp(file, { crop });
+    const originalUrl = keptOriginalUrl ?? URL.createObjectURL(file);
     const compressedUrl = URL.createObjectURL(photo.blob);
 
-    urls.push(originalUrl, compressedUrl);
+    if (!keptOriginalUrl) urls.push(originalUrl);
+    urls.push(compressedUrl);
 
     return {
       file,

@@ -2,6 +2,7 @@ import { type ReactNode, useMemo, useState } from 'react';
 
 import { resolveFailureMessage, toFailure } from '@crag-atlas/utils';
 import { Trans, useLingui } from '@lingui/react/macro';
+import CropIcon from '@mui/icons-material/Crop';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -17,8 +18,10 @@ import {
   formatBytes,
   savedPercent,
   signedPercent,
-  toast
+  toast,
+  useImageCrop
 } from '@web/shared/lib';
+import { ImageCropper } from '@web/shared/ui';
 
 import type { CompressedPick, PhotoComparison } from '../common';
 import {
@@ -28,8 +31,8 @@ import {
   usePhotoCompression
 } from '../common';
 import { PhotoCompare, PhotoSwap } from './ui';
+import { STAGE_HEIGHT } from './ui/stage';
 
-/** The API rejects anything heavier, so the dialog says so before the trip. */
 const MAX_PHOTO_BYTES = 5 * 1024 * 1024;
 
 const ASPECT_TOLERANCE = 0.01;
@@ -67,11 +70,8 @@ interface RegionUpload {
 
 export type Props = TopoUpload | RegionUpload;
 
-/**
- * TypeScript cannot narrow the union on `target.kind` — the discriminant is a
- * level down. This is the one place that says which branch we are in; past it
- * both halves carry real ids instead of a cast.
- */
+// TypeScript cannot narrow the union on `target.kind` — the discriminant is a
+// level down. Past this point both halves carry real ids instead of a cast.
 const isRegionUpload = (props: Props): props is RegionUpload =>
   props.target.kind === 'region';
 
@@ -93,11 +93,10 @@ const UploadPhotoDialog = (props: Props) =>
 
 export default UploadPhotoDialog;
 
-/** A region has one cover, so there is nothing to batch and nothing to skip. */
 const UploadRegionPhoto = ({ target, file, open }: RegionUpload) => {
   const { t } = useLingui();
-  // The compression effect keys off the array, so a fresh `[file]` every render
-  // would restart it forever.
+  // The compression effect keys off the array: a fresh `[file]` every render
+  // restarts it forever.
   const files = useMemo(() => [file], [file]);
 
   const { isPending, replaceRegionPhoto } = useApiReplaceRegionPhoto({
@@ -132,7 +131,6 @@ const UploadRegionPhoto = ({ target, file, open }: RegionUpload) => {
   );
 };
 
-/** A sector takes any number of photos, and replacing one keeps its lines. */
 const UploadTopoPhoto = ({ target, files, replacing, open }: TopoUpload) => {
   const { t } = useLingui();
   const [uploaded, setUploaded] = useState(0);
@@ -163,8 +161,7 @@ const UploadTopoPhoto = ({ target, files, replacing, open }: TopoUpload) => {
       return;
     }
 
-    // One request at a time: a photo's place in the sector is the order it
-    // arrived in, and parallel uploads would shuffle it.
+    // One at a time: a photo's place in the sector is the order it arrived in.
     for (const { comparison: photo } of sendable) {
       await uploadTopo({
         blob: photo.blob,
@@ -205,7 +202,6 @@ interface UploadDialogBodyProps {
   files: File[];
   replacing?: ReplacedTopo;
   title: ReactNode;
-  /** A sector upload words its warnings for many files; a cover does not. */
   isBatch: boolean;
   isBusy: boolean;
   open: boolean;
@@ -227,26 +223,34 @@ const UploadDialogBody = ({
   const { i18n } = useLingui();
   const { closeModal } = useModal();
   const [idxShown, setIdxShown] = useState(0);
+  const [isCropping, setIsCropping] = useState(false);
+  const cropper = useImageCrop();
 
-  const { isCompressing, picks } = usePhotoCompression(files);
+  const { isCompressing, picks, applyCrop } = usePhotoCompression(files);
 
   const close = () => closeModal('UPLOAD_PHOTO');
 
   const shown = picks[Math.min(idxShown, picks.length - 1)];
   const comparison = shown?.comparison;
-  const failed = picks.filter(({ isFailed }) => isFailed).length;
-  const sendable = picks.filter(isSendable);
-  const oversized = picks.filter(
-    (pick) => (pick.comparison?.compressed.bytes ?? 0) > MAX_PHOTO_BYTES
-  ).length;
-  const before = sendable.reduce(
-    (sum, { comparison: photo }) => sum + photo.original.bytes,
-    0
-  );
-  const after = sendable.reduce(
-    (sum, { comparison: photo }) => sum + photo.compressed.bytes,
-    0
-  );
+  const { failed, sendable, oversized, before, after } = useMemo(() => {
+    const sent = picks.filter(isSendable);
+
+    return {
+      failed: picks.filter(({ isFailed }) => isFailed).length,
+      sendable: sent,
+      oversized: picks.filter(
+        (pick) => (pick.comparison?.compressed.bytes ?? 0) > MAX_PHOTO_BYTES
+      ).length,
+      before: sent.reduce(
+        (sum, { comparison: photo }) => sum + photo.original.bytes,
+        0
+      ),
+      after: sent.reduce(
+        (sum, { comparison: photo }) => sum + photo.compressed.bytes,
+        0
+      )
+    };
+  }, [picks]);
   const isUploadingBatch = isBusy && sendable.length > 1;
   const savedAll = savedPercent(before, after);
   const saved = comparison
@@ -259,6 +263,29 @@ const UploadDialogBody = ({
     !!comparison &&
     Math.abs(comparison.ratio - replacing.ratio) / replacing.ratio >
       ASPECT_TOLERANCE;
+
+  const crop = async () => {
+    if (cropper.crop) await applyCrop(idxShown, cropper.crop);
+
+    setIsCropping(false);
+  };
+
+  const cropActions = (
+    <>
+      <Button size="small" color="inherit" onClick={() => setIsCropping(false)}>
+        <Trans>Cancel</Trans>
+      </Button>
+      <Button
+        size="small"
+        variant="outlined"
+        color="inherit"
+        disabled={!cropper.crop}
+        onClick={crop}
+      >
+        <Trans>Apply</Trans>
+      </Button>
+    </>
+  );
 
   const upload = async () => {
     if (sendable.length === 0) return;
@@ -294,7 +321,10 @@ const UploadDialogBody = ({
                     isActive={pick === shown}
                     isFailed={pick.isFailed}
                     aria-label={pick.file.name}
-                    onClick={() => setIdxShown(index)}
+                    onClick={() => {
+                      setIsCropping(false);
+                      setIdxShown(index);
+                    }}
                   >
                     {pick.comparison && (
                       <img src={pick.comparison.compressed.url} alt="" />
@@ -304,7 +334,35 @@ const UploadDialogBody = ({
                 {isCompressing && <CircularProgress size={20} />}
               </PickStripStyled>
             )}
-            {currentUrl ? (
+            <ToolbarStyled>
+              <Button
+                variant="outlined"
+                startIcon={<CropIcon />}
+                disabled={isBusy || isCompressing}
+                onClick={() => setIsCropping((current) => !current)}
+              >
+                {isCropping ? (
+                  <Trans>Keep the whole photo</Trans>
+                ) : (
+                  <Trans>Crop</Trans>
+                )}
+              </Button>
+            </ToolbarStyled>
+            {isCropping ? (
+              <StageStyled>
+                <ImageCropper
+                  src={comparison.original.url}
+                  aspect={cropper.aspect}
+                  position={cropper.position}
+                  zoom={cropper.zoom}
+                  action={cropActions}
+                  onAspectChange={cropper.changeAspect}
+                  onPositionChange={cropper.setPosition}
+                  onZoomChange={cropper.setZoom}
+                  onCropChange={cropper.setCrop}
+                />
+              </StageStyled>
+            ) : currentUrl ? (
               <PhotoSwap
                 currentUrl={currentUrl}
                 nextUrl={comparison.compressed.url}
@@ -315,27 +373,34 @@ const UploadDialogBody = ({
                 compressed={comparison.compressed}
               />
             )}
-            <SummaryStyled variant="body2">
-              <BeforeStyled>
-                {formatBytes(comparison.original.bytes, i18n.locale)}
-              </BeforeStyled>
-              {' → '}
-              <AfterStyled isSmaller={saved >= 0}>
-                {formatBytes(comparison.compressed.bytes, i18n.locale)}
-              </AfterStyled>{' '}
-              <SavedStyled isSmaller={saved >= 0}>
-                {signedPercent(saved)}
-              </SavedStyled>
-              <BeforeStyled>{' · WebP'}</BeforeStyled>
-            </SummaryStyled>
-            {sendable.length > 1 && (
-              <TotalStyled variant="caption" color="text.secondary">
-                <Trans>
-                  All {sendable.length}: {formatBytes(before, i18n.locale)} →{' '}
-                  {formatBytes(after, i18n.locale)} ({signedPercent(savedAll)})
-                </Trans>
-              </TotalStyled>
-            )}
+            {/* Hidden rather than unmounted while cropping: the figures
+                describe the whole photo and say nothing about the part being
+                kept, but dropping them would shrink the dialog under the
+                cursor. */}
+            <FiguresStyled isHidden={isCropping}>
+              <SummaryStyled variant="body2">
+                <BeforeStyled>
+                  {formatBytes(comparison.original.bytes, i18n.locale)}
+                </BeforeStyled>
+                {' → '}
+                <AfterStyled isSmaller={saved >= 0}>
+                  {formatBytes(comparison.compressed.bytes, i18n.locale)}
+                </AfterStyled>{' '}
+                <SavedStyled isSmaller={saved >= 0}>
+                  {signedPercent(saved)}
+                </SavedStyled>
+                <BeforeStyled>{' · WebP'}</BeforeStyled>
+              </SummaryStyled>
+              {sendable.length > 1 && (
+                <TotalStyled variant="caption" color="text.secondary">
+                  <Trans>
+                    All {sendable.length}: {formatBytes(before, i18n.locale)} →{' '}
+                    {formatBytes(after, i18n.locale)} ({signedPercent(savedAll)}
+                    )
+                  </Trans>
+                </TotalStyled>
+              )}
+            </FiguresStyled>
             {oversized > 0 && (
               <Alert severity="error">
                 {isBatch ? (
@@ -386,7 +451,9 @@ const UploadDialogBody = ({
         </Button>
         <Button
           variant="contained"
-          disabled={sendable.length === 0 || isCompressing || isBusy}
+          disabled={
+            sendable.length === 0 || isCompressing || isBusy || isCropping
+          }
           onClick={upload}
         >
           {isUploadingBatch ? (
@@ -411,12 +478,28 @@ type SendablePick = CompressedPick & { comparison: PhotoComparison };
 const isSendable = (pick: CompressedPick): pick is SendablePick =>
   !!pick.comparison && pick.comparison.compressed.bytes <= MAX_PHOTO_BYTES;
 
+const StageStyled = styled('div')`
+  position: relative;
+  height: ${STAGE_HEIGHT};
+`;
+
+const ToolbarStyled = styled('div')`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: ${({ theme }) => theme.spacing(1)};
+  margin-bottom: ${({ theme }) => theme.spacing(1.5)};
+  padding-bottom: ${({ theme }) => theme.spacing(1)};
+  border-bottom: 1px solid ${({ theme }) => theme.palette.divider};
+`;
+
 const PendingStyled = styled('div')`
   display: flex;
   align-items: center;
   justify-content: center;
   gap: ${({ theme }) => theme.spacing(1.5)};
-  height: min(52vh, 460px);
+  height: ${STAGE_HEIGHT};
 `;
 
 const PickStripStyled = styled('div')`
@@ -454,6 +537,12 @@ const PickStyled = styled('button', {
     height: 100%;
     object-fit: cover;
   }
+`;
+
+const FiguresStyled = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'isHidden'
+})<{ isHidden: boolean }>`
+  visibility: ${({ isHidden }) => (isHidden ? 'hidden' : 'visible')};
 `;
 
 const SummaryStyled = styled(Typography)`
