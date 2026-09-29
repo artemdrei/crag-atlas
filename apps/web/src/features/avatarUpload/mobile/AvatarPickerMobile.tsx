@@ -8,6 +8,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
 import { alpha, styled } from '@mui/material/styles';
 
+import { useModal } from '@web/app/providers';
 import { toast } from '@web/shared/lib';
 import { UserAvatar } from '@web/shared/ui';
 
@@ -19,28 +20,21 @@ export interface Props {
   size?: number;
 }
 
-/**
- * The buttons stay visible rather than appearing on hover: a touch screen has
- * no hover, so an affordance that only shows then shows never.
- */
+// Always visible, never on hover: a touch screen has no hover.
 export const AvatarPickerMobile = ({ name, avatarUrl, size = 80 }: Props) => {
   const { t } = useLingui();
-  const { hasPhoto, isPending, pick, remove } = useAvatarActions();
+  const { openModal } = useModal();
+  const { hasPhoto, isPending, remove } = useAvatarActions();
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handlePick = async (file: File) => {
+  const handlePick = (file: File) => {
     if (!isSupportedPhoto(file)) {
       toast.error(t`Only an image can be used as a photo`);
 
       return;
     }
 
-    try {
-      await pick(file);
-      toast.success(t`Your photo has been updated`);
-    } catch (error) {
-      toast.error(resolveFailureMessage(toFailure(error)));
-    }
+    openModal('CROP_AVATAR', { file });
   };
 
   const handleRemove = async () => {

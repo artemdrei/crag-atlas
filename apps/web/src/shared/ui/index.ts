@@ -20,6 +20,7 @@ export { FormActions } from './FormActions';
 export { GradeBadge } from './GradeBadge';
 export { GradeHistogram } from './GradeHistogram';
 export { GridColumnsMenu } from './GridColumnsMenu';
+export { ImageCropper } from './ImageCropper';
 export { MapArea } from './MapArea';
 export { MapCanvas } from './MapCanvas';
 export { MediaBadge } from './MediaBadge';

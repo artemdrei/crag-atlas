@@ -11,14 +11,17 @@ import { AvatarPickerDesktop } from './AvatarPickerDesktop';
 const actions = {
   hasPhoto: false,
   isPending: false,
-  pick: vi.fn(),
   remove: vi.fn()
 };
+
+const openModal = vi.fn();
 
 vi.mock('../common', () => ({
   isSupportedPhoto: (file: File) => file.type.startsWith('image/'),
   useAvatarActions: () => actions
 }));
+
+vi.mock('@web/app/providers', () => ({ useModal: () => ({ openModal }) }));
 
 i18n.load('en', {});
 i18n.activate('en');
@@ -35,11 +38,11 @@ const renderPicker = () =>
 describe('AvatarPickerDesktop', () => {
   beforeEach(() => {
     actions.hasPhoto = false;
-    actions.pick.mockClear();
     actions.remove.mockClear();
+    openModal.mockClear();
   });
 
-  it('hands the chosen file over', () => {
+  it('sends the chosen file to the cropper rather than straight up', () => {
     renderPicker();
 
     const file = new File(['x'], 'face.jpg', { type: 'image/jpeg' });
@@ -47,7 +50,19 @@ describe('AvatarPickerDesktop', () => {
 
     fireEvent.change(input, { target: { files: [file] } });
 
-    expect(actions.pick).toHaveBeenCalledWith(file);
+    expect(openModal).toHaveBeenCalledWith('CROP_AVATAR', { file });
+  });
+
+  it('refuses anything that is not an image before the cropper', () => {
+    renderPicker();
+
+    fireEvent.change(screen.getByLabelText('Choose a photo'), {
+      target: {
+        files: [new File(['x'], 'topo.pdf', { type: 'application/pdf' })]
+      }
+    });
+
+    expect(openModal).not.toHaveBeenCalled();
   });
 
   it('offers removal only once there is a photo to remove', () => {

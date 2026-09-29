@@ -1,12 +1,16 @@
-/** Enough detail for a 5x zoom on a 4K display, and far less than a phone shoots. */
 const MAX_EDGE = 2560;
-/** WebP at this quality is indistinguishable on rock texture at a fraction of the bytes. */
 const QUALITY = 0.82;
+
+export interface SourceRect {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
 
 export interface WebpOptions {
   maxEdge?: number;
-  /** Takes the largest centred square of the source before scaling. */
-  isSquare?: boolean;
+  crop?: SourceRect;
 }
 
 export interface CompressedPhoto {
@@ -18,16 +22,12 @@ export interface CompressedPhoto {
   sourceHeight: number;
 }
 
-/**
- * Canvas rather than a compression library: the whole job is decode, scale,
- * encode, and a dependency for three calls is a dependency to keep updated.
- */
 export const imageToWebp = async (
   file: File,
-  { maxEdge = MAX_EDGE, isSquare = false }: WebpOptions = {}
+  { maxEdge = MAX_EDGE, crop }: WebpOptions = {}
 ): Promise<CompressedPhoto> => {
   const bitmap = await decode(file);
-  const source = isSquare ? centredSquare(bitmap) : fullFrame(bitmap);
+  const source = crop ?? fullFrame(bitmap);
   const scale = Math.min(1, maxEdge / Math.max(source.width, source.height));
   const width = Math.round(source.width * scale);
   const height = Math.round(source.height * scale);
@@ -50,30 +50,12 @@ export const imageToWebp = async (
   };
 };
 
-interface SourceRect {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
-
 const fullFrame = ({ width, height }: ImageBitmap): SourceRect => ({
   x: 0,
   y: 0,
   width,
   height
 });
-
-const centredSquare = ({ width, height }: ImageBitmap): SourceRect => {
-  const edge = Math.min(width, height);
-
-  return {
-    x: Math.round((width - edge) / 2),
-    y: Math.round((height - edge) / 2),
-    width: edge,
-    height: edge
-  };
-};
 
 const decode = async (file: File): Promise<ImageBitmap> => {
   // Without the orientation hint a canvas ignores EXIF, and every photo shot

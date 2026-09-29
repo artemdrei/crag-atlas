@@ -9,7 +9,7 @@ export { formatDateTime } from './formatDateTime';
 export { getInitials } from './getInitials';
 export * from './grade';
 export { gradeKey, toGradeBars } from './gradeBars';
-export type { CompressedPhoto } from './imageToWebp';
+export type { CompressedPhoto, SourceRect } from './imageToWebp';
 export { imageToWebp } from './imageToWebp';
 export { isSafeHttpUrl } from './isSafeHttpUrl';
 export { localNameOf } from './localNameOf';
@@ -36,7 +36,15 @@ export {
 } from './useDebouncedValue';
 export type { GridColumns } from './useGridColumns';
 export { GRID_COLUMN_CHOICES, useGridColumns } from './useGridColumns';
+export type { CropPoint } from './useImageCrop';
+export {
+  MAX_ZOOM,
+  MIN_ZOOM,
+  useImageCrop,
+  ZOOM_STEP
+} from './useImageCrop';
 export { useLatinNames } from './useLatinNames';
+export { useObjectUrl } from './useObjectUrl';
 export { useScrollTopOnNavigate } from './useScrollTopOnNavigate';
 export { useSearchParamFlags } from './useSearchParamFlags';
 export { useSearchParamList } from './useSearchParamList';
