@@ -2,6 +2,8 @@ import type { BoulderGradeScale, RouteGradeScale } from '@crag-atlas/api';
 import { Trans, useLingui } from '@lingui/react/macro';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import Skeleton from '@mui/material/Skeleton';
+import { styled } from '@mui/material/styles';
 
 import {
   BOULDER_GRADE_SCALES,
@@ -15,8 +17,21 @@ import { ProfileSettingRow } from './ProfileSettingRow';
 
 export const GradeScaleSetting = () => {
   const { t } = useLingui();
-  const { gradeScaleRoute, gradeScaleBoulder, isPending, save } =
+  const { gradeScaleRoute, gradeScaleBoulder, isLoading, isPending, save } =
     useGradeScaleSetting();
+
+  if (isLoading) {
+    return (
+      <>
+        <ProfileSettingRow label={<Trans>Grade system — routes</Trans>}>
+          <ControlSkeletonStyled variant="rounded" />
+        </ProfileSettingRow>
+        <ProfileSettingRow label={<Trans>Grade system — boulder</Trans>}>
+          <ControlSkeletonStyled variant="rounded" />
+        </ProfileSettingRow>
+      </>
+    );
+  }
 
   return (
     <>
@@ -24,7 +39,6 @@ export const GradeScaleSetting = () => {
         <Select
           size="small"
           disabled={isPending}
-          // The row's label sits beside the control, not on it.
           inputProps={{ 'aria-label': t`Grade system — routes` }}
           value={gradeScaleRoute}
           onChange={(event) =>
@@ -58,3 +72,9 @@ export const GradeScaleSetting = () => {
     </>
   );
 };
+
+const ControlSkeletonStyled = styled(Skeleton)`
+  flex-shrink: 0;
+  width: 220px;
+  height: 40px;
+`;
