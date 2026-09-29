@@ -43,25 +43,26 @@ const grade: Record<'light' | 'dark', Record<GradeTone, GradeColor>> = {
   }
 };
 
-// Ascent styles read as a scale of cleanliness: the ground-up styles share a
-// green, the rehearsed ones cool down, and an attempt stays amber.
+// Ascent styles are told apart by hue, not by shade: onsight green, flash
+// cyan, retro flash blue, redpoint rose, top rope grey, an attempt amber. A
+// bar stacks them side by side, so two styles a shade apart read as one.
 const ascentType: Record<
   'light' | 'dark',
   Record<AscentTypeTone, GradeColor>
 > = {
   light: {
     onsight: { background: '#2E9E4F', text: '#FFFFFF' },
-    flash: { background: '#2E8E93', text: '#FFFFFF' },
+    flash: { background: '#1F9BB0', text: '#FFFFFF' },
     retro_flash: { background: '#4A6BB5', text: '#FFFFFF' },
-    redpoint: { background: '#6F8F3A', text: '#FFFFFF' },
+    redpoint: { background: '#C0356B', text: '#FFFFFF' },
     toprope: { background: '#8A7F70', text: '#FFFFFF' },
     attempt: { background: '#C98A22', text: '#1A1310' }
   },
   dark: {
     onsight: { background: '#2E4A28', text: '#9FD481' },
-    flash: { background: '#20444A', text: '#62C2C7' },
+    flash: { background: '#16414A', text: '#5FC3DA' },
     retro_flash: { background: '#22304F', text: '#8FB0F0' },
-    redpoint: { background: '#33421F', text: '#B9D481' },
+    redpoint: { background: '#45182C', text: '#F07AA6' },
     toprope: { background: '#2F2A25', text: '#C7BCAE' },
     attempt: { background: '#4A3F22', text: '#E8C55A' }
   }

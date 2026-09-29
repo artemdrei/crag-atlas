@@ -4,16 +4,17 @@ import Typography from '@mui/material/Typography';
 
 import type { AscentTypeTone } from '@web/shared/theme/palette';
 import { resolveAscentTypeInk } from '@web/shared/theme/palette';
-import { ASCENT_TYPES } from '@web/shared/ui';
+import { ASCENT_TYPES, GradeBadge } from '@web/shared/ui';
 
 import type { GradeBar } from '../entities';
 
 export interface Props {
   bars: GradeBar[];
   isCompact?: boolean;
+  className?: string;
 }
 
-export const GradeChart = ({ bars, isCompact }: Props) => {
+export const GradeChart = ({ bars, isCompact, className }: Props) => {
   if (bars.length === 0) {
     return null;
   }
@@ -21,19 +22,19 @@ export const GradeChart = ({ bars, isCompact }: Props) => {
   const top = Math.max(...bars.map(({ total }) => total));
 
   return (
-    <ChartStyled>
+    <ChartStyled className={className}>
       {!isCompact && (
         <TitleStyled variant="overline" color="text.secondary">
           <Trans>All ascents by grade</Trans>
         </TitleStyled>
       )}
-      {bars.map(({ grade, total, counts }) => (
+      {bars.map(({ grade, sourceGrade, scale, total, counts }) => (
         <RowStyled key={grade}>
           <LabelStyled>
-            <GradeStyled variant="body2" noWrap>
-              {grade}
-            </GradeStyled>
-            <CountStyled variant="body2" color="text.secondary">
+            <BadgeStyled>
+              <GradeBadge grade={sourceGrade} scale={scale} />
+            </BadgeStyled>
+            <CountStyled variant="body1" color="text.secondary">
               / {total}
             </CountStyled>
           </LabelStyled>
@@ -72,19 +73,21 @@ const TitleStyled = styled(Typography)`
 const RowStyled = styled('div')`
   display: flex;
   align-items: center;
-  gap: ${({ theme }) => theme.spacing(1.5)};
+  gap: ${({ theme }) => theme.spacing(2)};
 `;
 
 const LabelStyled = styled('div')`
   display: flex;
-  align-items: baseline;
-  justify-content: flex-end;
-  gap: ${({ theme }) => theme.spacing(0.5)};
-  flex: 0 0 ${({ theme }) => theme.spacing(9)};
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing(0.75)};
+  flex: 0 0 auto;
 `;
 
-const GradeStyled = styled(Typography)`
-  font-weight: 700;
+// Both columns are as wide as their longest possible content, so the badges
+// start on one edge and the bars start on another whatever the grades are.
+const BadgeStyled = styled('div')`
+  display: flex;
+  flex: 0 0 ${({ theme }) => theme.spacing(8)};
 `;
 
 const TrackStyled = styled('div')`
@@ -112,5 +115,6 @@ const SegmentStyled = styled('div', {
 `;
 
 const CountStyled = styled(Typography)`
+  flex: 0 0 ${({ theme }) => theme.spacing(5)};
   font-weight: 600;
 `;
