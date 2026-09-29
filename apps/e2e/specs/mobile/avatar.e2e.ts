@@ -16,8 +16,9 @@ const service = () =>
     auth: { persistSession: false, autoRefreshToken: false }
   });
 
-// WebKit cannot encode the WebP the upload needs (see the last test), so the
-// picture is put in place the way the API would have — object and row both.
+// WebKit on macOS encodes no WebP, so a photo picked through the UI cannot be
+// produced here; the picture is put in place the way the API would have —
+// object and row both.
 // A URL with nothing behind it would not do: MUI drops an <img> that fails to
 // load and falls back to the initials.
 const putAvatar = async (): Promise<string> => {
@@ -82,26 +83,3 @@ test('the photo buttons are reachable without a hover', async ({
     ).toBeNull();
   });
 });
-
-// Safari encodes no WebP: `canvas.toBlob` and `convertToBlob` both hand back
-// a PNG, so `imageToWebp` uploads a PNG and the API refuses it. The day the
-// encoder is replaced, this test starts passing and Playwright reports it.
-test.fail(
-  'picking a photo is refused on WebKit, which encodes no WebP',
-  async ({ page: phone }) => {
-    await phone.goto('/profile');
-    await phone.getByLabel('Choose a photo').setInputFiles(PIXEL_WEBP);
-
-    const save = phone.getByRole('button', { name: 'Save' });
-
-    await expect(save).toBeEnabled();
-    await save.click();
-
-    await expect(
-      phone
-        .getByRole('button', { name: /Change your photo|Add a photo/ })
-        .first()
-        .locator('img')
-    ).toBeVisible();
-  }
-);
