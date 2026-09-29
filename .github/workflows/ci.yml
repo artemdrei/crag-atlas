@@ -8,6 +8,12 @@ on:
 jobs:
   checks:
     runs-on: ubuntu-latest
+    # shared/supabase/client.ts throws at import time without these, which
+    # breaks collection of every spec that transitively imports shared/api.
+    # No test reaches Supabase, so placeholders are enough.
+    env:
+      VITE_SUPABASE_URL: http://127.0.0.1:54321
+      VITE_SUPABASE_ANON_KEY: ci-placeholder-anon-key
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
