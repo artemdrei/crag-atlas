@@ -53,6 +53,9 @@ export const TickForm = ({
       ? { id: tick.idPartner, displayName: tick.partnerName }
       : null
   );
+  const [partnerName, setPartnerName] = useState(
+    tick?.idPartner ? '' : (tick?.partnerName ?? '')
+  );
   const [rating, setRating] = useState<number | null>(tick?.rating ?? null);
   const grade = routeGrade ?? tick?.routeGrade ?? '';
   const scale = routeGradeScale ?? tick?.routeGradeScale ?? 'french';
@@ -80,6 +83,7 @@ export const TickForm = ({
         gradeVote: gradeVote || null,
         gradeOpinion: gradeFeel,
         idPartner: partner?.id ?? null,
+        partnerName: partner ? null : partnerName.trim() || null,
         note: note.trim() || null,
         notePrivate
       },
@@ -103,7 +107,9 @@ export const TickForm = ({
           <ClimberPicker
             value={partner}
             label={t`Partner`}
+            name={partnerName}
             onChange={setPartner}
+            onNameChange={setPartnerName}
           />
         </RowStyled>
       </TickFormSection>

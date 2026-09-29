@@ -15,7 +15,12 @@ import {
 } from '@web/app/router/routes';
 import { TickActionsButton } from '@web/features/logTick';
 import { countryName, formatDateTime } from '@web/shared/lib';
-import { AscentTypeBadge, GradeBadge, UserAvatar } from '@web/shared/ui';
+import {
+  AscentTypeBadge,
+  GradeBadge,
+  LocalName,
+  UserAvatar
+} from '@web/shared/ui';
 import { RouteMediaButton } from '@web/widgets/routeMedia';
 
 import type { Tick } from '../entities';
@@ -35,7 +40,6 @@ export interface Props {
 export const TickCard = ({ tick, isCommunity, isGradeHidden }: Props) => {
   const { i18n } = useLingui();
   const { idUser } = useUser();
-  const rating = isCommunity ? tick.routeRating : tick.rating;
   const isMine = !!idUser && idUser === tick.idUser;
   const title = tick.routeName ?? tick.idRoute;
   const places: Place[] = [
@@ -75,6 +79,7 @@ export const TickCard = ({ tick, isCommunity, isGradeHidden }: Props) => {
             <NameRowStyled>
               <Typography variant="h6" noWrap>
                 {title}
+                <LocalName name={title} nameLocal={tick.routeNameLocal} />
               </Typography>
               {!isGradeHidden && tick.routeGrade && (
                 <GradeBadge
@@ -117,6 +122,12 @@ export const TickCard = ({ tick, isCommunity, isGradeHidden }: Props) => {
 
       {tick.note && <Typography variant="body2">{tick.note}</Typography>}
 
+      {tick.partnerName && (
+        <Typography variant="body2" color="text.secondary">
+          <Trans>Belayer</Trans>: {tick.partnerName}
+        </Typography>
+      )}
+
       <AuthorRowStyled>
         {isCommunity && tick.authorName && (
           <>
@@ -133,20 +144,14 @@ export const TickCard = ({ tick, isCommunity, isGradeHidden }: Props) => {
         <Typography variant="body2" color="text.secondary">
           {formatDateTime(tick.createdAt, i18n.locale)}
         </Typography>
-        {!!rating && (
-          <Rating value={rating} precision={0.5} size="small" readOnly />
+        {!!tick.rating && (
+          <Rating value={tick.rating} precision={0.5} size="small" readOnly />
         )}
         <AscentTypeBadge
           ascentType={tick.ascentType}
           attempts={tick.attempts}
         />
       </AuthorRowStyled>
-
-      {tick.partnerName && (
-        <Typography variant="body2" color="text.secondary">
-          <Trans>Belayer</Trans>: {tick.partnerName}
-        </Typography>
-      )}
     </CardStyled>
   );
 };
@@ -215,8 +220,6 @@ const PlaceRowStyled = styled('div')`
   max-width: 100%;
   overflow: hidden;
 
-  /* The trail is one line: a name too long for the card is cut short rather
-     than broken across lines, which would push the row into two. */
   & > * {
     flex: 0 1 auto;
     min-width: 0;

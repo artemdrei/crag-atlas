@@ -2,7 +2,7 @@ import type { Tick, UpdateTick } from '@crag-atlas/api';
 import { resolveFailureMessage, toFailure } from '@crag-atlas/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { apiPatch, QUERY_KEYS } from '@web/shared/api';
+import { apiPatch, invalidateRouteLists, QUERY_KEYS } from '@web/shared/api';
 import { toast } from '@web/shared/lib';
 
 export interface Params {
@@ -23,6 +23,7 @@ export const useApiUpdateTick = ({ idTick, onSaved }: Params) => {
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.climberContents()
       });
+      invalidateRouteLists(queryClient);
       await onSaved();
     },
     onError: (error) => toast.error(resolveFailureMessage(toFailure(error)))
