@@ -34,8 +34,6 @@ import {
   TopoThumbRail
 } from './ui';
 
-/** The trailing group, for routes no photo carries yet. Not a photo, so it is
-    neither a move target nor an option in the photo select. */
 export const REST_GROUP = 'rest';
 
 export interface RouteGroupDraft {
@@ -46,9 +44,8 @@ export interface RouteGroupDraft {
 
 export interface Props {
   sector?: Sector;
-  /** What the server holds, so an edited field can say it differs. */
   savedRoutes: Route[];
-  /** Kept out of the session on purpose — see TopoEditorArchivedRoutes. */
+  // Kept out of the session on purpose — see TopoEditorArchivedRoutes.
   archivedRoutes: Route[];
   editor: TopoEditorSessionApi;
   actions: TopoEditorActions;
@@ -72,8 +69,6 @@ export const TopoEditorDesktop = ({
   const { numberOf, gradeOf, gradeScaleOf, nameOf, colorOf, selectRoute } =
     useTopoEditorDerived(editor);
   const [idHoveredRoute, setIdHoveredRoute] = useState<string>();
-  // The name and description are set once and rarely touched; the route being
-  // drawn is what this column is for.
   const [isSectorOpen, setIsSectorOpen] = useState(false);
 
   const activeTopo = session.idActiveTopo
@@ -83,7 +78,6 @@ export const TopoEditorDesktop = ({
     ? session.routes[session.idSelectedRoute]
     : undefined;
 
-  // The select names photos by position, the same way the list groups them.
   const photoLabel = usePhotoLabel();
 
   const topos = useMemo(
@@ -91,8 +85,6 @@ export const TopoEditorDesktop = ({
     [session.order, session.topos]
   );
 
-  // Same shape as the reader sees: photo by photo, each route in the order it
-  // is numbered on the rock, and whatever is not drawn yet at the end.
   const groups = useMemo(() => {
     const placed = new Set<string>();
     const grouped: RouteGroupDraft[] = [];
@@ -104,8 +96,6 @@ export const TopoEditorDesktop = ({
 
       for (const route of drawn) placed.add(route.id);
 
-      // Every photo gets a heading, empty ones included: an empty group is
-      // where a route is dropped to move it onto that photo.
       grouped.push({
         id: topo.id,
         label: photoLabel(index),
@@ -128,7 +118,6 @@ export const TopoEditorDesktop = ({
     return grouped;
   }, [topos, session.routes, session.routeOrder, numberOf, photoLabel, t]);
 
-  // Every photo is an option; only the trailing "not drawn yet" group is not.
   const photos = groups.filter((group) => group.id !== REST_GROUP);
 
   const idsDirtyRoutes = new Set(dirtyRouteIds(session));
@@ -298,8 +287,6 @@ export const TopoEditorDesktop = ({
   );
 };
 
-// The archive has nothing to select, so the panel that edits a selection
-// leaves and gives its width to the list.
 const LayoutStyled = styled('div', {
   shouldForwardProp: (prop) => prop !== 'isArchiveShown'
 })<{ isArchiveShown: boolean }>`
@@ -333,9 +320,6 @@ const EmptyPhotoStyled = styled('div')`
   justify-content: center;
 `;
 
-// Its own block rather than a heading followed by a rule: the open form ends
-// with a Save of its own, and the panel below opens with a toolbar — without a
-// boundary that belongs to the section, the two rows read as one.
 const SectorSectionStyled = styled('div')`
   display: flex;
   flex-direction: column;
@@ -369,7 +353,7 @@ const ColumnStyled = styled('div')`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(1.5)};
   min-height: 0;
-  overflow-y: auto;
+  overflow: hidden;
   padding: ${({ theme }) => theme.spacing(2)};
   border: 1px solid ${({ theme }) => theme.palette.divider};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;

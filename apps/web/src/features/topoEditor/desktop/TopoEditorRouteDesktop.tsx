@@ -19,15 +19,12 @@ import { TopoEditorRoutePanel, TopoEditStage, TopoThumbRail } from './ui';
 
 export interface Props {
   idRoute: string;
-  /** What the server holds, so an edited field can say it differs. */
   savedRoutes: Route[];
   editor: TopoEditorSessionApi;
   actions: TopoEditorActions;
   onDeleted: () => void;
 }
 
-/** The sector editor narrowed to one route: the photo strip only switches
-    photos, and everything the sector owns is edited there, not here. */
 export const TopoEditorRouteDesktop = ({
   idRoute,
   savedRoutes,
@@ -45,7 +42,6 @@ export const TopoEditorRouteDesktop = ({
     : undefined;
   const route = session.routes[idRoute];
 
-  // Named by position, the same way the sector editor groups them.
   const photoLabel = usePhotoLabel();
 
   const topos = useMemo(
@@ -184,7 +180,7 @@ const ColumnStyled = styled('div')`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(1.5)};
   min-height: 0;
-  overflow-y: auto;
+  overflow: hidden;
   padding: ${({ theme }) => theme.spacing(2)};
   border: 1px solid ${({ theme }) => theme.palette.divider};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
