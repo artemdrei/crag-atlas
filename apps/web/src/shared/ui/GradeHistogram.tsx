@@ -1,18 +1,32 @@
+import { useMemo } from 'react';
+
 import type { ClimbType, GradeHistogramGroup } from '@crag-atlas/api';
 import { Plural, useLingui } from '@lingui/react/macro';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import { toGradeBars, useDisplayGrade } from '@web/shared/lib';
+import { foldGradeBars, toGradeBars, useDisplayGrade } from '@web/shared/lib';
 import type { GradeTone } from '@web/shared/theme/palette';
 
 const COLUMN_WIDTH = 56;
+// A compact column keeps its width instead of sharing the row, so a sector of
+// three grades and one of eight draw bars a reader can compare.
+const COMPACT_COLUMN_WIDTH = 26;
+
+// A compact row scales against at least this many routes, so a sector whose
+// tallest grade holds one route draws a low row instead of a full-height one.
+const COMPACT_REFERENCE = 8;
+const COMPACT_HEIGHT = 40;
+
+const COLUMN_MIN_WIDTH = 22;
+const CROWDED_COLUMNS = 12;
 
 export interface Props {
   group: GradeHistogramGroup;
   selectedGrades?: string[];
   onToggleGrade?: (key: string) => void;
   isCompact?: boolean;
+  maxColumns?: number;
   className?: string;
 }
 
@@ -21,12 +35,20 @@ export const GradeHistogram = ({
   selectedGrades,
   onToggleGrade,
   isCompact,
+  maxColumns,
   className
 }: Props) => {
   const { t } = useLingui();
   const displayGrade = useDisplayGrade();
+  const compact = !!isCompact;
 
-  const bars = toGradeBars(group.grades, displayGrade);
+  // A folded column stands for two grades, and the filter below picks one, so
+  // a histogram that filters is never folded.
+  const bars = useMemo(() => {
+    const all = toGradeBars(group.grades, displayGrade);
+
+    return maxColumns && !onToggleGrade ? foldGradeBars(all, maxColumns) : all;
+  }, [group.grades, displayGrade, maxColumns, onToggleGrade]);
 
   if (bars.length === 0) return null;
 
@@ -36,13 +58,14 @@ export const GradeHistogram = ({
     boulder: t`Bouldering`
   };
   const top = Math.max(...bars.map(({ count }) => count));
+  const labelStep = bars.length > CROWDED_COLUMNS ? 2 : 1;
   const hasFilter = !!selectedGrades && selectedGrades.length > 0;
   const isPicked = (key: string) =>
     !hasFilter || !!selectedGrades?.includes(key);
 
   return (
-    <ChartStyled className={className} isCompact={!!isCompact}>
-      {!isCompact && (
+    <ChartStyled className={className} isCompact={compact}>
+      {!compact && (
         <HeaderRowStyled>
           <TitleStyled variant="overline" color="text.secondary">
             {climbTypeLabel[group.type]}
@@ -58,51 +81,61 @@ export const GradeHistogram = ({
           </Typography>
         </HeaderRowStyled>
       )}
-      <BarsRowStyled isCompact={!!isCompact} columns={bars.length}>
-        {bars.map(({ key, label, tone, count }) => {
-          const cell = (
-            <>
-              <CountStyled variant="caption" noWrap isMuted={!isPicked(key)}>
-                {count}
-              </CountStyled>
-              <BarStyled
-                tone={tone}
-                share={top ? count / top : 0}
-                isCompact={!!isCompact}
-                isMuted={!isPicked(key)}
-              />
-            </>
-          );
+      <ScrollStyled isCompact={compact}>
+        <BarsRowStyled isCompact={compact} columns={bars.length}>
+          {bars.map(({ key, label, tone, count }) => {
+            const cell = (
+              <>
+                <CountStyled variant="caption" noWrap isMuted={!isPicked(key)}>
+                  {count}
+                </CountStyled>
+                <BarStyled
+                  tone={tone}
+                  share={
+                    compact
+                      ? count / Math.max(top, COMPACT_REFERENCE)
+                      : top
+                        ? count / top
+                        : 0
+                  }
+                  isCompact={compact}
+                  isMuted={!isPicked(key)}
+                />
+              </>
+            );
 
-          // A card is itself one big button, so a static histogram must not
-          // put more buttons inside it.
-          return onToggleGrade ? (
-            <BarColumnStyled
-              key={key}
-              type="button"
-              aria-pressed={isPicked(key) && hasFilter}
-              aria-label={label}
-              onClick={(event) => {
-                event.stopPropagation();
-                onToggleGrade(key);
-              }}
-            >
-              {cell}
-            </BarColumnStyled>
-          ) : (
-            <ColumnStyled key={key}>{cell}</ColumnStyled>
-          );
-        })}
-      </BarsRowStyled>
-      <LabelsRowStyled isCompact={!!isCompact} columns={bars.length}>
-        {bars.map(({ label }) => (
-          <ColumnStyled key={label}>
-            <Typography variant="caption" color="text.secondary" noWrap>
-              {label}
-            </Typography>
-          </ColumnStyled>
-        ))}
-      </LabelsRowStyled>
+            // A card is one big button, and buttons cannot nest.
+            return onToggleGrade ? (
+              <BarColumnStyled
+                key={key}
+                type="button"
+                isCompact={compact}
+                aria-pressed={isPicked(key) && hasFilter}
+                aria-label={label}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  onToggleGrade(key);
+                }}
+              >
+                {cell}
+              </BarColumnStyled>
+            ) : (
+              <ColumnStyled key={key} isCompact={compact}>
+                {cell}
+              </ColumnStyled>
+            );
+          })}
+        </BarsRowStyled>
+        <LabelsRowStyled isCompact={compact} columns={bars.length}>
+          {bars.map(({ key, label }, index) => (
+            <ColumnStyled key={key} isCompact={compact}>
+              <Typography variant="caption" color="text.secondary" noWrap>
+                {index % labelStep === 0 ? label : ''}
+              </Typography>
+            </ColumnStyled>
+          ))}
+        </LabelsRowStyled>
+      </ScrollStyled>
     </ChartStyled>
   );
 };
@@ -133,8 +166,11 @@ const BarsRowStyled = styled('div', {
   display: flex;
   align-items: flex-end;
   gap: ${({ theme, isCompact }) => theme.spacing(isCompact ? 0.5 : 1)};
-  max-width: ${({ columns }) => columns * COLUMN_WIDTH}px;
-  padding-bottom: ${({ theme }) => theme.spacing(0.5)};
+  width: ${({ isCompact }) => (isCompact ? 'max-content' : 'auto')};
+  max-width: ${({ columns, isCompact }) =>
+    isCompact ? 'none' : `${columns * COLUMN_WIDTH}px`};
+  padding-bottom: ${({ theme, isCompact }) =>
+    theme.spacing(isCompact ? 0 : 0.5)};
   border-bottom: 1px solid ${({ theme }) => theme.palette.divider};
 `;
 
@@ -143,16 +179,32 @@ const LabelsRowStyled = styled('div', {
 })<{ isCompact: boolean; columns: number }>`
   display: flex;
   gap: ${({ theme, isCompact }) => theme.spacing(isCompact ? 0.5 : 1)};
-  max-width: ${({ columns }) => columns * COLUMN_WIDTH}px;
+  width: ${({ isCompact }) => (isCompact ? 'max-content' : 'auto')};
+  max-width: ${({ columns, isCompact }) =>
+    isCompact ? 'none' : `${columns * COLUMN_WIDTH}px`};
 `;
 
-const ColumnStyled = styled('div')`
+const ScrollStyled = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'isCompact'
+})<{ isCompact: boolean }>`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme, isCompact }) => theme.spacing(isCompact ? 0 : 0.5)};
+  min-width: 0;
+  overflow-x: auto;
+`;
+
+const ColumnStyled = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'isCompact'
+})<{ isCompact?: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: ${({ theme }) => theme.spacing(0.5)};
-  flex: 1 1 0;
-  min-width: 0;
+  flex: ${({ isCompact }) => (isCompact ? '0 0 auto' : '1 1 0')};
+  width: ${({ isCompact }) => (isCompact ? `${COMPACT_COLUMN_WIDTH}px` : 'auto')};
+  min-width: ${({ isCompact }) =>
+    isCompact ? COMPACT_COLUMN_WIDTH : COLUMN_MIN_WIDTH}px;
 `;
 
 const BarColumnStyled = styled(ColumnStyled.withComponent('button'))`
@@ -179,11 +231,16 @@ const BarStyled = styled('div', {
     prop !== 'share' &&
     prop !== 'isCompact' &&
     prop !== 'isMuted'
-})<{ tone: GradeTone; share: number; isCompact: boolean; isMuted: boolean }>`
+})<{
+  tone: GradeTone;
+  share: number;
+  isCompact: boolean;
+  isMuted: boolean;
+}>`
   width: 100%;
   height: ${({ share, isCompact }) =>
     isCompact
-      ? `${Math.max(share * 20, 4)}px`
+      ? `${Math.max(share * COMPACT_HEIGHT, 4)}px`
       : `${Math.max(share * 72, 6)}px`};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px
     ${({ theme }) => theme.shape.borderRadius}px 0 0;

@@ -7,6 +7,8 @@ import Typography from '@mui/material/Typography';
 import { coordsOf, countryName } from '@web/shared/lib';
 import { DirectionsButton, GradeHistogram } from '@web/shared/ui';
 
+const MAX_COLUMNS = 10;
+
 export interface Props {
   region: Region;
   onOpen: () => void;
@@ -35,7 +37,12 @@ export const RegionPointCard = ({ region, onOpen }: Props) => {
         />
       </Typography>
       {region.gradeHistogram.map((group) => (
-        <HistogramStyled key={group.type} group={group} isCompact />
+        <HistogramStyled
+          key={group.type}
+          group={group}
+          isCompact
+          maxColumns={MAX_COLUMNS}
+        />
       ))}
       <ActionsStyled>
         <Button variant="contained" size="small" onClick={onOpen}>
@@ -65,7 +72,11 @@ const CardStyled = styled('div')`
   align-items: flex-start;
   gap: ${({ theme }) => theme.spacing(0.5)};
   padding: ${({ theme }) => theme.spacing(2)};
-  width: ${({ theme }) => theme.spacing(38)};
+  /* A length, not a percentage: this card's max-content sizes its own
+     absolutely-positioned parent. */
+  width: max-content;
+  min-width: ${({ theme }) => theme.spacing(44)};
+  max-width: ${({ theme }) => theme.spacing(68)};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
   border: 1px solid ${({ theme }) => theme.palette.divider};
   background-color: ${({ theme }) => theme.palette.background.paper};

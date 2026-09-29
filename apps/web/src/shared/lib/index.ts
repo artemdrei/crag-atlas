@@ -2,6 +2,7 @@ export { buildDirectionsUrl } from './buildDirectionsUrl';
 export { coordsOf } from './coordsOf';
 export { countryCodes, countryName } from './countries';
 export { digitsOnly } from './digitsOnly';
+export { foldGradeBars } from './foldGradeBars';
 export { formatBytes, savedPercent, signedPercent } from './formatBytes';
 export { formatCoords } from './formatCoords';
 export { formatDateTime } from './formatDateTime';
