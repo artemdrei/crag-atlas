@@ -77,6 +77,9 @@ test('an ascent is logged, edited and taken back', async ({
       .fill('Went first go, actually');
     await dialog.getByRole('button', { name: 'Save' }).click();
 
+    // The dialog fades out, and until it has the comment is on screen twice:
+    // once in the logbook, once still in the textarea it was typed into.
+    await expect(dialog).toBeHidden();
     await expect(browser.getByText('Went first go, actually')).toBeVisible();
   });
 
