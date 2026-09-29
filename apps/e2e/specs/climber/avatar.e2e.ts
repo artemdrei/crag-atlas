@@ -4,14 +4,6 @@ import { expect, test } from '@playwright/test';
 import { member, PIXEL_WEBP } from '../../fixtures/apiClient';
 import { STORAGE_STATE_MEMBER } from '../../setup/storageState';
 
-/**
- * The picture a climber puts on themselves. The account is the ordinary
- * member's: the admin's face is the one half the suite renders next to ticks
- * and comments, and a run that died mid-scenario would leave it changed.
- *
- * "EM" is what `getInitials` makes of e2e-member@crag-atlas.test, and the
- * alt text is the email because these accounts carry no provider name.
- */
 test.describe.configure({ mode: 'serial' });
 
 test.use({ storageState: STORAGE_STATE_MEMBER });
@@ -21,12 +13,25 @@ const INITIALS = 'EM';
 const picker = (page: Page): Locator =>
   page.getByRole('button', { name: /Change your photo|Add a photo/ }).first();
 
-// The tag, not the role: while the upload is in flight the trigger holds a
-// spinner, and Playwright reads an <svg> as role "img" too.
+// The tag, not the role: Playwright reads the in-flight spinner's <svg> as
+// role "img" too.
 const headerAvatar = (page: Page): Locator =>
   page.getByRole('link', { name: 'Profile' }).locator('img');
 
 const profileAvatar = (page: Page): Locator => picker(page).locator('img');
+
+// react-easy-crop reports the crop area only once it has measured the image,
+// so Save is waited for rather than clicked blind.
+const chooseAndSave = async (page: Page): Promise<void> => {
+  await page.getByLabel('Choose a photo').setInputFiles(PIXEL_WEBP);
+
+  const dialog = page.getByRole('dialog');
+  const save = dialog.getByRole('button', { name: 'Save' });
+
+  await expect(save).toBeEnabled();
+  await save.click();
+  await expect(dialog).toHaveCount(0);
+};
 
 const srcOf = async (image: Locator): Promise<string> => {
   const src = await image.getAttribute('src');
@@ -53,7 +58,7 @@ test('a climber sets, replaces and removes their photo', async ({ page }) => {
   });
 
   await test.step('a chosen photo becomes the avatar', async () => {
-    await page.getByLabel('Choose a photo').setInputFiles(PIXEL_WEBP);
+    await chooseAndSave(page);
 
     await expect(profileAvatar(page)).toBeVisible();
 
@@ -66,8 +71,6 @@ test('a climber sets, replaces and removes their photo', async ({ page }) => {
     await expect(headerAvatar(page)).toHaveAttribute('src', first);
   });
 
-  // The session metadata would have answered with the provider's picture, so
-  // surviving a reload is what says the avatar is read from `/me`.
   await test.step('and a reload still finds it', async () => {
     await page.reload();
 
@@ -75,13 +78,13 @@ test('a climber sets, replaces and removes their photo', async ({ page }) => {
   });
 
   await test.step('a second photo replaces the first', async () => {
-    await page.getByLabel('Choose a photo').setInputFiles(PIXEL_WEBP);
+    await chooseAndSave(page);
 
     await expect(profileAvatar(page)).not.toHaveAttribute('src', first);
   });
 
   // A public bucket serves its bytes to anyone who ever saw the URL, so the
-  // object behind the replaced picture has to be gone, not just unreferenced.
+  // replaced object has to be gone, not just unreferenced.
   await test.step('and the replaced one stops being served', async () => {
     await expect
       .poll(async () => (await page.request.get(first)).status(), {
@@ -105,7 +108,7 @@ test('a climber sets, replaces and removes their photo', async ({ page }) => {
   });
 });
 
-test('a file that is not an image is refused before it is sent', async ({
+test('a file that is not an image never reaches the cropper', async ({
   page
 }) => {
   await page.goto('/profile');
@@ -119,6 +122,7 @@ test('a file that is not an image is refused before it is sent', async ({
   await expect(
     page.getByText('Only an image can be used as a photo')
   ).toBeVisible();
+  await expect(page.getByRole('dialog')).toHaveCount(0);
 
   const me = await member.get<{ avatarUrl: string | null }>('/me');
 

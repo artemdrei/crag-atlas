@@ -7,11 +7,6 @@ import { member, PIXEL_WEBP } from '../../fixtures/apiClient';
 import { env } from '../../setup/env';
 import { STORAGE_STATE_MEMBER } from '../../setup/storageState';
 
-/**
- * The same picture on a phone. A touch screen has no hover, so the two
- * buttons the desktop reveals under the avatar have to be reachable straight
- * away — that, and not the upload itself, is what this spec is for.
- */
 test.describe.configure({ mode: 'serial' });
 
 test.use({ storageState: STORAGE_STATE_MEMBER });
@@ -21,13 +16,10 @@ const service = () =>
     auth: { persistSession: false, autoRefreshToken: false }
   });
 
-/**
- * WebKit cannot encode the WebP the upload needs (see the last test), so the
- * picture is put in place the way the API would have — object and row both,
- * since the remove button deletes the one the path names. A URL with nothing
- * behind it would not do: MUI drops an <img> that fails to load and falls
- * back to the initials.
- */
+// WebKit cannot encode the WebP the upload needs (see the last test), so the
+// picture is put in place the way the API would have — object and row both.
+// A URL with nothing behind it would not do: MUI drops an <img> that fails to
+// load and falls back to the initials.
 const putAvatar = async (): Promise<string> => {
   const { idUser } = await member.get<{ idUser: string }>('/me');
   const path = `${idUser}/phone-fixture.webp`;
@@ -91,19 +83,19 @@ test('the photo buttons are reachable without a hover', async ({
   });
 });
 
-/**
- * Safari encodes no WebP: `canvas.toBlob(…, 'image/webp')` and
- * `OffscreenCanvas.convertToBlob({ type: 'image/webp' })` both hand back a
- * PNG, so `imageToWebp` uploads a PNG and the API refuses it. This is not the
- * avatar's bug — every photo upload in the app goes through the same helper —
- * but the avatar is where the suite first walks into it. The day the encoder
- * is replaced, this test starts passing and Playwright reports it.
- */
+// Safari encodes no WebP: `canvas.toBlob` and `convertToBlob` both hand back
+// a PNG, so `imageToWebp` uploads a PNG and the API refuses it. The day the
+// encoder is replaced, this test starts passing and Playwright reports it.
 test.fail(
   'picking a photo is refused on WebKit, which encodes no WebP',
   async ({ page: phone }) => {
     await phone.goto('/profile');
     await phone.getByLabel('Choose a photo').setInputFiles(PIXEL_WEBP);
+
+    const save = phone.getByRole('button', { name: 'Save' });
+
+    await expect(save).toBeEnabled();
+    await save.click();
 
     await expect(
       phone
