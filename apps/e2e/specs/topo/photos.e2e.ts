@@ -11,11 +11,6 @@ import {
 } from '../../fixtures/catalog';
 import { confirm, editorPath, thumbAction } from '../../fixtures/ui';
 
-/**
- * The photos a sector is drawn on. They are uploaded from the browser, which
- * compresses them to WebP on the way, and deleting one takes the lines drawn
- * on it with it.
- */
 test.describe.configure({ mode: 'serial' });
 
 let region: Row;
@@ -43,9 +38,8 @@ test('a sector without a photo asks for one, and takes it', async ({
   ).toBeVisible();
 
   await test.step('pick a file and confirm the upload', async () => {
-    // The rail opens a real file chooser, so the file is handed to that
-    // rather than pushed into a hidden input: only the click tells the editor
-    // which photo the file is for.
+    // Handed to the real file chooser rather than pushed into a hidden input:
+    // only the click tells the editor which photo the file is for.
     const chooser = page.waitForEvent('filechooser');
 
     await page.getByRole('button', { name: 'Add photo' }).first().click();
@@ -76,8 +70,8 @@ test('replacing a photo that carries lines says what happens to them', async ({
   ]);
 
   await page.goto(editorPath(region.id, sector.id));
-  // The thumbnail reveals its actions on hover, and only the click on them
-  // tells the rail which photo is being replaced.
+  // Only the click on the thumbnail's actions tells the rail which photo is
+  // being replaced.
   await page.getByRole('img', { name: 'Photo 1' }).last().hover();
 
   const chooser = page.waitForEvent('filechooser');
@@ -119,5 +113,42 @@ test('deleting a photo names the routes whose lines go with it', async ({
     const routes = await api.get<Row[]>(`/sectors/${sector.id}/routes`);
 
     expect(routes.map(({ id }) => id)).toContain(route.id);
+  });
+});
+
+test('a photo can be cropped to a preset shape before it is sent', async ({
+  page
+}) => {
+  const square = await makeSector(region.id, 'Photos-Cropped-Sector');
+
+  await page.goto(editorPath(region.id, square.id));
+
+  const chooser = page.waitForEvent('filechooser');
+
+  await page.getByRole('button', { name: 'Add photo' }).first().click();
+  await (await chooser).setFiles(WALL_WEBP);
+
+  const dialog = page.getByRole('dialog');
+
+  await expect(dialog.getByText('1600×1200').first()).toBeVisible();
+  await expect(dialog.getByText(/(\d+)×\1\b/)).toHaveCount(0);
+
+  await test.step('a square preset makes the frame square', async () => {
+    await dialog.getByRole('button', { name: 'Crop', exact: true }).click();
+    await dialog.getByRole('button', { name: '1:1', exact: true }).click();
+    await dialog.getByRole('button', { name: 'Apply' }).click();
+
+    await expect(dialog.getByText(/(\d+)×\1\b/)).toBeVisible();
+  });
+
+  await test.step('and what is sent is the cropped photo', async () => {
+    await confirm(page, 'Upload');
+    await expect(page.getByText('Photo uploaded')).toBeVisible();
+
+    const [topo] = await api.get<{ width: number; height: number }[]>(
+      `/sectors/${square.id}/topos`
+    );
+
+    expect(topo?.width).toBe(topo?.height);
   });
 });
