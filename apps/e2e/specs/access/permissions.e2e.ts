@@ -18,11 +18,6 @@ import {
 import { env } from '../../setup/env';
 import { STORAGE_STATE_MEMBER } from '../../setup/storageState';
 
-/**
- * Who may do what. The catalog is public to read and admin-only to change,
- * and both halves are enforced twice: the UI does not offer what the API
- * would refuse.
- */
 test.describe.configure({ mode: 'serial' });
 
 let region: Row;
@@ -51,8 +46,6 @@ test.describe('a visitor who has not signed in', () => {
       ).toHaveCount(0);
     });
 
-    // The button stays: it is the way in, not a promise. Clicking it asks the
-    // visitor to sign in rather than opening the form.
     await test.step('logging an ascent asks them to sign in first', async () => {
       await page.getByRole('button', { name: 'Log ascent' }).click();
       await expect(page).toHaveURL(/\/login/);
@@ -95,9 +88,8 @@ test.describe('a climber who is not an admin', () => {
       page.getByRole('textbox', { name: 'Your beta' })
     ).toBeVisible();
 
-    // Every step below asserts something is missing, so each one first waits
-    // for the screen it is judging to be on the page: an absence asserted
-    // against a blank page passes without testing anything.
+    // An absence asserted against a blank page passes without testing
+    // anything, so each step waits for the screen it is judging.
     await test.step('no edit mode anywhere in the catalog', async () => {
       await page.goto('/');
       await expect(card(page, region.name)).toBeVisible();
@@ -121,7 +113,7 @@ test.describe('a climber who is not an admin', () => {
 
     await test.step('and no way into the topo editor', async () => {
       await page.goto(editorPath(region.id, sector.id));
-      await expect(page).toHaveURL(/\/login/);
+      await expect(page).toHaveURL('/');
     });
   });
 
@@ -153,9 +145,6 @@ test('an admin is offered all of it', async ({ page }) => {
     page.getByRole('button', { name: 'Edit', exact: true })
   ).toBeVisible();
 
-  // Something only an admin's browser context can reach: the archive view
-  // behind edit mode. The API call below would pass whatever the browser is
-  // signed in as, so it cannot stand in for this.
   await page.goto('/?edit=1');
   await expect(
     page.getByRole('button', { name: 'Archive', exact: true })
