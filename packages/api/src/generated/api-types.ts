@@ -196,6 +196,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/regions/{idRegion}/sectors/ticked": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["SectorsController_findTicked"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/sectors/{idSector}": {
         parameters: {
             query?: never;
@@ -284,6 +300,22 @@ export interface paths {
             cookie?: never;
         };
         get: operations["RoutesController_findArchived"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/sectors/{idSector}/routes/ticked": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["RoutesController_findTicked"];
         put?: never;
         post?: never;
         delete?: never;
@@ -768,6 +800,11 @@ export interface components {
             /** @description Deleted directly, so restoring this row is what brings it back */
             isDeleted: boolean;
         };
+        SectorTickCountDto: {
+            idSector: string;
+            /** @description Routes the climber has ticked in this sector */
+            tickedCount: number;
+        };
         CreateSectorDto: {
             name: string;
             /** @description The name in its own writing system; null when there is none */
@@ -907,6 +944,7 @@ export interface components {
             idRegion?: string | null;
             /** @description Resolved from the route catalog; null if the route is gone */
             routeName?: string | null;
+            routeNameLocal?: string | null;
             routeGrade?: string | null;
             /**
              * @description System routeGrade is written in
@@ -930,6 +968,7 @@ export interface components {
             /** @description A private note is empty for everyone else */
             notePrivate: boolean;
             idPartner?: string | null;
+            /** @description The linked climber, or the name written by hand */
             partnerName?: string | null;
             authorName?: string | null;
             avatarUrl?: string | null;
@@ -979,6 +1018,8 @@ export interface components {
             /** @enum {string|null} */
             gradeOpinion?: "soft" | "neutral" | "hard" | null;
             idPartner?: string | null;
+            /** @description A belayer with no account here; ignored when idPartner is set */
+            partnerName?: string | null;
             gradeVote?: string | null;
             notePrivate?: boolean;
         };
@@ -993,6 +1034,8 @@ export interface components {
             /** @enum {string|null} */
             gradeOpinion?: "soft" | "neutral" | "hard" | null;
             idPartner?: string | null;
+            /** @description A belayer with no account here; ignored when idPartner is set */
+            partnerName?: string | null;
             gradeVote?: string | null;
             notePrivate?: boolean;
         };
@@ -1479,6 +1522,27 @@ export interface operations {
             };
         };
     };
+    SectorsController_findTicked: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idRegion: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SectorTickCountDto"][];
+                };
+            };
+        };
+    };
     SectorController_findOne: {
         parameters: {
             query?: never;
@@ -1676,6 +1740,27 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["RouteDto"][];
+                };
+            };
+        };
+    };
+    RoutesController_findTicked: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idSector: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string[];
                 };
             };
         };

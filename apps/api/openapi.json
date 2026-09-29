@@ -479,6 +479,37 @@
         "tags": ["Sectors"]
       }
     },
+    "/regions/{idRegion}/sectors/ticked": {
+      "get": {
+        "operationId": "SectorsController_findTicked",
+        "parameters": [
+          {
+            "name": "idRegion",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SectorTickCountDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Sectors"]
+      }
+    },
     "/sectors/{idSector}": {
       "get": {
         "operationId": "SectorController_findOne",
@@ -775,6 +806,37 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/RouteDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Routes"]
+      }
+    },
+    "/sectors/{idSector}/routes/ticked": {
+      "get": {
+        "operationId": "RoutesController_findTicked",
+        "parameters": [
+          {
+            "name": "idSector",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
                   }
                 }
               }
@@ -2203,6 +2265,19 @@
           "isDeleted"
         ]
       },
+      "SectorTickCountDto": {
+        "type": "object",
+        "properties": {
+          "idSector": {
+            "type": "string"
+          },
+          "tickedCount": {
+            "type": "number",
+            "description": "Routes the climber has ticked in this sector"
+          }
+        },
+        "required": ["idSector", "tickedCount"]
+      },
       "CreateSectorDto": {
         "type": "object",
         "properties": {
@@ -2631,6 +2706,10 @@
             "nullable": true,
             "description": "Resolved from the route catalog; null if the route is gone"
           },
+          "routeNameLocal": {
+            "type": "string",
+            "nullable": true
+          },
           "routeGrade": {
             "type": "string",
             "nullable": true
@@ -2710,7 +2789,8 @@
           },
           "partnerName": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "description": "The linked climber, or the name written by hand"
           },
           "authorName": {
             "type": "string",
@@ -2891,6 +2971,11 @@
             "type": "string",
             "nullable": true
           },
+          "partnerName": {
+            "type": "string",
+            "nullable": true,
+            "description": "A belayer with no account here; ignored when idPartner is set"
+          },
           "gradeVote": {
             "type": "string",
             "nullable": true
@@ -2939,6 +3024,11 @@
           "idPartner": {
             "type": "string",
             "nullable": true
+          },
+          "partnerName": {
+            "type": "string",
+            "nullable": true,
+            "description": "A belayer with no account here; ignored when idPartner is set"
           },
           "gradeVote": {
             "type": "string",

@@ -37,6 +37,7 @@ export type UpdateRegion = components['schemas']['UpdateRegionDto'];
 export type CreateRegion = components['schemas']['CreateRegionDto'];
 export type UpdateSector = components['schemas']['UpdateSectorDto'];
 export type CreateSector = components['schemas']['CreateSectorDto'];
+export type SectorTickCount = components['schemas']['SectorTickCountDto'];
 export type UpdateRoute = components['schemas']['UpdateRouteDto'];
 export type CreateRoute = components['schemas']['CreateRouteDto'];
 export type ReorderTopos = components['schemas']['ReorderToposDto'];
