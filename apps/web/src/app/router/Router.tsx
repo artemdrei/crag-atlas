@@ -11,19 +11,33 @@ export const LayoutWithSidebar = () => <AppLayoutDesktop />;
 
 export const LayoutWithMobileBottomNavigation = () => <AppLayoutMobile />;
 
-export const ProtectedRoute = ({
-  requiredRole,
-  children
-}: {
-  requiredRole: Role;
-  children: React.ReactNode;
-}) => {
-  const { hasRole, isLoading } = useUser();
-  const location = useLocation();
+export const GuestOnlyRoute = ({ children }: { children: React.ReactNode }) => {
+  const { isAuthenticated, isLoading } = useUser();
 
   if (isLoading) return null;
 
-  if (!hasRole(requiredRole)) {
+  if (isAuthenticated) return <Navigate to={ROUTES.INDEX} replace />;
+
+  return children;
+};
+
+// A signed-in visitor without the role goes to the catalog, not to login:
+// `GuestOnlyRoute` would bounce them straight back off it.
+export const ProtectedRoute = ({
+  requiredRole,
+  skeleton,
+  children
+}: {
+  requiredRole: Role;
+  skeleton?: React.ReactNode;
+  children: React.ReactNode;
+}) => {
+  const { hasRole, isAuthenticated, isLoading } = useUser();
+  const location = useLocation();
+
+  if (isLoading) return skeleton ?? null;
+
+  if (!isAuthenticated) {
     return (
       <Navigate
         to={ROUTES.LOGIN}
@@ -32,6 +46,8 @@ export const ProtectedRoute = ({
       />
     );
   }
+
+  if (!hasRole(requiredRole)) return <Navigate to={ROUTES.INDEX} replace />;
 
   return children;
 };

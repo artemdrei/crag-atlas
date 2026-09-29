@@ -9,14 +9,9 @@ import { ThemeModeProvider } from '@web/shared/theme/ThemeModeProvider';
 
 import { AppToastProvider } from './AppToastProvider';
 import { EditModeProvider, useEditMode } from './EditModeProvider';
-import type { ModalRegistration } from './modalProvider';
-import { ModalProvider } from './modalProvider';
 import { UserProvider } from './UserProvider';
 
 export interface Props {
-  // Device-specific: App.tsx picks the desktop or mobile set, so no component
-  // below has to re-check the device.
-  modalRegistrations: ModalRegistration[];
   children: React.ReactNode;
 }
 
@@ -28,7 +23,7 @@ const ThemedApp = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export const AppProviders = ({ modalRegistrations, children }: Props) => {
+export const AppProviders = ({ children }: Props) => {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -43,11 +38,7 @@ export const AppProviders = ({ modalRegistrations, children }: Props) => {
         <EditModeProvider>
           <ThemedApp>
             <AppToastProvider>
-              <UserProvider>
-                <ModalProvider registrations={modalRegistrations}>
-                  {children}
-                </ModalProvider>
-              </UserProvider>
+              <UserProvider>{children}</UserProvider>
             </AppToastProvider>
           </ThemedApp>
         </EditModeProvider>

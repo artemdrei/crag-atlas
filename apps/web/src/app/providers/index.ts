@@ -11,7 +11,7 @@ export type {
   ModalPayloadMap,
   ModalRegistration
 } from './modalProvider';
-export { useModal } from './modalProvider';
+export { ModalProvider, useModal } from './modalProvider';
 export type { Role } from './UserProvider';
 export { useUser } from './UserProvider';
 export { useProfileIdentity } from './useProfileIdentity';
