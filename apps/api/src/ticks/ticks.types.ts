@@ -59,6 +59,9 @@ export class TickDto {
   routeName?: string | null;
 
   @ApiProperty({ type: String, required: false, nullable: true })
+  routeNameLocal?: string | null;
+
+  @ApiProperty({ type: String, required: false, nullable: true })
   routeGrade?: string | null;
 
   @ApiProperty({
@@ -110,7 +113,12 @@ export class TickDto {
   @ApiProperty({ type: String, required: false, nullable: true })
   idPartner?: string | null;
 
-  @ApiProperty({ type: String, required: false, nullable: true })
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description: 'The linked climber, or the name written by hand'
+  })
   partnerName?: string | null;
 
   @ApiProperty({ type: String, required: false, nullable: true })
@@ -170,6 +178,15 @@ export class CreateTickDto {
 
   @ApiProperty({ type: String, required: false, nullable: true })
   idPartner?: string | null;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description: 'A belayer with no account here; ignored when idPartner is set'
+  })
+  partnerName?: string | null;
+
   @ApiProperty({ type: String, required: false, nullable: true })
   gradeVote?: string | null;
 
@@ -197,6 +214,15 @@ export class UpdateTickDto {
 
   @ApiProperty({ type: String, required: false, nullable: true })
   idPartner?: string | null;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description: 'A belayer with no account here; ignored when idPartner is set'
+  })
+  partnerName?: string | null;
+
   @ApiProperty({ type: String, required: false, nullable: true })
   gradeVote?: string | null;
 

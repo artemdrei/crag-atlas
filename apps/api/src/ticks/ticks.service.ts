@@ -43,7 +43,7 @@ interface TickPageIds {
 // The catalog rows come back embedded through the ticks → routes → sectors
 // foreign keys, so a logbook page is one query, not one per tick.
 const COLUMNS =
-  '*, routes (id_sector, name, grade, grade_scale, sectors (name, id_region, regions (name, country))), users!ticks_id_user_fkey (display_name, avatar_url), partner:users!ticks_id_partner_fkey (display_name), route_media (id, kind, url, storage_path)';
+  '*, routes (id_sector, name, name_local, grade, grade_scale, sectors (name, id_region, regions (name, country))), users!ticks_id_user_fkey (display_name, avatar_url), partner:users!ticks_id_partner_fkey (display_name), route_media (id, kind, url, storage_path)';
 
 const PAGE_SIZE = 100;
 const MAX_PAGE_SIZE = 200;
@@ -63,6 +63,7 @@ interface TickRow {
   routes: {
     id_sector: string;
     name: string;
+    name_local: string | null;
     grade: string;
     grade_scale: GradeScale;
     sectors: {
@@ -76,6 +77,7 @@ interface TickRow {
   grade_vote: string | null;
   note_private: boolean;
   id_partner: string | null;
+  partner_name: string | null;
   users: { display_name: string; avatar_url: string | null } | null;
   partner: { display_name: string } | null;
   route_media: {
@@ -356,7 +358,10 @@ const toTickColumns = (payload: CreateTickDto | UpdateTickDto) => ({
   grade_opinion: payload.gradeOpinion ?? null,
   grade_vote: payload.gradeVote ?? null,
   note_private: payload.notePrivate ?? false,
-  id_partner: payload.idPartner ?? null
+  id_partner: payload.idPartner ?? null,
+  // A linked climber carries their own name, so the two never both hold one —
+  // the database refuses the row that tries.
+  partner_name: payload.idPartner ? null : payload.partnerName?.trim() || null
 });
 
 // A private note must never leave the API for anyone but its author: the
@@ -428,6 +433,7 @@ const toTickDto = (
   idSector: row.routes?.id_sector ?? null,
   idRegion: row.routes?.sectors?.id_region ?? null,
   routeName: row.routes?.name ?? null,
+  routeNameLocal: row.routes?.name_local ?? null,
   routeGrade: row.routes?.grade ?? null,
   routeGradeScale: row.routes?.grade_scale ?? null,
   sectorName: row.routes?.sectors?.name ?? null,
@@ -442,7 +448,7 @@ const toTickDto = (
   gradeOpinion: row.grade_opinion,
   gradeVote: row.grade_vote,
   idPartner: row.id_partner,
-  partnerName: row.partner?.display_name ?? null,
+  partnerName: row.partner?.display_name ?? row.partner_name ?? null,
   authorName: row.users?.display_name ?? null,
   avatarUrl: row.users?.avatar_url ?? null,
   routeRating: marks?.rating ?? null,
