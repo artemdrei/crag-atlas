@@ -5,6 +5,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
+import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 
 import { MIN_SEARCH_LENGTH } from '../lib';
@@ -27,7 +28,7 @@ export const CatalogSearchField = ({ value, onChange, onFocus }: Props) => {
   };
 
   return (
-    <TextField
+    <FieldStyled
       fullWidth
       size="small"
       value={value}
@@ -66,3 +67,10 @@ export const CatalogSearchField = ({ value, onChange, onFocus }: Props) => {
     />
   );
 };
+
+const FieldStyled = styled(TextField)`
+  .MuiFormHelperText-root {
+    margin-top: ${({ theme }) => theme.spacing(0.25)};
+    line-height: 1.2;
+  }
+`;
