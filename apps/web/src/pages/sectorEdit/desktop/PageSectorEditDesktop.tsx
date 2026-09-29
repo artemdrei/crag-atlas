@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import type { Route } from '@crag-atlas/api';
-import { Plural, Trans } from '@lingui/react/macro';
+import { Plural } from '@lingui/react/macro';
 
 import { useEditModeWhileMounted, useModal } from '@web/app/providers';
 import { buildSectorPath } from '@web/app/router/routes';
@@ -14,7 +14,12 @@ import {
   useTopoEditorSession
 } from '@web/features/topoEditor';
 import { useSearchParamFlags, useWarnOnUnload } from '@web/shared/lib';
-import { ApiFeedback, ArchivedToggle, EditorPageShell } from '@web/shared/ui';
+import {
+  ApiFeedback,
+  ArchivedToggle,
+  EditorPageShell,
+  ListSkeleton
+} from '@web/shared/ui';
 
 import { useSectorEditorData } from '../common';
 
@@ -92,11 +97,8 @@ export const PageSectorEditDesktop = () => {
       }
       onLeave={leave}
     >
-      <ApiFeedback
-        isLoading={isLoading}
-        failure={failure}
-        loadingLabel={<Trans>Loading the sector…</Trans>}
-      />
+      <ApiFeedback failure={failure} />
+      {isLoading && <ListSkeleton count={4} variant="row" />}
       {!isLoading && !failure && (
         <TopoEditorDesktop
           sector={sector ?? undefined}

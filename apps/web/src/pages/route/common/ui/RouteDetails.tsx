@@ -34,7 +34,11 @@ export const RouteDetails = ({ route }: Props) => {
         )}
       </TitleStyled>
       <SummaryRowStyled>
-        <GradeBadge grade={route.grade} scale={route.gradeScale} />
+        <GradeBadge
+          grade={route.grade}
+          scale={route.gradeScale}
+          size="medium"
+        />
         <MetaStyled variant="body2" color="text.secondary">
           {!!route.rating && (
             <span>
@@ -93,8 +97,6 @@ export const RouteDetails = ({ route }: Props) => {
   );
 };
 
-// Its own line: a long local spelling beside the Latin one is what the title
-// truncates away, and it reads as a second title rather than a gloss.
 const TitleStyled = styled('div')`
   display: flex;
   flex-direction: column;

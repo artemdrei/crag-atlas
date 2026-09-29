@@ -12,6 +12,8 @@ import { formatDateTime, mediaThumbnailOf } from '@web/shared/lib';
 import { ApiFeedback } from '@web/shared/ui';
 
 import { useApiGetRouteMedia, useRouteMediaPermissions } from '../hooks';
+import { RouteMediaSkeleton } from './RouteMediaSkeleton';
+import { TILE_RATIO, TILE_WIDTH } from './tile';
 
 export interface Props {
   idRoute: string;
@@ -24,14 +26,12 @@ export const RouteMedia = ({ idRoute }: Props) => {
   const { isAuthenticated } = useUser();
   const { openModal } = useModal();
 
+  if (isLoading) return <RouteMediaSkeleton />;
+
   return (
     <StripStyled>
-      <ApiFeedback
-        isLoading={isLoading}
-        failure={failure}
-        loadingLabel={<Trans>Loading media…</Trans>}
-      />
-      {!isLoading && media.length === 0 && !isAuthenticated && (
+      <ApiFeedback failure={failure} />
+      {media.length === 0 && !isAuthenticated && (
         <Typography variant="body2" color="text.secondary">
           <Trans>No videos or photos yet.</Trans>
         </Typography>
@@ -73,8 +73,7 @@ export const RouteMedia = ({ idRoute }: Props) => {
               </CaptionStyled>
             </CardStyled>
             {canDelete(item.idUser) && (
-              // A sibling of the card, not a child: a button inside a button
-              // is invalid and the card swallows its clicks.
+              // A sibling of the card, not a child: buttons cannot nest.
               <RemoveButtonStyled
                 size="small"
                 aria-label={t`Delete media`}
@@ -108,9 +107,6 @@ const formatDuration = (seconds?: number | null) => {
 
   return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
 };
-
-const TILE_WIDTH = 240;
-const TILE_RATIO = '16 / 10';
 
 const StripStyled = styled('div')`
   display: flex;
@@ -150,8 +146,7 @@ const AddCardStyled = styled('button')`
   justify-content: center;
   gap: ${({ theme }) => theme.spacing(1)};
   width: ${TILE_WIDTH}px;
-  /* Alone in the strip it has no sibling to stretch against, and without a
-     shape of its own it collapses onto its label. */
+  /* Alone in the strip it has no sibling to stretch against. */
   min-height: calc(${TILE_WIDTH}px / (${TILE_RATIO}));
   padding: ${({ theme }) => theme.spacing(2)};
   color: ${({ theme }) => theme.palette.text.secondary};

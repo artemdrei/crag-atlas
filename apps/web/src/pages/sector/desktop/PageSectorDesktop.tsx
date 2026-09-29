@@ -27,7 +27,8 @@ import {
   ApiFeedback,
   DirectionsButton,
   PageBreadcrumbs,
-  PageShell
+  PageShell,
+  PageTitle
 } from '@web/shared/ui';
 
 import type { Route } from '../common';
@@ -37,6 +38,7 @@ import {
   RoutesPanelHeader,
   useApiGetRoutes,
   useApiGetSector,
+  useApiGetTickedRoutes,
   useGradeFilter,
   useRoutesByTopo,
   useSectorSelection
@@ -59,6 +61,10 @@ export const PageSectorDesktop = () => {
       selectedGrades,
       onSelectGrades: selectGrades
     });
+  const { tickedRoutes, tickedCount } = useApiGetTickedRoutes(
+    idSector,
+    visibleRoutes
+  );
   const { idActiveTopo, selectTopo } = useTopoGallery({
     topos: visibleTopos
   });
@@ -131,9 +137,7 @@ export const PageSectorDesktop = () => {
       <ColumnsStyled>
         <MainColumnStyled>
           <TitleRowStyled>
-            <Typography variant="h4" noWrap>
-              {sector?.name ?? '…'}
-            </Typography>
+            <PageTitle name={sector?.name} nameLocal={sector?.nameLocal} />
             <DirectionsButton point={coordsOf(sector)} />
           </TitleRowStyled>
           {sector?.description && (
@@ -157,21 +161,20 @@ export const PageSectorDesktop = () => {
         <PanelStyled>
           <RoutesPanelHeader
             routesCount={visibleRoutes.length}
+            tickedCount={tickedCount}
             gradeHistogram={sector?.gradeHistogram ?? []}
             selectedGrades={selectedGrades}
             onToggleGrade={toggleGrade}
             onClearGrades={clearGrades}
           />
-          <ApiFeedback
-            isLoading={isLoading}
-            failure={failure}
-            loadingLabel={<Trans>Loading routes…</Trans>}
-          />
+          <ApiFeedback failure={failure} />
           <ScrollAreaStyled>
             <RoutesList
               groups={groups}
               numberOf={numberOf}
               idHighlightedRoute={idHighlightedRoute}
+              tickedRoutes={tickedRoutes}
+              isLoading={isLoading}
               onOpen={openRoute}
               onHover={highlightRoute}
             />

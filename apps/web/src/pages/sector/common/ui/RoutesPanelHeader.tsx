@@ -4,10 +4,11 @@ import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import { GradeHistogram } from '@web/shared/ui';
+import { GradeHistogram, TickProgress } from '@web/shared/ui';
 
 export interface Props {
   routesCount: number;
+  tickedCount?: number;
   gradeHistogram: GradeHistogramGroup[];
   selectedGrades: string[];
   onToggleGrade: (key: string) => void;
@@ -16,6 +17,7 @@ export interface Props {
 
 export const RoutesPanelHeader = ({
   routesCount,
+  tickedCount,
   gradeHistogram,
   selectedGrades,
   onToggleGrade,
@@ -23,7 +25,7 @@ export const RoutesPanelHeader = ({
 }: Props) => (
   <HeaderStyled>
     <TitleRowStyled>
-      <Typography variant="subtitle1">
+      <Typography variant="subtitle1" noWrap>
         <Plural value={routesCount} one="# route" other="# routes" />
       </Typography>
       <ResetButtonStyled
@@ -34,6 +36,9 @@ export const RoutesPanelHeader = ({
       >
         <Trans>Reset filters</Trans>
       </ResetButtonStyled>
+      {tickedCount !== undefined && (
+        <ProgressStyled tickedCount={tickedCount} routesCount={routesCount} />
+      )}
     </TitleRowStyled>
     {gradeHistogram.map((group) => (
       <GradeHistogram
@@ -58,6 +63,12 @@ const TitleRowStyled = styled('div')`
   align-items: center;
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacing(1)};
+`;
+
+const ProgressStyled = styled(TickProgress)`
+  flex: none;
+  width: 90px;
+  margin-left: auto;
 `;
 
 const ResetButtonStyled = styled(Button, {

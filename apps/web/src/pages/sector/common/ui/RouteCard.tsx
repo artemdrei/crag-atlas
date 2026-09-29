@@ -1,11 +1,13 @@
 import { Plural, useLingui } from '@lingui/react/macro';
+import CheckIcon from '@mui/icons-material/Check';
 import PhishingIcon from '@mui/icons-material/Phishing';
 import CardActionArea from '@mui/material/CardActionArea';
 import Rating from '@mui/material/Rating';
-import { styled } from '@mui/material/styles';
+import { alpha, styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import { GradeBadge } from '@web/shared/ui';
+import { resolveAscentTypeInk } from '@web/shared/theme/palette';
+import { GradeBadge, LocalName } from '@web/shared/ui';
 import { RouteMediaButton } from '@web/widgets/routeMedia';
 
 import type { Route } from '../entities';
@@ -14,6 +16,7 @@ export interface Props {
   route: Route;
   number?: number;
   isHighlighted?: boolean;
+  isTicked?: boolean;
   onOpen: (route: Route) => void;
   onHover?: (idRoute?: string) => void;
 }
@@ -22,6 +25,7 @@ export const RouteCard = ({
   route,
   number,
   isHighlighted,
+  isTicked,
   onOpen,
   onHover
 }: Props) => {
@@ -30,14 +34,19 @@ export const RouteCard = ({
   return (
     <RowStyled
       isHighlighted={!!isHighlighted}
+      isTicked={!!isTicked}
       onMouseEnter={() => onHover?.(route.id)}
       onMouseLeave={() => onHover?.(undefined)}
     >
       <CardAreaStyled onClick={() => onOpen(route)}>
-        <NumberBadgeStyled>{number ?? '—'}</NumberBadgeStyled>
+        <NumberBadgeStyled isTicked={!!isTicked}>
+          {number ?? '—'}
+          {isTicked && <CheckIconStyled titleAccess={t`Climbed`} />}
+        </NumberBadgeStyled>
         <TextStyled>
           <Typography variant="subtitle2" noWrap>
             {route.name}
+            <LocalName name={route.name} nameLocal={route.nameLocal} />
           </Typography>
           <MetaStyled variant="caption" color="text.secondary" noWrap>
             {!!route.rating && (
@@ -82,8 +91,8 @@ export const RouteCard = ({
 };
 
 const RowStyled = styled('div', {
-  shouldForwardProp: (prop) => prop !== 'isHighlighted'
-})<{ isHighlighted: boolean }>`
+  shouldForwardProp: (prop) => prop !== 'isHighlighted' && prop !== 'isTicked'
+})<{ isHighlighted: boolean; isTicked: boolean }>`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing(0.5)};
@@ -92,8 +101,17 @@ const RowStyled = styled('div', {
   border: 1px solid
     ${({ theme, isHighlighted }) =>
       isHighlighted ? theme.palette.primary.main : 'transparent'};
-  background: ${({ theme, isHighlighted }) =>
-    isHighlighted ? theme.palette.action.hover : 'transparent'};
+  background: ${({ theme, isTicked }) =>
+    isTicked
+      ? alpha(resolveAscentTypeInk(theme.palette.mode, 'onsight'), 0.16)
+      : 'transparent'};
+
+  &:hover {
+    background: ${({ theme, isTicked }) =>
+      isTicked
+        ? alpha(resolveAscentTypeInk(theme.palette.mode, 'onsight'), 0.3)
+        : theme.palette.action.hover};
+  }
 `;
 
 const CardAreaStyled = styled(CardActionArea)`
@@ -104,9 +122,17 @@ const CardAreaStyled = styled(CardActionArea)`
   gap: ${({ theme }) => theme.spacing(1.5)};
   padding: ${({ theme }) => theme.spacing(1)};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
+
+  /* The row paints the hover; this overlay would tint only half of it. */
+  &:hover .MuiCardActionArea-focusHighlight {
+    opacity: 0;
+  }
 `;
 
-const NumberBadgeStyled = styled('span')`
+const NumberBadgeStyled = styled('span', {
+  shouldForwardProp: (prop) => prop !== 'isTicked'
+})<{ isTicked: boolean }>`
+  position: relative;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -117,7 +143,20 @@ const NumberBadgeStyled = styled('span')`
   font-weight: 700;
   font-size: ${({ theme }) => theme.typography.caption.fontSize};
   color: ${({ theme }) => theme.palette.text.secondary};
-  background: ${({ theme }) => theme.palette.action.hover};
+  background: ${({ theme, isTicked }) =>
+    isTicked ? theme.palette.background.paper : theme.palette.action.hover};
+`;
+
+const CheckIconStyled = styled(CheckIcon)`
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  padding: 1px;
+  font-size: 12px;
+  border-radius: 50%;
+  color: ${({ theme }) => theme.palette.background.paper};
+  background: ${({ theme }) =>
+    resolveAscentTypeInk(theme.palette.mode, 'onsight')};
 `;
 
 const MetaStyled = styled(Typography)`

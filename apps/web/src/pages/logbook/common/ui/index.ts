@@ -9,3 +9,4 @@ export { TickCard } from './TickCard';
 export { TicksFeed } from './TicksFeed';
 export { TicksGroupedList } from './TicksGroupedList';
 export { TicksList } from './TicksList';
+export { TicksSkeleton } from './TicksSkeleton';

@@ -15,7 +15,7 @@ import {
 } from '@web/features/topoEditor';
 import { useSectorEditorData } from '@web/pages/sectorEdit';
 import { useWarnOnUnload } from '@web/shared/lib';
-import { ApiFeedback, EditorPageShell } from '@web/shared/ui';
+import { ApiFeedback, EditorPageShell, ListSkeleton } from '@web/shared/ui';
 
 export const PageRouteEditDesktop = () => {
   useEditModeWhileMounted();
@@ -23,8 +23,6 @@ export const PageRouteEditDesktop = () => {
   const { idRegion = '', idSector = '', idRoute = '' } = useParams();
   const navigate = useNavigate();
   const { openModal } = useModal();
-  // The numbering readers see is computed across the whole sector, so the
-  // session is hydrated with all of it even though one route is edited.
   const { routes, topos, isLoading, failure } = useSectorEditorData(idSector);
   const editor = useTopoEditorSession();
   const actions = useTopoEditorActions({ idSector, editor, topos, routes });
@@ -54,8 +52,6 @@ export const PageRouteEditDesktop = () => {
     hasHydrated.current = true;
     dispatch({ type: 'SESSION_HYDRATED', topos, routes });
 
-    // The stage has to open on the photo this route is drawn on, not on the
-    // first one, or the line being edited is off screen.
     const topo = findTopoOfRoute(topos, idRoute);
 
     if (topo) dispatch({ type: 'SELECT_TOPO', idTopo: topo.id });
@@ -76,11 +72,8 @@ export const PageRouteEditDesktop = () => {
       title={route ? `${route.name || t`New route`} · ${route.grade}` : '…'}
       onLeave={leave}
     >
-      <ApiFeedback
-        isLoading={isLoading}
-        failure={failure}
-        loadingLabel={<Trans>Loading the route…</Trans>}
-      />
+      <ApiFeedback failure={failure} />
+      {isLoading && <ListSkeleton count={4} variant="row" />}
       {!isLoading && !failure && !route && (
         <Typography variant="body2" color="text.secondary">
           <Trans>This route is not in the sector any more.</Trans>

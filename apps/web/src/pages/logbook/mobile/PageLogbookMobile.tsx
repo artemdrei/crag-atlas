@@ -60,11 +60,7 @@ export const PageLogbookMobile = () => {
             onChange={setDiscipline}
           />
 
-          <ApiFeedback
-            isLoading={isLoading}
-            failure={failure ?? statsFailure}
-            loadingLabel={<Trans>Loading ascents…</Trans>}
-          />
+          <ApiFeedback failure={failure ?? statsFailure} />
 
           <AscentTypeFilter
             ascentType={ascentType}
@@ -75,7 +71,11 @@ export const PageLogbookMobile = () => {
           {view.bars.length > 0 && <GradeChart bars={view.bars} isCompact />}
 
           {sort === 'grade' ? (
-            <TicksGroupedList groups={view.groups} ungraded={view.ungraded} />
+            <TicksGroupedList
+              groups={view.groups}
+              ungraded={view.ungraded}
+              isLoading={isLoading}
+            />
           ) : (
             <TicksList ticks={ticks} isLoading={isLoading} />
           )}

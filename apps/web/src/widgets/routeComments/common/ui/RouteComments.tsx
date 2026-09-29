@@ -6,7 +6,7 @@ import {
   RouteCommentComposer,
   RouteCommentItem
 } from '@web/features/routeComment';
-import { ApiFeedback } from '@web/shared/ui';
+import { ApiFeedback, ListSkeleton } from '@web/shared/ui';
 
 import { useApiGetRouteComments } from '../hooks';
 
@@ -20,11 +20,8 @@ export const RouteComments = ({ idRoute }: Props) => {
   return (
     <ListStyled>
       <RouteCommentComposer idRoute={idRoute} />
-      <ApiFeedback
-        isLoading={isLoading}
-        failure={failure}
-        loadingLabel={<Trans>Loading comments…</Trans>}
-      />
+      <ApiFeedback failure={failure} />
+      {isLoading && <ListSkeleton count={2} variant="row" />}
       {!isLoading && comments.length === 0 && (
         <Typography variant="body2" color="text.secondary">
           <Trans>No comments yet — be the first to add beta.</Trans>

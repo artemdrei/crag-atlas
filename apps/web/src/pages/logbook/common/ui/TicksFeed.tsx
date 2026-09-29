@@ -18,11 +18,7 @@ export const TicksFeed = ({ columns }: Props) => {
 
   return (
     <>
-      <ApiFeedback
-        isLoading={isLoading}
-        failure={failure}
-        loadingLabel={<Trans>Loading ascents…</Trans>}
-      />
+      <ApiFeedback failure={failure} />
       {!isLoading && ticks.length === 0 ? (
         <Typography color="text.secondary">
           <Trans>Nobody has logged an ascent yet.</Trans>

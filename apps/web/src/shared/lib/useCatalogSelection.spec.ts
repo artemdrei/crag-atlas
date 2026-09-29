@@ -9,43 +9,41 @@ const ITEMS = [
   { id: 'c', lat: 3, lng: 3 }
 ];
 
-const render = (isEditing: boolean) =>
-  renderHook(({ editing }) => useCatalogSelection(ITEMS, editing), {
-    initialProps: { editing: isEditing }
+const render = (items: typeof ITEMS = ITEMS) =>
+  renderHook(({ rows }) => useCatalogSelection(rows), {
+    initialProps: { rows: items }
   });
 
 describe('useCatalogSelection', () => {
-  it('picks the first item when the editor opens on nothing', () => {
-    const { result, rerender } = render(false);
+  it('opens on the first item, so the map has a card from the start', () => {
+    const { result } = render();
 
-    rerender({ editing: true });
+    expect(result.current.idSelected).toBe('a');
+    expect(result.current.draftPoint).toEqual({ lat: 1, lng: 1 });
+  });
+
+  it('waits for the rows before it picks anything', () => {
+    const { result, rerender } = render([]);
+
+    expect(result.current.idSelected).toBeUndefined();
+
+    rerender({ rows: ITEMS });
 
     expect(result.current.idSelected).toBe('a');
   });
 
-  it('keeps a selection made in the same batch as the editor opening', () => {
-    const { result, rerender } = render(false);
+  it('keeps a selection the reader made', () => {
+    const { result } = render();
 
     act(() => result.current.select('c'));
-    rerender({ editing: true });
 
     expect(result.current.idSelected).toBe('c');
     expect(result.current.draftPoint).toEqual({ lat: 3, lng: 3 });
   });
 
-  it('keeps a selection made after the editor is already open', () => {
-    const { result, rerender } = render(false);
+  it('stays empty when the selection was dropped on purpose', () => {
+    const { result } = render();
 
-    rerender({ editing: true });
-    act(() => result.current.select('c'));
-
-    expect(result.current.idSelected).toBe('c');
-  });
-
-  it('leaves the editor empty when the selection was dropped on purpose', () => {
-    const { result, rerender } = render(false);
-
-    rerender({ editing: true });
     act(() => result.current.select(undefined));
 
     expect(result.current.idSelected).toBeUndefined();

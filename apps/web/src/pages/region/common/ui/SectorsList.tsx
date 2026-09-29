@@ -2,16 +2,19 @@ import { useEffect, useRef } from 'react';
 
 import { styled } from '@mui/material/styles';
 
+import { ListSkeleton } from '@web/shared/ui';
+
 import type { Sector } from '../entities';
 import { SectorCard } from './SectorCard';
 
 export interface Props {
   sectors: Sector[];
   pinColors?: Record<string, string>;
+  tickedOf?: Record<string, number>;
   idSelectedSector?: string;
-  /** The card whose form holds edits nobody saved yet. */
   idDirtySector?: string;
   isEditing?: boolean;
+  isLoading?: boolean;
   onSelect: (sector: Sector) => void;
   onShowOnMap?: (sector: Sector) => void;
   onEdit?: (sector: Sector) => void;
@@ -20,9 +23,11 @@ export interface Props {
 export const SectorsList = ({
   sectors,
   pinColors,
+  tickedOf,
   idSelectedSector,
   idDirtySector,
   isEditing,
+  isLoading,
   onSelect,
   onShowOnMap,
   onEdit
@@ -37,6 +42,8 @@ export const SectorsList = ({
     listRef.current?.children[index]?.scrollIntoView({ block: 'nearest' });
   }, [idSelectedSector, sectors]);
 
+  if (isLoading) return <ListSkeleton count={6} />;
+
   return (
     <ListStyled ref={listRef}>
       {sectors.map((sector) => (
@@ -44,6 +51,7 @@ export const SectorsList = ({
           key={sector.id}
           sector={sector}
           pinColor={pinColors?.[sector.id]}
+          tickedCount={tickedOf && (tickedOf[sector.id] ?? 0)}
           isSelected={sector.id === idSelectedSector}
           isMissingOnMap={isEditing && !pinColors?.[sector.id]}
           isUnsaved={sector.id === idDirtySector}

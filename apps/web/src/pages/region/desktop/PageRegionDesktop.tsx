@@ -1,9 +1,8 @@
 import { useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
-import { Trans, useLingui } from '@lingui/react/macro';
+import { useLingui } from '@lingui/react/macro';
 import { styled, useTheme } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
 
 import { useEditModeInUrl, useUser } from '@web/app/providers';
 import { buildSectorPath, ROUTES } from '@web/app/router/routes';
@@ -19,14 +18,16 @@ import {
   ApiFeedback,
   CatalogExplorerLayout,
   PageBreadcrumbs,
-  PageShell
+  PageShell,
+  PageTitle
 } from '@web/shared/ui';
 
 import {
   ArchivedRegionNotice,
   SectorsList,
   useApiGetRegion,
-  useApiGetSectors
+  useApiGetSectors,
+  useApiGetTickedSectors
 } from '../common';
 import { RegionEditSection, RegionEditSidebar } from './ui';
 
@@ -43,6 +44,7 @@ export const PageRegionDesktop = () => {
     idRegion,
     isArchiveShown
   );
+  const { tickedOf } = useApiGetTickedSectors(idRegion);
   const {
     idSelected: idSelectedSector,
     isDirty: isSelectedDirty,
@@ -50,10 +52,8 @@ export const PageRegionDesktop = () => {
     select: selectSector,
     setIsDirty: setIsSelectedDirty,
     setDraftPoint
-  } = useCatalogSelection(sectors, isEditing);
+  } = useCatalogSelection(sectors);
 
-  // The pin has to follow the cursor before the form is saved, so the selected
-  // sector renders from the draft instead of from what the server knows.
   const mapped = useMemo(
     () =>
       mapSectors(
@@ -94,23 +94,19 @@ export const PageRegionDesktop = () => {
         />
       </HeaderRowStyled>
       {region?.isArchived && <ArchivedRegionNotice />}
-      <Typography variant="h4" noWrap>
-        {region?.name ?? '…'}
-      </Typography>
-      <ApiFeedback
-        isLoading={isLoading}
-        failure={regionFailure ?? failure}
-        loadingLabel={<Trans>Loading sectors…</Trans>}
-      />
+      <PageTitle name={region?.name} nameLocal={region?.nameLocal} />
+      <ApiFeedback failure={regionFailure ?? failure} />
       <CatalogExplorerLayout
         search={<CatalogSearchDesktop />}
         list={
           <SectorsList
             sectors={sectors}
             pinColors={pinColors}
+            tickedOf={tickedOf}
             idSelectedSector={idSelectedSector}
             idDirtySector={isSelectedDirty ? idSelectedSector : undefined}
             isEditing={isEditing}
+            isLoading={isLoading}
             onSelect={(sector) =>
               isEditing
                 ? selectSector(sector.id)

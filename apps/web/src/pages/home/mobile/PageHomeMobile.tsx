@@ -1,7 +1,5 @@
 import { useNavigate } from 'react-router';
 
-import { Trans } from '@lingui/react/macro';
-
 import { buildRegionPath } from '@web/app/router/routes';
 import { CatalogSearchMobile } from '@web/features/catalogSearch';
 import { mapRegions, RegionMapMobile } from '@web/features/regionMap';
@@ -17,17 +15,14 @@ export const PageHomeMobile = () => {
     <PageShell spacing={2} isCompact>
       <HomeHeading />
       <CatalogSearchMobile />
-      <ApiFeedback
-        isLoading={isLoading}
-        failure={failure}
-        loadingLabel={<Trans>Loading regions…</Trans>}
-      />
+      <ApiFeedback failure={failure} />
       <RegionMapMobile
         mapped={mapRegions(regions)}
         onOpenRegion={(idRegion) => navigate(buildRegionPath(idRegion))}
       />
       <RegionsGrid
         regions={regions}
+        isLoading={isLoading}
         onSelect={(region) => navigate(buildRegionPath(region.id))}
       />
     </PageShell>

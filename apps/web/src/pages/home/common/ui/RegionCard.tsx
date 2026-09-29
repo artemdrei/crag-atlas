@@ -3,7 +3,12 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { countryName, useGradeRange } from '@web/shared/lib';
-import { CatalogCard, CatalogCardMenu, GradeBadge } from '@web/shared/ui';
+import {
+  CatalogCard,
+  CatalogCardMenu,
+  GradeBadge,
+  LocalName
+} from '@web/shared/ui';
 
 import type { Region } from '../entities';
 
@@ -47,13 +52,15 @@ export const RegionCard = ({
     >
       <TitleStyled>
         <Typography variant="subtitle1" noWrap>
+          {place && <PlaceStyled>{place} · </PlaceStyled>}
           {region.name}
         </Typography>
-        {place && (
-          <Typography variant="body2" color="text.secondary">
-            {place}
-          </Typography>
-        )}
+        <LocalName
+          name={region.name}
+          nameLocal={region.nameLocal}
+          variant="body2"
+          isBlock
+        />
       </TitleStyled>
       <CountsStyled variant="caption" color="text.secondary" noWrap>
         <Plural
@@ -84,6 +91,11 @@ const TitleStyled = styled('div')`
   display: flex;
   flex-direction: column;
   min-width: 0;
+`;
+
+const PlaceStyled = styled('span')`
+  color: ${({ theme }) => theme.palette.text.secondary};
+  font-weight: 400;
 `;
 
 const CountsStyled = styled(Typography)`

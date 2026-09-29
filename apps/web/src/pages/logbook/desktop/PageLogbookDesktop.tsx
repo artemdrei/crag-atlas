@@ -70,26 +70,26 @@ export const PageLogbookDesktop = () => {
             onChange={setDiscipline}
           />
 
-          <ApiFeedback
-            isLoading={isLoading}
-            failure={failure ?? statsFailure}
-            loadingLabel={<Trans>Loading ascents…</Trans>}
-          />
+          <ApiFeedback failure={failure ?? statsFailure} />
 
-          <AscentTypeFilter
-            ascentType={ascentType}
-            counts={view.counts}
-            onChange={setAscentType}
-          />
-
-          {view.bars.length > 0 && (
+          {view.counts.all > 0 && (
             <ChartCardStyled elevation={0}>
-              <GradeChart bars={view.bars} />
+              <AscentTypeFilter
+                ascentType={ascentType}
+                layout="grid"
+                counts={view.counts}
+                onChange={setAscentType}
+              />
+              <ChartStyled bars={view.bars} />
             </ChartCardStyled>
           )}
 
           {sort === 'grade' ? (
-            <TicksGroupedList groups={view.groups} ungraded={view.ungraded} />
+            <TicksGroupedList
+              groups={view.groups}
+              ungraded={view.ungraded}
+              isLoading={isLoading}
+            />
           ) : (
             <TicksList ticks={ticks} columns={columns} isLoading={isLoading} />
           )}
@@ -121,7 +121,15 @@ const ToolbarStyled = styled('div')`
 `;
 
 const ChartCardStyled = styled(Paper)`
+  display: flex;
+  align-items: flex-start;
+  gap: ${({ theme }) => theme.spacing(3)};
   padding: ${({ theme }) => theme.spacing(2.5)};
   background: ${({ theme }) => theme.palette.background.paper};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
+`;
+
+const ChartStyled = styled(GradeChart)`
+  flex: 1 1 auto;
+  min-width: 0;
 `;

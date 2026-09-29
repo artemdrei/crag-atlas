@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router';
 
-import { Trans, useLingui } from '@lingui/react/macro';
+import { useLingui } from '@lingui/react/macro';
 import { styled } from '@mui/material/styles';
 
 import { useEditModeInUrl, useUser } from '@web/app/providers';
@@ -34,11 +34,9 @@ export const PageHomeDesktop = () => {
     select: selectRegion,
     setIsDirty: setIsSelectedDirty,
     setDraftPoint
-  } = useCatalogSelection(regions, isEditing);
+  } = useCatalogSelection(regions);
 
   const selectedRegion = regions.find(({ id }) => id === idSelectedRegion);
-  // The pin has to follow the cursor before the form is saved, so the selected
-  // region renders from the draft instead of from what the server knows.
   const mapped = useMemo(
     () =>
       mapRegions(
@@ -67,11 +65,7 @@ export const PageHomeDesktop = () => {
         />
       </HeaderRowStyled>
       <HomeHeading />
-      <ApiFeedback
-        isLoading={isLoading}
-        failure={failure}
-        loadingLabel={<Trans>Loading regions…</Trans>}
-      />
+      <ApiFeedback failure={failure} />
       <CatalogExplorerLayout
         search={<CatalogSearchDesktop />}
         list={
@@ -82,7 +76,8 @@ export const PageHomeDesktop = () => {
           >
             <RegionsGrid
               regions={regions}
-              idSelectedRegion={isEditing ? idSelectedRegion : undefined}
+              idSelectedRegion={idSelectedRegion}
+              isLoading={isLoading}
               idDirtyRegion={isSelectedDirty ? idSelectedRegion : undefined}
               onSelect={(region) =>
                 isEditing
@@ -129,8 +124,8 @@ export const PageHomeDesktop = () => {
   );
 };
 
-// The empty space under the cards is what clears the selection, so it has to
-// be a real surface rather than however tall the cards happen to be.
+// The empty space under the cards is what clears the selection, so it needs a
+// height of its own.
 const ListAreaStyled = styled('div')`
   min-height: 100%;
 `;

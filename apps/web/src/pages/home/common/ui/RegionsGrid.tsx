@@ -1,13 +1,15 @@
 import { styled } from '@mui/material/styles';
 
+import { ListSkeleton } from '@web/shared/ui';
+
 import type { Region } from '../entities';
 import { RegionCard } from './RegionCard';
 
 export interface Props {
   regions: Region[];
   idSelectedRegion?: string;
-  /** The card whose form holds edits nobody saved yet. */
   idDirtyRegion?: string;
+  isLoading?: boolean;
   onSelect: (region: Region) => void;
   onShowOnMap?: (region: Region) => void;
   onEdit?: (region: Region) => void;
@@ -17,24 +19,29 @@ export const RegionsGrid = ({
   regions,
   idSelectedRegion,
   idDirtyRegion,
+  isLoading,
   onSelect,
   onShowOnMap,
   onEdit
-}: Props) => (
-  <GridStyled>
-    {regions.map((region) => (
-      <RegionCard
-        key={region.id}
-        region={region}
-        isSelected={region.id === idSelectedRegion}
-        isUnsaved={region.id === idDirtyRegion}
-        onSelect={onSelect}
-        onShowOnMap={onShowOnMap}
-        onEdit={onEdit}
-      />
-    ))}
-  </GridStyled>
-);
+}: Props) => {
+  if (isLoading) return <ListSkeleton count={4} />;
+
+  return (
+    <GridStyled>
+      {regions.map((region) => (
+        <RegionCard
+          key={region.id}
+          region={region}
+          isSelected={region.id === idSelectedRegion}
+          isUnsaved={region.id === idDirtyRegion}
+          onSelect={onSelect}
+          onShowOnMap={onShowOnMap}
+          onEdit={onEdit}
+        />
+      ))}
+    </GridStyled>
+  );
+};
 
 const GridStyled = styled('div')`
   display: grid;

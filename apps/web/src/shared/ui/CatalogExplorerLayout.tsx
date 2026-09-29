@@ -25,16 +25,17 @@ const LayoutStyled = styled('div', {
 })<{ hasAside: boolean }>`
   display: grid;
   grid-template-columns: ${({ hasAside }) =>
-    hasAside ? '380px minmax(0, 1fr) 400px' : '380px minmax(0, 1fr)'};
+    hasAside ? '460px minmax(0, 1fr) 400px' : '460px minmax(0, 1fr)'};
   gap: ${({ theme }) => theme.spacing(2)};
   flex: 1;
   min-height: 0;
 `;
 
+// No gap: the search field reserves a line for its hint, and that line is the
+// space above the rule already.
 const ColumnStyled = styled('div')`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(1.5)};
   min-height: 0;
 `;
 
@@ -42,7 +43,8 @@ const ListStyled = styled('div')`
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
-  padding-top: ${({ theme }) => theme.spacing(1)};
+  padding-top: ${({ theme }) => theme.spacing(2)};
+  border-top: 1px solid ${({ theme }) => theme.palette.divider};
 `;
 
 const MapAreaStyled = styled('div')`

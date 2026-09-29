@@ -84,19 +84,19 @@ const ThumbnailStyled = styled('div')`
   width: 96px;
 `;
 
-// Contained, not cropped: a crag photo loses its point when its edges are cut.
 const PhotoStyled = styled('img')`
   display: block;
   width: 100%;
   aspect-ratio: 1 / 1;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center;
   ${({ theme }) => photoFrame(theme)}
 `;
 
 const BodyStyled = styled('div')`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(0.5)};
+  gap: ${({ theme }) => theme.spacing(0.25)};
   flex-grow: 1;
   min-width: 0;
 `;

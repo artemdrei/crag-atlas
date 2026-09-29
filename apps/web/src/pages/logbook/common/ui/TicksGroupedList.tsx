@@ -6,13 +6,17 @@ import { GradeBadge } from '@web/shared/ui';
 
 import type { GradeGroup, Tick } from '../entities';
 import { TickCard } from './TickCard';
+import { TicksSkeleton } from './TicksSkeleton';
 
 export interface Props {
   groups: GradeGroup[];
   ungraded: Tick[];
+  isLoading: boolean;
 }
 
-export const TicksGroupedList = ({ groups, ungraded }: Props) => {
+export const TicksGroupedList = ({ groups, ungraded, isLoading }: Props) => {
+  if (isLoading) return <TicksSkeleton />;
+
   if (groups.length === 0 && ungraded.length === 0) {
     return (
       <Typography color="text.secondary">
@@ -97,8 +101,6 @@ const CountStyled = styled(Typography)`
   font-weight: 600;
 `;
 
-/* The line runs to the edge of the list: the header divides the whole block
-   rather than labelling the card under it. */
 const RuleStyled = styled('span')`
   flex: 1 1 auto;
   height: 1px;

@@ -2,13 +2,20 @@ import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import { CatalogCard, CatalogCardMenu, GradeHistogram } from '@web/shared/ui';
+import {
+  CatalogCard,
+  CatalogCardMenu,
+  GradeHistogram,
+  LocalName,
+  TickProgress
+} from '@web/shared/ui';
 
 import type { Sector } from '../entities';
 
 export interface Props {
   sector: Sector;
   pinColor?: string;
+  tickedCount?: number;
   isSelected?: boolean;
   isMissingOnMap?: boolean;
   isUnsaved?: boolean;
@@ -20,6 +27,7 @@ export interface Props {
 export const SectorCard = ({
   sector,
   pinColor,
+  tickedCount,
   isSelected,
   isMissingOnMap,
   isUnsaved,
@@ -51,6 +59,7 @@ export const SectorCard = ({
           {pinColor && <DotStyled color={pinColor} />}
           <NameStyled variant="subtitle1" noWrap>
             {sector.name}
+            <LocalName name={sector.name} nameLocal={sector.nameLocal} />
           </NameStyled>
         </TitleStyled>
         {isMissingOnMap && (
@@ -63,15 +72,23 @@ export const SectorCard = ({
         {sector.description}
       </Typography>
       <FooterStyled>
-        <Typography variant="caption" color="text.secondary">
-          <Plural
-            value={sector.routeCount}
-            one="# route"
-            few="# routes"
-            many="# routes"
-            other="# routes"
-          />
-        </Typography>
+        <CountRowStyled>
+          <Typography variant="caption" color="text.secondary" noWrap>
+            <Plural
+              value={sector.routeCount}
+              one="# route"
+              few="# routes"
+              many="# routes"
+              other="# routes"
+            />
+          </Typography>
+          {tickedCount !== undefined && (
+            <ProgressStyled
+              tickedCount={tickedCount}
+              routesCount={sector.routeCount}
+            />
+          )}
+        </CountRowStyled>
         {sector.gradeHistogram.map((group) => (
           <GradeHistogram key={group.type} group={group} isCompact />
         ))}
@@ -108,10 +125,21 @@ const DotStyled = styled('span', {
   background-color: ${({ color }) => color};
 `;
 
+const CountRowStyled = styled('div')`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: ${({ theme }) => theme.spacing(1.5)};
+`;
+
+const ProgressStyled = styled(TickProgress)`
+  flex: none;
+  width: 70px;
+`;
+
 const FooterStyled = styled('div')`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(1)};
-  margin-top: auto;
-  padding-top: ${({ theme }) => theme.spacing(2)};
+  gap: ${({ theme }) => theme.spacing(0.25)};
+  padding-top: ${({ theme }) => theme.spacing(0.25)};
 `;

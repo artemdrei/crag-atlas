@@ -1,10 +1,15 @@
-import { Plural, Trans } from '@lingui/react/macro';
+import { Trans } from '@lingui/react/macro';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { useUser } from '@web/app/providers';
 import { TickActionsButton } from '@web/features/logTick';
-import { ApiFeedback, AscentTypeBadge, UserAvatar } from '@web/shared/ui';
+import {
+  ApiFeedback,
+  AscentTypeBadge,
+  ListSkeleton,
+  UserAvatar
+} from '@web/shared/ui';
 import { RouteMediaButton } from '@web/widgets/routeMedia';
 
 import { useApiGetRouteLogbook } from '../hooks';
@@ -17,14 +22,12 @@ export const RouteLogbook = ({ idRoute }: Props) => {
   const { idUser } = useUser();
   const { ticks, isLoading, failure } = useApiGetRouteLogbook(idRoute);
 
+  if (isLoading) return <ListSkeleton count={2} variant="row" />;
+
   return (
     <ListStyled>
-      <ApiFeedback
-        isLoading={isLoading}
-        failure={failure}
-        loadingLabel={<Trans>Loading ascents…</Trans>}
-      />
-      {!isLoading && ticks.length === 0 && (
+      <ApiFeedback failure={failure} />
+      {ticks.length === 0 && (
         <Typography variant="body2" color="text.secondary">
           <Trans>Nobody has logged this route yet.</Trans>
         </Typography>
@@ -42,15 +45,13 @@ export const RouteLogbook = ({ idRoute }: Props) => {
               <Typography variant="body2" noWrap>
                 {tick.authorName}
               </Typography>
-              <AscentTypeBadge ascentType={tick.ascentType} />
+              <AscentTypeBadge
+                ascentType={tick.ascentType}
+                attempts={tick.attempts}
+              />
               <Typography variant="caption" color="text.secondary">
                 {tick.climbedAt}
               </Typography>
-              {!!tick.attempts && (
-                <Typography variant="caption" color="text.secondary">
-                  <Plural value={tick.attempts} one="# try" other="# tries" />
-                </Typography>
-              )}
               <RouteMediaButton
                 idRoute={idRoute}
                 hasPhoto={media.some(({ kind }) => kind === 'photo')}

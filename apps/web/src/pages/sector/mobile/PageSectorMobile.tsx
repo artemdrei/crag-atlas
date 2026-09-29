@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
-import { Trans, useLingui } from '@lingui/react/macro';
+import { useLingui } from '@lingui/react/macro';
 import { styled, useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
@@ -22,7 +22,8 @@ import {
   ApiFeedback,
   DirectionsButton,
   PageBreadcrumbs,
-  PageShell
+  PageShell,
+  PageTitle
 } from '@web/shared/ui';
 
 import type { Route } from '../common';
@@ -32,6 +33,7 @@ import {
   RoutesPanelHeader,
   useApiGetRoutes,
   useApiGetSector,
+  useApiGetTickedRoutes,
   useGradeFilter,
   useRoutesByTopo
 } from '../common';
@@ -52,6 +54,10 @@ export const PageSectorMobile = () => {
       selectedGrades,
       onSelectGrades: selectGrades
     });
+  const { tickedRoutes, tickedCount } = useApiGetTickedRoutes(
+    idSector,
+    visibleRoutes
+  );
   const { idActiveTopo, selectTopo } = useTopoGallery({
     topos: visibleTopos
   });
@@ -99,9 +105,11 @@ export const PageSectorMobile = () => {
       </HeaderRowStyled>
       {sector?.isArchived && <ArchivedSectorNotice />}
       <TitleRowStyled>
-        <Typography variant="h5" noWrap>
-          {sector?.name ?? '…'}
-        </Typography>
+        <PageTitle
+          name={sector?.name}
+          nameLocal={sector?.nameLocal}
+          variant="h5"
+        />
         <DirectionsButton point={coordsOf(sector)} />
       </TitleRowStyled>
       {sector?.description && (
@@ -119,17 +127,20 @@ export const PageSectorMobile = () => {
       />
       <RoutesPanelHeader
         routesCount={visibleRoutes.length}
+        tickedCount={tickedCount}
         gradeHistogram={sector?.gradeHistogram ?? []}
         selectedGrades={selectedGrades}
         onToggleGrade={toggleGrade}
         onClearGrades={clearGrades}
       />
-      <ApiFeedback
+      <ApiFeedback failure={failure} />
+      <RoutesList
+        groups={groups}
+        numberOf={numberOf}
+        tickedRoutes={tickedRoutes}
         isLoading={isLoading}
-        failure={failure}
-        loadingLabel={<Trans>Loading routes…</Trans>}
+        onOpen={openRoute}
       />
-      <RoutesList groups={groups} numberOf={numberOf} onOpen={openRoute} />
       <ActionBarStyled></ActionBarStyled>
     </PageShell>
   );

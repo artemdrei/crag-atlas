@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 
 import type { Tick } from '../entities';
 import { TickCard } from './TickCard';
+import { TicksSkeleton } from './TicksSkeleton';
 
 export interface Props {
   ticks: Tick[];
@@ -18,7 +19,9 @@ export const TicksList = ({
   isCommunity,
   isLoading
 }: Props) => {
-  if (!isLoading && ticks.length === 0) {
+  if (isLoading) return <TicksSkeleton />;
+
+  if (ticks.length === 0) {
     return (
       <Typography color="text.secondary">
         <Trans>No ascents logged yet.</Trans>

@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router';
 
-import { Trans, useLingui } from '@lingui/react/macro';
+import { useLingui } from '@lingui/react/macro';
 import { styled, useTheme } from '@mui/material/styles';
 
 import { useModal, useUser } from '@web/app/providers';
@@ -26,6 +26,7 @@ import {
   ArchivedRouteNotice,
   LogTickButton,
   RouteDetails,
+  RouteSkeleton,
   RouteStats,
   RouteTabs,
   useApiGetRoute
@@ -79,11 +80,8 @@ export const PageRouteDesktop = () => {
           />
         )}
       </HeaderRowStyled>
-      <ApiFeedback
-        isLoading={isLoading}
-        failure={failure}
-        loadingLabel={<Trans>Loading route…</Trans>}
-      />
+      <ApiFeedback failure={failure} />
+      {isLoading && <RouteSkeleton />}
       {route && (
         <ColumnsStyled>
           {route.isArchived && <NoticeStyled />}
