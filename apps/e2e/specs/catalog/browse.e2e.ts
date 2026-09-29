@@ -10,11 +10,6 @@ import {
 } from '../../fixtures/catalog';
 import { breadcrumb, card } from '../../fixtures/ui';
 
-/**
- * Reading the catalog, which is what everyone but an admin comes for: walking
- * down to a route, back up by the trail, and narrowing a long sector to the
- * grades worth climbing today.
- */
 test.describe.configure({ mode: 'serial' });
 
 let region: Row;
@@ -152,4 +147,37 @@ test('a sector nobody has drawn yet says it holds nothing', async ({
   await page.goto(`/regions/${region.id}/sectors/${bare.id}`);
 
   await expect(page.getByText('0 routes')).toBeVisible();
+});
+
+test('a map opens with a pin already chosen, so its card is there', async ({
+  page
+}) => {
+  await page.goto('/');
+
+  await expect(page.getByRole('button', { name: 'Open region' })).toBeVisible();
+
+  await test.step('a region opens on one of its sectors the same way', async () => {
+    // Creating a sector takes no coordinates, only editing one does.
+    await api.patch(`/sectors/${sector.id}`, {
+      name: sector.name,
+      nameLocal: sector.name,
+      lat: 48.68291,
+      lng: 26.56402
+    });
+
+    await page.goto(`/regions/${region.id}`);
+
+    await expect(
+      page.getByRole('button', { name: 'Open sector' })
+    ).toBeVisible();
+  });
+
+  await test.step('and it is chosen again on the way back', async () => {
+    await page.getByRole('button', { name: 'Open sector' }).click();
+    await page.goBack();
+
+    await expect(
+      page.getByRole('button', { name: 'Open sector' })
+    ).toBeVisible();
+  });
 });
