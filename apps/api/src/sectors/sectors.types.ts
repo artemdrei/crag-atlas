@@ -93,6 +93,14 @@ export class SectorDto {
   isDeleted!: boolean;
 }
 
+export class SectorTickCountDto {
+  @ApiProperty()
+  idSector!: string;
+
+  @ApiProperty({ description: 'Routes the climber has ticked in this sector' })
+  tickedCount!: number;
+}
+
 export class CreateSectorDto {
   @ApiProperty()
   name!: string;

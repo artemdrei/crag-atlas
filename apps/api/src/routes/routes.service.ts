@@ -123,6 +123,31 @@ export class RoutesService {
     return data.map(toRouteDto);
   }
 
+  // An attempt is not an ascent, so it leaves no mark on the list.
+  async findTickedBySector(
+    authUser: AuthUser,
+    idSector: string
+  ): Promise<string[]> {
+    const { data, error } = await userClient(authUser)
+      .from('ticks')
+      .select('id_route, routes!inner (id_sector, deleted_at)')
+      .eq('id_user', authUser.idUser)
+      .eq('routes.id_sector', idSector)
+      .is('routes.deleted_at', null)
+      .neq('ascent_type', 'attempt')
+      .returns<{ id_route: string }[]>();
+
+    if (error) {
+      throw readFailed(
+        'Could not load your ascents',
+        'ROUTES_TICKED_READ_FAILED',
+        error
+      );
+    }
+
+    return [...new Set(data.map(({ id_route }) => id_route))];
+  }
+
   async findOne(idRoute: string): Promise<RouteDto> {
     const { data, error } = await publicSupabase()
       .from('routes_with_stats')

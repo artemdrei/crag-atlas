@@ -27,6 +27,7 @@ import { publicSupabase, storagePublicUrl } from '../config/supabase.client';
 import type {
   CreateSectorDto,
   SectorDto,
+  SectorTickCountDto,
   UpdateSectorDto
 } from './sectors.types';
 
@@ -34,6 +35,11 @@ import type {
 // label to show in its breadcrumbs otherwise.
 const COLUMNS =
   'id, id_region, name, name_local, description, lat, lng, route_count, grade_min, grade_min_scale, grade_max, grade_max_scale, grade_histogram, is_archived, deleted_at, regions (name), topos (storage_path, sort_order)';
+
+interface TickedRow {
+  id_route: string;
+  routes: { id_sector: string };
+}
 
 interface SectorRow {
   id: string;
@@ -89,6 +95,47 @@ export class SectorsService {
     }
 
     return data.map(toSectorDto);
+  }
+
+  // Counted the way `route_count` is, so a card never shows more ascents than
+  // it has routes: a deleted route is out of both, an attempt is not an ascent.
+  async findTickedByRegion(
+    authUser: AuthUser,
+    idRegion: string
+  ): Promise<SectorTickCountDto[]> {
+    const { data, error } = await userClient(authUser)
+      .from('ticks')
+      .select(
+        'id_route, routes!inner (id_sector, deleted_at, sectors!inner (id_region))'
+      )
+      .eq('id_user', authUser.idUser)
+      .eq('routes.sectors.id_region', idRegion)
+      .is('routes.deleted_at', null)
+      .neq('ascent_type', 'attempt')
+      .returns<TickedRow[]>();
+
+    if (error) {
+      throw readFailed(
+        'Could not load your ascents',
+        'SECTORS_TICKED_READ_FAILED',
+        error
+      );
+    }
+
+    const routesBySector = new Map<string, Set<string>>();
+
+    for (const row of data) {
+      const idSector = row.routes.id_sector;
+      const routes = routesBySector.get(idSector) ?? new Set<string>();
+
+      routes.add(row.id_route);
+      routesBySector.set(idSector, routes);
+    }
+
+    return [...routesBySector].map(([idSector, routes]) => ({
+      idSector,
+      tickedCount: routes.size
+    }));
   }
 
   async findOne(idSector: string): Promise<SectorDto> {

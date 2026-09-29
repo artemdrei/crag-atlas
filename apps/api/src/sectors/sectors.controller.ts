@@ -6,7 +6,11 @@ import { AdminGuard } from '../common/guards/admin.guard';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
 import { SupabaseAuthGuard } from '../common/guards/supabaseAuth.guard';
 import { SectorsService } from './sectors.service';
-import { CreateSectorDto, SectorDto } from './sectors.types';
+import {
+  CreateSectorDto,
+  SectorDto,
+  SectorTickCountDto
+} from './sectors.types';
 
 @Controller('regions/:idRegion/sectors')
 export class SectorsController {
@@ -23,6 +27,16 @@ export class SectorsController {
   @ApiOkResponse({ type: SectorDto, isArray: true })
   findArchived(@Param('idRegion') idRegion: string): Promise<SectorDto[]> {
     return this.sectorsService.findByRegion(idRegion, true);
+  }
+
+  @Get('ticked')
+  @UseGuards(SupabaseAuthGuard)
+  @ApiOkResponse({ type: SectorTickCountDto, isArray: true })
+  findTicked(
+    @CurrentUser() authUser: AuthUser,
+    @Param('idRegion') idRegion: string
+  ): Promise<SectorTickCountDto[]> {
+    return this.sectorsService.findTickedByRegion(authUser, idRegion);
   }
 
   @Post()

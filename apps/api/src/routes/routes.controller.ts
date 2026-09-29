@@ -36,6 +36,16 @@ export class RoutesController {
     return this.routesService.findBySector(idSector, {}, true);
   }
 
+  @Get('ticked')
+  @UseGuards(SupabaseAuthGuard)
+  @ApiOkResponse({ type: String, isArray: true })
+  findTicked(
+    @CurrentUser() authUser: AuthUser,
+    @Param('idSector') idSector: string
+  ): Promise<string[]> {
+    return this.routesService.findTickedBySector(authUser, idSector);
+  }
+
   @Post()
   @UseGuards(SupabaseAuthGuard, AdminGuard)
   @ApiCreatedResponse({ type: RouteDto })
