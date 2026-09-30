@@ -5,7 +5,12 @@ import { Plural, useLingui } from '@lingui/react/macro';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import { foldGradeBars, toGradeBars, useDisplayGrade } from '@web/shared/lib';
+import {
+  foldGradeBars,
+  toGradeBars,
+  useDisplayGrade,
+  useScrollHint
+} from '@web/shared/lib';
 import type { GradeTone } from '@web/shared/theme/palette';
 
 const COLUMN_WIDTH = 56;
@@ -26,6 +31,7 @@ export interface Props {
   selectedGrades?: string[];
   onToggleGrade?: (key: string) => void;
   isCompact?: boolean;
+  hasScrollHint?: boolean;
   maxColumns?: number;
   className?: string;
 }
@@ -35,11 +41,13 @@ export const GradeHistogram = ({
   selectedGrades,
   onToggleGrade,
   isCompact,
+  hasScrollHint,
   maxColumns,
   className
 }: Props) => {
   const { t } = useLingui();
   const displayGrade = useDisplayGrade();
+  const scroll = useScrollHint();
   const compact = !!isCompact;
 
   // A folded column stands for two grades, and the filter below picks one, so
@@ -81,61 +89,72 @@ export const GradeHistogram = ({
           </Typography>
         </HeaderRowStyled>
       )}
-      <ScrollStyled isCompact={compact}>
-        <BarsRowStyled isCompact={compact} columns={bars.length}>
-          {bars.map(({ key, label, tone, count }) => {
-            const cell = (
-              <>
-                <CountStyled variant="caption" noWrap isMuted={!isPicked(key)}>
-                  {count}
-                </CountStyled>
-                <BarStyled
-                  tone={tone}
-                  share={
-                    compact
-                      ? count / Math.max(top, COMPACT_REFERENCE)
-                      : top
-                        ? count / top
-                        : 0
-                  }
-                  isCompact={compact}
-                  isMuted={!isPicked(key)}
-                />
-              </>
-            );
+      <ViewportStyled>
+        <ScrollStyled
+          ref={scroll.ref}
+          isCompact={compact}
+          onScroll={scroll.onScroll}
+        >
+          <BarsRowStyled isCompact={compact} columns={bars.length}>
+            {bars.map(({ key, label, tone, count }) => {
+              const cell = (
+                <>
+                  <CountStyled
+                    variant="caption"
+                    noWrap
+                    isMuted={!isPicked(key)}
+                  >
+                    {count}
+                  </CountStyled>
+                  <BarStyled
+                    tone={tone}
+                    share={
+                      compact
+                        ? count / Math.max(top, COMPACT_REFERENCE)
+                        : top
+                          ? count / top
+                          : 0
+                    }
+                    isCompact={compact}
+                    isMuted={!isPicked(key)}
+                  />
+                </>
+              );
 
-            // A card is one big button, and buttons cannot nest.
-            return onToggleGrade ? (
-              <BarColumnStyled
-                key={key}
-                type="button"
-                isCompact={compact}
-                aria-pressed={isPicked(key) && hasFilter}
-                aria-label={label}
-                onClick={(event) => {
-                  event.stopPropagation();
-                  onToggleGrade(key);
-                }}
-              >
-                {cell}
-              </BarColumnStyled>
-            ) : (
+              // A card is one big button, and buttons cannot nest.
+              return onToggleGrade ? (
+                <BarColumnStyled
+                  key={key}
+                  type="button"
+                  isCompact={compact}
+                  aria-pressed={isPicked(key) && hasFilter}
+                  aria-label={label}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    onToggleGrade(key);
+                  }}
+                >
+                  {cell}
+                </BarColumnStyled>
+              ) : (
+                <ColumnStyled key={key} isCompact={compact}>
+                  {cell}
+                </ColumnStyled>
+              );
+            })}
+          </BarsRowStyled>
+          <LabelsRowStyled isCompact={compact} columns={bars.length}>
+            {bars.map(({ key, label }, index) => (
               <ColumnStyled key={key} isCompact={compact}>
-                {cell}
+                <Typography variant="caption" color="text.secondary" noWrap>
+                  {index % labelStep === 0 ? label : ''}
+                </Typography>
               </ColumnStyled>
-            );
-          })}
-        </BarsRowStyled>
-        <LabelsRowStyled isCompact={compact} columns={bars.length}>
-          {bars.map(({ key, label }, index) => (
-            <ColumnStyled key={key} isCompact={compact}>
-              <Typography variant="caption" color="text.secondary" noWrap>
-                {index % labelStep === 0 ? label : ''}
-              </Typography>
-            </ColumnStyled>
-          ))}
-        </LabelsRowStyled>
-      </ScrollStyled>
+            ))}
+          </LabelsRowStyled>
+        </ScrollStyled>
+        {hasScrollHint && scroll.hasMore && <FadeStyled />}
+      </ViewportStyled>
     </ChartStyled>
   );
 };
@@ -182,6 +201,25 @@ const LabelsRowStyled = styled('div', {
   width: ${({ isCompact }) => (isCompact ? 'max-content' : 'auto')};
   max-width: ${({ columns, isCompact }) =>
     isCompact ? 'none' : `${columns * COLUMN_WIDTH}px`};
+`;
+
+const ViewportStyled = styled('div')`
+  position: relative;
+  min-width: 0;
+`;
+
+const FadeStyled = styled('div')`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: ${({ theme }) => theme.spacing(3)};
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    transparent,
+    ${({ theme }) => theme.palette.background.default}
+  );
 `;
 
 const ScrollStyled = styled('div', {

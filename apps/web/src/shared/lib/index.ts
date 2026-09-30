@@ -45,6 +45,7 @@ export {
 } from './useImageCrop';
 export { useLatinNames } from './useLatinNames';
 export { useObjectUrl } from './useObjectUrl';
+export { useScrollHint } from './useScrollHint';
 export { useScrollTopOnNavigate } from './useScrollTopOnNavigate';
 export { useSearchParamFlags } from './useSearchParamFlags';
 export { useSearchParamList } from './useSearchParamList';
