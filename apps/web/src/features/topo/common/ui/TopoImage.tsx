@@ -54,9 +54,16 @@ export const TopoImage = ({
   );
 
   // Hovering changes opacity, not geometry — without this every hover re-runs
-  // the spline for every line on the photo.
-  const paths = useMemo(
-    () => new Map(lines.map((line) => [line.idRoute, smoothPath(line.points)])),
+  // the spline and re-pairs every point of every line on the photo.
+  const shapes = useMemo(
+    () =>
+      lines.map((line) => ({
+        line,
+        path: smoothPath(line.points),
+        bolts: toPairs(line.bolts),
+        anchor: line.anchor ? toPairs([line.anchor])[0] : undefined,
+        start: toPairs(line.points)[0]
+      })),
     [lines]
   );
 
@@ -119,9 +126,8 @@ export const TopoImage = ({
           }}
         >
           <title>{label}</title>
-          {lines.map((line) => {
+          {shapes.map(({ line, path }) => {
             const isHighlighted = idHighlightedRoute === line.idRoute;
-            const path = paths.get(line.idRoute) ?? '';
 
             return (
               <g key={line.idRoute}>
@@ -137,17 +143,15 @@ export const TopoImage = ({
           })}
         </OverlayStyled>
         {isLoaded &&
-          lines.flatMap((line) => {
+          shapes.flatMap(({ line, bolts, anchor }) => {
             const lineColor = colorOf?.(line.idRoute);
             const alpha = lineOpacity(
               idHighlightedRoute === line.idRoute,
               hasHighlight
             );
 
-            const anchor = line.anchor ? toPairs([line.anchor])[0] : undefined;
-
             return [
-              ...toPairs(line.bolts).map(([x, y]) => (
+              ...bolts.map(([x, y]) => (
                 <TopoPointMark
                   key={`bolt-${line.idRoute}-${x}-${y}`}
                   kind="bolt"
@@ -173,9 +177,8 @@ export const TopoImage = ({
           })}
         {isLoaded &&
           numberOf &&
-          lines.map((line) => {
+          shapes.map(({ line, start }) => {
             const number = numberOf[line.idRoute];
-            const [start] = toPairs(line.points);
 
             return number && start ? (
               <TopoRouteBadge
