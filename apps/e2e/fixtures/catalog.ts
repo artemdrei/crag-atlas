@@ -15,7 +15,10 @@ type Scope = 'regions' | 'sectors' | 'routes';
 // answer to the first.
 const created: { scope: Scope; id: string }[] = [];
 
-const prefix = `TEST-${Date.now().toString(36)}`;
+// Workers are separate processes that can start in the same millisecond, so
+// the clock alone does not tell two of them apart. The worker's index does,
+// and it is what keeps one worker's rows out of another's locators.
+const prefix = `TEST-${Date.now().toString(36)}w${process.env.TEST_WORKER_INDEX ?? '0'}`;
 
 const record = async (scope: Scope, row: Promise<Row>): Promise<Row> => {
   const made = await row;

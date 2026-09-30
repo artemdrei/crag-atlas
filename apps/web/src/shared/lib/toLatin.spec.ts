@@ -21,6 +21,24 @@ describe('isLatinName', () => {
   });
 });
 
+// Above the block that loads the charmap on purpose: `transliterate` is
+// cached module-wide, so the same assertions below it would pass either way.
+describe('before the charmap arrives', () => {
+  it('still follows a Latin name, which needs no charmap at all', () => {
+    expect(followLatin('', '', 'Verdon')).toEqual({
+      name: 'Verdon',
+      nameLocal: 'Verdon'
+    });
+  });
+
+  it('leaves the Latin box empty for a name it cannot rewrite yet', () => {
+    expect(followLatin('', '', 'Денеші')).toEqual({
+      name: '',
+      nameLocal: 'Денеші'
+    });
+  });
+});
+
 describe('once the charmap is loaded', () => {
   beforeAll(() => loadTransliteration());
 
