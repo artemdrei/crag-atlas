@@ -61,7 +61,7 @@ msgstr "{0, plural, one {# photo or link} few {# photos or links} many {# photos
 #: src/pages/home/common/ui/RegionCard.tsx:66
 #: src/pages/region/common/ui/SectorCard.tsx:77
 #: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:83
-#: src/shared/ui/GradeHistogram.tsx:74
+#: src/shared/ui/GradeHistogram.tsx:82
 msgid "{0, plural, one {# route} few {# routes} many {# routes} other {# routes}}"
 msgstr "{0, plural, one {# route} few {# routes} many {# routes} other {# routes}}"
 
@@ -162,7 +162,7 @@ msgstr "{route} was never saved, so it just disappears from this panel."
 #~ msgid "{routesCount, plural, one {{sectorName} has # route.} few {{sectorName} has # routes.} many {{sectorName} has # routes.} other {{sectorName} has # routes.}}"
 #~ msgstr "{routesCount, plural, one {{sectorName} has # route.} few {{sectorName} has # routes.} many {{sectorName} has # routes.} other {{sectorName} has # routes.}}"
 
-#: src/pages/sector/common/ui/RoutesPanelHeader.tsx:29
+#: src/pages/sector/common/ui/RoutesPanelHeader.tsx:33
 msgid "{routesCount, plural, one {# route} other {# routes}}"
 msgstr "{routesCount, plural, one {# route} other {# routes}}"
 
@@ -328,7 +328,7 @@ msgstr "Add sector"
 msgid "Add video or photo"
 msgstr "Add video or photo"
 
-#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:96
+#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:97
 msgid "Add yours"
 msgstr "Add yours"
 
@@ -404,6 +404,10 @@ msgstr "Archived routes"
 #~ msgid "As written"
 #~ msgstr "As written"
 
+#: src/pages/sector/common/ui/RoutesSortDirectionButton.tsx:27
+msgid "Ascending"
+msgstr "Ascending"
+
 #: src/features/logTick/common/ui/TickActionsButton.tsx:25
 msgid "Ascent actions"
 msgstr "Ascent actions"
@@ -428,6 +432,10 @@ msgstr "Ascent type"
 #: src/pages/route/common/ui/RouteStats.tsx:21
 msgid "ascents"
 msgstr "ascents"
+
+#: src/pages/sector/common/hooks/useRouteSortLabel.ts:11
+msgid "Ascents"
+msgstr "Ascents"
 
 #: src/shared/ui/AscentTypeLabel.tsx:29
 msgid "Attempt"
@@ -492,7 +500,7 @@ msgid "Boulder"
 msgstr "Boulder"
 
 #: src/pages/logbook/common/ui/DisciplineTabs.tsx:36
-#: src/shared/ui/GradeHistogram.tsx:58
+#: src/shared/ui/GradeHistogram.tsx:66
 msgid "Bouldering"
 msgstr "Bouldering"
 
@@ -574,8 +582,6 @@ msgid "Climbers left nothing here — no ascents, no comments, no photos."
 msgstr "Climbers left nothing here — no ascents, no comments, no photos."
 
 #: src/features/topo/desktop/TopoPhotoDialog.tsx:36
-#: src/features/topo/mobile/TopoPhotoModal.tsx:38
-#: src/features/topo/mobile/TopoPhotoModal.tsx:46
 #: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:31
 #: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:39
 #: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:31
@@ -689,6 +695,10 @@ msgstr "Dark"
 msgid "Date"
 msgstr "Date"
 
+#: src/pages/sector/common/hooks/useRouteSortLabel.ts:8
+msgid "Default"
+msgstr "Default"
+
 #: src/features/logTick/common/ui/DeleteTickActions.tsx:26
 #: src/features/logTick/common/ui/TickMenuItems.tsx:34
 #: src/features/routeComment/common/hooks/useRouteCommentMenuItems.tsx:45
@@ -712,7 +722,7 @@ msgstr "Delete comment"
 msgid "Delete line"
 msgstr "Delete line"
 
-#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:78
+#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:79
 #: src/widgets/routeMedia/desktop/DeleteRouteMediaDialog.tsx:25
 #: src/widgets/routeMedia/mobile/DeleteRouteMediaSheet.tsx:23
 msgid "Delete media"
@@ -777,6 +787,10 @@ msgstr "Delete the photo?"
 msgid "Deleting…"
 msgstr "Deleting…"
 
+#: src/pages/sector/common/ui/RoutesSortDirectionButton.tsx:27
+msgid "Descending"
+msgstr "Descending"
+
 #: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:71
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:92
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:313
@@ -822,7 +836,7 @@ msgstr "Dropped on {0}"
 #: src/features/catalogEdit/common/ui/EditToggleButton.tsx:24
 #: src/features/logTick/common/ui/TickMenuItems.tsx:28
 #: src/features/routeComment/common/hooks/useRouteCommentMenuItems.tsx:35
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:131
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:145
 #: src/shared/ui/CatalogCardMenu.tsx:86
 msgid "Edit"
 msgstr "Edit"
@@ -915,6 +929,7 @@ msgstr "Free"
 
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:239
 #: src/pages/logbook/common/ui/LogbookFilterFields.tsx:36
+#: src/pages/sector/common/hooks/useRouteSortLabel.ts:9
 msgid "Grade"
 msgstr "Grade"
 
@@ -1230,7 +1245,7 @@ msgstr "No routes yet — add the first one, then drag it onto the photo it is d
 msgid "No topo yet"
 msgstr "No topo yet"
 
-#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:35
+#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:36
 msgid "No videos or photos yet."
 msgstr "No videos or photos yet."
 
@@ -1246,7 +1261,7 @@ msgstr "Nobody has logged an ascent yet."
 msgid "Nobody has logged this route yet."
 msgstr "Nobody has logged this route yet."
 
-#: src/pages/sector/common/hooks/useRoutesByTopo.ts:56
+#: src/pages/sector/common/hooks/useRoutesByTopo.ts:74
 msgid "Not on a photo"
 msgstr "Not on a photo"
 
@@ -1319,9 +1334,7 @@ msgstr "Open region"
 msgid "Open sector"
 msgstr "Open sector"
 
-#: src/features/topo/mobile/TopoGalleryMobile.tsx:44
 #: src/pages/route/desktop/PageRouteDesktop.tsx:92
-#: src/pages/route/mobile/PageRouteMobile.tsx:81
 msgid "Open the photo"
 msgstr "Open the photo"
 
@@ -1482,6 +1495,10 @@ msgstr "Profile"
 #~ msgid "Quality"
 #~ msgstr "Quality"
 
+#: src/pages/sector/common/hooks/useRouteSortLabel.ts:10
+msgid "Rating"
+msgstr "Rating"
+
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:155
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:157
 msgid "Reader view"
@@ -1518,9 +1535,9 @@ msgstr "Region saved"
 #: src/pages/region/desktop/PageRegionDesktop.tsx:80
 #: src/pages/region/mobile/PageRegionMobile.tsx:49
 #: src/pages/route/desktop/PageRouteDesktop.tsx:66
-#: src/pages/route/mobile/PageRouteMobile.tsx:62
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:118
-#: src/pages/sector/mobile/PageSectorMobile.tsx:100
+#: src/pages/route/mobile/PageRouteMobile.tsx:48
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:132
+#: src/pages/sector/mobile/PageSectorMobile.tsx:114
 msgid "Regions"
 msgstr "Regions"
 
@@ -1574,7 +1591,7 @@ msgstr "Replace the photo"
 msgid "Resend code"
 msgstr "Resend code"
 
-#: src/pages/sector/common/ui/RoutesPanelHeader.tsx:37
+#: src/pages/sector/common/ui/RoutesPanelHeader.tsx:41
 msgid "Reset filters"
 msgstr "Reset filters"
 
@@ -1757,9 +1774,15 @@ msgstr "Something went wrong"
 msgid "Sort by"
 msgstr "Sort by"
 
+#: src/pages/sector/desktop/RoutesSortButton.tsx:34
+#: src/pages/sector/mobile/RoutesSortButton.tsx:34
+#: src/pages/sector/mobile/RoutesSortButton.tsx:42
+msgid "Sort routes"
+msgstr "Sort routes"
+
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:215
 #: src/pages/logbook/common/ui/DisciplineTabs.tsx:27
-#: src/shared/ui/GradeHistogram.tsx:56
+#: src/shared/ui/GradeHistogram.tsx:64
 msgid "Sport"
 msgstr "Sport"
 
@@ -1926,7 +1949,7 @@ msgstr "Top rope"
 #~ msgid "Topo photo"
 #~ msgstr "Topo photo"
 
-#: src/shared/ui/GradeHistogram.tsx:57
+#: src/shared/ui/GradeHistogram.tsx:65
 msgid "Trad"
 msgstr "Trad"
 
