@@ -9,7 +9,7 @@ import type { RouteLine } from '@crag-atlas/api';
 import CircularProgress from '@mui/material/CircularProgress';
 import { styled } from '@mui/material/styles';
 
-import { photoFrame } from '@web/shared/theme/photoFrame';
+import { photoFit, photoStage } from '@web/shared/theme/photoFrame';
 
 import {
   findNearestLine,
@@ -27,7 +27,6 @@ export interface Props {
   label: string;
   lines: RouteLine[];
   idHighlightedRoute?: string;
-  isContained?: boolean;
   colorOf?: (idRoute: string) => string | undefined;
   numberOf?: Record<string, number>;
   onSelectRoute?: (idRoute: string) => void;
@@ -39,180 +38,174 @@ export const TopoImage = ({
   label,
   lines,
   idHighlightedRoute,
-  isContained,
   colorOf,
   numberOf,
   onSelectRoute,
   onHoverRoute
 }: Props) => {
-  const [loadedPhoto, setLoadedPhoto] = useState<{
-    url: string;
-    ratio: number;
-  }>();
+  const [loadedUrl, setLoadedUrl] = useState<string>();
   const overlayRef = useRef<SVGSVGElement>(null);
   const pressedAt = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
-  const isLoaded = loadedPhoto?.url === photoUrl;
-  const ratio = isLoaded ? loadedPhoto.ratio : undefined;
+  const isLoaded = loadedUrl === photoUrl;
 
   const hasHighlight = lines.some(
     (line) => line.idRoute === idHighlightedRoute
   );
 
   // Hovering changes opacity, not geometry — without this every hover re-runs
-  // the spline for every line on the photo.
-  const paths = useMemo(
-    () => new Map(lines.map((line) => [line.idRoute, smoothPath(line.points)])),
+  // the spline and re-pairs every point of every line on the photo.
+  const shapes = useMemo(
+    () =>
+      lines.map((line) => ({
+        line,
+        path: smoothPath(line.points),
+        bolts: toPairs(line.bolts),
+        anchor: line.anchor ? toPairs([line.anchor])[0] : undefined,
+        start: toPairs(line.points)[0]
+      })),
     [lines]
   );
 
   return (
-    <FrameStyled isContained={!!isContained && !!ratio} ratio={ratio}>
-      <ImageStyled
-        src={photoUrl}
-        alt={label}
-        decoding="async"
-        isContained={!!isContained && !!ratio}
-        isLoaded={isLoaded}
-        onLoad={({ currentTarget }) =>
-          setLoadedPhoto({
-            url: currentTarget.src,
-            ratio: currentTarget.naturalWidth / currentTarget.naturalHeight
-          })
-        }
-      />
+    <StageStyled>
       {!isLoaded && (
         <LoaderStyled>
           <CircularProgress size={28} />
         </LoaderStyled>
       )}
-      <OverlayStyled
-        ref={overlayRef}
-        viewBox="0 0 1 1"
-        preserveAspectRatio="none"
-        isLoaded={isLoaded}
-        isHoverable={!!onHoverRoute || !!onSelectRoute}
-        onPointerDown={(event: ReactPointerEvent<SVGSVGElement>) => {
-          pressedAt.current = { x: event.clientX, y: event.clientY };
-        }}
-        onPointerMove={(event: ReactPointerEvent<SVGSVGElement>) => {
-          if (!onHoverRoute || !overlayRef.current) return;
+      <FrameStyled>
+        <ImageStyled
+          src={photoUrl}
+          alt={label}
+          decoding="async"
+          isLoaded={isLoaded}
+          onLoad={({ currentTarget }) => setLoadedUrl(currentTarget.src)}
+        />
+        <OverlayStyled
+          ref={overlayRef}
+          viewBox="0 0 1 1"
+          preserveAspectRatio="none"
+          isLoaded={isLoaded}
+          isHoverable={!!onHoverRoute || !!onSelectRoute}
+          onPointerDown={(event: ReactPointerEvent<SVGSVGElement>) => {
+            pressedAt.current = { x: event.clientX, y: event.clientY };
+          }}
+          onPointerMove={(event: ReactPointerEvent<SVGSVGElement>) => {
+            if (!onHoverRoute || !overlayRef.current) return;
 
-          const rect = overlayRef.current.getBoundingClientRect();
+            const rect = overlayRef.current.getBoundingClientRect();
 
-          onHoverRoute(
-            findNearestLine(
+            onHoverRoute(
+              findNearestLine(
+                lines,
+                pointerToPhoto(event, rect),
+                toleranceOf(rect, HOVER_TOLERANCE)
+              )
+            );
+          }}
+          onPointerLeave={() => onHoverRoute?.(undefined)}
+          onClick={(event: ReactPointerEvent<SVGSVGElement>) => {
+            if (!onSelectRoute || !overlayRef.current) return;
+
+            const travel = Math.hypot(
+              event.clientX - pressedAt.current.x,
+              event.clientY - pressedAt.current.y
+            );
+
+            if (travel > TAP_SLOP) return;
+
+            const rect = overlayRef.current.getBoundingClientRect();
+            const idRoute = findNearestLine(
               lines,
               pointerToPhoto(event, rect),
               toleranceOf(rect, HOVER_TOLERANCE)
-            )
-          );
-        }}
-        onPointerLeave={() => onHoverRoute?.(undefined)}
-        onClick={(event: ReactPointerEvent<SVGSVGElement>) => {
-          if (!onSelectRoute || !overlayRef.current) return;
+            );
 
-          const travel = Math.hypot(
-            event.clientX - pressedAt.current.x,
-            event.clientY - pressedAt.current.y
-          );
+            if (idRoute) onSelectRoute(idRoute);
+          }}
+        >
+          <title>{label}</title>
+          {shapes.map(({ line, path }) => {
+            const isHighlighted = idHighlightedRoute === line.idRoute;
 
-          if (travel > TAP_SLOP) return;
+            return (
+              <g key={line.idRoute}>
+                {isHighlighted && <OutlineStyled d={path} />}
+                <PathStyled
+                  d={path}
+                  lineColor={colorOf?.(line.idRoute)}
+                  isHighlighted={isHighlighted}
+                  lineAlpha={lineOpacity(isHighlighted, hasHighlight)}
+                />
+              </g>
+            );
+          })}
+        </OverlayStyled>
+        {isLoaded &&
+          shapes.flatMap(({ line, bolts, anchor }) => {
+            const lineColor = colorOf?.(line.idRoute);
+            const alpha = lineOpacity(
+              idHighlightedRoute === line.idRoute,
+              hasHighlight
+            );
 
-          const rect = overlayRef.current.getBoundingClientRect();
-          const idRoute = findNearestLine(
-            lines,
-            pointerToPhoto(event, rect),
-            toleranceOf(rect, HOVER_TOLERANCE)
-          );
+            return [
+              ...bolts.map(([x, y]) => (
+                <TopoPointMark
+                  key={`bolt-${line.idRoute}-${x}-${y}`}
+                  kind="bolt"
+                  x={x}
+                  y={y}
+                  color={lineColor}
+                  opacity={alpha}
+                />
+              )),
+              ...(anchor
+                ? [
+                    <TopoPointMark
+                      key={`anchor-${line.idRoute}`}
+                      kind="anchor"
+                      x={anchor[0]}
+                      y={anchor[1]}
+                      color={lineColor}
+                      opacity={alpha}
+                    />
+                  ]
+                : [])
+            ];
+          })}
+        {isLoaded &&
+          numberOf &&
+          shapes.map(({ line, start }) => {
+            const number = numberOf[line.idRoute];
 
-          if (idRoute) onSelectRoute(idRoute);
-        }}
-      >
-        <title>{label}</title>
-        {lines.map((line) => {
-          const isHighlighted = idHighlightedRoute === line.idRoute;
-          const path = paths.get(line.idRoute) ?? '';
-
-          return (
-            <g key={line.idRoute}>
-              {isHighlighted && <OutlineStyled d={path} />}
-              <PathStyled
-                d={path}
-                lineColor={colorOf?.(line.idRoute)}
-                isHighlighted={isHighlighted}
-                lineAlpha={lineOpacity(isHighlighted, hasHighlight)}
+            return number && start ? (
+              <TopoRouteBadge
+                key={line.idRoute}
+                number={number}
+                grade={line.grade}
+                gradeScale={line.gradeScale}
+                name={
+                  lines.length === 1 || idHighlightedRoute === line.idRoute
+                    ? line.routeName
+                    : undefined
+                }
+                x={start[0] + line.labelOffsetX}
+                y={start[1] + line.labelOffsetY}
+                isHighlighted={idHighlightedRoute === line.idRoute}
+                isDimmed={hasHighlight && idHighlightedRoute !== line.idRoute}
+                onSelect={
+                  onSelectRoute ? () => onSelectRoute(line.idRoute) : undefined
+                }
+                onHover={(isOver) =>
+                  onHoverRoute?.(isOver ? line.idRoute : undefined)
+                }
               />
-            </g>
-          );
-        })}
-      </OverlayStyled>
-      {isLoaded &&
-        lines.flatMap((line) => {
-          const lineColor = colorOf?.(line.idRoute);
-          const alpha = lineOpacity(
-            idHighlightedRoute === line.idRoute,
-            hasHighlight
-          );
-
-          const anchor = line.anchor ? toPairs([line.anchor])[0] : undefined;
-
-          return [
-            ...toPairs(line.bolts).map(([x, y]) => (
-              <TopoPointMark
-                key={`bolt-${line.idRoute}-${x}-${y}`}
-                kind="bolt"
-                x={x}
-                y={y}
-                color={lineColor}
-                opacity={alpha}
-              />
-            )),
-            ...(anchor
-              ? [
-                  <TopoPointMark
-                    key={`anchor-${line.idRoute}`}
-                    kind="anchor"
-                    x={anchor[0]}
-                    y={anchor[1]}
-                    color={lineColor}
-                    opacity={alpha}
-                  />
-                ]
-              : [])
-          ];
-        })}
-      {isLoaded &&
-        numberOf &&
-        lines.map((line) => {
-          const number = numberOf[line.idRoute];
-          const [start] = toPairs(line.points);
-
-          return number && start ? (
-            <TopoRouteBadge
-              key={line.idRoute}
-              number={number}
-              grade={line.grade}
-              gradeScale={line.gradeScale}
-              name={
-                lines.length === 1 || idHighlightedRoute === line.idRoute
-                  ? line.routeName
-                  : undefined
-              }
-              x={start[0] + line.labelOffsetX}
-              y={start[1] + line.labelOffsetY}
-              isHighlighted={idHighlightedRoute === line.idRoute}
-              isDimmed={hasHighlight && idHighlightedRoute !== line.idRoute}
-              onSelect={
-                onSelectRoute ? () => onSelectRoute(line.idRoute) : undefined
-              }
-              onHover={(isOver) =>
-                onHoverRoute?.(isOver ? line.idRoute : undefined)
-              }
-            />
-          ) : null;
-        })}
-    </FrameStyled>
+            ) : null;
+          })}
+      </FrameStyled>
+    </StageStyled>
   );
 };
 
@@ -221,44 +214,25 @@ const HOVER_TOLERANCE = 16;
 /** Past this the pointer was panning the photo, not tapping a line. */
 const TAP_SLOP = 4;
 
-const FALLBACK_RATIO = '4 / 3';
+const StageStyled = styled('div')`
+  ${photoStage()}
+`;
 
 /* The frame is exactly the photo: any gap between the two boxes would slide
-   every line off the rock. Once the photo is measured it is the `img` that
-   holds the ratio — a frame given both a width and a height stops honouring
-   `aspect-ratio`, which is what squashed the photo when a fixed stage height
-   met a `max-width` clamp. */
-const FrameStyled = styled('div', {
-  shouldForwardProp: (prop) => prop !== 'isContained' && prop !== 'ratio'
-})<{ isContained: boolean; ratio?: number }>`
+   every line off the rock. */
+const FrameStyled = styled('div')`
   position: relative;
   display: flex;
-  /* Stretch is the flex default and would pull the photo off its own
-     proportions whenever the frame is taller or wider than it. */
-  align-items: flex-start;
   max-width: 100%;
-  width: ${({ isContained }) => (isContained ? 'auto' : '100%')};
-  aspect-ratio: ${({ isContained, ratio }) =>
-    isContained ? 'auto' : (ratio ?? FALLBACK_RATIO)};
-  overflow: hidden;
-  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
-  background: ${({ theme }) => theme.palette.action.hover};
+  max-height: 100%;
 `;
 
 const ImageStyled = styled('img', {
-  shouldForwardProp: (prop) => prop !== 'isContained' && prop !== 'isLoaded'
-})<{ isContained: boolean; isLoaded: boolean }>`
-  display: block;
-  width: ${({ isContained }) => (isContained ? 'auto' : '100%')};
-  height: auto;
-  max-width: 100%;
-  /* A percentage here would resolve against a frame whose own height is
-     auto, which CSS treats as no limit at all — so the stage hands its
-     height down as a length instead. */
-  max-height: var(--topo-stage-height, none);
+  shouldForwardProp: (prop) => prop !== 'isLoaded'
+})<{ isLoaded: boolean }>`
+  ${({ theme }) => photoFit(theme)}
   opacity: ${({ isLoaded }) => (isLoaded ? 1 : 0)};
   transition: opacity 0.2s ease-out;
-  ${({ theme }) => photoFrame(theme)}
 `;
 
 const LoaderStyled = styled('div')`

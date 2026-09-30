@@ -5,7 +5,8 @@ import { useLingui } from '@lingui/react/macro';
 
 import { sortByNumber, usePhotoLabel } from '@web/features/topo';
 
-import type { Route } from '../entities';
+import type { Route, RouteSort, RouteSortDirection } from '../entities';
+import { sortRoutes } from '../lib';
 
 export interface RouteGroup {
   id: string;
@@ -17,17 +18,34 @@ export interface Params {
   routes: Route[];
   topos: Topo[];
   numberOf: Record<string, number>;
+  sort: RouteSort;
+  direction: RouteSortDirection;
+  gradeOrder: Record<string, number>;
 }
 
 export const useRoutesByTopo = ({
   routes,
   topos,
-  numberOf
+  numberOf,
+  sort,
+  direction,
+  gradeOrder
 }: Params): RouteGroup[] => {
   const { t } = useLingui();
   const photoLabel = usePhotoLabel();
 
   return useMemo(() => {
+    // Photo groups carry their own left-to-right order, so any other order has
+    // to replace them rather than reshuffle inside them.
+    if (sort !== 'default')
+      return [
+        {
+          id: 'all',
+          label: '',
+          routes: sortRoutes(routes, sort, direction, gradeOrder)
+        }
+      ];
+
     const byId = new Map(routes.map((route) => [route.id, route]));
     const grouped: RouteGroup[] = [];
     const placed = new Set<string>();
@@ -59,5 +77,5 @@ export const useRoutesByTopo = ({
     }
 
     return grouped;
-  }, [routes, topos, numberOf, t, photoLabel]);
+  }, [routes, topos, numberOf, sort, direction, gradeOrder, t, photoLabel]);
 };

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import { useLingui } from '@lingui/react/macro';
@@ -26,17 +26,20 @@ import {
   PageTitle
 } from '@web/shared/ui';
 
-import type { Route } from '../common';
+import type { Route, RouteSort, RouteSortDirection } from '../common';
 import {
   ArchivedSectorNotice,
+  gradeOrder,
   RoutesList,
   RoutesPanelHeader,
+  RoutesSortDirectionButton,
   useApiGetRoutes,
   useApiGetSector,
   useApiGetTickedRoutes,
   useGradeFilter,
   useRoutesByTopo
 } from '../common';
+import { RoutesSortButton } from './RoutesSortButton';
 
 export const PageSectorMobile = () => {
   const { t } = useLingui();
@@ -61,6 +64,14 @@ export const PageSectorMobile = () => {
   const { idActiveTopo, selectTopo } = useTopoGallery({
     topos: visibleTopos
   });
+  const [sort, setSort] = useState<RouteSort>('default');
+  const [direction, setDirection] = useState<RouteSortDirection>('desc');
+
+  const orderOfGrade = useMemo(
+    () => gradeOrder(sector?.gradeHistogram ?? []),
+    [sector?.gradeHistogram]
+  );
+
   const numberOf = useMemo(
     () =>
       orderRoutes(
@@ -73,7 +84,10 @@ export const PageSectorMobile = () => {
   const groups = useRoutesByTopo({
     routes: visibleRoutes,
     topos: visibleTopos,
-    numberOf
+    numberOf,
+    sort,
+    direction,
+    gradeOrder: orderOfGrade
   });
 
   const colorOf = (idRoute: string) => {
@@ -130,6 +144,18 @@ export const PageSectorMobile = () => {
         tickedCount={tickedCount}
         gradeHistogram={sector?.gradeHistogram ?? []}
         selectedGrades={selectedGrades}
+        sortButton={
+          <>
+            <RoutesSortDirectionButton
+              direction={direction}
+              isVisible={sort !== 'default'}
+              onToggleDirection={() =>
+                setDirection((one) => (one === 'asc' ? 'desc' : 'asc'))
+              }
+            />
+            <RoutesSortButton sort={sort} onSortChange={setSort} />
+          </>
+        }
         onToggleGrade={toggleGrade}
         onClearGrades={clearGrades}
       />

@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 import type { GradeHistogramGroup } from '@crag-atlas/api';
 import { Plural, Trans } from '@lingui/react/macro';
 import Button from '@mui/material/Button';
@@ -11,6 +13,7 @@ export interface Props {
   tickedCount?: number;
   gradeHistogram: GradeHistogramGroup[];
   selectedGrades: string[];
+  sortButton?: ReactNode;
   onToggleGrade: (key: string) => void;
   onClearGrades: () => void;
 }
@@ -20,6 +23,7 @@ export const RoutesPanelHeader = ({
   tickedCount,
   gradeHistogram,
   selectedGrades,
+  sortButton,
   onToggleGrade,
   onClearGrades
 }: Props) => (
@@ -40,15 +44,21 @@ export const RoutesPanelHeader = ({
         <ProgressStyled tickedCount={tickedCount} routesCount={routesCount} />
       )}
     </TitleRowStyled>
-    {gradeHistogram.map((group) => (
-      <GradeHistogram
-        key={group.type}
-        group={group}
-        selectedGrades={selectedGrades}
-        onToggleGrade={onToggleGrade}
-        isCompact
-      />
-    ))}
+    <GradesRowStyled>
+      <GradesStyled>
+        {gradeHistogram.map((group) => (
+          <GradeHistogram
+            key={group.type}
+            group={group}
+            selectedGrades={selectedGrades}
+            onToggleGrade={onToggleGrade}
+            isCompact
+            hasScrollHint
+          />
+        ))}
+      </GradesStyled>
+      {sortButton && <SortSlotStyled>{sortButton}</SortSlotStyled>}
+    </GradesRowStyled>
   </HeaderStyled>
 );
 
@@ -63,6 +73,28 @@ const TitleRowStyled = styled('div')`
   align-items: center;
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacing(1)};
+`;
+
+const GradesRowStyled = styled('div')`
+  display: flex;
+  align-items: flex-start;
+  gap: ${({ theme }) => theme.spacing(1.5)};
+`;
+
+// The bars scroll inside this column instead of pushing the button out of the
+// row, so the button sits in the same place whatever a sector's grade spread.
+const GradesStyled = styled('div')`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing(1)};
+  flex: 1 1 auto;
+  min-width: 0;
+`;
+
+const SortSlotStyled = styled('div')`
+  display: flex;
+  align-items: center;
+  flex: none;
 `;
 
 const ProgressStyled = styled(TickProgress)`
