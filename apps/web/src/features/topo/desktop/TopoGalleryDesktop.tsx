@@ -68,9 +68,6 @@ const GalleryStyled = styled('div')`
 `;
 
 const ZoomStageStyled = styled(TopoZoomStage)`
-  /* This stage grows with the column rather than owning a height, so the
-     photo gets a viewport-sized ceiling instead of an exact one. */
-  --topo-stage-height: 80vh;
   flex-grow: 1;
   min-height: 0;
   border: 1px solid ${({ theme }) => theme.palette.divider};

@@ -87,7 +87,6 @@ export const PageRouteMobile = () => {
                   lines={lines}
                   numberOf={numberOf}
                   colorOf={colorOf}
-                  isContained
                 />
               </PhotoButtonStyled>
             ) : (
@@ -157,8 +156,7 @@ const ConsensusStyled = styled(GradeConsensus)`
 const PhotoButtonStyled = styled('button')`
   position: relative;
   display: flex;
-  align-items: flex-start;
-  max-width: 100%;
+  width: 100%;
   padding: 0;
   cursor: zoom-in;
   border: none;
@@ -166,10 +164,8 @@ const PhotoButtonStyled = styled('button')`
 `;
 
 const PhotoStyled = styled('div')`
-  --topo-stage-height: 38svh;
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  height: 38svh;
 `;
 
 const ActionBarStyled = styled('div')`

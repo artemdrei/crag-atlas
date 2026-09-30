@@ -34,6 +34,5 @@ export const TopoPhotoViewer = ({
 );
 
 const StageStyled = styled(TopoZoomStage)`
-  width: 100%;
   height: 100%;
 `;

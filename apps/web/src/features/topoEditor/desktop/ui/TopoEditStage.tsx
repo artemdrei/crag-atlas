@@ -18,7 +18,7 @@ import {
   TopoZoomControls,
   toleranceOf
 } from '@web/features/topo';
-import { photoFrame } from '@web/shared/theme/photoFrame';
+import { photoFit, photoStage } from '@web/shared/theme/photoFrame';
 import { ZoomStageShell } from '@web/shared/ui';
 
 import type {
@@ -297,96 +297,98 @@ export const TopoEditStage = ({
         onTransform={(_ref, state) => setIsZoomed(state.scale > MIN_SCALE)}
       >
         <TransformComponent>
-          <FrameStyled isPhotoLoaded={isPhotoLoaded}>
-            <ImageStyled
-              src={topo.photoUrl}
-              alt={label}
-              decoding="async"
-              onLoad={() => setIsPhotoLoaded(true)}
-            />
-            <OverlayStyled
-              ref={overlayRef}
-              viewBox="0 0 1 1"
-              preserveAspectRatio="none"
-              isDrawing={!!session.idSelectedRoute && !session.isPreview}
-              onPointerDown={handleOverlayDown}
-              onPointerMove={handleOverlayMove}
-              onPointerUp={handleDragEnd}
-              onPointerCancel={handleDragEnd}
-              // The capture can be taken away mid-drag; without this the
-              // gesture would stay open and the next hover would keep moving.
-              onLostPointerCapture={() => endDrag()}
-              onPointerLeave={() => {
-                if (!dragRef.current) onHoverRoute(undefined);
-              }}
-            >
-              <title>{label}</title>
-              <TopoEditOverlay
+          <StageStyled>
+            <FrameStyled isPhotoLoaded={isPhotoLoaded}>
+              <ImageStyled
+                src={topo.photoUrl}
+                alt={label}
+                decoding="async"
+                onLoad={() => setIsPhotoLoaded(true)}
+              />
+              <OverlayStyled
+                ref={overlayRef}
+                viewBox="0 0 1 1"
+                preserveAspectRatio="none"
+                isDrawing={!!session.idSelectedRoute && !session.isPreview}
+                onPointerDown={handleOverlayDown}
+                onPointerMove={handleOverlayMove}
+                onPointerUp={handleDragEnd}
+                onPointerCancel={handleDragEnd}
+                // The capture can be taken away mid-drag; without this the
+                // gesture would stay open and the next hover would keep moving.
+                onLostPointerCapture={() => endDrag()}
+                onPointerLeave={() => {
+                  if (!dragRef.current) onHoverRoute(undefined);
+                }}
+              >
+                <title>{label}</title>
+                <TopoEditOverlay
+                  lines={lines}
+                  idSelectedRoute={session.idSelectedRoute}
+                  idHoveredRoute={idHoveredRoute}
+                  colorOf={colorOf}
+                />
+              </OverlayStyled>
+              <TopoEditMarkers
                 lines={lines}
                 idSelectedRoute={session.idSelectedRoute}
                 idHoveredRoute={idHoveredRoute}
+                idSelectedPoint={session.idSelectedPoint}
+                areHandlesHidden={session.isPreview}
                 colorOf={colorOf}
+                onPointDown={handlePointDown}
               />
-            </OverlayStyled>
-            <TopoEditMarkers
-              lines={lines}
-              idSelectedRoute={session.idSelectedRoute}
-              idHoveredRoute={idHoveredRoute}
-              idSelectedPoint={session.idSelectedPoint}
-              areHandlesHidden={session.isPreview}
-              colorOf={colorOf}
-              onPointDown={handlePointDown}
-            />
-            {lines.map((line) => {
-              const number = numberOf[line.idRoute];
-              const [start] = line.points;
+              {lines.map((line) => {
+                const number = numberOf[line.idRoute];
+                const [start] = line.points;
 
-              return number && start ? (
-                <BadgeSlotStyled
-                  key={line.idRoute}
-                  onPointerDown={(event) =>
-                    handleLabelDown(line.idRoute, start, event)
-                  }
-                >
-                  <TopoRouteBadge
-                    number={number}
-                    grade={gradeOf(line.idRoute)}
-                    gradeScale={gradeScaleOf(line.idRoute)}
-                    name={
-                      lines.length === 1 ||
-                      line.idRoute === session.idSelectedRoute ||
-                      line.idRoute === idHoveredRoute
-                        ? nameOf(line.idRoute)
-                        : undefined
+                return number && start ? (
+                  <BadgeSlotStyled
+                    key={line.idRoute}
+                    onPointerDown={(event) =>
+                      handleLabelDown(line.idRoute, start, event)
                     }
-                    x={start[0] + line.labelOffset[0]}
-                    y={start[1] + line.labelOffset[1]}
-                    isHighlighted={line.idRoute === session.idSelectedRoute}
-                    isDimmed={
-                      !!session.idSelectedRoute &&
-                      line.idRoute !== session.idSelectedRoute
-                    }
-                    onSelect={
-                      isEditable(line.idRoute)
-                        ? () =>
-                            onAction({
-                              type: 'SELECT_ROUTE',
-                              idRoute: line.idRoute
-                            })
-                        : undefined
-                    }
-                    onHover={(isOver) =>
-                      onHoverRoute(
-                        isOver && isEditable(line.idRoute)
-                          ? line.idRoute
+                  >
+                    <TopoRouteBadge
+                      number={number}
+                      grade={gradeOf(line.idRoute)}
+                      gradeScale={gradeScaleOf(line.idRoute)}
+                      name={
+                        lines.length === 1 ||
+                        line.idRoute === session.idSelectedRoute ||
+                        line.idRoute === idHoveredRoute
+                          ? nameOf(line.idRoute)
                           : undefined
-                      )
-                    }
-                  />
-                </BadgeSlotStyled>
-              ) : null;
-            })}
-          </FrameStyled>
+                      }
+                      x={start[0] + line.labelOffset[0]}
+                      y={start[1] + line.labelOffset[1]}
+                      isHighlighted={line.idRoute === session.idSelectedRoute}
+                      isDimmed={
+                        !!session.idSelectedRoute &&
+                        line.idRoute !== session.idSelectedRoute
+                      }
+                      onSelect={
+                        isEditable(line.idRoute)
+                          ? () =>
+                              onAction({
+                                type: 'SELECT_ROUTE',
+                                idRoute: line.idRoute
+                              })
+                          : undefined
+                      }
+                      onHover={(isOver) =>
+                        onHoverRoute(
+                          isOver && isEditable(line.idRoute)
+                            ? line.idRoute
+                            : undefined
+                        )
+                      }
+                    />
+                  </BadgeSlotStyled>
+                ) : null;
+              })}
+            </FrameStyled>
+          </StageStyled>
         </TransformComponent>
         <TopoZoomControls />
         {children}
@@ -413,6 +415,10 @@ export const TopoEditStage = ({
 
 const FALLBACK_RATIO = '4 / 3';
 
+const StageStyled = styled('div')`
+  ${photoStage()}
+`;
+
 const FrameStyled = styled('div', {
   shouldForwardProp: (prop) => prop !== 'isPhotoLoaded'
 })<{ isPhotoLoaded: boolean }>`
@@ -425,12 +431,7 @@ const FrameStyled = styled('div', {
 `;
 
 const ImageStyled = styled('img')`
-  display: block;
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: 100%;
-  ${({ theme }) => photoFrame(theme)}
+  ${({ theme }) => photoFit(theme)}
 `;
 
 const OverlayStyled = styled('svg', {

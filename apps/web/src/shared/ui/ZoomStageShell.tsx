@@ -18,6 +18,7 @@ export const ZoomStageShell = ({
 const ShellStyled = styled('div')`
   position: relative;
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: center;
   overflow: hidden;

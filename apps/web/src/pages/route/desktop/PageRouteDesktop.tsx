@@ -98,7 +98,6 @@ export const PageRouteDesktop = () => {
                   lines={lines}
                   numberOf={numberOf}
                   colorOf={colorOf}
-                  isContained
                 />
               </PhotoButtonStyled>
             ) : (
@@ -196,8 +195,7 @@ const ConsensusStyled = styled(GradeConsensus)`
 const PhotoButtonStyled = styled('button')`
   position: relative;
   display: flex;
-  align-items: flex-start;
-  max-width: 100%;
+  width: 100%;
   padding: 0;
   cursor: zoom-in;
   border: none;
@@ -205,13 +203,10 @@ const PhotoButtonStyled = styled('button')`
 `;
 
 const PhotoStyled = styled('div')`
-  --topo-stage-height: 320px;
   position: sticky;
   top: ${({ theme }) => theme.spacing(2)};
-  height: var(--topo-stage-height);
+  height: 320px;
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
 
   ${({ theme }) => theme.breakpoints.down('lg')} {
     position: static;

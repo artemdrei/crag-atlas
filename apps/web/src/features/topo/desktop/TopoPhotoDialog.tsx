@@ -43,16 +43,10 @@ const TopoPhotoDialog = ({ open, ...photo }: Props) => {
 
 export default TopoPhotoDialog;
 
-const BODY_HEIGHT = 'min(88vh, 1100px)';
-
 const BodyStyled = styled('div')`
   position: relative;
   width: min(92vw, 1400px);
-  height: ${BODY_HEIGHT};
-  /* The body's own height less the padding it adds around the stage. */
-  --topo-stage-height: calc(
-    ${BODY_HEIGHT} - ${({ theme }) => theme.spacing(4)}
-  );
+  height: min(88vh, 1100px);
   padding: ${({ theme }) => theme.spacing(2)};
 `;
 

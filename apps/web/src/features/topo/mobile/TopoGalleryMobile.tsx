@@ -49,7 +49,6 @@ export const TopoGalleryMobile = ({
               label={photoLabel(idxActiveTopo)}
               lines={activeTopo.lines}
               idHighlightedRoute={idHighlightedRoute}
-              isContained
               colorOf={colorOf}
               numberOf={numberOf}
               onSelectRoute={onSelectRoute}
@@ -81,17 +80,13 @@ const GalleryStyled = styled('div')`
 // that took each one's height would move everything below it on every switch.
 // The photo fits inside this rather than setting it.
 const PhotoFrameStyled = styled('div')`
-  --topo-stage-height: 30svh;
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  height: var(--topo-stage-height);
+  height: 30svh;
 `;
 
 const PhotoButtonStyled = styled('button')`
   display: flex;
-  align-items: flex-start;
-  max-width: 100%;
+  width: 100%;
   padding: 0;
   cursor: zoom-in;
   border: none;

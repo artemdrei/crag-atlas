@@ -57,7 +57,6 @@ export const TopoZoomStage = ({
             label={label}
             lines={lines}
             idHighlightedRoute={idHighlightedRoute}
-            isContained
             colorOf={colorOf}
             numberOf={numberOf}
             onSelectRoute={onSelectRoute}
