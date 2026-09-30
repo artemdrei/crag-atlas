@@ -14,7 +14,8 @@ import { routePath } from '../../fixtures/ui';
 /**
  * The topo on a phone. There is no editor here — drawing is desktop-only —
  * but the photo and the line on it are what the climber came to see, and they
- * open in a sheet of their own.
+ * sit on the route itself: a phone zooms the photo where it is rather than
+ * opening it anywhere else.
  */
 test.describe.configure({ mode: 'serial' });
 
@@ -37,27 +38,25 @@ test.beforeAll(async () => {
 
 test.afterAll(cleanup);
 
-test('the route shows its photo, and the photo opens full width', async ({
+test('the route shows its photo with the line drawn on it', async ({
   page: phone
 }) => {
   await phone.goto(routePath(region.id, sector.id, route.id));
 
-  const open = phone.getByRole('button', { name: 'Open the photo' });
-
-  await expect(open).toBeVisible();
-  await open.click();
-
-  await expect(phone.getByRole('img', { name: 'Photo 1' })).toHaveCount(2);
+  // The photo is on the route itself, once: the phone has nowhere to open it.
+  await expect(phone.locator('img[alt="Photo 1"]')).toHaveCount(1);
+  // The overlay over the photo answers to the same name, and the line is the
+  // path drawn on it.
+  await expect(
+    phone.getByRole('img', { name: 'Photo 1' }).locator('path')
+  ).toHaveCount(1);
 });
 
-test('a route nobody has drawn shows no photo to open', async ({
-  page: phone
-}) => {
+test('a route nobody has drawn shows no photo', async ({ page: phone }) => {
   const bare = await makeRoute(sector.id, 'Phone-Topo-Undrawn');
 
   await phone.goto(routePath(region.id, sector.id, bare.id));
 
-  await expect(
-    phone.getByRole('button', { name: 'Open the photo' })
-  ).toHaveCount(0);
+  await expect(phone.getByText('No topo yet')).toBeVisible();
+  await expect(phone.locator('img[alt="Photo 1"]')).toHaveCount(0);
 });

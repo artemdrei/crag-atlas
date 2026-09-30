@@ -3,13 +3,12 @@ import { useParams } from 'react-router';
 import { useLingui } from '@lingui/react/macro';
 import { styled, useTheme } from '@mui/material/styles';
 
-import { useModal } from '@web/app/providers';
 import {
   buildRegionPath,
   buildSectorPath,
   ROUTES
 } from '@web/app/router/routes';
-import { TopoImage, usePhotoLabel, useRouteTopo } from '@web/features/topo';
+import { TopoZoomStage, usePhotoLabel, useRouteTopo } from '@web/features/topo';
 import { getGradeColor } from '@web/shared/theme/palette';
 import {
   ApiFeedback,
@@ -33,25 +32,12 @@ export const PageRouteMobile = () => {
   const { t } = useLingui();
   const { idRegion = '', idSector = '', idRoute = '' } = useParams();
   const theme = useTheme();
-  const { openModal } = useModal();
   const { route, isLoading, failure } = useApiGetRoute(idRoute);
   const { topo, photoIndex, lines, numberOf } = useRouteTopo(idSector, idRoute);
   const photoLabel = usePhotoLabel();
 
   const colorOf = () =>
     getGradeColor(theme.palette.grade, route?.grade, route?.gradeScale);
-
-  const openPhoto = () => {
-    if (!topo) return;
-
-    openModal('VIEW_TOPO_PHOTO', {
-      photoUrl: topo.photoUrl,
-      label: photoLabel(photoIndex),
-      lines,
-      numberOf,
-      colorOf
-    });
-  };
 
   return (
     <PageShell spacing={2} isCompact>
@@ -76,19 +62,13 @@ export const PageRouteMobile = () => {
           {route.isArchived && <ArchivedRouteNotice />}
           <PhotoStyled>
             {topo ? (
-              <PhotoButtonStyled
-                type="button"
-                aria-label={t`Open the photo`}
-                onClick={openPhoto}
-              >
-                <TopoImage
-                  photoUrl={topo.photoUrl}
-                  label={photoLabel(photoIndex)}
-                  lines={lines}
-                  numberOf={numberOf}
-                  colorOf={colorOf}
-                />
-              </PhotoButtonStyled>
+              <TopoZoomStage
+                photoUrl={topo.photoUrl}
+                label={photoLabel(photoIndex)}
+                lines={lines}
+                numberOf={numberOf}
+                colorOf={colorOf}
+              />
             ) : (
               <PhotoPlaceholder variant="wide" />
             )}
@@ -151,16 +131,6 @@ const StatsStyled = styled(RouteStats)`
 const ConsensusStyled = styled(GradeConsensus)`
   flex: 1 1 100%;
   min-width: 0;
-`;
-
-const PhotoButtonStyled = styled('button')`
-  position: relative;
-  display: flex;
-  width: 100%;
-  padding: 0;
-  cursor: zoom-in;
-  border: none;
-  background: none;
 `;
 
 const PhotoStyled = styled('div')`

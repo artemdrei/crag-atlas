@@ -5,7 +5,6 @@ import { ModalProvider } from '@web/app/providers';
 import { avatarUploadMobileRegistrations } from '@web/features/avatarUpload';
 import { logTickMobileRegistrations } from '@web/features/logTick';
 import { routeCommentMobileRegistrations } from '@web/features/routeComment';
-import { topoMobileRegistrations } from '@web/features/topo';
 import { playgroundMobileRegistrations } from '@web/pages/playground/registrations';
 import { ProfileSkeleton } from '@web/pages/profile/common';
 import { routeMediaMobileRegistrations } from '@web/widgets/routeMedia';
@@ -24,7 +23,6 @@ import { ErrorBoundary } from '../ui/errorBoundary';
 const registrations = [
   ...avatarUploadMobileRegistrations,
   ...logTickMobileRegistrations,
-  ...topoMobileRegistrations,
   ...routeCommentMobileRegistrations,
   ...routeMediaMobileRegistrations,
   ...playgroundMobileRegistrations

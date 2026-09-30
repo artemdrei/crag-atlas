@@ -43,10 +43,3 @@ export const topoDesktopRegistrations: ModalRegistration[] = [
     Component: lazy(() => import('./desktop/TopoPhotoDialog'))
   }
 ];
-
-export const topoMobileRegistrations: ModalRegistration[] = [
-  {
-    id: 'VIEW_TOPO_PHOTO',
-    Component: lazy(() => import('./mobile/TopoPhotoModal'))
-  }
-];
