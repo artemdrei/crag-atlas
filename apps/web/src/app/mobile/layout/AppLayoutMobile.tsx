@@ -50,6 +50,7 @@ const MainStyled = styled(Box)`
   flex-grow: 1;
   min-height: 0;
   overflow-y: auto;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
 ` as typeof Box;
 
