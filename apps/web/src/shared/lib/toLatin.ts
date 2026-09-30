@@ -19,9 +19,13 @@ export const loadTransliteration = async (): Promise<void> => {
  * A name in any writing system, rewritten in Latin — or undefined while the
  * charmap has not arrived yet. A name that already is Latin comes back
  * untouched: the library would strip its diacritics, and Céüse is not Ceuse.
+ *
+ * An empty name is Latin as much as any other, and answering `undefined` for
+ * it made `followLatin` wait on a charmap it had no use for: the first letter
+ * typed into an empty pair decided whether the Latin box would ever follow.
  */
 export const toLatin = (value: string): string | undefined =>
-  isLatinName(value) ? value : transliterate?.(value);
+  isNameLatin(value) ? value : transliterate?.(value);
 
 /**
  * The Latin name follows the local one only while nobody has written it
