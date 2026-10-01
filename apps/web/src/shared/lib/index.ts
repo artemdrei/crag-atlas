@@ -1,3 +1,12 @@
+export {
+  catalogIdsOfPath,
+  rememberLoginAttempt,
+  resolveLoginEvent,
+  takeLoginAttempt,
+  trackCatalogItemOpened,
+  trackListControl,
+  useTrackPageView
+} from './analytics';
 export { buildDirectionsUrl } from './buildDirectionsUrl';
 export { coordsOf } from './coordsOf';
 export { countryCodes, countryName } from './countries';
