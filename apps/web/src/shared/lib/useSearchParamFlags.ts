@@ -3,10 +3,8 @@ import { useSearchParams } from 'react-router';
 
 type Flags<K extends string> = Record<K, boolean>;
 
-// Several keys share one hook because they have to share one write: every
-// updater react-router hands out — functional form included — carries the
-// params of the render it came from, so two setters called in one handler
-// would each undo the other's key.
+// One hook per key would undo itself: every updater react-router hands out,
+// functional form included, carries the params of the render it came from.
 export const useSearchParamFlags = <K extends string>(
   keys: readonly K[]
 ): [Flags<K>, (next: Partial<Flags<K>>) => void] => {

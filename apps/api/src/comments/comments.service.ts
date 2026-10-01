@@ -96,8 +96,8 @@ export class CommentsService {
       );
     }
 
-    // Someone else's comment is invisible to this policy, so a missing row
-    // means "not yours" and "not there" alike — the caller learns neither.
+    // Invisible to this policy, so a missing row means "not yours" and "not
+    // there" alike.
     if (!data) {
       throw new NotFoundException('Comment not found', 'COMMENT_NOT_FOUND');
     }

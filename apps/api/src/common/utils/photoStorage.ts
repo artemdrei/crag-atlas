@@ -10,7 +10,7 @@ const logger = new Logger('PhotoStorage');
 
 export const MAX_PHOTO_BYTES = 5 * 1024 * 1024;
 
-/** What multer hands over; `@types/multer` is not installed. */
+// What multer hands over; `@types/multer` is not installed.
 export interface UploadedPhoto {
   originalname: string;
   mimetype: string;
@@ -18,11 +18,11 @@ export interface UploadedPhoto {
   buffer: Buffer;
 }
 
-/** A new key per upload, so a replaced photo can never be served from cache. */
+// A new key per upload, so a replaced photo is never served from cache.
 export const buildPhotoPath = (prefix: string): string =>
   `${prefix}/${randomUUID()}.webp`;
 
-/** The declared mimetype comes from the client, so the bytes get the last word. */
+// The declared mimetype comes from the client, so the bytes decide.
 export const assertWebp = ({ buffer }: UploadedPhoto): void => {
   const isWebp =
     buffer.length > 12 &&
@@ -37,7 +37,7 @@ export const assertWebp = ({ buffer }: UploadedPhoto): void => {
   }
 };
 
-/** Multipart carries strings only, and there is no global ValidationPipe. */
+// Multipart carries strings only, and there is no global ValidationPipe.
 export const parseDimension = (value: unknown, field: string): number => {
   const parsed = Number(value);
 
@@ -73,11 +73,8 @@ export const uploadPhoto = async (
   }
 };
 
-/**
- * Best effort: an orphaned object costs kilobytes, a false error costs trust.
- * Logged as an error rather than a warning, though — a delete that silently
- * left the file behind is how the public bucket kept serving deleted photos.
- */
+// Best effort, but logged as an error: a delete that silently left the file
+// behind is how the public bucket kept serving deleted photos.
 export const removePhoto = async (
   client: SupabaseClient,
   bucket: string,

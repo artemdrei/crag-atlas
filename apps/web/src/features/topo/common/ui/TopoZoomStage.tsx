@@ -44,8 +44,7 @@ export const TopoZoomStage = ({
         maxScale={MAX_SCALE}
         centerOnInit
         doubleClick={{ mode: 'toggle' }}
-        // A plain scroll belongs to the page; only a pinch (ctrl+wheel on a
-        // trackpad) zooms, and dragging pans only once the topo is zoomed in.
+        // A plain scroll belongs to the page; only a pinch zooms.
         wheel={{ wheelDisabled: true }}
         panning={{ disabled: !isZoomed }}
         trackPadPanning={{ disabled: !isZoomed }}

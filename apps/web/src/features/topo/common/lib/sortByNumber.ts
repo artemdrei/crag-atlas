@@ -1,5 +1,3 @@
-/** Routes read in the order they are numbered on the rock; anything unnumbered
-    sits at the end. */
 export const sortByNumber = <T extends { id: string }>(
   routes: T[],
   numberOf: Record<string, number>

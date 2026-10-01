@@ -7,7 +7,7 @@ import type {
   RequestWithAuthUser
 } from '../guards/supabaseAuth.guard';
 
-/** Only valid on a route guarded by SupabaseAuthGuard, which fills authUser. */
+// Only valid on a route guarded by SupabaseAuthGuard, which fills authUser.
 export const CurrentUser = createParamDecorator(
   (_data: unknown, context: ExecutionContext): AuthUser => {
     const request = context.switchToHttp().getRequest<RequestWithAuthUser>();

@@ -5,10 +5,8 @@ import type { GradeGroup, GradeGrouping, Tick } from '../entities';
 
 type DisplayGrade = (grade: string, scale: GradeScale) => string;
 
-// The reader's own system is what the buckets are labelled with, but the
-// converted label is not always a member of that scale (`5.11c/d`), so the
-// order comes from the stored grade instead. An unreadable grade scores -1
-// and lands at the bottom, where the chart's cap drops it first.
+// A converted label is not always a member of that scale (`5.11c/d`), so the
+// order comes from the stored grade. An unreadable grade scores -1.
 export const groupTicksByGrade = (
   ticks: Tick[],
   displayGrade: DisplayGrade

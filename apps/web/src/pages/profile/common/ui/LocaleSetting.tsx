@@ -21,8 +21,7 @@ export const LocaleSetting = () => {
     <ProfileSettingRow label={<Trans>Language</Trans>}>
       <Select
         size="small"
-        // The row's label sits beside the control, not on it, so the control
-        // needs a name of its own for anyone not reading the screen.
+        // The row's label sits beside the control, not on it.
         inputProps={{ 'aria-label': t`Language` }}
         value={locale}
         onChange={(event) => changeLocale(event.target.value as Locale)}

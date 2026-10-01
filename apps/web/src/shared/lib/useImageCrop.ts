@@ -24,8 +24,7 @@ export const useImageCrop = () => {
     position,
     zoom,
     crop,
-    // A new shape is a new frame: keeping the old offset would leave it
-    // hanging off the photo the moment the proportions change.
+    // A new shape is a new frame: the old offset would hang off the photo.
     changeAspect: (next?: number) => {
       setAspect(next);
       setPosition(CENTRED);

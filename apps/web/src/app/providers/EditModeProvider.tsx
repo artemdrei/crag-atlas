@@ -28,8 +28,7 @@ export const EditModeProvider = ({
 
 const EDITOR_FLAGS = ['edit', 'archive'] as const;
 
-// The URL owns whether the editor is open; the provider only mirrors it so the
-// theme can tint.
+// The URL owns whether the editor is open; this only mirrors it.
 export const useEditModeInUrl = () => {
   const { setIsEditing: mirror } = useEditMode();
   const { hasRole } = useUser();
@@ -48,8 +47,8 @@ export const useEditModeInUrl = () => {
     isEditing,
     // A pasted ?archive=1 without ?edit=1 shows the catalog, not the archive.
     isArchiveShown: isEditing && flags.archive,
-    // Closing the editor takes the archive with it, in one write: the archive
-    // is a view inside editing, never a place to come back to without it.
+    // One write: the archive is a view inside editing, never a place of
+    // its own to come back to.
     setIsEditing: (next: boolean) =>
       setFlags(next ? { edit: true } : { edit: false, archive: false }),
     setIsArchiveShown: (next: boolean) => setFlags({ archive: next })

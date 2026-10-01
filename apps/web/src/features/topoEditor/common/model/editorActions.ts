@@ -26,7 +26,7 @@ export type EditorAction =
   | { type: 'TOPOS_REPLACED'; topos: Topo[] }
   | { type: 'REORDER_TOPOS'; order: string[] };
 
-/** Undo rewinds what was drawn, never a selection, a drag frame or a save. */
+// Undo rewinds what was drawn, never a selection, a drag frame or a save.
 export const HISTORY_SKIPPED_ACTIONS = new Set<EditorAction['type']>([
   'SESSION_HYDRATED',
   'SELECT_TOPO',

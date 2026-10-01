@@ -3,7 +3,6 @@ import type { Tick, TickGradeCount } from '@crag-atlas/api';
 import type { AscentFilter, Discipline } from '../entities';
 import { scaleDiscipline } from './tickDiscipline';
 
-/** Every ascent of the discipline by style, whatever the list has loaded. */
 export const ascentCounts = (
   grades: TickGradeCount[],
   discipline: Discipline

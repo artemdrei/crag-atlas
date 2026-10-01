@@ -12,10 +12,7 @@ export interface Props {
   idSector: string;
 }
 
-/**
- * The sector's cover is its first photo. Clicking it swaps that photo rather
- * than adding another, which would land at the end and leave the cover as is.
- */
+// The cover is the first photo, so this swaps it rather than appending.
 export const SectorPhotoPicker = ({ idSector }: Props) => {
   const { t } = useLingui();
   const { openModal } = useModal();
@@ -74,8 +71,7 @@ export const SectorPhotoPicker = ({ idSector }: Props) => {
         onChange={(event) => {
           const files = Array.from(event.target.files ?? []);
 
-          // The same file twice in a row fires no change event, so the input
-          // is cleared before the dialog opens.
+          // The same file twice in a row fires no change event.
           event.target.value = '';
 
           pick(files);

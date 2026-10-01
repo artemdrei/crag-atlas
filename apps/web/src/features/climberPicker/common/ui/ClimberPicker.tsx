@@ -20,8 +20,7 @@ export interface Props {
   onNameChange?: (name: string) => void;
 }
 
-// A partner who has no account here is written by hand instead: passing
-// `onNameChange` is what opens the field to a name the search cannot find.
+// Passing `onNameChange` opens the field to a name the search cannot find.
 export const ClimberPicker = ({
   value,
   label,
@@ -80,8 +79,7 @@ export const ClimberPicker = ({
       onInputChange={(_event, next, reason) => {
         setQuery(next);
 
-        // Typing over a picked climber unlinks them: what is in the field is
-        // the name, until an option is chosen from the list again.
+        // Typing over a picked climber unlinks them.
         if (onNameChange && reason === 'input') {
           onChange(null);
           onNameChange(next);

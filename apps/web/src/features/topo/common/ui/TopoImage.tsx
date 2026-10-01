@@ -53,8 +53,8 @@ export const TopoImage = ({
     (line) => line.idRoute === idHighlightedRoute
   );
 
-  // Hovering changes opacity, not geometry — without this every hover re-runs
-  // the spline and re-pairs every point of every line on the photo.
+  // Hovering changes opacity, not geometry: without this every hover re-runs
+  // the spline for every line on the photo.
   const shapes = useMemo(
     () =>
       lines.map((line) => ({
@@ -211,15 +211,14 @@ export const TopoImage = ({
 
 const HOVER_TOLERANCE = 16;
 
-/** Past this the pointer was panning the photo, not tapping a line. */
+// Past this the pointer was panning the photo, not tapping a line.
 const TAP_SLOP = 4;
 
 const StageStyled = styled('div')`
   ${photoStage()}
 `;
 
-/* The frame is exactly the photo: any gap between the two boxes would slide
-   every line off the rock. */
+/* Exactly the photo: a gap between the boxes slides every line off the rock. */
 const FrameStyled = styled('div')`
   position: relative;
   display: flex;
@@ -273,8 +272,8 @@ const PathStyled = styled('path', {
   stroke: ${({ theme, lineColor }) =>
     lineColor ?? theme.palette.secondary.main};
   filter: drop-shadow(0 0 2px rgb(0 0 0 / 60%));
-  /* non-scaling-stroke measures in px, so the line stays this thick at any
-     photo size — and the stretched viewBox cannot squash it. */
+  /* non-scaling-stroke measures in px, so the stretched viewBox cannot squash
+     the line. */
   stroke-width: ${({ isHighlighted }) => (isHighlighted ? 4 : 3)};
   stroke-linecap: round;
   stroke-linejoin: round;

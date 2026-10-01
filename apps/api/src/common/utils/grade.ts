@@ -1,7 +1,7 @@
 import type { GradeScalesTypes } from '@openbeta/sandbag';
 import { getScale, getScore, getScoreForSort } from '@openbeta/sandbag';
 
-/** Scales a roped route can be graded in; they all convert into each other. */
+// Scales a roped route can be graded in; they all convert into each other.
 export const ROUTE_GRADE_SCALES = [
   'french',
   'yds',
@@ -12,7 +12,7 @@ export const ROUTE_GRADE_SCALES = [
   'brazilian_crux'
 ] as const;
 
-/** Bouldering scales. A boulder grade never converts into a route grade. */
+// A boulder grade never converts into a route grade.
 export const BOULDER_GRADE_SCALES = ['font', 'vscale'] as const;
 
 export const GRADE_SCALES = [
@@ -40,15 +40,11 @@ export const isBoulderGradeScale = (
 export const isValidGrade = (grade: string, scale: GradeScale): boolean =>
   getScale(scale as GradeScalesTypes)?.isType(grade) ?? false;
 
-/**
- * The sortable key stored next to the grade. `getScoreForSort` is the only
- * public accessor that returns a single number; a scale's own `getScore`
- * returns the range a grade spans.
- */
+// `getScoreForSort` is the only accessor returning a single number; a scale's
+// own `getScore` returns the range a grade spans.
 export const gradeScore = (grade: string, scale: GradeScale): number =>
   getScoreForSort(grade, scale as GradeScalesTypes);
 
-/** The span a grade covers, used to build an inclusive filter range. */
 export const gradeScoreRange = (
   grade: string,
   scale: GradeScale

@@ -144,8 +144,8 @@ export const useTopoEditorActions = ({
     [dispatch]
   );
 
-  /** Resolves to whether the route is gone, so a caller whose whole page is
-      that route does not navigate away from a failed delete. */
+  // Resolves to whether the route is gone, so a page that is that route does
+  // not navigate away from a failed delete.
   const removeRoute = useCallback(
     async (idRoute: string) => {
       if (session.routes[idRoute]?.isNew) {

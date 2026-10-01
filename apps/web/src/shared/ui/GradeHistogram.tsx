@@ -14,12 +14,11 @@ import {
 import type { GradeTone } from '@web/shared/theme/palette';
 
 const COLUMN_WIDTH = 56;
-// A compact column keeps its width instead of sharing the row, so a sector of
-// three grades and one of eight draw bars a reader can compare.
+// A fixed width, so a sector of three grades and one of eight compare.
 const COMPACT_COLUMN_WIDTH = 26;
 
-// A compact row scales against at least this many routes, so a sector whose
-// tallest grade holds one route draws a low row instead of a full-height one.
+// Scales against at least this many routes, so a sector whose tallest grade
+// holds one route draws a low row.
 const COMPACT_REFERENCE = 8;
 const COMPACT_HEIGHT = 40;
 
@@ -50,8 +49,7 @@ export const GradeHistogram = ({
   const scroll = useScrollHint();
   const compact = !!isCompact;
 
-  // A folded column stands for two grades, and the filter below picks one, so
-  // a histogram that filters is never folded.
+  // A folded column stands for two grades, and the filter picks one.
   const bars = useMemo(() => {
     const all = toGradeBars(group.grades, displayGrade);
 

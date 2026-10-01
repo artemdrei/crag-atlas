@@ -8,7 +8,7 @@ export interface Props {
   onClick: () => void;
 }
 
-/** Renders nothing for everyone but an admin — the guard is the DB, this is the affordance. */
+// The guard is the DB; this is only the affordance.
 export const EditToggleButton = ({ onClick }: Props) => {
   const { hasRole } = useUser();
 

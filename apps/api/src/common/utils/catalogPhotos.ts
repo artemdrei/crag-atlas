@@ -25,11 +25,8 @@ const paths = (rows: { storage_path: string | null }[] | null): string[] =>
     .map(({ storage_path }) => storage_path)
     .filter((path): path is string => !!path);
 
-/**
- * Every file under a catalog row. Erasing the row takes its descendants with a
- * SQL cascade, and a cascade cannot reach storage — so the paths are read
- * while the rows still exist, and the objects removed once they are gone.
- */
+// A cascade cannot reach storage, so the paths are read while the rows still
+// exist and the objects removed once they are gone.
 export const findPhotosUnder = async (
   client: SupabaseClient,
   { idRegion, idSector }: CatalogScope
@@ -73,7 +70,7 @@ export const findPhotosUnder = async (
   };
 };
 
-/** Best effort, but loud: an orphan is invisible unless the log says so. */
+// Best effort, but loud: an orphan is invisible unless the log says so.
 export const removeCatalogPhotos = async (
   client: SupabaseClient,
   photos: CatalogPhotos

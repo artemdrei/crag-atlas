@@ -26,8 +26,7 @@ export const ClimberContentNote = ({ content, catalogLoss }: Props) => {
     );
   }
 
-  // Only what is actually there is named: a "0 photos" in the middle of the
-  // sentence reads as a defect, not as information.
+  // A "0 photos" mid-sentence reads as a defect, not as information.
   const left = [
     {
       id: 'ascents',

@@ -16,7 +16,7 @@ export interface SegmentHit {
   distance: number;
 }
 
-/** Tested against the chord, not the rendered curve: they differ by a pixel. */
+// Tested against the chord, not the rendered curve: they differ by a pixel.
 export const findNearestPoint = (
   points: readonly number[][],
   target: Point,

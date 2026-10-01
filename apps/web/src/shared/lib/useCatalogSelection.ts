@@ -23,8 +23,7 @@ export const useCatalogSelection = <T extends Selectable>(items: T[]) => {
     [items]
   );
 
-  // Auto-picked so the screen opens on something, but never re-picked after
-  // the reader drops the selection themselves.
+  // Auto-picked once, never re-picked after the reader drops the selection.
   useEffect(() => {
     const [first] = items;
 

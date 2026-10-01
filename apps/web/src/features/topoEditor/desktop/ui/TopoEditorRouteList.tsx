@@ -29,7 +29,6 @@ import type { RouteGroupDraft } from '../TopoEditorDesktop';
 export interface Props {
   groups: RouteGroupDraft[];
   numberOf: Record<string, number>;
-  /** Fields or geometry away from what the server holds. */
   idsDirtyRoutes: ReadonlySet<string>;
   idSelectedRoute?: string;
   idHoveredRoute?: string;
@@ -38,7 +37,7 @@ export interface Props {
   onMoveToPhoto: (idRoute: string, idTopo: string) => void;
 }
 
-/** Below this the pointer is clicking the row, not dragging it. */
+// Below this the pointer is clicking the row, not dragging it.
 const DRAG_THRESHOLD = 6;
 
 export const TopoEditorRouteList = ({
@@ -70,8 +69,7 @@ export const TopoEditorRouteList = ({
     groups.find((group) => group.id === String(id))?.label ||
     String(id);
 
-  // A drop on the photo the line already hangs on, or on the group that is no
-  // photo at all, leaves the session as it is — the reducer says so, not this.
+  // The reducer, not this, decides that a drop changing nothing is a no-op.
   const handleDragEnd = ({ active, over }: DragEndEvent) => {
     setIdDragged(undefined);
 
@@ -143,9 +141,8 @@ export const TopoEditorRouteList = ({
         )}
         {groups.map((group) => (
           <DroppableGroup key={group.id} id={group.id} label={group.label}>
-            {/* A photo with nothing on it is a drop zone and looks like a gap;
-                the hint is what says so. With no route anywhere there is
-                nothing to drag, and the list-wide hint covers it instead. */}
+            {/* An empty photo is a drop zone that looks like a gap. With no
+                route anywhere the list-wide hint covers it instead. */}
             {group.routes.length === 0 && routes.length > 0 ? (
               <DropHintStyled variant="caption" color="text.secondary">
                 <Trans>Drag a route here</Trans>
@@ -231,8 +228,8 @@ const ListStyled = styled('div')`
   gap: ${({ theme }) => theme.spacing(0.5)};
   min-height: 0;
   overflow-y: auto;
-  /* An auto overflow clips at the padding box on both axes, and the drop
-     outline is drawn outside the group — this is the room it needs. */
+  /* An auto overflow clips at the padding box, and the drop outline is drawn
+     outside the group. */
   padding: ${({ theme }) => theme.spacing(0.5)};
 `;
 
@@ -250,9 +247,8 @@ const GroupStyled = styled('div', {
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(0.5)};
-  /* The list scrolls, so it has a definite height, and a flex child of a
-     definite-height column shrinks below its own content by default: the
-     rows spill out of the group and land on the next one. */
+  /* A flex child of a definite-height column shrinks below its own content by
+     default, spilling the rows onto the next group. */
   flex-shrink: 0;
   /* An empty photo is a thin strip, so the drop area needs a floor. */
   min-height: ${({ theme }) => theme.spacing(5)};
@@ -261,8 +257,7 @@ const GroupStyled = styled('div', {
     ${({ theme, isOver }) =>
       isOver ? theme.palette.primary.main : 'transparent'};
   outline-offset: 2px;
-  /* A tint the panel can carry, so the zone reads as "drop here" rather than
-     just being framed. */
+  /* So the zone reads as "drop here" rather than just framed. */
   background: ${({ theme, isOver }) =>
     isOver ? alpha(theme.palette.primary.main, 0.08) : 'transparent'};
   transition:
@@ -284,8 +279,7 @@ const DropHintStyled = styled(Typography)`
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
 `;
 
-// Unsaved wins over selected on the border: what the row says about the
-// catalog matters more than which row the panel is showing.
+// Unsaved wins over selected on the border.
 const RowStyled = styled(ButtonBase, {
   shouldForwardProp: (prop) =>
     prop !== 'isSelected' &&
@@ -301,8 +295,8 @@ const RowStyled = styled(ButtonBase, {
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing(1)};
-  /* Same reason as the group above: a row keeps its height or its label
-     prints over the row below it. */
+  /* Same as the group above: a row keeps its height or its label prints over
+     the row below. */
   flex-shrink: 0;
   padding: ${({ theme }) => theme.spacing(1, 1.5)};
   border: 1px solid
@@ -322,10 +316,8 @@ const RowStyled = styled(ButtonBase, {
         : 'transparent'};
 `;
 
-// DragOverlay sizes its wrapper to the rect the row was measured at, so the
-// row only has to fill it — otherwise it shrinks to its content. The surface
-// is opaque: the row travels over the list, and the rows beneath must not
-// read through it.
+// DragOverlay sizes its wrapper to the measured rect, so the row only fills
+// it. Opaque, because it travels over the rows beneath.
 const OverlayRowStyled = styled(RowStyled)`
   width: 100%;
   height: 100%;

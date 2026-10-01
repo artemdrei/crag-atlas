@@ -58,18 +58,15 @@ export const parseMediaLink = (value: string): MediaLink | undefined => {
   return undefined;
 };
 
-/**
- * Built from the parsed id, never from the stored url: whatever a climber
- * typed must not reach an iframe `src` unchecked.
- */
+// Built from the parsed id, never the stored url: what a climber typed must
+// not reach an iframe `src` unchecked.
 export const mediaEmbedUrl = ({ provider, id }: MediaLink): string =>
   provider === 'youtube'
-    ? // Without playsinline iOS hands the video to its own fullscreen player
-      // instead of starting it in the frame.
+    ? // Without playsinline iOS hands the video to its fullscreen player.
       `https://www.youtube-nocookie.com/embed/${id}?playsinline=1`
     : `https://www.instagram.com/p/${id}/embed`;
 
-/** Instagram serves no thumbnail without an API token, so it has none here. */
+// Instagram serves no thumbnail without an API token.
 export const mediaThumbnailUrl = ({
   provider,
   id

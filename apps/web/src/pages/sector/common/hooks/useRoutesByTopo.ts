@@ -35,8 +35,7 @@ export const useRoutesByTopo = ({
   const photoLabel = usePhotoLabel();
 
   return useMemo(() => {
-    // Photo groups carry their own left-to-right order, so any other order has
-    // to replace them rather than reshuffle inside them.
+    // Photo groups carry their own order, so another sort replaces them.
     if (sort !== 'default')
       return [
         {

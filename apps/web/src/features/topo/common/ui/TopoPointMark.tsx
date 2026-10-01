@@ -29,8 +29,7 @@ export const TopoPointMark = ({
 }: Props) => (
   <MarkStyled
     className={className}
-    // Coordinates move with every frame of a drag; through the template they
-    // would mint a fresh emotion class per frame.
+    // Through the template a drag would mint a fresh emotion class per frame.
     style={{ left: `${x * 100}%`, top: `${y * 100}%` }}
     kind={kind}
     markColor={color}

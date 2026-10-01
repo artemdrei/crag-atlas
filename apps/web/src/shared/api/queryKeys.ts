@@ -1,13 +1,8 @@
-/**
- * Every query key lives here, not next to its hook: a mutation in one slice
- * has to invalidate a query owned by another (logging a tick refreshes the
- * logbook), and cross-slice imports are banned. `shared` is the only place
- * both sides may import from.
- */
+// Every key lives here, not next to its hook: a mutation in one slice
+// invalidates a query owned by another, and cross-slice imports are banned.
 export const QUERY_KEYS = {
-  // `regions` and `sector` are prefixes of everything below them, so a
-  // mutation that changes a derived count invalidates one of the two instead
-  // of listing every affected query. `list`/`detail` keep a uuid from ever
+  // `regions` and `sector` are prefixes of everything below them, so one
+  // invalidation covers a derived count. `list`/`detail` keep a uuid from
   // colliding with a literal segment.
   regions: () => ['regions'] as const,
   regionList: (isArchiveOnly: boolean) =>

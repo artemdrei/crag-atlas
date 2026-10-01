@@ -51,10 +51,8 @@ export const apiDelete = (path: string): Promise<void> =>
     if (!response.ok) await throwResponseFailure(response, `DELETE ${path}`);
   });
 
-/**
- * Multipart, so the content type is left to the browser: it has to append the
- * boundary, and any value we set here would replace it and break the parse.
- */
+// Multipart: the browser appends the boundary, and any content type set here
+// would replace it and break the parse.
 export const apiUpload = <T>(
   method: 'POST' | 'PUT',
   path: string,

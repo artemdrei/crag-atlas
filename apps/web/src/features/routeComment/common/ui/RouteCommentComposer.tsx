@@ -14,7 +14,7 @@ export interface Props {
 export const RouteCommentComposer = ({ idRoute }: Props) => {
   const { t } = useLingui();
   const { isAuthenticated } = useUser();
-  // Remounting on success is what clears the field; the form owns its text.
+  // Remounting clears the field; the form owns its text.
   const [formKey, setFormKey] = useState(0);
 
   const { isPending, createComment } = useApiCreateRouteComment({

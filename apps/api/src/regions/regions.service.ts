@@ -44,7 +44,7 @@ import type {
 } from './regions.types';
 
 // Counts and grade ranges are derived, so reads come from the view and writes
-// go to the table underneath it.
+// go to the table under it.
 const COLUMNS =
   'id, name, name_local, country, rock_type, lat, lng, photo_path, sector_count, route_count, grade_min, grade_min_scale, grade_max, grade_max_scale, grade_histogram, is_archived, deleted_at';
 
@@ -68,8 +68,8 @@ interface RegionRow {
   deleted_at: string | null;
 }
 
-// The picker sends a code, but nothing stops a client from sending anything;
-// the column's own check would answer with a write error nobody can read.
+// The column's check would answer an unexpected code with an unreadable
+// write error.
 const normalizeCountry = (country?: string | null): string | null => {
   const code = country?.trim().toUpperCase();
 
@@ -213,8 +213,7 @@ export class RegionsService {
       );
     }
 
-    // The bucket is public, so a cover left behind stays downloadable by
-    // anyone who ever saw its URL.
+    // The bucket is public, so a cover left behind stays downloadable.
     if (current?.photo_path) {
       await removePhoto(client, REGIONS_BUCKET, current.photo_path);
     }
@@ -265,8 +264,8 @@ export class RegionsService {
 
   async purge(authUser: AuthUser, idRegion: string): Promise<void> {
     const client = userClient(authUser);
-    // Read before the erase: the rows below carry the only reference to their
-    // files, and a cascade deletes them without telling storage.
+    // Read before the erase: a cascade deletes the rows without telling
+    // storage.
     const photos = await findPhotosUnder(client, { idRegion });
 
     await eraseArchivedRow(client, TARGET, idRegion);

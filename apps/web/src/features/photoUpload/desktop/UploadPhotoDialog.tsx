@@ -70,8 +70,8 @@ interface RegionUpload {
 
 export type Props = TopoUpload | RegionUpload;
 
-// TypeScript cannot narrow the union on `target.kind` — the discriminant is a
-// level down. Past this point both halves carry real ids instead of a cast.
+// TypeScript cannot narrow the union on `target.kind`: the discriminant is a
+// level down.
 const isRegionUpload = (props: Props): props is RegionUpload =>
   props.target.kind === 'region';
 
@@ -95,8 +95,8 @@ export default UploadPhotoDialog;
 
 const UploadRegionPhoto = ({ target, file, open }: RegionUpload) => {
   const { t } = useLingui();
-  // The compression effect keys off the array: a fresh `[file]` every render
-  // restarts it forever.
+  // The compression effect keys off the array, and a fresh `[file]` every
+  // render restarts it forever.
   const files = useMemo(() => [file], [file]);
 
   const { isPending, replaceRegionPhoto } = useApiReplaceRegionPhoto({
@@ -161,7 +161,7 @@ const UploadTopoPhoto = ({ target, files, replacing, open }: TopoUpload) => {
       return;
     }
 
-    // One at a time: a photo's place in the sector is the order it arrived in.
+    // A photo's place in the sector is the order it arrived in.
     for (const { comparison: photo } of sendable) {
       await uploadTopo({
         blob: photo.blob,

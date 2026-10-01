@@ -25,8 +25,7 @@ import { usePhotoLabel } from '@web/features/topo';
 import type { EditableTopo } from '../../common';
 import { ThumbStyled, TopoThumb } from './TopoThumb';
 
-/** Which photo belongs to the sector is a sector-level decision, so an editor
-    scoped to one route browses the rail instead of managing it. */
+// An editor scoped to one route browses the rail instead of managing it.
 export type RailMode =
   | { kind: 'browse' }
   | {
@@ -45,7 +44,7 @@ export interface Props {
   onSelect: (idTopo: string) => void;
 }
 
-/** Below this the pointer is clicking the thumbnail, not dragging it. */
+// Below this the pointer is clicking the thumbnail, not dragging it.
 const DRAG_THRESHOLD = 6;
 
 export const TopoThumbRail = ({
@@ -194,8 +193,8 @@ export const TopoThumbRail = ({
 
 const RailStyled = styled('div')`
   display: flex;
-  /* A flex item shrinks by default, and a squeezed rail clips the thumbs
-     instead of the stage above it giving up the space. */
+  /* A squeezed rail would clip the thumbs rather than the stage giving up
+     the space. */
   flex: 0 0 auto;
   gap: ${({ theme }) => theme.spacing(1)};
   /* Room for the insertion line, which the scroller would otherwise clip. */

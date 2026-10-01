@@ -34,8 +34,8 @@ export class MeService {
   async findMe(authUser: AuthUser): Promise<MeDto> {
     const client = userClient(authUser);
 
-    // Asking as the user: the select policy only ever returns their own row,
-    // so a missing row and "not an admin" are the same answer.
+    // The select policy only returns their own row, so a missing row and
+    // "not an admin" are the same answer.
     const [{ data }, { data: preferences }] = await Promise.all([
       client
         .from('user_roles')
@@ -124,8 +124,7 @@ export class MeService {
       );
     }
 
-    // The bucket is public, so a picture left behind stays downloadable by
-    // anyone who ever saw its URL.
+    // The bucket is public, so a picture left behind stays downloadable.
     if (previous) await removePhoto(client, AVATARS_BUCKET, previous);
 
     return this.findMe(authUser);
@@ -152,10 +151,8 @@ export class MeService {
   }
 }
 
-/**
- * Only a path we stored ourselves may be deleted: `avatar_url` also holds the
- * identity provider's URL, which has no object of ours behind it.
- */
+// `avatar_url` also holds the identity provider's URL, which has no object of
+// ours behind it.
 const currentAvatarPath = async (
   client: ReturnType<typeof userClient>,
   authUser: AuthUser

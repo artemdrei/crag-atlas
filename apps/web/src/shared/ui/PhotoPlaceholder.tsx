@@ -4,11 +4,9 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 export interface Props {
-  /** Square thumbnails sit in cards; the wide one stands in for a topo. */
   variant?: 'thumbnail' | 'wide';
 }
 
-/** Stands in wherever a photo belongs but none has been added yet. */
 export const PhotoPlaceholder = ({ variant = 'thumbnail' }: Props) => (
   <PlaceholderStyled isWide={variant === 'wide'}>
     <PhotoCameraOutlinedIcon fontSize="small" color="disabled" />

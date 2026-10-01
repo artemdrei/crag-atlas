@@ -6,10 +6,7 @@ import { scaleDiscipline } from './tickDiscipline';
 
 type DisplayGrade = (grade: string, scale: GradeScale) => string;
 
-/**
- * The chart draws the whole logbook, so it is built from the counts the server
- * aggregated, never from the page the list happens to have loaded.
- */
+// Built from the counts the server aggregated, never from the loaded page.
 export const gradeBars = (
   grades: TickGradeCount[],
   discipline: Discipline,

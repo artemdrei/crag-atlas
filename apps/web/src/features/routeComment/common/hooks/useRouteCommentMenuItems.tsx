@@ -18,7 +18,6 @@ export interface Params {
   onDelete: () => void;
 }
 
-/** The menu's rows as data; each device renders them with its own chrome. */
 export const useRouteCommentMenuItems = ({
   canEdit,
   canDelete,

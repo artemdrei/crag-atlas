@@ -45,8 +45,7 @@ export const useLogbookView = ({
     return {
       bars: bars.slice(0, TOP_GRADES_LIMIT),
       counts: ascentCounts(stats?.grades ?? [], discipline),
-      // A section header counts every ascent of that grade, not the ones this
-      // page happened to bring.
+      // Every ascent of that grade, not the ones this page brought.
       groups: groups.map((group) => {
         const bar = totals.get(group.grade);
 

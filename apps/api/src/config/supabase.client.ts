@@ -4,11 +4,8 @@ import { supabaseConfig } from './supabase.config';
 
 let client: SupabaseClient | null = null;
 
-/**
- * Anonymous client for the public catalog. Built on first use, not at import
- * time, so booting without env (e.g. `gen:contracts`) still works — and it
- * carries no elevated key, so the read-only RLS policies still apply.
- */
+// Built on first use, not at import time, so booting without env (e.g.
+// `gen:contracts`) still works. No elevated key, so RLS still applies.
 export const publicSupabase = (): SupabaseClient => {
   if (!client) {
     const { url, anonKey } = supabaseConfig();
@@ -21,6 +18,6 @@ export const publicSupabase = (): SupabaseClient => {
   return client;
 };
 
-/** Public bucket URLs are stable and derivable, so no round trip is needed. */
+// Public bucket URLs are stable and derivable, so no round trip is needed.
 export const storagePublicUrl = (bucket: string, path: string): string =>
   `${supabaseConfig().url}/storage/v1/object/public/${bucket}/${path}`;

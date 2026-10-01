@@ -8,7 +8,7 @@ export interface Params {
   onEscape: () => void;
 }
 
-/** Bails out in text entry: Cmd+Z in the description is the browser's undo. */
+// Bails out in text entry: Cmd+Z in the description is the browser's undo.
 export const useEditorHotkeys = ({
   isEnabled,
   onUndo,

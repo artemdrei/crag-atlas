@@ -13,7 +13,7 @@ const url = () => env('SUPABASE_URL', 'http://127.0.0.1:54321');
 
 const LOCAL_HOSTS = ['127.0.0.1', 'localhost', '::1', 'host.docker.internal'];
 
-/** These tests delete rows; a hosted project is never the right target. */
+// These tests delete rows; a hosted project is never the right target.
 export const assertLocalStack = () => {
   const { hostname } = new URL(url());
 
@@ -21,17 +21,14 @@ export const assertLocalStack = () => {
     throw new Error(`Refusing to run integration tests against ${hostname}`);
 };
 
-/** Bypasses RLS: for building and tearing down fixtures, never for asserting. */
+// Bypasses RLS: for fixtures, never for asserting.
 export const serviceClient = (): SupabaseClient =>
   createClient(url(), env('SUPABASE_SERVICE_ROLE_KEY'), {
     auth: { persistSession: false, autoRefreshToken: false }
   });
 
-/**
- * A signed-in, ordinary user. `climber_content` runs with the caller's rights,
- * so a service-role key would read past every policy and the scoping
- * assertions would pass on a function that cannot count.
- */
+// `climber_content` runs with the caller's rights, so a service-role key would
+// read past every policy and the scoping assertions would pass regardless.
 export const authenticatedClient = async (): Promise<{
   client: SupabaseClient;
   idUser: string;

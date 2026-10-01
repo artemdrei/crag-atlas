@@ -36,8 +36,7 @@ export const RoutesSortDirectionButton = ({
   );
 };
 
-// The slot keeps its width while no sort is picked, so turning one on does not
-// shove the bars sideways.
+// The slot keeps its width while no sort is picked.
 const ButtonStyled = styled(IconButton, {
   shouldForwardProp: (prop) => prop !== 'isVisible'
 })<{ isVisible: boolean }>`

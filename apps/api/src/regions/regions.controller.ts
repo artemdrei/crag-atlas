@@ -37,8 +37,7 @@ export class RegionsController {
     return this.regionsService.findAll();
   }
 
-  // Its own endpoint rather than a flag on the public one: the archive is for
-  // admins, and a guard cannot depend on a query parameter.
+  // Its own endpoint: a guard cannot depend on a query parameter.
   @Get('archived')
   @UseGuards(SupabaseAuthGuard, AdminGuard)
   @ApiOkResponse({ type: RegionDto, isArray: true })

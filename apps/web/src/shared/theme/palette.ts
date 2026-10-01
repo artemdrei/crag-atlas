@@ -1,12 +1,10 @@
 import type { GradeScale, Tick } from '@crag-atlas/api';
 import { getScoreForSort } from '@openbeta/sandbag';
 
-/** French sport grades bucketed by their leading number: 5a…5c, 6a…6c+, … */
 export const GRADE_LEVELS = ['5', '6', '7', '8', '9'] as const;
 
 export type GradeLevel = (typeof GRADE_LEVELS)[number];
 
-/** Ranges and unreadable grades: a tone the difficulty scale never uses. */
 export type GradeTone = GradeLevel | 'neutral';
 
 export interface GradeColor {
@@ -21,9 +19,7 @@ interface Neutrals {
   divider: string;
 }
 
-// Distinct hue per level, the way gyms colour-code walls: green → yellow →
-// red → purple → black. Every badge is a solid fill of the same intensity;
-// difficulty reads from the hue, not from how loud the colour is.
+// Difficulty reads from the hue, not from how loud the colour is.
 const grade: Record<'light' | 'dark', Record<GradeTone, GradeColor>> = {
   light: {
     '5': { background: '#2E9E4F', text: '#FFFFFF' },
@@ -43,9 +39,7 @@ const grade: Record<'light' | 'dark', Record<GradeTone, GradeColor>> = {
   }
 };
 
-// Ascent styles are told apart by hue, not by shade: onsight green, flash
-// cyan, retro flash blue, redpoint rose, top rope grey, an attempt amber. A
-// bar stacks them side by side, so two styles a shade apart read as one.
+// Told apart by hue, not shade: a bar stacks them side by side.
 const ascentType: Record<
   'light' | 'dark',
   Record<AscentTypeTone, GradeColor>
@@ -68,9 +62,8 @@ const ascentType: Record<
   }
 };
 
-// Sector pins need hues that read apart from one another on a map, not a
-// meaning of their own: the palette is cycled by the sector's position in the
-// list, so the dot beside a name and its pin always match.
+// Cycled by the sector's position in the list, so the dot beside a name and
+// its pin always match.
 const sectorPin: Record<'light' | 'dark', string[]> = {
   light: ['#C25A2A', '#B8963E', '#2E8E93', '#7B3FBF', '#2E9E4F', '#4A6BB5'],
   dark: ['#E2703A', '#E8C55A', '#62C2C7', '#9B5BE0', '#3FAF63', '#8FB0F0']
@@ -113,11 +106,8 @@ export const palette = {
 export const resolvePalette = (mode: 'light' | 'dark', isEditing: boolean) =>
   isEditing ? { ...palette[mode], ...editing[mode] } : palette[mode];
 
-// A range spans several levels, so colouring it by one of them would lie —
-// it gets the neutral tone, as does anything unreadable. Everything below 5
-// reads as 5 and above 9 as 9: the scale groups routes by feel, not exhaustively.
-// Level boundaries read off the French scale, so a hue keeps the meaning it
-// had before a grade could arrive in any system: 5a and 5.8 look alike now.
+// Boundaries read off the French scale, so a hue keeps the meaning it had
+// before grades could arrive in any system: 5a and 5.8 look alike.
 const TONE_THRESHOLDS = GRADE_LEVELS.map((level) => ({
   tone: level as GradeTone,
   score: getScoreForSort(`${level}a`, 'french')
@@ -135,10 +125,7 @@ export const resolveGradeTone = (
   return TONE_THRESHOLDS.find((level) => score >= level.score)?.tone ?? '5';
 };
 
-/**
- * The tone's fill and the ink that reads on it swap roles with the mode: on a
- * light ground the saturated fill is what reads, on a dark one the light ink.
- */
+// Fill and ink swap roles with the mode.
 export const resolveAscentTypeInk = (
   mode: 'light' | 'dark',
   tone: AscentTypeTone
@@ -147,7 +134,6 @@ export const resolveAscentTypeInk = (
     ? ascentType.dark[tone].text
     : ascentType.light[tone].background;
 
-/** Colour of a route's grade, for anything that is not a `GradeBadge`. */
 export const getGradeColor = (
   grades: Record<GradeTone, GradeColor>,
   grade?: string,

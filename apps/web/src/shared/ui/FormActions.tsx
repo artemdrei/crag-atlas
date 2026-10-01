@@ -6,7 +6,6 @@ export interface Props {
   children: ReactNode;
 }
 
-/** The trailing button row a form or a confirmation ends with. */
 export const FormActions = ({ children }: Props) => (
   <RowStyled>{children}</RowStyled>
 );

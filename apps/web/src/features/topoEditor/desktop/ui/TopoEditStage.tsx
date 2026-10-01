@@ -31,8 +31,7 @@ import { HANDLE_CLASS, TopoEditMarkers } from './TopoEditMarkers';
 import { TopoEditOverlay } from './TopoEditOverlay';
 import { TopoPointMenu } from './TopoPointMenu';
 
-/** A sector editor reaches every line on the photo; an editor scoped to one
-    route leaves the rest visible but untouchable. */
+// Scoped to one route, the rest stay visible but untouchable.
 export type StageAccess =
   | { kind: 'sector' }
   | { kind: 'route'; idRoute: string };
@@ -58,7 +57,7 @@ export interface Props {
 const MIN_SCALE = 1;
 const MAX_SCALE = 5;
 const LINE_TOLERANCE = 16;
-/** Past this the pointer was dragging a point, not clicking it. */
+// Past this the pointer was dragging a point, not clicking it.
 const CLICK_SLOP = 4;
 
 type Drag =
@@ -140,8 +139,7 @@ export const TopoEditStage = ({
       tolerance
     );
 
-    // Locked to one route, a hit on someone else's line is neither a pick nor
-    // a place to draw: the click lands on a line the user cannot touch.
+    // Locked to one route: a hit on someone else's line does nothing.
     if (idRoute) {
       if (isEditable(idRoute)) onAction({ type: 'SELECT_ROUTE', idRoute });
 
@@ -164,9 +162,8 @@ export const TopoEditStage = ({
     onHoverRoute(idRoute && isEditable(idRoute) ? idRoute : undefined);
   };
 
-  /** One action per frame: the browser fires pointermove far more often than
-      it paints, and both actions set an absolute position, so a move the
-      frame never reached is simply overwritten by the next one. */
+  // One action per frame: pointermove fires far more often than the browser
+  // paints, and both actions set an absolute position.
   const flushDrag = () => {
     frameRef.current = undefined;
 
@@ -243,9 +240,8 @@ export const TopoEditStage = ({
     }
   };
 
-  /** The overlay holds the capture, never the marker or the badge that was
-      pressed: those re-render through the drag, and a node that goes away
-      takes the rest of the gesture with it. */
+  // The overlay holds the capture, never the pressed node: that re-renders
+  // through the drag, and a node that goes away ends the gesture.
   const captureDrag = (event: ReactPointerEvent) => {
     overlayRef.current?.setPointerCapture(event.pointerId);
   };
@@ -284,14 +280,14 @@ export const TopoEditStage = ({
         maxScale={MAX_SCALE}
         centerOnInit
         wheel={{ wheelDisabled: true }}
-        // Left draws, middle pans — no mode switch to reposition the photo.
+        // Left draws, middle pans: no mode switch to move the photo.
         panning={{
           allowLeftClickPan: session.isPreview,
           allowMiddleClickPan: true,
           excluded: [HANDLE_CLASS]
         }}
         trackPadPanning={{ disabled: !isZoomed }}
-        // Two quick point-adds must not toggle the zoom under the cursor.
+        // Two quick point-adds must not toggle the zoom.
         doubleClick={{ disabled: true }}
         keyboard={{ disabled: true }}
         onTransform={(_ref, state) => setIsZoomed(state.scale > MIN_SCALE)}
@@ -314,8 +310,7 @@ export const TopoEditStage = ({
                 onPointerMove={handleOverlayMove}
                 onPointerUp={handleDragEnd}
                 onPointerCancel={handleDragEnd}
-                // The capture can be taken away mid-drag; without this the
-                // gesture would stay open and the next hover would keep moving.
+                // A capture lost mid-drag would leave the gesture open.
                 onLostPointerCapture={() => endDrag()}
                 onPointerLeave={() => {
                   if (!dragRef.current) onHoverRoute(undefined);

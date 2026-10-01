@@ -40,8 +40,8 @@ interface TickPageIds {
   total: number;
 }
 
-// The catalog rows come back embedded through the ticks → routes → sectors
-// foreign keys, so a logbook page is one query, not one per tick.
+// Embedded through the ticks → routes → sectors foreign keys, so a logbook
+// page is one query, not one per tick.
 const COLUMNS =
   '*, routes (id_sector, name, name_local, grade, grade_scale, sectors (name, id_region, regions (name, country))), users!ticks_id_user_fkey (display_name, avatar_url), partner:users!ticks_id_partner_fkey (display_name), route_media (id, kind, url, storage_path)';
 
@@ -90,9 +90,8 @@ interface TickRow {
 
 @Injectable()
 export class TicksService {
-  // Which ids make up the page is decided in SQL, because the order the reader
-  // asked for lives on the route, not on the tick; the rows themselves are then
-  // read with their catalog and media in the one embedded select.
+  // The page's ids are decided in SQL, because the order the reader asked for
+  // lives on the route, not on the tick.
   async findMine(
     authUser: AuthUser,
     params: TickPageParams = {}
@@ -182,8 +181,7 @@ export class TicksService {
       );
     }
 
-    // `in` answers in whatever order it likes; the page order is the one SQL
-    // already decided.
+    // `in` answers in whatever order it likes.
     const byId = new Map(data.map((row) => [row.id, row]));
 
     return toTickDtos(
@@ -192,9 +190,8 @@ export class TicksService {
     );
   }
 
-  // Everyone's ascents on one route, for anyone looking at it. No viewer id
-  // reaches the mapper, so a private note stays hidden even from its author
-  // here — their own logbook is where they read it back.
+  // No viewer id reaches the mapper, so a private note stays hidden even from
+  // its author here.
   async findByRoute(idRoute: string): Promise<TickDto[]> {
     const { data, error } = await publicSupabase()
       .from('ticks')
@@ -225,8 +222,7 @@ export class TicksService {
     const { data, error } = await userClient(authUser)
       .from('ticks')
       .insert({
-        // Taken from the verified token, never from the body — RLS checks the
-        // same value, so a forged one would be rejected by the database too.
+        // From the verified token, never the body: RLS checks the same value.
         id_user: authUser.idUser,
         id_route: payload.idRoute.trim(),
         ascent_type: payload.ascentType,
@@ -262,8 +258,7 @@ export class TicksService {
       .select(COLUMNS)
       .order('climbed_at', { ascending: false })
       .order('id', { ascending: false })
-      // One row past the page tells us whether another page exists without a
-      // second count query.
+      // One row past the page, so no second count query.
       .limit(pageSize + 1);
 
     if (cursor) {
@@ -359,14 +354,12 @@ const toTickColumns = (payload: CreateTickDto | UpdateTickDto) => ({
   grade_vote: payload.gradeVote ?? null,
   note_private: payload.notePrivate ?? false,
   id_partner: payload.idPartner ?? null,
-  // A linked climber carries their own name, so the two never both hold one —
-  // the database refuses the row that tries.
+  // The database refuses a row holding both.
   partner_name: payload.idPartner ? null : payload.partnerName?.trim() || null
 });
 
-// A private note must never leave the API for anyone but its author: the
-// select policy publishes every tick row, so this is the only thing holding
-// it back. Required, not optional, so a new caller cannot forget it.
+// The select policy publishes every tick row, so this is the only thing
+// keeping a private note in. Required, so a new caller cannot forget it.
 interface RouteMarks {
   hasPhoto: boolean;
   hasVideo: boolean;

@@ -90,8 +90,8 @@ export class RoutesService {
       .select(COLUMNS)
       .eq('id_sector', idSector);
 
-    // Own mark either way: an archived sector's page still lists its routes,
-    // and its archive holds the routes deleted from it.
+    // An archived sector's page still lists its routes, and its archive holds
+    // the routes deleted from it.
     query = isArchiveOnly
       ? query.not('deleted_at', 'is', null)
       : query.is('deleted_at', null);
@@ -263,10 +263,8 @@ export class RoutesService {
   }
 }
 
-/**
- * A grade is only meaningful together with its scale, and the sorting key is
- * derived from both — so the three columns are always written as one unit.
- */
+// A grade means nothing without its scale, and the sorting key derives from
+// both, so the three columns are written as one unit.
 const gradeColumns = (
   grade: string,
   scale: unknown
@@ -292,10 +290,8 @@ const gradeColumns = (
   };
 };
 
-/**
- * Each bound widens to the full span of its grade, so a route graded in
- * another system is included whenever it overlaps the requested range.
- */
+// Each bound widens to the full span of its grade, so a route graded in
+// another system is included whenever it overlaps.
 const scoreBounds = (
   filter: RouteFilterQuery
 ): { from?: number; to?: number } => {

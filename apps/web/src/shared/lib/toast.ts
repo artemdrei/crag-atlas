@@ -1,3 +1,2 @@
-// Single import point for toasts — never import from 'sonner' directly
-// elsewhere, so swapping the library later touches one file.
+// Single import point: never import from 'sonner' directly elsewhere.
 export { toast } from 'sonner';

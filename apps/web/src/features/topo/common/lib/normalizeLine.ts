@@ -1,7 +1,4 @@
-/**
- * In photo coordinates y grows downwards, so the start of a route is the point
- * with the larger y.
- */
+// In photo coordinates y grows downwards, so a route starts at the larger y.
 export const normalizeLineDirection = <T extends number[]>(
   points: T[]
 ): T[] => {

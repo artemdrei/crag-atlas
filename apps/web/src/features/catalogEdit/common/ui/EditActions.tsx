@@ -43,8 +43,7 @@ export const EditActions = ({
   </ActionsStyled>
 );
 
-// The sidebar it sits in is the scrolling column, so the row rides its bottom
-// edge and the fields pass under it.
+// The sidebar is the scrolling column, so the row rides its bottom edge.
 const ActionsStyled = styled('div')`
   position: sticky;
   bottom: 0;
