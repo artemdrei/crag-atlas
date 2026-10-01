@@ -1,26 +1,14 @@
 import type { UserSummary } from '@crag-atlas/api';
 
-import { apiGet, QUERY_KEYS, useApiQuery } from '@web/shared/api';
-import { SEARCH_DEBOUNCE_MS, useDebouncedValue } from '@web/shared/lib';
-
-const EMPTY: UserSummary[] = [];
-
-export const MIN_SEARCH_LENGTH = 2;
+import { apiGet, QUERY_KEYS, useApiSearch } from '@web/shared/api';
 
 export const useApiSearchUsers = (query: string) => {
-  const term = query.trim();
-  const debouncedTerm = useDebouncedValue(term, SEARCH_DEBOUNCE_MS);
-
-  const { data, isLoading } = useApiQuery({
-    queryKey: QUERY_KEYS.userSearch(debouncedTerm),
-    queryFn: () =>
-      apiGet<UserSummary[]>(`/users?q=${encodeURIComponent(debouncedTerm)}`),
-    enabled: debouncedTerm.length >= MIN_SEARCH_LENGTH
+  const { results, isLoading, term } = useApiSearch<UserSummary>({
+    query,
+    queryKey: QUERY_KEYS.userSearch,
+    queryFn: (term) =>
+      apiGet<UserSummary[]>(`/users?q=${encodeURIComponent(term)}`)
   });
 
-  return {
-    climbers: data ?? EMPTY,
-    isLoading: isLoading || debouncedTerm !== term,
-    term
-  };
+  return { climbers: results, isLoading, term };
 };

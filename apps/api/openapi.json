@@ -13,6 +13,110 @@
         "tags": ["Health"]
       }
     },
+    "/admins": {
+      "get": {
+        "operationId": "AdminsController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AdminDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Admins"]
+      },
+      "post": {
+        "operationId": "AdminsController_grant",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GrantAdminDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AdminDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Admins"]
+      }
+    },
+    "/admins/candidates": {
+      "get": {
+        "operationId": "AdminsController_search",
+        "parameters": [
+          {
+            "name": "q",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AdminCandidateDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Admins"]
+      }
+    },
+    "/admins/{idUser}": {
+      "delete": {
+        "operationId": "AdminsController_revoke",
+        "parameters": [
+          {
+            "name": "idUser",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": ["Admins"]
+      }
+    },
     "/me": {
       "get": {
         "operationId": "MeController_findMe",
@@ -1855,6 +1959,59 @@
   "servers": [],
   "components": {
     "schemas": {
+      "AdminDto": {
+        "type": "object",
+        "properties": {
+          "idUser": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string"
+          }
+        },
+        "required": ["idUser", "displayName", "email"]
+      },
+      "AdminCandidateDto": {
+        "type": "object",
+        "properties": {
+          "idUser": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string"
+          },
+          "isAdmin": {
+            "type": "boolean"
+          }
+        },
+        "required": ["idUser", "displayName", "email", "isAdmin"]
+      },
+      "GrantAdminDto": {
+        "type": "object",
+        "properties": {
+          "idUsers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": ["idUsers"]
+      },
       "MeDto": {
         "type": "object",
         "properties": {

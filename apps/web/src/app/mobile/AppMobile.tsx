@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router';
 
 import { ModalProvider } from '@web/app/providers';
 import { avatarUploadMobileRegistrations } from '@web/features/avatarUpload';
+import { grantAdminMobileRegistrations } from '@web/features/grantAdmin';
 import { logTickMobileRegistrations } from '@web/features/logTick';
 import { routeCommentMobileRegistrations } from '@web/features/routeComment';
 import { signInPromptMobileRegistrations } from '@web/features/signInPrompt';
@@ -15,7 +16,8 @@ import { lazyPage as page } from '../router/lazyPage';
 import {
   GuestOnlyRoute,
   LayoutWithMobileBottomNavigation,
-  MembersOnlyRoute
+  MembersOnlyRoute,
+  ProtectedRoute
 } from '../router/Router';
 import { ROUTES } from '../router/routes';
 import { ErrorBoundary } from '../ui/errorBoundary';
@@ -24,6 +26,7 @@ import { ErrorBoundary } from '../ui/errorBoundary';
 // devices' features.
 const registrations = [
   ...avatarUploadMobileRegistrations,
+  ...grantAdminMobileRegistrations,
   ...logTickMobileRegistrations,
   ...routeCommentMobileRegistrations,
   ...signInPromptMobileRegistrations,
@@ -31,6 +34,10 @@ const registrations = [
   ...playgroundMobileRegistrations
 ];
 
+const PageAdminAccessMobile = page(
+  () => import('@web/pages/adminAccess'),
+  'PageAdminAccessMobile'
+);
 const PageHomeMobile = page(() => import('@web/pages/home'), 'PageHomeMobile');
 const PageLogbookMobile = page(
   () => import('@web/pages/logbook'),
@@ -91,6 +98,14 @@ const AppMobile = () => (
                 element={<PagePlaygroundMobile />}
               />
             )}
+            <Route
+              path={ROUTES.ACCESS}
+              element={
+                <ProtectedRoute requiredRole="admin">
+                  <PageAdminAccessMobile />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path={ROUTES.LOGBOOK}
               element={

@@ -13,7 +13,7 @@ msgstr ""
 
 #. placeholder {0}: content.ascents
 #. placeholder {0}: ungraded.length
-#: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:36
+#: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:35
 #: src/pages/logbook/common/ui/TicksGroupedList.tsx:57
 msgid "{0, plural, one {# ascent} few {# ascents} many {# ascents} other {# ascents}}"
 msgstr "{0, plural, one {# ascent} few {# ascents} many {# ascents} other {# ascents}}"
@@ -29,7 +29,7 @@ msgid "{0, plural, one {# bolt} other {# bolts}}"
 msgstr "{0, plural, one {# bolt} other {# bolts}}"
 
 #. placeholder {0}: content.comments
-#: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:49
+#: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:48
 msgid "{0, plural, one {# comment} few {# comments} many {# comments} other {# comments}}"
 msgstr "{0, plural, one {# comment} few {# comments} many {# comments} other {# comments}}"
 
@@ -44,7 +44,7 @@ msgstr "{0, plural, one {# comment} few {# comments} many {# comments} other {# 
 #~ msgstr "{0, plural, one {# entry} other {# entries}}"
 
 #. placeholder {0}: content.media
-#: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:62
+#: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:61
 msgid "{0, plural, one {# photo or link} few {# photos or links} many {# photos or links} other {# photos or links}}"
 msgstr "{0, plural, one {# photo or link} few {# photos or links} many {# photos or links} other {# photos or links}}"
 
@@ -61,7 +61,7 @@ msgstr "{0, plural, one {# photo or link} few {# photos or links} many {# photos
 #: src/pages/home/common/ui/RegionCard.tsx:66
 #: src/pages/region/common/ui/SectorCard.tsx:77
 #: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:83
-#: src/shared/ui/GradeHistogram.tsx:82
+#: src/shared/ui/GradeHistogram.tsx:80
 msgid "{0, plural, one {# route} few {# routes} many {# routes} other {# routes}}"
 msgstr "{0, plural, one {# route} few {# routes} many {# routes} other {# routes}}"
 
@@ -218,7 +218,7 @@ msgstr "{total, plural, one {# ascent} few {# ascents} many {# ascents} other {#
 #~ msgid "{total, plural, one {# sector} few {# sectors} many {# sectors} other {# sectors}}"
 #~ msgstr "{total, plural, one {# sector} few {# sectors} many {# sectors} other {# sectors}}"
 
-#: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:40
+#: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:39
 msgid "{total, plural, one {# vote} other {# votes}}"
 msgstr "{total, plural, one {# vote} other {# votes}}"
 
@@ -262,6 +262,12 @@ msgstr "<0>{name}</0> and everything filed under it leave the database for good 
 #~ msgid "A sector that still has routes cannot be deleted: they would be deleted along with it, and their lines, comments and photos too. Delete the routes first."
 #~ msgstr "A sector that still has routes cannot be deleted: they would be deleted along with it, and their lines, comments and photos too. Delete the routes first."
 
+#: src/pages/adminAccess/desktop/PageAdminAccessDesktop.tsx:11
+#: src/pages/adminAccess/mobile/PageAdminAccessMobile.tsx:10
+#: src/pages/profile/common/ui/AccessSetting.tsx:17
+msgid "Access"
+msgstr "Access"
+
 #. placeholder {0}: region.name
 #. placeholder {0}: sector.name
 #: src/pages/home/common/ui/RegionCard.tsx:45
@@ -285,18 +291,24 @@ msgstr "Add a cover photo"
 
 #: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:54
 #: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:69
-#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:55
-#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:70
-#: src/features/catalogEdit/desktop/ui/RegionPhotoPicker.tsx:33
-#: src/features/catalogEdit/desktop/ui/RegionPhotoPicker.tsx:43
-#: src/pages/region/desktop/ui/SectorPhotoPicker.tsx:62
-#: src/pages/region/desktop/ui/SectorPhotoPicker.tsx:73
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:54
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:69
+#: src/features/catalogEdit/desktop/ui/RegionPhotoPicker.tsx:30
+#: src/features/catalogEdit/desktop/ui/RegionPhotoPicker.tsx:40
+#: src/pages/region/desktop/ui/SectorPhotoPicker.tsx:59
+#: src/pages/region/desktop/ui/SectorPhotoPicker.tsx:70
 msgid "Add a photo"
 msgstr "Add a photo"
 
 #: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:162
 msgid "Add a photo to start drawing routes on it."
 msgstr "Add a photo to start drawing routes on it."
+
+#: src/features/grantAdmin/desktop/GrantAdminDialog.tsx:22
+#: src/features/grantAdmin/mobile/GrantAdminSheet.tsx:19
+#: src/pages/adminAccess/common/ui/GrantAdminButton.tsx:21
+msgid "Add admin"
+msgstr "Add admin"
 
 #: src/shared/ui/SignInBenefits.tsx:63
 msgid "Add beta and photos that help the next climber"
@@ -309,7 +321,7 @@ msgstr "Add beta and photos that help the next climber"
 #: src/features/logTick/common/ui/TickMediaField.tsx:84
 #: src/features/logTick/common/ui/TickMediaField.tsx:92
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:188
-#: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:161
+#: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:160
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:74
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:82
 msgid "Add photo"
@@ -344,7 +356,11 @@ msgstr "Add video or photo"
 msgid "Add yours"
 msgstr "Add yours"
 
-#: src/pages/logbook/common/ui/AscentTypeFilter.tsx:47
+#: src/features/grantAdmin/common/hooks/useApiGrantAdmins.ts:21
+msgid "Admin access granted"
+msgstr "Admin access granted"
+
+#: src/pages/logbook/common/ui/AscentTypeFilter.tsx:46
 msgid "All"
 msgstr "All"
 
@@ -371,6 +387,10 @@ msgstr "All ascents by grade"
 #: src/pages/logbook/common/ui/LogbookFilterFields.tsx:53
 msgid "All styles"
 msgstr "All styles"
+
+#: src/features/grantAdmin/common/ui/AdminCandidateList.tsx:105
+msgid "already an admin"
+msgstr "already an admin"
 
 #: src/features/signInPrompt/common/ui/SignInPromptBody.tsx:19
 msgid "An account keeps your logbook, your beta and your photos in one place."
@@ -432,7 +452,7 @@ msgstr "Ascent actions"
 msgid "Ascent deleted"
 msgstr "Ascent deleted"
 
-#: src/features/logTick/common/hooks/useLogTick.ts:43
+#: src/features/logTick/common/hooks/useLogTick.ts:30
 msgid "Ascent logged"
 msgstr "Ascent logged"
 
@@ -453,7 +473,7 @@ msgstr "ascents"
 msgid "Ascents"
 msgstr "Ascents"
 
-#: src/shared/ui/AscentTypeLabel.tsx:29
+#: src/shared/ui/AscentTypeLabel.tsx:28
 msgid "Attempt"
 msgstr "Attempt"
 
@@ -461,7 +481,7 @@ msgstr "Attempt"
 #~ msgid "Attempts"
 #~ msgstr "Attempts"
 
-#: src/shared/ui/NameFields.tsx:97
+#: src/shared/ui/NameFields.tsx:96
 msgid "Auto"
 msgstr "Auto"
 
@@ -482,7 +502,7 @@ msgstr "Back to the catalog"
 #~ msgid "Back to the sector"
 #~ msgstr "Back to the sector"
 
-#: src/pages/logbook/common/ui/TickCard.tsx:153
+#: src/pages/logbook/common/ui/TickCard.tsx:155
 msgid "Belayer"
 msgstr "Belayer"
 
@@ -516,17 +536,18 @@ msgid "Boulder"
 msgstr "Boulder"
 
 #: src/pages/logbook/common/ui/DisciplineTabs.tsx:36
-#: src/shared/ui/GradeHistogram.tsx:66
+#: src/shared/ui/GradeHistogram.tsx:64
 msgid "Bouldering"
 msgstr "Bouldering"
 
-#: src/shared/ui/PageBreadcrumbs.tsx:42
+#: src/shared/ui/PageBreadcrumbs.tsx:39
 msgid "Breadcrumb"
 msgstr "Breadcrumb"
 
 #: src/features/avatarUpload/desktop/CropAvatarDialog.tsx:29
 #: src/features/avatarUpload/mobile/CropAvatarSheet.tsx:23
 #: src/features/catalogEdit/common/ui/EditActions.tsx:32
+#: src/features/grantAdmin/common/ui/GrantAdminBody.tsx:82
 #: src/features/logTick/common/ui/DeleteTickActions.tsx:17
 #: src/features/logTick/common/ui/TickForm.tsx:176
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:276
@@ -547,8 +568,8 @@ msgstr "Cards per row"
 
 #: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:54
 #: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:69
-#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:55
-#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:70
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:54
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:69
 msgid "Change your photo"
 msgstr "Change your photo"
 
@@ -557,7 +578,7 @@ msgstr "Change your photo"
 #~ msgstr "Changes published"
 
 #: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:92
-#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:93
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:92
 msgid "Choose a photo"
 msgstr "Choose a photo"
 
@@ -569,7 +590,8 @@ msgstr "Clear"
 msgid "Clear the climber above to type a name"
 msgstr "Clear the climber above to type a name"
 
-#: src/features/catalogSearch/common/ui/CatalogSearchField.tsx:56
+#: src/features/catalogSearch/common/ui/CatalogSearchField.tsx:55
+#: src/features/grantAdmin/common/ui/GrantAdminBody.tsx:60
 msgid "Clear the search"
 msgstr "Clear the search"
 
@@ -597,11 +619,11 @@ msgstr "Climber with an account"
 msgid "Climbers left nothing here — no ascents, no comments, no photos."
 msgstr "Climbers left nothing here — no ascents, no comments, no photos."
 
-#: src/features/topo/desktop/TopoPhotoDialog.tsx:40
-#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:35
-#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:43
-#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:35
-#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:43
+#: src/features/topo/desktop/TopoPhotoDialog.tsx:36
+#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:31
+#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:39
+#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:31
+#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:39
 msgid "Close"
 msgstr "Close"
 
@@ -666,7 +688,7 @@ msgstr "Continue with Google"
 msgid "Coordinates"
 msgstr "Coordinates"
 
-#: src/shared/ui/MapCanvas.tsx:99
+#: src/shared/ui/MapCanvas.tsx:98
 msgid "Could not read your location."
 msgstr "Could not read your location."
 
@@ -674,7 +696,7 @@ msgstr "Could not read your location."
 msgid "Country"
 msgstr "Country"
 
-#: src/features/topoEditor/desktop/ui/TopoThumb.tsx:78
+#: src/features/topoEditor/desktop/ui/TopoThumb.tsx:77
 msgid "Cover"
 msgstr "Cover"
 
@@ -717,7 +739,7 @@ msgstr "Default"
 
 #: src/features/logTick/common/ui/DeleteTickActions.tsx:26
 #: src/features/logTick/common/ui/TickMenuItems.tsx:34
-#: src/features/routeComment/common/hooks/useRouteCommentMenuItems.tsx:45
+#: src/features/routeComment/common/hooks/useRouteCommentMenuItems.tsx:44
 #: src/features/routeComment/common/ui/DeleteRouteCommentActions.tsx:26
 #: src/widgets/routeMedia/common/ui/DeleteRouteMediaActions.tsx:26
 msgid "Delete"
@@ -745,8 +767,8 @@ msgid "Delete media"
 msgstr "Delete media"
 
 #: src/features/topoEditor/desktop/DeletePhotoDialog.tsx:46
-#: src/features/topoEditor/desktop/ui/TopoThumb.tsx:98
-#: src/features/topoEditor/desktop/ui/TopoThumb.tsx:103
+#: src/features/topoEditor/desktop/ui/TopoThumb.tsx:97
+#: src/features/topoEditor/desktop/ui/TopoThumb.tsx:102
 msgid "Delete photo"
 msgstr "Delete photo"
 
@@ -817,7 +839,7 @@ msgstr "Description"
 msgid "Did you like it?"
 msgstr "Did you like it?"
 
-#: src/shared/ui/DirectionsButton.tsx:37
+#: src/shared/ui/DirectionsButton.tsx:34
 msgid "Directions"
 msgstr "Directions"
 
@@ -829,14 +851,14 @@ msgstr "Directions"
 #~ msgid "Done"
 #~ msgstr "Done"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:151
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:148
 msgid "Drag a route here"
 msgstr "Drag a route here"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:120
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:121
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:118
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:119
+#: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:114
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:115
-#: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:116
 msgid "Drag cancelled"
 msgstr "Drag cancelled"
 
@@ -845,15 +867,15 @@ msgid "Draw the route first, then it can move between photos."
 msgstr "Draw the route first, then it can move between photos."
 
 #. placeholder {0}: nameOf(over.id)
-#: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:115
+#: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:114
 msgid "Dropped on {0}"
 msgstr "Dropped on {0}"
 
 #: src/features/catalogEdit/common/ui/EditToggleButton.tsx:24
 #: src/features/logTick/common/ui/TickMenuItems.tsx:28
-#: src/features/routeComment/common/hooks/useRouteCommentMenuItems.tsx:35
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:161
-#: src/shared/ui/CatalogCardMenu.tsx:86
+#: src/features/routeComment/common/hooks/useRouteCommentMenuItems.tsx:34
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:160
+#: src/shared/ui/CatalogCardMenu.tsx:85
 msgid "Edit"
 msgstr "Edit"
 
@@ -935,7 +957,7 @@ msgstr "Find your next climb"
 msgid "Fit the photo"
 msgstr "Fit the photo"
 
-#: src/shared/ui/AscentTypeLabel.tsx:25
+#: src/shared/ui/AscentTypeLabel.tsx:24
 msgid "Flash"
 msgstr "Flash"
 
@@ -949,7 +971,7 @@ msgstr "Free"
 msgid "Grade"
 msgstr "Grade"
 
-#: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:37
+#: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:36
 msgid "Grade consensus"
 msgstr "Grade consensus"
 
@@ -969,6 +991,10 @@ msgstr "Grade system — boulder"
 msgid "Grade system — routes"
 msgstr "Grade system — routes"
 
+#: src/features/grantAdmin/common/ui/GrantAdminBody.tsx:89
+msgid "Grant access"
+msgstr "Grant access"
+
 #: src/pages/region/common/ui/SectorViewToggle.tsx:46
 #~ msgid "Grid"
 #~ msgstr "Grid"
@@ -977,7 +1003,7 @@ msgstr "Grade system — routes"
 #~ msgid "Hard"
 #~ msgstr "Hard"
 
-#: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:28
+#: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:27
 msgid "harder"
 msgstr "harder"
 
@@ -1009,9 +1035,13 @@ msgstr "How hard is the route?"
 #~ msgid "How it felt"
 #~ msgstr "How it felt"
 
-#: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:83
+#: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:82
 msgid "It is out of the catalog, and a direct link still opens everything on it."
 msgstr "It is out of the catalog, and a direct link still opens everything on it."
+
+#: src/pages/adminAccess/common/ui/AdminRow.tsx:32
+msgid "It's you"
+msgstr "It's you"
 
 #: src/features/topoEditor/desktop/LeaveEditorDialog.tsx:41
 msgid "Keep editing"
@@ -1030,15 +1060,15 @@ msgstr "Keep your grades, language and theme on every device"
 #~ msgstr "Kept for good — climbers left"
 
 #: src/pages/profile/common/ui/LocaleSetting.tsx:21
-#: src/pages/profile/common/ui/LocaleSetting.tsx:26
+#: src/pages/profile/common/ui/LocaleSetting.tsx:25
 msgid "Language"
 msgstr "Language"
 
-#: src/shared/ui/NameFields.tsx:48
+#: src/shared/ui/NameFields.tsx:47
 msgid "Latin letters only"
 msgstr "Latin letters only"
 
-#: src/shared/ui/NameFields.tsx:82
+#: src/shared/ui/NameFields.tsx:81
 msgid "Latin name"
 msgstr "Latin name"
 
@@ -1149,12 +1179,12 @@ msgstr "Loading…"
 #~ msgid "Local spelling"
 #~ msgstr "Local spelling"
 
-#: src/shared/ui/MapCanvas.tsx:98
+#: src/shared/ui/MapCanvas.tsx:97
 msgid "Location is blocked for this site. Allow it in the browser to see where you are."
 msgstr "Location is blocked for this site. Allow it in the browser to see where you are."
 
 #: src/features/logTick/common/ui/TickForm.tsx:184
-#: src/pages/route/common/ui/LogTickButton.tsx:41
+#: src/pages/route/common/ui/LogTickButton.tsx:40
 msgid "Log ascent"
 msgstr "Log ascent"
 
@@ -1170,6 +1200,10 @@ msgstr "Log every ascent and watch your grade pyramid build up"
 #: src/pages/route/common/ui/RouteTabs.tsx:41
 msgid "Logbook"
 msgstr "Logbook"
+
+#: src/pages/profile/common/ui/AccessSetting.tsx:19
+msgid "Manage admins"
+msgstr "Manage admins"
 
 #: src/pages/home/desktop/PageHomeDesktop.tsx:87
 #: src/pages/home/mobile/PageHomeMobile.tsx:26
@@ -1209,7 +1243,7 @@ msgid "Move the sector to the archive?"
 msgstr "Move the sector to the archive?"
 
 #. placeholder {0}: nameOf(over.id)
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:120
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:118
 msgid "Moved to {0}"
 msgstr "Moved to {0}"
 
@@ -1224,7 +1258,7 @@ msgstr "My ascents"
 msgid "My logbook"
 msgstr "My logbook"
 
-#: src/shared/ui/NameFields.tsx:73
+#: src/shared/ui/NameFields.tsx:72
 msgid "Name"
 msgstr "Name"
 
@@ -1245,6 +1279,10 @@ msgstr "New route"
 #~ msgid "New sector"
 #~ msgstr "New sector"
 
+#: src/pages/adminAccess/common/ui/AdminList.tsx:24
+msgid "No admins yet"
+msgstr "No admins yet"
+
 #: src/pages/logbook/common/ui/TicksGroupedList.tsx:23
 #: src/pages/logbook/common/ui/TicksList.tsx:27
 msgid "No ascents logged yet."
@@ -1262,7 +1300,7 @@ msgstr "No country found"
 #~ msgid "No photo yet"
 #~ msgstr "No photo yet"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:138
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:136
 msgid "No routes yet — add the first one, then drag it onto the photo it is drawn on."
 msgstr "No routes yet — add the first one, then drag it onto the photo it is drawn on."
 
@@ -1270,7 +1308,7 @@ msgstr "No routes yet — add the first one, then drag it onto the photo it is d
 #~ msgid "No routes yet — add the first one."
 #~ msgstr "No routes yet — add the first one."
 
-#: src/shared/ui/PhotoPlaceholder.tsx:17
+#: src/shared/ui/PhotoPlaceholder.tsx:15
 msgid "No topo yet"
 msgstr "No topo yet"
 
@@ -1279,6 +1317,7 @@ msgid "No videos or photos yet."
 msgstr "No videos or photos yet."
 
 #: src/features/climberPicker/common/ui/ClimberPicker.tsx:65
+#: src/features/grantAdmin/common/ui/AdminCandidateList.tsx:80
 msgid "Nobody found"
 msgstr "Nobody found"
 
@@ -1290,7 +1329,7 @@ msgstr "Nobody has logged an ascent yet."
 msgid "Nobody has logged this route yet."
 msgstr "Nobody has logged this route yet."
 
-#: src/pages/sector/common/hooks/useRoutesByTopo.ts:74
+#: src/pages/sector/common/hooks/useRoutesByTopo.ts:73
 msgid "Not on a photo"
 msgstr "Not on a photo"
 
@@ -1319,8 +1358,8 @@ msgstr "Nothing found"
 #~ msgstr "Nothing was ever logged or written here, so it can go."
 
 #. placeholder {0}: nameOf(over.id)
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:118
-#: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:113
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:116
+#: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:112
 msgid "Now over {0}"
 msgstr "Now over {0}"
 
@@ -1337,7 +1376,7 @@ msgid "One more try"
 msgstr "One more try"
 
 #: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:31
-#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:32
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:31
 msgid "Only an image can be used as a photo"
 msgstr "Only an image can be used as a photo"
 
@@ -1350,7 +1389,7 @@ msgstr "Only YouTube and Instagram links."
 msgid "onsight"
 msgstr "onsight"
 
-#: src/shared/ui/AscentTypeLabel.tsx:24
+#: src/shared/ui/AscentTypeLabel.tsx:23
 msgid "Onsight"
 msgstr "Onsight"
 
@@ -1363,7 +1402,7 @@ msgstr "Open region"
 msgid "Open sector"
 msgstr "Open sector"
 
-#: src/pages/route/desktop/PageRouteDesktop.tsx:94
+#: src/pages/route/desktop/PageRouteDesktop.tsx:92
 msgid "Open the photo"
 msgstr "Open the photo"
 
@@ -1411,11 +1450,11 @@ msgstr "Photo"
 #~ msgstr "photo {0}"
 
 #. placeholder {0}: index + 1
-#: src/features/topo/common/hooks/usePhotoLabel.ts:10
+#: src/features/topo/common/hooks/usePhotoLabel.ts:9
 msgid "Photo {0}"
 msgstr "Photo {0}"
 
-#: src/widgets/routeMedia/common/ui/RouteMediaGallery.tsx:48
+#: src/widgets/routeMedia/common/ui/RouteMediaGallery.tsx:47
 msgid "Photo {position}"
 msgstr "Photo {position}"
 
@@ -1474,8 +1513,8 @@ msgid "Pick an archived sector on the left to restore it."
 msgstr "Pick an archived sector on the left to restore it."
 
 #. placeholder {0}: nameOf(active.id)
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:116
-#: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:111
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:114
+#: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:110
 msgid "Picked up {0}"
 msgstr "Picked up {0}"
 
@@ -1507,8 +1546,8 @@ msgstr "Private comment"
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:51
 #: src/app/mobile/layout/AppBottomNavigation.tsx:41
 #: src/pages/profile/common/ui/ProfileTeaser.tsx:14
-#: src/pages/profile/desktop/PageProfileDesktop.tsx:22
-#: src/pages/profile/mobile/PageProfileMobile.tsx:22
+#: src/pages/profile/desktop/PageProfileDesktop.tsx:23
+#: src/pages/profile/mobile/PageProfileMobile.tsx:23
 msgid "Profile"
 msgstr "Profile"
 
@@ -1538,7 +1577,7 @@ msgstr "Reader view"
 msgid "Redo"
 msgstr "Redo"
 
-#: src/shared/ui/AscentTypeLabel.tsx:27
+#: src/shared/ui/AscentTypeLabel.tsx:26
 msgid "Redpoint"
 msgstr "Redpoint"
 
@@ -1561,12 +1600,12 @@ msgstr "Region saved"
 
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:32
 #: src/features/catalogSearch/common/ui/CatalogSearchResults.tsx:22
-#: src/pages/home/desktop/PageHomeDesktop.tsx:56
-#: src/pages/region/desktop/PageRegionDesktop.tsx:83
-#: src/pages/region/mobile/PageRegionMobile.tsx:52
-#: src/pages/route/desktop/PageRouteDesktop.tsx:68
+#: src/pages/home/desktop/PageHomeDesktop.tsx:54
+#: src/pages/region/desktop/PageRegionDesktop.tsx:81
+#: src/pages/region/mobile/PageRegionMobile.tsx:50
+#: src/pages/route/desktop/PageRouteDesktop.tsx:66
 #: src/pages/route/mobile/PageRouteMobile.tsx:48
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:148
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:147
 #: src/pages/sector/mobile/PageSectorMobile.tsx:117
 msgid "Regions"
 msgstr "Regions"
@@ -1589,7 +1628,7 @@ msgstr "Reload"
 #~ msgstr "Remove point"
 
 #: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:79
-#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:80
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:79
 msgid "Remove your photo"
 msgstr "Remove your photo"
 
@@ -1603,8 +1642,8 @@ msgstr "Remove your photo"
 
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:184
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:464
-#: src/features/topoEditor/desktop/ui/TopoThumb.tsx:83
-#: src/features/topoEditor/desktop/ui/TopoThumb.tsx:87
+#: src/features/topoEditor/desktop/ui/TopoThumb.tsx:82
+#: src/features/topoEditor/desktop/ui/TopoThumb.tsx:86
 msgid "Replace photo"
 msgstr "Replace photo"
 
@@ -1612,8 +1651,8 @@ msgstr "Replace photo"
 msgid "Replace the cover photo"
 msgstr "Replace the cover photo"
 
-#: src/features/catalogEdit/desktop/ui/RegionPhotoPicker.tsx:43
-#: src/pages/region/desktop/ui/SectorPhotoPicker.tsx:73
+#: src/features/catalogEdit/desktop/ui/RegionPhotoPicker.tsx:40
+#: src/pages/region/desktop/ui/SectorPhotoPicker.tsx:70
 msgid "Replace the photo"
 msgstr "Replace the photo"
 
@@ -1653,9 +1692,13 @@ msgstr "Restoring brings back its sectors and routes, except the ones archived o
 msgid "Restoring puts it back in its sector, lines and all."
 msgstr "Restoring puts it back in its sector, lines and all."
 
-#: src/shared/ui/AscentTypeLabel.tsx:26
+#: src/shared/ui/AscentTypeLabel.tsx:25
 msgid "Retro flash"
 msgstr "Retro flash"
+
+#: src/pages/adminAccess/common/ui/AdminRow.tsx:44
+msgid "Revoke access"
+msgstr "Revoke access"
 
 #: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:81
 #: src/features/catalogEdit/common/ui/RegionEditForm.tsx:99
@@ -1675,7 +1718,7 @@ msgid "Route saved"
 msgstr "Route saved"
 
 #: src/features/catalogSearch/common/ui/CatalogSearchResults.tsx:24
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:133
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:131
 msgid "Routes"
 msgstr "Routes"
 
@@ -1723,6 +1766,10 @@ msgstr "Saving…"
 msgid "Search a region, sector or route"
 msgstr "Search a region, sector or route"
 
+#: src/features/grantAdmin/common/ui/GrantAdminBody.tsx:47
+msgid "Search by name or email"
+msgstr "Search by name or email"
+
 #: src/features/catalogSearch/common/ui/CatalogSearchResults.tsx:30
 msgid "Searching…"
 msgstr "Searching…"
@@ -1736,7 +1783,7 @@ msgstr "Sector"
 msgid "Sector {0} created"
 msgstr "Sector {0} created"
 
-#: src/pages/region/desktop/ui/SectorPhotoPicker.tsx:57
+#: src/pages/region/desktop/ui/SectorPhotoPicker.tsx:54
 msgid "Sector cover"
 msgstr "Sector cover"
 
@@ -1756,6 +1803,11 @@ msgstr "See what everyone else has climbed on a route"
 #~ msgid "Select"
 #~ msgstr "Select"
 
+#. placeholder {0}: selected.length
+#: src/features/grantAdmin/common/ui/GrantAdminBody.tsx:77
+msgid "Selected: {0}"
+msgstr "Selected: {0}"
+
 #: src/pages/login/common/ui/EmailOtpForm.tsx:114
 msgid "Sending code…"
 msgstr "Sending code…"
@@ -1772,11 +1824,11 @@ msgstr "Share your thoughts"
 msgid "Show more"
 msgstr "Show more"
 
-#: src/shared/ui/CatalogCardMenu.tsx:79
+#: src/shared/ui/CatalogCardMenu.tsx:78
 msgid "Show on map"
 msgstr "Show on map"
 
-#: src/shared/ui/SignInCta.tsx:35
+#: src/shared/ui/SignInCta.tsx:32
 msgid "Sign in"
 msgstr "Sign in"
 
@@ -1827,7 +1879,7 @@ msgstr "Sign out"
 #~ msgid "Soft"
 #~ msgstr "Soft"
 
-#: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:26
+#: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:25
 msgid "softer"
 msgstr "softer"
 
@@ -1851,7 +1903,7 @@ msgstr "Sort routes"
 
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:215
 #: src/pages/logbook/common/ui/DisciplineTabs.tsx:27
-#: src/shared/ui/GradeHistogram.tsx:64
+#: src/shared/ui/GradeHistogram.tsx:62
 msgid "Sport"
 msgstr "Sport"
 
@@ -1928,11 +1980,11 @@ msgstr "This cannot be undone."
 msgid "This file could not be read as a photo."
 msgstr "This file could not be read as a photo."
 
-#: src/widgets/routeMedia/common/ui/RouteMediaGallery.tsx:39
+#: src/widgets/routeMedia/common/ui/RouteMediaGallery.tsx:38
 msgid "This media is gone."
 msgstr "This media is gone."
 
-#: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:75
+#: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:74
 msgid "This one stays — climbers left"
 msgstr "This one stays — climbers left"
 
@@ -2001,7 +2053,7 @@ msgstr "This sector is in the archive, so it is out of the catalog. Its routes a
 #~ msgid "This sector was removed from the catalog. Its routes and everything climbers left on them — ascents, photos, links and comments — are still here."
 #~ msgstr "This sector was removed from the catalog. Its routes and everything climbers left on them — ascents, photos, links and comments — are still here."
 
-#: src/shared/ui/AscentTypeLabel.tsx:28
+#: src/shared/ui/AscentTypeLabel.tsx:27
 msgid "Top rope"
 msgstr "Top rope"
 
@@ -2022,7 +2074,7 @@ msgstr "Top rope"
 msgid "Track your progress sector by sector"
 msgstr "Track your progress sector by sector"
 
-#: src/shared/ui/GradeHistogram.tsx:65
+#: src/shared/ui/GradeHistogram.tsx:63
 msgid "Trad"
 msgstr "Trad"
 
@@ -2046,11 +2098,12 @@ msgstr "Tries"
 #~ msgid "Type"
 #~ msgstr "Type"
 
-#: src/features/catalogSearch/common/ui/CatalogSearchField.tsx:41
+#: src/features/catalogSearch/common/ui/CatalogSearchField.tsx:40
 msgid "Type at least {MIN_SEARCH_LENGTH} letters"
 msgstr "Type at least {MIN_SEARCH_LENGTH} letters"
 
 #: src/features/climberPicker/common/ui/ClimberPicker.tsx:64
+#: src/features/grantAdmin/common/ui/AdminCandidateList.tsx:68
 msgid "Type at least {MIN_SEARCH_LENGTH} letters of a name"
 msgstr "Type at least {MIN_SEARCH_LENGTH} letters of a name"
 
@@ -2092,14 +2145,14 @@ msgstr "Use another email"
 msgid "Verifying…"
 msgstr "Verifying…"
 
-#: src/widgets/routeMedia/common/ui/RouteMediaGallery.tsx:48
+#: src/widgets/routeMedia/common/ui/RouteMediaGallery.tsx:47
 msgid "Video {position}"
 msgstr "Video {position}"
 
 #: src/pages/route/common/ui/RouteTabs.tsx:37
-#: src/widgets/routeMedia/common/ui/RouteMediaButton.tsx:26
-#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:33
-#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:33
+#: src/widgets/routeMedia/common/ui/RouteMediaButton.tsx:22
+#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:29
+#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:29
 msgid "Video and photo"
 msgstr "Video and photo"
 
@@ -2129,11 +2182,11 @@ msgstr "When did you climb it?"
 msgid "Without a grade"
 msgstr "Without a grade"
 
-#: src/shared/ui/NameFields.tsx:64
+#: src/shared/ui/NameFields.tsx:63
 msgid "Write it in your own language — it will be searchable both in Latin and in yours"
 msgstr "Write it in your own language — it will be searchable both in Latin and in yours"
 
-#: src/shared/ui/NameFields.tsx:57
+#: src/shared/ui/NameFields.tsx:56
 msgid "Written for you from the name above"
 msgstr "Written for you from the name above"
 
@@ -2157,12 +2210,12 @@ msgstr "Your grade"
 msgid "Your logbook keeps every ascent you have ever logged."
 msgstr "Your logbook keeps every ascent you have ever logged."
 
-#: src/shared/ui/NameFields.tsx:58
+#: src/shared/ui/NameFields.tsx:57
 msgid "Your own spelling — the name above no longer changes it"
 msgstr "Your own spelling — the name above no longer changes it"
 
 #: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:42
-#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:43
+#: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:42
 msgid "Your photo has been removed"
 msgstr "Your photo has been removed"
 

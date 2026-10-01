@@ -34,12 +34,13 @@ export class MeService {
   async findMe(authUser: AuthUser): Promise<MeDto> {
     const client = userClient(authUser);
 
-    // The select policy only returns their own row, so a missing row and
-    // "not an admin" are the same answer.
+    // Scoped to their own row: an admin reads the whole table, and anything
+    // wider turns this into a multi-row answer `maybeSingle` refuses.
     const [{ data }, { data: preferences }] = await Promise.all([
       client
         .from('user_roles')
         .select('role')
+        .eq('id_user', authUser.idUser)
         .eq('role', 'admin')
         .maybeSingle(),
       client

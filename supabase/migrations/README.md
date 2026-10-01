@@ -25,3 +25,4 @@ data: the catalog starts empty and is filled from the editor or by an import.
 | 007 | `007_views_and_functions.sql` | The stats views behind every catalog page, plus `climber_content()`, `tick_page()`, `tick_stats()` and `catalog_search()` |
 | 011 | `011_external_ascents.sql` | `routes.id_route_8a` and the tick key `(id_user, id_route, climbed_at)` — what makes a re-parse from 8a land on the same rows |
 | 012 | `012_tick_partner_name.sql` | `ticks.partner_name` — the belayer who has no account here, written by hand instead of linked |
+| 013 | `013_admin_access.sql` | Admin-scoped policies on `user_roles`, `id_user_granted_by` and `admin_directory()` — admins grant and revoke the role, never their own |

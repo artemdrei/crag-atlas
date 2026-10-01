@@ -42,7 +42,10 @@ export default defineConfig({
     },
     {
       name: 'mobile',
-      use: devices['iPhone 17'],
+      // The descriptor's viewport, touch and Safari user agent on Chromium:
+      // the app picks its tree from the user agent, so the mobile shell is
+      // what renders, and WebKit's system libraries stay off the runner.
+      use: { ...devices['iPhone 17'], browserName: 'chromium' },
       testMatch: '**/mobile/**/*.e2e.ts'
     }
   ],

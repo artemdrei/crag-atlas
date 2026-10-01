@@ -5,9 +5,10 @@ import { useLingui } from '@lingui/react/macro';
 import Autocomplete from '@mui/material/Autocomplete';
 import { styled } from '@mui/material/styles';
 
+import { MIN_SEARCH_LENGTH } from '@web/shared/api';
 import { ChangedTextField, UserAvatar } from '@web/shared/ui';
 
-import { MIN_SEARCH_LENGTH, useApiSearchUsers } from '../hooks';
+import { useApiSearchUsers } from '../hooks';
 
 const AVATAR_SIZE = 28;
 

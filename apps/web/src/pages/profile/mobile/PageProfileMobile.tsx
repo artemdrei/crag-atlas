@@ -6,6 +6,7 @@ import { useProfileIdentity } from '@web/app/providers';
 import { AvatarPickerMobile } from '@web/features/avatarUpload';
 
 import {
+  AccessSetting,
   GradeScaleSetting,
   LocaleSetting,
   ProfileIdentity,
@@ -33,6 +34,7 @@ export const PageProfileMobile = () => {
       <ThemeModeSetting />
       <LocaleSetting />
       <GradeScaleSetting />
+      <AccessSetting />
       <SignOutButton />
     </PageStyled>
   );
