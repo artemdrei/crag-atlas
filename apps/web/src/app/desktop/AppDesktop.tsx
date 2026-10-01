@@ -4,6 +4,7 @@ import { Navigate, Route, Routes } from 'react-router';
 import { ModalProvider } from '@web/app/providers';
 import { avatarUploadDesktopRegistrations } from '@web/features/avatarUpload';
 import { catalogEditDesktopRegistrations } from '@web/features/catalogEdit';
+import { grantAdminDesktopRegistrations } from '@web/features/grantAdmin';
 import { logTickDesktopRegistrations } from '@web/features/logTick';
 import { photoUploadDesktopRegistrations } from '@web/features/photoUpload';
 import { routeCommentDesktopRegistrations } from '@web/features/routeComment';
@@ -30,6 +31,7 @@ import { ErrorBoundary } from '../ui/errorBoundary';
 const registrations = [
   ...avatarUploadDesktopRegistrations,
   ...catalogEditDesktopRegistrations,
+  ...grantAdminDesktopRegistrations,
   ...logTickDesktopRegistrations,
   ...topoDesktopRegistrations,
   ...topoEditorDesktopRegistrations,
@@ -40,6 +42,10 @@ const registrations = [
   ...playgroundDesktopRegistrations
 ];
 
+const PageAdminAccessDesktop = page(
+  () => import('@web/pages/adminAccess'),
+  'PageAdminAccessDesktop'
+);
 const PageHomeDesktop = page(
   () => import('@web/pages/home'),
   'PageHomeDesktop'
@@ -110,6 +116,14 @@ const AppDesktop = () => (
               element={
                 <ProtectedRoute requiredRole="admin">
                   <PageRouteEditDesktop />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path={ROUTES.ACCESS}
+              element={
+                <ProtectedRoute requiredRole="admin">
+                  <PageAdminAccessDesktop />
                 </ProtectedRoute>
               }
             />

@@ -1,5 +1,6 @@
 export const ROUTES = {
   INDEX: '/',
+  ACCESS: '/access',
   LOGBOOK: '/logbook',
   LOGIN: '/login',
   PROFILE: '/profile',
