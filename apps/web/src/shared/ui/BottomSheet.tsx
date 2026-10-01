@@ -18,12 +18,11 @@ export const BottomSheet = ({ title, isOpen, children, onClose }: Props) => {
     <SheetStyled
       detent="content"
       isOpen={isOpen}
-      // Without it the library paints a white sheet through inline styles,
-      // which no stylesheet of ours can override.
+      // Without it the library paints a white sheet through inline styles.
       unstyled
       onClose={onClose}
-      // The library hard-codes z-index 9999 inline unless style.zIndex is
-      // given, which would bury every MUI menu opened from inside the sheet.
+      // The library hard-codes z-index 9999 unless style.zIndex is given,
+      // burying every MUI menu opened from inside the sheet.
       style={{ zIndex: theme.zIndex.drawer }}
     >
       <Sheet.Container>
@@ -43,8 +42,7 @@ const TitleStyled = styled(Typography)`
   margin-bottom: ${({ theme }) => theme.spacing(1)};
 `;
 
-// react-modal-sheet renders its own DOM, so its classes are the only hook for
-// theming it.
+// react-modal-sheet renders its own DOM, so its classes are the only hook.
 const SheetStyled = styled(Sheet)`
   .react-modal-sheet-backdrop {
     background-color: ${({ theme }) => alpha(theme.palette.common.black, 0.5)};

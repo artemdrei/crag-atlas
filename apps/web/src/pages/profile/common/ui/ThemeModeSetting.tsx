@@ -1,3 +1,4 @@
+import { track } from '@crag-atlas/analytics';
 import { Trans } from '@lingui/react/macro';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
@@ -16,7 +17,13 @@ export const ThemeModeSetting = () => {
         size="small"
         value={mode}
         onChange={(_event, next) => {
-          if (next && next !== mode) toggle();
+          if (!next || next === mode) return;
+
+          track({
+            name: 'Setting Changed',
+            props: { setting: 'theme', value: next }
+          });
+          toggle();
         }}
       >
         <ToggleButton value="light">

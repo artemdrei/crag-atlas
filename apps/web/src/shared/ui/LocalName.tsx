@@ -21,8 +21,7 @@ export const LocalName = ({
 
   if (!local) return null;
 
-  // A heading has the width to spell the name out on a line of its own; a
-  // card's one line does not, so there it trails the Latin name in brackets.
+  // A card's single line has no room for a name of its own.
   if (isBlock) {
     return (
       <BlockStyled variant={variant} color="text.secondary" noWrap>
@@ -38,8 +37,7 @@ const BlockStyled = styled(Typography)`
   line-height: 1.2;
 ` as typeof Typography;
 
-// In em, not a spacing step: the gap follows the name it sits beside, from a
-// card's caption to a page's heading.
+// In em, not a spacing step: the gap follows the name it sits beside.
 const RootStyled = styled('span')`
   margin-left: 0.35em;
   color: ${({ theme }) => theme.palette.text.secondary};

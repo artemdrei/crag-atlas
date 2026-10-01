@@ -298,6 +298,14 @@ msgstr "Add a photo"
 msgid "Add a photo to start drawing routes on it."
 msgstr "Add a photo to start drawing routes on it."
 
+#: src/shared/ui/SignInBenefits.tsx:63
+msgid "Add beta and photos that help the next climber"
+msgstr "Add beta and photos that help the next climber"
+
+#: src/features/signInPrompt/common/ui/SignInPromptBody.tsx:26
+#~ msgid "Add beta comments"
+#~ msgstr "Add beta comments"
+
 #: src/features/logTick/common/ui/TickMediaField.tsx:84
 #: src/features/logTick/common/ui/TickMediaField.tsx:92
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:188
@@ -306,6 +314,10 @@ msgstr "Add a photo to start drawing routes on it."
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:82
 msgid "Add photo"
 msgstr "Add photo"
+
+#: src/features/signInPrompt/common/ui/SignInPromptBody.tsx:29
+#~ msgid "Add photos and videos"
+#~ msgstr "Add photos and videos"
 
 #: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:87
 #: src/pages/home/desktop/ui/HomeEditSidebar.tsx:78
@@ -328,7 +340,7 @@ msgstr "Add sector"
 msgid "Add video or photo"
 msgstr "Add video or photo"
 
-#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:97
+#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:37
 msgid "Add yours"
 msgstr "Add yours"
 
@@ -359,6 +371,10 @@ msgstr "All ascents by grade"
 #: src/pages/logbook/common/ui/LogbookFilterFields.tsx:53
 msgid "All styles"
 msgstr "All styles"
+
+#: src/features/signInPrompt/common/ui/SignInPromptBody.tsx:19
+msgid "An account keeps your logbook, your beta and your photos in one place."
+msgstr "An account keeps your logbook, your beta and your photos in one place."
 
 #: src/features/topoEditor/desktop/ui/TopoPointMenu.tsx:44
 msgid "Anchor"
@@ -416,7 +432,7 @@ msgstr "Ascent actions"
 msgid "Ascent deleted"
 msgstr "Ascent deleted"
 
-#: src/features/logTick/common/hooks/useLogTick.ts:30
+#: src/features/logTick/common/hooks/useLogTick.ts:43
 msgid "Ascent logged"
 msgstr "Ascent logged"
 
@@ -466,7 +482,7 @@ msgstr "Back to the catalog"
 #~ msgid "Back to the sector"
 #~ msgstr "Back to the sector"
 
-#: src/pages/logbook/common/ui/TickCard.tsx:127
+#: src/pages/logbook/common/ui/TickCard.tsx:153
 msgid "Belayer"
 msgstr "Belayer"
 
@@ -504,7 +520,7 @@ msgstr "Boulder"
 msgid "Bouldering"
 msgstr "Bouldering"
 
-#: src/shared/ui/PageBreadcrumbs.tsx:27
+#: src/shared/ui/PageBreadcrumbs.tsx:42
 msgid "Breadcrumb"
 msgstr "Breadcrumb"
 
@@ -581,11 +597,11 @@ msgstr "Climber with an account"
 msgid "Climbers left nothing here — no ascents, no comments, no photos."
 msgstr "Climbers left nothing here — no ascents, no comments, no photos."
 
-#: src/features/topo/desktop/TopoPhotoDialog.tsx:36
-#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:31
-#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:39
-#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:31
-#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:39
+#: src/features/topo/desktop/TopoPhotoDialog.tsx:40
+#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:35
+#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:43
+#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:35
+#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:43
 msgid "Close"
 msgstr "Close"
 
@@ -613,7 +629,7 @@ msgstr "Comment deleted"
 msgid "Comment saved"
 msgstr "Comment saved"
 
-#: src/pages/route/common/ui/RouteTabs.tsx:33
+#: src/pages/route/common/ui/RouteTabs.tsx:40
 msgid "Comments"
 msgstr "Comments"
 
@@ -662,7 +678,7 @@ msgstr "Country"
 msgid "Cover"
 msgstr "Cover"
 
-#: src/app/mobile/layout/AppBottomNavigation.tsx:29
+#: src/app/mobile/layout/AppBottomNavigation.tsx:27
 msgid "Crags"
 msgstr "Crags"
 
@@ -686,7 +702,7 @@ msgstr "Crop shape"
 msgid "Current photo"
 msgstr "Current photo"
 
-#: src/pages/profile/common/ui/ThemeModeSetting.tsx:26
+#: src/pages/profile/common/ui/ThemeModeSetting.tsx:33
 msgid "Dark"
 msgstr "Dark"
 
@@ -722,7 +738,7 @@ msgstr "Delete comment"
 msgid "Delete line"
 msgstr "Delete line"
 
-#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:79
+#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:99
 #: src/widgets/routeMedia/desktop/DeleteRouteMediaDialog.tsx:25
 #: src/widgets/routeMedia/mobile/DeleteRouteMediaSheet.tsx:23
 msgid "Delete media"
@@ -801,7 +817,7 @@ msgstr "Description"
 msgid "Did you like it?"
 msgstr "Did you like it?"
 
-#: src/shared/ui/DirectionsButton.tsx:24
+#: src/shared/ui/DirectionsButton.tsx:37
 msgid "Directions"
 msgstr "Directions"
 
@@ -836,7 +852,7 @@ msgstr "Dropped on {0}"
 #: src/features/catalogEdit/common/ui/EditToggleButton.tsx:24
 #: src/features/logTick/common/ui/TickMenuItems.tsx:28
 #: src/features/routeComment/common/hooks/useRouteCommentMenuItems.tsx:35
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:145
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:161
 #: src/shared/ui/CatalogCardMenu.tsx:86
 msgid "Edit"
 msgstr "Edit"
@@ -1005,6 +1021,10 @@ msgstr "Keep editing"
 msgid "Keep the whole photo"
 msgstr "Keep the whole photo"
 
+#: src/shared/ui/SignInBenefits.tsx:71
+msgid "Keep your grades, language and theme on every device"
+msgstr "Keep your grades, language and theme on every device"
+
 #: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:22
 #~ msgid "Kept for good — climbers left"
 #~ msgstr "Kept for good — climbers left"
@@ -1052,7 +1072,7 @@ msgstr "Leave without saving?"
 msgid "Length, m"
 msgstr "Length, m"
 
-#: src/pages/profile/common/ui/ThemeModeSetting.tsx:23
+#: src/pages/profile/common/ui/ThemeModeSetting.tsx:30
 msgid "Light"
 msgstr "Light"
 
@@ -1134,12 +1154,20 @@ msgid "Location is blocked for this site. Allow it in the browser to see where y
 msgstr "Location is blocked for this site. Allow it in the browser to see where you are."
 
 #: src/features/logTick/common/ui/TickForm.tsx:184
-#: src/pages/route/common/ui/LogTickButton.tsx:43
+#: src/pages/route/common/ui/LogTickButton.tsx:41
 msgid "Log ascent"
 msgstr "Log ascent"
 
-#: src/app/mobile/layout/AppBottomNavigation.tsx:36
-#: src/pages/route/common/ui/RouteTabs.tsx:34
+#: src/shared/ui/SignInBenefits.tsx:39
+msgid "Log every ascent and watch your grade pyramid build up"
+msgstr "Log every ascent and watch your grade pyramid build up"
+
+#: src/features/signInPrompt/common/ui/SignInPromptBody.tsx:22
+#~ msgid "Log your ascents and keep a logbook"
+#~ msgstr "Log your ascents and keep a logbook"
+
+#: src/app/mobile/layout/AppBottomNavigation.tsx:34
+#: src/pages/route/common/ui/RouteTabs.tsx:41
 msgid "Logbook"
 msgstr "Logbook"
 
@@ -1189,9 +1217,10 @@ msgstr "Moved to {0}"
 msgid "My ascents"
 msgstr "My ascents"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:37
-#: src/pages/logbook/desktop/PageLogbookDesktop.tsx:43
-#: src/pages/logbook/mobile/PageLogbookMobile.tsx:40
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:35
+#: src/pages/logbook/common/ui/LogbookTeaser.tsx:18
+#: src/pages/logbook/desktop/PageLogbookDesktop.tsx:47
+#: src/pages/logbook/mobile/PageLogbookMobile.tsx:44
 msgid "My logbook"
 msgstr "My logbook"
 
@@ -1221,7 +1250,7 @@ msgstr "New route"
 msgid "No ascents logged yet."
 msgstr "No ascents logged yet."
 
-#: src/widgets/routeComments/common/ui/RouteComments.tsx:27
+#: src/widgets/routeComments/common/ui/RouteComments.tsx:28
 msgid "No comments yet — be the first to add beta."
 msgstr "No comments yet — be the first to add beta."
 
@@ -1245,7 +1274,7 @@ msgstr "No routes yet — add the first one, then drag it onto the photo it is d
 msgid "No topo yet"
 msgstr "No topo yet"
 
-#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:36
+#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:48
 msgid "No videos or photos yet."
 msgstr "No videos or photos yet."
 
@@ -1257,7 +1286,7 @@ msgstr "Nobody found"
 msgid "Nobody has logged an ascent yet."
 msgstr "Nobody has logged an ascent yet."
 
-#: src/pages/route/common/ui/RouteLogbook.tsx:32
+#: src/pages/route/common/ui/RouteLogbook.tsx:35
 msgid "Nobody has logged this route yet."
 msgstr "Nobody has logged this route yet."
 
@@ -1330,11 +1359,11 @@ msgid "Open region"
 msgstr "Open region"
 
 #: src/features/sectorMap/common/ui/SectorPointCard.tsx:31
-#: src/features/sectorMap/mobile/SectorMapMobile.tsx:53
+#: src/features/sectorMap/mobile/SectorMapMobile.tsx:56
 msgid "Open sector"
 msgstr "Open sector"
 
-#: src/pages/route/desktop/PageRouteDesktop.tsx:92
+#: src/pages/route/desktop/PageRouteDesktop.tsx:94
 msgid "Open the photo"
 msgstr "Open the photo"
 
@@ -1475,8 +1504,9 @@ msgstr "Post"
 msgid "Private comment"
 msgstr "Private comment"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:53
-#: src/app/mobile/layout/AppBottomNavigation.tsx:43
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:51
+#: src/app/mobile/layout/AppBottomNavigation.tsx:41
+#: src/pages/profile/common/ui/ProfileTeaser.tsx:14
 #: src/pages/profile/desktop/PageProfileDesktop.tsx:22
 #: src/pages/profile/mobile/PageProfileMobile.tsx:22
 msgid "Profile"
@@ -1529,15 +1559,15 @@ msgstr "Region {0} created"
 msgid "Region saved"
 msgstr "Region saved"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:30
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:32
 #: src/features/catalogSearch/common/ui/CatalogSearchResults.tsx:22
-#: src/pages/home/desktop/PageHomeDesktop.tsx:55
-#: src/pages/region/desktop/PageRegionDesktop.tsx:80
-#: src/pages/region/mobile/PageRegionMobile.tsx:49
-#: src/pages/route/desktop/PageRouteDesktop.tsx:66
+#: src/pages/home/desktop/PageHomeDesktop.tsx:56
+#: src/pages/region/desktop/PageRegionDesktop.tsx:83
+#: src/pages/region/mobile/PageRegionMobile.tsx:52
+#: src/pages/route/desktop/PageRouteDesktop.tsx:68
 #: src/pages/route/mobile/PageRouteMobile.tsx:48
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:132
-#: src/pages/sector/mobile/PageSectorMobile.tsx:114
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:148
+#: src/pages/sector/mobile/PageSectorMobile.tsx:117
 msgid "Regions"
 msgstr "Regions"
 
@@ -1718,6 +1748,10 @@ msgstr "Sector saved"
 msgid "Sectors"
 msgstr "Sectors"
 
+#: src/shared/ui/SignInBenefits.tsx:47
+msgid "See what everyone else has climbed on a route"
+msgstr "See what everyone else has climbed on a route"
+
 #: src/features/topoEditor/desktop/ui/TopoEditorToolbar.tsx:49
 #~ msgid "Select"
 #~ msgstr "Select"
@@ -1742,15 +1776,50 @@ msgstr "Show more"
 msgid "Show on map"
 msgstr "Show on map"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:61
+#: src/shared/ui/SignInCta.tsx:35
 msgid "Sign in"
 msgstr "Sign in"
+
+#: src/features/routeComment/common/ui/RouteCommentComposer.tsx:42
+#~ msgid "Sign in to add beta for this route."
+#~ msgstr "Sign in to add beta for this route."
+
+#: src/features/signInPrompt/desktop/SignInPromptDialog.tsx:25
+#: src/features/signInPrompt/mobile/SignInPromptSheet.tsx:24
+#~ msgid "Sign in to add media"
+#~ msgstr "Sign in to add media"
+
+#: src/features/signInPrompt/common/ui/SignInPromptBody.tsx:41
+#~ msgid "Sign in to add photos and videos."
+#~ msgstr "Sign in to add photos and videos."
+
+#: src/pages/profile/common/ui/ProfileTeaser.tsx:27
+#~ msgid "Sign in to keep your logbook, your beta and your settings across devices."
+#~ msgstr "Sign in to keep your logbook, your beta and your settings across devices."
+
+#: src/features/signInPrompt/desktop/SignInPromptDialog.tsx:22
+#: src/features/signInPrompt/mobile/SignInPromptSheet.tsx:20
+msgid "Sign in to log this ascent"
+msgstr "Sign in to log this ascent"
+
+#: src/pages/logbook/common/ui/LogbookTeaser.tsx:30
+#~ msgid "Sign in to log your ascents and keep a logbook — grades, ascent styles and progress over time."
+#~ msgstr "Sign in to log your ascents and keep a logbook — grades, ascent styles and progress over time."
 
 #: src/pages/login/common/ui/LoginCard.tsx:27
 msgid "Sign in to log your sends"
 msgstr "Sign in to log your sends"
 
-#: src/pages/profile/common/ui/SignOutButton.tsx:14
+#: src/pages/route/common/ui/RouteTabsLocked.tsx:21
+#~ msgid "Sign in to see the photos, beta and ascents climbers have left on this route."
+#~ msgstr "Sign in to see the photos, beta and ascents climbers have left on this route."
+
+#: src/pages/region/common/ui/SectorsList.tsx:57
+#: src/pages/sector/common/ui/RoutesPanelHeader.tsx:52
+#~ msgid "Sign in to track which routes you have climbed here."
+#~ msgstr "Sign in to track which routes you have climbed here."
+
+#: src/pages/profile/common/ui/SignOutButton.tsx:12
 msgid "Sign out"
 msgstr "Sign out"
 
@@ -1842,7 +1911,7 @@ msgstr "The sector has no photo yet — add one in the sector editor."
 #~ msgid "The topo editor is available on a desktop screen."
 #~ msgstr "The topo editor is available on a desktop screen."
 
-#: src/pages/profile/common/ui/ThemeModeSetting.tsx:13
+#: src/pages/profile/common/ui/ThemeModeSetting.tsx:14
 msgid "Theme"
 msgstr "Theme"
 
@@ -1949,6 +2018,10 @@ msgstr "Top rope"
 #~ msgid "Topo photo"
 #~ msgstr "Topo photo"
 
+#: src/shared/ui/SignInBenefits.tsx:55
+msgid "Track your progress sector by sector"
+msgstr "Track your progress sector by sector"
+
 #: src/shared/ui/GradeHistogram.tsx:65
 msgid "Trad"
 msgstr "Trad"
@@ -2023,10 +2096,10 @@ msgstr "Verifying…"
 msgid "Video {position}"
 msgstr "Video {position}"
 
-#: src/pages/route/common/ui/RouteTabs.tsx:30
-#: src/widgets/routeMedia/common/ui/RouteMediaButton.tsx:22
-#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:29
-#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:29
+#: src/pages/route/common/ui/RouteTabs.tsx:37
+#: src/widgets/routeMedia/common/ui/RouteMediaButton.tsx:26
+#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:33
+#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:33
 msgid "Video and photo"
 msgstr "Video and photo"
 
@@ -2035,7 +2108,7 @@ msgstr "Video and photo"
 #~ msgid "Video and photo ({0})"
 #~ msgstr "Video and photo ({0})"
 
-#: src/pages/route/common/ui/RouteTabs.tsx:30
+#: src/pages/route/common/ui/RouteTabs.tsx:37
 msgid "Video and photo ({mediaCount})"
 msgstr "Video and photo ({mediaCount})"
 
@@ -2068,6 +2141,10 @@ msgstr "Written for you from the name above"
 msgid "Year"
 msgstr "Year"
 
+#: src/pages/profile/common/ui/ProfileTeaser.tsx:16
+msgid "Your account keeps your logbook, your beta and your settings in one place."
+msgstr "Your account keeps your logbook, your beta and your settings in one place."
+
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:39
 msgid "Your beta"
 msgstr "Your beta"
@@ -2075,6 +2152,10 @@ msgstr "Your beta"
 #: src/features/logTick/common/ui/GradeFeelChoice.tsx:44
 msgid "Your grade"
 msgstr "Your grade"
+
+#: src/pages/logbook/common/ui/LogbookTeaser.tsx:20
+msgid "Your logbook keeps every ascent you have ever logged."
+msgstr "Your logbook keeps every ascent you have ever logged."
 
 #: src/shared/ui/NameFields.tsx:58
 msgid "Your own spelling — the name above no longer changes it"

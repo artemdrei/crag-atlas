@@ -83,8 +83,8 @@ const LabelStyled = styled('div')`
   flex: 0 0 auto;
 `;
 
-// Both columns are as wide as their longest possible content, so the badges
-// start on one edge and the bars start on another whatever the grades are.
+// Both columns are as wide as their longest content, so badges and bars line
+// up whatever the grades are.
 const BadgeStyled = styled('div')`
   display: flex;
   flex: 0 0 ${({ theme }) => theme.spacing(8)};

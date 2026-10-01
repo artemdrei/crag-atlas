@@ -81,8 +81,7 @@ const GradesRowStyled = styled('div')`
   gap: ${({ theme }) => theme.spacing(1.5)};
 `;
 
-// The bars scroll inside this column instead of pushing the button out of the
-// row, so the button sits in the same place whatever a sector's grade spread.
+// The bars scroll inside this column instead of pushing the button out.
 const GradesStyled = styled('div')`
   display: flex;
   flex-direction: column;

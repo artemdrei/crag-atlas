@@ -1,7 +1,5 @@
-/**
- * Guards user-submitted links before they reach an `href`: anything but
- * http/https (`javascript:`, `data:`) executes in the visitor's session.
- */
+// Anything but http/https (`javascript:`, `data:`) executes in the visitor's
+// session once it reaches an `href`.
 export const isSafeHttpUrl = (value?: string | null): boolean => {
   if (!value) return false;
 

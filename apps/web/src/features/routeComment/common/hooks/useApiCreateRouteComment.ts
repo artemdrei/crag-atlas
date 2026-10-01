@@ -1,3 +1,4 @@
+import { track } from '@crag-atlas/analytics';
 import { resolveFailureMessage, toFailure } from '@crag-atlas/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -18,6 +19,10 @@ export const useApiCreateRouteComment = ({ idRoute, onCreated }: Params) => {
     mutationFn: (payload: CreateRouteComment) =>
       apiPost<RouteComment>(`/routes/${idRoute}/comments`, payload),
     onSuccess: () => {
+      track({
+        name: 'Content Created',
+        props: { content_type: 'comment', id_route: idRoute }
+      });
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.routeComments(idRoute)
       });

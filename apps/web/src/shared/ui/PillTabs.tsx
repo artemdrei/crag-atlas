@@ -16,11 +16,6 @@ export interface Props<T extends string> {
   onChange: (value: T) => void;
 }
 
-/**
- * The second level of tabs: a switch inside a page whose own tabs already
- * carry the underline. Options are data, not children, so the same set can
- * be rendered by a native tab bar later.
- */
 export const PillTabs = <T extends string>({
   value,
   options,

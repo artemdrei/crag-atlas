@@ -1,3 +1,4 @@
+import { track } from '@crag-atlas/analytics';
 import type { Me, UpdateMe } from '@crag-atlas/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -13,8 +14,29 @@ export const useGradeScaleSetting = () => {
 
   const { mutate: save, isPending } = useMutation({
     mutationFn: (payload: UpdateMe) => apiPatch<Me>('/me', payload),
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.me() })
+    onSuccess: (_me, payload) => {
+      if (payload.gradeScaleRoute) {
+        track({
+          name: 'Setting Changed',
+          props: {
+            setting: 'grade_scale_route',
+            value: payload.gradeScaleRoute
+          }
+        });
+      }
+
+      if (payload.gradeScaleBoulder) {
+        track({
+          name: 'Setting Changed',
+          props: {
+            setting: 'grade_scale_boulder',
+            value: payload.gradeScaleBoulder
+          }
+        });
+      }
+
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.me() });
+    }
   });
 
   return {

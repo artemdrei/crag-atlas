@@ -1,12 +1,12 @@
 import { Trans } from '@lingui/react/macro';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
 
 import {
   RouteCommentComposer,
   RouteCommentItem
 } from '@web/features/routeComment';
-import { ApiFeedback, ListSkeleton } from '@web/shared/ui';
+import { ApiFeedback, EmptyState, ListSkeleton } from '@web/shared/ui';
 
 import { useApiGetRouteComments } from '../hooks';
 
@@ -23,9 +23,10 @@ export const RouteComments = ({ idRoute }: Props) => {
       <ApiFeedback failure={failure} />
       {isLoading && <ListSkeleton count={2} variant="row" />}
       {!isLoading && comments.length === 0 && (
-        <Typography variant="body2" color="text.secondary">
-          <Trans>No comments yet — be the first to add beta.</Trans>
-        </Typography>
+        <EmptyState
+          icon={<ChatBubbleOutlineIcon />}
+          message={<Trans>No comments yet — be the first to add beta.</Trans>}
+        />
       )}
       {comments.map((comment) => (
         <RouteCommentItem key={comment.id} comment={comment} />

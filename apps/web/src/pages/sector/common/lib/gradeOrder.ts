@@ -3,9 +3,8 @@ import type { GradeHistogramGroup } from '@crag-atlas/api';
 import { gradeKey } from '@web/shared/lib';
 
 // grade_score never reaches the DTO, so position in the histogram is the only
-// difficulty order the client has: easiest first inside a group, sport before
-// trad before boulder. Keeping the types apart is deliberate - a font 7a and a
-// french 7a are not the same climb to rank against each other.
+// difficulty order the client has. The types stay apart: a font 7a and a
+// french 7a are not the same climb.
 export const gradeOrder = (
   groups: GradeHistogramGroup[]
 ): Record<string, number> => {

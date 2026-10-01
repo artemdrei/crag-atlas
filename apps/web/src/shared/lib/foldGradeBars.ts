@@ -5,12 +5,10 @@ import type { GradeBar } from './gradeBars';
 const EASY_TONE: GradeTone = '5';
 const EASY_LABEL = '<5c';
 
-// A crag spread over twenty columns says less than one over ten.
 export const foldGradeBars = (bars: GradeBar[], limit: number): GradeBar[] =>
   bars.length <= limit ? bars : foldPluses(foldEasy(bars));
 
-// Everything below 6a is one step for a reader choosing a crag: which of them
-// a crag holds says less than how many of them it holds.
+// Everything below 6a is one step for a reader choosing a crag.
 const foldEasy = (bars: GradeBar[]): GradeBar[] => {
   const easy = bars.filter(({ tone }) => tone === EASY_TONE);
 

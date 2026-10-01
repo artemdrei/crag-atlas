@@ -5,6 +5,8 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
+import { catalogIdsOfPath, trackCatalogItemOpened } from '@web/shared/lib';
+
 export interface Crumb {
   label: string;
   to?: string;
@@ -12,18 +14,28 @@ export interface Crumb {
 
 export interface Props {
   items: Crumb[];
-  /** Above this many crumbs the head collapses into an expandable "…". */
   maxItems?: number;
 }
 
-/** Ids in the URL are uuids, so the trail is the only place a name appears. */
+const trackCrumb = (label: string, to?: string) => {
+  const ids = to ? catalogIdsOfPath(to) : {};
+
+  if (!ids.idRegion) return;
+
+  trackCatalogItemOpened({
+    name: label,
+    source: 'breadcrumb',
+    ...ids,
+    idRegion: ids.idRegion
+  });
+};
+
 export const PageBreadcrumbs = ({ items, maxItems }: Props) => {
   const { t } = useLingui();
 
   return (
     <Breadcrumbs
-      // A page has more than one set of links; a landmark without a name is
-      // announced as just "navigation".
+      // A landmark without a name is announced as just "navigation".
       aria-label={t`Breadcrumb`}
       maxItems={maxItems}
       itemsBeforeCollapse={0}
@@ -31,7 +43,11 @@ export const PageBreadcrumbs = ({ items, maxItems }: Props) => {
     >
       {items.map((item) =>
         item.to ? (
-          <LinkStyled key={item.label} to={item.to}>
+          <LinkStyled
+            key={item.label}
+            to={item.to}
+            onClick={() => trackCrumb(item.label, item.to)}
+          >
             {item.label}
           </LinkStyled>
         ) : (

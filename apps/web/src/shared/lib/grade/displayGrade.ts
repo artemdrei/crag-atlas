@@ -1,11 +1,8 @@
 import type { GradeScale } from '@crag-atlas/api';
 import { convertGrade, getScale } from '@openbeta/sandbag';
 
-/**
- * A grade in the system the reader chose. Route and boulder scales are
- * separate families that never convert into each other, so anything outside
- * the reader's family stays as its guidebook wrote it.
- */
+// Route and boulder scales never convert into each other, so anything outside
+// the reader's family stays as its guidebook wrote it.
 export const displayGrade = (
   grade: string,
   scale: GradeScale,

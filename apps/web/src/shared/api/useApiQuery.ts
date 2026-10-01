@@ -7,15 +7,11 @@ export interface Params<T> {
   enabled?: boolean;
 }
 
-/**
- * The one place a query result turns into the app's `{ isLoading, failure }`
- * shape, so every page keeps working with `ApiFeedback`. Deliberately thin:
- * anything that needs more of react-query's options should call `useQuery`
- * directly rather than grow this into a second framework.
- */
+// Deliberately thin: anything needing more of react-query calls `useQuery`
+// directly rather than grow this into a second framework.
 export const useApiQuery = <T>({ queryKey, queryFn, enabled }: Params<T>) => {
-  // isPending, not isLoading: a cached query that is refetching in the
-  // background must not re-render the loading state — that is the flash.
+  // isPending, not isLoading: a cached query refetching in the background must
+  // not re-render the loading state.
   const { data, isPending, error } = useQuery({ queryKey, queryFn, enabled });
 
   return {

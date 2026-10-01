@@ -12,8 +12,7 @@ export interface Params {
 export const useApiReplaceRegionPhoto = ({ idRegion }: Params) => {
   const queryClient = useQueryClient();
 
-  // The blob arrives already compressed: the dialog needs the WebP anyway, to
-  // show what the saving was.
+  // Already compressed: the dialog needs the WebP anyway.
   const { isPending, mutateAsync } = useMutation({
     mutationFn: (blob: Blob) =>
       apiUpload<Region>('PUT', `/regions/${idRegion}/photo`, toPhotoForm(blob)),

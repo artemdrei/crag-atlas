@@ -11,7 +11,7 @@ export interface Props {
   mapped: MappedSector[];
   selectedSector?: Sector;
   isEditing?: boolean;
-  onOpenSector: (idSector: string) => void;
+  onOpenSector: (sector: Sector) => void;
   onSelectSector: (idSector: string) => void;
   onPlacePoint: (point: Coords) => void;
 }
@@ -35,7 +35,7 @@ export const SectorMapDesktop = ({
           !isEditing && (
             <SectorPointCard
               sector={selectedSector}
-              onOpen={() => onOpenSector(selectedSector.id)}
+              onOpen={() => onOpenSector(selectedSector)}
             />
           )
         }

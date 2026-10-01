@@ -41,8 +41,7 @@ export const useApiGetTicks = (params: Params) => {
   });
 
   const pages = data?.pages ?? [];
-  // A tick logged while pages are loaded shifts every offset below it, so the
-  // refetch can hand the same row back twice.
+  // A tick logged while pages are loaded shifts every offset below it.
   const ticks = [
     ...new Map(
       pages.flatMap((page) => page.items).map((tick) => [tick.id, tick])

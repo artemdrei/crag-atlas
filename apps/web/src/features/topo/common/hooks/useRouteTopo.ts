@@ -16,8 +16,7 @@ export const useRouteTopo = (idSector: string, idRoute: string) => {
 
   const numberOf = useMemo(() => orderRoutes(topos), [topos]);
 
-  // Photos are named by where they sit in the sector, so the caller needs to
-  // know which one this is.
+  // Photos are named by position, so the caller needs to know which this is.
   const photoIndex = topo ? topos.indexOf(topo) : -1;
 
   return { topo, photoIndex, lines, numberOf, isLoading, failure };

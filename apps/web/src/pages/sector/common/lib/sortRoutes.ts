@@ -2,8 +2,8 @@ import { gradeKey } from '@web/shared/lib';
 
 import type { Route, RouteSort, RouteSortDirection } from '../entities';
 
-// Below every known grade, so a route the histogram has not listed yet sinks
-// to the bottom instead of leading a descending sort.
+// Below every known grade, so an unlisted route cannot lead a descending
+// sort.
 const UNRANKED = -1;
 
 const rankOf = (
@@ -23,8 +23,6 @@ const rankOf = (
   }
 };
 
-// Descending puts the hardest, best and most climbed first, matching how the
-// logbook orders grades.
 export const sortRoutes = (
   routes: Route[],
   sort: RouteSort,

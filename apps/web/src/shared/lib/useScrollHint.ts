@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-// A pixel of slack: fractional layout widths leave scrollLeft short of the end
-// by a hair, which would otherwise keep the hint up forever.
+// Fractional layout widths leave scrollLeft a hair short of the end.
 const EPSILON = 1;
 
 export const useScrollHint = () => {

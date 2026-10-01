@@ -1,11 +1,8 @@
 import type { Point } from './hitTest';
 import { toPairs } from './toPairs';
 
-/**
- * Centripetal Catmull-Rom as cubic Beziers: it interpolates, so the curve
- * passes through every stored point and no line drifts off the rock. Uniform
- * would self-intersect on the sharp turns a traverse makes.
- */
+// Centripetal Catmull-Rom: it interpolates, so the curve passes through every
+// stored point. Uniform would self-intersect on a traverse's sharp turns.
 export const smoothPath = (input: readonly number[][]): string => {
   const points = toPairs(input);
   const [head, next] = points;

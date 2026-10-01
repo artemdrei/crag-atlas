@@ -10,7 +10,6 @@ import Typography from '@mui/material/Typography';
 
 import type { EditableTopo } from '../../common';
 
-/** Browsing shows the photo only; managing adds the actions that change it. */
 export type ThumbMode =
   | { kind: 'browse' }
   | {
@@ -185,8 +184,8 @@ const ActionsStyled = styled('div')`
   opacity: 0;
   transition: opacity 0.15s ease-out;
 
-  /* The bar always sits on its own dark scrim, so the icons take their colour
-     from it rather than from the theme — in light mode they vanished. */
+  /* The bar sits on its own dark scrim, so the icons cannot take the theme's
+     colour: in light mode they vanished. */
   & .MuiIconButton-root {
     color: ${({ theme }) => theme.palette.common.white};
   }

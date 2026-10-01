@@ -3,6 +3,7 @@ import ButtonBase from '@mui/material/ButtonBase';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
+import { trackListControl } from '@web/shared/lib';
 import { photoFrame } from '@web/shared/theme/photoFrame';
 
 import { usePhotoLabel } from '../hooks';
@@ -22,7 +23,10 @@ export const TopoThumbStrip = ({ topos, idActiveTopo, onSelect }: Props) => {
         <ThumbStyled
           key={topo.id}
           isActive={topo.id === idActiveTopo}
-          onClick={() => onSelect(topo.id)}
+          onClick={() => {
+            trackListControl('sector', 'topo', String(index));
+            onSelect(topo.id);
+          }}
         >
           <ThumbImageStyled
             src={topo.photoUrl}
@@ -41,8 +45,8 @@ export const TopoThumbStrip = ({ topos, idActiveTopo, onSelect }: Props) => {
 
 const StripStyled = styled('div')`
   display: flex;
-  /* A flex item shrinks by default, and a squeezed strip clips the square
-     thumbs instead of the stage above it giving up the space. */
+  /* A squeezed strip would clip the thumbs rather than the stage giving up
+     the space. */
   flex: 0 0 auto;
   gap: ${({ theme }) => theme.spacing(1)};
   overflow-x: auto;

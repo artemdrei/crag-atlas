@@ -10,8 +10,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { styled } from '@mui/material/styles';
 
-// Long enough to cross the seam between the button and the list without the
-// menu blinking shut, short enough not to linger once the pointer is away.
+// Long enough to cross the seam between the button and the list.
 const CLOSE_DELAY_MS = 120;
 
 export interface Props {
@@ -99,8 +98,8 @@ const ButtonStyled = styled(IconButton)`
   }
 `;
 
-// The backdrop would otherwise swallow every pointer event on the page, so a
-// hover-opened menu could never be left again.
+// The backdrop would swallow every pointer event, so a hover-opened menu
+// could never be left.
 const MenuStyled = styled(Menu)`
   pointer-events: none;
 

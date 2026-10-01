@@ -17,8 +17,6 @@ export interface Props {
   onSelect: () => void;
 }
 
-/** A small square thumbnail beside the text, so the card keeps its height
-    whatever the grid's column count. Regions and sectors read the same. */
 export const CatalogCard = ({
   alt,
   photoUrl,
@@ -45,8 +43,7 @@ export const CatalogCard = ({
   </RootStyled>
 );
 
-// Emotion's component selectors need a babel plugin this app does not use, so
-// the reveal hangs off an attribute rather than off ActionsStyled itself.
+// Emotion's component selectors need a babel plugin this app does not use.
 const RootStyled = styled('div')`
   position: relative;
 

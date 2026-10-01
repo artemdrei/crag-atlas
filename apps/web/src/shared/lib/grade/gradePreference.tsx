@@ -15,7 +15,7 @@ export interface GradePreference {
   boulder: BoulderGradeScale;
 }
 
-// What a reader sees before /me answers, and the catalog's own pair.
+// What a reader sees before /me answers.
 const DEFAULT_PREFERENCE: GradePreference = {
   route: 'french',
   boulder: 'vscale'
@@ -43,11 +43,8 @@ export const GradePreferenceProvider = ({
   );
 };
 
-/**
- * Turns a stored grade into the one this reader sees. Which of the two
- * preferences applies follows from the scale's own family, not from the
- * route's type.
- */
+// Which of the two preferences applies follows from the scale's own family,
+// not from the route's type.
 export const useDisplayGrade = () => {
   const preference = useContext(GradePreferenceContext);
 
@@ -71,10 +68,7 @@ export interface GradeRange {
   gradeMaxScale?: GradeScale | null;
 }
 
-/**
- * The two ends of a range come from two different routes, so each is
- * converted on its own before they are joined.
- */
+// The two ends come from two different routes, so each converts on its own.
 export const useGradeRange = (range: GradeRange): string | null => {
   const displayGrade = useDisplayGrade();
 

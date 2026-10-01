@@ -4,10 +4,9 @@ import type { ModalRegistration } from '@web/app/providers';
 
 import './types';
 
-// Kept apart from the page barrel: App.tsx is not code-split, so importing the
-// pages from there would pull the whole playground into the entry chunk. The
-// DEV check lives here rather than at the call site — in a production build it
-// folds to an empty array and Rollup drops the dynamic imports with it.
+// Apart from the page barrel: App.tsx is not code-split, so importing from
+// there would pull the playground into the entry chunk. The DEV check folds to
+// an empty array and Rollup drops the dynamic imports with it.
 export const playgroundDesktopRegistrations: ModalRegistration[] = import.meta
   .env.DEV
   ? [

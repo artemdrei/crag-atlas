@@ -26,8 +26,7 @@ export const createAppTheme = (mode: 'light' | 'dark', isEditing = false) =>
     components: {
       MuiBackdrop: {
         styleOverrides: {
-          // Menus and popovers ride on an invisible backdrop; only the ones
-          // meant to dim the page get the deeper tint.
+          // Menus and popovers ride on an invisible backdrop.
           root: ({ ownerState, theme }) =>
             ownerState.invisible
               ? {}
@@ -38,8 +37,7 @@ export const createAppTheme = (mode: 'light' | 'dark', isEditing = false) =>
       },
       MuiDialog: {
         styleOverrides: {
-          // A phone has no room for the 32px MUI leaves around a dialog: the
-          // gutter here is the one every modal on a narrow screen gets.
+          // A phone has no room for the 32px MUI leaves around a dialog.
           paper: ({ ownerState, theme }) =>
             ownerState.fullScreen
               ? {}

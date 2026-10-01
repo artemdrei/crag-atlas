@@ -3,7 +3,6 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 export interface Props {
-  /** The grade the route is listed at — the middle bucket. */
   grade: string;
   votesSoft: number;
   votesNeutral: number;

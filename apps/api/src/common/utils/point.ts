@@ -5,8 +5,8 @@ export interface Coords {
   lng: number | null;
 }
 
-// A point is placed on the map by hand, so a typo reaching the column's own
-// check would answer with a write error nobody can read.
+// A typo reaching the column's check would answer with an unreadable write
+// error.
 export const toPoint = (
   { lat, lng }: Partial<Coords>,
   entity: string

@@ -6,8 +6,8 @@ export interface Props {
   className?: string;
 }
 
-/** The frame a react-zoom-pan-pinch wrapper sits in: it has to stretch the
-    library's own two elements, which only a descendant selector can reach. */
+// Stretches the library's own two elements, which only a descendant selector
+// can reach.
 export const ZoomStageShell = ({
   className,
   children

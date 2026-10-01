@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { Trans } from '@lingui/react/macro';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
@@ -8,7 +6,6 @@ import Typography from '@mui/material/Typography';
 import { useGridColumns } from '@web/shared/lib';
 import { ApiFeedback, GridColumnsMenu, PageShell } from '@web/shared/ui';
 
-import type { AscentFilter, Discipline, LogbookTab, TickSort } from '../common';
 import {
   AscentTypeFilter,
   DisciplineTabs,
@@ -20,15 +17,22 @@ import {
   TicksList,
   useApiGetTickStats,
   useApiGetTicks,
+  useLogbookControls,
   useLogbookView
 } from '../common';
 import { LogbookFiltersButton } from './LogbookFiltersButton';
 
 export const PageLogbookDesktop = () => {
-  const [tab, setTab] = useState<LogbookTab>('mine');
-  const [discipline, setDiscipline] = useState<Discipline>('sport');
-  const [sort, setSort] = useState<TickSort>('grade');
-  const [ascentType, setAscentType] = useState<AscentFilter>('all');
+  const {
+    tab,
+    discipline,
+    sort,
+    ascentType,
+    changeTab,
+    changeDiscipline,
+    changeSort,
+    changeAscentType
+  } = useLogbookControls();
   const { ticks, isLoading, isLoadingMore, hasMore, failure, loadMore } =
     useApiGetTicks({ discipline, ascentType, sort });
   const { stats, failure: statsFailure } = useApiGetTickStats();
@@ -50,8 +54,8 @@ export const PageLogbookDesktop = () => {
             <LogbookFiltersButton
               sort={sort}
               ascentType={ascentType}
-              onSortChange={setSort}
-              onAscentTypeChange={setAscentType}
+              onSortChange={changeSort}
+              onAscentTypeChange={changeAscentType}
             />
           </ToolbarStyled>
         ) : (
@@ -59,7 +63,7 @@ export const PageLogbookDesktop = () => {
         )}
       </HeaderRowStyled>
 
-      <LogbookTabs tab={tab} onChange={setTab} />
+      <LogbookTabs tab={tab} onChange={changeTab} />
 
       {tab === 'mine' ? (
         <>
@@ -67,7 +71,7 @@ export const PageLogbookDesktop = () => {
             discipline={discipline}
             sportCount={stats?.sportCount}
             boulderCount={stats?.boulderCount}
-            onChange={setDiscipline}
+            onChange={changeDiscipline}
           />
 
           <ApiFeedback failure={failure ?? statsFailure} />
@@ -78,7 +82,7 @@ export const PageLogbookDesktop = () => {
                 ascentType={ascentType}
                 layout="grid"
                 counts={view.counts}
-                onChange={setAscentType}
+                onChange={changeAscentType}
               />
               <ChartStyled bars={view.bars} />
             </ChartCardStyled>

@@ -1,18 +1,18 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
 
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 
+import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
+
 import {
   CatalogSearchField,
   CatalogSearchResults,
-  searchHitPath,
   useApiSearchCatalog
 } from '../common';
 
 export const CatalogSearchMobile = () => {
-  const navigate = useNavigate();
+  const openCatalogItem = useOpenCatalogItem();
   const [query, setQuery] = useState('');
   const { results, isLoading, isActive } = useApiSearchCatalog(query);
 
@@ -26,7 +26,7 @@ export const CatalogSearchMobile = () => {
             isLoading={isLoading}
             onPick={(hit) => {
               setQuery('');
-              navigate(searchHitPath(hit));
+              openCatalogItem('search', hit);
             }}
           />
         </DropdownStyled>

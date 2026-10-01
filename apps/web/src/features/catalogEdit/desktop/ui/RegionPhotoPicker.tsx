@@ -12,10 +12,7 @@ export interface Props {
   photoUrl?: string | null;
 }
 
-/**
- * Clicking the cover swaps it; a region has one photo, not a gallery. The
- * upload dialog takes it from here — it shows what the compression saved.
- */
+// A region has one photo, not a gallery, so clicking the cover swaps it.
 export const RegionPhotoPicker = ({ idRegion, photoUrl }: Props) => {
   const { t } = useLingui();
   const { openModal } = useModal();
@@ -59,8 +56,7 @@ export const RegionPhotoPicker = ({ idRegion, photoUrl }: Props) => {
   );
 };
 
-// A square slot the whole photo fits inside: the panel keeps its height
-// whatever the shot's proportions, and nothing gets cropped away.
+// A square slot the whole photo fits inside, so nothing is cropped away.
 const PickerStyled = styled('button')`
   display: flex;
   align-items: center;

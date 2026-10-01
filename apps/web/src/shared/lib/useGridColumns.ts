@@ -7,11 +7,8 @@ export type GridColumns = (typeof GRID_COLUMN_CHOICES)[number];
 const isColumns = (value: unknown): value is GridColumns =>
   GRID_COLUMN_CHOICES.includes(value as GridColumns);
 
-/**
- * How many cards a list shows per row. A per-viewer convenience, so it lives
- * in this browser and nowhere else; private windows and blocked site data
- * both throw, hence the try/catch.
- */
+// A per-viewer convenience: private windows and blocked site data both throw,
+// hence the try/catch.
 export const useGridColumns = (storageKey: string) => {
   const [columns, setColumns] = useState<GridColumns>(() => {
     try {
@@ -28,9 +25,7 @@ export const useGridColumns = (storageKey: string) => {
 
     try {
       localStorage.setItem(storageKey, String(next));
-    } catch {
-      // Remembering is a nicety; the page works without it.
-    }
+    } catch {}
   };
 
   return { columns, changeColumns };

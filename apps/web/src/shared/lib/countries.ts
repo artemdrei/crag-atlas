@@ -1,8 +1,8 @@
 const FIRST = 'A'.charCodeAt(0);
 const LAST = 'Z'.charCodeAt(0);
 
-// A country is catalog data, like a crag's name: one spelling everybody can
-// read and type, not one that changes with the reader's interface language.
+// Catalog data, like a crag's name: one spelling, not one that changes with
+// the reader's interface language.
 const LOCALE = 'en';
 
 let cache: string[] | undefined;
@@ -15,12 +15,8 @@ const displayNames = new Intl.DisplayNames([LOCALE], {
 export const countryName = (code: string): string =>
   displayNames.of(code) ?? code;
 
-/**
- * ISO 3166-1 alpha-2 codes the runtime can name, sorted by that name. Read off
- * Intl rather than kept as a list of our own: a list would be one more thing to
- * keep current. Codes sharing a name are deprecated aliases (FX for FR) and
- * only the first survives.
- */
+// Read off Intl rather than kept as a list of our own. Codes sharing a name
+// are deprecated aliases (FX for FR); only the first survives.
 export const countryCodes = (): string[] => {
   if (cache) {
     return cache;

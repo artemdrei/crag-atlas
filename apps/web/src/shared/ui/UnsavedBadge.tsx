@@ -2,7 +2,7 @@ import { Trans } from '@lingui/react/macro';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-/** Sits on the top-right edge of whatever holds edits, which therefore needs `position: relative` and no clipping. */
+// The holder needs `position: relative` and no clipping.
 export const UnsavedBadge = () => (
   <BadgeStyled variant="caption">
     <Trans>Unsaved</Trans>

@@ -16,7 +16,6 @@ export interface Props {
   ascentType: AscentType;
 }
 
-/** The stored value is data; only its label is UI copy. */
 export const AscentTypeLabel = ({ ascentType }: Props) => {
   const { t } = useLingui();
 

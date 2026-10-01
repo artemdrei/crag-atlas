@@ -148,9 +148,8 @@ export class MediaService {
   async remove(authUser: AuthUser, idMedia: string): Promise<void> {
     const client = userClient(authUser);
 
-    // The row comes back so its object can follow it out; the bucket is
-    // public, so a photo left behind stays downloadable by anyone who ever
-    // saw its URL.
+    // The row comes back so its object can follow it out: the bucket is
+    // public, so a photo left behind stays downloadable.
     const { data, error } = await client
       .from('route_media')
       .delete()
@@ -166,8 +165,8 @@ export class MediaService {
       );
     }
 
-    // Someone else's media is invisible to this policy, so a missing row
-    // means "not yours" and "not there" alike — the caller learns neither.
+    // Invisible to this policy, so a missing row means "not yours" and "not
+    // there" alike.
     if (!data) {
       throw new NotFoundException('Media not found', 'MEDIA_NOT_FOUND');
     }

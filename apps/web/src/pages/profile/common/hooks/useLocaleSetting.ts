@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { track } from '@crag-atlas/analytics';
+
 import {
   activateLocale,
   type Locale,
@@ -12,6 +14,10 @@ export const useLocaleSetting = () => {
   // activateLocale dynamically imports the catalog — awaiting it keeps two
   // quick switches from landing out of order.
   const changeLocale = async (next: Locale) => {
+    track({
+      name: 'Setting Changed',
+      props: { setting: 'locale', value: next }
+    });
     await activateLocale(next);
     setLocale(next);
   };

@@ -24,8 +24,8 @@ const STYLE_URL = {
 
 const SELECTED_CLASS = 'is-selected';
 
-// GeolocationPositionError.PERMISSION_DENIED: the interface constant is not
-// reachable through the event MapLibre hands over.
+// GeolocationPositionError.PERMISSION_DENIED, which the event MapLibre hands
+// over does not expose.
 const PERMISSION_DENIED = 1;
 
 const SELECTED_ZOOM = 13;
@@ -33,8 +33,7 @@ const FIT_PADDING = 64;
 
 const ZOOM_DURATION = 1_200;
 
-// Outlives the component on purpose: coming back to a framing remounts it, and
-// the second arrival is not worth another flight.
+// Outlives the component on purpose: a remount is not worth another flight.
 const FLOWN_LIMIT = 50;
 
 const flownTo = new Set<string>();
@@ -51,8 +50,8 @@ const rememberFlight = (key: string) => {
   }
 };
 
-// Every call site builds its points array inline, so identity changes on each
-// parent render while the framing it asks for is the same one.
+// Every call site builds its points inline, so identity changes on each parent
+// render while the framing stays the same.
 const framingKey = (points: MapPoint[], maxZoom: number): string =>
   `${maxZoom}|${points
     .map(({ id, point }) => `${id}:${point.lng},${point.lat}`)
@@ -142,8 +141,8 @@ export const MapCanvas = ({
     };
   }, []);
 
-  // Re-applying the style the map was built with restarts a load still in
-  // flight, and the basemap then never asks for a single tile.
+  // Re-applying the style the map was built with restarts a load in flight,
+  // and the basemap then never asks for a tile.
   const styleRef = useRef(STYLE_URL[theme.palette.mode]);
 
   useEffect(() => {
@@ -215,8 +214,7 @@ export const MapCanvas = ({
 
     if (!map || !isReady || !points.length) return;
 
-    // A point being placed is not part of the framing yet: refitting would move
-    // the ground under the crosshair on every click.
+    // Refitting would move the ground under the crosshair on every click.
     if (isEditing && fittedKeyRef.current) return;
 
     const key = framingKey(points, selectedZoom);
@@ -265,8 +263,7 @@ export const MapCanvas = ({
 
     if (!map || !selected) return;
 
-    // The screen opens with something already chosen; flying to it would undo
-    // the fit, so the camera follows only selections the reader makes.
+    // Flying to the initial selection would undo the fit.
     if (!hasSelectedRef.current) {
       hasSelectedRef.current = true;
 
@@ -280,8 +277,8 @@ export const MapCanvas = ({
     });
   }, [idSelected, selectedZoom]);
 
-  // The element the map owns gets no React class: MapLibre writes its own onto
-  // it, and a React rewrite wipes them, leaving markers unpositioned.
+  // No React class on the element the map owns: MapLibre writes its own, and
+  // a React rewrite wipes them, leaving markers unpositioned.
   return (
     <ShellStyled isEditing={!!isEditing}>
       <div ref={containerRef} />
@@ -291,7 +288,7 @@ export const MapCanvas = ({
 };
 
 // MapLibre copies the properties onto an event of its own, so `code` is there
-// at runtime while the declared type promises nothing about it.
+// at runtime while the declared type promises nothing.
 const isPermissionDenied = (event: unknown): boolean =>
   typeof event === 'object' &&
   event !== null &&

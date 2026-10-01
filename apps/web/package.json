@@ -12,6 +12,8 @@
     "i18n:compile": "lingui compile"
   },
   "dependencies": {
+    "@amplitude/analytics-browser": "^2.45.4",
+    "@crag-atlas/analytics": "workspace:*",
     "@crag-atlas/api": "workspace:*",
     "@crag-atlas/utils": "workspace:*",
     "@dnd-kit/core": "^6.3.1",

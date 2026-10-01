@@ -5,6 +5,7 @@ export { LoadMoreOnScroll } from './LoadMoreOnScroll';
 export { LogbookFilterFields } from './LogbookFilterFields';
 export type { LogbookTab } from './LogbookTabs';
 export { LogbookTabs } from './LogbookTabs';
+export { LogbookTeaser } from './LogbookTeaser';
 export { TickCard } from './TickCard';
 export { TicksFeed } from './TicksFeed';
 export { TicksGroupedList } from './TicksGroupedList';

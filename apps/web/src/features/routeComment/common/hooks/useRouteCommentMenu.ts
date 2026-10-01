@@ -6,7 +6,6 @@ export interface Params {
   body: string;
 }
 
-/** What the ⋮ menu does on either device: hand off to the edit or delete surface. */
 export const useRouteCommentMenu = ({ idRoute, idComment, body }: Params) => {
   const { openModal, closeModal } = useModal();
 

@@ -1,6 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
+import type { CatalogSource } from '@crag-atlas/analytics';
 import { Trans, useLingui } from '@lingui/react/macro';
 import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
@@ -10,10 +11,10 @@ import Typography from '@mui/material/Typography';
 import { useUser } from '@web/app/providers';
 import {
   buildRegionPath,
-  buildRoutePath,
   buildSectorEditPath,
   ROUTES
 } from '@web/app/router/routes';
+import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
 import {
   findTopoOfRoute,
   orderRoutes,
@@ -31,7 +32,7 @@ import {
   PageTitle
 } from '@web/shared/ui';
 
-import type { Route, RouteSort, RouteSortDirection } from '../common';
+import type { Route } from '../common';
 import {
   ArchivedSectorNotice,
   gradeOrder,
@@ -43,6 +44,7 @@ import {
   useApiGetTickedRoutes,
   useGradeFilter,
   useRoutesByTopo,
+  useRoutesSort,
   useSectorSelection
 } from '../common';
 import { RoutesSortButton } from './RoutesSortButton';
@@ -52,6 +54,7 @@ export const PageSectorDesktop = () => {
   const theme = useTheme();
   const { idRegion = '', idSector = '' } = useParams();
   const navigate = useNavigate();
+  const openCatalogItem = useOpenCatalogItem();
   const { hasRole } = useUser();
   const { sector } = useApiGetSector(idSector);
   const { routes, isLoading, failure } = useApiGetRoutes(idSector);
@@ -73,8 +76,7 @@ export const PageSectorDesktop = () => {
   });
   const { idHighlightedRoute, highlightRoute } = useSectorSelection();
 
-  const [sort, setSort] = useState<RouteSort>('default');
-  const [direction, setDirection] = useState<RouteSortDirection>('desc');
+  const { sort, direction, changeSort, toggleDirection } = useRoutesSort();
 
   const orderOfGrade = useMemo(
     () => gradeOrder(sector?.gradeHistogram ?? []),
@@ -105,7 +107,7 @@ export const PageSectorDesktop = () => {
     return getGradeColor(theme.palette.grade, route?.grade, route?.gradeScale);
   };
 
-  const openRoute = (route: Route) => {
+  const openRoute = (route: Route, source: CatalogSource = 'card') => {
     const topo = findTopoOfRoute(visibleTopos, route.id);
 
     if (topo && topo.id !== idActiveTopo) {
@@ -115,13 +117,26 @@ export const PageSectorDesktop = () => {
       return;
     }
 
-    navigate(buildRoutePath(idRegion, idSector, route.id));
+    openCatalogItem(source, {
+      name: route.name,
+      idRegion,
+      idSector,
+      idRoute: route.id
+    });
   };
 
+  // No topo check: the line was clicked on the topo already open.
   const openRouteById = (idRoute: string) => {
     const route = routes.find(({ id }) => id === idRoute);
 
-    if (route) navigate(buildRoutePath(idRegion, idSector, route.id));
+    if (!route) return;
+
+    openCatalogItem('topo', {
+      name: route.name,
+      idRegion,
+      idSector,
+      idRoute: route.id
+    });
   };
 
   return (
@@ -152,7 +167,7 @@ export const PageSectorDesktop = () => {
         <MainColumnStyled>
           <TitleRowStyled>
             <PageTitle name={sector?.name} nameLocal={sector?.nameLocal} />
-            <DirectionsButton point={coordsOf(sector)} />
+            <DirectionsButton entityType="sector" point={coordsOf(sector)} />
           </TitleRowStyled>
           {sector?.description && (
             <Typography variant="body2" color="text.secondary">
@@ -183,11 +198,9 @@ export const PageSectorDesktop = () => {
                 <RoutesSortDirectionButton
                   direction={direction}
                   isVisible={sort !== 'default'}
-                  onToggleDirection={() =>
-                    setDirection((one) => (one === 'asc' ? 'desc' : 'asc'))
-                  }
+                  onToggleDirection={toggleDirection}
                 />
-                <RoutesSortButton sort={sort} onSortChange={setSort} />
+                <RoutesSortButton sort={sort} onSortChange={changeSort} />
               </>
             }
             onToggleGrade={toggleGrade}

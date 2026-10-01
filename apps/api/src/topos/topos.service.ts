@@ -95,8 +95,8 @@ export class ToposService {
     return toTopoDto(data);
   }
 
-  /** The lines stay: different proportions are an adjustment, not a reason
-   * to throw the geometry away. */
+  // The lines stay: different proportions are an adjustment, not a reason to
+  // throw the geometry away.
   async replacePhoto(
     authUser: AuthUser,
     idTopo: string,

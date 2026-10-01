@@ -5,15 +5,17 @@ import { ModalProvider } from '@web/app/providers';
 import { avatarUploadMobileRegistrations } from '@web/features/avatarUpload';
 import { logTickMobileRegistrations } from '@web/features/logTick';
 import { routeCommentMobileRegistrations } from '@web/features/routeComment';
+import { signInPromptMobileRegistrations } from '@web/features/signInPrompt';
+import { LogbookTeaser, TicksSkeleton } from '@web/pages/logbook/common';
 import { playgroundMobileRegistrations } from '@web/pages/playground/registrations';
-import { ProfileSkeleton } from '@web/pages/profile/common';
+import { ProfileSkeleton, ProfileTeaser } from '@web/pages/profile/common';
 import { routeMediaMobileRegistrations } from '@web/widgets/routeMedia';
 
 import { lazyPage as page } from '../router/lazyPage';
 import {
   GuestOnlyRoute,
   LayoutWithMobileBottomNavigation,
-  ProtectedRoute
+  MembersOnlyRoute
 } from '../router/Router';
 import { ROUTES } from '../router/routes';
 import { ErrorBoundary } from '../ui/errorBoundary';
@@ -24,6 +26,7 @@ const registrations = [
   ...avatarUploadMobileRegistrations,
   ...logTickMobileRegistrations,
   ...routeCommentMobileRegistrations,
+  ...signInPromptMobileRegistrations,
   ...routeMediaMobileRegistrations,
   ...playgroundMobileRegistrations
 ];
@@ -91,20 +94,23 @@ const AppMobile = () => (
             <Route
               path={ROUTES.LOGBOOK}
               element={
-                <ProtectedRoute requiredRole="user">
+                <MembersOnlyRoute
+                  skeleton={<TicksSkeleton />}
+                  teaser={<LogbookTeaser isCompact />}
+                >
                   <PageLogbookMobile />
-                </ProtectedRoute>
+                </MembersOnlyRoute>
               }
             />
             <Route
               path={ROUTES.PROFILE}
               element={
-                <ProtectedRoute
-                  requiredRole="user"
+                <MembersOnlyRoute
                   skeleton={<ProfileSkeleton />}
+                  teaser={<ProfileTeaser />}
                 >
                   <PageProfileMobile />
-                </ProtectedRoute>
+                </MembersOnlyRoute>
               }
             />
           </Route>

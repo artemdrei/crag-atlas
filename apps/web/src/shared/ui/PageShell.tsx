@@ -4,14 +4,10 @@ import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 
 export interface Props extends ComponentProps<typeof Stack> {
-  /** Phones pad evenly; desktop pages get wider side gutters. */
   isCompact?: boolean;
-  /** Pages whose body owns its own scrolling — the editors, the sector view. */
   isFixedHeight?: boolean;
 }
 
-/** The outer frame every route-level surface sits in, so page padding has one
-    source rather than a copy per screen. */
 export const PageShell = ({
   isCompact,
   isFixedHeight,

@@ -5,8 +5,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { GlobalHttpExceptionFilter } from './common/filters/http-exception.filter';
 
-// Unset means any origin, which is what local development and the e2e suite
-// need. Production sets it; leaving it unset there opens the API to any site.
+// Unset means any origin, which local development and the e2e suite need.
+// Leaving it unset in production opens the API to any site.
 const allowedOrigins = process.env.WEB_ORIGIN?.split(',').map((origin) =>
   origin.trim()
 );

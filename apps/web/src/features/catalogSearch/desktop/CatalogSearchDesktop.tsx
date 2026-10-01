@@ -1,20 +1,20 @@
 import { useRef, useState } from 'react';
-import { useNavigate } from 'react-router';
 
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import { styled } from '@mui/material/styles';
 
+import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
+
 import {
   CatalogSearchField,
   CatalogSearchResults,
-  searchHitPath,
   useApiSearchCatalog
 } from '../common';
 
 export const CatalogSearchDesktop = () => {
-  const navigate = useNavigate();
+  const openCatalogItem = useOpenCatalogItem();
   const anchorRef = useRef<HTMLDivElement>(null);
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
@@ -45,7 +45,7 @@ export const CatalogSearchDesktop = () => {
               isLoading={isLoading}
               onPick={(hit) => {
                 setIsOpen(false);
-                navigate(searchHitPath(hit));
+                openCatalogItem('search', hit);
               }}
             />
           </DropdownStyled>

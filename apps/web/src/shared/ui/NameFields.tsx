@@ -42,8 +42,7 @@ export const NameFields = ({
   const auto = isReady && hasLocal ? toLatin(nameLocal) : undefined;
   const canAutoCorrect = auto !== undefined && auto !== name;
 
-  // Nothing can be said about the pair before the charmap lands, and the
-  // wrong line for a frame is worse than no line.
+  // Nothing can be said about the pair before the charmap lands.
   const latinHelperText = () => {
     if (!isValid) return t`Latin letters only`;
 

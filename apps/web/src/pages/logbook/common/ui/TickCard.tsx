@@ -14,7 +14,11 @@ import {
   buildSectorPath
 } from '@web/app/router/routes';
 import { TickActionsButton } from '@web/features/logTick';
-import { countryName, formatDateTime } from '@web/shared/lib';
+import {
+  countryName,
+  formatDateTime,
+  trackCatalogItemOpened
+} from '@web/shared/lib';
 import {
   AscentTypeBadge,
   GradeBadge,
@@ -65,12 +69,26 @@ export const TickCard = ({ tick, isCommunity, isGradeHidden }: Props) => {
       : null
   ].filter((place): place is Place => !!place);
 
+  const trackOpen = (
+    name: string,
+    idSector?: string | null,
+    idRoute?: string | null
+  ) =>
+    trackCatalogItemOpened({
+      name,
+      source: 'logbook',
+      idRegion: tick.idRegion ?? '',
+      idSector,
+      idRoute
+    });
+
   return (
     <CardStyled elevation={0}>
       {tick.idRegion && tick.idSector && (
         <CardLinkStyled
           to={buildRoutePath(tick.idRegion, tick.idSector, tick.idRoute)}
           aria-label={title}
+          onClick={() => trackOpen(title, tick.idSector, tick.idRoute)}
         />
       )}
       <HeaderRowStyled>
@@ -98,7 +116,17 @@ export const TickCard = ({ tick, isCommunity, isGradeHidden }: Props) => {
                       </Typography>
                     )}
                     {to ? (
-                      <PlaceLinkStyled to={to}>{label}</PlaceLinkStyled>
+                      <PlaceLinkStyled
+                        to={to}
+                        onClick={() =>
+                          trackOpen(
+                            label,
+                            key === 'sector' ? tick.idSector : undefined
+                          )
+                        }
+                      >
+                        {label}
+                      </PlaceLinkStyled>
                     ) : (
                       <Typography variant="body2" color="text.secondary" noWrap>
                         {label}

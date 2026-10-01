@@ -15,9 +15,8 @@ export interface BolterColumns {
 const EARLIEST_YEAR = 1900;
 const LATEST_YEAR = 2100;
 
-// The same bounds the column's own check carries. Validating here as well is
-// what turns a constraint violation nobody can read into a message naming the
-// field the editor has open.
+// The same bounds the column's check carries: validating here turns an
+// unreadable constraint violation into a message naming the field.
 export const toBolter = ({
   idBolter,
   bolterName,
@@ -26,8 +25,7 @@ export const toBolter = ({
   const name = bolterName?.trim() || null;
   const id = idBolter || null;
 
-  // A climber with an account is the better answer, so picking one drops the
-  // typed name rather than refusing the save.
+  // Picking an account drops the typed name rather than refusing the save.
   return {
     id_bolter: id,
     bolter_name: id ? null : name,

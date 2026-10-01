@@ -16,7 +16,6 @@ const PATH: Record<ArchiveAction, (base: string) => string> = {
 
 export interface Params<T> {
   scope: ContentScope;
-  /** Only `restore` answers with a row; archiving and erasing return 204. */
   onDone?: (data: T) => void;
 }
 
@@ -36,8 +35,7 @@ export const useApiArchiveAction = <T = unknown>(
     },
     onSuccess: (data) => {
       // isArchived is derived from a row's ancestors, so archiving anything
-      // changes the flag on everything under it — the catalog is refetched
-      // whole rather than guessing which branch moved.
+      // changes the flag on everything under it.
       for (const queryKey of [
         QUERY_KEYS.regions(),
         QUERY_KEYS.sectors(),

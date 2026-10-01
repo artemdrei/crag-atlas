@@ -15,7 +15,7 @@ export const useLatinNames = (initialName = '', initialLocal = '') => {
   nameLocalRef.current = nameLocal;
 
   // A local name typed before the charmap arrived leaves the Latin box empty,
-  // so it is filled once — never over something already written there.
+  // so it is filled once, never over something already written.
   useEffect(() => {
     void loadTransliteration().then(() =>
       setName((current) =>
@@ -35,8 +35,7 @@ export const useLatinNames = (initialName = '', initialLocal = '') => {
       setNameLocal(next.nameLocal);
       setName(next.name);
     },
-    // Both boxes at once, past the rule above: a revert restores what was
-    // saved even where the Latin name was written by hand.
+    // Past the rule above: a revert restores a hand-written Latin name too.
     resetNames: (nextName = '', nextLocal = '') => {
       setName(nextName);
       setNameLocal(nextLocal);

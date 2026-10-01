@@ -34,9 +34,8 @@ export class GlobalHttpExceptionFilter implements ExceptionFilter {
     body: ErrorResponseBody;
   } {
     if (exception instanceof AppException) {
-      // A 5xx is our fault and its text is written for the log, not for the
-      // reader — a message only leaves the server with a status that says the
-      // caller can do something about it.
+      // A 5xx is our fault and its text is written for the log, not the
+      // reader.
       const isServerFault = exception.statusCode >= 500;
 
       return {
@@ -79,8 +78,7 @@ export class GlobalHttpExceptionFilter implements ExceptionFilter {
   ) {
     const detail =
       exception instanceof Error ? exception.message : String(exception);
-    // The database's own words never reach the client, so this is the only
-    // place they are readable at all.
+    // The database's own words never reach the client.
     const cause =
       exception instanceof DatabaseException && exception.dbError
         ? ` — database: ${JSON.stringify(exception.dbError)}`

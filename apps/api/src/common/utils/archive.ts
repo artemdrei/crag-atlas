@@ -3,7 +3,7 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import { AppException, NotFoundException } from '../exceptions/app.exception';
 import { isReferenced, writeFailed } from '../exceptions/database.exception';
 
-/** Names the table and the `<ENTITY>_*` half of every error code it raises. */
+// Names the table and the `<ENTITY>_*` half of every error code it raises.
 export interface ArchiveTarget {
   table: 'regions' | 'sectors' | 'routes';
   entity: 'REGION' | 'SECTOR' | 'ROUTE';

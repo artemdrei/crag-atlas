@@ -38,8 +38,7 @@ export const imageToWebp = async (
 
   bitmap.close?.();
 
-  // Always the WebP, even when it came out larger than an already-optimised
-  // original: the API accepts nothing else.
+  // Always the WebP, even when larger: the API accepts nothing else.
   return {
     blob,
     width,
@@ -58,8 +57,8 @@ const fullFrame = ({ width, height }: ImageBitmap): SourceRect => ({
 });
 
 const decode = async (file: File): Promise<ImageBitmap> => {
-  // Without the orientation hint a canvas ignores EXIF, and every photo shot
-  // in portrait on a phone comes out lying on its side.
+  // Without the orientation hint a canvas ignores EXIF, and every portrait
+  // phone photo comes out on its side.
   if ('createImageBitmap' in globalThis) {
     return createImageBitmap(file, { imageOrientation: 'from-image' });
   }

@@ -34,8 +34,7 @@ export const AscentTypeFilter = ({
   counts,
   onChange
 }: Props) => {
-  // A style nobody has climbed in this discipline is a tile of zero; only the
-  // total is always offered, so the row never reads as empty.
+  // Only the total is always offered, so the row never reads as empty.
   const styles = ASCENT_TYPES.filter((type) => counts[type]);
 
   if (styles.length === 0) return null;

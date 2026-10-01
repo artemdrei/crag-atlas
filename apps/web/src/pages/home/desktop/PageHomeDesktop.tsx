@@ -1,11 +1,10 @@
 import { useMemo } from 'react';
-import { useNavigate } from 'react-router';
 
 import { useLingui } from '@lingui/react/macro';
 import { styled } from '@mui/material/styles';
 
 import { useEditModeInUrl, useUser } from '@web/app/providers';
-import { buildRegionPath } from '@web/app/router/routes';
+import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
 import { CatalogEditActions } from '@web/features/catalogEdit';
 import { CatalogSearchDesktop } from '@web/features/catalogSearch';
 import { mapRegions, RegionMapDesktop } from '@web/features/regionMap';
@@ -22,7 +21,7 @@ import { HomeEditSidebar } from './ui';
 
 export const PageHomeDesktop = () => {
   const { t } = useLingui();
-  const navigate = useNavigate();
+  const openCatalogItem = useOpenCatalogItem();
   const { hasRole } = useUser();
   const { isEditing, isArchiveShown, setIsEditing, setIsArchiveShown } =
     useEditModeInUrl();
@@ -82,7 +81,10 @@ export const PageHomeDesktop = () => {
               onSelect={(region) =>
                 isEditing
                   ? selectRegion(region.id)
-                  : navigate(buildRegionPath(region.id))
+                  : openCatalogItem('card', {
+                      name: region.name,
+                      idRegion: region.id
+                    })
               }
               onShowOnMap={(region) => selectRegion(region.id)}
               onEdit={
@@ -102,7 +104,9 @@ export const PageHomeDesktop = () => {
             selectedRegion={selectedRegion}
             draftPoint={draftPoint}
             isEditing={isEditing}
-            onOpenRegion={(idRegion) => navigate(buildRegionPath(idRegion))}
+            onOpenRegion={(region) =>
+              openCatalogItem('map', { name: region.name, idRegion: region.id })
+            }
             onSelectRegion={selectRegion}
             onPlacePoint={setDraftPoint}
           />

@@ -3,7 +3,6 @@ export interface OrderableTopo {
   lines: { idRoute: string; points: number[][] }[];
 }
 
-/** Drawn routes first, photo by photo and left to right; the rest follow. */
 export const orderRoutes = (
   topos: OrderableTopo[],
   idRestRoutes: string[] = []

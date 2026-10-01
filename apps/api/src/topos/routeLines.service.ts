@@ -66,8 +66,8 @@ export class RouteLinesService {
     return toRouteLineDto(data);
   }
 
-  /** A line hangs on a photo of the route's own sector — the editor only ever
-      offers those, so a mismatch means the call did not come from it. */
+  // The editor only offers photos of the route's own sector, so a mismatch
+  // means the call did not come from it.
   private async assertSameSector(
     idRoute: string,
     idTopo: string

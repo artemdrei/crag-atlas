@@ -14,8 +14,8 @@ export const saveTickMedia = async (
     pending.files.map((file) => imageToWebp(file))
   );
 
-  // The gallery orders media by created_at, so the rows are posted in the
-  // order the climber picked them, not in whichever finishes first.
+  // The gallery orders media by created_at, so posting order is the picked
+  // order, not whichever finishes first.
   for (const url of pending.links) {
     const payload: CreateRouteMedia = { kind: 'video', url, idTick };
 

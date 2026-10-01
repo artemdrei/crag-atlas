@@ -35,7 +35,7 @@ export const PhotoCompare = ({ original, compressed }: Props) => {
   const [isZoomed, setIsZoomed] = useState(false);
   const originalRef = useRef<ReactZoomPanPinchRef>(null);
   const compressedRef = useRef<ReactZoomPanPinchRef>(null);
-  // Mirroring a transform transforms the other pane, which would mirror back.
+  // Mirroring a transform would make the other pane mirror back.
   const isMirroring = useRef(false);
 
   const mirror = (

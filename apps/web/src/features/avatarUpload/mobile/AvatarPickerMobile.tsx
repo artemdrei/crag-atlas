@@ -20,7 +20,6 @@ export interface Props {
   size?: number;
 }
 
-// Always visible, never on hover: a touch screen has no hover.
 export const AvatarPickerMobile = ({ name, avatarUrl, size = 80 }: Props) => {
   const { t } = useLingui();
   const { openModal } = useModal();

@@ -31,8 +31,7 @@ const LayoutStyled = styled('div', {
   min-height: 0;
 `;
 
-// No gap: the search field reserves a line for its hint, and that line is the
-// space above the rule already.
+// No gap: the search field's hint line is already the space above the rule.
 const ColumnStyled = styled('div')`
   display: flex;
   flex-direction: column;

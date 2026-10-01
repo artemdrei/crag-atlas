@@ -134,8 +134,8 @@ export const ImageCropper = ({
   );
 };
 
-// react-easy-crop fills whatever it is given, so the caller sizes the frame:
-// a percentage height resolves to nothing inside an aspect-ratio box.
+// react-easy-crop fills whatever it is given, and a percentage height
+// resolves to nothing inside an aspect-ratio box.
 const StageStyled = styled('div')`
   position: absolute;
   inset: 0;

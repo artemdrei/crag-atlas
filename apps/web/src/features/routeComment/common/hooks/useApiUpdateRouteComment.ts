@@ -1,3 +1,4 @@
+import { track } from '@crag-atlas/analytics';
 import { resolveFailureMessage, toFailure } from '@crag-atlas/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -26,6 +27,7 @@ export const useApiUpdateRouteComment = ({
         payload
       ),
     onSuccess: () => {
+      track({ name: 'Content Updated', props: { content_type: 'comment' } });
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.routeComments(idRoute)
       });

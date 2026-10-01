@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 
 import { useModal, useUser } from '@web/app/providers';
 import { formatDateTime, mediaThumbnailOf } from '@web/shared/lib';
-import { ApiFeedback } from '@web/shared/ui';
+import { ApiFeedback, EmptyState } from '@web/shared/ui';
 
 import { useApiGetRouteMedia, useRouteMediaPermissions } from '../hooks';
 import { RouteMediaSkeleton } from './RouteMediaSkeleton';
@@ -26,79 +26,93 @@ export const RouteMedia = ({ idRoute }: Props) => {
   const { isAuthenticated } = useUser();
   const { openModal } = useModal();
 
+  const handleAdd = () => openModal('ROUTE_MEDIA_ADD', { idRoute });
+
   if (isLoading) return <RouteMediaSkeleton />;
 
-  return (
-    <StripStyled>
-      <ApiFeedback failure={failure} />
-      {media.length === 0 && !isAuthenticated && (
-        <Typography variant="body2" color="text.secondary">
-          <Trans>No videos or photos yet.</Trans>
-        </Typography>
-      )}
-      {media.map((item) => {
-        const thumbnail = mediaThumbnailOf(item);
+  const addCard = isAuthenticated ? (
+    <AddCardStyled type="button" onClick={handleAdd}>
+      <AddIcon />
+      <Typography variant="body2">
+        <Trans>Add yours</Trans>
+      </Typography>
+    </AddCardStyled>
+  ) : null;
 
-        return (
-          <ItemStyled key={item.id}>
-            <CardStyled
-              type="button"
-              onClick={() =>
-                openModal('ROUTE_MEDIA_VIEW', { idRoute, idMedia: item.id })
-              }
-            >
-              <ThumbnailStyled>
-                {thumbnail && <ImageStyled src={thumbnail} alt="" />}
-                {item.kind === 'video' ? (
-                  <PlayBadgeStyled>
-                    <PlayArrowIcon fontSize="large" />
-                  </PlayBadgeStyled>
-                ) : (
-                  !thumbnail && <ImageOutlinedIcon fontSize="large" />
-                )}
-              </ThumbnailStyled>
-              <CaptionStyled>
-                <Typography variant="subtitle2" noWrap>
-                  {item.title}
-                </Typography>
-                <Typography variant="caption" color="text.secondary" noWrap>
-                  {[
-                    item.authorName,
-                    formatDateTime(item.createdAt, i18n.locale),
-                    formatDuration(item.durationSeconds)
-                  ]
-                    .filter(Boolean)
-                    .join(' · ')}
-                </Typography>
-              </CaptionStyled>
-            </CardStyled>
-            {canDelete(item.idUser) && (
-              // A sibling of the card, not a child: buttons cannot nest.
-              <RemoveButtonStyled
-                size="small"
-                aria-label={t`Delete media`}
+  if (media.length === 0) {
+    return (
+      <SectionStyled>
+        <ApiFeedback failure={failure} />
+        <EmptyState
+          icon={<ImageOutlinedIcon />}
+          message={<Trans>No videos or photos yet.</Trans>}
+          action={addCard}
+        />
+      </SectionStyled>
+    );
+  }
+
+  return (
+    <SectionStyled>
+      <ApiFeedback failure={failure} />
+      <StripStyled>
+        {media.map((item) => {
+          const thumbnail = mediaThumbnailOf(item);
+
+          return (
+            <ItemStyled key={item.id}>
+              <CardStyled
+                type="button"
                 onClick={() =>
-                  openModal('ROUTE_MEDIA_DELETE', { idRoute, idMedia: item.id })
+                  openModal('ROUTE_MEDIA_VIEW', { idRoute, idMedia: item.id })
                 }
               >
-                <DeleteOutlinedIcon fontSize="small" />
-              </RemoveButtonStyled>
-            )}
-          </ItemStyled>
-        );
-      })}
-      {isAuthenticated && (
-        <AddCardStyled
-          type="button"
-          onClick={() => openModal('ROUTE_MEDIA_ADD', { idRoute })}
-        >
-          <AddIcon />
-          <Typography variant="body2">
-            <Trans>Add yours</Trans>
-          </Typography>
-        </AddCardStyled>
-      )}
-    </StripStyled>
+                <ThumbnailStyled>
+                  {thumbnail && <ImageStyled src={thumbnail} alt="" />}
+                  {item.kind === 'video' ? (
+                    <PlayBadgeStyled>
+                      <PlayArrowIcon fontSize="large" />
+                    </PlayBadgeStyled>
+                  ) : (
+                    !thumbnail && <ImageOutlinedIcon fontSize="large" />
+                  )}
+                </ThumbnailStyled>
+                <CaptionStyled>
+                  <Typography variant="subtitle2" noWrap>
+                    {item.title}
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary" noWrap>
+                    {[
+                      item.authorName,
+                      formatDateTime(item.createdAt, i18n.locale),
+                      formatDuration(item.durationSeconds)
+                    ]
+                      .filter(Boolean)
+                      .join(' · ')}
+                  </Typography>
+                </CaptionStyled>
+              </CardStyled>
+              {canDelete(item.idUser) && (
+                // A sibling of the card, not a child: buttons cannot nest.
+                <RemoveButtonStyled
+                  size="small"
+                  aria-label={t`Delete media`}
+                  onClick={() =>
+                    openModal('ROUTE_MEDIA_DELETE', {
+                      idRoute,
+                      idMedia: item.id
+                    })
+                  }
+                >
+                  <DeleteOutlinedIcon fontSize="small" />
+                </RemoveButtonStyled>
+              )}
+            </ItemStyled>
+          );
+        })}
+        {addCard}
+      </StripStyled>
+    </SectionStyled>
   );
 };
 
@@ -107,6 +121,12 @@ const formatDuration = (seconds?: number | null) => {
 
   return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
 };
+
+const SectionStyled = styled('div')`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing(1.5)};
+`;
 
 const StripStyled = styled('div')`
   display: flex;
@@ -146,7 +166,6 @@ const AddCardStyled = styled('button')`
   justify-content: center;
   gap: ${({ theme }) => theme.spacing(1)};
   width: ${TILE_WIDTH}px;
-  /* Alone in the strip it has no sibling to stretch against. */
   min-height: calc(${TILE_WIDTH}px / (${TILE_RATIO}));
   padding: ${({ theme }) => theme.spacing(2)};
   color: ${({ theme }) => theme.palette.text.secondary};

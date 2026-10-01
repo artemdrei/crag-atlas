@@ -29,7 +29,7 @@ export const editorSessionReducer = (
     case 'TOPOS_REPLACED':
       return replaceTopos(session, action.topos);
 
-    // Applied before the request: waiting for it makes the photo snap back.
+    // Before the request: waiting for it makes the photo snap back.
     case 'REORDER_TOPOS':
       return {
         ...session,
@@ -216,7 +216,7 @@ const hydrate = (
   isPreview: session.isPreview
 });
 
-/** Server metadata wins, but lines not saved yet survive the refetch. */
+// Server metadata wins, but unsaved lines survive the refetch.
 const replaceTopos = (
   session: TopoEditorSession,
   topos: Topo[]
@@ -381,13 +381,9 @@ const restoreRoute = (
   })
 });
 
-/** The line keeps its points; only the photo it hangs on changes. Nothing is
-    copied, so the route never shows up on two photos at once.
-
-    A drop that lands on another photo opens the route for editing there: the
-    fractions now read against a different image, so the line almost always
-    needs redrawing, and the user is already looking at it. A drop back onto
-    the photo the line is on leaves the session untouched. */
+// Nothing is copied, so the route never shows up on two photos at once. The
+// fractions then read against a different image, so the line almost always
+// needs redrawing; a drop back onto the same photo changes nothing.
 const moveLine = (
   session: TopoEditorSession,
   idRoute: string,
@@ -419,8 +415,7 @@ const moveLine = (
   };
 };
 
-/** A route the server has never seen leaves the map rather than sitting in it
-    as an undefined value. */
+// An unsaved route leaves the map rather than sitting in it as undefined.
 const restored = (
   routes: Record<string, RouteDraft>,
   idRoute: string,
@@ -433,8 +428,8 @@ const restored = (
   return rest;
 };
 
-// The server put the route back in the sector, so the session takes it as it
-// stands — no line yet, and nothing the editor holds is touched.
+// The server put the route back in the sector: no line yet, and nothing the
+// editor holds is touched.
 const addRoute = (
   session: TopoEditorSession,
   route: Route

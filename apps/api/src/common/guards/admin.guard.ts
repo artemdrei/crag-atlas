@@ -5,11 +5,8 @@ import { AppException } from '../exceptions/app.exception';
 import { userClient } from '../utils/userClient';
 import type { RequestWithAuthUser } from './supabaseAuth.guard';
 
-/**
- * Runs after SupabaseAuthGuard and asks the database whether this user is an
- * admin — the same `user_roles` row the RLS policies check, so the two can
- * never disagree.
- */
+// The same `user_roles` row the RLS policies check, so the two cannot
+// disagree.
 @Injectable()
 export class AdminGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {

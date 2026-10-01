@@ -109,8 +109,8 @@ const PickerStyled = styled('div')`
   align-items: center;
   gap: ${({ theme }) => theme.spacing(0.5)};
 
-  /* A component selector would need @emotion/babel-plugin, which nothing here
-     runs. Hidden rather than unmounted, so the page does not jump on hover. */
+  /* A component selector would need @emotion/babel-plugin. Hidden rather than
+     unmounted, so the page does not jump on hover. */
   & > div {
     opacity: 0;
     transition: opacity ${({ theme }) => theme.transitions.duration.shorter}ms;
@@ -143,8 +143,7 @@ const TriggerStyled = styled('button', {
     cursor: default;
   }
 
-  /* A component selector would need @emotion/babel-plugin, which nothing here
-     runs. A scrim rather than action.active, white in dark mode. */
+  /* A component selector would need @emotion/babel-plugin. */
   & > span {
     position: absolute;
     inset: 0;

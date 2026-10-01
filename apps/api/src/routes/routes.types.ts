@@ -135,10 +135,8 @@ export class RouteDto {
   isDeleted!: boolean;
 }
 
-/**
- * Only what an admin owns. This is a full replacement, so any community field
- * listed here would be nulled by a client that had nothing to send for it.
- */
+// A full replacement, so any community field listed here would be nulled by a
+// client with nothing to send for it.
 export class UpdateRouteDto {
   @ApiProperty()
   name!: string;
@@ -249,10 +247,7 @@ export class CreateRouteDto {
 
 export const ROUTE_TYPES: RouteDto['type'][] = ['sport', 'boulder'];
 
-/**
- * Bounds arrive as a grade in whatever system the reader thinks in; the
- * service turns them into the score range the column is queried with.
- */
+// Bounds arrive as a grade in whatever system the reader thinks in.
 export class RouteFilterQuery {
   @ApiPropertyOptional({ enum: ['sport', 'boulder'] })
   type?: 'sport' | 'boulder';

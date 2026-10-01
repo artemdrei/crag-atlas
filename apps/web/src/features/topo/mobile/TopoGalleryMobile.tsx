@@ -52,8 +52,7 @@ const GalleryStyled = styled('div')`
   gap: ${({ theme }) => theme.spacing(1)};
 `;
 
-// Fixed, not content-sized: a section that took each photo's height would move
-// everything below it on every switch.
+// Fixed, not content-sized: per-photo heights would move everything below.
 const ZoomStageStyled = styled(TopoZoomStage)`
   height: 30svh;
 `;

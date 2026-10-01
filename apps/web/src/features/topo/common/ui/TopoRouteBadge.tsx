@@ -39,8 +39,7 @@ export const TopoRouteBadge = ({
 
   return (
     <BadgeStyled
-      // Without a listener it is a label, and the photo under it is itself a
-      // button on the route page — a button inside a button is invalid.
+      // The photo under it is itself a button, and buttons cannot nest.
       as={onSelect ? 'button' : 'span'}
       type={onSelect ? 'button' : undefined}
       x={x}

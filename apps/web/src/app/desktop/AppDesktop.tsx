@@ -7,16 +7,19 @@ import { catalogEditDesktopRegistrations } from '@web/features/catalogEdit';
 import { logTickDesktopRegistrations } from '@web/features/logTick';
 import { photoUploadDesktopRegistrations } from '@web/features/photoUpload';
 import { routeCommentDesktopRegistrations } from '@web/features/routeComment';
+import { signInPromptDesktopRegistrations } from '@web/features/signInPrompt';
 import { topoDesktopRegistrations } from '@web/features/topo';
 import { topoEditorDesktopRegistrations } from '@web/features/topoEditor';
+import { LogbookTeaser, TicksSkeleton } from '@web/pages/logbook/common';
 import { playgroundDesktopRegistrations } from '@web/pages/playground/registrations';
-import { ProfileSkeleton } from '@web/pages/profile/common';
+import { ProfileSkeleton, ProfileTeaser } from '@web/pages/profile/common';
 import { routeMediaDesktopRegistrations } from '@web/widgets/routeMedia';
 
 import { lazyPage as page } from '../router/lazyPage';
 import {
   GuestOnlyRoute,
   LayoutWithSidebar,
+  MembersOnlyRoute,
   ProtectedRoute
 } from '../router/Router';
 import { ROUTES } from '../router/routes';
@@ -32,6 +35,7 @@ const registrations = [
   ...topoEditorDesktopRegistrations,
   ...photoUploadDesktopRegistrations,
   ...routeCommentDesktopRegistrations,
+  ...signInPromptDesktopRegistrations,
   ...routeMediaDesktopRegistrations,
   ...playgroundDesktopRegistrations
 ];
@@ -126,20 +130,23 @@ const AppDesktop = () => (
             <Route
               path={ROUTES.LOGBOOK}
               element={
-                <ProtectedRoute requiredRole="user">
+                <MembersOnlyRoute
+                  skeleton={<TicksSkeleton />}
+                  teaser={<LogbookTeaser />}
+                >
                   <PageLogbookDesktop />
-                </ProtectedRoute>
+                </MembersOnlyRoute>
               }
             />
             <Route
               path={ROUTES.PROFILE}
               element={
-                <ProtectedRoute
-                  requiredRole="user"
+                <MembersOnlyRoute
                   skeleton={<ProfileSkeleton />}
+                  teaser={<ProfileTeaser />}
                 >
                   <PageProfileDesktop />
-                </ProtectedRoute>
+                </MembersOnlyRoute>
               }
             />
           </Route>

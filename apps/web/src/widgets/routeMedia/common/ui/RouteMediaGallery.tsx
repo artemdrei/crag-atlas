@@ -27,8 +27,7 @@ export const RouteMediaGallery = ({ idRoute, idMedia }: Props) => {
   const { media, isLoading } = useApiGetRouteMedia(idRoute);
   const [idActive, setIdActive] = useState(idMedia);
 
-  // Opened from a row that only knows the route carries media, the gallery
-  // starts on whatever came back first.
+  // Opened from a row that only knows the route carries media.
   const active = media.find(({ id }) => id === idActive) ?? media[0];
 
   if (isLoading) return null;
@@ -129,8 +128,8 @@ const MediaStage = ({ item, title }: MediaStageProps) => {
       data-provider={link.provider}
       title={title}
       allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-      // The frame plays someone else's page: it may run its player, but it
-      // must not reach this app's storage, forms or navigation.
+      // Someone else's page: it may run its player, but must not reach this
+      // app's storage, forms or navigation.
       sandbox="allow-scripts allow-same-origin allow-popups allow-presentation"
       referrerPolicy="strict-origin-when-cross-origin"
     />

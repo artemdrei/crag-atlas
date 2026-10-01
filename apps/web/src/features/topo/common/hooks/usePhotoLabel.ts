@@ -2,8 +2,7 @@ import { useCallback } from 'react';
 
 import { useLingui } from '@lingui/react/macro';
 
-/** Photos are named by where they sit in the sector, never by the file that
-    was uploaded: the name then follows a reorder on its own. */
+// Named by position in the sector, so the name follows a reorder on its own.
 export const usePhotoLabel = () => {
   const { t } = useLingui();
 

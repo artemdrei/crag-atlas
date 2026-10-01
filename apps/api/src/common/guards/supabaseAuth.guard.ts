@@ -23,8 +23,8 @@ export class SupabaseAuthGuard implements CanActivate {
 
     if (!accessToken) throw new UnauthorizedException('Missing access token');
 
-    // Built per request: the client is only a vehicle for verifying this one
-    // token, and the config is read lazily so booting without env still works.
+    // Per request: a vehicle for verifying this one token, with the config
+    // read lazily so booting without env still works.
     const { url, anonKey } = supabaseConfig();
     const { data, error } = await createClient(url, anonKey).auth.getUser(
       accessToken

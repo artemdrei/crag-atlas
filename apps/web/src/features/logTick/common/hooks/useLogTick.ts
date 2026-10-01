@@ -17,7 +17,7 @@ export const useLogTick = (idRoute: string) => {
   const queryClient = useQueryClient();
   const mediaRef = useRef<PendingMedia>({ links: [], files: [] });
 
-  const close = () => closeModal('LOG_TICK');
+  const dismiss = () => closeModal('LOG_TICK');
 
   const { isPending, createTick } = useApiCreateTick({
     onCreated: async (tick) => {
@@ -28,7 +28,8 @@ export const useLogTick = (idRoute: string) => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ticks() });
       invalidateRouteLists(queryClient);
       toast.success(t`Ascent logged`);
-      close();
+      // The sheet calls onClose on its way out whoever asked for it.
+      closeModal('LOG_TICK', { isCompleted: true });
     }
   });
 
@@ -37,5 +38,5 @@ export const useLogTick = (idRoute: string) => {
     createTick({ ...payload, idRoute });
   };
 
-  return { isPending, close, save };
+  return { isPending, dismiss, save };
 };

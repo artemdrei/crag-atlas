@@ -34,8 +34,7 @@ export const CatalogSearchField = ({ value, onChange, onFocus }: Props) => {
       value={value}
       inputRef={inputRef}
       placeholder={t`Search a region, sector or route`}
-      // A blank helper text rather than none: the field must not resize the
-      // column under it the moment the hint appears.
+      // Blank rather than none: the hint must not resize the column.
       helperText={
         typed > 0 && typed < MIN_SEARCH_LENGTH
           ? t`Type at least ${MIN_SEARCH_LENGTH} letters`

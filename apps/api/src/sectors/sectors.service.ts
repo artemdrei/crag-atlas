@@ -31,8 +31,8 @@ import type {
   UpdateSectorDto
 } from './sectors.types';
 
-// The region name rides along: ids are uuids, so a page opened by URL has no
-// label to show in its breadcrumbs otherwise.
+// The region name rides along: ids are uuids, so a page opened by URL would
+// have no breadcrumb label.
 const COLUMNS =
   'id, id_region, name, name_local, description, lat, lng, route_count, grade_min, grade_min_scale, grade_max, grade_max_scale, grade_histogram, is_archived, deleted_at, regions (name), topos (storage_path, sort_order)';
 
@@ -79,8 +79,8 @@ export class SectorsService {
       .eq('id_region', idRegion)
       .order('name');
 
-    // Own mark either way: an archived region's page still lists what it held,
-    // and its archive holds the sectors deleted from it.
+    // An archived region's page still lists what it held, and its archive
+    // holds the sectors deleted from it.
     const { data, error } = await (isArchiveOnly
       ? query.not('deleted_at', 'is', null)
       : query.is('deleted_at', null)
@@ -98,7 +98,7 @@ export class SectorsService {
   }
 
   // Counted the way `route_count` is, so a card never shows more ascents than
-  // it has routes: a deleted route is out of both, an attempt is not an ascent.
+  // it has routes.
   async findTickedByRegion(
     authUser: AuthUser,
     idRegion: string
@@ -232,8 +232,8 @@ export class SectorsService {
 
   async purge(authUser: AuthUser, idSector: string): Promise<void> {
     const client = userClient(authUser);
-    // Read before the erase: the rows below carry the only reference to their
-    // files, and a cascade deletes them without telling storage.
+    // Read before the erase: a cascade deletes the rows without telling
+    // storage.
     const photos = await findPhotosUnder(client, { idSector });
 
     await eraseArchivedRow(client, TARGET, idSector);

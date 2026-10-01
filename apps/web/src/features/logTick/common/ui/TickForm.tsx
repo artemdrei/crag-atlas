@@ -75,8 +75,8 @@ export const TickForm = ({
     onSubmit(
       {
         ascentType,
-        // climbed_at is NOT NULL with a default, so an empty field must drop
-        // the key rather than send an empty string.
+        // climbed_at is NOT NULL with a default, so an empty field drops the
+        // key rather than sending an empty string.
         ...(climbedAt ? { climbedAt } : {}),
         attempts: hasAttempts ? attempts : null,
         rating,

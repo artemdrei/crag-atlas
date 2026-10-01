@@ -1,11 +1,7 @@
 import type { Point } from './hitTest';
 
-/**
- * The wire contract types a point as `number[]`, so the geometry would have to
- * re-check both coordinates on every read. Pairing them up once at the edge
- * keeps the maths working on tuples; a malformed point is dropped rather than
- * turned into a NaN that spreads through the curve.
- */
+// The wire contract types a point as `number[]`, so pairing up once at the
+// edge keeps the maths on tuples. A malformed point is dropped, not NaN.
 export const toPairs = (points: readonly number[][]): Point[] => {
   const pairs: Point[] = [];
 

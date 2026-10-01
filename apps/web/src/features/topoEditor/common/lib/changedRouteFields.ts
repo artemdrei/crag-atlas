@@ -34,7 +34,7 @@ const NOTHING_CHANGED: ChangedRouteFields = {
   description: false
 };
 
-/** Which fields a draft no longer agrees with the server on; a route that was never saved has nothing to differ from. */
+// A route that was never saved has nothing to differ from.
 export const changedRouteFields = (
   draft: RouteDraft,
   saved?: Route
@@ -56,6 +56,5 @@ export const changedRouteFields = (
   };
 };
 
-// The draft holds what the inputs show, and an absent number shows as empty.
 const numberText = (value?: number | null): string =>
   value === null || value === undefined ? '' : String(value);
