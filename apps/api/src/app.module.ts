@@ -13,6 +13,7 @@ import { SectorsModule } from './sectors/sectors.module';
 import { TicksModule } from './ticks/ticks.module';
 import { ToposModule } from './topos/topos.module';
 import { UsersModule } from './users/users.module';
+import { WeatherModule } from './weather/weather.module';
 
 @Module({
   imports: [
@@ -28,7 +29,8 @@ import { UsersModule } from './users/users.module';
     ToposModule,
     UsersModule,
     CommentsModule,
-    MediaModule
+    MediaModule,
+    WeatherModule
   ]
 })
 export class AppModule {}

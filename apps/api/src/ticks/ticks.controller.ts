@@ -20,6 +20,7 @@ import {
 import { CurrentUser } from '../common/decorators/authUser.decorator';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
 import { SupabaseAuthGuard } from '../common/guards/supabaseAuth.guard';
+import { WeatherBackfillDto } from '../weather/weather.types';
 import { TicksService } from './ticks.service';
 import {
   ASCENT_TYPES,
@@ -80,6 +81,14 @@ export class TicksController {
     @Query('cursor') cursor?: string
   ): Promise<TickFeedPageDto> {
     return this.ticksService.findFeed(authUser, Number(limit), cursor);
+  }
+
+  @Post('weather/backfill')
+  @ApiOkResponse({ type: WeatherBackfillDto })
+  backfillWeather(
+    @CurrentUser() authUser: AuthUser
+  ): Promise<WeatherBackfillDto> {
+    return this.ticksService.backfillWeather(authUser);
   }
 
   @Post()

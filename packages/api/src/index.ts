@@ -46,3 +46,6 @@ export type SaveRouteLine = components['schemas']['SaveRouteLineDto'];
 export type Admin = components['schemas']['AdminDto'];
 export type AdminCandidate = components['schemas']['AdminCandidateDto'];
 export type GrantAdmin = components['schemas']['GrantAdminDto'];
+export type TickWeather = components['schemas']['TickWeatherDto'];
+export type WeatherLookup = components['schemas']['WeatherLookupDto'];
+export type WeatherBackfill = components['schemas']['WeatherBackfillDto'];

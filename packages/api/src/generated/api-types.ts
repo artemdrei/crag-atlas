@@ -500,6 +500,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/ticks/weather/backfill": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["TicksController_backfillWeather"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/ticks/{idTick}": {
         parameters: {
             query?: never;
@@ -524,6 +540,22 @@ export interface paths {
             cookie?: never;
         };
         get: operations["RouteTicksController_findByRoute"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/weather": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["WeatherController_lookup"];
         put?: never;
         post?: never;
         delete?: never;
@@ -999,6 +1031,28 @@ export interface components {
             kind: "video" | "photo";
             url: string;
         };
+        TickWeatherDto: {
+            /** @description Local wall clock at the crag, e.g. 2026-10-01T16:00. Taken from the ascent when one is saved, so a sent value is ignored */
+            observedAt: string;
+            lat?: number | null;
+            lng?: number | null;
+            temperatureC?: number | null;
+            apparentTemperatureC?: number | null;
+            dewPointC?: number | null;
+            humidityPct?: number | null;
+            windSpeedMs?: number | null;
+            windGustMs?: number | null;
+            precipitationMm?: number | null;
+            /** @description What fell in the 24 hours up to observedAt */
+            precipitation24hMm?: number | null;
+            cloudCoverPct?: number | null;
+            /** @description WMO weather code */
+            weatherCode?: number | null;
+            sunrise?: string | null;
+            sunset?: string | null;
+            /** @description The climber corrected the numbers the provider answered with */
+            isManual?: boolean;
+        };
         TickDto: {
             id: string;
             idUser: string;
@@ -1023,6 +1077,8 @@ export interface components {
             ascentType: "onsight" | "flash" | "retro_flash" | "redpoint" | "toprope" | "attempt";
             /** @description ISO date, e.g. 2026-09-19 */
             climbedAt: string;
+            /** @description Local wall clock at the crag, e.g. 16:17; older ascents have none */
+            climbedAtTime?: string | null;
             attempts?: number | null;
             note?: string | null;
             rating?: number | null;
@@ -1037,6 +1093,7 @@ export interface components {
             authorName?: string | null;
             avatarUrl?: string | null;
             media?: components["schemas"]["TickMediaDto"][];
+            weather?: components["schemas"]["TickWeatherDto"] | null;
             /** @description What the community makes of the route, 0..5 */
             routeRating?: number | null;
             routeHasPhoto?: boolean;
@@ -1070,12 +1127,20 @@ export interface components {
             /** @description Pass back as `cursor` to get the next page */
             nextCursor?: string | null;
         };
+        WeatherBackfillDto: {
+            /** @description Ascents this call gave conditions to */
+            filled: number;
+            /** @description Ascents still waiting, because one call fills a batch at most */
+            remaining: number;
+        };
         CreateTickDto: {
             idRoute: string;
             /** @enum {string} */
             ascentType: "onsight" | "flash" | "retro_flash" | "redpoint" | "toprope" | "attempt";
             /** @description ISO date; defaults to today */
             climbedAt?: string;
+            /** @description Local wall clock at the crag, e.g. 16:17 */
+            climbedAtTime?: string | null;
             attempts?: number | null;
             note?: string | null;
             rating?: number | null;
@@ -1086,12 +1151,16 @@ export interface components {
             partnerName?: string | null;
             gradeVote?: string | null;
             notePrivate?: boolean;
+            /** @description Null erases the conditions recorded for this ascent */
+            weather?: components["schemas"]["TickWeatherDto"] | null;
         };
         UpdateTickDto: {
             /** @enum {string} */
             ascentType?: "onsight" | "flash" | "retro_flash" | "redpoint" | "toprope" | "attempt";
             /** @description ISO date, e.g. 2026-09-19 */
             climbedAt?: string;
+            /** @description Local wall clock at the crag, e.g. 16:17 */
+            climbedAtTime?: string | null;
             attempts?: number | null;
             note?: string | null;
             rating?: number | null;
@@ -1102,6 +1171,13 @@ export interface components {
             partnerName?: string | null;
             gradeVote?: string | null;
             notePrivate?: boolean;
+            /** @description Null erases the conditions recorded for this ascent */
+            weather?: components["schemas"]["TickWeatherDto"] | null;
+        };
+        WeatherLookupDto: {
+            /** @description False when the sector has no coordinates — nothing can be looked up and the conditions are written by hand */
+            hasPoint: boolean;
+            weather: components["schemas"]["TickWeatherDto"] | null;
         };
         RouteLineDto: {
             idRoute: string;
@@ -2147,6 +2223,25 @@ export interface operations {
             };
         };
     };
+    TicksController_backfillWeather: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WeatherBackfillDto"];
+                };
+            };
+        };
+    };
     TicksController_remove: {
         parameters: {
             query?: never;
@@ -2208,6 +2303,30 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["TickDto"][];
+                };
+            };
+        };
+    };
+    WeatherController_lookup: {
+        parameters: {
+            query: {
+                /** @description Read at its sector’s point */
+                idRoute: string;
+                /** @description Local wall clock, 2026-10-01T16:00 */
+                at: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WeatherLookupDto"];
                 };
             };
         };

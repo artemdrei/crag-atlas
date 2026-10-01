@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 import type { GradeScale } from '../common/utils/grade';
 import { GRADE_SCALES } from '../common/utils/grade';
+import { TickWeatherDto } from '../weather/weather.types';
 
 export const GRADE_OPINIONS = ['soft', 'neutral', 'hard'] as const;
 
@@ -92,6 +93,15 @@ export class TickDto {
   @ApiProperty({ description: 'ISO date, e.g. 2026-09-19' })
   climbedAt!: string;
 
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description:
+      'Local wall clock at the crag, e.g. 16:17; older ascents have none'
+  })
+  climbedAtTime?: string | null;
+
   @ApiProperty({ type: Number, required: false, nullable: true })
   attempts?: number | null;
 
@@ -130,6 +140,9 @@ export class TickDto {
   @ApiProperty({ type: [TickMediaDto], required: false })
   media?: TickMediaDto[];
 
+  @ApiProperty({ type: TickWeatherDto, required: false, nullable: true })
+  weather?: TickWeatherDto | null;
+
   // The three below describe the route, not the ascent. Only the logbook and
   // the feed (GET /ticks, GET /ticks/feed) carry them, because only their
   // cards show them; every other response leaves them out rather than paying
@@ -165,6 +178,14 @@ export class CreateTickDto {
   @ApiProperty({ required: false, description: 'ISO date; defaults to today' })
   climbedAt?: string;
 
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description: 'Local wall clock at the crag, e.g. 16:17'
+  })
+  climbedAtTime?: string | null;
+
   @ApiProperty({ type: Number, required: false, nullable: true })
   attempts?: number | null;
 
@@ -192,6 +213,14 @@ export class CreateTickDto {
 
   @ApiProperty({ type: Boolean, required: false })
   notePrivate?: boolean;
+
+  @ApiProperty({
+    type: TickWeatherDto,
+    required: false,
+    nullable: true,
+    description: 'Null erases the conditions recorded for this ascent'
+  })
+  weather?: TickWeatherDto | null;
 }
 
 export class UpdateTickDto {
@@ -201,6 +230,14 @@ export class UpdateTickDto {
   @ApiProperty({ required: false, description: 'ISO date, e.g. 2026-09-19' })
   climbedAt?: string;
 
+  @ApiProperty({
+    type: String,
+    required: false,
+    nullable: true,
+    description: 'Local wall clock at the crag, e.g. 16:17'
+  })
+  climbedAtTime?: string | null;
+
   @ApiProperty({ type: Number, required: false, nullable: true })
   attempts?: number | null;
 
@@ -228,6 +265,14 @@ export class UpdateTickDto {
 
   @ApiProperty({ type: Boolean, required: false })
   notePrivate?: boolean;
+
+  @ApiProperty({
+    type: TickWeatherDto,
+    required: false,
+    nullable: true,
+    description: 'Null erases the conditions recorded for this ascent'
+  })
+  weather?: TickWeatherDto | null;
 }
 
 export const TICK_SORTS = ['date', 'grade'] as const;
