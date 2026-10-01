@@ -53,26 +53,11 @@ jobs:
 
       - run: pnpm --filter api test:integration
 
-      # The browsers are ~50s of the job and only change when Playwright does,
-      # so they are keyed on the resolved version in the lockfile.
-      - name: Resolve the Playwright version
-        id: playwright
-        run: |
-          version="$(node -p "require('./apps/e2e/node_modules/@playwright/test/package.json').version")"
-          echo "version=$version" >> "$GITHUB_OUTPUT"
-
-      - uses: actions/cache@v4
-        id: browsers
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}
-
-      - if: steps.browsers.outputs.cache-hit != 'true'
-        run: pnpm --filter @crag-atlas/e2e exec playwright install --with-deps chromium webkit
-
-      # The system libraries live outside the cached browser folder.
-      - if: steps.browsers.outputs.cache-hit == 'true'
-        run: pnpm --filter @crag-atlas/e2e exec playwright install-deps chromium webkit
+      # Chromium only: its system libraries already ship with the runner
+      # image, so this stays seconds. WebKit pulls the GStreamer stack over
+      # apt, which cost between one and twelve minutes depending on the
+      # mirror -- and both projects run on Chromium now.
+      - run: pnpm --filter @crag-atlas/e2e exec playwright install --with-deps chromium
 
       - run: pnpm --filter @crag-atlas/e2e test:e2e
 
