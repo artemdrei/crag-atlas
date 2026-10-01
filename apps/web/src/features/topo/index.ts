@@ -40,6 +40,7 @@ export { TopoGalleryMobile } from './mobile/TopoGalleryMobile';
 export const topoDesktopRegistrations: ModalRegistration[] = [
   {
     id: 'VIEW_TOPO_PHOTO',
-    Component: lazy(() => import('./desktop/TopoPhotoDialog'))
+    Component: lazy(() => import('./desktop/TopoPhotoDialog')),
+    dialog: 'topo_photo'
   }
 ];

@@ -18,10 +18,10 @@ const LogTickDialog = ({
   routeGradeScale,
   place
 }: Props) => {
-  const { isPending, close, save } = useLogTick(idRoute);
+  const { isPending, dismiss, save } = useLogTick(idRoute);
 
   return (
-    <Dialog fullWidth maxWidth="sm" open={open} onClose={close}>
+    <Dialog fullWidth maxWidth="sm" open={open} onClose={dismiss}>
       <DialogTitle>
         <TickFormHeader
           routeName={routeName}
@@ -36,7 +36,7 @@ const LogTickDialog = ({
           routeGradeScale={routeGradeScale}
           isPending={isPending}
           onSubmit={save}
-          onCancel={close}
+          onCancel={dismiss}
         />
       </DialogContent>
     </Dialog>

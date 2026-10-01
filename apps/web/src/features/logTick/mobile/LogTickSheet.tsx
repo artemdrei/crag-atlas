@@ -16,10 +16,10 @@ const LogTickSheet = ({
   routeGradeScale,
   place
 }: Props) => {
-  const { isPending, close, save } = useLogTick(idRoute);
+  const { isPending, dismiss, save } = useLogTick(idRoute);
 
   return (
-    <BottomSheet isOpen={open} onClose={close}>
+    <BottomSheet isOpen={open} onClose={dismiss}>
       <TickFormHeader
         routeName={routeName}
         routeGrade={routeGrade}
@@ -31,7 +31,7 @@ const LogTickSheet = ({
         routeGradeScale={routeGradeScale}
         isPending={isPending}
         onSubmit={save}
-        onCancel={close}
+        onCancel={dismiss}
       />
     </BottomSheet>
   );

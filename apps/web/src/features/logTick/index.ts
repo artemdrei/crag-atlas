@@ -8,7 +8,11 @@ export type { TickHeader } from './common';
 export { TickActionsButton } from './common';
 
 export const logTickDesktopRegistrations: ModalRegistration[] = [
-  { id: 'LOG_TICK', Component: lazy(() => import('./desktop/LogTickDialog')) },
+  {
+    id: 'LOG_TICK',
+    Component: lazy(() => import('./desktop/LogTickDialog')),
+    dialog: 'tick'
+  },
   { id: 'TICK_MENU', Component: lazy(() => import('./desktop/TickMenu')) },
   {
     id: 'TICK_EDIT',
@@ -21,7 +25,11 @@ export const logTickDesktopRegistrations: ModalRegistration[] = [
 ];
 
 export const logTickMobileRegistrations: ModalRegistration[] = [
-  { id: 'LOG_TICK', Component: lazy(() => import('./mobile/LogTickSheet')) },
+  {
+    id: 'LOG_TICK',
+    Component: lazy(() => import('./mobile/LogTickSheet')),
+    dialog: 'tick'
+  },
   { id: 'TICK_MENU', Component: lazy(() => import('./mobile/TickMenuSheet')) },
   { id: 'TICK_EDIT', Component: lazy(() => import('./mobile/EditTickSheet')) },
   {

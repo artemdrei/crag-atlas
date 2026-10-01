@@ -8,10 +8,13 @@ import {
   useState
 } from 'react';
 
+import { track } from '@crag-atlas/analytics';
+
 import { sleep } from '@web/shared/lib';
 
 import { ModalContext } from './ModalContext';
 import type {
+  CloseModalOptions,
   ID_MODAL,
   ModalAnchor,
   ModalContextValue,
@@ -25,8 +28,7 @@ const CLOSE_ANIMATION_MS = 200;
 
 interface OpenedModal {
   id: ID_MODAL;
-  // Mount and open are two steps: a modal that mounts already open plays no
-  // entrance animation.
+  // Mount and open are two steps: mounting already open plays no animation.
   isOpen: boolean;
   anchor?: ModalAnchor;
 }
@@ -48,10 +50,20 @@ export const ModalProvider = ({ registrations, children }: Props) => {
     return map;
   }, [registrations]);
 
+  // openModal is a no-op for a surface already up, so the same ids gate the
+  // reporting.
+  const reportedRef = useRef<Set<ID_MODAL>>(new Set());
+
   const openModal = useCallback<ModalContextValue['openModal']>(
     async (idModal, ...args) => {
       const [data, options] = args as [unknown?, ModalOptions?];
       const rect = options?.anchorEl?.getBoundingClientRect();
+      const dialog = registry.get(idModal)?.dialog;
+
+      if (dialog && !reportedRef.current.has(idModal)) {
+        reportedRef.current.add(idModal);
+        track({ name: 'Dialog Opened', props: { dialog } });
+      }
 
       setOpened((prev) =>
         prev.some(({ id }) => id === idModal)
@@ -77,29 +89,40 @@ export const ModalProvider = ({ registrations, children }: Props) => {
         )
       );
     },
-    []
+    [registry]
   );
 
-  // Closing is per modal: one closing surface must not shut every other one
-  // mounted alongside it.
-  const closeModal = useCallback(async (idModal: ID_MODAL) => {
-    setOpened((prev) =>
-      prev.map((modal) =>
-        modal.id === idModal ? { ...modal, isOpen: false } : modal
-      )
-    );
+  const closeModal = useCallback(
+    async (idModal: ID_MODAL, options?: CloseModalOptions) => {
+      const dialog = registry.get(idModal)?.dialog;
 
-    await sleep(CLOSE_ANIMATION_MS);
-    setOpened((prev) => prev.filter(({ id }) => id !== idModal));
-    setPayloads((prev) => {
-      const next = { ...prev };
-      delete next[idModal];
-      return next;
-    });
-  }, []);
+      if (
+        dialog &&
+        reportedRef.current.delete(idModal) &&
+        !options?.isCompleted
+      ) {
+        track({ name: 'Dialog Dismissed', props: { dialog } });
+      }
 
-  // Read through a ref so the context value never changes: every consumer of
-  // `useModal` — one per comment row, say — would re-render otherwise.
+      setOpened((prev) =>
+        prev.map((modal) =>
+          modal.id === idModal ? { ...modal, isOpen: false } : modal
+        )
+      );
+
+      await sleep(CLOSE_ANIMATION_MS);
+      setOpened((prev) => prev.filter(({ id }) => id !== idModal));
+      setPayloads((prev) => {
+        const next = { ...prev };
+        delete next[idModal];
+        return next;
+      });
+    },
+    [registry]
+  );
+
+  // Read through a ref so the context value never changes: every `useModal`
+  // consumer would re-render otherwise.
   const openedRef = useRef<ID_MODAL[]>([]);
   useEffect(() => {
     openedRef.current = opened.map(({ id }) => id);

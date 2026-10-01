@@ -1,5 +1,6 @@
 export { ModalProvider } from './ModalProvider';
 export type {
+  CloseModalOptions,
   ID_MODAL,
   ModalAnchor,
   ModalContextValue,

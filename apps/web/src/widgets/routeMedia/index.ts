@@ -13,7 +13,8 @@ export const routeMediaDesktopRegistrations: ModalRegistration[] = [
   },
   {
     id: 'ROUTE_MEDIA_VIEW',
-    Component: lazy(() => import('./desktop/ViewRouteMediaDialog'))
+    Component: lazy(() => import('./desktop/ViewRouteMediaDialog')),
+    dialog: 'route_media'
   },
   {
     id: 'ROUTE_MEDIA_DELETE',
@@ -28,7 +29,8 @@ export const routeMediaMobileRegistrations: ModalRegistration[] = [
   },
   {
     id: 'ROUTE_MEDIA_VIEW',
-    Component: lazy(() => import('./mobile/ViewRouteMediaModal'))
+    Component: lazy(() => import('./mobile/ViewRouteMediaModal')),
+    dialog: 'route_media'
   },
   {
     id: 'ROUTE_MEDIA_DELETE',
