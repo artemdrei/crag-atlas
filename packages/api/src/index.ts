@@ -43,3 +43,6 @@ export type CreateRoute = components['schemas']['CreateRouteDto'];
 export type ReorderTopos = components['schemas']['ReorderToposDto'];
 export type TopoOrder = components['schemas']['TopoOrderDto'];
 export type SaveRouteLine = components['schemas']['SaveRouteLineDto'];
+export type Admin = components['schemas']['AdminDto'];
+export type AdminCandidate = components['schemas']['AdminCandidateDto'];
+export type GrantAdmin = components['schemas']['GrantAdminDto'];
