@@ -19,6 +19,9 @@ export const useApiGrantAdmins = ({ onGranted }: Params) => {
       apiPost<Admin[]>('/admins', { idUsers } satisfies GrantAdmin),
     onSuccess: (admins) => {
       queryClient.setQueryData(QUERY_KEYS.admins(), admins);
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.adminCandidates()
+      });
       toast.success(t`Admin access granted`);
       onGranted();
     },

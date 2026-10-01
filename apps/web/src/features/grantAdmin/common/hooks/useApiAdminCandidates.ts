@@ -5,7 +5,7 @@ import { apiGet, QUERY_KEYS, useApiSearch } from '@web/shared/api';
 export const useApiAdminCandidates = (query: string) => {
   const { results, isLoading, failure, term } = useApiSearch<AdminCandidate>({
     query,
-    queryKey: QUERY_KEYS.adminCandidates,
+    queryKey: QUERY_KEYS.adminCandidateSearch,
     queryFn: (term) =>
       apiGet<AdminCandidate[]>(
         `/admins/candidates?q=${encodeURIComponent(term)}`
