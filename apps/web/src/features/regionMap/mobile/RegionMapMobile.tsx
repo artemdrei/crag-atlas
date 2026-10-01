@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import type { Region } from '@crag-atlas/api';
 import { styled, useTheme } from '@mui/material/styles';
 
 import { BottomSheet, MapCanvas } from '@web/shared/ui';
@@ -9,7 +10,7 @@ import { REGION_ZOOM, RegionPointCard, regionMapPoints } from '../common';
 
 export interface Props {
   mapped: MappedRegion[];
-  onOpenRegion: (idRegion: string) => void;
+  onOpenRegion: (region: Region) => void;
 }
 
 export const RegionMapMobile = ({ mapped, onOpenRegion }: Props) => {
@@ -36,7 +37,7 @@ export const RegionMapMobile = ({ mapped, onOpenRegion }: Props) => {
           <SheetStyled>
             <RegionPointCard
               region={selected}
-              onOpen={() => onOpenRegion(selected.id)}
+              onOpen={() => onOpenRegion(selected)}
             />
           </SheetStyled>
         )}

@@ -48,7 +48,7 @@ export const RegionPointCard = ({ region, onOpen }: Props) => {
         <Button variant="contained" size="small" onClick={onOpen}>
           <Trans>Open region</Trans>
         </Button>
-        <DirectionsButton point={coordsOf(region)} />
+        <DirectionsButton entityType="region" point={coordsOf(region)} />
       </ActionsStyled>
     </CardStyled>
   );

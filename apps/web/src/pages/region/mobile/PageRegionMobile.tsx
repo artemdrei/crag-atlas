@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useParams } from 'react-router';
 
 import { useLingui } from '@lingui/react/macro';
 import { useTheme } from '@mui/material/styles';
 
-import { buildSectorPath, ROUTES } from '@web/app/router/routes';
+import { ROUTES } from '@web/app/router/routes';
+import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
 import { CatalogSearchMobile } from '@web/features/catalogSearch';
 import {
   mapSectors,
@@ -30,7 +31,7 @@ import {
 export const PageRegionMobile = () => {
   const { t } = useLingui();
   const { idRegion = '' } = useParams();
-  const navigate = useNavigate();
+  const openCatalogItem = useOpenCatalogItem();
   const theme = useTheme();
   const { region, failure: regionFailure } = useApiGetRegion(idRegion);
   const { sectors, isLoading, failure } = useApiGetSectors(idRegion);
@@ -64,11 +65,21 @@ export const PageRegionMobile = () => {
           <SectorCard
             sector={sector}
             pinColor={pinColors[sector.id]}
-            onSelect={() => navigate(buildSectorPath(idRegion, sector.id))}
+            onSelect={() =>
+              openCatalogItem('map', {
+                name: sector.name,
+                idRegion,
+                idSector: sector.id
+              })
+            }
           />
         )}
-        onOpenSector={(idSector) =>
-          navigate(buildSectorPath(idRegion, idSector))
+        onOpenSector={(sector) =>
+          openCatalogItem('map', {
+            name: sector.name,
+            idRegion,
+            idSector: sector.id
+          })
         }
       />
       <SectorsList
@@ -76,7 +87,13 @@ export const PageRegionMobile = () => {
         pinColors={pinColors}
         tickedOf={tickedOf}
         isLoading={isLoading}
-        onSelect={(sector) => navigate(buildSectorPath(idRegion, sector.id))}
+        onSelect={(sector) =>
+          openCatalogItem('card', {
+            name: sector.name,
+            idRegion,
+            idSector: sector.id
+          })
+        }
       />
     </PageShell>
   );

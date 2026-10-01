@@ -14,7 +14,7 @@ export interface Props {
   selectedRegion?: Region;
   draftPoint?: Coords;
   isEditing?: boolean;
-  onOpenRegion: (idRegion: string) => void;
+  onOpenRegion: (region: Region) => void;
   onSelectRegion: (idRegion: string) => void;
   onPlacePoint: (point: Coords) => void;
 }
@@ -52,7 +52,7 @@ export const RegionMapDesktop = ({
           !isEditing && (
             <RegionPointCard
               region={selectedRegion}
-              onOpen={() => onOpenRegion(selectedRegion.id)}
+              onOpen={() => onOpenRegion(selectedRegion)}
             />
           )
         }

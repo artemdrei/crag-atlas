@@ -30,7 +30,7 @@ export const SectorPointCard = ({ sector, onOpen }: Props) => (
       <Button variant="contained" size="small" onClick={onOpen}>
         <Trans>Open sector</Trans>
       </Button>
-      <DirectionsButton point={coordsOf(sector)} />
+      <DirectionsButton entityType="sector" point={coordsOf(sector)} />
     </ActionsStyled>
   </CardStyled>
 );

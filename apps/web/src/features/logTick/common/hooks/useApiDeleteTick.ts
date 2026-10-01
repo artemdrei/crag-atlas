@@ -1,3 +1,4 @@
+import { track } from '@crag-atlas/analytics';
 import { resolveFailureMessage, toFailure } from '@crag-atlas/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -15,6 +16,7 @@ export const useApiDeleteTick = ({ idTick, onDeleted }: Params) => {
   const { isPending, mutate } = useMutation({
     mutationFn: () => apiDelete(`/ticks/${idTick}`),
     onSuccess: () => {
+      track({ name: 'Content Deleted', props: { content_type: 'tick' } });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ticks() });
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.climberContents()

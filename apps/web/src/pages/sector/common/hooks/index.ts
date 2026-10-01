@@ -5,4 +5,5 @@ export * from './useGradeFilter';
 export * from './useRouteSortLabel';
 export type { RouteGroup } from './useRoutesByTopo';
 export { useRoutesByTopo } from './useRoutesByTopo';
+export * from './useRoutesSort';
 export * from './useSectorSelection';

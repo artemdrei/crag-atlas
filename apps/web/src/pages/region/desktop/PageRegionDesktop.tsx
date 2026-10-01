@@ -1,11 +1,12 @@
 import { useMemo } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useParams } from 'react-router';
 
 import { useLingui } from '@lingui/react/macro';
 import { styled, useTheme } from '@mui/material/styles';
 
 import { useEditModeInUrl, useUser } from '@web/app/providers';
-import { buildSectorPath, ROUTES } from '@web/app/router/routes';
+import { ROUTES } from '@web/app/router/routes';
+import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
 import { CatalogEditActions } from '@web/features/catalogEdit';
 import { CatalogSearchDesktop } from '@web/features/catalogSearch';
 import {
@@ -35,7 +36,7 @@ export const PageRegionDesktop = () => {
   const { t } = useLingui();
   const theme = useTheme();
   const { idRegion = '' } = useParams();
-  const navigate = useNavigate();
+  const openCatalogItem = useOpenCatalogItem();
   const { hasRole } = useUser();
   const { region, failure: regionFailure } = useApiGetRegion(idRegion);
   const { isEditing, isArchiveShown, setIsEditing, setIsArchiveShown } =
@@ -110,7 +111,11 @@ export const PageRegionDesktop = () => {
             onSelect={(sector) =>
               isEditing
                 ? selectSector(sector.id)
-                : navigate(buildSectorPath(idRegion, sector.id))
+                : openCatalogItem('card', {
+                    name: sector.name,
+                    idRegion,
+                    idSector: sector.id
+                  })
             }
             onShowOnMap={(sector) => selectSector(sector.id)}
             onEdit={
@@ -128,8 +133,12 @@ export const PageRegionDesktop = () => {
             mapped={mapped}
             selectedSector={selectedSector}
             isEditing={isEditing}
-            onOpenSector={(idSector) =>
-              navigate(buildSectorPath(idRegion, idSector))
+            onOpenSector={(sector) =>
+              openCatalogItem('map', {
+                name: sector.name,
+                idRegion,
+                idSector: sector.id
+              })
             }
             onSelectSector={selectSector}
             onPlacePoint={setDraftPoint}

@@ -1,10 +1,23 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 
+import { identifyUser, resetAnalytics, track } from '@crag-atlas/analytics';
 import type { Me } from '@crag-atlas/api';
 import type { Session } from '@supabase/supabase-js';
 
 import { apiGet, QUERY_KEYS, useApiQuery } from '@web/shared/api';
-import { GradePreferenceProvider } from '@web/shared/lib';
+import {
+  GradePreferenceProvider,
+  resolveLoginEvent,
+  takeLoginAttempt
+} from '@web/shared/lib';
+import { setAnalyticsAuthState } from '@web/shared/lib/analytics/amplitude';
 import { supabase } from '@web/shared/supabase';
 
 export type Role = 'guest' | 'user' | 'admin';
@@ -13,7 +26,6 @@ const ROLE_RANK: Record<Role, number> = { guest: 0, user: 1, admin: 2 };
 
 const UserContext = createContext<{
   role: Role;
-  /** The caller's own id, for "is this mine?" checks on public rows. */
   idUser: string | null;
   session: Session | null;
   isAuthenticated: boolean;
@@ -25,16 +37,50 @@ const UserContext = createContext<{
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [isSessionLoading, setIsSessionLoading] = useState(true);
+  // onAuthStateChange also fires on a restored session, a token refresh and a
+  // tab focus, so only a new id is a new identity.
+  const idIdentified = useRef<string | null>(null);
 
   useEffect(() => {
-    // Fires INITIAL_SESSION right away with the persisted session, so there's
-    // no separate getSession() call — and no await inside the callback, which
-    // deadlocks the auth client.
+    // Fires INITIAL_SESSION right away with the persisted session, so no
+    // getSession() call — and no await in the callback, which deadlocks it.
     const {
       data: { subscription }
-    } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+    } = supabase.auth.onAuthStateChange((event, nextSession) => {
       setSession(nextSession);
       setIsSessionLoading(false);
+
+      setAnalyticsAuthState(!!nextSession);
+
+      if (nextSession?.user) {
+        if (nextSession.user.id !== idIdentified.current) {
+          idIdentified.current = nextSession.user.id;
+          identifyUser({
+            idUser: nextSession.user.id,
+            email: nextSession.user.email ?? undefined
+          });
+        }
+
+        // The marker exists only where this tab started a login, so a
+        // restored session reports nothing.
+        const loginEvent = resolveLoginEvent({
+          method: takeLoginAttempt(),
+          createdAt: nextSession.user.created_at,
+          lastSignInAt: nextSession.user.last_sign_in_at
+        });
+
+        if (loginEvent) track(loginEvent);
+
+        return;
+      }
+
+      // reset() regenerates the device id, and INITIAL_SESSION fires
+      // session-less on every anonymous load.
+      if (event === 'SIGNED_OUT') {
+        track({ name: 'Logged Out' });
+        idIdentified.current = null;
+        resetAnalytics();
+      }
     });
 
     return () => subscription.unsubscribe();
@@ -47,8 +93,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   });
 
   // The session comes back from storage well before `/me` answers, so a guard
-  // that only waited for the session would see an admin as a plain user and
-  // redirect them away from their own page on every reload.
+  // waiting on the session alone would see an admin as a plain user.
   const isLoading = isSessionLoading || isRoleLoading;
 
   const value = useMemo(() => {
@@ -67,8 +112,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, [session, isLoading, me]);
 
-  // Grades are shown in the system this user picked, so the preference has to
-  // reach every badge on the page, not just the profile screen.
   const gradePreference = useMemo(
     () => ({
       route: me?.gradeScaleRoute ?? 'french',

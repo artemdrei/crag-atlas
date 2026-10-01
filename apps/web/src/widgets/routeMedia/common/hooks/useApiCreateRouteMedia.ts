@@ -1,3 +1,4 @@
+import { track } from '@crag-atlas/analytics';
 import type { CreateRouteMedia, RouteMedia } from '@crag-atlas/api';
 import { resolveFailureMessage, toFailure } from '@crag-atlas/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -42,6 +43,10 @@ export const useApiCreateRouteMedia = ({ idRoute, onCreated }: Params) => {
       );
     },
     onSuccess: () => {
+      track({
+        name: 'Content Created',
+        props: { content_type: 'media', id_route: idRoute }
+      });
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.routeMedia(idRoute)
       });

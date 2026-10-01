@@ -1,3 +1,4 @@
+import { track } from '@crag-atlas/analytics';
 import { resolveFailureMessage, toFailure } from '@crag-atlas/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -20,6 +21,7 @@ export const useApiDeleteRouteMedia = ({
   const { isPending, mutate } = useMutation({
     mutationFn: () => apiDelete(`/routes/${idRoute}/media/${idMedia}`),
     onSuccess: () => {
+      track({ name: 'Content Deleted', props: { content_type: 'media' } });
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.routeMedia(idRoute)
       });

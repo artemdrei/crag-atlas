@@ -1,3 +1,4 @@
+import { track } from '@crag-atlas/analytics';
 import { resolveFailureMessage, toFailure } from '@crag-atlas/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -17,7 +18,18 @@ export const useApiCreateTick = ({ onCreated }: Params) => {
     mutationFn: (payload: CreateTick) => apiPost<Tick>('/ticks', payload),
     // Awaited: the mutation stays pending while the callback uploads the
     // media that belongs to this tick, so the form cannot be submitted twice.
-    onSuccess: async (tick) => {
+    onSuccess: async (tick, payload) => {
+      track({
+        name: 'Tick Logged',
+        props: {
+          ascent_type: payload.ascentType,
+          id_route: payload.idRoute,
+          has_note: !!payload.note,
+          has_rating: !!payload.rating,
+          has_partner: !!(payload.idPartner ?? payload.partnerName),
+          has_grade_vote: !!payload.gradeVote
+        }
+      });
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.climberContents()
       });

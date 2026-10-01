@@ -1,3 +1,4 @@
+import { track } from '@crag-atlas/analytics';
 import type { Topo } from '@crag-atlas/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -23,7 +24,13 @@ export const useApiUploadTopo = ({ idSector }: Params) => {
         `/sectors/${idSector}/topos`,
         toPhotoForm(blob, { width, height })
       ),
-    onSuccess: () => invalidateToposAndRegions(queryClient, idSector)
+    onSuccess: () => {
+      track({
+        name: 'Content Created',
+        props: { content_type: 'topo', id_sector: idSector }
+      });
+      invalidateToposAndRegions(queryClient, idSector);
+    }
   });
 
   return { isPending, uploadTopo: mutateAsync };

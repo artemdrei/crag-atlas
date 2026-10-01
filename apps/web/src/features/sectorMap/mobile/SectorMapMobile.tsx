@@ -15,7 +15,7 @@ import { sectorMapPoints } from '../common';
 export interface Props {
   mapped: MappedSector[];
   renderSector: (sector: Sector) => ReactNode;
-  onOpenSector: (idSector: string) => void;
+  onOpenSector: (sector: Sector) => void;
 }
 
 export const SectorMapMobile = ({
@@ -45,10 +45,13 @@ export const SectorMapMobile = ({
           <>
             {renderSector(selected)}
             <ActionsStyled>
-              <DirectionsButton point={coordsOf(selected)} />
+              <DirectionsButton
+                entityType="sector"
+                point={coordsOf(selected)}
+              />
               <Button
                 variant="contained"
-                onClick={() => onOpenSector(selected.id)}
+                onClick={() => onOpenSector(selected)}
               >
                 <Trans>Open sector</Trans>
               </Button>

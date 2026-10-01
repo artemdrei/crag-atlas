@@ -1,6 +1,4 @@
-import { useNavigate } from 'react-router';
-
-import { buildRegionPath } from '@web/app/router/routes';
+import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
 import { CatalogSearchMobile } from '@web/features/catalogSearch';
 import { mapRegions, RegionMapMobile } from '@web/features/regionMap';
 import { ApiFeedback, PageShell } from '@web/shared/ui';
@@ -8,7 +6,7 @@ import { ApiFeedback, PageShell } from '@web/shared/ui';
 import { HomeHeading, RegionsGrid, useApiGetRegions } from '../common';
 
 export const PageHomeMobile = () => {
-  const navigate = useNavigate();
+  const openCatalogItem = useOpenCatalogItem();
   const { regions, isLoading, failure } = useApiGetRegions();
 
   return (
@@ -18,12 +16,16 @@ export const PageHomeMobile = () => {
       <ApiFeedback failure={failure} />
       <RegionMapMobile
         mapped={mapRegions(regions)}
-        onOpenRegion={(idRegion) => navigate(buildRegionPath(idRegion))}
+        onOpenRegion={(region) =>
+          openCatalogItem('map', { name: region.name, idRegion: region.id })
+        }
       />
       <RegionsGrid
         regions={regions}
         isLoading={isLoading}
-        onSelect={(region) => navigate(buildRegionPath(region.id))}
+        onSelect={(region) =>
+          openCatalogItem('card', { name: region.name, idRegion: region.id })
+        }
       />
     </PageShell>
   );

@@ -1,12 +1,9 @@
-import { useState } from 'react';
-
 import { Trans } from '@lingui/react/macro';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { ApiFeedback, PageShell } from '@web/shared/ui';
 
-import type { AscentFilter, Discipline, LogbookTab, TickSort } from '../common';
 import {
   AscentTypeFilter,
   DisciplineTabs,
@@ -18,15 +15,22 @@ import {
   TicksList,
   useApiGetTickStats,
   useApiGetTicks,
+  useLogbookControls,
   useLogbookView
 } from '../common';
 import { LogbookFiltersButton } from './LogbookFiltersButton';
 
 export const PageLogbookMobile = () => {
-  const [tab, setTab] = useState<LogbookTab>('mine');
-  const [discipline, setDiscipline] = useState<Discipline>('sport');
-  const [sort, setSort] = useState<TickSort>('grade');
-  const [ascentType, setAscentType] = useState<AscentFilter>('all');
+  const {
+    tab,
+    discipline,
+    sort,
+    ascentType,
+    changeTab,
+    changeDiscipline,
+    changeSort,
+    changeAscentType
+  } = useLogbookControls();
   const { ticks, isLoading, isLoadingMore, hasMore, failure, loadMore } =
     useApiGetTicks({ discipline, ascentType, sort });
   const { stats, failure: statsFailure } = useApiGetTickStats();
@@ -43,13 +47,13 @@ export const PageLogbookMobile = () => {
           <LogbookFiltersButton
             sort={sort}
             ascentType={ascentType}
-            onSortChange={setSort}
-            onAscentTypeChange={setAscentType}
+            onSortChange={changeSort}
+            onAscentTypeChange={changeAscentType}
           />
         )}
       </HeaderRowStyled>
 
-      <LogbookTabs tab={tab} onChange={setTab} />
+      <LogbookTabs tab={tab} onChange={changeTab} />
 
       {tab === 'mine' ? (
         <>
@@ -57,7 +61,7 @@ export const PageLogbookMobile = () => {
             discipline={discipline}
             sportCount={stats?.sportCount}
             boulderCount={stats?.boulderCount}
-            onChange={setDiscipline}
+            onChange={changeDiscipline}
           />
 
           <ApiFeedback failure={failure ?? statsFailure} />
@@ -65,7 +69,7 @@ export const PageLogbookMobile = () => {
           <AscentTypeFilter
             ascentType={ascentType}
             counts={view.counts}
-            onChange={setAscentType}
+            onChange={changeAscentType}
           />
 
           {view.bars.length > 0 && <GradeChart bars={view.bars} isCompact />}

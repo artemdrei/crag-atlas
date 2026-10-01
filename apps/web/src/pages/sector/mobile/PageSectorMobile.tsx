@@ -1,15 +1,13 @@
-import { useMemo, useState } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useMemo } from 'react';
+import { useParams } from 'react-router';
 
+import type { CatalogSource } from '@crag-atlas/analytics';
 import { useLingui } from '@lingui/react/macro';
 import { styled, useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import {
-  buildRegionPath,
-  buildRoutePath,
-  ROUTES
-} from '@web/app/router/routes';
+import { buildRegionPath, ROUTES } from '@web/app/router/routes';
+import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
 import {
   orderRoutes,
   TopoGalleryMobile,
@@ -26,7 +24,7 @@ import {
   PageTitle
 } from '@web/shared/ui';
 
-import type { Route, RouteSort, RouteSortDirection } from '../common';
+import type { Route } from '../common';
 import {
   ArchivedSectorNotice,
   gradeOrder,
@@ -37,7 +35,8 @@ import {
   useApiGetSector,
   useApiGetTickedRoutes,
   useGradeFilter,
-  useRoutesByTopo
+  useRoutesByTopo,
+  useRoutesSort
 } from '../common';
 import { RoutesSortButton } from './RoutesSortButton';
 
@@ -45,7 +44,7 @@ export const PageSectorMobile = () => {
   const { t } = useLingui();
   const theme = useTheme();
   const { idRegion = '', idSector = '' } = useParams();
-  const navigate = useNavigate();
+  const openCatalogItem = useOpenCatalogItem();
   const { sector } = useApiGetSector(idSector);
   const { routes, isLoading, failure } = useApiGetRoutes(idSector);
   const { topos } = useApiGetTopos(idSector);
@@ -64,8 +63,7 @@ export const PageSectorMobile = () => {
   const { idActiveTopo, selectTopo } = useTopoGallery({
     topos: visibleTopos
   });
-  const [sort, setSort] = useState<RouteSort>('default');
-  const [direction, setDirection] = useState<RouteSortDirection>('desc');
+  const { sort, direction, changeSort, toggleDirection } = useRoutesSort();
 
   const orderOfGrade = useMemo(
     () => gradeOrder(sector?.gradeHistogram ?? []),
@@ -96,13 +94,18 @@ export const PageSectorMobile = () => {
     return getGradeColor(theme.palette.grade, route?.grade, route?.gradeScale);
   };
 
-  const openRoute = (route: Route) =>
-    navigate(buildRoutePath(idRegion, idSector, route.id));
+  const openRoute = (route: Route, source: CatalogSource = 'card') =>
+    openCatalogItem(source, {
+      name: route.name,
+      idRegion,
+      idSector,
+      idRoute: route.id
+    });
 
   const openRouteById = (idRoute: string) => {
     const route = routes.find(({ id }) => id === idRoute);
 
-    if (route) openRoute(route);
+    if (route) openRoute(route, 'topo');
   };
 
   return (
@@ -124,7 +127,7 @@ export const PageSectorMobile = () => {
           nameLocal={sector?.nameLocal}
           variant="h5"
         />
-        <DirectionsButton point={coordsOf(sector)} />
+        <DirectionsButton entityType="sector" point={coordsOf(sector)} />
       </TitleRowStyled>
       {sector?.description && (
         <Typography variant="body2" color="text.secondary">
@@ -149,11 +152,9 @@ export const PageSectorMobile = () => {
             <RoutesSortDirectionButton
               direction={direction}
               isVisible={sort !== 'default'}
-              onToggleDirection={() =>
-                setDirection((one) => (one === 'asc' ? 'desc' : 'asc'))
-              }
+              onToggleDirection={toggleDirection}
             />
-            <RoutesSortButton sort={sort} onSortChange={setSort} />
+            <RoutesSortButton sort={sort} onSortChange={changeSort} />
           </>
         }
         onToggleGrade={toggleGrade}

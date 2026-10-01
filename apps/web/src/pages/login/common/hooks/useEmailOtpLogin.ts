@@ -1,8 +1,9 @@
 import { useState } from 'react';
 
+import { track } from '@crag-atlas/analytics';
 import { resolveFailureMessage } from '@crag-atlas/utils';
 
-import { toast } from '@web/shared/lib';
+import { rememberLoginAttempt, toast } from '@web/shared/lib';
 import { supabase, toAuthFailure } from '@web/shared/supabase';
 
 export type EmailOtpStep = 'email' | 'code';
@@ -20,6 +21,9 @@ export const useEmailOtpLogin = ({ onVerified }: Params) => {
     setIsSending(true);
 
     try {
+      track({ name: 'Login Attempted', props: { method: 'email' } });
+      rememberLoginAttempt('email');
+
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: { shouldCreateUser: true }

@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react';
 
 import type { Topo } from '@crag-atlas/api';
 
-import { gradeKey } from '@web/shared/lib';
+import { gradeKey, trackListControl } from '@web/shared/lib';
 
 import type { Route } from '../entities';
 
@@ -21,6 +21,7 @@ export const useGradeFilter = ({
 }: Params) => {
   const toggleGrade = useCallback(
     (key: string) => {
+      trackListControl('routes', 'grade_filter', key);
       onSelectGrades(
         selectedGrades.includes(key)
           ? selectedGrades.filter((one) => one !== key)
@@ -30,7 +31,14 @@ export const useGradeFilter = ({
     [selectedGrades, onSelectGrades]
   );
 
-  const clearGrades = useCallback(() => onSelectGrades([]), [onSelectGrades]);
+  const clearGrades = useCallback(() => {
+    trackListControl(
+      'routes',
+      'grade_filter_reset',
+      String(selectedGrades.length)
+    );
+    onSelectGrades([]);
+  }, [selectedGrades, onSelectGrades]);
 
   const visibleRoutes = useMemo(() => {
     if (selectedGrades.length === 0) return routes;

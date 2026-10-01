@@ -1,3 +1,4 @@
+import { track } from '@crag-atlas/analytics';
 import { resolveFailureMessage, toFailure } from '@crag-atlas/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -20,6 +21,7 @@ export const useApiDeleteRouteComment = ({
   const { isPending, mutate } = useMutation({
     mutationFn: () => apiDelete(`/routes/${idRoute}/comments/${idComment}`),
     onSuccess: () => {
+      track({ name: 'Content Deleted', props: { content_type: 'comment' } });
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.routeComments(idRoute)
       });

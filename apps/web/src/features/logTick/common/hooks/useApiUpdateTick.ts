@@ -1,3 +1,4 @@
+import { track } from '@crag-atlas/analytics';
 import type { Tick, UpdateTick } from '@crag-atlas/api';
 import { resolveFailureMessage, toFailure } from '@crag-atlas/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -19,6 +20,7 @@ export const useApiUpdateTick = ({ idTick, onSaved }: Params) => {
     // Awaited: the mutation stays pending while the callback uploads the
     // media that belongs to this tick, so the form cannot be submitted twice.
     onSuccess: async () => {
+      track({ name: 'Content Updated', props: { content_type: 'tick' } });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ticks() });
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.climberContents()
