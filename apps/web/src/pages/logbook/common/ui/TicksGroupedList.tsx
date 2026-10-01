@@ -76,18 +76,21 @@ export const TicksGroupedList = ({ groups, ungraded, isLoading }: Props) => {
 const ListStyled = styled('div')`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(4)};
 `;
 
 const SectionStyled = styled('div')`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(1.5)};
+
+  &:not(:last-of-type) > *:last-child {
+    margin-bottom: ${({ theme }) => theme.spacing(4)};
+  }
 `;
 
 const HeaderStyled = styled('div')`
   position: sticky;
-  top: 0;
+  top: -1px;
   z-index: 1;
   display: flex;
   align-items: center;

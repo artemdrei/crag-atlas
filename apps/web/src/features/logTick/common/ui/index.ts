@@ -1,5 +1,6 @@
 export { AscentTypeChoice } from './AscentTypeChoice';
 export { AttemptsStepper } from './AttemptsStepper';
+export { ConditionsSection } from './ConditionsSection';
 export { DeleteTickActions } from './DeleteTickActions';
 export { GradeFeelChoice } from './GradeFeelChoice';
 export { TickActionsButton } from './TickActionsButton';
@@ -8,3 +9,4 @@ export { TickFormHeader } from './TickFormHeader';
 export { TickFormSection } from './TickFormSection';
 export { TickMediaField } from './TickMediaField';
 export { useTickMenuItems } from './TickMenuItems';
+export { WeatherField } from './WeatherField';

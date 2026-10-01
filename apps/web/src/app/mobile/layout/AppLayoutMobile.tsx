@@ -43,6 +43,8 @@ const LayoutRootStyled = styled(Box)`
 `;
 
 const HeaderSlotStyled = styled(Box)`
+  position: relative;
+  z-index: 1;
   flex-shrink: 0;
 `;
 

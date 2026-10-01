@@ -1,9 +1,6 @@
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-
 import type { TickHeader } from '../common';
-import { TickForm, TickFormHeader, useLogTick } from '../common';
+import { TickForm, useLogTick } from '../common';
+import { TickFormDialog } from './TickFormDialog';
 
 export interface Props extends TickHeader {
   open: boolean;
@@ -21,25 +18,23 @@ const LogTickDialog = ({
   const { isPending, dismiss, save } = useLogTick(idRoute);
 
   return (
-    <Dialog fullWidth maxWidth="sm" open={open} onClose={dismiss}>
-      <DialogTitle>
-        <TickFormHeader
-          routeName={routeName}
-          routeGrade={routeGrade}
-          routeGradeScale={routeGradeScale}
-          place={place}
-        />
-      </DialogTitle>
-      <DialogContent>
-        <TickForm
-          routeGrade={routeGrade}
-          routeGradeScale={routeGradeScale}
-          isPending={isPending}
-          onSubmit={save}
-          onCancel={dismiss}
-        />
-      </DialogContent>
-    </Dialog>
+    <TickFormDialog
+      routeName={routeName}
+      routeGrade={routeGrade}
+      routeGradeScale={routeGradeScale}
+      place={place}
+      open={open}
+      onClose={dismiss}
+    >
+      <TickForm
+        idRoute={idRoute}
+        routeGrade={routeGrade}
+        routeGradeScale={routeGradeScale}
+        isPending={isPending}
+        onSubmit={save}
+        onCancel={dismiss}
+      />
+    </TickFormDialog>
   );
 };
 

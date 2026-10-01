@@ -25,6 +25,12 @@ pnpm dev:web
 pnpm dev:api
 ```
 
+## Data
+
+Ascent conditions come from [Open-Meteo](https://open-meteo.com), used under
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The free tier is
+non-commercial.
+
 ## License
 
 MIT — see [LICENSE](./LICENSE).

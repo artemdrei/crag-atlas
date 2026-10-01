@@ -1290,6 +1290,25 @@
         "tags": ["Ticks"]
       }
     },
+    "/ticks/weather/backfill": {
+      "post": {
+        "operationId": "TicksController_backfillWeather",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeatherBackfillDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Ticks"]
+      }
+    },
     "/ticks/{idTick}": {
       "patch": {
         "operationId": "TicksController_update",
@@ -1376,6 +1395,44 @@
           }
         },
         "tags": ["RouteTicks"]
+      }
+    },
+    "/weather": {
+      "get": {
+        "operationId": "WeatherController_lookup",
+        "parameters": [
+          {
+            "name": "idRoute",
+            "required": true,
+            "in": "query",
+            "description": "Read at its sector’s point",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "at",
+            "required": true,
+            "in": "query",
+            "description": "Local wall clock, 2026-10-01T16:00",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeatherLookupDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Weather"]
       }
     },
     "/sectors/{idSector}/topos": {
@@ -2837,6 +2894,78 @@
         },
         "required": ["id", "kind", "url"]
       },
+      "TickWeatherDto": {
+        "type": "object",
+        "properties": {
+          "observedAt": {
+            "type": "string",
+            "description": "Local wall clock at the crag, e.g. 2026-10-01T16:00. Taken from the ascent when one is saved, so a sent value is ignored"
+          },
+          "lat": {
+            "type": "number",
+            "nullable": true
+          },
+          "lng": {
+            "type": "number",
+            "nullable": true
+          },
+          "temperatureC": {
+            "type": "number",
+            "nullable": true
+          },
+          "apparentTemperatureC": {
+            "type": "number",
+            "nullable": true
+          },
+          "dewPointC": {
+            "type": "number",
+            "nullable": true
+          },
+          "humidityPct": {
+            "type": "number",
+            "nullable": true
+          },
+          "windSpeedMs": {
+            "type": "number",
+            "nullable": true
+          },
+          "windGustMs": {
+            "type": "number",
+            "nullable": true
+          },
+          "precipitationMm": {
+            "type": "number",
+            "nullable": true
+          },
+          "precipitation24hMm": {
+            "type": "number",
+            "nullable": true,
+            "description": "What fell in the 24 hours up to observedAt"
+          },
+          "cloudCoverPct": {
+            "type": "number",
+            "nullable": true
+          },
+          "weatherCode": {
+            "type": "number",
+            "nullable": true,
+            "description": "WMO weather code"
+          },
+          "sunrise": {
+            "type": "string",
+            "nullable": true
+          },
+          "sunset": {
+            "type": "string",
+            "nullable": true
+          },
+          "isManual": {
+            "type": "boolean",
+            "description": "The climber corrected the numbers the provider answered with"
+          }
+        },
+        "required": ["observedAt"]
+      },
       "TickDto": {
         "type": "object",
         "properties": {
@@ -2915,6 +3044,11 @@
             "type": "string",
             "description": "ISO date, e.g. 2026-09-19"
           },
+          "climbedAtTime": {
+            "type": "string",
+            "nullable": true,
+            "description": "Local wall clock at the crag, e.g. 16:17; older ascents have none"
+          },
           "attempts": {
             "type": "number",
             "nullable": true
@@ -2962,6 +3096,15 @@
             "items": {
               "$ref": "#/components/schemas/TickMediaDto"
             }
+          },
+          "weather": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TickWeatherDto"
+              }
+            ]
           },
           "routeRating": {
             "type": "number",
@@ -3086,6 +3229,20 @@
         },
         "required": ["items"]
       },
+      "WeatherBackfillDto": {
+        "type": "object",
+        "properties": {
+          "filled": {
+            "type": "number",
+            "description": "Ascents this call gave conditions to"
+          },
+          "remaining": {
+            "type": "number",
+            "description": "Ascents still waiting, because one call fills a batch at most"
+          }
+        },
+        "required": ["filled", "remaining"]
+      },
       "CreateTickDto": {
         "type": "object",
         "properties": {
@@ -3106,6 +3263,11 @@
           "climbedAt": {
             "type": "string",
             "description": "ISO date; defaults to today"
+          },
+          "climbedAtTime": {
+            "type": "string",
+            "nullable": true,
+            "description": "Local wall clock at the crag, e.g. 16:17"
           },
           "attempts": {
             "type": "number",
@@ -3139,6 +3301,16 @@
           },
           "notePrivate": {
             "type": "boolean"
+          },
+          "weather": {
+            "nullable": true,
+            "description": "Null erases the conditions recorded for this ascent",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TickWeatherDto"
+              }
+            ]
           }
         },
         "required": ["idRoute", "ascentType"]
@@ -3161,6 +3333,11 @@
             "type": "string",
             "description": "ISO date, e.g. 2026-09-19"
           },
+          "climbedAtTime": {
+            "type": "string",
+            "nullable": true,
+            "description": "Local wall clock at the crag, e.g. 16:17"
+          },
           "attempts": {
             "type": "number",
             "nullable": true
@@ -3193,8 +3370,37 @@
           },
           "notePrivate": {
             "type": "boolean"
+          },
+          "weather": {
+            "nullable": true,
+            "description": "Null erases the conditions recorded for this ascent",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TickWeatherDto"
+              }
+            ]
           }
         }
+      },
+      "WeatherLookupDto": {
+        "type": "object",
+        "properties": {
+          "hasPoint": {
+            "type": "boolean",
+            "description": "False when the sector has no coordinates — nothing can be looked up and the conditions are written by hand"
+          },
+          "weather": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TickWeatherDto"
+              }
+            ]
+          }
+        },
+        "required": ["hasPoint", "weather"]
       },
       "RouteLineDto": {
         "type": "object",

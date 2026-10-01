@@ -8,6 +8,7 @@ import { ApiFeedback, GridColumnsMenu, PageShell } from '@web/shared/ui';
 
 import {
   AscentTypeFilter,
+  BackfillWeatherButton,
   DisciplineTabs,
   GradeChart,
   LoadMoreOnScroll,
@@ -48,6 +49,7 @@ export const PageLogbookDesktop = () => {
         </Typography>
         {tab === 'mine' ? (
           <ToolbarStyled>
+            <BackfillWeatherButton />
             {sort === 'date' && (
               <GridColumnsMenu columns={columns} onChange={changeColumns} />
             )}

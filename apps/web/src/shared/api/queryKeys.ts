@@ -29,6 +29,7 @@ export const QUERY_KEYS = {
   tickStats: () => ['ticks', 'stats'] as const,
   routeLogbook: (idRoute: string) => ['ticks', 'route', idRoute] as const,
   ticksFeed: () => ['ticks', 'feed'] as const,
+  weather: (idRoute: string, at: string) => ['weather', idRoute, at] as const,
   catalogSearch: (query: string) => ['catalog', 'search', query] as const,
   userSearch: (query: string) => ['users', 'search', query] as const,
   climberContents: () => ['climberContent'] as const,

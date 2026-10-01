@@ -21,6 +21,7 @@ const EditTickSheet = ({ open, tick }: Props) => {
       />
       <TickForm
         tick={tick}
+        idRoute={tick.idRoute}
         isPending={isPending}
         onSubmit={save}
         onCancel={close}

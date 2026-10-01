@@ -14,5 +14,5 @@ export const HeaderMobile = () => (
 );
 
 const HeaderStyled = styled(AppBar)`
-  padding-top: env(safe-area-inset-top);
+  background-color: ${({ theme }) => theme.palette.background.default};
 `;

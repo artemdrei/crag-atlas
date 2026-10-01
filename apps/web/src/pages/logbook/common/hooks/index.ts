@@ -1,3 +1,4 @@
+export { useApiBackfillWeather } from './useApiBackfillWeather';
 export { useApiGetTickStats } from './useApiGetTickStats';
 export { useApiGetTicks } from './useApiGetTicks';
 export { useApiGetTicksFeed } from './useApiGetTicksFeed';

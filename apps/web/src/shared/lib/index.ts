@@ -14,7 +14,7 @@ export { digitsOnly } from './digitsOnly';
 export { foldGradeBars } from './foldGradeBars';
 export { formatBytes, savedPercent, signedPercent } from './formatBytes';
 export { formatCoords } from './formatCoords';
-export { formatDateTime } from './formatDateTime';
+export { formatDate, formatDateTime } from './formatDateTime';
 export { getInitials } from './getInitials';
 export * from './grade';
 export { gradeKey, toGradeBars } from './gradeBars';
@@ -29,6 +29,7 @@ export {
   mediaThumbnailUrl,
   parseMediaLink
 } from './mediaLink';
+export { observedHour } from './observedHour';
 export { parseCoords } from './parseCoords';
 export { sleep } from './sleep';
 export { toast } from './toast';

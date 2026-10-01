@@ -27,6 +27,7 @@ const LogTickSheet = ({
         place={place}
       />
       <TickForm
+        idRoute={idRoute}
         routeGrade={routeGrade}
         routeGradeScale={routeGradeScale}
         isPending={isPending}

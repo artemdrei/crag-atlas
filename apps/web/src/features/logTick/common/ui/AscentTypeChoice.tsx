@@ -15,6 +15,7 @@ export const AscentTypeChoice = ({ value, onChange }: Props) => {
   return (
     <TextField
       select
+      required
       fullWidth
       size="small"
       label={t`Ascent type`}
