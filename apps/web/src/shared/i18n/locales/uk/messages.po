@@ -75,11 +75,32 @@ msgstr "{0, plural, one {# сектор} few {# сектори} many {# сект
 #~ msgid "{0} attempts"
 #~ msgstr "{0} спроб"
 
+#. placeholder {0}: phase.hours
+#: src/features/logTick/common/ui/ConditionsSection.tsx:155
+#: src/pages/logbook/common/ui/TickConditions.tsx:46
+#~ msgid "{0} h before sunset"
+#~ msgstr "за {0} год до заходу"
+
+#. placeholder {0}: phase.hours
+#: src/pages/logbook/common/ui/TickConditions.tsx:46
+#~ msgid "{0} h left"
+#~ msgstr "за {0} год"
+
 #. placeholder {0}: route.length
 #: src/pages/route/common/ui/RouteDetails.tsx:57
 #: src/pages/sector/common/ui/RouteCard.tsx:72
 msgid "{0} m"
 msgstr "{0} м"
+
+#. placeholder {0}: weather.windSpeedMs
+#: src/pages/logbook/common/ui/TickConditions.tsx:34
+#~ msgid "{0} m/s"
+#~ msgstr "{0} м/с"
+
+#. placeholder {0}: conditions.precipitation24hMm
+#: src/features/logTick/common/ui/ConditionsSection.tsx:156
+msgid "{0} mm / 24 h"
+msgstr "{0} мм / 24 год"
 
 #. placeholder {0}: mapped.length
 #: src/features/sectorMap/common/ui/SectorMapList.tsx:48
@@ -196,7 +217,7 @@ msgstr "{sector} зникне з каталогу для всіх разом з�
 #~ msgid "{sectorName} is not empty"
 #~ msgstr "{sectorName} не порожній"
 
-#: src/features/logTick/common/ui/TickForm.tsx:140
+#: src/features/logTick/common/ui/TickForm.tsx:155
 msgid "{stars} of 5"
 msgstr "{stars} з 5"
 
@@ -211,6 +232,14 @@ msgstr "{total, plural, one {# пролаз} few {# пролази} many {# пр
 #: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:39
 msgid "{total, plural, one {# vote} other {# votes}}"
 msgstr "{total, plural, one {# голос} few {# голоси} many {# голосів} other {# голосу}}"
+
+#: src/features/logTick/common/ui/ConditionsSection.tsx:99
+#~ msgid "%"
+#~ msgstr "%"
+
+#: src/features/logTick/common/ui/ConditionsSection.tsx:87
+#~ msgid "°C"
+#~ msgstr "°C"
 
 #: src/features/catalogEdit/desktop/PurgeDialog.tsx:24
 msgid "<0>{name}</0> and everything filed under it leave the database for good — the archive will have nothing left to bring back. Climbers left nothing here, so none of their work goes with it."
@@ -308,6 +337,10 @@ msgstr "Додавай бету й фото, які допоможуть нас�
 #~ msgid "Add beta comments"
 #~ msgstr "Додавати бету в коментарях"
 
+#: src/pages/logbook/common/ui/BackfillWeatherButton.tsx:17
+#~ msgid "Add conditions"
+#~ msgstr "Додати умови"
+
 #: src/features/logTick/common/ui/TickMediaField.tsx:84
 #: src/features/logTick/common/ui/TickMediaField.tsx:92
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:188
@@ -346,9 +379,18 @@ msgstr "Додати відео або фото"
 msgid "Add yours"
 msgstr "Додати своє"
 
-#: src/features/grantAdmin/common/hooks/useApiGrantAdmins.ts:21
+#: src/pages/logbook/common/ui/AscentTypeFilter.tsx:46
+#: src/pages/logbook/common/ui/BackfillWeatherButton.tsx:17
+#~ msgid "Adding…"
+#~ msgstr "Додаємо…"
+
+#: src/features/grantAdmin/common/hooks/useApiGrantAdmins.ts:25
 msgid "Admin access granted"
 msgstr "Доступ адміна надано"
+
+#: src/pages/logbook/common/ui/TickConditions.tsx:54
+#~ msgid "After sunset"
+#~ msgstr "після заходу"
 
 #: src/pages/logbook/common/ui/AscentTypeFilter.tsx:46
 msgid "All"
@@ -450,7 +492,7 @@ msgstr "Пролаз записано"
 msgid "Ascent saved"
 msgstr "Пролаз збережено"
 
-#: src/features/logTick/common/ui/AscentTypeChoice.tsx:20
+#: src/features/logTick/common/ui/AscentTypeChoice.tsx:21
 #: src/pages/logbook/common/ui/LogbookFilterFields.tsx:46
 msgid "Ascent type"
 msgstr "Тип пролазу"
@@ -475,6 +517,10 @@ msgstr "Спроба"
 msgid "Auto"
 msgstr "Авто"
 
+#: src/pages/logbook/common/ui/SeasonIcon.tsx:24
+#~ msgid "Autumn"
+#~ msgstr "Осінь"
+
 #: src/pages/home/desktop/ui/HomeEditSidebar.tsx:43
 #: src/pages/region/desktop/ui/RegionEditSidebar.tsx:52
 #~ msgid "Back"
@@ -484,6 +530,10 @@ msgstr "Авто"
 msgid "Back to the catalog"
 msgstr "Назад до каталогу"
 
+#: src/features/logTick/common/ui/WeatherField.tsx:57
+msgid "Back to the measured value"
+msgstr "Повернути виміряне значення"
+
 #: src/pages/routeEdit/desktop/PageRouteEditDesktop.tsx:76
 #~ msgid "Back to the route"
 #~ msgstr "Назад до маршруту"
@@ -491,6 +541,11 @@ msgstr "Назад до каталогу"
 #: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:65
 #~ msgid "Back to the sector"
 #~ msgstr "Назад до сектора"
+
+#: src/pages/logbook/common/ui/TickCard.tsx:155
+#: src/pages/logbook/common/ui/TickConditions.tsx:62
+#~ msgid "Before sunrise"
+#~ msgstr "до сходу"
 
 #: src/pages/logbook/common/ui/TickCard.tsx:155
 msgid "Belayer"
@@ -539,7 +594,7 @@ msgstr "Навігаційний ланцюжок"
 #: src/features/catalogEdit/common/ui/EditActions.tsx:32
 #: src/features/grantAdmin/common/ui/GrantAdminBody.tsx:82
 #: src/features/logTick/common/ui/DeleteTickActions.tsx:17
-#: src/features/logTick/common/ui/TickForm.tsx:176
+#: src/features/logTick/common/ui/TickForm.tsx:191
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:276
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:450
 #: src/features/routeComment/common/ui/DeleteRouteCommentActions.tsx:17
@@ -625,7 +680,7 @@ msgstr "Закрити редагування"
 msgid "Close the editor"
 msgstr "Закрити редагування"
 
-#: src/features/logTick/common/ui/TickForm.tsx:150
+#: src/features/logTick/common/ui/TickForm.tsx:165
 msgid "Comment"
 msgstr "Коментар"
 
@@ -664,6 +719,18 @@ msgstr "Стискаємо фото…"
 #: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:158
 #~ msgid "Compression quality"
 #~ msgstr "Якість стиснення"
+
+#: src/pages/logbook/common/hooks/useApiBackfillWeather.ts:20
+#~ msgid "Conditions added to {filled} ascents"
+#~ msgstr "Умови додано до {filled} пролазів"
+
+#: src/pages/logbook/common/hooks/useApiBackfillWeather.ts:19
+#~ msgid "Conditions added to {filled} ascents, {remaining} still to go"
+#~ msgstr "Умови додано до {filled} пролазів, лишилося {remaining}"
+
+#: src/features/logTick/common/ui/ConditionsSection.tsx:112
+msgid "Conditions, read at the sector"
+msgstr "Умови, зчитані за координатами сектора"
 
 #: src/pages/login/common/ui/EmailOtpForm.tsx:75
 #: src/pages/login/common/ui/EmailOtpForm.tsx:114
@@ -718,7 +785,7 @@ msgstr "Поточне фото"
 msgid "Dark"
 msgstr "Темна"
 
-#: src/features/logTick/common/ui/TickForm.tsx:102
+#: src/features/logTick/common/ui/ConditionsSection.tsx:94
 #: src/pages/logbook/common/ui/LogbookFilterFields.tsx:39
 msgid "Date"
 msgstr "Дата"
@@ -825,7 +892,17 @@ msgstr "За спаданням"
 msgid "Description"
 msgstr "Опис"
 
-#: src/features/logTick/common/ui/TickForm.tsx:136
+#. placeholder {0}: conditions.dewPointC
+#: src/features/logTick/common/ui/ConditionsSection.tsx:147
+msgid "dew {0}°"
+msgstr "роса {0}°"
+
+#. placeholder {0}: conditions.dewPointC
+#: src/features/logTick/common/ui/ConditionsSection.tsx:137
+#~ msgid "Dew point {0}°C"
+#~ msgstr "точка роси {0}°C"
+
+#: src/features/logTick/common/ui/TickForm.tsx:151
 msgid "Did you like it?"
 msgstr "Як тобі маршрут?"
 
@@ -1013,17 +1090,22 @@ msgstr "Є відео"
 #~ msgid "Hide archived"
 #~ msgstr "Сховати архівні"
 
-#: src/features/logTick/common/ui/TickForm.tsx:117
+#: src/features/logTick/common/ui/TickForm.tsx:125
 msgid "How did you climb it?"
 msgstr "Як ти це проліз?"
 
-#: src/features/logTick/common/ui/TickForm.tsx:126
+#: src/features/logTick/common/ui/TickForm.tsx:141
 msgid "How hard is the route?"
 msgstr "Складність маршруту"
 
 #: src/features/logTick/common/ui/TickForm.tsx:124
 #~ msgid "How it felt"
 #~ msgstr "Відчуття"
+
+#: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:82
+#: src/features/logTick/common/ui/ConditionsSection.tsx:98
+#~ msgid "Humidity"
+#~ msgstr "Вологість"
 
 #: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:82
 msgid "It is out of the catalog, and a direct link still opens everything on it."
@@ -1173,7 +1255,7 @@ msgstr "Завантаження…"
 msgid "Location is blocked for this site. Allow it in the browser to see where you are."
 msgstr "Геолокацію для цього сайту заблоковано. Дозволь її в браузері, щоб бачити, де ти."
 
-#: src/features/logTick/common/ui/TickForm.tsx:184
+#: src/features/logTick/common/ui/TickForm.tsx:199
 #: src/pages/route/common/ui/LogTickButton.tsx:40
 msgid "Log ascent"
 msgstr "Відмітити пролаз"
@@ -1190,6 +1272,10 @@ msgstr "Записуй кожен пролаз і дивись, як росте 
 #: src/pages/route/common/ui/RouteTabs.tsx:41
 msgid "Logbook"
 msgstr "Логбук"
+
+#: src/features/logTick/common/ui/ConditionsSection.tsx:111
+#~ msgid "m/s"
+#~ msgstr "м/с"
 
 #: src/pages/profile/common/ui/AccessSetting.tsx:19
 msgid "Manage admins"
@@ -1426,7 +1512,7 @@ msgstr "Оригінальне фото"
 #~ msgid "Other routes"
 #~ msgstr "Інші маршрути"
 
-#: src/features/logTick/common/ui/TickForm.tsx:109
+#: src/features/logTick/common/ui/TickForm.tsx:134
 msgid "Partner"
 msgstr "Партнер"
 
@@ -1448,7 +1534,7 @@ msgstr "Фото {0}"
 msgid "Photo {position}"
 msgstr "Фото {position}"
 
-#: src/features/logTick/common/ui/TickForm.tsx:166
+#: src/features/logTick/common/ui/TickForm.tsx:181
 msgid "Photo and video"
 msgstr "Фото та відео"
 
@@ -1529,7 +1615,7 @@ msgstr "Розмістіть фото"
 msgid "Post"
 msgstr "Опублікувати"
 
-#: src/features/logTick/common/ui/TickForm.tsx:155
+#: src/features/logTick/common/ui/TickForm.tsx:170
 msgid "Private comment"
 msgstr "Приватний коментар"
 
@@ -1554,6 +1640,11 @@ msgstr "Профіль"
 #~ msgid "Quality"
 #~ msgstr "Якість"
 
+#. placeholder {0}: conditions.precipitation24hMm
+#: src/features/logTick/common/ui/ConditionsSection.tsx:143
+#~ msgid "Rain over 24 h: {0} mm"
+#~ msgstr "опади за 24 год: {0} мм"
+
 #: src/pages/sector/common/hooks/useRouteSortLabel.ts:10
 msgid "Rating"
 msgstr "Рейтинг"
@@ -1574,6 +1665,10 @@ msgstr "Редпоінт"
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:126
 #~ msgid "Redraw line"
 #~ msgstr "Перемалювати лінію"
+
+#: src/features/logTick/common/ui/ConditionsSection.tsx:87
+#~ msgid "Refresh"
+#~ msgstr "Оновити"
 
 #: src/pages/region/desktop/ui/RegionEditSection.tsx:29
 msgid "Region"
@@ -1723,7 +1818,7 @@ msgstr "Траси, які ви тут пролізли"
 #: src/features/avatarUpload/desktop/CropAvatarDialog.tsx:37
 #: src/features/avatarUpload/mobile/CropAvatarSheet.tsx:31
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:182
+#: src/features/logTick/common/ui/TickForm.tsx:197
 #: src/features/routeComment/desktop/EditRouteCommentDialog.tsx:29
 #: src/features/routeComment/mobile/EditRouteCommentSheet.tsx:24
 msgid "Save"
@@ -1742,7 +1837,7 @@ msgid "Saved changes go live for everyone straight away."
 msgstr "Збережені зміни одразу стають видимими всім."
 
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:180
+#: src/features/logTick/common/ui/TickForm.tsx:195
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:54
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:95
 msgid "Saving…"
@@ -1798,7 +1893,7 @@ msgstr "Обрано: {0}"
 msgid "Sending code…"
 msgstr "Надсилаємо код…"
 
-#: src/features/logTick/common/ui/TickForm.tsx:145
+#: src/features/logTick/common/ui/TickForm.tsx:160
 msgid "Share your thoughts"
 msgstr "Що скажеш?"
 
@@ -1893,13 +1988,25 @@ msgstr "Сортувати маршрути"
 msgid "Sport"
 msgstr "Спорт"
 
+#: src/pages/logbook/common/ui/SeasonIcon.tsx:22
+#~ msgid "Spring"
+#~ msgstr "Весна"
+
 #: src/features/logTick/common/ui/AscentStyleChoice.tsx:24
 #~ msgid "Style"
 #~ msgstr "Стиль"
 
+#: src/pages/logbook/common/ui/SeasonIcon.tsx:23
+#~ msgid "Summer"
+#~ msgstr "Літо"
+
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:225
 msgid "System"
 msgstr "Система"
+
+#: src/features/logTick/common/ui/ConditionsSection.tsx:86
+#~ msgid "Temperature"
+#~ msgstr "Температура"
 
 #: src/features/topoEditor/desktop/LeaveEditorDialog.tsx:33
 msgid "The edits you have not saved yet are dropped, and the catalog keeps what it had."
@@ -1940,6 +2047,10 @@ msgstr "Нове фото має інші пропорції. Лінії збе�
 #: src/features/topoEditor/desktop/TopoEditorRouteDesktop.tsx:101
 msgid "The sector has no photo yet — add one in the sector editor."
 msgstr "У секторі ще немає фото — додайте його в редакторі сектора."
+
+#: src/features/logTick/common/ui/ConditionsSection.tsx:114
+msgid "The sector has no point — fill the conditions in"
+msgstr "Сектор без координат — заповніть умови вручну"
 
 #: src/features/catalogEdit/desktop/DeleteSectorDialog.tsx:39
 #~ msgid "The sector is not empty"
@@ -2038,6 +2149,10 @@ msgstr "Цей сектор в архіві, тож поза каталогом.
 #: src/pages/sector/mobile/PageSectorMobile.tsx:102
 #~ msgid "This sector was removed from the catalog. Its routes and everything climbers left on them — ascents, photos, links and comments — are still here."
 #~ msgstr "Цей сектор прибрали з каталогу. Його маршрути й усе, що лишили на них скелелази — пролази, фото, посилання й коментарі — досі тут."
+
+#: src/features/logTick/common/ui/ConditionsSection.tsx:103
+msgid "Time"
+msgstr "Час"
 
 #: src/shared/ui/AscentTypeLabel.tsx:27
 msgid "Top rope"
@@ -2160,9 +2275,21 @@ msgstr "Відео та фото ({mediaCount})"
 msgid "We sent a code to <0>{0}</0>"
 msgstr "Ми надіслали код на <0>{0}</0>"
 
-#: src/features/logTick/common/ui/TickForm.tsx:96
+#: src/features/logTick/common/ui/ConditionsSection.tsx:169
+msgid "Weather by Open-Meteo.com"
+msgstr "Погода — Open-Meteo.com"
+
+#: src/features/logTick/common/ui/ConditionsSection.tsx:87
 msgid "When did you climb it?"
 msgstr "Коли ти це проліз?"
+
+#: src/features/logTick/common/ui/ConditionsSection.tsx:110
+#~ msgid "Wind"
+#~ msgstr "Вітер"
+
+#: src/pages/logbook/common/ui/SeasonIcon.tsx:21
+#~ msgid "Winter"
+#~ msgstr "Зима"
 
 #: src/pages/logbook/common/ui/TicksGroupedList.tsx:54
 msgid "Without a grade"

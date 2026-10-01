@@ -13,8 +13,10 @@ import { ClimberPicker } from '@web/features/climberPicker';
 import type { AscentType } from '@web/shared/ui';
 
 import type { CreateTick, GradeOpinion, PendingMedia, Tick } from '../entities';
+import { useTickConditions } from '../hooks';
 import { AscentTypeChoice } from './AscentTypeChoice';
 import { AttemptsStepper } from './AttemptsStepper';
+import { ConditionsSection } from './ConditionsSection';
 import { GradeFeelChoice } from './GradeFeelChoice';
 import { TickFormSection } from './TickFormSection';
 import { TickMediaField } from './TickMediaField';
@@ -23,6 +25,7 @@ const TYPES_WITH_ATTEMPTS: AscentType[] = ['redpoint', 'toprope', 'attempt'];
 
 export interface Props {
   tick?: Tick;
+  idRoute: string;
   routeGrade?: string | null;
   routeGradeScale?: GradeScale | null;
   isPending: boolean;
@@ -32,6 +35,7 @@ export interface Props {
 
 export const TickForm = ({
   tick,
+  idRoute,
   routeGrade,
   routeGradeScale,
   isPending,
@@ -43,7 +47,10 @@ export const TickForm = ({
     tick?.ascentType ?? 'redpoint'
   );
   const [climbedAt, setClimbedAt] = useState(
-    () => tick?.climbedAt ?? todayIso()
+    () => tick?.climbedAt ?? nowLocal().date
+  );
+  const [climbedAtTime, setClimbedAtTime] = useState(
+    () => tick?.climbedAtTime ?? nowLocal().time
   );
   const [attempts, setAttempts] = useState<number | null>(
     tick?.attempts ?? null
@@ -68,6 +75,13 @@ export const TickForm = ({
   const [media, setMedia] = useState<PendingMedia>({ links: [], files: [] });
 
   const hasAttempts = TYPES_WITH_ATTEMPTS.includes(ascentType);
+  const { conditions, hasPoint, isLoading, isEdited, setField, resetField } =
+    useTickConditions({
+      idRoute,
+      climbedAt,
+      climbedAtTime,
+      stored: tick?.weather
+    });
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -78,6 +92,8 @@ export const TickForm = ({
         // climbed_at is NOT NULL with a default, so an empty field drops the
         // key rather than sending an empty string.
         ...(climbedAt ? { climbedAt } : {}),
+        climbedAtTime: climbedAtTime || null,
+        weather: conditions,
         attempts: hasAttempts ? attempts : null,
         rating,
         gradeVote: gradeVote || null,
@@ -93,26 +109,18 @@ export const TickForm = ({
 
   return (
     <FormStyled onSubmit={handleSubmit}>
-      <TickFormSection isFirst title={<Trans>When did you climb it?</Trans>}>
-        <RowStyled>
-          <TextField
-            fullWidth
-            size="small"
-            type="date"
-            label={t`Date`}
-            value={climbedAt}
-            slotProps={{ inputLabel: { shrink: true } }}
-            onChange={(event) => setClimbedAt(event.target.value)}
-          />
-          <ClimberPicker
-            value={partner}
-            label={t`Partner`}
-            name={partnerName}
-            onChange={setPartner}
-            onNameChange={setPartnerName}
-          />
-        </RowStyled>
-      </TickFormSection>
+      <ConditionsSection
+        climbedAt={climbedAt}
+        climbedAtTime={climbedAtTime}
+        conditions={conditions}
+        hasPoint={hasPoint}
+        isLoading={isLoading}
+        isEdited={isEdited}
+        onDateChange={setClimbedAt}
+        onTimeChange={setClimbedAtTime}
+        onFieldChange={setField}
+        onFieldReset={resetField}
+      />
 
       <TickFormSection title={<Trans>How did you climb it?</Trans>}>
         <TypeRowStyled>
@@ -121,6 +129,13 @@ export const TickForm = ({
             <AttemptsStepper value={attempts} onChange={setAttempts} />
           )}
         </TypeRowStyled>
+        <ClimberPicker
+          value={partner}
+          label={t`Partner`}
+          name={partnerName}
+          onChange={setPartner}
+          onNameChange={setPartnerName}
+        />
       </TickFormSection>
 
       <TickFormSection title={<Trans>How hard is the route?</Trans>}>
@@ -189,7 +204,16 @@ export const TickForm = ({
   );
 };
 
-const todayIso = () => new Date().toISOString().slice(0, 10);
+// Local, not UTC: an evening ascent would otherwise be logged for tomorrow.
+const nowLocal = () => {
+  const now = new Date();
+  const pad = (value: number) => String(value).padStart(2, '0');
+
+  return {
+    date: `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`,
+    time: `${pad(now.getHours())}:${pad(now.getMinutes())}`
+  };
+};
 
 const FormStyled = styled('form')`
   display: flex;
@@ -204,19 +228,14 @@ const TypeRowStyled = styled('div')`
   gap: ${({ theme }) => theme.spacing(1.5)};
 `;
 
-const RowStyled = styled('div')`
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: ${({ theme }) => theme.spacing(2)};
-  align-items: start;
-
-  ${({ theme }) => theme.breakpoints.down('sm')} {
-    grid-template-columns: minmax(0, 1fr);
-  }
-`;
-
 const ActionsStyled = styled('div')`
+  position: sticky;
+  z-index: 1;
+  bottom: 0;
   display: flex;
   justify-content: flex-end;
   gap: ${({ theme }) => theme.spacing(1)};
+  padding: ${({ theme }) => theme.spacing(1.5, 0, 2.5)};
+  background-color: ${({ theme }) => theme.palette.background.paper};
+  border-top: 1px solid ${({ theme }) => theme.palette.divider};
 `;

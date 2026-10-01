@@ -85,11 +85,32 @@ msgstr "{0, plural, one {# sector} few {# sectors} many {# sectors} other {# sec
 #~ msgid "{0} attempts"
 #~ msgstr "{0} attempts"
 
+#. placeholder {0}: phase.hours
+#: src/features/logTick/common/ui/ConditionsSection.tsx:155
+#: src/pages/logbook/common/ui/TickConditions.tsx:46
+#~ msgid "{0} h before sunset"
+#~ msgstr "{0} h before sunset"
+
+#. placeholder {0}: phase.hours
+#: src/pages/logbook/common/ui/TickConditions.tsx:46
+#~ msgid "{0} h left"
+#~ msgstr "{0} h left"
+
 #. placeholder {0}: route.length
 #: src/pages/route/common/ui/RouteDetails.tsx:57
 #: src/pages/sector/common/ui/RouteCard.tsx:72
 msgid "{0} m"
 msgstr "{0} m"
+
+#. placeholder {0}: weather.windSpeedMs
+#: src/pages/logbook/common/ui/TickConditions.tsx:34
+#~ msgid "{0} m/s"
+#~ msgstr "{0} m/s"
+
+#. placeholder {0}: conditions.precipitation24hMm
+#: src/features/logTick/common/ui/ConditionsSection.tsx:156
+msgid "{0} mm / 24 h"
+msgstr "{0} mm / 24 h"
 
 #. placeholder {0}: mapped.length
 #: src/features/sectorMap/common/ui/SectorMapList.tsx:48
@@ -206,7 +227,7 @@ msgstr "{sector} leaves the catalog for everyone, together with its routes. Noth
 #~ msgid "{sectorName} is not empty"
 #~ msgstr "{sectorName} is not empty"
 
-#: src/features/logTick/common/ui/TickForm.tsx:140
+#: src/features/logTick/common/ui/TickForm.tsx:155
 msgid "{stars} of 5"
 msgstr "{stars} of 5"
 
@@ -221,6 +242,14 @@ msgstr "{total, plural, one {# ascent} few {# ascents} many {# ascents} other {#
 #: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:39
 msgid "{total, plural, one {# vote} other {# votes}}"
 msgstr "{total, plural, one {# vote} other {# votes}}"
+
+#: src/features/logTick/common/ui/ConditionsSection.tsx:99
+#~ msgid "%"
+#~ msgstr "%"
+
+#: src/features/logTick/common/ui/ConditionsSection.tsx:87
+#~ msgid "°C"
+#~ msgstr "°C"
 
 #: src/features/catalogEdit/desktop/PurgeDialog.tsx:24
 msgid "<0>{name}</0> and everything filed under it leave the database for good — the archive will have nothing left to bring back. Climbers left nothing here, so none of their work goes with it."
@@ -318,6 +347,10 @@ msgstr "Add beta and photos that help the next climber"
 #~ msgid "Add beta comments"
 #~ msgstr "Add beta comments"
 
+#: src/pages/logbook/common/ui/BackfillWeatherButton.tsx:17
+#~ msgid "Add conditions"
+#~ msgstr "Add conditions"
+
 #: src/features/logTick/common/ui/TickMediaField.tsx:84
 #: src/features/logTick/common/ui/TickMediaField.tsx:92
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:188
@@ -356,9 +389,18 @@ msgstr "Add video or photo"
 msgid "Add yours"
 msgstr "Add yours"
 
-#: src/features/grantAdmin/common/hooks/useApiGrantAdmins.ts:21
+#: src/pages/logbook/common/ui/AscentTypeFilter.tsx:46
+#: src/pages/logbook/common/ui/BackfillWeatherButton.tsx:17
+#~ msgid "Adding…"
+#~ msgstr "Adding…"
+
+#: src/features/grantAdmin/common/hooks/useApiGrantAdmins.ts:25
 msgid "Admin access granted"
 msgstr "Admin access granted"
+
+#: src/pages/logbook/common/ui/TickConditions.tsx:54
+#~ msgid "After sunset"
+#~ msgstr "After sunset"
 
 #: src/pages/logbook/common/ui/AscentTypeFilter.tsx:46
 msgid "All"
@@ -460,7 +502,7 @@ msgstr "Ascent logged"
 msgid "Ascent saved"
 msgstr "Ascent saved"
 
-#: src/features/logTick/common/ui/AscentTypeChoice.tsx:20
+#: src/features/logTick/common/ui/AscentTypeChoice.tsx:21
 #: src/pages/logbook/common/ui/LogbookFilterFields.tsx:46
 msgid "Ascent type"
 msgstr "Ascent type"
@@ -485,6 +527,10 @@ msgstr "Attempt"
 msgid "Auto"
 msgstr "Auto"
 
+#: src/pages/logbook/common/ui/SeasonIcon.tsx:24
+#~ msgid "Autumn"
+#~ msgstr "Autumn"
+
 #: src/pages/home/desktop/ui/HomeEditSidebar.tsx:43
 #: src/pages/region/desktop/ui/RegionEditSidebar.tsx:52
 #~ msgid "Back"
@@ -494,6 +540,10 @@ msgstr "Auto"
 msgid "Back to the catalog"
 msgstr "Back to the catalog"
 
+#: src/features/logTick/common/ui/WeatherField.tsx:57
+msgid "Back to the measured value"
+msgstr "Back to the measured value"
+
 #: src/pages/routeEdit/desktop/PageRouteEditDesktop.tsx:76
 #~ msgid "Back to the route"
 #~ msgstr "Back to the route"
@@ -501,6 +551,11 @@ msgstr "Back to the catalog"
 #: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:65
 #~ msgid "Back to the sector"
 #~ msgstr "Back to the sector"
+
+#: src/pages/logbook/common/ui/TickCard.tsx:155
+#: src/pages/logbook/common/ui/TickConditions.tsx:62
+#~ msgid "Before sunrise"
+#~ msgstr "Before sunrise"
 
 #: src/pages/logbook/common/ui/TickCard.tsx:155
 msgid "Belayer"
@@ -549,7 +604,7 @@ msgstr "Breadcrumb"
 #: src/features/catalogEdit/common/ui/EditActions.tsx:32
 #: src/features/grantAdmin/common/ui/GrantAdminBody.tsx:82
 #: src/features/logTick/common/ui/DeleteTickActions.tsx:17
-#: src/features/logTick/common/ui/TickForm.tsx:176
+#: src/features/logTick/common/ui/TickForm.tsx:191
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:276
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:450
 #: src/features/routeComment/common/ui/DeleteRouteCommentActions.tsx:17
@@ -635,7 +690,7 @@ msgstr "Close editing"
 msgid "Close the editor"
 msgstr "Close the editor"
 
-#: src/features/logTick/common/ui/TickForm.tsx:150
+#: src/features/logTick/common/ui/TickForm.tsx:165
 msgid "Comment"
 msgstr "Comment"
 
@@ -674,6 +729,18 @@ msgstr "Compressing the photo…"
 #: src/features/topoEditor/desktop/UploadPhotoDialog.tsx:158
 #~ msgid "Compression quality"
 #~ msgstr "Compression quality"
+
+#: src/pages/logbook/common/hooks/useApiBackfillWeather.ts:20
+#~ msgid "Conditions added to {filled} ascents"
+#~ msgstr "Conditions added to {filled} ascents"
+
+#: src/pages/logbook/common/hooks/useApiBackfillWeather.ts:19
+#~ msgid "Conditions added to {filled} ascents, {remaining} still to go"
+#~ msgstr "Conditions added to {filled} ascents, {remaining} still to go"
+
+#: src/features/logTick/common/ui/ConditionsSection.tsx:112
+msgid "Conditions, read at the sector"
+msgstr "Conditions, read at the sector"
 
 #: src/pages/login/common/ui/EmailOtpForm.tsx:75
 #: src/pages/login/common/ui/EmailOtpForm.tsx:114
@@ -728,7 +795,7 @@ msgstr "Current photo"
 msgid "Dark"
 msgstr "Dark"
 
-#: src/features/logTick/common/ui/TickForm.tsx:102
+#: src/features/logTick/common/ui/ConditionsSection.tsx:94
 #: src/pages/logbook/common/ui/LogbookFilterFields.tsx:39
 msgid "Date"
 msgstr "Date"
@@ -835,7 +902,17 @@ msgstr "Descending"
 msgid "Description"
 msgstr "Description"
 
-#: src/features/logTick/common/ui/TickForm.tsx:136
+#. placeholder {0}: conditions.dewPointC
+#: src/features/logTick/common/ui/ConditionsSection.tsx:147
+msgid "dew {0}°"
+msgstr "dew {0}°"
+
+#. placeholder {0}: conditions.dewPointC
+#: src/features/logTick/common/ui/ConditionsSection.tsx:137
+#~ msgid "Dew point {0}°C"
+#~ msgstr "Dew point {0}°C"
+
+#: src/features/logTick/common/ui/TickForm.tsx:151
 msgid "Did you like it?"
 msgstr "Did you like it?"
 
@@ -1023,17 +1100,22 @@ msgstr "Has video"
 #~ msgid "Hide archived"
 #~ msgstr "Hide archived"
 
-#: src/features/logTick/common/ui/TickForm.tsx:117
+#: src/features/logTick/common/ui/TickForm.tsx:125
 msgid "How did you climb it?"
 msgstr "How did you climb it?"
 
-#: src/features/logTick/common/ui/TickForm.tsx:126
+#: src/features/logTick/common/ui/TickForm.tsx:141
 msgid "How hard is the route?"
 msgstr "How hard is the route?"
 
 #: src/features/logTick/common/ui/TickForm.tsx:124
 #~ msgid "How it felt"
 #~ msgstr "How it felt"
+
+#: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:82
+#: src/features/logTick/common/ui/ConditionsSection.tsx:98
+#~ msgid "Humidity"
+#~ msgstr "Humidity"
 
 #: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:82
 msgid "It is out of the catalog, and a direct link still opens everything on it."
@@ -1183,7 +1265,7 @@ msgstr "Loading…"
 msgid "Location is blocked for this site. Allow it in the browser to see where you are."
 msgstr "Location is blocked for this site. Allow it in the browser to see where you are."
 
-#: src/features/logTick/common/ui/TickForm.tsx:184
+#: src/features/logTick/common/ui/TickForm.tsx:199
 #: src/pages/route/common/ui/LogTickButton.tsx:40
 msgid "Log ascent"
 msgstr "Log ascent"
@@ -1200,6 +1282,10 @@ msgstr "Log every ascent and watch your grade pyramid build up"
 #: src/pages/route/common/ui/RouteTabs.tsx:41
 msgid "Logbook"
 msgstr "Logbook"
+
+#: src/features/logTick/common/ui/ConditionsSection.tsx:111
+#~ msgid "m/s"
+#~ msgstr "m/s"
 
 #: src/pages/profile/common/ui/AccessSetting.tsx:19
 msgid "Manage admins"
@@ -1436,7 +1522,7 @@ msgstr "Original photo"
 #~ msgid "Other routes"
 #~ msgstr "Other routes"
 
-#: src/features/logTick/common/ui/TickForm.tsx:109
+#: src/features/logTick/common/ui/TickForm.tsx:134
 msgid "Partner"
 msgstr "Partner"
 
@@ -1458,7 +1544,7 @@ msgstr "Photo {0}"
 msgid "Photo {position}"
 msgstr "Photo {position}"
 
-#: src/features/logTick/common/ui/TickForm.tsx:166
+#: src/features/logTick/common/ui/TickForm.tsx:181
 msgid "Photo and video"
 msgstr "Photo and video"
 
@@ -1539,7 +1625,7 @@ msgstr "Position your photo"
 msgid "Post"
 msgstr "Post"
 
-#: src/features/logTick/common/ui/TickForm.tsx:155
+#: src/features/logTick/common/ui/TickForm.tsx:170
 msgid "Private comment"
 msgstr "Private comment"
 
@@ -1564,6 +1650,11 @@ msgstr "Profile"
 #~ msgid "Quality"
 #~ msgstr "Quality"
 
+#. placeholder {0}: conditions.precipitation24hMm
+#: src/features/logTick/common/ui/ConditionsSection.tsx:143
+#~ msgid "Rain over 24 h: {0} mm"
+#~ msgstr "Rain over 24 h: {0} mm"
+
 #: src/pages/sector/common/hooks/useRouteSortLabel.ts:10
 msgid "Rating"
 msgstr "Rating"
@@ -1584,6 +1675,10 @@ msgstr "Redpoint"
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:126
 #~ msgid "Redraw line"
 #~ msgstr "Redraw line"
+
+#: src/features/logTick/common/ui/ConditionsSection.tsx:87
+#~ msgid "Refresh"
+#~ msgstr "Refresh"
 
 #: src/pages/region/desktop/ui/RegionEditSection.tsx:29
 msgid "Region"
@@ -1733,7 +1828,7 @@ msgstr "Routes you have climbed here"
 #: src/features/avatarUpload/desktop/CropAvatarDialog.tsx:37
 #: src/features/avatarUpload/mobile/CropAvatarSheet.tsx:31
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:182
+#: src/features/logTick/common/ui/TickForm.tsx:197
 #: src/features/routeComment/desktop/EditRouteCommentDialog.tsx:29
 #: src/features/routeComment/mobile/EditRouteCommentSheet.tsx:24
 msgid "Save"
@@ -1756,7 +1851,7 @@ msgid "Saved changes go live for everyone straight away."
 msgstr "Saved changes go live for everyone straight away."
 
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:180
+#: src/features/logTick/common/ui/TickForm.tsx:195
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:54
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:95
 msgid "Saving…"
@@ -1812,7 +1907,7 @@ msgstr "Selected: {0}"
 msgid "Sending code…"
 msgstr "Sending code…"
 
-#: src/features/logTick/common/ui/TickForm.tsx:145
+#: src/features/logTick/common/ui/TickForm.tsx:160
 msgid "Share your thoughts"
 msgstr "Share your thoughts"
 
@@ -1907,13 +2002,25 @@ msgstr "Sort routes"
 msgid "Sport"
 msgstr "Sport"
 
+#: src/pages/logbook/common/ui/SeasonIcon.tsx:22
+#~ msgid "Spring"
+#~ msgstr "Spring"
+
 #: src/features/logTick/common/ui/AscentStyleChoice.tsx:24
 #~ msgid "Style"
 #~ msgstr "Style"
 
+#: src/pages/logbook/common/ui/SeasonIcon.tsx:23
+#~ msgid "Summer"
+#~ msgstr "Summer"
+
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:225
 msgid "System"
 msgstr "System"
+
+#: src/features/logTick/common/ui/ConditionsSection.tsx:86
+#~ msgid "Temperature"
+#~ msgstr "Temperature"
 
 #: src/features/topoEditor/desktop/LeaveEditorDialog.tsx:33
 msgid "The edits you have not saved yet are dropped, and the catalog keeps what it had."
@@ -1954,6 +2061,10 @@ msgstr "The new photo has different proportions. The lines are kept, but they wi
 #: src/features/topoEditor/desktop/TopoEditorRouteDesktop.tsx:101
 msgid "The sector has no photo yet — add one in the sector editor."
 msgstr "The sector has no photo yet — add one in the sector editor."
+
+#: src/features/logTick/common/ui/ConditionsSection.tsx:114
+msgid "The sector has no point — fill the conditions in"
+msgstr "The sector has no point — fill the conditions in"
 
 #: src/features/catalogEdit/desktop/DeleteSectorDialog.tsx:39
 #~ msgid "The sector is not empty"
@@ -2052,6 +2163,10 @@ msgstr "This sector is in the archive, so it is out of the catalog. Its routes a
 #: src/pages/sector/mobile/PageSectorMobile.tsx:102
 #~ msgid "This sector was removed from the catalog. Its routes and everything climbers left on them — ascents, photos, links and comments — are still here."
 #~ msgstr "This sector was removed from the catalog. Its routes and everything climbers left on them — ascents, photos, links and comments — are still here."
+
+#: src/features/logTick/common/ui/ConditionsSection.tsx:103
+msgid "Time"
+msgstr "Time"
 
 #: src/shared/ui/AscentTypeLabel.tsx:27
 msgid "Top rope"
@@ -2174,9 +2289,21 @@ msgstr "Video and photo ({mediaCount})"
 msgid "We sent a code to <0>{0}</0>"
 msgstr "We sent a code to <0>{0}</0>"
 
-#: src/features/logTick/common/ui/TickForm.tsx:96
+#: src/features/logTick/common/ui/ConditionsSection.tsx:169
+msgid "Weather by Open-Meteo.com"
+msgstr "Weather by Open-Meteo.com"
+
+#: src/features/logTick/common/ui/ConditionsSection.tsx:87
 msgid "When did you climb it?"
 msgstr "When did you climb it?"
+
+#: src/features/logTick/common/ui/ConditionsSection.tsx:110
+#~ msgid "Wind"
+#~ msgstr "Wind"
+
+#: src/pages/logbook/common/ui/SeasonIcon.tsx:21
+#~ msgid "Winter"
+#~ msgstr "Winter"
 
 #: src/pages/logbook/common/ui/TicksGroupedList.tsx:54
 msgid "Without a grade"
