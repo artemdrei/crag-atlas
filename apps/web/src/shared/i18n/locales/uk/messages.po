@@ -288,6 +288,14 @@ msgstr "Додати фото"
 msgid "Add a photo to start drawing routes on it."
 msgstr "Додайте фото, щоб малювати на ньому маршрути."
 
+#: src/shared/ui/SignInBenefits.tsx:63
+msgid "Add beta and photos that help the next climber"
+msgstr "Додавай бету й фото, які допоможуть наступному"
+
+#: src/features/signInPrompt/common/ui/SignInPromptBody.tsx:26
+#~ msgid "Add beta comments"
+#~ msgstr "Додавати бету в коментарях"
+
 #: src/features/logTick/common/ui/TickMediaField.tsx:84
 #: src/features/logTick/common/ui/TickMediaField.tsx:92
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:188
@@ -296,6 +304,10 @@ msgstr "Додайте фото, щоб малювати на ньому мар�
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:82
 msgid "Add photo"
 msgstr "Додати фото"
+
+#: src/features/signInPrompt/common/ui/SignInPromptBody.tsx:29
+#~ msgid "Add photos and videos"
+#~ msgstr "Додавати фото й відео"
 
 #: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:87
 #: src/pages/home/desktop/ui/HomeEditSidebar.tsx:78
@@ -318,7 +330,7 @@ msgstr "Додати сектор"
 msgid "Add video or photo"
 msgstr "Додати відео або фото"
 
-#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:97
+#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:37
 msgid "Add yours"
 msgstr "Додати своє"
 
@@ -349,6 +361,10 @@ msgstr "Усі пролази за грейдом"
 #: src/pages/logbook/common/ui/LogbookFilterFields.tsx:53
 msgid "All styles"
 msgstr "Усі стилі"
+
+#: src/features/signInPrompt/common/ui/SignInPromptBody.tsx:19
+msgid "An account keeps your logbook, your beta and your photos in one place."
+msgstr "Акаунт тримає твій щоденник, бету й фото в одному місці."
 
 #: src/features/topoEditor/desktop/ui/TopoPointMenu.tsx:44
 msgid "Anchor"
@@ -406,7 +422,7 @@ msgstr "Дії з пролазом"
 msgid "Ascent deleted"
 msgstr "Пролаз видалено"
 
-#: src/features/logTick/common/hooks/useLogTick.ts:30
+#: src/features/logTick/common/hooks/useLogTick.ts:43
 msgid "Ascent logged"
 msgstr "Пролаз записано"
 
@@ -456,7 +472,7 @@ msgstr "Назад до каталогу"
 #~ msgid "Back to the sector"
 #~ msgstr "Назад до сектора"
 
-#: src/pages/logbook/common/ui/TickCard.tsx:127
+#: src/pages/logbook/common/ui/TickCard.tsx:153
 msgid "Belayer"
 msgstr "Страхуючий"
 
@@ -494,7 +510,7 @@ msgstr "Болдер"
 msgid "Bouldering"
 msgstr "Болдеринг"
 
-#: src/shared/ui/PageBreadcrumbs.tsx:27
+#: src/shared/ui/PageBreadcrumbs.tsx:42
 msgid "Breadcrumb"
 msgstr "Навігаційний ланцюжок"
 
@@ -571,11 +587,11 @@ msgstr "Скелелаз з акаунтом"
 msgid "Climbers left nothing here — no ascents, no comments, no photos."
 msgstr "Скелелази тут нічого не лишали — ні пролазів, ні коментарів, ні фото."
 
-#: src/features/topo/desktop/TopoPhotoDialog.tsx:36
-#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:31
-#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:39
-#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:31
-#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:39
+#: src/features/topo/desktop/TopoPhotoDialog.tsx:40
+#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:35
+#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:43
+#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:35
+#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:43
 msgid "Close"
 msgstr "Закрити"
 
@@ -603,7 +619,7 @@ msgstr "Коментар видалено"
 msgid "Comment saved"
 msgstr "Коментар збережено"
 
-#: src/pages/route/common/ui/RouteTabs.tsx:33
+#: src/pages/route/common/ui/RouteTabs.tsx:40
 msgid "Comments"
 msgstr "Коментарі"
 
@@ -652,7 +668,7 @@ msgstr "Країна"
 msgid "Cover"
 msgstr "Головне"
 
-#: src/app/mobile/layout/AppBottomNavigation.tsx:29
+#: src/app/mobile/layout/AppBottomNavigation.tsx:27
 msgid "Crags"
 msgstr "Скелі"
 
@@ -676,7 +692,7 @@ msgstr "Форма рамки"
 msgid "Current photo"
 msgstr "Поточне фото"
 
-#: src/pages/profile/common/ui/ThemeModeSetting.tsx:26
+#: src/pages/profile/common/ui/ThemeModeSetting.tsx:33
 msgid "Dark"
 msgstr "Темна"
 
@@ -712,7 +728,7 @@ msgstr "Видалити коментар"
 msgid "Delete line"
 msgstr "Видалити лінію"
 
-#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:79
+#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:99
 #: src/widgets/routeMedia/desktop/DeleteRouteMediaDialog.tsx:25
 #: src/widgets/routeMedia/mobile/DeleteRouteMediaSheet.tsx:23
 msgid "Delete media"
@@ -791,7 +807,7 @@ msgstr "Опис"
 msgid "Did you like it?"
 msgstr "Як тобі маршрут?"
 
-#: src/shared/ui/DirectionsButton.tsx:24
+#: src/shared/ui/DirectionsButton.tsx:37
 msgid "Directions"
 msgstr "Маршрут"
 
@@ -826,7 +842,7 @@ msgstr "Відпущено на {0}"
 #: src/features/catalogEdit/common/ui/EditToggleButton.tsx:24
 #: src/features/logTick/common/ui/TickMenuItems.tsx:28
 #: src/features/routeComment/common/hooks/useRouteCommentMenuItems.tsx:35
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:145
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:161
 #: src/shared/ui/CatalogCardMenu.tsx:86
 msgid "Edit"
 msgstr "Редагувати"
@@ -995,6 +1011,10 @@ msgstr "Продовжити редагування"
 msgid "Keep the whole photo"
 msgstr "Лишити фото цілим"
 
+#: src/shared/ui/SignInBenefits.tsx:71
+msgid "Keep your grades, language and theme on every device"
+msgstr "Тримай категорії, мову й тему на всіх пристроях"
+
 #: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:22
 #~ msgid "Kept for good — climbers left"
 #~ msgstr "Лишається назавжди — скелелази лишили тут"
@@ -1042,7 +1062,7 @@ msgstr "Вийти без збереження?"
 msgid "Length, m"
 msgstr "Довжина, м"
 
-#: src/pages/profile/common/ui/ThemeModeSetting.tsx:23
+#: src/pages/profile/common/ui/ThemeModeSetting.tsx:30
 msgid "Light"
 msgstr "Світла"
 
@@ -1124,12 +1144,20 @@ msgid "Location is blocked for this site. Allow it in the browser to see where y
 msgstr "Геолокацію для цього сайту заблоковано. Дозволь її в браузері, щоб бачити, де ти."
 
 #: src/features/logTick/common/ui/TickForm.tsx:184
-#: src/pages/route/common/ui/LogTickButton.tsx:43
+#: src/pages/route/common/ui/LogTickButton.tsx:41
 msgid "Log ascent"
 msgstr "Відмітити пролаз"
 
-#: src/app/mobile/layout/AppBottomNavigation.tsx:36
-#: src/pages/route/common/ui/RouteTabs.tsx:34
+#: src/shared/ui/SignInBenefits.tsx:39
+msgid "Log every ascent and watch your grade pyramid build up"
+msgstr "Записуй кожен пролаз і дивись, як росте твоя піраміда категорій"
+
+#: src/features/signInPrompt/common/ui/SignInPromptBody.tsx:22
+#~ msgid "Log your ascents and keep a logbook"
+#~ msgstr "Записувати пролази й вести щоденник"
+
+#: src/app/mobile/layout/AppBottomNavigation.tsx:34
+#: src/pages/route/common/ui/RouteTabs.tsx:41
 msgid "Logbook"
 msgstr "Логбук"
 
@@ -1179,9 +1207,10 @@ msgstr "Перенесено на {0}"
 msgid "My ascents"
 msgstr "Мої пролази"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:37
-#: src/pages/logbook/desktop/PageLogbookDesktop.tsx:43
-#: src/pages/logbook/mobile/PageLogbookMobile.tsx:40
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:35
+#: src/pages/logbook/common/ui/LogbookTeaser.tsx:18
+#: src/pages/logbook/desktop/PageLogbookDesktop.tsx:47
+#: src/pages/logbook/mobile/PageLogbookMobile.tsx:44
 msgid "My logbook"
 msgstr "Мій логбук"
 
@@ -1211,7 +1240,7 @@ msgstr "Новий маршрут"
 msgid "No ascents logged yet."
 msgstr "Поки що жодного пролазу."
 
-#: src/widgets/routeComments/common/ui/RouteComments.tsx:27
+#: src/widgets/routeComments/common/ui/RouteComments.tsx:28
 msgid "No comments yet — be the first to add beta."
 msgstr "Коментарів ще немає — додай бету першим."
 
@@ -1235,7 +1264,7 @@ msgstr "Маршрутів ще немає — додайте перший, а �
 msgid "No topo yet"
 msgstr "Топо ще немає"
 
-#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:36
+#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:48
 msgid "No videos or photos yet."
 msgstr "Відео та фото ще немає."
 
@@ -1247,7 +1276,7 @@ msgstr "Нікого не знайдено"
 msgid "Nobody has logged an ascent yet."
 msgstr "Ще ніхто не записав жодного пролазу."
 
-#: src/pages/route/common/ui/RouteLogbook.tsx:32
+#: src/pages/route/common/ui/RouteLogbook.tsx:35
 msgid "Nobody has logged this route yet."
 msgstr "Цей маршрут ще ніхто не відмітив."
 
@@ -1320,11 +1349,11 @@ msgid "Open region"
 msgstr "Відкрити регіон"
 
 #: src/features/sectorMap/common/ui/SectorPointCard.tsx:31
-#: src/features/sectorMap/mobile/SectorMapMobile.tsx:53
+#: src/features/sectorMap/mobile/SectorMapMobile.tsx:56
 msgid "Open sector"
 msgstr "Відкрити сектор"
 
-#: src/pages/route/desktop/PageRouteDesktop.tsx:92
+#: src/pages/route/desktop/PageRouteDesktop.tsx:94
 msgid "Open the photo"
 msgstr "Відкрити фото"
 
@@ -1465,8 +1494,9 @@ msgstr "Опублікувати"
 msgid "Private comment"
 msgstr "Приватний коментар"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:53
-#: src/app/mobile/layout/AppBottomNavigation.tsx:43
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:51
+#: src/app/mobile/layout/AppBottomNavigation.tsx:41
+#: src/pages/profile/common/ui/ProfileTeaser.tsx:14
 #: src/pages/profile/desktop/PageProfileDesktop.tsx:22
 #: src/pages/profile/mobile/PageProfileMobile.tsx:22
 msgid "Profile"
@@ -1519,15 +1549,15 @@ msgstr "Регіон {0} створено"
 msgid "Region saved"
 msgstr "Регіон збережено"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:30
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:32
 #: src/features/catalogSearch/common/ui/CatalogSearchResults.tsx:22
-#: src/pages/home/desktop/PageHomeDesktop.tsx:55
-#: src/pages/region/desktop/PageRegionDesktop.tsx:80
-#: src/pages/region/mobile/PageRegionMobile.tsx:49
-#: src/pages/route/desktop/PageRouteDesktop.tsx:66
+#: src/pages/home/desktop/PageHomeDesktop.tsx:56
+#: src/pages/region/desktop/PageRegionDesktop.tsx:83
+#: src/pages/region/mobile/PageRegionMobile.tsx:52
+#: src/pages/route/desktop/PageRouteDesktop.tsx:68
 #: src/pages/route/mobile/PageRouteMobile.tsx:48
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:132
-#: src/pages/sector/mobile/PageSectorMobile.tsx:114
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:148
+#: src/pages/sector/mobile/PageSectorMobile.tsx:117
 msgid "Regions"
 msgstr "Регіони"
 
@@ -1704,6 +1734,10 @@ msgstr "Сектор збережено"
 msgid "Sectors"
 msgstr "Сектори"
 
+#: src/shared/ui/SignInBenefits.tsx:47
+msgid "See what everyone else has climbed on a route"
+msgstr "Дивись, хто ще проходив цей маршрут і як"
+
 #: src/features/topoEditor/desktop/ui/TopoEditorToolbar.tsx:49
 #~ msgid "Select"
 #~ msgstr "Вибір"
@@ -1728,15 +1762,50 @@ msgstr "Показати ще"
 msgid "Show on map"
 msgstr "Показати на карті"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:61
+#: src/shared/ui/SignInCta.tsx:35
 msgid "Sign in"
 msgstr "Увійти"
+
+#: src/features/routeComment/common/ui/RouteCommentComposer.tsx:42
+#~ msgid "Sign in to add beta for this route."
+#~ msgstr "Увійди, щоб додати бету до цього маршруту."
+
+#: src/features/signInPrompt/desktop/SignInPromptDialog.tsx:25
+#: src/features/signInPrompt/mobile/SignInPromptSheet.tsx:24
+#~ msgid "Sign in to add media"
+#~ msgstr "Увійди, щоб додати медіа"
+
+#: src/features/signInPrompt/common/ui/SignInPromptBody.tsx:41
+#~ msgid "Sign in to add photos and videos."
+#~ msgstr "Увійди, щоб додати фото й відео."
+
+#: src/pages/profile/common/ui/ProfileTeaser.tsx:27
+#~ msgid "Sign in to keep your logbook, your beta and your settings across devices."
+#~ msgstr "Увійди, щоб зберігати щоденник, бету й налаштування на всіх пристроях."
+
+#: src/features/signInPrompt/desktop/SignInPromptDialog.tsx:22
+#: src/features/signInPrompt/mobile/SignInPromptSheet.tsx:20
+msgid "Sign in to log this ascent"
+msgstr "Увійди, щоб записати цей пролаз"
+
+#: src/pages/logbook/common/ui/LogbookTeaser.tsx:30
+#~ msgid "Sign in to log your ascents and keep a logbook — grades, ascent styles and progress over time."
+#~ msgstr "Увійди, щоб записувати пролази й вести щоденник — категорії, стилі проходження та прогрес у часі."
 
 #: src/pages/login/common/ui/LoginCard.tsx:27
 msgid "Sign in to log your sends"
 msgstr "Увійдіть, щоб відмічати пролази"
 
-#: src/pages/profile/common/ui/SignOutButton.tsx:14
+#: src/pages/route/common/ui/RouteTabsLocked.tsx:21
+#~ msgid "Sign in to see the photos, beta and ascents climbers have left on this route."
+#~ msgstr "Увійди, щоб побачити фото, бету й пролази, які залишили інші на цьому маршруті."
+
+#: src/pages/region/common/ui/SectorsList.tsx:57
+#: src/pages/sector/common/ui/RoutesPanelHeader.tsx:52
+#~ msgid "Sign in to track which routes you have climbed here."
+#~ msgstr "Увійди, щоб бачити, які маршрути тут уже пройдено."
+
+#: src/pages/profile/common/ui/SignOutButton.tsx:12
 msgid "Sign out"
 msgstr "Вийти"
 
@@ -1828,7 +1897,7 @@ msgstr "У секторі ще немає фото — додайте його �
 #~ msgid "The topo editor is available on a desktop screen."
 #~ msgstr "Редактор топо доступний на десктопі."
 
-#: src/pages/profile/common/ui/ThemeModeSetting.tsx:13
+#: src/pages/profile/common/ui/ThemeModeSetting.tsx:14
 msgid "Theme"
 msgstr "Тема"
 
@@ -1935,6 +2004,10 @@ msgstr "Верхня страховка"
 #~ msgid "Topo photo"
 #~ msgstr "Топо-фото"
 
+#: src/shared/ui/SignInBenefits.tsx:55
+msgid "Track your progress sector by sector"
+msgstr "Стеж за прогресом по кожному сектору"
+
 #: src/shared/ui/GradeHistogram.tsx:65
 msgid "Trad"
 msgstr "Трад"
@@ -2009,10 +2082,10 @@ msgstr "Перевіряємо…"
 msgid "Video {position}"
 msgstr "Відео {position}"
 
-#: src/pages/route/common/ui/RouteTabs.tsx:30
-#: src/widgets/routeMedia/common/ui/RouteMediaButton.tsx:22
-#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:29
-#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:29
+#: src/pages/route/common/ui/RouteTabs.tsx:37
+#: src/widgets/routeMedia/common/ui/RouteMediaButton.tsx:26
+#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:33
+#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:33
 msgid "Video and photo"
 msgstr "Відео та фото"
 
@@ -2021,7 +2094,7 @@ msgstr "Відео та фото"
 #~ msgid "Video and photo ({0})"
 #~ msgstr "Відео та фото ({0})"
 
-#: src/pages/route/common/ui/RouteTabs.tsx:30
+#: src/pages/route/common/ui/RouteTabs.tsx:37
 msgid "Video and photo ({mediaCount})"
 msgstr "Відео та фото ({mediaCount})"
 
@@ -2054,6 +2127,10 @@ msgstr "Заповнено автоматично з назви вище"
 msgid "Year"
 msgstr "Рік"
 
+#: src/pages/profile/common/ui/ProfileTeaser.tsx:16
+msgid "Your account keeps your logbook, your beta and your settings in one place."
+msgstr "Акаунт тримає щоденник, бету й налаштування в одному місці."
+
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:39
 msgid "Your beta"
 msgstr "Твоя бета"
@@ -2061,6 +2138,10 @@ msgstr "Твоя бета"
 #: src/features/logTick/common/ui/GradeFeelChoice.tsx:44
 msgid "Your grade"
 msgstr "Твій грейд"
+
+#: src/pages/logbook/common/ui/LogbookTeaser.tsx:20
+msgid "Your logbook keeps every ascent you have ever logged."
+msgstr "Щоденник зберігає кожен пролаз, який ти записав."
 
 #: src/shared/ui/NameFields.tsx:58
 msgid "Your own spelling — the name above no longer changes it"

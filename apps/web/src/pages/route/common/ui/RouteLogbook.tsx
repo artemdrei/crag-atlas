@@ -1,4 +1,5 @@
 import { Trans } from '@lingui/react/macro';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
@@ -7,6 +8,7 @@ import { TickActionsButton } from '@web/features/logTick';
 import {
   ApiFeedback,
   AscentTypeBadge,
+  EmptyState,
   ListSkeleton,
   UserAvatar
 } from '@web/shared/ui';
@@ -28,9 +30,10 @@ export const RouteLogbook = ({ idRoute }: Props) => {
     <ListStyled>
       <ApiFeedback failure={failure} />
       {ticks.length === 0 && (
-        <Typography variant="body2" color="text.secondary">
-          <Trans>Nobody has logged this route yet.</Trans>
-        </Typography>
+        <EmptyState
+          icon={<BookmarkBorderIcon />}
+          message={<Trans>Nobody has logged this route yet.</Trans>}
+        />
       )}
       {ticks.map((tick) => {
         const media = tick.media ?? [];

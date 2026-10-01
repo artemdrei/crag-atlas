@@ -9,12 +9,10 @@ import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import Paper from '@mui/material/Paper';
 import { keyframes, styled } from '@mui/material/styles';
 
-import { useUser } from '@web/app/providers';
 import { ROUTES } from '@web/app/router/routes';
 
 export const AppBottomNavigation = () => {
   const location = useLocation();
-  const { isAuthenticated } = useUser();
 
   const section = [ROUTES.PROFILE, ROUTES.LOGBOOK].find((route) =>
     location.pathname.startsWith(route)
@@ -23,8 +21,8 @@ export const AppBottomNavigation = () => {
   return (
     <NavPaperStyled elevation={2}>
       <BottomNavigationStyled showLabels value={section ?? ROUTES.INDEX}>
-        {/* Links, not buttons: each one goes to a page, and a signed-out
-            reader is sent to the sign-in page rather than nowhere. */}
+        {/* Links, not buttons: each one goes to a page, and every page here
+            is readable signed out. */}
         <BottomNavigationAction
           label={<Trans>Crags</Trans>}
           value={ROUTES.INDEX}
@@ -37,14 +35,14 @@ export const AppBottomNavigation = () => {
           value={ROUTES.LOGBOOK}
           icon={<BookmarkIcon />}
           component={Link}
-          to={isAuthenticated ? ROUTES.LOGBOOK : ROUTES.LOGIN}
+          to={ROUTES.LOGBOOK}
         />
         <BottomNavigationAction
           label={<Trans>Profile</Trans>}
           value={ROUTES.PROFILE}
           icon={<PersonIcon />}
           component={Link}
-          to={isAuthenticated ? ROUTES.PROFILE : ROUTES.LOGIN}
+          to={ROUTES.PROFILE}
         />
       </BottomNavigationStyled>
     </NavPaperStyled>

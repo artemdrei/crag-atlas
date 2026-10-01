@@ -48,6 +48,13 @@ test.describe('a visitor who has not signed in', () => {
 
     await test.step('logging an ascent asks them to sign in first', async () => {
       await page.getByRole('button', { name: 'Log ascent' }).click();
+
+      const prompt = page.getByRole('dialog', {
+        name: 'Sign in to log this ascent'
+      });
+
+      await expect(prompt).toBeVisible();
+      await prompt.getByRole('link', { name: 'Sign in' }).click();
       await expect(page).toHaveURL(/\/login/);
       await page.goBack();
     });

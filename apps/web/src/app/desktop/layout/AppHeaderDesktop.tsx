@@ -10,14 +10,16 @@ import Toolbar from '@mui/material/Toolbar';
 
 import { useProfileIdentity, useUser } from '@web/app/providers';
 import { ROUTES } from '@web/app/router/routes';
+import { useSignInLink } from '@web/app/router/useSignInLink';
 import { CONTENT_MAX_WIDTH } from '@web/shared/theme/layout';
-import { UserAvatar, Wordmark } from '@web/shared/ui';
+import { SignInCta, UserAvatar, Wordmark } from '@web/shared/ui';
 
 export const AppHeaderDesktop = () => {
   const { t } = useLingui();
   const navigate = useNavigate();
   const { isAuthenticated, isLoading } = useUser();
   const { avatarUrl, displayName } = useProfileIdentity();
+  const signInLink = useSignInLink();
 
   return (
     <HeaderStyled position="static" color="transparent" elevation={0}>
@@ -29,11 +31,7 @@ export const AppHeaderDesktop = () => {
         <Button color="inherit" component={Link} to={ROUTES.INDEX}>
           <Trans>Regions</Trans>
         </Button>
-        <Button
-          color="inherit"
-          component={Link}
-          to={isAuthenticated ? ROUTES.LOGBOOK : ROUTES.LOGIN}
-        >
+        <Button color="inherit" component={Link} to={ROUTES.LOGBOOK}>
           <Trans>My logbook</Trans>
         </Button>
         <SpacerStyled />
@@ -57,9 +55,7 @@ export const AppHeaderDesktop = () => {
               <AvatarStyled name={displayName} avatarUrl={avatarUrl} />
             </IconButton>
           ) : (
-            <Button variant="outlined" component={Link} to={ROUTES.LOGIN}>
-              <Trans>Sign in</Trans>
-            </Button>
+            <SignInCta to={signInLink.to} from={signInLink.from} />
           ))}
       </ToolbarStyled>
     </HeaderStyled>

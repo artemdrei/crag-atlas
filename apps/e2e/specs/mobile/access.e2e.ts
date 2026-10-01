@@ -47,8 +47,14 @@ test.describe('a visitor who has not signed in', () => {
       ).toHaveCount(0);
     });
 
-    await test.step('the logbook asks them in first', async () => {
+    await test.step('the logbook shows what signing in would give', async () => {
       await phone.getByRole('link', { name: 'Logbook' }).click();
+      await expect(phone).toHaveURL(/\/logbook/);
+      await expect(
+        phone.getByRole('heading', { name: 'My logbook' })
+      ).toBeVisible();
+
+      await phone.getByRole('link', { name: 'Sign in' }).click();
       await expect(phone).toHaveURL(/\/login/);
     });
   });

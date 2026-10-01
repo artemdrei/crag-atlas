@@ -1,16 +1,14 @@
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import { styled } from '@mui/material/styles';
 
-import { ROUTES } from '@web/app/router/routes';
+import { useSignInReturnPath } from '@web/app/router/useSignInLink';
 
 import { LoginCard } from '../common';
 
 export const PageLoginMobile = () => {
-  const location = useLocation();
   const navigate = useNavigate();
-  const from =
-    (location.state as { from?: string } | null)?.from ?? ROUTES.INDEX;
+  const from = useSignInReturnPath();
 
   return (
     <PageStyled>

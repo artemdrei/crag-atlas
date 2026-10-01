@@ -7,8 +7,6 @@ import { useUser } from '@web/app/providers';
 export const SignOutButton = () => {
   const { signOut } = useUser();
 
-  // No navigate() here: dropping the session makes ProtectedRoute redirect,
-  // and two navigations would race each other.
   return (
     <ButtonStyled fullWidth size="large" variant="outlined" onClick={signOut}>
       <Trans>Sign out</Trans>
