@@ -94,11 +94,13 @@ msgstr "{0} м"
 
 #. placeholder {0}: weather.windSpeedMs
 #: src/pages/logbook/common/ui/TickConditions.tsx:34
-#~ msgid "{0} m/s"
-#~ msgstr "{0} м/с"
+msgid "{0} m/s"
+msgstr "{0} м/с"
 
 #. placeholder {0}: conditions.precipitation24hMm
+#. placeholder {0}: weather.precipitation24hMm
 #: src/features/logTick/common/ui/ConditionsSection.tsx:156
+#: src/pages/logbook/common/ui/TickConditions.tsx:29
 msgid "{0} mm / 24 h"
 msgstr "{0} мм / 24 год"
 
@@ -338,8 +340,8 @@ msgstr "Додавай бету й фото, які допоможуть нас�
 #~ msgstr "Додавати бету в коментарях"
 
 #: src/pages/logbook/common/ui/BackfillWeatherButton.tsx:17
-#~ msgid "Add conditions"
-#~ msgstr "Додати умови"
+msgid "Add conditions"
+msgstr "Додати умови"
 
 #: src/features/logTick/common/ui/TickMediaField.tsx:84
 #: src/features/logTick/common/ui/TickMediaField.tsx:92
@@ -379,10 +381,9 @@ msgstr "Додати відео або фото"
 msgid "Add yours"
 msgstr "Додати своє"
 
-#: src/pages/logbook/common/ui/AscentTypeFilter.tsx:46
 #: src/pages/logbook/common/ui/BackfillWeatherButton.tsx:17
-#~ msgid "Adding…"
-#~ msgstr "Додаємо…"
+msgid "Adding…"
+msgstr "Додаємо…"
 
 #: src/features/grantAdmin/common/hooks/useApiGrantAdmins.ts:25
 msgid "Admin access granted"
@@ -517,9 +518,9 @@ msgstr "Спроба"
 msgid "Auto"
 msgstr "Авто"
 
-#: src/pages/logbook/common/ui/SeasonIcon.tsx:24
-#~ msgid "Autumn"
-#~ msgstr "Осінь"
+#: src/pages/logbook/common/ui/SeasonIcon.tsx:20
+msgid "Autumn"
+msgstr "Осінь"
 
 #: src/pages/home/desktop/ui/HomeEditSidebar.tsx:43
 #: src/pages/region/desktop/ui/RegionEditSidebar.tsx:52
@@ -547,7 +548,7 @@ msgstr "Повернути виміряне значення"
 #~ msgid "Before sunrise"
 #~ msgstr "до сходу"
 
-#: src/pages/logbook/common/ui/TickCard.tsx:155
+#: src/pages/logbook/common/ui/TickCard.tsx:172
 msgid "Belayer"
 msgstr "Страхуючий"
 
@@ -721,12 +722,12 @@ msgstr "Стискаємо фото…"
 #~ msgstr "Якість стиснення"
 
 #: src/pages/logbook/common/hooks/useApiBackfillWeather.ts:20
-#~ msgid "Conditions added to {filled} ascents"
-#~ msgstr "Умови додано до {filled} пролазів"
+msgid "Conditions added to {filled} ascents"
+msgstr "Умови додано до {filled} пролазів"
 
 #: src/pages/logbook/common/hooks/useApiBackfillWeather.ts:19
-#~ msgid "Conditions added to {filled} ascents, {remaining} still to go"
-#~ msgstr "Умови додано до {filled} пролазів, лишилося {remaining}"
+msgid "Conditions added to {filled} ascents, {remaining} still to go"
+msgstr "Умови додано до {filled} пролазів, лишилося {remaining}"
 
 #: src/features/logTick/common/ui/ConditionsSection.tsx:112
 msgid "Conditions, read at the sector"
@@ -1066,13 +1067,17 @@ msgstr "Надати доступ"
 #~ msgid "Grid"
 #~ msgstr "Плитка"
 
+#: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:27
+msgid "hard"
+msgstr "жорстко"
+
 #: src/features/logTick/common/ui/GradeOpinionChoice.tsx:26
 #~ msgid "Hard"
 #~ msgstr "Жорсткіше"
 
 #: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:27
-msgid "harder"
-msgstr "жорсткіше"
+#~ msgid "harder"
+#~ msgstr "жорсткіше"
 
 #: src/features/logTick/common/ui/GradeFeelChoice.tsx:57
 msgid "Harder"
@@ -1329,8 +1334,8 @@ msgstr "Мої пролази"
 
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:35
 #: src/pages/logbook/common/ui/LogbookTeaser.tsx:18
-#: src/pages/logbook/desktop/PageLogbookDesktop.tsx:47
-#: src/pages/logbook/mobile/PageLogbookMobile.tsx:44
+#: src/pages/logbook/desktop/PageLogbookDesktop.tsx:48
+#: src/pages/logbook/mobile/PageLogbookMobile.tsx:45
 msgid "My logbook"
 msgstr "Мій логбук"
 
@@ -1956,13 +1961,17 @@ msgstr "Увійдіть, щоб відмічати пролази"
 msgid "Sign out"
 msgstr "Вийти"
 
+#: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:25
+msgid "soft"
+msgstr "мʼяко"
+
 #: src/features/logTick/common/ui/GradeOpinionChoice.tsx:22
 #~ msgid "Soft"
 #~ msgstr "Мʼякше"
 
 #: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:25
-msgid "softer"
-msgstr "м'якше"
+#~ msgid "softer"
+#~ msgstr "м'якше"
 
 #: src/features/logTick/common/ui/GradeFeelChoice.tsx:36
 msgid "Softer"
@@ -1988,17 +1997,17 @@ msgstr "Сортувати маршрути"
 msgid "Sport"
 msgstr "Спорт"
 
-#: src/pages/logbook/common/ui/SeasonIcon.tsx:22
-#~ msgid "Spring"
-#~ msgstr "Весна"
+#: src/pages/logbook/common/ui/SeasonIcon.tsx:18
+msgid "Spring"
+msgstr "Весна"
 
 #: src/features/logTick/common/ui/AscentStyleChoice.tsx:24
 #~ msgid "Style"
 #~ msgstr "Стиль"
 
-#: src/pages/logbook/common/ui/SeasonIcon.tsx:23
-#~ msgid "Summer"
-#~ msgstr "Літо"
+#: src/pages/logbook/common/ui/SeasonIcon.tsx:19
+msgid "Summer"
+msgstr "Літо"
 
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:225
 msgid "System"
@@ -2287,9 +2296,9 @@ msgstr "Коли ти це проліз?"
 #~ msgid "Wind"
 #~ msgstr "Вітер"
 
-#: src/pages/logbook/common/ui/SeasonIcon.tsx:21
-#~ msgid "Winter"
-#~ msgstr "Зима"
+#: src/pages/logbook/common/ui/SeasonIcon.tsx:17
+msgid "Winter"
+msgstr "Зима"
 
 #: src/pages/logbook/common/ui/TicksGroupedList.tsx:54
 msgid "Without a grade"

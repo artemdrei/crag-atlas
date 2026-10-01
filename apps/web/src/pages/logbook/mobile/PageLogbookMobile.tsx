@@ -6,6 +6,7 @@ import { ApiFeedback, PageShell } from '@web/shared/ui';
 
 import {
   AscentTypeFilter,
+  BackfillWeatherButton,
   DisciplineTabs,
   GradeChart,
   LoadMoreOnScroll,
@@ -44,12 +45,15 @@ export const PageLogbookMobile = () => {
           <Trans>My logbook</Trans>
         </Typography>
         {tab === 'mine' && (
-          <LogbookFiltersButton
-            sort={sort}
-            ascentType={ascentType}
-            onSortChange={changeSort}
-            onAscentTypeChange={changeAscentType}
-          />
+          <ToolbarStyled>
+            <BackfillWeatherButton />
+            <LogbookFiltersButton
+              sort={sort}
+              ascentType={ascentType}
+              onSortChange={changeSort}
+              onAscentTypeChange={changeAscentType}
+            />
+          </ToolbarStyled>
         )}
       </HeaderRowStyled>
 
@@ -102,4 +106,10 @@ const HeaderRowStyled = styled('div')`
   align-items: center;
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacing(1)};
+`;
+
+const ToolbarStyled = styled('div')`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing(0.5)};
 `;

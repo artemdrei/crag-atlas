@@ -104,11 +104,13 @@ msgstr "{0} m"
 
 #. placeholder {0}: weather.windSpeedMs
 #: src/pages/logbook/common/ui/TickConditions.tsx:34
-#~ msgid "{0} m/s"
-#~ msgstr "{0} m/s"
+msgid "{0} m/s"
+msgstr "{0} m/s"
 
 #. placeholder {0}: conditions.precipitation24hMm
+#. placeholder {0}: weather.precipitation24hMm
 #: src/features/logTick/common/ui/ConditionsSection.tsx:156
+#: src/pages/logbook/common/ui/TickConditions.tsx:29
 msgid "{0} mm / 24 h"
 msgstr "{0} mm / 24 h"
 
@@ -348,8 +350,8 @@ msgstr "Add beta and photos that help the next climber"
 #~ msgstr "Add beta comments"
 
 #: src/pages/logbook/common/ui/BackfillWeatherButton.tsx:17
-#~ msgid "Add conditions"
-#~ msgstr "Add conditions"
+msgid "Add conditions"
+msgstr "Add conditions"
 
 #: src/features/logTick/common/ui/TickMediaField.tsx:84
 #: src/features/logTick/common/ui/TickMediaField.tsx:92
@@ -389,10 +391,9 @@ msgstr "Add video or photo"
 msgid "Add yours"
 msgstr "Add yours"
 
-#: src/pages/logbook/common/ui/AscentTypeFilter.tsx:46
 #: src/pages/logbook/common/ui/BackfillWeatherButton.tsx:17
-#~ msgid "Adding…"
-#~ msgstr "Adding…"
+msgid "Adding…"
+msgstr "Adding…"
 
 #: src/features/grantAdmin/common/hooks/useApiGrantAdmins.ts:25
 msgid "Admin access granted"
@@ -527,9 +528,9 @@ msgstr "Attempt"
 msgid "Auto"
 msgstr "Auto"
 
-#: src/pages/logbook/common/ui/SeasonIcon.tsx:24
-#~ msgid "Autumn"
-#~ msgstr "Autumn"
+#: src/pages/logbook/common/ui/SeasonIcon.tsx:20
+msgid "Autumn"
+msgstr "Autumn"
 
 #: src/pages/home/desktop/ui/HomeEditSidebar.tsx:43
 #: src/pages/region/desktop/ui/RegionEditSidebar.tsx:52
@@ -557,7 +558,7 @@ msgstr "Back to the measured value"
 #~ msgid "Before sunrise"
 #~ msgstr "Before sunrise"
 
-#: src/pages/logbook/common/ui/TickCard.tsx:155
+#: src/pages/logbook/common/ui/TickCard.tsx:172
 msgid "Belayer"
 msgstr "Belayer"
 
@@ -731,12 +732,12 @@ msgstr "Compressing the photo…"
 #~ msgstr "Compression quality"
 
 #: src/pages/logbook/common/hooks/useApiBackfillWeather.ts:20
-#~ msgid "Conditions added to {filled} ascents"
-#~ msgstr "Conditions added to {filled} ascents"
+msgid "Conditions added to {filled} ascents"
+msgstr "Conditions added to {filled} ascents"
 
 #: src/pages/logbook/common/hooks/useApiBackfillWeather.ts:19
-#~ msgid "Conditions added to {filled} ascents, {remaining} still to go"
-#~ msgstr "Conditions added to {filled} ascents, {remaining} still to go"
+msgid "Conditions added to {filled} ascents, {remaining} still to go"
+msgstr "Conditions added to {filled} ascents, {remaining} still to go"
 
 #: src/features/logTick/common/ui/ConditionsSection.tsx:112
 msgid "Conditions, read at the sector"
@@ -1076,13 +1077,17 @@ msgstr "Grant access"
 #~ msgid "Grid"
 #~ msgstr "Grid"
 
+#: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:27
+msgid "hard"
+msgstr "hard"
+
 #: src/features/logTick/common/ui/GradeOpinionChoice.tsx:26
 #~ msgid "Hard"
 #~ msgstr "Hard"
 
 #: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:27
-msgid "harder"
-msgstr "harder"
+#~ msgid "harder"
+#~ msgstr "harder"
 
 #: src/features/logTick/common/ui/GradeFeelChoice.tsx:57
 msgid "Harder"
@@ -1339,8 +1344,8 @@ msgstr "My ascents"
 
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:35
 #: src/pages/logbook/common/ui/LogbookTeaser.tsx:18
-#: src/pages/logbook/desktop/PageLogbookDesktop.tsx:47
-#: src/pages/logbook/mobile/PageLogbookMobile.tsx:44
+#: src/pages/logbook/desktop/PageLogbookDesktop.tsx:48
+#: src/pages/logbook/mobile/PageLogbookMobile.tsx:45
 msgid "My logbook"
 msgstr "My logbook"
 
@@ -1970,13 +1975,17 @@ msgstr "Sign in to log your sends"
 msgid "Sign out"
 msgstr "Sign out"
 
+#: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:25
+msgid "soft"
+msgstr "soft"
+
 #: src/features/logTick/common/ui/GradeOpinionChoice.tsx:22
 #~ msgid "Soft"
 #~ msgstr "Soft"
 
 #: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:25
-msgid "softer"
-msgstr "softer"
+#~ msgid "softer"
+#~ msgstr "softer"
 
 #: src/features/logTick/common/ui/GradeFeelChoice.tsx:36
 msgid "Softer"
@@ -2002,17 +2011,17 @@ msgstr "Sort routes"
 msgid "Sport"
 msgstr "Sport"
 
-#: src/pages/logbook/common/ui/SeasonIcon.tsx:22
-#~ msgid "Spring"
-#~ msgstr "Spring"
+#: src/pages/logbook/common/ui/SeasonIcon.tsx:18
+msgid "Spring"
+msgstr "Spring"
 
 #: src/features/logTick/common/ui/AscentStyleChoice.tsx:24
 #~ msgid "Style"
 #~ msgstr "Style"
 
-#: src/pages/logbook/common/ui/SeasonIcon.tsx:23
-#~ msgid "Summer"
-#~ msgstr "Summer"
+#: src/pages/logbook/common/ui/SeasonIcon.tsx:19
+msgid "Summer"
+msgstr "Summer"
 
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:225
 msgid "System"
@@ -2301,9 +2310,9 @@ msgstr "When did you climb it?"
 #~ msgid "Wind"
 #~ msgstr "Wind"
 
-#: src/pages/logbook/common/ui/SeasonIcon.tsx:21
-#~ msgid "Winter"
-#~ msgstr "Winter"
+#: src/pages/logbook/common/ui/SeasonIcon.tsx:17
+msgid "Winter"
+msgstr "Winter"
 
 #: src/pages/logbook/common/ui/TicksGroupedList.tsx:54
 msgid "Without a grade"

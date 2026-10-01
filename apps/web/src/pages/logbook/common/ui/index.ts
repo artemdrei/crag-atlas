@@ -1,4 +1,5 @@
 export { AscentTypeFilter } from './AscentTypeFilter';
+export { BackfillWeatherButton } from './BackfillWeatherButton';
 export { DisciplineTabs } from './DisciplineTabs';
 export { GradeChart } from './GradeChart';
 export { LoadMoreOnScroll } from './LoadMoreOnScroll';
@@ -6,7 +7,9 @@ export { LogbookFilterFields } from './LogbookFilterFields';
 export type { LogbookTab } from './LogbookTabs';
 export { LogbookTabs } from './LogbookTabs';
 export { LogbookTeaser } from './LogbookTeaser';
+export { SeasonIcon } from './SeasonIcon';
 export { TickCard } from './TickCard';
+export { TickConditions } from './TickConditions';
 export { TicksFeed } from './TicksFeed';
 export { TicksGroupedList } from './TicksGroupedList';
 export { TicksList } from './TicksList';

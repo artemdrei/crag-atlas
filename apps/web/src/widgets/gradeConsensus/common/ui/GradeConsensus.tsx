@@ -22,9 +22,9 @@ export const GradeConsensus = ({
   const { t } = useLingui();
 
   const buckets = [
-    { id: 'soft', label: t`softer`, votes: votesSoft },
+    { id: 'soft', label: t`soft`, votes: votesSoft },
     { id: 'neutral', label: grade, votes: votesNeutral },
-    { id: 'hard', label: t`harder`, votes: votesHard }
+    { id: 'hard', label: t`hard`, votes: votesHard }
   ];
   const total = votesSoft + votesNeutral + votesHard;
   const top = Math.max(...buckets.map(({ votes }) => votes));

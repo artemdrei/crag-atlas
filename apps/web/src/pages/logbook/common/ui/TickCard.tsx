@@ -16,6 +16,7 @@ import {
 import { TickActionsButton } from '@web/features/logTick';
 import {
   countryName,
+  formatDate,
   formatDateTime,
   trackCatalogItemOpened
 } from '@web/shared/lib';
@@ -28,6 +29,9 @@ import {
 import { RouteMediaButton } from '@web/widgets/routeMedia';
 
 import type { Tick } from '../entities';
+import { seasonOf } from '../lib';
+import { SeasonIcon } from './SeasonIcon';
+import { TickConditions } from './TickConditions';
 
 interface Place {
   key: string;
@@ -46,6 +50,7 @@ export const TickCard = ({ tick, isCommunity, isGradeHidden }: Props) => {
   const { idUser } = useUser();
   const isMine = !!idUser && idUser === tick.idUser;
   const title = tick.routeName ?? tick.idRoute;
+  const season = seasonOf(tick.climbedAt);
   const places: Place[] = [
     tick.regionCountry
       ? { key: 'country', label: countryName(tick.regionCountry) }
@@ -148,7 +153,19 @@ export const TickCard = ({ tick, isCommunity, isGradeHidden }: Props) => {
         </ActionsStyled>
       </HeaderRowStyled>
 
-      {tick.note && <Typography variant="body2">{tick.note}</Typography>}
+      {isCommunity && tick.authorName && (
+        <AuthorRowStyled>
+          <AvatarStyled
+            name={tick.authorName}
+            avatarUrl={tick.avatarUrl ?? undefined}
+          />
+          <Typography variant="body2" noWrap>
+            {tick.authorName}
+          </Typography>
+        </AuthorRowStyled>
+      )}
+
+      {tick.note && <NoteStyled variant="body2">{tick.note}</NoteStyled>}
 
       {tick.partnerName && (
         <Typography variant="body2" color="text.secondary">
@@ -156,22 +173,18 @@ export const TickCard = ({ tick, isCommunity, isGradeHidden }: Props) => {
         </Typography>
       )}
 
-      <AuthorRowStyled>
-        {isCommunity && tick.authorName && (
-          <>
-            <AvatarStyled
-              name={tick.authorName}
-              avatarUrl={tick.avatarUrl ?? undefined}
-            />
-            <Typography variant="body2">{tick.authorName}</Typography>
-            <Typography variant="body2" color="text.secondary">
-              ·
-            </Typography>
-          </>
-        )}
-        <Typography variant="body2" color="text.secondary">
-          {formatDateTime(tick.createdAt, i18n.locale)}
-        </Typography>
+      <StatsRowStyled>
+        <DateStyled>
+          {season && <SeasonIcon season={season} />}
+          <Typography variant="body2" color="text.secondary">
+            {tick.climbedAtTime
+              ? formatDateTime(
+                  `${tick.climbedAt}T${tick.climbedAtTime}`,
+                  i18n.locale
+                )
+              : formatDate(tick.climbedAt, i18n.locale)}
+          </Typography>
+        </DateStyled>
         {!!tick.rating && (
           <Rating value={tick.rating} precision={0.5} size="small" readOnly />
         )}
@@ -179,10 +192,19 @@ export const TickCard = ({ tick, isCommunity, isGradeHidden }: Props) => {
           ascentType={tick.ascentType}
           attempts={tick.attempts}
         />
-      </AuthorRowStyled>
+      </StatsRowStyled>
+
+      {tick.weather && <TickConditions weather={tick.weather} />}
     </CardStyled>
   );
 };
+
+const NoteStyled = styled(Typography)`
+  padding-left: ${({ theme }) => theme.spacing(1.5)};
+  border-left: 2px solid ${({ theme }) => theme.palette.divider};
+  color: ${({ theme }) => theme.palette.text.secondary};
+  font-style: italic;
+`;
 
 const CardLinkStyled = styled(Link)`
   position: absolute;
@@ -200,6 +222,7 @@ const ActionsStyled = styled('span')`
 
 const CardStyled = styled(Paper)`
   position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(1.5)};
@@ -212,16 +235,29 @@ const CardStyled = styled(Paper)`
   }
 `;
 
+const DateStyled = styled('div')`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing(0.5)};
+`;
+
 const AuthorRowStyled = styled('div')`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing(1)};
 `;
 
+const StatsRowStyled = styled('div')`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing(1)};
+`;
+
 const AvatarStyled = styled(UserAvatar)`
-  width: 24px;
-  height: 24px;
-  font-size: ${({ theme }) => theme.typography.caption.fontSize};
+  width: 32px;
+  height: 32px;
+  font-size: ${({ theme }) => theme.typography.body2.fontSize};
 `;
 
 const NameRowStyled = styled('div')`
