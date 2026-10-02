@@ -43,6 +43,22 @@ export class SearchHitDto {
     description: 'Routes only; community rating, 0..5'
   })
   rating?: number | null;
+
+  @ApiProperty({
+    type: Number,
+    required: false,
+    nullable: true,
+    description: 'Routes only'
+  })
+  boltsCount?: number | null;
+
+  @ApiProperty({
+    type: Number,
+    required: false,
+    nullable: true,
+    description: 'Routes only; logged ascents plus imported ones'
+  })
+  ascentsCount?: number | null;
 }
 
 export class CatalogSearchDto {

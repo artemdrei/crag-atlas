@@ -2850,6 +2850,16 @@
             "type": "number",
             "nullable": true,
             "description": "Routes only; community rating, 0..5"
+          },
+          "boltsCount": {
+            "type": "number",
+            "nullable": true,
+            "description": "Routes only"
+          },
+          "ascentsCount": {
+            "type": "number",
+            "nullable": true,
+            "description": "Routes only; logged ascents plus imported ones"
           }
         },
         "required": ["id", "name", "idRegion"]

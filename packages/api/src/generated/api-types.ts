@@ -1019,6 +1019,10 @@ export interface components {
             gradeScale?: string | null;
             /** @description Routes only; community rating, 0..5 */
             rating?: number | null;
+            /** @description Routes only */
+            boltsCount?: number | null;
+            /** @description Routes only; logged ascents plus imported ones */
+            ascentsCount?: number | null;
         };
         CatalogSearchDto: {
             regions: components["schemas"]["SearchHitDto"][];
