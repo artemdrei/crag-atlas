@@ -1,4 +1,10 @@
-export const ROUTE_SORTS = ['default', 'grade', 'rating', 'ascents'] as const;
+export const ROUTE_SORTS = [
+  'default',
+  'rating',
+  'length',
+  'grade',
+  'ascents'
+] as const;
 
 export type RouteSort = (typeof ROUTE_SORTS)[number];
 

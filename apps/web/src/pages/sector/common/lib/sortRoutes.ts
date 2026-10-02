@@ -16,6 +16,8 @@ const rankOf = (
       return order[gradeKey(route.grade, route.gradeScale)] ?? UNRANKED;
     case 'rating':
       return route.rating ?? 0;
+    case 'length':
+      return route.length ?? 0;
     case 'ascents':
       return route.ascentsCount ?? 0;
     default:

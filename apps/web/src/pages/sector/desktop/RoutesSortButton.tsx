@@ -4,11 +4,13 @@ import { useLingui } from '@lingui/react/macro';
 import TuneIcon from '@mui/icons-material/Tune';
 import Badge from '@mui/material/Badge';
 import IconButton from '@mui/material/IconButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
 import type { RouteSort } from '../common';
-import { ROUTE_SORTS, useRouteSortLabel } from '../common';
+import { ROUTE_SORTS, RouteSortIcon, useRouteSortLabel } from '../common';
 
 export interface Props {
   sort: RouteSort;
@@ -51,7 +53,10 @@ export const RoutesSortButton = ({ sort, onSortChange }: Props) => {
             selected={one === sort}
             onClick={() => handleSortChange(one)}
           >
-            {sortLabel(one)}
+            <ListItemIcon>
+              <RouteSortIcon sort={one} />
+            </ListItemIcon>
+            <ListItemText>{sortLabel(one)}</ListItemText>
           </MenuItem>
         ))}
       </Menu>
