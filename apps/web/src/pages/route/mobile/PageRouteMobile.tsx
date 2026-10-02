@@ -1,20 +1,26 @@
 import { useParams } from 'react-router';
 
-import { useLingui } from '@lingui/react/macro';
 import { styled, useTheme } from '@mui/material/styles';
 
+import { buildRegionPath, buildSectorPath } from '@web/app/router/routes';
 import {
-  buildRegionPath,
-  buildSectorPath,
-  ROUTES
-} from '@web/app/router/routes';
-import { TopoZoomStage, usePhotoLabel, useRouteTopo } from '@web/features/topo';
+  TopoImage,
+  useOpenTopoPhoto,
+  usePhotoLabel,
+  useRouteTopo
+} from '@web/features/topo';
+import { useApiGetSector } from '@web/pages/sector';
+import { coordsOf } from '@web/shared/lib';
 import { getGradeColor } from '@web/shared/theme/palette';
 import {
   ApiFeedback,
+  DirectionsButton,
   PageBreadcrumbs,
   PageShell,
-  PhotoPlaceholder
+  PageTitle,
+  PageTitleRow,
+  PhotoPlaceholder,
+  ZoomStageShell
 } from '@web/shared/ui';
 import { GradeConsensus } from '@web/widgets/gradeConsensus';
 
@@ -29,24 +35,38 @@ import {
 } from '../common';
 
 export const PageRouteMobile = () => {
-  const { t } = useLingui();
   const { idRegion = '', idSector = '', idRoute = '' } = useParams();
   const theme = useTheme();
+  const openTopoPhoto = useOpenTopoPhoto();
   const { route, isLoading, failure } = useApiGetRoute(idRoute);
+  const { sector } = useApiGetSector(idSector);
   const { topo, photoIndex, lines, numberOf } = useRouteTopo(idSector, idRoute);
   const photoLabel = usePhotoLabel();
 
   const colorOf = () =>
     getGradeColor(theme.palette.grade, route?.grade, route?.gradeScale);
 
+  const handleSelectPhoto = () =>
+    openTopoPhoto({
+      topo,
+      label: photoLabel(photoIndex),
+      lines,
+      numberOf,
+      colorOf
+    });
+
   return (
-    <PageShell spacing={2} isCompact>
-      <HeaderRowStyled>
+    <PageShell
+      spacing={2}
+      isCompact
+      header={
         <PageBreadcrumbs
           maxItems={2}
           items={[
-            { label: t`Regions`, to: ROUTES.INDEX },
-            { label: route?.regionName ?? '…', to: buildRegionPath(idRegion) },
+            {
+              label: route?.regionName ?? '…',
+              to: buildRegionPath(idRegion)
+            },
             {
               label: route?.sectorName ?? '…',
               to: buildSectorPath(idRegion, idSector)
@@ -54,21 +74,33 @@ export const PageRouteMobile = () => {
             { label: route?.name ?? '…' }
           ]}
         />
-      </HeaderRowStyled>
+      }
+    >
       <ApiFeedback failure={failure} />
       {isLoading && <RouteSkeleton />}
       {route && (
         <>
           {route.isArchived && <ArchivedRouteNotice />}
+          <PageTitleRow>
+            <PageTitle
+              name={route.name}
+              nameLocal={route.nameLocal}
+              variant="h5"
+            />
+            <DirectionsButton entityType="sector" point={coordsOf(sector)} />
+          </PageTitleRow>
           <PhotoStyled>
             {topo ? (
-              <TopoZoomStage
-                photoUrl={topo.photoUrl}
-                label={photoLabel(photoIndex)}
-                lines={lines}
-                numberOf={numberOf}
-                colorOf={colorOf}
-              />
+              <ZoomStageShell>
+                <TopoImage
+                  photoUrl={topo.photoUrl}
+                  label={photoLabel(photoIndex)}
+                  lines={lines}
+                  numberOf={numberOf}
+                  colorOf={colorOf}
+                  onSelectPhoto={handleSelectPhoto}
+                />
+              </ZoomStageShell>
             ) : (
               <PhotoPlaceholder variant="wide" />
             )}
@@ -109,13 +141,6 @@ export const PageRouteMobile = () => {
     </PageShell>
   );
 };
-
-const HeaderRowStyled = styled('div')`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: ${({ theme }) => theme.spacing(1)};
-`;
 
 const StatsRowStyled = styled('div')`
   display: flex;
