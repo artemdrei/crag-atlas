@@ -37,7 +37,7 @@ test('a link is added from a sheet', async ({ page: phone }) => {
   const route = await makeRoute(sector.id, 'Phone-Media-Route-Fresh');
 
   await phone.goto(routePath(region.id, sector.id, route.id));
-  await phone.getByRole('button', { name: 'Add yours' }).click();
+  await phone.getByRole('button', { name: 'Add photo or video' }).click();
 
   await phone
     .getByRole('textbox', { name: 'YouTube or Instagram link' })

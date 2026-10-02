@@ -51,7 +51,7 @@ test('a climber hangs a link and a photo on a route', async ({ page }) => {
   await page.goto(routePath(region.id, added.id, route.id));
 
   await test.step('a host the app cannot play is refused', async () => {
-    await page.getByRole('button', { name: 'Add yours' }).click();
+    await page.getByRole('button', { name: 'Add photo or video' }).click();
 
     const dialog = page.getByRole('dialog');
 
