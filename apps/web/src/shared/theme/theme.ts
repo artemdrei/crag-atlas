@@ -18,6 +18,8 @@ declare module '@mui/material/styles' {
   }
 }
 
+const CONTROL_RADIUS = 50;
+
 export const createAppTheme = (mode: 'light' | 'dark', isEditing = false) =>
   createTheme({
     palette: { mode, ...resolvePalette(mode, isEditing) },
@@ -52,12 +54,37 @@ export const createAppTheme = (mode: 'light' | 'dark', isEditing = false) =>
       },
       MuiButton: {
         styleOverrides: {
-          root: { textTransform: 'capitalize' }
+          root: { textTransform: 'capitalize', borderRadius: CONTROL_RADIUS }
+        }
+      },
+      MuiOutlinedInput: {
+        styleOverrides: {
+          // A textarea curved like a pill crops its own first line, and the
+          // notch a floating label cuts lands inside the curve.
+          root: ({ ownerState, theme }) => ({
+            borderRadius:
+              ownerState.multiline || ownerState.label
+                ? theme.shape.borderRadius
+                : CONTROL_RADIUS
+          })
         }
       },
       MuiToggleButton: {
         styleOverrides: {
-          root: { textTransform: 'capitalize' }
+          root: { textTransform: 'capitalize', borderRadius: CONTROL_RADIUS }
+        }
+      },
+      MuiToggleButtonGroup: {
+        styleOverrides: {
+          // The buttons carry the pill radius on their own, so a group has to
+          // flatten the edges where they meet.
+          firstButton: {
+            borderRadius: `${CONTROL_RADIUS}px 0 0 ${CONTROL_RADIUS}px`
+          },
+          middleButton: { borderRadius: 0 },
+          lastButton: {
+            borderRadius: `0 ${CONTROL_RADIUS}px ${CONTROL_RADIUS}px 0`
+          }
         }
       },
       MuiTab: {
