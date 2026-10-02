@@ -30,14 +30,12 @@ export const GradeChart = ({ bars, isCompact, className }: Props) => {
       )}
       {bars.map(({ grade, sourceGrade, scale, total, counts }) => (
         <RowStyled key={grade}>
-          <LabelStyled>
-            <BadgeStyled>
-              <GradeBadge grade={sourceGrade} scale={scale} />
-            </BadgeStyled>
-            <CountStyled variant="body1" color="text.secondary">
-              / {total}
-            </CountStyled>
-          </LabelStyled>
+          <BadgeStyled>
+            <GradeBadge grade={sourceGrade} scale={scale} />
+          </BadgeStyled>
+          <CountStyled noWrap variant="body1" color="text.secondary">
+            / {total}
+          </CountStyled>
           <TrackStyled>
             <BarStyled share={total / top}>
               {ASCENT_TYPES.filter((ascentType) => counts[ascentType]).map(
@@ -70,29 +68,23 @@ const TitleStyled = styled(Typography)`
   letter-spacing: 0.08em;
 `;
 
+// A grid, not flex bases: iOS Safari sized a flex label by its text and let
+// the bar run over the count.
 const RowStyled = styled('div')`
-  display: flex;
+  display: grid;
+  grid-template-columns:
+    ${({ theme }) => theme.spacing(8)} ${({ theme }) => theme.spacing(5)}
+    minmax(0, 1fr);
   align-items: center;
-  gap: ${({ theme }) => theme.spacing(2)};
+  column-gap: ${({ theme }) => theme.spacing(0.75)};
 `;
 
-const LabelStyled = styled('div')`
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing(0.75)};
-  flex: 0 0 auto;
-`;
-
-// Both columns are as wide as their longest content, so badges and bars line
-// up whatever the grades are.
 const BadgeStyled = styled('div')`
   display: flex;
-  flex: 0 0 ${({ theme }) => theme.spacing(8)};
 `;
 
 const TrackStyled = styled('div')`
-  flex: 1 1 auto;
-  min-width: 0;
+  margin-left: ${({ theme }) => theme.spacing(1.25)};
 `;
 
 const BarStyled = styled('div', {
@@ -115,6 +107,5 @@ const SegmentStyled = styled('div', {
 `;
 
 const CountStyled = styled(Typography)`
-  flex: 0 0 ${({ theme }) => theme.spacing(5)};
   font-weight: 600;
 `;
