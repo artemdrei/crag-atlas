@@ -1,4 +1,3 @@
-import type { RouteLine } from '@crag-atlas/api';
 import { useLingui } from '@lingui/react/macro';
 import CloseIcon from '@mui/icons-material/Close';
 import Dialog from '@mui/material/Dialog';
@@ -7,15 +6,11 @@ import { styled } from '@mui/material/styles';
 
 import { useModal } from '@web/app/providers';
 
+import type { TopoPhotoPayload } from '../common';
 import { TopoPhotoViewer } from '../common';
 
-export interface Props {
+export interface Props extends TopoPhotoPayload {
   open: boolean;
-  photoUrl: string;
-  label: string;
-  lines: RouteLine[];
-  numberOf?: Record<string, number>;
-  colorOf?: (idRoute: string) => string | undefined;
 }
 
 const TopoPhotoDialog = ({ open, ...photo }: Props) => {

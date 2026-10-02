@@ -1,15 +1,10 @@
-import type { RouteLine } from '@crag-atlas/api';
 import { styled } from '@mui/material/styles';
 
+import type { TopoPhotoPayload } from '../entities';
 import { TopoZoomControls } from './TopoZoomControls';
 import { TopoZoomStage } from './TopoZoomStage';
 
-export interface Props {
-  photoUrl: string;
-  label: string;
-  lines: RouteLine[];
-  numberOf?: Record<string, number>;
-  colorOf?: (idRoute: string) => string | undefined;
+export interface Props extends TopoPhotoPayload {
   className?: string;
 }
 

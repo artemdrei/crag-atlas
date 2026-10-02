@@ -40,6 +40,8 @@ const LayoutRootStyled = styled(Box)`
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  /* iOS ignores user-scalable=no; this is what stops its page pinch-zoom. */
+  touch-action: pan-x pan-y;
 `;
 
 const HeaderSlotStyled = styled(Box)`
