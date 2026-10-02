@@ -10,6 +10,7 @@ import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 
 import { ClimberPicker } from '@web/features/climberPicker';
+import { useWeatherFailureMessage } from '@web/shared/lib';
 import type { AscentType } from '@web/shared/ui';
 
 import type { CreateTick, GradeOpinion, PendingMedia, Tick } from '../entities';
@@ -49,8 +50,8 @@ export const TickForm = ({
   const [climbedAt, setClimbedAt] = useState(
     () => tick?.climbedAt ?? nowLocal().date
   );
-  const [climbedAtTime, setClimbedAtTime] = useState(
-    () => tick?.climbedAtTime ?? nowLocal().time
+  const [climbedAtTime, setClimbedAtTime] = useState(() =>
+    tick ? (tick.climbedAtTime ?? '') : nowLocal().time
   );
   const [attempts, setAttempts] = useState<number | null>(
     tick?.attempts ?? null
@@ -75,13 +76,23 @@ export const TickForm = ({
   const [media, setMedia] = useState<PendingMedia>({ links: [], files: [] });
 
   const hasAttempts = TYPES_WITH_ATTEMPTS.includes(ascentType);
-  const { conditions, hasPoint, isLoading, isEdited, setField, resetField } =
-    useTickConditions({
-      idRoute,
-      climbedAt,
-      climbedAtTime,
-      stored: tick?.weather
-    });
+  const describeWeatherFailure = useWeatherFailureMessage();
+  const {
+    conditions,
+    weather,
+    failure,
+    hasPoint,
+    isLoading,
+    isEditsReset,
+    isEdited,
+    setField,
+    resetField
+  } = useTickConditions({
+    idRoute,
+    climbedAt,
+    climbedAtTime,
+    stored: tick?.weather
+  });
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -93,7 +104,7 @@ export const TickForm = ({
         // key rather than sending an empty string.
         ...(climbedAt ? { climbedAt } : {}),
         climbedAtTime: climbedAtTime || null,
-        weather: conditions,
+        weather,
         attempts: hasAttempts ? attempts : null,
         rating,
         gradeVote: gradeVote || null,
@@ -113,8 +124,13 @@ export const TickForm = ({
         climbedAt={climbedAt}
         climbedAtTime={climbedAtTime}
         conditions={conditions}
+        failureMessage={
+          failure &&
+          describeWeatherFailure('code' in failure ? failure.code : null)
+        }
         hasPoint={hasPoint}
         isLoading={isLoading}
+        isEditsReset={isEditsReset}
         isEdited={isEdited}
         onDateChange={setClimbedAt}
         onTimeChange={setClimbedAtTime}

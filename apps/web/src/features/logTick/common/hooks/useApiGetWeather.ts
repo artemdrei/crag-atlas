@@ -9,7 +9,7 @@ export interface Params {
 }
 
 export const useApiGetWeather = ({ idRoute, at, enabled = true }: Params) => {
-  const { data, isLoading } = useApiQuery<WeatherLookup>({
+  const { data, isLoading, failure } = useApiQuery<WeatherLookup>({
     queryKey: QUERY_KEYS.weather(idRoute, at),
     queryFn: () =>
       apiGet<WeatherLookup>(
@@ -23,6 +23,7 @@ export const useApiGetWeather = ({ idRoute, at, enabled = true }: Params) => {
     // Assumed until the answer arrives, so a slow lookup never disables the
     // fields on someone who wants to type the numbers in.
     hasPoint: data?.hasPoint ?? true,
-    isLoading
+    isLoading,
+    failure
   };
 };

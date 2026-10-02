@@ -60,8 +60,10 @@ export interface Props {
   climbedAt: string;
   climbedAtTime: string;
   conditions: TickWeather | null;
+  failureMessage: string | null;
   hasPoint: boolean;
   isLoading: boolean;
+  isEditsReset: boolean;
   isEdited: (field: WeatherFieldName) => boolean;
   onDateChange: (value: string) => void;
   onTimeChange: (value: string) => void;
@@ -73,8 +75,10 @@ export const ConditionsSection = ({
   climbedAt,
   climbedAtTime,
   conditions,
+  failureMessage,
   hasPoint,
   isLoading,
+  isEditsReset,
   isEdited,
   onDateChange,
   onTimeChange,
@@ -134,6 +138,18 @@ export const ConditionsSection = ({
             />
           ))}
         </RowStyled>
+      )}
+
+      {failureMessage && (
+        <Typography variant="caption" color="error">
+          {failureMessage}
+        </Typography>
+      )}
+
+      {isEditsReset && (
+        <Typography variant="caption" color="warning.main">
+          <Trans>Your corrections were reset for the new date and time</Trans>
+        </Typography>
       )}
 
       {conditions && (
