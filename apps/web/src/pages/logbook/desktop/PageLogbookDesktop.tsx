@@ -101,7 +101,7 @@ export const PageLogbookDesktop = () => {
           )}
 
           <LoadMoreOnScroll
-            hasMore={hasMore}
+            hasMore={hasMore && !failure}
             isLoading={isLoadingMore}
             onReach={loadMore}
           />

@@ -1,9 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import { Trans } from '@lingui/react/macro';
-import CircularProgress from '@mui/material/CircularProgress';
-import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
+import { TicksSkeleton } from './TicksSkeleton';
 
 export interface Props {
   hasMore: boolean;
@@ -17,7 +14,8 @@ export const LoadMoreOnScroll = ({ hasMore, isLoading, onReach }: Props) => {
   useEffect(() => {
     const sentinel = sentinelRef.current;
 
-    if (!sentinel || !hasMore) {
+    // Re-observing after each page loads re-fires if the skeleton is still in view.
+    if (!sentinel || !hasMore || isLoading) {
       return;
     }
 
@@ -30,27 +28,15 @@ export const LoadMoreOnScroll = ({ hasMore, isLoading, onReach }: Props) => {
     observer.observe(sentinel);
 
     return () => observer.disconnect();
-  }, [hasMore, onReach]);
+  }, [hasMore, isLoading, onReach]);
 
   if (!hasMore) {
     return null;
   }
 
   return (
-    <SentinelStyled ref={sentinelRef}>
-      {isLoading ? (
-        <CircularProgress size={20} />
-      ) : (
-        <Typography variant="body2" color="text.secondary">
-          <Trans>Loading more…</Trans>
-        </Typography>
-      )}
-    </SentinelStyled>
+    <div ref={sentinelRef}>
+      <TicksSkeleton count={1} />
+    </div>
   );
 };
-
-const SentinelStyled = styled('div')`
-  display: flex;
-  justify-content: center;
-  padding: ${({ theme }) => theme.spacing(2)} 0;
-`;

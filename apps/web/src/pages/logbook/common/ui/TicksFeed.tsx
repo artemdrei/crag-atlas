@@ -1,11 +1,10 @@
 import { Trans } from '@lingui/react/macro';
-import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { ApiFeedback } from '@web/shared/ui';
 
 import { useApiGetTicksFeed } from '../hooks';
+import { LoadMoreOnScroll } from './LoadMoreOnScroll';
 import { TicksList } from './TicksList';
 
 export interface Props {
@@ -31,22 +30,11 @@ export const TicksFeed = ({ columns }: Props) => {
           isLoading={isLoading}
         />
       )}
-      {hasMore && (
-        <MoreRowStyled>
-          <Button
-            variant="outlined"
-            disabled={isLoadingMore}
-            onClick={() => loadMore()}
-          >
-            {isLoadingMore ? <Trans>Loading…</Trans> : <Trans>Show more</Trans>}
-          </Button>
-        </MoreRowStyled>
-      )}
+      <LoadMoreOnScroll
+        hasMore={hasMore && !failure}
+        isLoading={isLoadingMore}
+        onReach={loadMore}
+      />
     </>
   );
 };
-
-const MoreRowStyled = styled('div')`
-  display: flex;
-  justify-content: center;
-`;
