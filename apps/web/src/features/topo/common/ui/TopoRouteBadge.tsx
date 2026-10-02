@@ -12,7 +12,6 @@ export interface Props {
   name?: string;
   x: number;
   y: number;
-  isHighlighted?: boolean;
   isDimmed?: boolean;
   onSelect?: () => void;
   onHover?: (isOver: boolean) => void;
@@ -25,7 +24,6 @@ export const TopoRouteBadge = ({
   name,
   x,
   y,
-  isHighlighted,
   isDimmed,
   onSelect,
   onHover
@@ -51,10 +49,10 @@ export const TopoRouteBadge = ({
       onPointerEnter={() => onHover?.(true)}
       onPointerLeave={() => onHover?.(false)}
     >
-      <NumberStyled tone={tone} isHighlighted={!!isHighlighted}>
-        {number}
-      </NumberStyled>
-      <GradeStyled>{name ? `${name} · ${shownGrade}` : shownGrade}</GradeStyled>
+      <GradeStyled tone={tone}>
+        {name ? `${name} · ${shownGrade}` : shownGrade}
+      </GradeStyled>
+      <NumberStyled>{number}</NumberStyled>
     </BadgeStyled>
   );
 };
@@ -70,6 +68,12 @@ const toAlignment = (x: number): Alignment => {
 };
 
 const CHIP_HALF = '11px';
+
+const ITEMS_ALIGNMENT: Record<Alignment, string> = {
+  start: 'flex-start',
+  center: 'center',
+  end: 'flex-end'
+};
 
 const TRANSFORMS: Record<Alignment, string> = {
   start: `translate(-${CHIP_HALF}, -50%)`,
@@ -95,11 +99,10 @@ const BadgeStyled = styled('button', {
   left: ${({ x }) => x * 100}%;
   top: ${({ y }) => y * 100}%;
   transform: ${({ alignment }) => TRANSFORMS[alignment]};
-  flex-direction: ${({ alignment }) =>
-    alignment === 'end' ? 'row-reverse' : 'row'};
   display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing(0.5)};
+  flex-direction: column;
+  align-items: ${({ alignment }) => ITEMS_ALIGNMENT[alignment]};
+  gap: ${({ theme }) => theme.spacing(0.25)};
   padding: 0;
   border: none;
   background: none;
@@ -111,9 +114,24 @@ const BadgeStyled = styled('button', {
   pointer-events: ${({ isStatic }) => (isStatic ? 'none' : 'auto')};
 `;
 
-const NumberStyled = styled('span', {
-  shouldForwardProp: (prop) => prop !== 'tone' && prop !== 'isHighlighted'
-})<{ tone: GradeTone; isHighlighted: boolean }>`
+const GradeStyled = styled('span', {
+  shouldForwardProp: (prop) => prop !== 'tone'
+})<{ tone: GradeTone }>`
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 2px ${({ theme }) => theme.spacing(0.75)};
+  border-radius: 999px;
+  background: ${({ theme, tone }) => theme.palette.grade[tone].background};
+  color: ${({ theme, tone }) => theme.palette.grade[tone].text};
+  font-size: ${({ theme }) => theme.typography.caption.fontSize};
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+  filter: drop-shadow(0 0 2px rgb(0 0 0 / 60%));
+`;
+
+const NumberStyled = styled('span')`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -121,27 +139,9 @@ const NumberStyled = styled('span', {
   height: 22px;
   padding: 0 ${({ theme }) => theme.spacing(0.5)};
   border-radius: 11px;
-  border: 2px solid
-    ${({ theme, isHighlighted }) =>
-      isHighlighted ? theme.palette.background.paper : 'transparent'};
-  background: ${({ theme, tone }) => theme.palette.grade[tone].background};
-  color: ${({ theme, tone }) => theme.palette.grade[tone].text};
-  font-size: ${({ theme }) => theme.typography.caption.fontSize};
-  font-weight: 700;
-  line-height: 1;
-  filter: drop-shadow(0 0 2px rgb(0 0 0 / 60%));
-`;
-
-const GradeStyled = styled('span')`
-  max-width: 180px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding: 1px ${({ theme }) => theme.spacing(0.5)};
-  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
   background: rgb(0 0 0 / 55%);
-  color: ${({ theme }) => theme.palette.common.white};
+  color: rgb(255 255 255 / 80%);
   font-size: ${({ theme }) => theme.typography.caption.fontSize};
   font-weight: 600;
-  line-height: 1.4;
-  white-space: nowrap;
+  line-height: 1;
 `;

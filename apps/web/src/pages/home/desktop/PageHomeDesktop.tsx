@@ -6,7 +6,6 @@ import { styled } from '@mui/material/styles';
 import { useEditModeInUrl, useUser } from '@web/app/providers';
 import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
 import { CatalogEditActions } from '@web/features/catalogEdit';
-import { CatalogSearchDesktop } from '@web/features/catalogSearch';
 import { mapRegions, RegionMapDesktop } from '@web/features/regionMap';
 import { useCatalogSelection } from '@web/shared/lib';
 import {
@@ -49,8 +48,6 @@ export const PageHomeDesktop = () => {
   return (
     <PageShell spacing={1} isFixedHeight>
       <HeaderRowStyled>
-        {/* The same trail every deeper screen has, so the header does not
-            shift as the reader walks down into a region. */}
         <PageBreadcrumbs items={[{ label: t`Regions` }]} />
         <CatalogEditActions
           isEditing={isEditing}
@@ -66,7 +63,6 @@ export const PageHomeDesktop = () => {
       <HomeHeading />
       <ApiFeedback failure={failure} />
       <CatalogExplorerLayout
-        search={<CatalogSearchDesktop />}
         list={
           <ListAreaStyled
             onClick={(event) => {

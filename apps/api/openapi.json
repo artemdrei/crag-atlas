@@ -2850,6 +2850,16 @@
             "type": "number",
             "nullable": true,
             "description": "Routes only; community rating, 0..5"
+          },
+          "boltsCount": {
+            "type": "number",
+            "nullable": true,
+            "description": "Routes only"
+          },
+          "ascentsCount": {
+            "type": "number",
+            "nullable": true,
+            "description": "Routes only; logged ascents plus imported ones"
           }
         },
         "required": ["id", "name", "idRegion"]
@@ -3239,9 +3249,18 @@
           "remaining": {
             "type": "number",
             "description": "Ascents still waiting, because one call fills a batch at most"
+          },
+          "failed": {
+            "type": "number",
+            "description": "Ascents the provider had no answer for"
+          },
+          "failureCode": {
+            "type": "string",
+            "nullable": true,
+            "description": "Error code of the first ascent that failed"
           }
         },
-        "required": ["filled", "remaining"]
+        "required": ["filled", "remaining", "failed", "failureCode"]
       },
       "CreateTickDto": {
         "type": "object",

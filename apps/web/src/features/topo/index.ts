@@ -30,6 +30,7 @@ export {
   TopoZoomStage,
   toleranceOf,
   useApiGetTopos,
+  useOpenTopoPhoto,
   usePhotoLabel,
   useRouteTopo,
   useTopoGallery
@@ -41,6 +42,14 @@ export const topoDesktopRegistrations: ModalRegistration[] = [
   {
     id: 'VIEW_TOPO_PHOTO',
     Component: lazy(() => import('./desktop/TopoPhotoDialog')),
+    dialog: 'topo_photo'
+  }
+];
+
+export const topoMobileRegistrations: ModalRegistration[] = [
+  {
+    id: 'VIEW_TOPO_PHOTO',
+    Component: lazy(() => import('./mobile/TopoPhotoModal')),
     dialog: 'topo_photo'
   }
 ];

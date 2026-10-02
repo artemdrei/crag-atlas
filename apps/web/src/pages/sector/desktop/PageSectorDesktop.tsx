@@ -2,18 +2,14 @@ import { useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import type { CatalogSource } from '@crag-atlas/analytics';
-import { Trans, useLingui } from '@lingui/react/macro';
+import { Trans } from '@lingui/react/macro';
 import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
 import { styled, useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { useUser } from '@web/app/providers';
-import {
-  buildRegionPath,
-  buildSectorEditPath,
-  ROUTES
-} from '@web/app/router/routes';
+import { buildRegionPath, buildSectorEditPath } from '@web/app/router/routes';
 import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
 import {
   findTopoOfRoute,
@@ -50,7 +46,6 @@ import {
 import { RoutesSortButton } from './RoutesSortButton';
 
 export const PageSectorDesktop = () => {
-  const { t } = useLingui();
   const theme = useTheme();
   const { idRegion = '', idSector = '' } = useParams();
   const navigate = useNavigate();
@@ -144,7 +139,6 @@ export const PageSectorDesktop = () => {
       <HeaderRowStyled>
         <PageBreadcrumbs
           items={[
-            { label: t`Regions`, to: ROUTES.INDEX },
             { label: sector?.regionName ?? '…', to: buildRegionPath(idRegion) },
             { label: sector?.name ?? '…' }
           ]}

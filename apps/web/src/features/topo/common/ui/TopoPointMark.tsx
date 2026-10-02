@@ -85,9 +85,8 @@ const MarkStyled = styled('div', {
 
       return markColor ?? theme.palette.secondary.main;
     }};
-    border: 2px solid ${({ theme }) => theme.palette.background.paper};
     border-radius: ${({ kind }) => (kind === 'anchor' ? '2px' : '50%')};
-    width: ${({ kind }) => (kind === 'anchor' ? '22px' : '11px')};
-    height: ${({ kind }) => (kind === 'anchor' ? '8px' : '11px')};
+    width: ${({ kind }) => (kind === 'anchor' ? '13px' : '9px')};
+    height: ${({ kind }) => (kind === 'anchor' ? '5px' : '9px')};
   }
 `;

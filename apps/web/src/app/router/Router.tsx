@@ -8,7 +8,9 @@ import { useUser } from '@web/app/providers';
 import { ROUTES } from './routes';
 import { useSignInReturnPath } from './useSignInLink';
 
-export const LayoutWithSidebar = () => <AppLayoutDesktop />;
+export const LayoutWithSidebar = ({ hasSearch }: { hasSearch?: boolean }) => (
+  <AppLayoutDesktop hasSearch={hasSearch} />
+);
 
 export const LayoutWithMobileBottomNavigation = () => <AppLayoutMobile />;
 

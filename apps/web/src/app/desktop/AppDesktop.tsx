@@ -106,32 +106,16 @@ const AppDesktop = () => (
               </GuestOnlyRoute>
             }
           />
-          <Route element={<LayoutWithSidebar />}>
+          <Route element={<LayoutWithSidebar hasSearch />}>
             <Route path={ROUTES.INDEX} element={<PageHomeDesktop />} />
             <Route path={ROUTES.REGION} element={<PageRegionDesktop />} />
             <Route path={ROUTES.SECTOR} element={<PageSectorDesktop />} />
             <Route path={ROUTES.ROUTE_DETAIL} element={<PageRouteDesktop />} />
             <Route
-              path={ROUTES.ROUTE_EDIT}
-              element={
-                <ProtectedRoute requiredRole="admin">
-                  <PageRouteEditDesktop />
-                </ProtectedRoute>
-              }
-            />
-            <Route
               path={ROUTES.ACCESS}
               element={
                 <ProtectedRoute requiredRole="admin">
                   <PageAdminAccessDesktop />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path={ROUTES.SECTOR_EDIT}
-              element={
-                <ProtectedRoute requiredRole="admin">
-                  <PageSectorEditDesktop />
                 </ProtectedRoute>
               }
             />
@@ -161,6 +145,24 @@ const AppDesktop = () => (
                 >
                   <PageProfileDesktop />
                 </MembersOnlyRoute>
+              }
+            />
+          </Route>
+          <Route element={<LayoutWithSidebar />}>
+            <Route
+              path={ROUTES.ROUTE_EDIT}
+              element={
+                <ProtectedRoute requiredRole="admin">
+                  <PageRouteEditDesktop />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path={ROUTES.SECTOR_EDIT}
+              element={
+                <ProtectedRoute requiredRole="admin">
+                  <PageSectorEditDesktop />
+                </ProtectedRoute>
               }
             />
           </Route>

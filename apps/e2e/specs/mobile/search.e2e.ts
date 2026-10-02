@@ -9,8 +9,8 @@ import {
 } from '../../fixtures/catalog';
 
 /**
- * The phone searches through its own component: the hits are a list under the
- * field rather than a popper over it, and there is no click-away to close.
+ * The phone searches from the header: the field hides behind an icon until it
+ * is asked for.
  */
 test.describe.configure({ mode: 'serial' });
 
@@ -36,8 +36,9 @@ test('the phone searches the catalog and walks to the hit', async ({
   page
 }) => {
   await page.goto('/');
+  await page.getByRole('button', { name: 'Search', exact: true }).click();
 
-  const field = page.getByPlaceholder('Search a region, sector or route');
+  const field = page.getByPlaceholder('Search', { exact: true });
 
   await field.fill(LOCAL_TERM.slice(0, 2));
   await expect(page.getByText('Type at least 3 letters')).toBeVisible();
@@ -45,12 +46,12 @@ test('the phone searches the catalog and walks to the hit', async ({
   await test.step('the local spelling finds the route', async () => {
     await field.fill(LOCAL_TERM);
     await expect(
-      page.getByRole('button', { name: new RegExp(route.name) })
+      page.getByRole('option', { name: new RegExp(route.name) })
     ).toBeVisible();
   });
 
   await test.step('and picking it opens the route', async () => {
-    await page.getByRole('button', { name: new RegExp(route.name) }).click();
+    await page.getByRole('option', { name: new RegExp(route.name) }).click();
 
     await expect(page).toHaveURL(
       `/regions/${region.id}/sectors/${sector.id}/routes/${route.id}`

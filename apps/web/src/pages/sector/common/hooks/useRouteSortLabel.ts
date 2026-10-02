@@ -6,8 +6,9 @@ export const useRouteSortLabel = () => {
   const { t } = useLingui();
   const labels: Record<RouteSort, string> = {
     default: t`Default`,
-    grade: t`Grade`,
     rating: t`Rating`,
+    length: t`Length`,
+    grade: t`Grade`,
     ascents: t`Ascents`
   };
 

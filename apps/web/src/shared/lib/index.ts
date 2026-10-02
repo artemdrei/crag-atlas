@@ -62,3 +62,4 @@ export { useSearchParamList } from './useSearchParamList';
 export { useStoredFlag } from './useStoredFlag';
 export { useTransliteration } from './useTransliteration';
 export { useWarnOnUnload } from './useWarnOnUnload';
+export { useWeatherFailureMessage } from './useWeatherFailureMessage';

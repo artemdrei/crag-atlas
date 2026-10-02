@@ -1,23 +1,15 @@
 import { useMemo } from 'react';
 import { useParams } from 'react-router';
 
-import { useLingui } from '@lingui/react/macro';
 import { useTheme } from '@mui/material/styles';
 
-import { ROUTES } from '@web/app/router/routes';
 import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
-import { CatalogSearchMobile } from '@web/features/catalogSearch';
 import {
   mapSectors,
   SectorMapMobile,
   sectorPinColors
 } from '@web/features/sectorMap';
-import {
-  ApiFeedback,
-  PageBreadcrumbs,
-  PageShell,
-  PageTitle
-} from '@web/shared/ui';
+import { ApiFeedback, PageShell, PageTitle } from '@web/shared/ui';
 
 import {
   ArchivedRegionNotice,
@@ -29,7 +21,6 @@ import {
 } from '../common';
 
 export const PageRegionMobile = () => {
-  const { t } = useLingui();
   const { idRegion = '' } = useParams();
   const openCatalogItem = useOpenCatalogItem();
   const theme = useTheme();
@@ -44,20 +35,12 @@ export const PageRegionMobile = () => {
 
   return (
     <PageShell spacing={2} isCompact>
-      <PageBreadcrumbs
-        maxItems={2}
-        items={[
-          { label: t`Regions`, to: ROUTES.INDEX },
-          { label: region?.name ?? '…' }
-        ]}
-      />
       {region?.isArchived && <ArchivedRegionNotice />}
       <PageTitle
         name={region?.name}
         nameLocal={region?.nameLocal}
         variant="h5"
       />
-      <CatalogSearchMobile />
       <ApiFeedback failure={regionFailure ?? failure} />
       <SectorMapMobile
         mapped={mapped}

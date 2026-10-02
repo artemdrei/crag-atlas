@@ -357,7 +357,6 @@ export const TopoEditStage = ({
                       }
                       x={start[0] + line.labelOffset[0]}
                       y={start[1] + line.labelOffset[1]}
-                      isHighlighted={line.idRoute === session.idSelectedRoute}
                       isDimmed={
                         !!session.idSelectedRoute &&
                         line.idRoute !== session.idSelectedRoute

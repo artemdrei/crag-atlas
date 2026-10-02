@@ -62,7 +62,10 @@ test('the catalog walks down to a route and back up again', async ({
     await breadcrumb(page, region.name).click();
     await expect(card(page, sector.name)).toBeVisible();
 
-    await breadcrumb(page, 'Regions').click();
+    await page
+      .getByRole('banner')
+      .getByRole('link', { name: 'Regions' })
+      .click();
     await expect(card(page, region.name)).toBeVisible();
   });
 });

@@ -1019,6 +1019,10 @@ export interface components {
             gradeScale?: string | null;
             /** @description Routes only; community rating, 0..5 */
             rating?: number | null;
+            /** @description Routes only */
+            boltsCount?: number | null;
+            /** @description Routes only; logged ascents plus imported ones */
+            ascentsCount?: number | null;
         };
         CatalogSearchDto: {
             regions: components["schemas"]["SearchHitDto"][];
@@ -1132,6 +1136,10 @@ export interface components {
             filled: number;
             /** @description Ascents still waiting, because one call fills a batch at most */
             remaining: number;
+            /** @description Ascents the provider had no answer for */
+            failed: number;
+            /** @description Error code of the first ascent that failed */
+            failureCode: string | null;
         };
         CreateTickDto: {
             idRoute: string;

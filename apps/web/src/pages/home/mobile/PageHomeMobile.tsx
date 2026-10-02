@@ -1,5 +1,4 @@
 import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
-import { CatalogSearchMobile } from '@web/features/catalogSearch';
 import { mapRegions, RegionMapMobile } from '@web/features/regionMap';
 import { ApiFeedback, PageShell } from '@web/shared/ui';
 
@@ -11,8 +10,7 @@ export const PageHomeMobile = () => {
 
   return (
     <PageShell spacing={2} isCompact>
-      <HomeHeading />
-      <CatalogSearchMobile />
+      <HomeHeading variant="h5" />
       <ApiFeedback failure={failure} />
       <RegionMapMobile
         mapped={mapRegions(regions)}

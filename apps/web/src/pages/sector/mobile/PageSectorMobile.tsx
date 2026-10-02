@@ -2,11 +2,10 @@ import { useMemo } from 'react';
 import { useParams } from 'react-router';
 
 import type { CatalogSource } from '@crag-atlas/analytics';
-import { useLingui } from '@lingui/react/macro';
 import { styled, useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import { buildRegionPath, ROUTES } from '@web/app/router/routes';
+import { buildRegionPath } from '@web/app/router/routes';
 import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
 import {
   orderRoutes,
@@ -21,7 +20,8 @@ import {
   DirectionsButton,
   PageBreadcrumbs,
   PageShell,
-  PageTitle
+  PageTitle,
+  PageTitleRow
 } from '@web/shared/ui';
 
 import type { Route } from '../common';
@@ -41,7 +41,6 @@ import {
 import { RoutesSortButton } from './RoutesSortButton';
 
 export const PageSectorMobile = () => {
-  const { t } = useLingui();
   const theme = useTheme();
   const { idRegion = '', idSector = '' } = useParams();
   const openCatalogItem = useOpenCatalogItem();
@@ -109,26 +108,31 @@ export const PageSectorMobile = () => {
   };
 
   return (
-    <PageShell spacing={2} isCompact>
-      <HeaderRowStyled>
+    <PageShell
+      spacing={2}
+      isCompact
+      header={
         <PageBreadcrumbs
           maxItems={2}
           items={[
-            { label: t`Regions`, to: ROUTES.INDEX },
-            { label: sector?.regionName ?? '…', to: buildRegionPath(idRegion) },
+            {
+              label: sector?.regionName ?? '…',
+              to: buildRegionPath(idRegion)
+            },
             { label: sector?.name ?? '…' }
           ]}
         />
-      </HeaderRowStyled>
+      }
+    >
       {sector?.isArchived && <ArchivedSectorNotice />}
-      <TitleRowStyled>
+      <PageTitleRow>
         <PageTitle
           name={sector?.name}
           nameLocal={sector?.nameLocal}
           variant="h5"
         />
         <DirectionsButton entityType="sector" point={coordsOf(sector)} />
-      </TitleRowStyled>
+      </PageTitleRow>
       {sector?.description && (
         <Typography variant="body2" color="text.secondary">
           {sector.description}
@@ -172,28 +176,6 @@ export const PageSectorMobile = () => {
     </PageShell>
   );
 };
-
-const TitleRowStyled = styled('div')`
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: ${({ theme }) => theme.spacing(1.5)};
-
-  & > *:first-of-type {
-    min-width: 0;
-  }
-
-  & > *:last-child {
-    flex: none;
-  }
-`;
-
-const HeaderRowStyled = styled('div')`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: ${({ theme }) => theme.spacing(1)};
-`;
 
 const ActionBarStyled = styled('div')`
   position: sticky;

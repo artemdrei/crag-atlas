@@ -30,6 +30,7 @@ export interface Props {
   colorOf?: (idRoute: string) => string | undefined;
   numberOf?: Record<string, number>;
   onSelectRoute?: (idRoute: string) => void;
+  onSelectPhoto?: () => void;
   onHoverRoute?: (idRoute?: string) => void;
 }
 
@@ -41,6 +42,7 @@ export const TopoImage = ({
   colorOf,
   numberOf,
   onSelectRoute,
+  onSelectPhoto,
   onHoverRoute
 }: Props) => {
   const [loadedUrl, setLoadedUrl] = useState<string>();
@@ -87,7 +89,7 @@ export const TopoImage = ({
           viewBox="0 0 1 1"
           preserveAspectRatio="none"
           isLoaded={isLoaded}
-          isHoverable={!!onHoverRoute || !!onSelectRoute}
+          isHoverable={!!onHoverRoute || !!onSelectRoute || !!onSelectPhoto}
           onPointerDown={(event: ReactPointerEvent<SVGSVGElement>) => {
             pressedAt.current = { x: event.clientX, y: event.clientY };
           }}
@@ -106,7 +108,8 @@ export const TopoImage = ({
           }}
           onPointerLeave={() => onHoverRoute?.(undefined)}
           onClick={(event: ReactPointerEvent<SVGSVGElement>) => {
-            if (!onSelectRoute || !overlayRef.current) return;
+            if ((!onSelectRoute && !onSelectPhoto) || !overlayRef.current)
+              return;
 
             const travel = Math.hypot(
               event.clientX - pressedAt.current.x,
@@ -122,7 +125,8 @@ export const TopoImage = ({
               toleranceOf(rect, HOVER_TOLERANCE)
             );
 
-            if (idRoute) onSelectRoute(idRoute);
+            if (idRoute && onSelectRoute) onSelectRoute(idRoute);
+            else onSelectPhoto?.();
           }}
         >
           <title>{label}</title>
@@ -130,15 +134,13 @@ export const TopoImage = ({
             const isHighlighted = idHighlightedRoute === line.idRoute;
 
             return (
-              <g key={line.idRoute}>
-                {isHighlighted && <OutlineStyled d={path} />}
-                <PathStyled
-                  d={path}
-                  lineColor={colorOf?.(line.idRoute)}
-                  isHighlighted={isHighlighted}
-                  lineAlpha={lineOpacity(isHighlighted, hasHighlight)}
-                />
-              </g>
+              <PathStyled
+                key={line.idRoute}
+                d={path}
+                lineColor={colorOf?.(line.idRoute)}
+                isHighlighted={isHighlighted}
+                lineAlpha={lineOpacity(isHighlighted, hasHighlight)}
+              />
             );
           })}
         </OverlayStyled>
@@ -193,7 +195,6 @@ export const TopoImage = ({
                 }
                 x={start[0] + line.labelOffsetX}
                 y={start[1] + line.labelOffsetY}
-                isHighlighted={idHighlightedRoute === line.idRoute}
                 isDimmed={hasHighlight && idHighlightedRoute !== line.idRoute}
                 onSelect={
                   onSelectRoute ? () => onSelectRoute(line.idRoute) : undefined
@@ -211,14 +212,12 @@ export const TopoImage = ({
 
 const HOVER_TOLERANCE = 16;
 
-// Past this the pointer was panning the photo, not tapping a line.
 const TAP_SLOP = 4;
 
 const StageStyled = styled('div')`
   ${photoStage()}
 `;
 
-/* Exactly the photo: a gap between the boxes slides every line off the rock. */
 const FrameStyled = styled('div')`
   position: relative;
   display: flex;
@@ -252,16 +251,6 @@ const OverlayStyled = styled('svg', {
   opacity: ${({ isLoaded }) => (isLoaded ? 1 : 0)};
   pointer-events: ${({ isHoverable }) => (isHoverable ? 'auto' : 'none')};
   transition: opacity 0.2s ease-out;
-`;
-
-const OutlineStyled = styled('path')`
-  fill: none;
-  stroke: ${({ theme }) => theme.palette.background.paper};
-  stroke-width: 8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  opacity: 0.9;
-  vector-effect: non-scaling-stroke;
 `;
 
 const PathStyled = styled('path', {

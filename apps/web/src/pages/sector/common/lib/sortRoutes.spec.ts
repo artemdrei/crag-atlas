@@ -56,6 +56,18 @@ describe('sortRoutes', () => {
     ).toEqual(['good', 'fine', 'unrated']);
   });
 
+  it('puts the longest first and counts a missing length as zero', () => {
+    const routes = [
+      route('unknown', { length: null }),
+      route('short', { length: 12 }),
+      route('long', { length: 35 })
+    ];
+
+    expect(
+      sortRoutes(routes, 'length', 'desc', order).map(({ name }) => name)
+    ).toEqual(['long', 'short', 'unknown']);
+  });
+
   it('puts the most climbed first', () => {
     const routes = [
       route('quiet', { ascentsCount: 3 }),

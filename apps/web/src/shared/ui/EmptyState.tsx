@@ -6,14 +6,12 @@ import Typography from '@mui/material/Typography';
 export interface Props {
   icon: ReactNode;
   message: ReactNode;
-  action?: ReactNode;
 }
 
-export const EmptyState = ({ icon, message, action }: Props) => (
+export const EmptyState = ({ icon, message }: Props) => (
   <EmptyStateStyled>
     <IconStyled>{icon}</IconStyled>
     <MessageStyled variant="body2">{message}</MessageStyled>
-    {action}
   </EmptyStateStyled>
 );
 

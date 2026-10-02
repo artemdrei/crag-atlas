@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router';
+import { Link } from 'react-router';
 
 import { Trans, useLingui } from '@lingui/react/macro';
 import AppBar from '@mui/material/AppBar';
@@ -11,12 +11,12 @@ import Toolbar from '@mui/material/Toolbar';
 import { useProfileIdentity, useUser } from '@web/app/providers';
 import { ROUTES } from '@web/app/router/routes';
 import { useSignInLink } from '@web/app/router/useSignInLink';
+import { CatalogSearchDesktop } from '@web/features/catalogSearch';
 import { CONTENT_MAX_WIDTH } from '@web/shared/theme/layout';
 import { SignInCta, UserAvatar, Wordmark } from '@web/shared/ui';
 
-export const AppHeaderDesktop = () => {
+export const AppHeaderDesktop = ({ hasSearch }: { hasSearch?: boolean }) => {
   const { t } = useLingui();
-  const navigate = useNavigate();
   const { isAuthenticated, isLoading } = useUser();
   const { avatarUrl, displayName } = useProfileIdentity();
   const signInLink = useSignInLink();
@@ -24,9 +24,6 @@ export const AppHeaderDesktop = () => {
   return (
     <HeaderStyled position="static" color="transparent" elevation={0}>
       <ToolbarStyled>
-        {/* Anything that takes the reader to another page is a link: it
-            reads as one, opens in a new tab, and can be followed without a
-            mouse. */}
         <Wordmark to={ROUTES.INDEX} />
         <Button color="inherit" component={Link} to={ROUTES.INDEX}>
           <Trans>Regions</Trans>
@@ -35,15 +32,10 @@ export const AppHeaderDesktop = () => {
           <Trans>My logbook</Trans>
         </Button>
         <SpacerStyled />
-        {/* Dev-only shortcut: the route itself does not exist in a build. */}
-        {import.meta.env.DEV && (
-          <Button
-            color="inherit"
-            size="small"
-            onClick={() => navigate(ROUTES.PLAYGROUND)}
-          >
-            Playground
-          </Button>
+        {hasSearch && (
+          <SearchSlotStyled>
+            <CatalogSearchDesktop />
+          </SearchSlotStyled>
         )}
         {!isLoading &&
           (isAuthenticated ? (
@@ -79,4 +71,8 @@ const AvatarStyled = styled(UserAvatar)`
 
 const SpacerStyled = styled(Box)`
   flex-grow: 1;
+`;
+
+const SearchSlotStyled = styled(Box)`
+  flex-shrink: 0;
 `;

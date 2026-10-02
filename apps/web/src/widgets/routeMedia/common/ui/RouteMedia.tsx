@@ -12,6 +12,7 @@ import { formatDateTime, mediaThumbnailOf } from '@web/shared/lib';
 import { ApiFeedback, EmptyState } from '@web/shared/ui';
 
 import { useApiGetRouteMedia, useRouteMediaPermissions } from '../hooks';
+import { RouteMediaInvite } from './RouteMediaInvite';
 import { RouteMediaSkeleton } from './RouteMediaSkeleton';
 import { TILE_RATIO, TILE_WIDTH } from './tile';
 
@@ -43,11 +44,14 @@ export const RouteMedia = ({ idRoute }: Props) => {
     return (
       <SectionStyled>
         <ApiFeedback failure={failure} />
-        <EmptyState
-          icon={<ImageOutlinedIcon />}
-          message={<Trans>No videos or photos yet.</Trans>}
-          action={addCard}
-        />
+        {isAuthenticated ? (
+          <RouteMediaInvite onAdd={handleAdd} />
+        ) : (
+          <EmptyState
+            icon={<ImageOutlinedIcon />}
+            message={<Trans>No videos or photos yet.</Trans>}
+          />
+        )}
       </SectionStyled>
     );
   }

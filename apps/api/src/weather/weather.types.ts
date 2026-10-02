@@ -85,4 +85,14 @@ export class WeatherBackfillDto {
     description: 'Ascents still waiting, because one call fills a batch at most'
   })
   remaining!: number;
+
+  @ApiProperty({ description: 'Ascents the provider had no answer for' })
+  failed!: number;
+
+  @ApiProperty({
+    type: String,
+    nullable: true,
+    description: 'Error code of the first ascent that failed'
+  })
+  failureCode!: string | null;
 }

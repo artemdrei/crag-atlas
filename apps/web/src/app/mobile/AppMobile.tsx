@@ -7,6 +7,7 @@ import { grantAdminMobileRegistrations } from '@web/features/grantAdmin';
 import { logTickMobileRegistrations } from '@web/features/logTick';
 import { routeCommentMobileRegistrations } from '@web/features/routeComment';
 import { signInPromptMobileRegistrations } from '@web/features/signInPrompt';
+import { topoMobileRegistrations } from '@web/features/topo';
 import { LogbookTeaser, TicksSkeleton } from '@web/pages/logbook/common';
 import { playgroundMobileRegistrations } from '@web/pages/playground/registrations';
 import { ProfileSkeleton, ProfileTeaser } from '@web/pages/profile/common';
@@ -30,6 +31,7 @@ const registrations = [
   ...logTickMobileRegistrations,
   ...routeCommentMobileRegistrations,
   ...signInPromptMobileRegistrations,
+  ...topoMobileRegistrations,
   ...routeMediaMobileRegistrations,
   ...playgroundMobileRegistrations
 ];

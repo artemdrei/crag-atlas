@@ -3,20 +3,25 @@ import { useNavigate, useParams } from 'react-router';
 import { useLingui } from '@lingui/react/macro';
 import { styled, useTheme } from '@mui/material/styles';
 
-import { useModal, useUser } from '@web/app/providers';
+import { useUser } from '@web/app/providers';
 import {
   buildRegionPath,
   buildRouteEditPath,
-  buildSectorPath,
-  ROUTES
+  buildSectorPath
 } from '@web/app/router/routes';
 import { EditToggleButton } from '@web/features/catalogEdit';
-import { TopoImage, usePhotoLabel, useRouteTopo } from '@web/features/topo';
+import {
+  TopoImage,
+  useOpenTopoPhoto,
+  usePhotoLabel,
+  useRouteTopo
+} from '@web/features/topo';
 import { getGradeColor } from '@web/shared/theme/palette';
 import {
   ApiFeedback,
   PageBreadcrumbs,
   PageShell,
+  PageTitle,
   PhotoPlaceholder
 } from '@web/shared/ui';
 import { GradeConsensus } from '@web/widgets/gradeConsensus';
@@ -37,7 +42,7 @@ export const PageRouteDesktop = () => {
   const { idRegion = '', idSector = '', idRoute = '' } = useParams();
   const theme = useTheme();
   const navigate = useNavigate();
-  const { openModal } = useModal();
+  const openTopoPhoto = useOpenTopoPhoto();
   const { hasRole } = useUser();
   const { route, isLoading, failure } = useApiGetRoute(idRoute);
   const { topo, photoIndex, lines, numberOf } = useRouteTopo(idSector, idRoute);
@@ -46,40 +51,43 @@ export const PageRouteDesktop = () => {
   const colorOf = () =>
     getGradeColor(theme.palette.grade, route?.grade, route?.gradeScale);
 
-  const openPhoto = () => {
-    if (!topo) return;
-
-    openModal('VIEW_TOPO_PHOTO', {
-      photoUrl: topo.photoUrl,
+  const openPhoto = () =>
+    openTopoPhoto({
+      topo,
       label: photoLabel(photoIndex),
       lines,
       numberOf,
       colorOf
     });
-  };
 
   return (
-    <PageShell spacing={2}>
-      <HeaderRowStyled>
-        <PageBreadcrumbs
-          items={[
-            { label: t`Regions`, to: ROUTES.INDEX },
-            { label: route?.regionName ?? '…', to: buildRegionPath(idRegion) },
-            {
-              label: route?.sectorName ?? '…',
-              to: buildSectorPath(idRegion, idSector)
-            },
-            { label: route?.name ?? '…' }
-          ]}
-        />
-        {route && !route.isArchived && (
-          <EditToggleButton
-            onClick={() =>
-              navigate(buildRouteEditPath(idRegion, idSector, idRoute))
-            }
+    <PageShell
+      spacing={2}
+      header={
+        <HeaderRowStyled>
+          <PageBreadcrumbs
+            items={[
+              {
+                label: route?.regionName ?? '…',
+                to: buildRegionPath(idRegion)
+              },
+              {
+                label: route?.sectorName ?? '…',
+                to: buildSectorPath(idRegion, idSector)
+              },
+              { label: route?.name ?? '…' }
+            ]}
           />
-        )}
-      </HeaderRowStyled>
+          {route && !route.isArchived && (
+            <EditToggleButton
+              onClick={() =>
+                navigate(buildRouteEditPath(idRegion, idSector, idRoute))
+              }
+            />
+          )}
+        </HeaderRowStyled>
+      }
+    >
       <ApiFeedback failure={failure} />
       {isLoading && <RouteSkeleton />}
       {route && (
@@ -105,7 +113,10 @@ export const PageRouteDesktop = () => {
             )}
           </PhotoStyled>
           <MainColumnStyled>
-            <RouteDetails route={route} />
+            <DetailsBlockStyled>
+              <PageTitle name={route.name} nameLocal={route.nameLocal} />
+              <RouteDetails route={route} />
+            </DetailsBlockStyled>
             <StatsRowStyled>
               {!!route.ascentsCount && (
                 <StatsStyled
@@ -170,6 +181,13 @@ const MainColumnStyled = styled('div')`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(3)};
+  min-width: 0;
+`;
+
+const DetailsBlockStyled = styled('div')`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing(1.5)};
   min-width: 0;
 `;
 
