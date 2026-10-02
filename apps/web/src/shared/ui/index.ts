@@ -32,6 +32,7 @@ export { NameFields } from './NameFields';
 export { type Crumb, PageBreadcrumbs } from './PageBreadcrumbs';
 export { PageShell } from './PageShell';
 export { PageTitle } from './PageTitle';
+export { PageTitleRow } from './PageTitleRow';
 export { PhotoPlaceholder } from './PhotoPlaceholder';
 export { type PillTabOption, PillTabs } from './PillTabs';
 export { PointEditor } from './PointEditor';
