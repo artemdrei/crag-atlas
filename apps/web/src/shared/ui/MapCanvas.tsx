@@ -58,6 +58,12 @@ const framingKey = (points: MapPoint[], maxZoom: number): string =>
     .sort()
     .join('|')}`;
 
+const boundsOf = (points: MapPoint[]): LngLatBounds =>
+  points.reduce(
+    (acc, { point }) => acc.extend([point.lng, point.lat]),
+    new LngLatBounds()
+  );
+
 export interface Props {
   points: MapPoint[];
   details?: ReactNode;
@@ -100,6 +106,7 @@ export const MapCanvas = ({
 
   const latestRef = useRef({
     points,
+    selectedZoom,
     idSelected,
     mode: theme.palette.mode,
     onSelect,
@@ -107,6 +114,7 @@ export const MapCanvas = ({
     onLocateError
   });
   latestRef.current.points = points;
+  latestRef.current.selectedZoom = selectedZoom;
   latestRef.current.idSelected = idSelected;
   latestRef.current.mode = theme.palette.mode;
   latestRef.current.onSelect = onSelect;
@@ -116,11 +124,24 @@ export const MapCanvas = ({
   useEffect(() => {
     if (!containerRef.current) return;
 
+    const { points: initial, selectedZoom: initialZoom } = latestRef.current;
+    const initialKey = framingKey(initial, initialZoom);
+    // A framing already flown to is where the map is born: fitting it after
+    // `load` shows one painted frame of the world first, and the jump reads
+    // as a flicker.
+    const isAlreadyFramed = initial.length > 0 && flownTo.has(initialKey);
+
     const map = new MapLibreMap({
       container: containerRef.current,
       style: STYLE_URL[latestRef.current.mode],
-      attributionControl: { compact: true }
+      attributionControl: { compact: true },
+      ...(isAlreadyFramed && {
+        bounds: boundsOf(initial),
+        fitBoundsOptions: { padding: FIT_PADDING, maxZoom: initialZoom }
+      })
     });
+
+    if (isAlreadyFramed) fittedKeyRef.current = initialKey;
 
     map.addControl(new NavigationControl({ showCompass: false }), 'top-right');
     const geolocate = new GeolocateControl({});
@@ -223,12 +244,7 @@ export const MapCanvas = ({
 
     fittedKeyRef.current = key;
 
-    const bounds = points.reduce(
-      (acc, { point }) => acc.extend([point.lng, point.lat]),
-      new LngLatBounds()
-    );
-
-    map.fitBounds(bounds, {
+    map.fitBounds(boundsOf(points), {
       padding: FIT_PADDING,
       maxZoom: selectedZoom,
       duration: flownTo.has(key) ? 0 : ZOOM_DURATION
