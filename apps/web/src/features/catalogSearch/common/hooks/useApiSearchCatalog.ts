@@ -49,6 +49,7 @@ export const useApiSearchCatalog = (query: string) => {
   return {
     results,
     isLoading: isLoading || debouncedTerm !== term,
-    isActive
+    isActive,
+    hasTerm: term.length > 0
   };
 };

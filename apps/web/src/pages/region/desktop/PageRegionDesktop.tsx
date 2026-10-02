@@ -1,14 +1,11 @@
 import { useMemo } from 'react';
 import { useParams } from 'react-router';
 
-import { useLingui } from '@lingui/react/macro';
 import { styled, useTheme } from '@mui/material/styles';
 
 import { useEditModeInUrl, useUser } from '@web/app/providers';
-import { ROUTES } from '@web/app/router/routes';
 import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
 import { CatalogEditActions } from '@web/features/catalogEdit';
-import { CatalogSearchDesktop } from '@web/features/catalogSearch';
 import {
   mapSectors,
   SectorMapDesktop,
@@ -18,7 +15,6 @@ import { useCatalogSelection } from '@web/shared/lib';
 import {
   ApiFeedback,
   CatalogExplorerLayout,
-  PageBreadcrumbs,
   PageShell,
   PageTitle
 } from '@web/shared/ui';
@@ -33,7 +29,6 @@ import {
 import { RegionEditSection, RegionEditSidebar } from './ui';
 
 export const PageRegionDesktop = () => {
-  const { t } = useLingui();
   const theme = useTheme();
   const { idRegion = '' } = useParams();
   const openCatalogItem = useOpenCatalogItem();
@@ -76,12 +71,6 @@ export const PageRegionDesktop = () => {
   return (
     <PageShell spacing={1} isFixedHeight>
       <HeaderRowStyled>
-        <PageBreadcrumbs
-          items={[
-            { label: t`Regions`, to: ROUTES.INDEX },
-            { label: region?.name ?? '…' }
-          ]}
-        />
         <CatalogEditActions
           isEditing={isEditing}
           isArchiveShown={isArchiveShown}
@@ -98,7 +87,6 @@ export const PageRegionDesktop = () => {
       <PageTitle name={region?.name} nameLocal={region?.nameLocal} />
       <ApiFeedback failure={regionFailure ?? failure} />
       <CatalogExplorerLayout
-        search={<CatalogSearchDesktop />}
         list={
           <SectorsList
             sectors={sectors}
@@ -168,6 +156,6 @@ export const PageRegionDesktop = () => {
 const HeaderRowStyled = styled('div')`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: ${({ theme }) => theme.spacing(2)};
 `;

@@ -32,13 +32,8 @@ test.beforeAll(async () => {
 
 test.afterAll(cleanup);
 
-/**
- * A hit and a catalog card are both buttons, and a region on the home page
- * answers to both — but the dropdown is a portal at the end of the document,
- * so the hit is the last match.
- */
 const hit = (page: Page, name: string) =>
-  page.getByRole('button', { name: new RegExp(name) }).last();
+  page.getByRole('option', { name: new RegExp(name) });
 
 const searchFor = (page: Page, term: string) =>
   page.getByPlaceholder('Search a region, sector or route').fill(term);

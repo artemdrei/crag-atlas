@@ -1,2 +1,4 @@
+export { CatalogSearchBox } from './CatalogSearchBox';
 export { CatalogSearchField } from './CatalogSearchField';
-export { CatalogSearchResults } from './CatalogSearchResults';
+export { CatalogSearchGroup } from './CatalogSearchGroup';
+export { CatalogSearchOption } from './CatalogSearchOption';

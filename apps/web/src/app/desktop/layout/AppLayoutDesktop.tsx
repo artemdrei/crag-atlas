@@ -10,7 +10,7 @@ import { CONTENT_MAX_WIDTH } from '@web/shared/theme/layout';
 
 import { AppHeaderDesktop } from './AppHeaderDesktop';
 
-export const AppLayoutDesktop = () => {
+export const AppLayoutDesktop = ({ hasSearch }: { hasSearch?: boolean }) => {
   const location = useLocation();
   const mainRef = useRef<HTMLDivElement>(null);
 
@@ -18,7 +18,7 @@ export const AppLayoutDesktop = () => {
 
   return (
     <LayoutRootStyled>
-      <AppHeaderDesktop />
+      <AppHeaderDesktop hasSearch={hasSearch} />
       <MainStyled ref={mainRef} component="main">
         {/* Keyed by path: a crash on one screen must not follow the user to
             the next one, and a boundary only clears by remounting. */}

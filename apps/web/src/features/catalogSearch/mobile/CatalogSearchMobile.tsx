@@ -1,49 +1,68 @@
 import { useState } from 'react';
 
+import { useLingui } from '@lingui/react/macro';
+import SearchIcon from '@mui/icons-material/Search';
+import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
-import { styled } from '@mui/material/styles';
+import { keyframes, styled } from '@mui/material/styles';
 
-import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
-
-import {
-  CatalogSearchField,
-  CatalogSearchResults,
-  useApiSearchCatalog
-} from '../common';
+import { CatalogSearchBox } from '../common';
 
 export const CatalogSearchMobile = () => {
-  const openCatalogItem = useOpenCatalogItem();
-  const [query, setQuery] = useState('');
-  const { results, isLoading, isActive } = useApiSearchCatalog(query);
+  const { t } = useLingui();
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  if (!isExpanded) {
+    return (
+      <IconButton aria-label={t`Search`} onClick={() => setIsExpanded(true)}>
+        <SearchIcon />
+      </IconButton>
+    );
+  }
 
   return (
-    <SearchStyled>
-      <CatalogSearchField value={query} onChange={setQuery} />
-      {isActive && (
-        <DropdownStyled elevation={0}>
-          <CatalogSearchResults
-            results={results}
-            isLoading={isLoading}
-            onPick={(hit) => {
-              setQuery('');
-              openCatalogItem('search', hit);
-            }}
-          />
-        </DropdownStyled>
-      )}
-    </SearchStyled>
+    <SearchStyled
+      placeholder={t`Search`}
+      isAutoFocused
+      slots={{ paper: DropdownStyled }}
+      onBlur={(query) => {
+        if (!query) setIsExpanded(false);
+      }}
+      onPick={() => setIsExpanded(false)}
+    />
   );
 };
 
-const SearchStyled = styled('div')`
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(1)};
+const appear = keyframes`
+  from {
+    opacity: 0;
+  }
+`;
+
+// Opacity, not width: the popper measures this element once when it opens, so
+// an anchor that is still growing is measured at its starting size.
+const SearchStyled = styled(CatalogSearchBox)`
+  width: 100%;
+  animation: ${appear} 0.2s ease-out;
+
+  .MuiOutlinedInput-root {
+    height: 100%;
+    padding-left: ${({ theme }) => theme.spacing(1.25)};
+    padding-right: ${({ theme }) => theme.spacing(0.5)};
+    font-size: ${({ theme }) => theme.typography.body2.fontSize};
+  }
+
+  .MuiInputAdornment-positionStart {
+    margin-right: ${({ theme }) => theme.spacing(0.5)};
+  }
 `;
 
 const DropdownStyled = styled(Paper)`
-  max-height: ${({ theme }) => theme.spacing(40)};
-  overflow-y: auto;
-  border: 1px solid ${({ theme }) => theme.palette.divider};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
+  border: 1px solid ${({ theme }) => theme.palette.divider};
+
+  & .MuiAutocomplete-listbox {
+    max-height: 60dvh;
+    padding: 0;
+  }
 `;
