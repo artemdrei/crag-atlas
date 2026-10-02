@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 import {
+  AppException,
   NotFoundException,
   ValidationException
 } from '../common/exceptions/app.exception';
@@ -70,6 +71,8 @@ const COLUMNS =
 const BACKFILL_COLUMNS =
   'id,climbed_at,climbed_at_time,routes!inner(sectors!inner(lat,lng)),tick_weather!left(id_tick)';
 const BACKFILL_BATCH = 50;
+
+const logger = new Logger('TicksService');
 
 const PAGE_SIZE = 100;
 const MAX_PAGE_SIZE = 200;
@@ -384,6 +387,7 @@ export class TicksService {
     }
 
     const entries: WeatherEntry[] = [];
+    const failureCodes: string[] = [];
 
     for (const tick of data) {
       const { lat, lng } = tick.routes?.sectors ?? {};
@@ -398,9 +402,18 @@ export class TicksService {
           at,
           weather: await this.weatherService.at(lat, lng, at)
         });
-      } catch {
-        // Swallowed on purpose: a day the provider has nothing for must not
-        // cost the whole run.
+      } catch (cause) {
+        // Not rethrown: a day the provider has nothing for must not cost the
+        // whole run.
+        const code =
+          cause instanceof AppException && cause.code
+            ? cause.code
+            : 'WEATHER_FETCH_FAILED';
+
+        failureCodes.push(code);
+        logger.warn(
+          `No weather for tick ${tick.id} at ${at}: ${String(cause)}`
+        );
       }
     }
 
@@ -408,7 +421,9 @@ export class TicksService {
 
     return {
       filled: entries.length,
-      remaining: Math.max((count ?? 0) - entries.length, 0)
+      remaining: Math.max((count ?? 0) - entries.length, 0),
+      failed: failureCodes.length,
+      failureCode: failureCodes[0] ?? null
     };
   }
 
