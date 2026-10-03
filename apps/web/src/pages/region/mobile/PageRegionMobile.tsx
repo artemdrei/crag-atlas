@@ -4,6 +4,7 @@ import { useParams } from 'react-router';
 import { useTheme } from '@mui/material/styles';
 
 import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
+import { RegionConditionsMobile } from '@web/features/sectorConditions';
 import {
   mapSectors,
   SectorMapMobile,
@@ -65,6 +66,7 @@ export const PageRegionMobile = () => {
           })
         }
       />
+      <RegionConditionsMobile idRegion={idRegion} />
       <SectorsList
         sectors={sectors}
         pinColors={pinColors}

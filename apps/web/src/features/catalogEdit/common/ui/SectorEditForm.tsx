@@ -1,7 +1,10 @@
 import { type FormEvent, type ReactNode, useEffect, useState } from 'react';
 
-import type { Sector } from '@crag-atlas/api';
+import type { Sector, Shelter } from '@crag-atlas/api';
 import { useLingui } from '@lingui/react/macro';
+import MenuItem from '@mui/material/MenuItem';
+import { styled } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
 
 import { coordsOf, toast, useLatinNames } from '@web/shared/lib';
 import type { Coords } from '@web/shared/types';
@@ -34,13 +37,19 @@ export const SectorEditForm = ({
   const { name, nameLocal, isNameLatin, setName, setNameLocal, resetNames } =
     useLatinNames(sector.name, sector.nameLocal ?? '');
   const [description, setDescription] = useState(sector.description);
+  const [aspectDeg, setAspectDeg] = useState(
+    sector.aspectDeg?.toString() ?? ''
+  );
+  const [shelter, setShelter] = useState<Shelter>(sector.shelter);
 
   const isDirty =
     name !== sector.name ||
     nameLocal !== (sector.nameLocal ?? '') ||
     description !== sector.description ||
     (point?.lat ?? null) !== (sector.lat ?? null) ||
-    (point?.lng ?? null) !== (sector.lng ?? null);
+    (point?.lng ?? null) !== (sector.lng ?? null) ||
+    toAspect(aspectDeg) !== (sector.aspectDeg ?? null) ||
+    shelter !== sector.shelter;
 
   useEffect(() => {
     onDirtyChange?.(isDirty);
@@ -58,6 +67,8 @@ export const SectorEditForm = ({
   const handleCancel = () => {
     resetNames(sector.name, sector.nameLocal ?? '');
     setDescription(sector.description);
+    setAspectDeg(sector.aspectDeg?.toString() ?? '');
+    setShelter(sector.shelter);
     onPointChange?.(coordsOf(sector));
     onDirtyChange?.(false);
     onClose?.();
@@ -71,7 +82,9 @@ export const SectorEditForm = ({
       nameLocal: nameLocal.trim() || null,
       description: description.trim(),
       lat: point?.lat ?? null,
-      lng: point?.lng ?? null
+      lng: point?.lng ?? null,
+      aspectDeg: toAspect(aspectDeg),
+      shelter
     });
   };
 
@@ -94,6 +107,29 @@ export const SectorEditForm = ({
         isChanged={description !== sector.description}
         onChange={(event) => setDescription(event.target.value)}
       />
+      <RowStyled>
+        <TextField
+          fullWidth
+          type="number"
+          label={t`Aspect, °`}
+          helperText={t`Where the wall looks: 0 north, 90 east. Left empty it is read off the slope`}
+          value={aspectDeg}
+          slotProps={{ htmlInput: { min: 0, max: 359 } }}
+          onChange={(event) => setAspectDeg(event.target.value)}
+        />
+        <TextField
+          select
+          fullWidth
+          label={t`Shelter`}
+          helperText={t`Whether the rain reaches a climber on the wall`}
+          value={shelter}
+          onChange={(event) => setShelter(event.target.value as Shelter)}
+        >
+          <MenuItem value="open">{t`Open to the rain`}</MenuItem>
+          <MenuItem value="partial">{t`Partly sheltered`}</MenuItem>
+          <MenuItem value="full">{t`Under a roof`}</MenuItem>
+        </TextField>
+      </RowStyled>
       {children}
       <EditActions
         isDisabled={!name.trim() || !nameLocal.trim() || !isNameLatin || !point}
@@ -104,4 +140,22 @@ export const SectorEditForm = ({
       />
     </EditFormStyled>
   );
+};
+
+const RowStyled = styled('div')`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing(1.5)};
+
+  & > * {
+    flex: 1 1 180px;
+  }
+`;
+
+// An empty field means "work it out from the terrain", which is not the same
+// as north.
+const toAspect = (value: string): number | null => {
+  const parsed = Number.parseInt(value, 10);
+
+  return Number.isNaN(parsed) ? null : ((parsed % 360) + 360) % 360;
 };

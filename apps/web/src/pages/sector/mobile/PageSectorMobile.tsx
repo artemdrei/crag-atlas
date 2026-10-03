@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 
 import { buildRegionPath } from '@web/app/router/routes';
 import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
+import { SectorConditionsMobile } from '@web/features/sectorConditions';
 import {
   orderRoutes,
   TopoGalleryMobile,
@@ -146,6 +147,7 @@ export const PageSectorMobile = () => {
         onSelectTopo={selectTopo}
         onSelectRoute={openRouteById}
       />
+      <SectorConditionsMobile idSector={idSector} />
       <RoutesPanelHeader
         routesCount={visibleRoutes.length}
         tickedCount={tickedCount}

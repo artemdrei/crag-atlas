@@ -6,6 +6,7 @@ import { styled, useTheme } from '@mui/material/styles';
 import { useEditModeInUrl, useUser } from '@web/app/providers';
 import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
 import { CatalogEditActions } from '@web/features/catalogEdit';
+import { RegionConditionsDesktop } from '@web/features/sectorConditions';
 import {
   mapSectors,
   SectorMapDesktop,
@@ -88,33 +89,38 @@ export const PageRegionDesktop = () => {
       <ApiFeedback failure={regionFailure ?? failure} />
       <CatalogExplorerLayout
         list={
-          <SectorsList
-            sectors={sectors}
-            pinColors={pinColors}
-            tickedOf={tickedOf}
-            idSelectedSector={idSelectedSector}
-            idDirtySector={isSelectedDirty ? idSelectedSector : undefined}
-            isEditing={isEditing}
-            isLoading={isLoading}
-            onSelect={(sector) =>
-              isEditing
-                ? selectSector(sector.id)
-                : openCatalogItem('card', {
-                    name: sector.name,
-                    idRegion,
-                    idSector: sector.id
-                  })
-            }
-            onShowOnMap={(sector) => selectSector(sector.id)}
-            onEdit={
-              hasRole('admin')
-                ? (sector) => {
-                    selectSector(sector.id);
-                    setIsEditing(true);
-                  }
-                : undefined
-            }
-          />
+          <>
+            <ConditionsSlotStyled>
+              <RegionConditionsDesktop idRegion={idRegion} />
+            </ConditionsSlotStyled>
+            <SectorsList
+              sectors={sectors}
+              pinColors={pinColors}
+              tickedOf={tickedOf}
+              idSelectedSector={idSelectedSector}
+              idDirtySector={isSelectedDirty ? idSelectedSector : undefined}
+              isEditing={isEditing}
+              isLoading={isLoading}
+              onSelect={(sector) =>
+                isEditing
+                  ? selectSector(sector.id)
+                  : openCatalogItem('card', {
+                      name: sector.name,
+                      idRegion,
+                      idSector: sector.id
+                    })
+              }
+              onShowOnMap={(sector) => selectSector(sector.id)}
+              onEdit={
+                hasRole('admin')
+                  ? (sector) => {
+                      selectSector(sector.id);
+                      setIsEditing(true);
+                    }
+                  : undefined
+              }
+            />
+          </>
         }
         map={
           <SectorMapDesktop
@@ -158,4 +164,8 @@ const HeaderRowStyled = styled('div')`
   align-items: center;
   justify-content: flex-end;
   gap: ${({ theme }) => theme.spacing(2)};
+`;
+
+const ConditionsSlotStyled = styled('div')`
+  margin-bottom: ${({ theme }) => theme.spacing(1.5)};
 `;
