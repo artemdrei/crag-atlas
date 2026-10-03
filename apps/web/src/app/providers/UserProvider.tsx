@@ -79,8 +79,8 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       // session-less on every anonymous load.
       if (event === 'SIGNED_OUT') {
         track({ name: 'Logged Out' });
-        // The cache is persisted, so the next person on this device would
-        // otherwise open the app on this climber's logbook.
+        // Otherwise the next person to sign in on this tab would be served
+        // this climber's cached logbook and saved-region list.
         queryClient.clear();
         deleteAllOfflineRegions();
         idIdentified.current = null;
