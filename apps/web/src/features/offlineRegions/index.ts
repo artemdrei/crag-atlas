@@ -7,4 +7,6 @@ export {
   useOfflineRegionsSync
 } from './common';
 export { OfflineRegionsDesktop } from './desktop/OfflineRegionsDesktop';
+export { OfflineShortcutsDesktop } from './desktop/OfflineShortcutsDesktop';
 export { OfflineRegionsMobile } from './mobile/OfflineRegionsMobile';
+export { OfflineShortcutsMobile } from './mobile/OfflineShortcutsMobile';

@@ -1813,6 +1813,10 @@ msgstr "Заповнено автоматично з назви вище"
 msgid "Year"
 msgstr "Рік"
 
+#: src/features/offlineRegions/common/ui/OfflineShortcutLinks.tsx:16
+msgid "You are offline. Saved regions:"
+msgstr "Ви офлайн. Збережені регіони:"
+
 #: src/pages/profile/common/ui/ProfileTeaser.tsx:16
 msgid "Your account keeps your logbook, your beta and your settings in one place."
 msgstr "Акаунт тримає щоденник, бету й налаштування в одному місці."

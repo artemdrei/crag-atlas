@@ -1813,6 +1813,10 @@ msgstr "Written for you from the name above"
 msgid "Year"
 msgstr "Year"
 
+#: src/features/offlineRegions/common/ui/OfflineShortcutLinks.tsx:16
+msgid "You are offline. Saved regions:"
+msgstr "You are offline. Saved regions:"
+
 #: src/pages/profile/common/ui/ProfileTeaser.tsx:16
 msgid "Your account keeps your logbook, your beta and your settings in one place."
 msgstr "Your account keeps your logbook, your beta and your settings in one place."

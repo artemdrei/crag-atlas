@@ -4,5 +4,6 @@ export { deleteAllOfflineRegions } from './lib';
 export {
   OfflineDownloadProgress,
   OfflineRegionPicker,
-  OfflineRegionRow
+  OfflineRegionRow,
+  OfflineShortcutLinks
 } from './ui';

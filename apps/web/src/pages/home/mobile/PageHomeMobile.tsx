@@ -1,4 +1,5 @@
 import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
+import { OfflineShortcutsMobile } from '@web/features/offlineRegions';
 import { mapRegions, RegionMapMobile } from '@web/features/regionMap';
 import { ApiFeedback, PageShell } from '@web/shared/ui';
 
@@ -11,6 +12,7 @@ export const PageHomeMobile = () => {
   return (
     <PageShell spacing={2} isCompact>
       <HomeHeading variant="h5" />
+      <OfflineShortcutsMobile />
       <ApiFeedback failure={failure} />
       <RegionMapMobile
         mapped={mapRegions(regions)}
