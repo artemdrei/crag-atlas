@@ -133,7 +133,21 @@ export default defineConfig(({ mode }) => {
                 cacheName: 'offline-regions',
                 networkTimeoutSeconds: 5,
                 matchOptions: { ignoreVary: true },
-                plugins: [{ cacheWillUpdate: async () => null }]
+                plugins: [
+                  { cacheWillUpdate: async () => null },
+                  // An API that answers but cannot reach its database (an
+                  // outage, or no internet behind a local API) is as useless
+                  // as no network: a saved region still answers from its copy.
+                  {
+                    fetchDidSucceed: async ({ request, response }) =>
+                      response.status >= 500
+                        ? ((await caches.match(request, {
+                            cacheName: 'offline-regions',
+                            ignoreVary: true
+                          })) ?? response)
+                        : response
+                  }
+                ]
               }
             },
             // A saved photo is served from the copy even online. Photos merely
