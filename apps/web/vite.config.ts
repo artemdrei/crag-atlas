@@ -98,6 +98,7 @@ export default defineConfig(({ mode }) => {
               options: {
                 cacheName: 'app-shell',
                 cacheableResponse: { statuses: [200] },
+                matchOptions: { ignoreVary: true },
                 // Every path gets the same SPA index.html, so one entry serves
                 // an offline open of any route, not just the ones visited.
                 plugins: [{ cacheKeyWillBeUsed: async () => '/' }]
@@ -109,6 +110,10 @@ export default defineConfig(({ mode }) => {
               handler: 'CacheFirst',
               options: {
                 cacheName: 'app-assets',
+                // A module script asks with an Origin header and the offline
+                // warm-up fetch without one, so a `Vary: Origin` response
+                // stored by one would never answer the other.
+                matchOptions: { ignoreVary: true },
                 // Room for the current build and the tail of the previous one.
                 // No maxAgeSeconds: it reads the response's Date header, so a
                 // region saved and then left a month offline would find its
