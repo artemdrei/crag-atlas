@@ -37,6 +37,7 @@ export const TopoGalleryDesktop = ({
           numberOf={numberOf}
           onSelectRoute={onSelectRoute}
           onHoverRoute={onHoverRoute}
+          isTopAligned
         >
           <CaptionStyled variant="caption">
             {photoLabel(idxActiveTopo)}
@@ -70,8 +71,7 @@ const GalleryStyled = styled('div')`
 const ZoomStageStyled = styled(TopoZoomStage)`
   flex-grow: 1;
   min-height: 0;
-  border: 1px solid ${({ theme }) => theme.palette.divider};
-  background: ${({ theme }) => theme.palette.background.paper};
+  padding: 0;
 `;
 
 const CaptionStyled = styled(Typography)`

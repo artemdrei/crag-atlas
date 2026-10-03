@@ -47,6 +47,7 @@ export const TopoGalleryMobile = ({
             onSelectRoute={onSelectRoute}
             onSelectPhoto={handleSelectPhoto}
             onHoverRoute={onHoverRoute}
+            isTopAligned
           />
         </StageStyled>
       ) : (
@@ -71,4 +72,5 @@ const GalleryStyled = styled('div')`
 
 const StageStyled = styled(ZoomStageShell)`
   height: 30svh;
+  padding: 0;
 `;

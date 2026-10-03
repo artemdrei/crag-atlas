@@ -9,10 +9,10 @@ export const photoFrame = (theme: Theme) => `
 
 // `container-type: size` is what lets `photoFit` cap the photo by this box
 // while the frame around it still shrinks to the photo alone.
-export const photoStage = () => `
+export const photoStage = (align = 'center') => `
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: ${align};
   justify-content: center;
   width: 100%;
   height: 100%;
