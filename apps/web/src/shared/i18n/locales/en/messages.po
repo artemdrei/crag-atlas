@@ -231,6 +231,10 @@ msgstr "{sector} leaves the catalog for everyone, together with its routes. Noth
 #~ msgid "{sectorName} is not empty"
 #~ msgstr "{sectorName} is not empty"
 
+#: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:73
+msgid "{size} · saved {savedAt}"
+msgstr "{size} · saved {savedAt}"
+
 #: src/features/logTick/common/ui/TickForm.tsx:171
 msgid "{stars} of 5"
 msgstr "{stars} of 5"
@@ -757,6 +761,11 @@ msgstr "Conditions added to {filled} ascents, {remaining} still to go"
 msgid "Conditions, read at the sector"
 msgstr "Conditions, read at the sector"
 
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:50
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:52
+msgid "Connect to the internet to save or refresh a region."
+msgstr "Connect to the internet to save or refresh a region."
+
 #: src/pages/login/common/ui/EmailOtpForm.tsx:75
 #: src/pages/login/common/ui/EmailOtpForm.tsx:114
 msgid "Continue"
@@ -946,6 +955,16 @@ msgstr "Directions"
 #: src/pages/region/desktop/PageRegionDesktop.tsx:43
 #~ msgid "Done"
 #~ msgstr "Done"
+
+#. placeholder {0}: progress.done
+#. placeholder {1}: progress.total
+#: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:40
+#~ msgid "Downloading photos: {0} of {1}"
+#~ msgstr "Downloading photos: {0} of {1}"
+
+#: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:41
+msgid "Downloading photos: {done} of {total}"
+msgstr "Downloading photos: {done} of {total}"
 
 #: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:148
 msgid "Drag a route here"
@@ -1417,6 +1436,15 @@ msgstr "No forecast is published that far ahead"
 #~ msgid "No photo yet"
 #~ msgstr "No photo yet"
 
+#: src/features/offlineRegions/common/ui/OfflineRegionPicker.tsx:34
+msgid "No region found"
+msgstr "No region found"
+
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:78
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:80
+msgid "No regions saved yet."
+msgstr "No regions saved yet."
+
 #: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:136
 msgid "No routes yet — add the first one, then drag it onto the photo it is drawn on."
 msgstr "No routes yet — add the first one, then drag it onto the photo it is drawn on."
@@ -1479,6 +1507,11 @@ msgstr "Nothing found"
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:112
 msgid "Now over {0}"
 msgstr "Now over {0}"
+
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:21
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:21
+msgid "Offline regions"
+msgstr "Offline regions"
 
 #: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:85
 #~ msgid "On this photo"
@@ -1656,6 +1689,10 @@ msgstr "Position your photo"
 msgid "Post"
 msgstr "Post"
 
+#: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:42
+msgid "Preparing the download…"
+msgstr "Preparing the download…"
+
 #: src/features/logTick/common/ui/TickForm.tsx:186
 msgid "Private comment"
 msgstr "Private comment"
@@ -1663,8 +1700,8 @@ msgstr "Private comment"
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:43
 #: src/app/mobile/layout/AppBottomNavigation.tsx:41
 #: src/pages/profile/common/ui/ProfileTeaser.tsx:14
-#: src/pages/profile/desktop/PageProfileDesktop.tsx:24
-#: src/pages/profile/mobile/PageProfileMobile.tsx:24
+#: src/pages/profile/desktop/PageProfileDesktop.tsx:25
+#: src/pages/profile/mobile/PageProfileMobile.tsx:25
 msgid "Profile"
 msgstr "Profile"
 
@@ -1707,10 +1744,11 @@ msgstr "Redpoint"
 #~ msgid "Redraw line"
 #~ msgstr "Redraw line"
 
-#: src/features/logTick/common/ui/ConditionsSection.tsx:87
-#~ msgid "Refresh"
-#~ msgstr "Refresh"
+#: src/features/offlineRegions/common/ui/OfflineRegionRow.tsx:42
+msgid "Refresh"
+msgstr "Refresh"
 
+#: src/features/offlineRegions/common/ui/OfflineRegionPicker.tsx:35
 #: src/pages/region/desktop/ui/RegionEditSection.tsx:29
 msgid "Region"
 msgstr "Region"
@@ -1733,6 +1771,10 @@ msgstr "Regions"
 #: src/app/ui/errorBoundary/ErrorFallback.tsx:21
 msgid "Reload"
 msgstr "Reload"
+
+#: src/features/offlineRegions/common/ui/OfflineRegionRow.tsx:49
+msgid "Remove"
+msgstr "Remove"
 
 #: src/features/topoEditor/desktop/ui/TopoEditorToolbar.tsx:51
 #~ msgid "Remove line"
@@ -1854,10 +1896,17 @@ msgstr "Routes you have climbed here"
 #: src/features/avatarUpload/mobile/CropAvatarSheet.tsx:31
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
 #: src/features/logTick/common/ui/TickForm.tsx:213
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:44
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:46
 #: src/features/routeComment/desktop/EditRouteCommentDialog.tsx:29
 #: src/features/routeComment/mobile/EditRouteCommentSheet.tsx:24
 msgid "Save"
 msgstr "Save"
+
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:24
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:24
+msgid "Save a region with its sectors, routes and topos to open it without a connection."
+msgstr "Save a region with its sectors, routes and topos to open it without a connection."
 
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:331
 msgid "Save changes"
@@ -1874,6 +1923,10 @@ msgstr "Save changes"
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:321
 msgid "Saved changes go live for everyone straight away."
 msgstr "Saved changes go live for everyone straight away."
+
+#: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:31
+msgid "Saved for offline use"
+msgstr "Saved for offline use"
 
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
 #: src/features/logTick/common/ui/TickForm.tsx:211

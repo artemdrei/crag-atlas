@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 
 import { useProfileIdentity } from '@web/app/providers';
 import { AvatarPickerDesktop } from '@web/features/avatarUpload';
+import { OfflineRegionsDesktop } from '@web/features/offlineRegions';
 
 import {
   AccessSetting,
@@ -36,6 +37,7 @@ export const PageProfileDesktop = () => {
       <LocaleSetting />
       <GradeScaleSetting />
       <AccessSetting />
+      <OfflineRegionsDesktop />
       <SignOutButton />
       <AppVersion />
     </PageStyled>
