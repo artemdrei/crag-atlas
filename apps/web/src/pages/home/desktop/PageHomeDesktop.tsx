@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 
-import { useLingui } from '@lingui/react/macro';
 import { styled } from '@mui/material/styles';
 
 import { useEditModeInUrl, useUser } from '@web/app/providers';
@@ -8,18 +7,12 @@ import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
 import { CatalogEditActions } from '@web/features/catalogEdit';
 import { mapRegions, RegionMapDesktop } from '@web/features/regionMap';
 import { useCatalogSelection } from '@web/shared/lib';
-import {
-  ApiFeedback,
-  CatalogExplorerLayout,
-  PageBreadcrumbs,
-  PageShell
-} from '@web/shared/ui';
+import { ApiFeedback, CatalogExplorerLayout, PageShell } from '@web/shared/ui';
 
 import { HomeHeading, RegionsGrid, useApiGetRegions } from '../common';
 import { HomeEditSidebar } from './ui';
 
 export const PageHomeDesktop = () => {
-  const { t } = useLingui();
   const openCatalogItem = useOpenCatalogItem();
   const { hasRole } = useUser();
   const { isEditing, isArchiveShown, setIsEditing, setIsArchiveShown } =
@@ -48,7 +41,6 @@ export const PageHomeDesktop = () => {
   return (
     <PageShell spacing={1} isFixedHeight>
       <HeaderRowStyled>
-        <PageBreadcrumbs items={[{ label: t`Regions` }]} />
         <CatalogEditActions
           isEditing={isEditing}
           isArchiveShown={isArchiveShown}
@@ -133,6 +125,6 @@ const ListAreaStyled = styled('div')`
 const HeaderRowStyled = styled('div')`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: ${({ theme }) => theme.spacing(2)};
 `;
