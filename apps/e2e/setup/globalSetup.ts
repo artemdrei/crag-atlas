@@ -1,3 +1,4 @@
+import { execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname } from 'node:path';
 
@@ -121,8 +122,29 @@ const sweepFixtures = async (): Promise<void> => {
   await client.from('regions').delete().in('id', idRegions);
 };
 
+const REPO_ROOT = new URL('../../../', import.meta.url).pathname;
+
+// `supabase start` applies migrations only to an empty database, so a local
+// stack that outlives a pull keeps the old schema and every spec fails on it.
+const applyMigrations = (): void => {
+  try {
+    execFileSync('supabase', ['migration', 'up', '--local'], {
+      cwd: REPO_ROOT,
+      stdio: 'pipe'
+    });
+  } catch (error) {
+    const output = (error as { stderr?: Buffer }).stderr?.toString() ?? '';
+
+    throw new Error(
+      `Could not migrate the local database. If a migration's objects already exist, mark it with \`supabase migration repair --local --status applied <version>\`.\n${output}`
+    );
+  }
+};
+
 const globalSetup = async () => {
   assertLocalStack();
+
+  applyMigrations();
 
   await sweepFixtures();
 

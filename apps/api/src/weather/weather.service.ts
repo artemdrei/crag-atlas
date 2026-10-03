@@ -69,13 +69,69 @@ interface CacheEntry {
 interface OpenMeteoResponse {
   error?: boolean;
   reason?: string;
+  utc_offset_seconds?: number;
   hourly?: Record<string, (number | null)[] | string[]>;
   daily?: { time: string[]; sunrise: string[]; sunset: string[] };
 }
 
+// The whole published forecast in one answer, which is what a strip of days
+// needs — asking day by day would fetch the same response sixteen times.
+export interface ForecastWindow {
+  utcOffsetSeconds: number;
+  time: string[];
+  temperature: (number | null)[];
+  humidity: (number | null)[];
+  precipitation: (number | null)[];
+  cloudCover: (number | null)[];
+  weatherCode: (number | null)[];
+  windSpeed: (number | null)[];
+}
+
+interface WindowCacheEntry {
+  window: ForecastWindow;
+  expiresAt: number;
+}
+
+// Yesterday rides along because "how long since it rained" reaches back
+// across midnight on the first hour shown.
+const WINDOW_PAST_DAYS = 1;
+export const WINDOW_FORECAST_DAYS = 16;
+
 @Injectable()
 export class WeatherService {
   private readonly cache = new Map<string, CacheEntry>();
+  private readonly windows = new Map<string, WindowCacheEntry>();
+
+  async window(lat: number, lng: number): Promise<ForecastWindow> {
+    const key = `${lat.toFixed(3)}|${lng.toFixed(3)}`;
+    const cached = this.windows.get(key);
+
+    if (cached && cached.expiresAt > Date.now()) return cached.window;
+
+    const url = new URL(FORECAST_URL);
+
+    url.search = new URLSearchParams({
+      latitude: String(lat),
+      longitude: String(lng),
+      hourly: HOURLY,
+      timezone: 'auto',
+      wind_speed_unit: 'ms',
+      past_days: String(WINDOW_PAST_DAYS),
+      forecast_days: String(WINDOW_FORECAST_DAYS)
+    }).toString();
+
+    const window = parseWindow(await request(url));
+
+    if (this.windows.size >= CACHE_SIZE) {
+      const oldest = this.windows.keys().next().value;
+
+      if (oldest) this.windows.delete(oldest);
+    }
+
+    this.windows.set(key, { window, expiresAt: Date.now() + FRESH_MS });
+
+    return window;
+  }
 
   async lookupByRoute(idRoute: string, at: string): Promise<WeatherLookupDto> {
     assertAt(at);
@@ -271,6 +327,31 @@ const request = async (url: URL): Promise<OpenMeteoResponse> => {
   }
 
   return body;
+};
+
+const parseWindow = (body: OpenMeteoResponse): ForecastWindow => {
+  const hourly = body.hourly;
+
+  if (!hourly?.time) {
+    throw new AppException(
+      'Open-Meteo answered without an hourly series',
+      502,
+      'WEATHER_FETCH_FAILED'
+    );
+  }
+
+  const numbers = (name: string) => (hourly[name] ?? []) as (number | null)[];
+
+  return {
+    utcOffsetSeconds: body.utc_offset_seconds ?? 0,
+    time: hourly.time as string[],
+    temperature: numbers('temperature_2m'),
+    humidity: numbers('relative_humidity_2m'),
+    precipitation: numbers('precipitation'),
+    cloudCover: numbers('cloud_cover'),
+    weatherCode: numbers('weather_code'),
+    windSpeed: numbers('wind_speed_10m')
+  };
 };
 
 const parseDay = (body: OpenMeteoResponse, date: string): OpenMeteoDay => {
