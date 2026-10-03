@@ -20,6 +20,7 @@ import {
   formatDateTime,
   trackCatalogItemOpened
 } from '@web/shared/lib';
+import { hoverRing } from '@web/shared/theme/surfaces';
 import {
   AscentTypeBadge,
   GradeBadge,
@@ -227,11 +228,11 @@ const CardStyled = styled(Paper)`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(1.5)};
   padding: ${({ theme }) => theme.spacing(2.5)};
-  border: 1px solid ${({ theme }) => theme.palette.divider};
+  border: 2px solid ${({ theme }) => theme.palette.divider};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
 
   &:has(a:hover) {
-    border-color: ${({ theme }) => theme.palette.primary.main};
+    ${({ theme }) => hoverRing(theme.palette.primary.main)}
   }
 `;
 

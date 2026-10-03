@@ -12,6 +12,7 @@ import {
   useScrollHint
 } from '@web/shared/lib';
 import type { GradeTone } from '@web/shared/theme/palette';
+import { resolveGradeBar, resolveGradeHue } from '@web/shared/theme/palette';
 
 const COLUMN_WIDTH = 56;
 // A fixed width, so a sector of three grades and one of eight compare.
@@ -188,7 +189,6 @@ const BarsRowStyled = styled('div', {
     isCompact ? 'none' : `${columns * COLUMN_WIDTH}px`};
   padding-bottom: ${({ theme, isCompact }) =>
     theme.spacing(isCompact ? 0 : 0.5)};
-  border-bottom: 1px solid ${({ theme }) => theme.palette.divider};
 `;
 
 const LabelsRowStyled = styled('div', {
@@ -280,6 +280,9 @@ const BarStyled = styled('div', {
       : `${Math.max(share * 72, 6)}px`};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px
     ${({ theme }) => theme.shape.borderRadius}px 0 0;
-  background: ${({ theme, tone }) => theme.palette.grade[tone].background};
+  background: ${({ theme, tone }) => resolveGradeBar(theme.palette.mode, tone)};
+  border: none;
+  border-bottom: 1px solid
+    ${({ theme, tone }) => resolveGradeHue(theme.palette.mode, tone)};
   opacity: ${({ isMuted }) => (isMuted ? 0.25 : 1)};
 `;

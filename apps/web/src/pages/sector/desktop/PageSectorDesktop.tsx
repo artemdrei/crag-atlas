@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import { useUser } from '@web/app/providers';
 import { buildRegionPath, buildSectorEditPath } from '@web/app/router/routes';
 import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
+import { SectorConditionsDesktop } from '@web/features/sectorConditions';
 import {
   findTopoOfRoute,
   orderRoutes,
@@ -182,6 +183,7 @@ export const PageSectorDesktop = () => {
           </GalleryAreaStyled>
         </MainColumnStyled>
         <PanelStyled>
+          <SectorConditionsDesktop idSector={idSector} />
           <RoutesPanelHeader
             routesCount={visibleRoutes.length}
             tickedCount={tickedCount}

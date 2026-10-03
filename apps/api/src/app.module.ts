@@ -3,7 +3,9 @@ import { ConfigModule } from '@nestjs/config';
 
 import { AdminsModule } from './admins/admins.module';
 import { CommentsModule } from './comments/comments.module';
+import { ConditionsModule } from './conditions/conditions.module';
 import { HealthModule } from './health/health.module';
+import { HorizonModule } from './horizon/horizon.module';
 import { MeModule } from './me/me.module';
 import { MediaModule } from './media/media.module';
 import { RegionsModule } from './regions/regions.module';
@@ -30,7 +32,9 @@ import { WeatherModule } from './weather/weather.module';
     UsersModule,
     CommentsModule,
     MediaModule,
-    WeatherModule
+    WeatherModule,
+    HorizonModule,
+    ConditionsModule
   ]
 })
 export class AppModule {}

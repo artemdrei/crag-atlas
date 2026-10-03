@@ -8,6 +8,8 @@ export const QUERY_KEYS = {
   regionList: (isArchiveOnly: boolean) =>
     ['regions', 'list', isArchiveOnly] as const,
   region: (idRegion: string) => ['regions', 'detail', idRegion] as const,
+  regionConditions: (idRegion: string) =>
+    ['regions', 'detail', idRegion, 'conditions'] as const,
   sectorList: (idRegion: string, isArchiveOnly: boolean) =>
     ['regions', 'detail', idRegion, 'sectors', isArchiveOnly] as const,
   sectorsTicked: (idRegion: string) =>
@@ -18,6 +20,8 @@ export const QUERY_KEYS = {
     ['sectors', 'detail', idSector, 'routes', isArchiveOnly] as const,
   routesTicked: (idSector: string) =>
     ['sectors', 'detail', idSector, 'routes', 'ticked'] as const,
+  sectorConditions: (idSector: string) =>
+    ['sectors', 'detail', idSector, 'conditions'] as const,
   topos: (idSector: string) =>
     ['sectors', 'detail', idSector, 'topos'] as const,
   routes: () => ['routes'] as const,

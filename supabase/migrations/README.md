@@ -27,3 +27,5 @@ data: the catalog starts empty and is filled from the editor or by an import.
 | 012 | `012_tick_partner_name.sql` | `ticks.partner_name` — the belayer who has no account here, written by hand instead of linked |
 | 013 | `013_admin_access.sql` | Admin-scoped policies on `user_roles`, `id_user_granted_by` and `admin_directory()` — admins grant and revoke the role, never their own |
 | 014 | `014_tick_weather.sql` | `ticks.climbed_at_time` and `tick_weather` — the hour of an ascent and the conditions it was climbed in |
+| 015 | `015_search_route_stats.sql` | Ascent counts and rating on a search hit, read from `routes_with_stats` |
+| 016 | `016_sector_conditions.sql` | `sectors.aspect_deg` / `sectors.shelter` and `sector_horizon` — which way a wall faces, whether rain reaches it, and the skyline around it |

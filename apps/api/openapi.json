@@ -774,6 +774,46 @@
         "tags": ["Sector"]
       }
     },
+    "/horizon/backfill": {
+      "post": {
+        "operationId": "HorizonController_backfill",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HorizonBackfillDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Horizon"]
+      }
+    },
+    "/horizon/{idSector}/recompute": {
+      "post": {
+        "operationId": "HorizonController_recompute",
+        "parameters": [
+          {
+            "name": "idSector",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": ""
+          }
+        },
+        "tags": ["Horizon"]
+      }
+    },
     "/sectors/{idSector}/routes": {
       "get": {
         "operationId": "RoutesController_findBySector",
@@ -2004,6 +2044,62 @@
         },
         "tags": ["Media"]
       }
+    },
+    "/sectors/{idSector}/conditions": {
+      "get": {
+        "operationId": "ConditionsController_forSector",
+        "parameters": [
+          {
+            "name": "idSector",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SectorConditionsDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Conditions"]
+      }
+    },
+    "/regions/{idRegion}/conditions": {
+      "get": {
+        "operationId": "ConditionsController_forRegion",
+        "parameters": [
+          {
+            "name": "idRegion",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SectorConditionsDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Conditions"]
+      }
     }
   },
   "info": {
@@ -2458,6 +2554,16 @@
             "type": "number",
             "nullable": true
           },
+          "aspectDeg": {
+            "type": "number",
+            "nullable": true,
+            "description": "Direction the wall faces, 0 = north, clockwise. Null leaves it to the slope the skyline was read from"
+          },
+          "shelter": {
+            "type": "string",
+            "enum": ["open", "partial", "full"],
+            "description": "How much of the rain the wall keeps off a climber"
+          },
           "isArchived": {
             "type": "boolean",
             "description": "Out of the catalog, because it carries the mark or an ancestor does"
@@ -2475,6 +2581,7 @@
           "description",
           "routeCount",
           "gradeHistogram",
+          "shelter",
           "isArchived",
           "isDeleted"
         ]
@@ -2532,9 +2639,41 @@
           "lng": {
             "type": "number",
             "nullable": true
+          },
+          "aspectDeg": {
+            "type": "number",
+            "nullable": true,
+            "description": "Overrides the direction read off the surrounding slope"
+          },
+          "shelter": {
+            "type": "string",
+            "enum": ["open", "partial", "full"]
           }
         },
         "required": ["name"]
+      },
+      "HorizonBackfillDto": {
+        "type": "object",
+        "properties": {
+          "built": {
+            "type": "number",
+            "description": "Sectors this call built a skyline for"
+          },
+          "remaining": {
+            "type": "number",
+            "description": "Sectors still queued, because one call builds a batch at most"
+          },
+          "failed": {
+            "type": "number",
+            "description": "Sectors the elevation provider had no answer for"
+          },
+          "failureCode": {
+            "type": "string",
+            "nullable": true,
+            "description": "Error code of the first sector that failed"
+          }
+        },
+        "required": ["built", "remaining", "failed", "failureCode"]
       },
       "RouteDto": {
         "type": "object",
@@ -3737,6 +3876,173 @@
           }
         },
         "required": ["kind", "url"]
+      },
+      "SunIntervalDto": {
+        "type": "object",
+        "properties": {
+          "fromAt": {
+            "type": "string"
+          },
+          "untilAt": {
+            "type": "string"
+          }
+        },
+        "required": ["fromAt", "untilAt"]
+      },
+      "ConditionsHourDto": {
+        "type": "object",
+        "properties": {
+          "at": {
+            "type": "string",
+            "description": "Local wall clock at the crag, e.g. 14:00"
+          },
+          "score": {
+            "type": "number",
+            "nullable": true,
+            "description": "Null past the published forecast, where only the sun is known"
+          },
+          "band": {
+            "type": "string",
+            "enum": ["excellent", "good", "ok", "poor", "bad"],
+            "nullable": true,
+            "description": "The band the hour falls in, so a bar is coloured once"
+          },
+          "isSun": {
+            "type": "boolean",
+            "description": "Direct sun reaches the sector, cloud aside — geometry, not forecast"
+          },
+          "temperatureC": {
+            "type": "number",
+            "nullable": true
+          },
+          "precipitationMm": {
+            "type": "number",
+            "nullable": true
+          },
+          "humidityPct": {
+            "type": "number",
+            "nullable": true
+          },
+          "windSpeedMs": {
+            "type": "number",
+            "nullable": true
+          },
+          "weatherCode": {
+            "type": "number",
+            "nullable": true,
+            "description": "WMO weather code"
+          }
+        },
+        "required": [
+          "at",
+          "score",
+          "band",
+          "isSun",
+          "temperatureC",
+          "precipitationMm",
+          "humidityPct",
+          "windSpeedMs",
+          "weatherCode"
+        ]
+      },
+      "ConditionsDayDto": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "Local date at the crag, YYYY-MM-DD"
+          },
+          "hasForecast": {
+            "type": "boolean",
+            "description": "False past the published forecast; the sun is still known"
+          },
+          "score": {
+            "type": "number",
+            "nullable": true
+          },
+          "band": {
+            "type": "string",
+            "enum": ["excellent", "good", "ok", "poor", "bad"],
+            "nullable": true
+          },
+          "bestFromAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "bestUntilAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "sunriseAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "sunsetAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "sunIntervals": {
+            "description": "When direct sun reaches the sector; empty on a wall in shade",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SunIntervalDto"
+            }
+          },
+          "hours": {
+            "description": "The climbing hours of the day, not the whole twenty-four",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConditionsHourDto"
+            }
+          }
+        },
+        "required": [
+          "date",
+          "hasForecast",
+          "score",
+          "band",
+          "bestFromAt",
+          "bestUntilAt",
+          "sunriseAt",
+          "sunsetAt",
+          "sunIntervals",
+          "hours"
+        ]
+      },
+      "SectorConditionsDto": {
+        "type": "object",
+        "properties": {
+          "hasPoint": {
+            "type": "boolean",
+            "description": "False when the sector has no pin — nothing can be computed"
+          },
+          "isHorizonReady": {
+            "type": "boolean",
+            "description": "False while no skyline has been built; sun and shade then ignore the terrain"
+          },
+          "shelter": {
+            "type": "string",
+            "enum": ["open", "partial", "full"]
+          },
+          "aspectDeg": {
+            "type": "number",
+            "nullable": true,
+            "description": "Direction the wall faces, 0 = north, clockwise"
+          },
+          "days": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConditionsDayDto"
+            }
+          }
+        },
+        "required": [
+          "hasPoint",
+          "isHorizonReady",
+          "shelter",
+          "aspectDeg",
+          "days"
+        ]
       }
     }
   }

@@ -4,7 +4,11 @@ import { styled } from '@mui/material/styles';
 
 import { useDisplayGrade } from '@web/shared/lib';
 import type { GradeTone } from '@web/shared/theme/palette';
-import { resolveGradeTone } from '@web/shared/theme/palette';
+import {
+  resolveGradeFill,
+  resolveGradeInk,
+  resolveGradeTone
+} from '@web/shared/theme/palette';
 
 export interface Props {
   grade?: string | null;
@@ -31,8 +35,10 @@ const ChipStyled = styled(Chip, {
 })<{ tone: GradeTone }>`
   font-weight: 600;
   background-color: ${({ theme, tone }) =>
-    theme.palette.grade[tone].background};
-  color: ${({ theme, tone }) => theme.palette.grade[tone].text};
+    resolveGradeFill(theme.palette.mode, tone)};
+  border: 1px solid
+    ${({ theme, tone }) => resolveGradeInk(theme.palette.mode, tone)};
+  color: ${({ theme, tone }) => resolveGradeInk(theme.palette.mode, tone)};
 
   &.MuiChip-sizeMedium {
     font-size: ${({ theme }) => theme.typography.body1.fontSize};
