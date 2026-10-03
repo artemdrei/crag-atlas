@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "i18n:extract": "lingui extract",
-    "i18n:compile": "lingui compile"
+    "i18n:compile": "lingui compile",
+    "release": "release-it"
   },
   "dependencies": {
     "@amplitude/analytics-browser": "^2.45.4",
@@ -44,12 +45,14 @@
     "@lingui/babel-plugin-lingui-macro": "^6.7.0",
     "@lingui/cli": "^6.7.0",
     "@lingui/vite-plugin": "^6.7.0",
+    "@release-it/conventional-changelog": "^12.0.2",
     "@rolldown/plugin-babel": "^0.2.4",
     "@testing-library/react": "^16.3.2",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.1.1",
     "jsdom": "^30.0.1",
+    "release-it": "^21.1.0",
     "typescript": "^7.0.2",
     "vite": "^8.3.0",
     "vitest": "^5.0.0"

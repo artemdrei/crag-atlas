@@ -1,0 +1,49 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'apps/api/**'
+      - 'apps/e2e/**'
+      - 'supabase/**'
+      - 'docs/**'
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release-web:
+    # The release commit is pushed with a PAT, so unlike GITHUB_TOKEN pushes
+    # it triggers this workflow again.
+    if: "!startsWith(github.event.head_commit.message, 'chore(web): release')"
+    runs-on: ubuntu-latest
+    steps:
+      # main is protected; RELEASE_TOKEN belongs to an admin, whom the
+      # protection does not apply to, so the version commit can land on it.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.RELEASE_TOKEN }}
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: Setup git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Release web
+        working-directory: apps/web
+        run: pnpm release --ci
+
+      # Render's auto-deploy is off: deploying on the merge commit would ship
+      # the new code under the previous version.
+      - name: Deploy to Render
+        run: curl -fsS -X POST "${{ secrets.RENDER_DEPLOY_HOOK_WEB }}"
