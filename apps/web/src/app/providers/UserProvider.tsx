@@ -91,7 +91,11 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     return () => subscription.unsubscribe();
   }, []);
 
-  const { data: me, isLoading: isRoleLoading } = useApiQuery({
+  const {
+    data: me,
+    isLoading: isMeLoading,
+    isPaused: isMePaused
+  } = useApiQuery({
     queryKey: QUERY_KEYS.me(),
     queryFn: () => apiGet<Me>('/me'),
     enabled: !!session
@@ -99,6 +103,9 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   // The session comes back from storage well before `/me` answers, so a guard
   // waiting on the session alone would see an admin as a plain user.
+  // Offline, `/me` waits for the network indefinitely; members-only pages
+  // (the saved regions live on the profile) must not wait with it.
+  const isRoleLoading = isMeLoading && !isMePaused;
   const isLoading = isSessionLoading || isRoleLoading;
 
   const value = useMemo(() => {

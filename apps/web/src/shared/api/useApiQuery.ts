@@ -12,11 +12,16 @@ export interface Params<T> {
 export const useApiQuery = <T>({ queryKey, queryFn, enabled }: Params<T>) => {
   // isPending, not isLoading: a cached query refetching in the background must
   // not re-render the loading state.
-  const { data, isPending, error } = useQuery({ queryKey, queryFn, enabled });
+  const { data, isPending, error, fetchStatus } = useQuery({
+    queryKey,
+    queryFn,
+    enabled
+  });
 
   return {
     data,
     isLoading: enabled === false ? false : isPending,
+    isPaused: fetchStatus === 'paused',
     failure: error ? (toFailure(error) as Failure) : null
   };
 };
