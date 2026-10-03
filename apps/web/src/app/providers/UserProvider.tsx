@@ -11,6 +11,7 @@ import { identifyUser, resetAnalytics, track } from '@crag-atlas/analytics';
 import type { Me } from '@crag-atlas/api';
 import type { Session } from '@supabase/supabase-js';
 
+import { deleteAllOfflineRegions } from '@web/features/offlineRegions';
 import { apiGet, QUERY_KEYS, queryClient, useApiQuery } from '@web/shared/api';
 import {
   GradePreferenceProvider,
@@ -81,6 +82,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         // The cache is persisted, so the next person on this device would
         // otherwise open the app on this climber's logbook.
         queryClient.clear();
+        deleteAllOfflineRegions();
         idIdentified.current = null;
         resetAnalytics();
       }

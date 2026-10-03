@@ -6,6 +6,8 @@ import type { ErrorResponseBody } from './ErrorResponseBody';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:4001';
 
+export const apiUrl = (path: string) => `${API_BASE_URL}${path}`;
+
 export const apiGet = <T>(path: string): Promise<T> =>
   wrapApiCall(`apiGet:${path}`, async () => {
     const response = await fetch(`${API_BASE_URL}${path}`, {
