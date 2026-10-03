@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
 
 import { I18nProvider } from '@lingui/react';
-import { QueryClientProvider } from '@tanstack/react-query';
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 
-import { queryClient } from '@web/shared/api';
+import {
+  QUERY_CACHE_MAX_AGE,
+  queryClient,
+  queryPersister
+} from '@web/shared/api';
 import { activateLocale, i18n, readStoredLocale } from '@web/shared/i18n/i18n';
 import { ThemeModeProvider } from '@web/shared/theme/ThemeModeProvider';
 
@@ -33,7 +37,15 @@ export const AppProviders = ({ children }: Props) => {
   if (!ready) return null;
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <PersistQueryClientProvider
+      client={queryClient}
+      persistOptions={{
+        persister: queryPersister,
+        maxAge: QUERY_CACHE_MAX_AGE,
+        // A release may change what an endpoint returns.
+        buster: __APP_VERSION__
+      }}
+    >
       <I18nProvider i18n={i18n}>
         <EditModeProvider>
           <ThemedApp>
@@ -43,6 +55,6 @@ export const AppProviders = ({ children }: Props) => {
           </ThemedApp>
         </EditModeProvider>
       </I18nProvider>
-    </QueryClientProvider>
+    </PersistQueryClientProvider>
   );
 };

@@ -11,7 +11,7 @@ import { identifyUser, resetAnalytics, track } from '@crag-atlas/analytics';
 import type { Me } from '@crag-atlas/api';
 import type { Session } from '@supabase/supabase-js';
 
-import { apiGet, QUERY_KEYS, useApiQuery } from '@web/shared/api';
+import { apiGet, QUERY_KEYS, queryClient, useApiQuery } from '@web/shared/api';
 import {
   GradePreferenceProvider,
   resolveLoginEvent,
@@ -78,6 +78,9 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       // session-less on every anonymous load.
       if (event === 'SIGNED_OUT') {
         track({ name: 'Logged Out' });
+        // The cache is persisted, so the next person on this device would
+        // otherwise open the app on this climber's logbook.
+        queryClient.clear();
         idIdentified.current = null;
         resetAnalytics();
       }
