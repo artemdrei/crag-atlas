@@ -21,6 +21,7 @@ import Typography from '@mui/material/Typography';
 
 import type { GradeTone } from '@web/shared/theme/palette';
 import { resolveGradeTone } from '@web/shared/theme/palette';
+import { hoverRing } from '@web/shared/theme/surfaces';
 import { UnsavedBadge } from '@web/shared/ui';
 
 import type { RouteDraft } from '../../common';
@@ -299,7 +300,7 @@ const RowStyled = styled(ButtonBase, {
      the row below. */
   flex-shrink: 0;
   padding: ${({ theme }) => theme.spacing(1, 1.5)};
-  border: 1px solid
+  border: 2px solid
     ${({ theme, isSelected, isDirty }) =>
       isDirty
         ? theme.palette.warning.main
@@ -314,6 +315,13 @@ const RowStyled = styled(ButtonBase, {
       : isSelected || isHovered
         ? theme.palette.action.hover
         : 'transparent'};
+
+  &:hover {
+    ${({ theme, isDirty }) =>
+      hoverRing(
+        isDirty ? theme.palette.warning.main : theme.palette.primary.main
+      )}
+  }
 `;
 
 // DragOverlay sizes its wrapper to the measured rect, so the row only fills

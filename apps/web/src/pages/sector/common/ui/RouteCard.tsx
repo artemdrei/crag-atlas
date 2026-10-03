@@ -98,7 +98,7 @@ const RowStyled = styled('div', {
   gap: ${({ theme }) => theme.spacing(0.5)};
   padding-right: ${({ theme }) => theme.spacing(0.5)};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
-  border: 1px solid
+  border: 2px solid
     ${({ theme, isHighlighted }) =>
       isHighlighted ? theme.palette.primary.main : 'transparent'};
   background: ${({ theme, isTicked }) =>
