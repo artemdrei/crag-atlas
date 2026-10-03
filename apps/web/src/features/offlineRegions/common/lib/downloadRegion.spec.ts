@@ -61,11 +61,32 @@ beforeEach(() => {
   vi.stubGlobal('fetch', async (url: string) =>
     url === failingPhoto
       ? new Response(null, { status: 500 })
-      : new Response(new Blob(['jpeg']))
+      : new Response('jpeg')
   );
 });
 
 const urlsOf = () => [...cached.keys()].sort();
+
+const sizeOf = (data: unknown) => new Blob([JSON.stringify(data)]).size;
+
+// Every catalog response, a detail copy of each sector and route, and the two
+// distinct photos of four bytes each.
+const expectedBytes = () => {
+  const sectors = catalog['/regions/r1/sectors'] as unknown[];
+  const routes = catalog['/sectors/s1/routes'] as unknown[];
+
+  return (
+    Object.values(catalog).reduce<number>(
+      (sum, data) => sum + sizeOf(data),
+      0
+    ) +
+    [...sectors, ...routes].reduce<number>(
+      (sum, data) => sum + sizeOf(data),
+      0
+    ) +
+    2 * 'jpeg'.length
+  );
+};
 
 describe('downloadRegion', () => {
   it('saves the region, a detail entry per route and each photo once', async () => {
@@ -87,7 +108,7 @@ describe('downloadRegion', () => {
       ].sort()
     );
     expect(region.name).toBe('Céüse');
-    expect(region.bytes).toBeGreaterThan(0);
+    expect(region.bytes).toBe(expectedBytes());
     expect((await readOfflineRegions()).r1?.urls).toHaveLength(11);
   });
 

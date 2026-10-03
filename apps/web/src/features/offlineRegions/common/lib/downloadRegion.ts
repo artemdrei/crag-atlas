@@ -89,7 +89,11 @@ const saveRegion = async (
 
       if (!response.ok) throw new Error(`${url} answered ${response.status}`);
 
-      bytes += (await response.clone().blob()).size;
+      // Read before adding: `bytes += await …` reads `bytes` first, so parallel
+      // photos would overwrite each other's share.
+      const { size } = await response.clone().blob();
+
+      bytes += size;
       await cache.put(url, response);
       onProgress({ done: ++done, total: photoUrls.length });
     });
