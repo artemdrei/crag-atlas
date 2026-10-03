@@ -96,6 +96,10 @@ const buildHeaders = async (): Promise<HeadersInit> => ({
 });
 
 const buildAuthHeaders = async (): Promise<Record<string, string>> => {
+  // Offline, getSession() spends ~25 s trying to refresh an expired token
+  // before it answers, and a saved region is served without one anyway.
+  if (!navigator.onLine) return {};
+
   const { data } = await supabase.auth.getSession();
   const accessToken = data.session?.access_token;
 
