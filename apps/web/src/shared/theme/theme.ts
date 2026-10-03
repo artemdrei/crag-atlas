@@ -1,3 +1,4 @@
+import type { ConditionBand } from '@crag-atlas/api';
 import { alpha, createTheme } from '@mui/material/styles';
 
 import type { AscentTypeTone, GradeColor, GradeTone } from './palette';
@@ -8,12 +9,14 @@ declare module '@mui/material/styles' {
   interface Palette {
     grade: Record<GradeTone, GradeColor>;
     ascentType: Record<AscentTypeTone, GradeColor>;
+    conditionBand: Record<ConditionBand, string>;
     sectorPin: string[];
   }
 
   interface PaletteOptions {
     grade?: Record<GradeTone, GradeColor>;
     ascentType?: Record<AscentTypeTone, GradeColor>;
+    conditionBand?: Record<ConditionBand, string>;
     sectorPin?: string[];
   }
 }

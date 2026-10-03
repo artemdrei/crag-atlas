@@ -324,6 +324,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/horizon/backfill": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["HorizonController_backfill"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/horizon/{idSector}/recompute": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["HorizonController_recompute"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/sectors/{idSector}/routes": {
         parameters: {
             query?: never;
@@ -740,6 +772,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/sectors/{idSector}/conditions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ConditionsController_forSector"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/regions/{idRegion}/conditions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ConditionsController_forRegion"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -891,6 +955,13 @@ export interface components {
             gradeHistogram: components["schemas"]["GradeHistogramGroupDto"][];
             lat?: number | null;
             lng?: number | null;
+            /** @description Direction the wall faces, 0 = north, clockwise. Null leaves it to the slope the skyline was read from */
+            aspectDeg?: number | null;
+            /**
+             * @description How much of the rain the wall keeps off a climber
+             * @enum {string}
+             */
+            shelter: "open" | "partial" | "full";
             /** @description Out of the catalog, because it carries the mark or an ancestor does */
             isArchived: boolean;
             /** @description Deleted directly, so restoring this row is what brings it back */
@@ -914,6 +985,20 @@ export interface components {
             description?: string | null;
             lat?: number | null;
             lng?: number | null;
+            /** @description Overrides the direction read off the surrounding slope */
+            aspectDeg?: number | null;
+            /** @enum {string} */
+            shelter?: "open" | "partial" | "full";
+        };
+        HorizonBackfillDto: {
+            /** @description Sectors this call built a skyline for */
+            built: number;
+            /** @description Sectors still queued, because one call builds a batch at most */
+            remaining: number;
+            /** @description Sectors the elevation provider had no answer for */
+            failed: number;
+            /** @description Error code of the first sector that failed */
+            failureCode: string | null;
         };
         RouteDto: {
             id: string;
@@ -1276,6 +1361,57 @@ export interface components {
             url: string;
             title?: string | null;
             durationSeconds?: number | null;
+        };
+        SunIntervalDto: {
+            fromAt: string;
+            untilAt: string;
+        };
+        ConditionsHourDto: {
+            /** @description Local wall clock at the crag, e.g. 14:00 */
+            at: string;
+            /** @description Null past the published forecast, where only the sun is known */
+            score: number | null;
+            /**
+             * @description The band the hour falls in, so a bar is coloured once
+             * @enum {string|null}
+             */
+            band: "excellent" | "good" | "ok" | "poor" | "bad" | null;
+            /** @description Direct sun reaches the sector, cloud aside — geometry, not forecast */
+            isSun: boolean;
+            temperatureC: number | null;
+            precipitationMm: number | null;
+            humidityPct: number | null;
+            windSpeedMs: number | null;
+            /** @description WMO weather code */
+            weatherCode: number | null;
+        };
+        ConditionsDayDto: {
+            /** @description Local date at the crag, YYYY-MM-DD */
+            date: string;
+            /** @description False past the published forecast; the sun is still known */
+            hasForecast: boolean;
+            score: number | null;
+            /** @enum {string|null} */
+            band: "excellent" | "good" | "ok" | "poor" | "bad" | null;
+            bestFromAt: string | null;
+            bestUntilAt: string | null;
+            sunriseAt: string | null;
+            sunsetAt: string | null;
+            /** @description When direct sun reaches the sector; empty on a wall in shade */
+            sunIntervals: components["schemas"]["SunIntervalDto"][];
+            /** @description The climbing hours of the day, not the whole twenty-four */
+            hours: components["schemas"]["ConditionsHourDto"][];
+        };
+        SectorConditionsDto: {
+            /** @description False when the sector has no pin — nothing can be computed */
+            hasPoint: boolean;
+            /** @description False while no skyline has been built; sun and shade then ignore the terrain */
+            isHorizonReady: boolean;
+            /** @enum {string} */
+            shelter: "open" | "partial" | "full";
+            /** @description Direction the wall faces, 0 = north, clockwise */
+            aspectDeg: number | null;
+            days: components["schemas"]["ConditionsDayDto"][];
         };
     };
     responses: never;
@@ -1892,6 +2028,44 @@ export interface operations {
         requestBody?: never;
         responses: {
             204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    HorizonController_backfill: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HorizonBackfillDto"];
+                };
+            };
+        };
+    };
+    HorizonController_recompute: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idSector: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            202: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -2715,6 +2889,48 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    ConditionsController_forSector: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idSector: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SectorConditionsDto"];
+                };
+            };
+        };
+    };
+    ConditionsController_forRegion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idRegion: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SectorConditionsDto"];
+                };
             };
         };
     };

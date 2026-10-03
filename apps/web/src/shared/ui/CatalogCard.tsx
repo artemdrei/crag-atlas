@@ -4,6 +4,7 @@ import CardActionArea from '@mui/material/CardActionArea';
 import { styled } from '@mui/material/styles';
 
 import { photoFrame } from '@web/shared/theme/photoFrame';
+import { hoverRing } from '@web/shared/theme/surfaces';
 
 import { PhotoPlaceholder } from './PhotoPlaceholder';
 import { UnsavedBadge } from './UnsavedBadge';
@@ -69,11 +70,15 @@ const CardAreaStyled = styled(CardActionArea, {
   align-items: stretch;
   gap: ${({ theme }) => theme.spacing(2)};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
-  border: 1px solid
+  border: 2px solid
     ${({ theme, isSelected }) =>
       isSelected ? theme.palette.primary.main : theme.palette.divider};
   position: relative;
   padding: ${({ theme }) => theme.spacing(1.5)};
+
+  &:hover {
+    ${({ theme }) => hoverRing(theme.palette.primary.main)}
+  }
 `;
 
 const ThumbnailStyled = styled('div')`

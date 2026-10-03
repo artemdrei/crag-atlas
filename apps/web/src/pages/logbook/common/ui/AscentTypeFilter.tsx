@@ -6,6 +6,7 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import type { AscentTypeTone } from '@web/shared/theme/palette';
+import { hoverRing } from '@web/shared/theme/surfaces';
 import { ASCENT_TYPES, AscentTypeLabel } from '@web/shared/ui';
 
 import type { AscentFilter } from '../entities';
@@ -108,10 +109,14 @@ const TileStyled = styled(ButtonBase, {
   min-width: ${({ theme, layout }) => theme.spacing(layout === 'grid' ? 14 : 11)};
   padding: ${({ theme }) => theme.spacing(1, 1.5)};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
-  border: 1px solid
+  border: 2px solid
     ${({ theme, isSelected }) =>
       isSelected ? theme.palette.primary.main : theme.palette.divider};
   background: ${({ theme }) => theme.palette.background.paper};
+
+  &:hover {
+    ${({ theme }) => hoverRing(theme.palette.primary.main)}
+  }
 `;
 
 const CountRowStyled = styled('span')`

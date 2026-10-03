@@ -3,6 +3,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { GradeHistogramGroupDto } from '../common/dto/gradeHistogram.dto';
 import type { GradeScale } from '../common/utils/grade';
 import { GRADE_SCALES } from '../common/utils/grade';
+import type { Shelter } from '../common/utils/shelter';
+import { SHELTERS } from '../common/utils/shelter';
 
 export class SectorDto {
   @ApiProperty()
@@ -81,6 +83,21 @@ export class SectorDto {
   lng?: number | null;
 
   @ApiProperty({
+    type: Number,
+    required: false,
+    nullable: true,
+    description:
+      'Direction the wall faces, 0 = north, clockwise. Null leaves it to the slope the skyline was read from'
+  })
+  aspectDeg?: number | null;
+
+  @ApiProperty({
+    enum: SHELTERS,
+    description: 'How much of the rain the wall keeps off a climber'
+  })
+  shelter!: Shelter;
+
+  @ApiProperty({
     description:
       'Out of the catalog, because it carries the mark or an ancestor does'
   })
@@ -137,4 +154,15 @@ export class UpdateSectorDto {
 
   @ApiProperty({ type: Number, required: false, nullable: true })
   lng?: number | null;
+
+  @ApiProperty({
+    type: Number,
+    required: false,
+    nullable: true,
+    description: 'Overrides the direction read off the surrounding slope'
+  })
+  aspectDeg?: number | null;
+
+  @ApiProperty({ enum: SHELTERS, required: false })
+  shelter?: Shelter;
 }

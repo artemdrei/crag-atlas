@@ -29,6 +29,7 @@ export interface Props {
   idHighlightedRoute?: string;
   colorOf?: (idRoute: string) => string | undefined;
   numberOf?: Record<string, number>;
+  isTopAligned?: boolean;
   onSelectRoute?: (idRoute: string) => void;
   onSelectPhoto?: () => void;
   onHoverRoute?: (idRoute?: string) => void;
@@ -43,7 +44,8 @@ export const TopoImage = ({
   numberOf,
   onSelectRoute,
   onSelectPhoto,
-  onHoverRoute
+  onHoverRoute,
+  isTopAligned
 }: Props) => {
   const [loadedUrl, setLoadedUrl] = useState<string>();
   const overlayRef = useRef<SVGSVGElement>(null);
@@ -70,7 +72,7 @@ export const TopoImage = ({
   );
 
   return (
-    <StageStyled>
+    <StageStyled isTopAligned={!!isTopAligned}>
       {!isLoaded && (
         <LoaderStyled>
           <CircularProgress size={28} />
@@ -214,8 +216,10 @@ const HOVER_TOLERANCE = 16;
 
 const TAP_SLOP = 4;
 
-const StageStyled = styled('div')`
-  ${photoStage()}
+const StageStyled = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'isTopAligned'
+})<{ isTopAligned: boolean }>`
+  ${({ isTopAligned }) => photoStage(isTopAligned ? 'flex-start' : 'center')}
 `;
 
 const FrameStyled = styled('div')`

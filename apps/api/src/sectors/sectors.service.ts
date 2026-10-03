@@ -22,8 +22,10 @@ import { countClimberContent } from '../common/utils/climberContent';
 import type { GradeScale } from '../common/utils/grade';
 import { toLatinName, toLocalName } from '../common/utils/names';
 import { toPoint } from '../common/utils/point';
+import type { Shelter } from '../common/utils/shelter';
 import { userClient } from '../common/utils/userClient';
 import { publicSupabase, storagePublicUrl } from '../config/supabase.client';
+import { HorizonService } from '../horizon/horizon.service';
 import type {
   CreateSectorDto,
   SectorDto,
@@ -34,7 +36,7 @@ import type {
 // The region name rides along: ids are uuids, so a page opened by URL would
 // have no breadcrumb label.
 const COLUMNS =
-  'id, id_region, name, name_local, description, lat, lng, route_count, grade_min, grade_min_scale, grade_max, grade_max_scale, grade_histogram, is_archived, deleted_at, regions (name), topos (storage_path, sort_order)';
+  'id, id_region, name, name_local, description, lat, lng, aspect_deg, shelter, route_count, grade_min, grade_min_scale, grade_max, grade_max_scale, grade_histogram, is_archived, deleted_at, regions (name), topos (storage_path, sort_order)';
 
 interface TickedRow {
   id_route: string;
@@ -49,6 +51,8 @@ interface SectorRow {
   description: string;
   lat: number | null;
   lng: number | null;
+  aspect_deg: number | null;
+  shelter: Shelter;
   route_count: number;
   grade_min: string | null;
   grade_min_scale: GradeScale | null;
@@ -69,6 +73,8 @@ const TARGET: ArchiveTarget = {
 
 @Injectable()
 export class SectorsService {
+  constructor(private readonly horizonService: HorizonService) {}
+
   async findByRegion(
     idRegion: string,
     isArchiveOnly = false
@@ -195,13 +201,18 @@ export class SectorsService {
     idSector: string,
     payload: UpdateSectorDto
   ): Promise<SectorDto> {
+    const before = await this.point(idSector);
+    const point = toPoint(payload, TARGET.entity);
+
     const { error } = await userClient(authUser)
       .from('sectors')
       .update({
         name: toLatinName(payload.name, TARGET.entity),
         name_local: toLocalName(payload.nameLocal),
         description: payload.description ?? '',
-        ...toPoint(payload, TARGET.entity)
+        aspect_deg: payload.aspectDeg ?? null,
+        ...(payload.shelter ? { shelter: payload.shelter } : {}),
+        ...point
       })
       .eq('id', idSector);
 
@@ -213,7 +224,42 @@ export class SectorsService {
       );
     }
 
+    // The skyline is read from the ground around the pin, so moving the pin
+    // invalidates it. Queued and built behind the answer: a profile is dozens
+    // of calls to the elevation provider and the admin is waiting on a save.
+    if (before.lat !== point.lat || before.lng !== point.lng) {
+      await this.horizonService.queueAndBuild(idSector);
+    }
+
     return this.findOne(idSector);
+  }
+
+  // Only the pin is read here, not the whole sector: `findOne` goes through
+  // the stats view, which aggregates every route and joins the region.
+  private async point(idSector: string): Promise<SectorPoint> {
+    const { data, error } = await publicSupabase()
+      .from('sectors')
+      .select('lat, lng')
+      .eq('id', idSector)
+      .is('deleted_at', null)
+      .maybeSingle<SectorPoint>();
+
+    if (error) {
+      throw readFailed(
+        'Could not load the sector',
+        'SECTOR_READ_FAILED',
+        error
+      );
+    }
+
+    if (!data) {
+      throw new NotFoundException(
+        `Sector "${idSector}" not found`,
+        'SECTOR_NOT_FOUND'
+      );
+    }
+
+    return data;
   }
 
   async climberContent(idSector: string): Promise<ClimberContentDto> {
@@ -241,6 +287,11 @@ export class SectorsService {
   }
 }
 
+interface SectorPoint {
+  lat: number | null;
+  lng: number | null;
+}
+
 const toSectorDto = (row: SectorRow): SectorDto => ({
   id: row.id,
   idRegion: row.id_region,
@@ -251,6 +302,8 @@ const toSectorDto = (row: SectorRow): SectorDto => ({
   description: row.description,
   lat: row.lat,
   lng: row.lng,
+  aspectDeg: row.aspect_deg,
+  shelter: row.shelter,
   routeCount: row.route_count,
   gradeMin: row.grade_min,
   gradeMinScale: row.grade_min_scale,

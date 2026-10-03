@@ -1,4 +1,5 @@
-import type { GradeScale, Tick } from '@crag-atlas/api';
+import type { ConditionBand, GradeScale, Tick } from '@crag-atlas/api';
+import { alpha } from '@mui/material/styles';
 import { getScoreForSort } from '@openbeta/sandbag';
 
 export const GRADE_LEVELS = ['5', '6', '7', '8', '9'] as const;
@@ -62,6 +63,25 @@ const ascentType: Record<
   }
 };
 
+// A conditions score reads as a traffic light: the eye finds the green day
+// in the strip before it reads a single number.
+const conditionBand: Record<'light' | 'dark', Record<ConditionBand, string>> = {
+  light: {
+    excellent: '#2E9E4F',
+    good: '#7FA83C',
+    ok: '#E3B505',
+    poor: '#D9792B',
+    bad: '#E8503C'
+  },
+  dark: {
+    excellent: '#3FAF63',
+    good: '#92C44F',
+    ok: '#E8C55A',
+    poor: '#E2963A',
+    bad: '#E8503C'
+  }
+};
+
 // Cycled by the sector's position in the list, so the dot beside a name and
 // its pin always match.
 const sectorPin: Record<'light' | 'dark', string[]> = {
@@ -89,6 +109,7 @@ export const palette = {
     divider: '#E4DACB',
     grade: grade.light,
     ascentType: ascentType.light,
+    conditionBand: conditionBand.light,
     sectorPin: sectorPin.light
   },
   dark: {
@@ -99,6 +120,7 @@ export const palette = {
     divider: '#2A2521',
     grade: grade.dark,
     ascentType: ascentType.dark,
+    conditionBand: conditionBand.dark,
     sectorPin: sectorPin.dark
   }
 } as const;
@@ -134,6 +156,50 @@ export const resolveAscentTypeInk = (
     ? ascentType.dark[tone].text
     : ascentType.light[tone].background;
 
+// Ink is not the fill at full strength: the badge prints the grade on top of
+// its own tinted fill, and a hue over 40% of itself can read as low as 1.2:1.
+// These are the same hues taken to the lightness that clears 4.5:1 there.
+const gradeInk: Record<'light' | 'dark', Record<GradeTone, string>> = {
+  light: {
+    '5': '#1D6331',
+    '6': '#785F03',
+    '7': '#9B2212',
+    '8': '#603196',
+    '9': '#1A1310',
+    neutral: '#806742'
+  },
+  dark: {
+    '5': '#7CD097',
+    '6': '#F0D994',
+    '7': '#F2998D',
+    '8': '#C39CEC',
+    '9': '#F9F6F1',
+    neutral: '#C7C0B8'
+  }
+};
+
+export const resolveGradeInk = (
+  mode: 'light' | 'dark',
+  tone: GradeTone
+): string => gradeInk[mode][tone];
+
+// The darkest tones vanish into the dark background, so their ink takes over.
+export const resolveGradeHue = (
+  mode: 'light' | 'dark',
+  tone: GradeTone
+): string =>
+  mode === 'dark' && (tone === '9' || tone === 'neutral')
+    ? grade.dark[tone].text
+    : grade[mode][tone].background;
+
+// The badge prints the grade on its fill, so the tint stays light enough for
+// the ink above to clear AA; a chart bar carries no text and reads as colour.
+export const resolveGradeFill = (mode: 'light' | 'dark', tone: GradeTone) =>
+  alpha(resolveGradeHue(mode, tone), 0.4);
+
+export const resolveGradeBar = (mode: 'light' | 'dark', tone: GradeTone) =>
+  alpha(resolveGradeHue(mode, tone), 0.7);
+
 export const getGradeColor = (
   grades: Record<GradeTone, GradeColor>,
   grade?: string,
@@ -142,3 +208,8 @@ export const getGradeColor = (
   grade && scale
     ? grades[resolveGradeTone(grade, scale)].background
     : undefined;
+
+export const getScoreColor = (
+  bands: Record<ConditionBand, string>,
+  band?: ConditionBand | null
+) => (band ? bands[band] : undefined);

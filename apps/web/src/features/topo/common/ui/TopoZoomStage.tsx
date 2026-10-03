@@ -14,6 +14,7 @@ export interface Props {
   idHighlightedRoute?: string;
   colorOf?: (idRoute: string) => string | undefined;
   numberOf?: Record<string, number>;
+  isTopAligned?: boolean;
   onSelectRoute?: (idRoute: string) => void;
   onHoverRoute?: (idRoute?: string) => void;
   className?: string;
@@ -31,6 +32,7 @@ export const TopoZoomStage = ({
   numberOf,
   onSelectRoute,
   onHoverRoute,
+  isTopAligned,
   className,
   children
 }: PropsWithChildren<Props>) => {
@@ -60,6 +62,7 @@ export const TopoZoomStage = ({
             numberOf={numberOf}
             onSelectRoute={onSelectRoute}
             onHoverRoute={onHoverRoute}
+            isTopAligned={isTopAligned}
           />
         </TransformComponent>
         {children}

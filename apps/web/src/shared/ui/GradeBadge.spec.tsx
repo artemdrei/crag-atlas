@@ -16,10 +16,10 @@ const renderBadge = (grade: string, scale?: GradeScale) =>
     </ThemeProvider>
   );
 
-const backgroundOf = (grade: string, scale?: GradeScale) => {
+const inkOf = (grade: string, scale?: GradeScale) => {
   const { container } = renderBadge(grade, scale);
   const chip = container.querySelector('.MuiChip-root') as HTMLElement;
-  return getComputedStyle(chip).backgroundColor;
+  return getComputedStyle(chip).borderTopColor;
 };
 
 describe('GradeBadge', () => {
@@ -30,18 +30,18 @@ describe('GradeBadge', () => {
   });
 
   it('tones a grade by difficulty, whatever system it is written in', () => {
-    expect(backgroundOf('5.13b', 'yds')).toBe(backgroundOf('8a', 'french'));
-    expect(backgroundOf('5.13b', 'yds')).not.toBe(backgroundOf('project'));
+    expect(inkOf('5.13b', 'yds')).toBe(inkOf('8a', 'french'));
+    expect(inkOf('5.13b', 'yds')).not.toBe(inkOf('project'));
   });
 
   it('gives a range the neutral tone instead of picking one level', () => {
-    expect(backgroundOf('5a-8b')).not.toBe(backgroundOf('5c', 'french'));
-    expect(backgroundOf('5a-8b')).toBe(backgroundOf('project'));
+    expect(inkOf('5a-8b')).not.toBe(inkOf('5c', 'french'));
+    expect(inkOf('5a-8b')).toBe(inkOf('project'));
   });
 
   it('gives each level its own color', () => {
     const backgrounds = ['5a', '6a', '7a', '8a', '9a'].map((grade) =>
-      backgroundOf(grade, 'french')
+      inkOf(grade, 'french')
     );
 
     expect(new Set(backgrounds).size).toBe(5);
@@ -49,9 +49,9 @@ describe('GradeBadge', () => {
 
   it('keeps the neutral tone out of the difficulty scale', () => {
     const levels = ['5a', '6a', '7a', '8a', '9a'].map((grade) =>
-      backgroundOf(grade, 'french')
+      inkOf(grade, 'french')
     );
 
-    expect(levels).not.toContain(backgroundOf('project'));
+    expect(levels).not.toContain(inkOf('project'));
   });
 });
