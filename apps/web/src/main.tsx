@@ -4,8 +4,10 @@ import { BrowserRouter } from 'react-router';
 
 import { App } from '@web/app/App';
 import { setupReporter } from '@web/app/setupReporter';
+import { printVersion } from '@web/shared/lib';
 import { initAmplitude } from '@web/shared/lib/analytics/amplitude';
 
+printVersion();
 setupReporter();
 initAmplitude();
 

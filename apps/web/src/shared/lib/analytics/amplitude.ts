@@ -104,6 +104,7 @@ export const initAmplitude = () => {
   if (!apiKey) return;
 
   init(apiKey, {
+    appVersion: __APP_VERSION__,
     fetchRemoteConfig: false,
     flushIntervalMillis: 10_000,
     autocapture: {

@@ -31,6 +31,7 @@ export {
 } from './mediaLink';
 export { observedHour } from './observedHour';
 export { parseCoords } from './parseCoords';
+export { printVersion } from './printVersion';
 export { sleep } from './sleep';
 export { toast } from './toast';
 export {

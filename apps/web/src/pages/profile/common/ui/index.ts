@@ -1,4 +1,5 @@
 export { AccessSetting } from './AccessSetting';
+export { AppVersion } from './AppVersion';
 export { GradeScaleSetting } from './GradeScaleSetting';
 export { LocaleSetting } from './LocaleSetting';
 export { ProfileIdentity } from './ProfileIdentity';

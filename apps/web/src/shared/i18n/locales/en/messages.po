@@ -20,7 +20,7 @@ msgstr "{0, plural, one {# ascent} few {# ascents} many {# ascents} other {# asc
 
 #. placeholder {0}: hit.ascentsCount
 #. placeholder {0}: route.ascentsCount
-#: src/features/catalogSearch/common/ui/CatalogSearchResults.tsx:99
+#: src/features/catalogSearch/common/ui/CatalogSearchOption.tsx:39
 #: src/pages/sector/common/ui/RouteCard.tsx:65
 msgid "{0, plural, one {# ascent} other {# ascents}}"
 msgstr "{0, plural, one {# ascent} other {# ascents}}"
@@ -656,7 +656,6 @@ msgstr "Clear"
 msgid "Clear the climber above to type a name"
 msgstr "Clear the climber above to type a name"
 
-#: src/features/catalogSearch/common/ui/CatalogSearchField.tsx:56
 #: src/features/grantAdmin/common/ui/GrantAdminBody.tsx:60
 msgid "Clear the search"
 msgstr "Clear the search"
@@ -775,7 +774,7 @@ msgstr "Coordinates"
 msgid "Could not load the weather"
 msgstr "Could not load the weather"
 
-#: src/shared/ui/MapCanvas.tsx:98
+#: src/shared/ui/MapCanvas.tsx:104
 msgid "Could not read your location."
 msgstr "Could not read your location."
 
@@ -1289,7 +1288,7 @@ msgstr "Light"
 #~ msgid "Local spelling"
 #~ msgstr "Local spelling"
 
-#: src/shared/ui/MapCanvas.tsx:97
+#: src/shared/ui/MapCanvas.tsx:103
 msgid "Location is blocked for this site. Allow it in the browser to see where you are."
 msgstr "Location is blocked for this site. Allow it in the browser to see where you are."
 
@@ -1365,7 +1364,7 @@ msgstr "Moved to {0}"
 msgid "My ascents"
 msgstr "My ascents"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:34
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:32
 #: src/pages/logbook/common/ui/LogbookTeaser.tsx:18
 #: src/pages/logbook/desktop/PageLogbookDesktop.tsx:48
 #: src/pages/logbook/mobile/PageLogbookMobile.tsx:45
@@ -1467,7 +1466,7 @@ msgstr "not on the map"
 msgid "Nothing archived here — every route is in the catalog."
 msgstr "Nothing archived here — every route is in the catalog."
 
-#: src/features/catalogSearch/common/ui/CatalogSearchResults.tsx:64
+#: src/features/catalogSearch/common/ui/CatalogSearchBox.tsx:66
 msgid "Nothing found"
 msgstr "Nothing found"
 
@@ -1520,7 +1519,7 @@ msgstr "Open region"
 msgid "Open sector"
 msgstr "Open sector"
 
-#: src/pages/route/desktop/PageRouteDesktop.tsx:98
+#: src/pages/route/desktop/PageRouteDesktop.tsx:100
 msgid "Open the photo"
 msgstr "Open the photo"
 
@@ -1661,11 +1660,11 @@ msgstr "Post"
 msgid "Private comment"
 msgstr "Private comment"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:45
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:43
 #: src/app/mobile/layout/AppBottomNavigation.tsx:41
 #: src/pages/profile/common/ui/ProfileTeaser.tsx:14
-#: src/pages/profile/desktop/PageProfileDesktop.tsx:23
-#: src/pages/profile/mobile/PageProfileMobile.tsx:23
+#: src/pages/profile/desktop/PageProfileDesktop.tsx:24
+#: src/pages/profile/mobile/PageProfileMobile.tsx:24
 msgid "Profile"
 msgstr "Profile"
 
@@ -1725,8 +1724,8 @@ msgstr "Region {0} created"
 msgid "Region saved"
 msgstr "Region saved"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:31
-#: src/features/catalogSearch/common/ui/CatalogSearchResults.tsx:35
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:29
+#: src/features/catalogSearch/common/ui/CatalogSearchGroup.tsx:34
 #: src/pages/home/desktop/PageHomeDesktop.tsx:51
 msgid "Regions"
 msgstr "Regions"
@@ -1838,7 +1837,7 @@ msgstr "Route not on the wall yet"
 msgid "Route saved"
 msgstr "Route saved"
 
-#: src/features/catalogSearch/common/ui/CatalogSearchResults.tsx:47
+#: src/features/catalogSearch/common/ui/CatalogSearchGroup.tsx:36
 #: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:131
 msgid "Routes"
 msgstr "Routes"
@@ -1883,12 +1882,12 @@ msgstr "Saved changes go live for everyone straight away."
 msgid "Saving…"
 msgstr "Saving…"
 
-#: src/features/catalogSearch/mobile/CatalogSearchMobile.tsx:37
-#: src/features/catalogSearch/mobile/CatalogSearchMobile.tsx:48
+#: src/features/catalogSearch/mobile/CatalogSearchMobile.tsx:17
+#: src/features/catalogSearch/mobile/CatalogSearchMobile.tsx:25
 msgid "Search"
 msgstr "Search"
 
-#: src/features/catalogSearch/common/ui/CatalogSearchField.tsx:43
+#: src/features/catalogSearch/common/ui/CatalogSearchBox.tsx:72
 msgid "Search a region, sector or route"
 msgstr "Search a region, sector or route"
 
@@ -1896,7 +1895,7 @@ msgstr "Search a region, sector or route"
 msgid "Search by name or email"
 msgstr "Search by name or email"
 
-#: src/features/catalogSearch/common/ui/CatalogSearchResults.tsx:64
+#: src/features/catalogSearch/common/ui/CatalogSearchBox.tsx:63
 msgid "Searching…"
 msgstr "Searching…"
 
@@ -1917,7 +1916,7 @@ msgstr "Sector cover"
 msgid "Sector saved"
 msgstr "Sector saved"
 
-#: src/features/catalogSearch/common/ui/CatalogSearchResults.tsx:41
+#: src/features/catalogSearch/common/ui/CatalogSearchGroup.tsx:35
 msgid "Sectors"
 msgstr "Sectors"
 
@@ -2252,7 +2251,7 @@ msgstr "Tries"
 #~ msgid "Type"
 #~ msgstr "Type"
 
-#: src/features/catalogSearch/common/ui/CatalogSearchResults.tsx:56
+#: src/features/catalogSearch/common/ui/CatalogSearchBox.tsx:67
 msgid "Type at least {MIN_SEARCH_LENGTH} letters"
 msgstr "Type at least {MIN_SEARCH_LENGTH} letters"
 
@@ -2298,6 +2297,10 @@ msgstr "Use another email"
 #: src/pages/login/common/ui/EmailOtpForm.tsx:75
 msgid "Verifying…"
 msgstr "Verifying…"
+
+#: src/pages/profile/common/ui/AppVersion.tsx:10
+msgid "Version {version}"
+msgstr "Version {version}"
 
 #: src/widgets/routeMedia/common/ui/RouteMediaGallery.tsx:47
 msgid "Video {position}"

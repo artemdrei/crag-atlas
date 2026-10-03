@@ -7,6 +7,7 @@ import { AvatarPickerDesktop } from '@web/features/avatarUpload';
 
 import {
   AccessSetting,
+  AppVersion,
   GradeScaleSetting,
   LocaleSetting,
   ProfileIdentity,
@@ -36,6 +37,7 @@ export const PageProfileDesktop = () => {
       <GradeScaleSetting />
       <AccessSetting />
       <SignOutButton />
+      <AppVersion />
     </PageStyled>
   );
 };
