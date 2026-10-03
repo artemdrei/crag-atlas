@@ -45,6 +45,9 @@ export const AppProviders = ({ children }: Props) => {
         // A release may change what an endpoint returns.
         buster: __APP_VERSION__
       }}
+      // Restored queries keep their old fetch time and would count as fresh,
+      // so a reload would show yesterday's data without asking the API.
+      onSuccess={() => queryClient.invalidateQueries()}
     >
       <I18nProvider i18n={i18n}>
         <EditModeProvider>
