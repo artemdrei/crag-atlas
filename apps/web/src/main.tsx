@@ -3,9 +3,15 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router';
 
 import { App } from '@web/app/App';
+import { recoverFromStaleBuild } from '@web/app/recoverFromStaleBuild';
+import { registerServiceWorker } from '@web/app/registerServiceWorker';
 import { setupReporter } from '@web/app/setupReporter';
+import { printVersion } from '@web/shared/lib';
 import { initAmplitude } from '@web/shared/lib/analytics/amplitude';
 
+printVersion();
+recoverFromStaleBuild();
+registerServiceWorker();
 setupReporter();
 initAmplitude();
 

@@ -4,7 +4,8 @@ export {
   apiPatch,
   apiPost,
   apiPut,
-  apiUpload
+  apiUpload,
+  apiUrl
 } from './httpClient';
 export { invalidateRouteLists } from './invalidateRouteLists';
 export { invalidateToposAndRegions } from './invalidateToposAndRegions';

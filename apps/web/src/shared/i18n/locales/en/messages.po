@@ -132,6 +132,10 @@ msgstr "{sector} is empty, so only the sector itself and its photos leave the ca
 msgid "{sector} leaves the catalog for everyone, together with its routes. Nothing is erased: everything climbers left stays, and you can bring the sector back from the archive."
 msgstr "{sector} leaves the catalog for everyone, together with its routes. Nothing is erased: everything climbers left stays, and you can bring the sector back from the archive."
 
+#: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:71
+msgid "{size} · saved {savedAt}"
+msgstr "{size} · saved {savedAt}"
+
 #: src/features/logTick/common/ui/TickForm.tsx:171
 msgid "{stars} of 5"
 msgstr "{stars} of 5"
@@ -144,7 +148,7 @@ msgstr "{total, plural, one {# ascent} few {# ascents} many {# ascents} other {#
 msgid "{total, plural, one {# vote} other {# votes}}"
 msgstr "{total, plural, one {# vote} other {# votes}}"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:52
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:50
 msgid "°C"
 msgstr "°C"
 
@@ -254,7 +258,7 @@ msgstr "Adding…"
 msgid "Admin access granted"
 msgstr "Admin access granted"
 
-#: src/pages/logbook/common/ui/AscentTypeFilter.tsx:46
+#: src/pages/logbook/common/ui/AscentTypeFilter.tsx:47
 msgid "All"
 msgstr "All"
 
@@ -378,13 +382,13 @@ msgstr "Bad"
 msgid "Be the first to show this route"
 msgstr "Be the first to show this route"
 
-#: src/pages/logbook/common/ui/TickCard.tsx:172
+#: src/pages/logbook/common/ui/TickCard.tsx:173
 msgid "Belayer"
 msgstr "Belayer"
 
 #. placeholder {0}: day.bestFromAt
 #. placeholder {1}: day.bestUntilAt
-#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:38
+#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:39
 msgid "best {0} – {1}"
 msgstr "best {0} – {1}"
 
@@ -549,14 +553,19 @@ msgstr "Conditions added to {filled} ascents, {failed} failed: {reason}"
 msgid "Conditions added to {filled} ascents, {remaining} still to go"
 msgstr "Conditions added to {filled} ascents, {remaining} still to go"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:42
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:77
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:40
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:75
 msgid "Conditions score"
 msgstr "Conditions score"
 
 #: src/features/logTick/common/ui/ConditionsSection.tsx:116
 msgid "Conditions, read at the sector"
 msgstr "Conditions, read at the sector"
+
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:50
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:52
+msgid "Connect to the internet to save or refresh a region."
+msgstr "Connect to the internet to save or refresh a region."
 
 #: src/pages/login/common/ui/EmailOtpForm.tsx:75
 #: src/pages/login/common/ui/EmailOtpForm.tsx:114
@@ -696,12 +705,16 @@ msgstr "Did you like it?"
 msgid "Directions"
 msgstr "Directions"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:148
+#: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:41
+msgid "Downloading photos: {done} of {total}"
+msgstr "Downloading photos: {done} of {total}"
+
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:149
 msgid "Drag a route here"
 msgstr "Drag a route here"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:118
 #: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:119
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:120
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:114
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:115
 msgid "Drag cancelled"
@@ -830,7 +843,7 @@ msgstr "Has photo"
 msgid "Has video"
 msgstr "Has video"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:62
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:60
 msgid "Hourly"
 msgstr "Hourly"
 
@@ -846,11 +859,11 @@ msgstr "How hard is the route?"
 msgid "Humidity"
 msgstr "Humidity"
 
-#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:48
+#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:50
 msgid "In the shade all day"
 msgstr "In the shade all day"
 
-#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:54
+#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:56
 msgid "In the sun all day"
 msgstr "In the sun all day"
 
@@ -874,7 +887,7 @@ msgstr "Keep the whole photo"
 msgid "Keep your grades, language and theme on every device"
 msgstr "Keep your grades, language and theme on every device"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:54
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:52
 msgid "km/h"
 msgstr "km/h"
 
@@ -941,7 +954,7 @@ msgstr "Media added"
 msgid "Media deleted"
 msgstr "Media deleted"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:53
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:51
 msgid "mm"
 msgstr "mm"
 
@@ -958,7 +971,7 @@ msgid "Move the sector to the archive?"
 msgstr "Move the sector to the archive?"
 
 #. placeholder {0}: nameOf(over.id)
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:118
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:119
 msgid "Moved to {0}"
 msgstr "Moved to {0}"
 
@@ -1007,7 +1020,16 @@ msgstr "No country found"
 msgid "No forecast is published that far ahead"
 msgstr "No forecast is published that far ahead"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:136
+#: src/features/offlineRegions/common/ui/OfflineRegionPicker.tsx:34
+msgid "No region found"
+msgstr "No region found"
+
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:78
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:80
+msgid "No regions saved yet."
+msgstr "No regions saved yet."
+
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:137
 msgid "No routes yet — add the first one, then drag it onto the photo it is drawn on."
 msgstr "No routes yet — add the first one, then drag it onto the photo it is drawn on."
 
@@ -1053,10 +1075,15 @@ msgid "Nothing found"
 msgstr "Nothing found"
 
 #. placeholder {0}: nameOf(over.id)
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:116
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:117
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:112
 msgid "Now over {0}"
 msgstr "Now over {0}"
+
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:21
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:21
+msgid "Offline regions"
+msgstr "Offline regions"
 
 #: src/features/sectorConditions/common/hooks/useBandLabel.ts:11
 msgid "OK"
@@ -1192,7 +1219,7 @@ msgid "Pick an archived sector on the left to restore it."
 msgstr "Pick an archived sector on the left to restore it."
 
 #. placeholder {0}: nameOf(active.id)
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:114
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:115
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:110
 msgid "Picked up {0}"
 msgstr "Picked up {0}"
@@ -1205,7 +1232,7 @@ msgstr "Pinch or double-click to zoom — both panes follow the same view."
 msgid "Plain point"
 msgstr "Plain point"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:51
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:49
 msgid "points"
 msgstr "points"
 
@@ -1222,11 +1249,15 @@ msgstr "Position your photo"
 msgid "Post"
 msgstr "Post"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:44
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:83
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:42
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:81
 #: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:36
 msgid "Precipitation"
 msgstr "Precipitation"
+
+#: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:42
+msgid "Preparing the download…"
+msgstr "Preparing the download…"
 
 #: src/features/logTick/common/ui/TickForm.tsx:186
 msgid "Private comment"
@@ -1235,8 +1266,8 @@ msgstr "Private comment"
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:43
 #: src/app/mobile/layout/AppBottomNavigation.tsx:41
 #: src/pages/profile/common/ui/ProfileTeaser.tsx:14
-#: src/pages/profile/desktop/PageProfileDesktop.tsx:23
-#: src/pages/profile/mobile/PageProfileMobile.tsx:23
+#: src/pages/profile/desktop/PageProfileDesktop.tsx:25
+#: src/pages/profile/mobile/PageProfileMobile.tsx:25
 msgid "Profile"
 msgstr "Profile"
 
@@ -1257,6 +1288,11 @@ msgstr "Redo"
 msgid "Redpoint"
 msgstr "Redpoint"
 
+#: src/features/offlineRegions/common/ui/OfflineRegionRow.tsx:42
+msgid "Refresh"
+msgstr "Refresh"
+
+#: src/features/offlineRegions/common/ui/OfflineRegionPicker.tsx:35
 #: src/pages/region/desktop/ui/RegionEditSection.tsx:29
 msgid "Region"
 msgstr "Region"
@@ -1272,13 +1308,16 @@ msgstr "Region saved"
 
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:29
 #: src/features/catalogSearch/common/ui/CatalogSearchGroup.tsx:34
-#: src/pages/home/desktop/PageHomeDesktop.tsx:51
 msgid "Regions"
 msgstr "Regions"
 
 #: src/app/ui/errorBoundary/ErrorFallback.tsx:21
 msgid "Reload"
 msgstr "Reload"
+
+#: src/features/offlineRegions/common/ui/OfflineRegionRow.tsx:49
+msgid "Remove"
+msgstr "Remove"
 
 #: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:79
 #: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:79
@@ -1355,7 +1394,7 @@ msgid "Route saved"
 msgstr "Route saved"
 
 #: src/features/catalogSearch/common/ui/CatalogSearchGroup.tsx:36
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:131
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:132
 msgid "Routes"
 msgstr "Routes"
 
@@ -1367,10 +1406,17 @@ msgstr "Routes you have climbed here"
 #: src/features/avatarUpload/mobile/CropAvatarSheet.tsx:31
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
 #: src/features/logTick/common/ui/TickForm.tsx:213
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:44
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:46
 #: src/features/routeComment/desktop/EditRouteCommentDialog.tsx:29
 #: src/features/routeComment/mobile/EditRouteCommentSheet.tsx:24
 msgid "Save"
 msgstr "Save"
+
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:24
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:24
+msgid "Save a region with its sectors, routes and topos to open it without a connection."
+msgstr "Save a region with its sectors, routes and topos to open it without a connection."
 
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:331
 msgid "Save changes"
@@ -1379,6 +1425,14 @@ msgstr "Save changes"
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:321
 msgid "Saved changes go live for everyone straight away."
 msgstr "Saved changes go live for everyone straight away."
+
+#: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:31
+msgid "Saved for offline use"
+msgstr "Saved for offline use"
+
+#: src/features/offlineRegions/common/ui/OfflineShortcutLinks.tsx:16
+msgid "Saved for offline:"
+msgstr "Saved for offline:"
 
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
 #: src/features/logTick/common/ui/TickForm.tsx:211
@@ -1509,7 +1563,7 @@ msgstr "Summer"
 
 #. placeholder {0}: sunShade.firstSunAt
 #. placeholder {1}: sunShade.lastSunAt
-#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:60
+#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:62
 msgid "Sun roughly {0} – {1}"
 msgstr "Sun roughly {0} – {1}"
 
@@ -1517,7 +1571,7 @@ msgstr "Sun roughly {0} – {1}"
 msgid "System"
 msgstr "System"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:43
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:41
 #: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:26
 msgid "Temperature"
 msgstr "Temperature"
@@ -1612,7 +1666,7 @@ msgstr "This screen could not be drawn. Reloading usually gets past it."
 msgid "This sector is in the archive, so it is out of the catalog. Its routes and everything climbers left on them — ascents, photos, links and comments — are still here."
 msgstr "This sector is in the archive, so it is out of the catalog. Its routes and everything climbers left on them — ascents, photos, links and comments — are still here."
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:98
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:96
 msgid "time"
 msgstr "time"
 
@@ -1620,7 +1674,7 @@ msgstr "time"
 msgid "Time"
 msgstr "Time"
 
-#: src/features/sectorConditions/common/ui/ConditionsDayStrip.tsx:29
+#: src/features/sectorConditions/common/ui/ConditionsDayStrip.tsx:30
 msgid "today"
 msgstr "today"
 
@@ -1687,6 +1741,10 @@ msgstr "Use another email"
 msgid "Verifying…"
 msgstr "Verifying…"
 
+#: src/pages/profile/common/ui/AppVersion.tsx:10
+msgid "Version {version}"
+msgstr "Version {version}"
+
 #: src/widgets/routeMedia/common/ui/RouteMediaGallery.tsx:47
 msgid "Video {position}"
 msgstr "Video {position}"
@@ -1707,7 +1765,7 @@ msgstr "Video and photo ({mediaCount})"
 msgid "We sent a code to <0>{0}</0>"
 msgstr "We sent a code to <0>{0}</0>"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:80
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:78
 msgid "Weather"
 msgstr "Weather"
 
@@ -1717,7 +1775,7 @@ msgid "Weather by Open-Meteo.com"
 msgstr "Weather by Open-Meteo.com"
 
 #: src/features/sectorConditions/common/ui/ConditionsCard.tsx:44
-#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:32
+#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:33
 msgid "Weather forecast not available yet"
 msgstr "Weather forecast not available yet"
 
@@ -1733,8 +1791,8 @@ msgstr "Where the wall looks: 0 north, 90 east. Left empty it is read off the sl
 msgid "Whether the rain reaches a climber on the wall"
 msgstr "Whether the rain reaches a climber on the wall"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:45
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:86
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:43
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:84
 #: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:56
 msgid "Wind"
 msgstr "Wind"

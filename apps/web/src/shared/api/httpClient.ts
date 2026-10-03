@@ -6,6 +6,8 @@ import type { ErrorResponseBody } from './ErrorResponseBody';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:4001';
 
+export const apiUrl = (path: string) => `${API_BASE_URL}${path}`;
+
 export const apiGet = <T>(path: string): Promise<T> =>
   wrapApiCall(`apiGet:${path}`, async () => {
     const response = await fetch(`${API_BASE_URL}${path}`, {
@@ -94,6 +96,10 @@ const buildHeaders = async (): Promise<HeadersInit> => ({
 });
 
 const buildAuthHeaders = async (): Promise<Record<string, string>> => {
+  // Offline, getSession() spends ~25 s trying to refresh an expired token
+  // before it answers, and a saved region is served without one anyway.
+  if (!navigator.onLine) return {};
+
   const { data } = await supabase.auth.getSession();
   const accessToken = data.session?.access_token;
 

@@ -4,9 +4,11 @@ import Typography from '@mui/material/Typography';
 
 import { useProfileIdentity } from '@web/app/providers';
 import { AvatarPickerMobile } from '@web/features/avatarUpload';
+import { OfflineRegionsMobile } from '@web/features/offlineRegions';
 
 import {
   AccessSetting,
+  AppVersion,
   GradeScaleSetting,
   LocaleSetting,
   ProfileIdentity,
@@ -35,7 +37,9 @@ export const PageProfileMobile = () => {
       <LocaleSetting />
       <GradeScaleSetting />
       <AccessSetting />
+      <OfflineRegionsMobile />
       <SignOutButton />
+      <AppVersion />
     </PageStyled>
   );
 };

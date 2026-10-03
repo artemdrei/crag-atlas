@@ -1,0 +1,20 @@
+{
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "preset": "conventionalcommits",
+      "infile": "CHANGELOG.md"
+    }
+  },
+  "git": {
+    "commitMessage": "chore(web): release v${version}",
+    "tagName": "web-v${version}",
+    "tagMatch": "web-v*",
+    "requireBranch": "main"
+  },
+  "npm": {
+    "publish": false
+  },
+  "github": {
+    "release": false
+  }
+}

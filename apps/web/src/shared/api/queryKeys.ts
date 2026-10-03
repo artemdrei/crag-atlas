@@ -43,5 +43,6 @@ export const QUERY_KEYS = {
   adminCandidates: () => ['admins', 'candidates'] as const,
   adminCandidateSearch: (query: string) =>
     ['admins', 'candidates', query] as const,
-  me: () => ['me'] as const
+  me: () => ['me'] as const,
+  offlineRegions: () => ['offlineRegions'] as const
 } as const;

@@ -132,6 +132,10 @@ msgstr "{sector} порожній, тож з каталогу зникне ли�
 msgid "{sector} leaves the catalog for everyone, together with its routes. Nothing is erased: everything climbers left stays, and you can bring the sector back from the archive."
 msgstr "{sector} зникне з каталогу для всіх разом зі своїми маршрутами. Нічого не стирається: усе, що лишили скелелази, залишається, а сектор можна повернути з архіву."
 
+#: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:71
+msgid "{size} · saved {savedAt}"
+msgstr "{size} · збережено {savedAt}"
+
 #: src/features/logTick/common/ui/TickForm.tsx:171
 msgid "{stars} of 5"
 msgstr "{stars} з 5"
@@ -144,7 +148,7 @@ msgstr "{total, plural, one {# пролаз} few {# пролази} many {# пр
 msgid "{total, plural, one {# vote} other {# votes}}"
 msgstr "{total, plural, one {# голос} few {# голоси} many {# голосів} other {# голосу}}"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:52
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:50
 msgid "°C"
 msgstr "°C"
 
@@ -254,7 +258,7 @@ msgstr "Додаємо…"
 msgid "Admin access granted"
 msgstr "Доступ адміна надано"
 
-#: src/pages/logbook/common/ui/AscentTypeFilter.tsx:46
+#: src/pages/logbook/common/ui/AscentTypeFilter.tsx:47
 msgid "All"
 msgstr "Усі"
 
@@ -378,13 +382,13 @@ msgstr "Погано"
 msgid "Be the first to show this route"
 msgstr "Покажи цей маршрут першим"
 
-#: src/pages/logbook/common/ui/TickCard.tsx:172
+#: src/pages/logbook/common/ui/TickCard.tsx:173
 msgid "Belayer"
 msgstr "Страхуючий"
 
 #. placeholder {0}: day.bestFromAt
 #. placeholder {1}: day.bestUntilAt
-#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:38
+#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:39
 msgid "best {0} – {1}"
 msgstr "найкраще {0} – {1}"
 
@@ -549,14 +553,19 @@ msgstr "Умови додано до {filled} пролазів, не вдало�
 msgid "Conditions added to {filled} ascents, {remaining} still to go"
 msgstr "Умови додано до {filled} пролазів, лишилося {remaining}"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:42
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:77
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:40
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:75
 msgid "Conditions score"
 msgstr "Оцінка умов"
 
 #: src/features/logTick/common/ui/ConditionsSection.tsx:116
 msgid "Conditions, read at the sector"
 msgstr "Умови, зчитані за координатами сектора"
+
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:50
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:52
+msgid "Connect to the internet to save or refresh a region."
+msgstr "Підключіться до інтернету, щоб зберегти або оновити регіон."
 
 #: src/pages/login/common/ui/EmailOtpForm.tsx:75
 #: src/pages/login/common/ui/EmailOtpForm.tsx:114
@@ -696,12 +705,16 @@ msgstr "Як тобі маршрут?"
 msgid "Directions"
 msgstr "Маршрут"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:148
+#: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:41
+msgid "Downloading photos: {done} of {total}"
+msgstr "Завантаження фото: {done} з {total}"
+
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:149
 msgid "Drag a route here"
 msgstr "Перетягніть сюди маршрут"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:118
 #: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:119
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:120
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:114
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:115
 msgid "Drag cancelled"
@@ -830,7 +843,7 @@ msgstr "Є фото"
 msgid "Has video"
 msgstr "Є відео"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:62
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:60
 msgid "Hourly"
 msgstr "Погодинно"
 
@@ -846,11 +859,11 @@ msgstr "Складність маршруту"
 msgid "Humidity"
 msgstr "Вологість"
 
-#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:48
+#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:50
 msgid "In the shade all day"
 msgstr "У тіні весь день"
 
-#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:54
+#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:56
 msgid "In the sun all day"
 msgstr "На сонці весь день"
 
@@ -874,7 +887,7 @@ msgstr "Лишити фото цілим"
 msgid "Keep your grades, language and theme on every device"
 msgstr "Тримай категорії, мову й тему на всіх пристроях"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:54
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:52
 msgid "km/h"
 msgstr "км/год"
 
@@ -941,7 +954,7 @@ msgstr "Медіа додано"
 msgid "Media deleted"
 msgstr "Медіа видалено"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:53
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:51
 msgid "mm"
 msgstr "мм"
 
@@ -958,7 +971,7 @@ msgid "Move the sector to the archive?"
 msgstr "Перенести сектор до архіву?"
 
 #. placeholder {0}: nameOf(over.id)
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:118
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:119
 msgid "Moved to {0}"
 msgstr "Перенесено на {0}"
 
@@ -1007,7 +1020,16 @@ msgstr "Країну не знайдено"
 msgid "No forecast is published that far ahead"
 msgstr "Прогнозу на таку далеку дату ще немає"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:136
+#: src/features/offlineRegions/common/ui/OfflineRegionPicker.tsx:34
+msgid "No region found"
+msgstr "Регіон не знайдено"
+
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:78
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:80
+msgid "No regions saved yet."
+msgstr "Збережених регіонів поки немає."
+
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:137
 msgid "No routes yet — add the first one, then drag it onto the photo it is drawn on."
 msgstr "Маршрутів ще немає — додайте перший, а потім перетягніть його на фото, де він намальований."
 
@@ -1053,10 +1075,15 @@ msgid "Nothing found"
 msgstr "Нічого не знайдено"
 
 #. placeholder {0}: nameOf(over.id)
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:116
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:117
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:112
 msgid "Now over {0}"
 msgstr "Зараз над {0}"
+
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:21
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:21
+msgid "Offline regions"
+msgstr "Офлайн-регіони"
 
 #: src/features/sectorConditions/common/hooks/useBandLabel.ts:11
 msgid "OK"
@@ -1192,7 +1219,7 @@ msgid "Pick an archived sector on the left to restore it."
 msgstr "Оберіть архівний сектор ліворуч, щоб відновити його."
 
 #. placeholder {0}: nameOf(active.id)
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:114
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:115
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:110
 msgid "Picked up {0}"
 msgstr "Взято {0}"
@@ -1205,7 +1232,7 @@ msgstr "Зум пінчем або подвійним кліком — обид�
 msgid "Plain point"
 msgstr "Звичайна точка"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:51
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:49
 msgid "points"
 msgstr "бали"
 
@@ -1222,11 +1249,15 @@ msgstr "Розмістіть фото"
 msgid "Post"
 msgstr "Опублікувати"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:44
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:83
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:42
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:81
 #: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:36
 msgid "Precipitation"
 msgstr "Опади"
+
+#: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:42
+msgid "Preparing the download…"
+msgstr "Готуємо завантаження…"
 
 #: src/features/logTick/common/ui/TickForm.tsx:186
 msgid "Private comment"
@@ -1235,8 +1266,8 @@ msgstr "Приватний коментар"
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:43
 #: src/app/mobile/layout/AppBottomNavigation.tsx:41
 #: src/pages/profile/common/ui/ProfileTeaser.tsx:14
-#: src/pages/profile/desktop/PageProfileDesktop.tsx:23
-#: src/pages/profile/mobile/PageProfileMobile.tsx:23
+#: src/pages/profile/desktop/PageProfileDesktop.tsx:25
+#: src/pages/profile/mobile/PageProfileMobile.tsx:25
 msgid "Profile"
 msgstr "Профіль"
 
@@ -1257,6 +1288,11 @@ msgstr "Повторити"
 msgid "Redpoint"
 msgstr "Редпоінт"
 
+#: src/features/offlineRegions/common/ui/OfflineRegionRow.tsx:42
+msgid "Refresh"
+msgstr "Оновити"
+
+#: src/features/offlineRegions/common/ui/OfflineRegionPicker.tsx:35
 #: src/pages/region/desktop/ui/RegionEditSection.tsx:29
 msgid "Region"
 msgstr "Регіон"
@@ -1272,13 +1308,16 @@ msgstr "Регіон збережено"
 
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:29
 #: src/features/catalogSearch/common/ui/CatalogSearchGroup.tsx:34
-#: src/pages/home/desktop/PageHomeDesktop.tsx:51
 msgid "Regions"
 msgstr "Регіони"
 
 #: src/app/ui/errorBoundary/ErrorFallback.tsx:21
 msgid "Reload"
 msgstr "Перезавантажити"
+
+#: src/features/offlineRegions/common/ui/OfflineRegionRow.tsx:49
+msgid "Remove"
+msgstr "Видалити"
 
 #: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:79
 #: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:79
@@ -1355,7 +1394,7 @@ msgid "Route saved"
 msgstr "Маршрут збережено"
 
 #: src/features/catalogSearch/common/ui/CatalogSearchGroup.tsx:36
-#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:131
+#: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:132
 msgid "Routes"
 msgstr "Маршрути"
 
@@ -1367,10 +1406,17 @@ msgstr "Траси, які ви тут пролізли"
 #: src/features/avatarUpload/mobile/CropAvatarSheet.tsx:31
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
 #: src/features/logTick/common/ui/TickForm.tsx:213
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:44
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:46
 #: src/features/routeComment/desktop/EditRouteCommentDialog.tsx:29
 #: src/features/routeComment/mobile/EditRouteCommentSheet.tsx:24
 msgid "Save"
 msgstr "Зберегти"
+
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:24
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:24
+msgid "Save a region with its sectors, routes and topos to open it without a connection."
+msgstr "Збережіть регіон із секторами, маршрутами й топо, щоб відкривати його без інтернету."
 
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:331
 msgid "Save changes"
@@ -1379,6 +1425,14 @@ msgstr "Відредагувати"
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:321
 msgid "Saved changes go live for everyone straight away."
 msgstr "Збережені зміни одразу стають видимими всім."
+
+#: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:31
+msgid "Saved for offline use"
+msgstr "Збережено для офлайн-доступу"
+
+#: src/features/offlineRegions/common/ui/OfflineShortcutLinks.tsx:16
+msgid "Saved for offline:"
+msgstr "Збережені для офлайну:"
 
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
 #: src/features/logTick/common/ui/TickForm.tsx:211
@@ -1509,7 +1563,7 @@ msgstr "Літо"
 
 #. placeholder {0}: sunShade.firstSunAt
 #. placeholder {1}: sunShade.lastSunAt
-#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:60
+#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:62
 msgid "Sun roughly {0} – {1}"
 msgstr "Сонце орієнтовно {0} – {1}"
 
@@ -1517,7 +1571,7 @@ msgstr "Сонце орієнтовно {0} – {1}"
 msgid "System"
 msgstr "Система"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:43
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:41
 #: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:26
 msgid "Temperature"
 msgstr "Температура"
@@ -1612,7 +1666,7 @@ msgstr "Цей екран не вдалося намалювати. Зазвич
 msgid "This sector is in the archive, so it is out of the catalog. Its routes and everything climbers left on them — ascents, photos, links and comments — are still here."
 msgstr "Цей сектор в архіві, тож поза каталогом. Його маршрути й усе, що лишили на них скелелази — пролази, фото, посилання й коментарі — досі тут."
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:98
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:96
 msgid "time"
 msgstr "час"
 
@@ -1620,7 +1674,7 @@ msgstr "час"
 msgid "Time"
 msgstr "Час"
 
-#: src/features/sectorConditions/common/ui/ConditionsDayStrip.tsx:29
+#: src/features/sectorConditions/common/ui/ConditionsDayStrip.tsx:30
 msgid "today"
 msgstr "сьогодні"
 
@@ -1687,6 +1741,10 @@ msgstr "Інший email"
 msgid "Verifying…"
 msgstr "Перевіряємо…"
 
+#: src/pages/profile/common/ui/AppVersion.tsx:10
+msgid "Version {version}"
+msgstr "Версія {version}"
+
 #: src/widgets/routeMedia/common/ui/RouteMediaGallery.tsx:47
 msgid "Video {position}"
 msgstr "Відео {position}"
@@ -1707,7 +1765,7 @@ msgstr "Відео та фото ({mediaCount})"
 msgid "We sent a code to <0>{0}</0>"
 msgstr "Ми надіслали код на <0>{0}</0>"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:80
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:78
 msgid "Weather"
 msgstr "Погода"
 
@@ -1717,7 +1775,7 @@ msgid "Weather by Open-Meteo.com"
 msgstr "Погода — Open-Meteo.com"
 
 #: src/features/sectorConditions/common/ui/ConditionsCard.tsx:44
-#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:32
+#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:33
 msgid "Weather forecast not available yet"
 msgstr "Прогнозу погоди ще немає"
 
@@ -1733,8 +1791,8 @@ msgstr "Куди дивиться стіна: 0 північ, 90 схід. По�
 msgid "Whether the rain reaches a climber on the wall"
 msgstr "Чи дістає дощ до того, хто лізе"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:45
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:86
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:43
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:84
 #: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:56
 msgid "Wind"
 msgstr "Вітер"

@@ -5,6 +5,7 @@ import { styled } from '@mui/material/styles';
 import { useEditModeInUrl, useUser } from '@web/app/providers';
 import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
 import { CatalogEditActions } from '@web/features/catalogEdit';
+import { OfflineShortcutsDesktop } from '@web/features/offlineRegions';
 import { mapRegions, RegionMapDesktop } from '@web/features/regionMap';
 import { useCatalogSelection } from '@web/shared/lib';
 import { ApiFeedback, CatalogExplorerLayout, PageShell } from '@web/shared/ui';
@@ -53,6 +54,7 @@ export const PageHomeDesktop = () => {
         />
       </HeaderRowStyled>
       <HomeHeading />
+      <OfflineShortcutsDesktop isCatalogUnavailable={!!failure} />
       <ApiFeedback failure={failure} />
       <CatalogExplorerLayout
         list={
