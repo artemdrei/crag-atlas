@@ -1,7 +1,11 @@
 import { OfflineShortcutLinks, useOfflineShortcuts } from '../common';
 
-export const OfflineShortcutsDesktop = () => {
-  const { isVisible, links } = useOfflineShortcuts();
+export interface Props {
+  isCatalogUnavailable: boolean;
+}
+
+export const OfflineShortcutsDesktop = ({ isCatalogUnavailable }: Props) => {
+  const { isVisible, links } = useOfflineShortcuts(isCatalogUnavailable);
 
   if (!isVisible) return null;
 

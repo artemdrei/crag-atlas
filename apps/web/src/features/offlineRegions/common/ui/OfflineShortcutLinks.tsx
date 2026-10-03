@@ -13,7 +13,7 @@ export interface Props {
 export const OfflineShortcutLinks = ({ links }: Props) => (
   <SectionStyled>
     <Typography variant="body2" color="text.secondary">
-      <Trans>You are offline. Saved regions:</Trans>
+      <Trans>Saved for offline:</Trans>
     </Typography>
     <ChipsStyled>
       {links.map((link) => (

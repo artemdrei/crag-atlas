@@ -1430,6 +1430,10 @@ msgstr "Saved changes go live for everyone straight away."
 msgid "Saved for offline use"
 msgstr "Saved for offline use"
 
+#: src/features/offlineRegions/common/ui/OfflineShortcutLinks.tsx:16
+msgid "Saved for offline:"
+msgstr "Saved for offline:"
+
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
 #: src/features/logTick/common/ui/TickForm.tsx:211
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:54
@@ -1812,10 +1816,6 @@ msgstr "Written for you from the name above"
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:299
 msgid "Year"
 msgstr "Year"
-
-#: src/features/offlineRegions/common/ui/OfflineShortcutLinks.tsx:16
-msgid "You are offline. Saved regions:"
-msgstr "You are offline. Saved regions:"
 
 #: src/pages/profile/common/ui/ProfileTeaser.tsx:16
 msgid "Your account keeps your logbook, your beta and your settings in one place."

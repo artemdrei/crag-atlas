@@ -12,7 +12,7 @@ export const PageHomeMobile = () => {
   return (
     <PageShell spacing={2} isCompact>
       <HomeHeading variant="h5" />
-      <OfflineShortcutsMobile />
+      <OfflineShortcutsMobile isCatalogUnavailable={!!failure} />
       <ApiFeedback failure={failure} />
       <RegionMapMobile
         mapped={mapRegions(regions)}

@@ -54,7 +54,7 @@ export const PageHomeDesktop = () => {
         />
       </HeaderRowStyled>
       <HomeHeading />
-      <OfflineShortcutsDesktop />
+      <OfflineShortcutsDesktop isCatalogUnavailable={!!failure} />
       <ApiFeedback failure={failure} />
       <CatalogExplorerLayout
         list={

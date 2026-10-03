@@ -1430,6 +1430,10 @@ msgstr "Збережені зміни одразу стають видимими
 msgid "Saved for offline use"
 msgstr "Збережено для офлайн-доступу"
 
+#: src/features/offlineRegions/common/ui/OfflineShortcutLinks.tsx:16
+msgid "Saved for offline:"
+msgstr "Збережені для офлайну:"
+
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
 #: src/features/logTick/common/ui/TickForm.tsx:211
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:54
@@ -1812,10 +1816,6 @@ msgstr "Заповнено автоматично з назви вище"
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:299
 msgid "Year"
 msgstr "Рік"
-
-#: src/features/offlineRegions/common/ui/OfflineShortcutLinks.tsx:16
-msgid "You are offline. Saved regions:"
-msgstr "Ви офлайн. Збережені регіони:"
 
 #: src/pages/profile/common/ui/ProfileTeaser.tsx:16
 msgid "Your account keeps your logbook, your beta and your settings in one place."
