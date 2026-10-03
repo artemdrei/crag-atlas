@@ -10,7 +10,8 @@
     "test": "vitest run",
     "i18n:extract": "lingui extract",
     "i18n:compile": "lingui compile",
-    "release": "release-it"
+    "release": "release-it",
+    "icons": "pwa-assets-generator"
   },
   "dependencies": {
     "@amplitude/analytics-browser": "^2.45.4",
@@ -50,6 +51,7 @@
     "@testing-library/react": "^16.3.2",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
+    "@vite-pwa/assets-generator": "^2.0.0",
     "@vitejs/plugin-react": "^6.1.1",
     "jsdom": "^30.0.1",
     "release-it": "^21.1.0",

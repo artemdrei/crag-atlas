@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <title>crag-atlas</title>
+  <rect width="512" height="512" fill="#C25A2A"/>
+  <path d="M76 396 L206 140 L264 246 L308 190 L436 396 Z" fill="#F6F1E9"/>
+  <path d="M146 384 C168 320 214 292 206 160" fill="none" stroke="#1A1310" stroke-width="16" stroke-linecap="round" stroke-dasharray="1 32"/>
+</svg>
