@@ -37,9 +37,14 @@ export const readFailed = queryFailed;
 
 export const writeFailed = queryFailed;
 
-// The only SQLSTATE we branch on: purging a catalog row is refused while
-// anybody's ascent still references it.
+// Purging a catalog row is refused while anybody's ascent still references it.
 export const FOREIGN_KEY_VIOLATION = '23503';
 
 export const isReferenced = (error?: DatabaseError): boolean =>
   error?.code === FOREIGN_KEY_VIOLATION;
+
+// Raised by the `ticks_first_ascent_style_*` triggers in 017_repeat_ascents.sql.
+export const REPEAT_FIRST_ASCENT_STYLE = 'CA001';
+
+export const isRepeatInFirstAscentStyle = (error?: DatabaseError): boolean =>
+  error?.code === REPEAT_FIRST_ASCENT_STYLE;

@@ -1330,6 +1330,37 @@
         "tags": ["Ticks"]
       }
     },
+    "/ticks/routes/{idRoute}": {
+      "get": {
+        "operationId": "TicksController_findMineByRoute",
+        "parameters": [
+          {
+            "name": "idRoute",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TickDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Ticks"]
+      }
+    },
     "/ticks/weather/backfill": {
       "post": {
         "operationId": "TicksController_backfillWeather",
@@ -3254,6 +3285,14 @@
                 "$ref": "#/components/schemas/TickWeatherDto"
               }
             ]
+          },
+          "repeatCount": {
+            "type": "number",
+            "description": "Repeats folded under this first ascent; only the logbook carries it"
+          },
+          "isRepeat": {
+            "type": "boolean",
+            "description": "A send of a route already sent; only GET /ticks/routes/:idRoute carries it"
           },
           "routeRating": {
             "type": "number",

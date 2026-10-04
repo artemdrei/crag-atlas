@@ -143,6 +143,20 @@ export class TickDto {
   @ApiProperty({ type: TickWeatherDto, required: false, nullable: true })
   weather?: TickWeatherDto | null;
 
+  @ApiProperty({
+    required: false,
+    description:
+      'Repeats folded under this first ascent; only the logbook carries it'
+  })
+  repeatCount?: number;
+
+  @ApiProperty({
+    required: false,
+    description:
+      'A send of a route already sent; only GET /ticks/routes/:idRoute carries it'
+  })
+  isRepeat?: boolean;
+
   // The three below describe the route, not the ascent. Only the logbook and
   // the feed (GET /ticks, GET /ticks/feed) carry them, because only their
   // cards show them; every other response leaves them out rather than paying

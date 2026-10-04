@@ -7,6 +7,8 @@ import {
   ValidationException
 } from '../common/exceptions/app.exception';
 import {
+  type DatabaseError,
+  isRepeatInFirstAscentStyle,
   readFailed,
   writeFailed
 } from '../common/exceptions/database.exception';
@@ -59,6 +61,7 @@ interface BackfillRow {
 interface TickPageIds {
   ids: string[];
   total: number;
+  repeats: Record<string, number>;
 }
 
 // Embedded through the ticks → routes → sectors foreign keys, so a logbook
@@ -169,7 +172,10 @@ export class TicksService {
     const items = await this.findByIds(authUser, page.ids);
 
     return {
-      items,
+      items: items.map((item) => ({
+        ...item,
+        repeatCount: page.repeats[item.id] ?? 0
+      })),
       total: page.total,
       nextOffset:
         offset + page.ids.length < page.total ? offset + page.ids.length : null
@@ -230,6 +236,7 @@ export class TicksService {
       .from('ticks')
       .select(COLUMNS)
       .eq('id_route', idRoute)
+      .eq('is_repeat', false)
       .order('climbed_at', { ascending: false })
       .order('id', { ascending: false })
       .returns<TickRow[]>();
@@ -245,6 +252,35 @@ export class TicksService {
     return data.map((row) => toTickDto(row, ''));
   }
 
+  async findMineByRoute(
+    authUser: AuthUser,
+    idRoute: string
+  ): Promise<TickDto[]> {
+    const { data, error } = await userClient(authUser)
+      .from('ticks')
+      .select(`${COLUMNS}, is_repeat`)
+      .eq('id_user', authUser.idUser)
+      .eq('id_route', idRoute)
+      .order('climbed_at')
+      .order('climbed_at_time', { nullsFirst: true })
+      .order('created_at')
+      .order('id')
+      .returns<(TickRow & { is_repeat: boolean })[]>();
+
+    if (error) {
+      throw readFailed(
+        'Could not load your ascents',
+        'TICKS_MINE_ROUTE_READ_FAILED',
+        error
+      );
+    }
+
+    return data.map((row) => ({
+      ...toTickDto(row, authUser.idUser),
+      isRepeat: row.is_repeat
+    }));
+  }
+
   async create(authUser: AuthUser, payload: CreateTickDto): Promise<TickDto> {
     if (!payload.idRoute?.trim()) {
       throw new ValidationException('An idRoute is required');
@@ -252,13 +288,14 @@ export class TicksService {
 
     assertAscentType(payload.ascentType);
 
+    const idRoute = payload.idRoute.trim();
     const client = userClient(authUser);
     const { data, error } = await client
       .from('ticks')
       .insert({
         // From the verified token, never the body: RLS checks the same value.
         id_user: authUser.idUser,
-        id_route: payload.idRoute.trim(),
+        id_route: idRoute,
         ascent_type: payload.ascentType,
         climbed_at: payload.climbedAt,
         ...toTickColumns(payload)
@@ -267,6 +304,7 @@ export class TicksService {
       .single<TickRow>();
 
     if (error) {
+      assertFirstAscentStyle(error);
       throw writeFailed(
         'Could not log the ascent',
         'TICK_INSERT_FAILED',
@@ -292,6 +330,7 @@ export class TicksService {
     let query = userClient(authUser)
       .from('ticks')
       .select(COLUMNS)
+      .eq('is_repeat', false)
       .order('climbed_at', { ascending: false })
       .order('id', { ascending: false })
       // One row past the page, so no second count query.
@@ -346,6 +385,7 @@ export class TicksService {
       .maybeSingle<TickRow>();
 
     if (error) {
+      assertFirstAscentStyle(error);
       throw writeFailed(
         'Could not save the ascent',
         'TICK_UPDATE_FAILED',
@@ -538,6 +578,15 @@ const routeMarks = async (
   }
 
   return marks;
+};
+
+const assertFirstAscentStyle = (error: DatabaseError) => {
+  if (isRepeatInFirstAscentStyle(error)) {
+    throw new ValidationException(
+      'Only the first ascent of a route can be an onsight or a flash',
+      'TICK_REPEAT_FIRST_ASCENT_STYLE'
+    );
+  }
 };
 
 const toTickDto = (

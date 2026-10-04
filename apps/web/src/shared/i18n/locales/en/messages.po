@@ -112,6 +112,10 @@ msgstr "{region} is empty, so only the region itself and its photo leave the cat
 msgid "{region} leaves the catalog for everyone, together with its sectors and their routes. Nothing is erased: everything climbers left stays, and you can bring the region back from the archive."
 msgstr "{region} leaves the catalog for everyone, together with its sectors and their routes. Nothing is erased: everything climbers left stays, and you can bring the region back from the archive."
 
+#: src/pages/logbook/common/ui/TickRepeats.tsx:42
+msgid "{repeatCount, plural, one {# repeat} few {# repeats} many {# repeats} other {# repeats}}"
+msgstr "{repeatCount, plural, one {# repeat} few {# repeats} many {# repeats} other {# repeats}}"
+
 #: src/features/topoEditor/desktop/ArchiveRouteDialog.tsx:48
 msgid "{route} leaves the catalog for everyone, together with its lines on every photo. Nothing is erased: the ascents, photos, links and comments on it stay, and you can bring the route back from the archive."
 msgstr "{route} leaves the catalog for everyone, together with its lines on every photo. Nothing is erased: the ascents, photos, links and comments on it stay, and you can bring the route back from the archive."
@@ -136,7 +140,7 @@ msgstr "{sector} leaves the catalog for everyone, together with its routes. Noth
 msgid "{size} · saved {savedAt}"
 msgstr "{size} · saved {savedAt}"
 
-#: src/features/logTick/common/ui/TickForm.tsx:171
+#: src/features/logTick/common/ui/TickForm.tsx:183
 msgid "{stars} of 5"
 msgstr "{stars} of 5"
 
@@ -337,7 +341,7 @@ msgstr "Ascent logged"
 msgid "Ascent saved"
 msgstr "Ascent saved"
 
-#: src/features/logTick/common/ui/AscentTypeChoice.tsx:21
+#: src/features/logTick/common/ui/AscentTypeChoice.tsx:28
 #: src/pages/logbook/common/ui/LogbookFilterFields.tsx:46
 msgid "Ascent type"
 msgstr "Ascent type"
@@ -382,7 +386,8 @@ msgstr "Bad"
 msgid "Be the first to show this route"
 msgstr "Be the first to show this route"
 
-#: src/pages/logbook/common/ui/TickCard.tsx:173
+#: src/pages/logbook/common/ui/TickCard.tsx:169
+#: src/pages/logbook/common/ui/TickRepeats.tsx:93
 msgid "Belayer"
 msgstr "Belayer"
 
@@ -431,7 +436,7 @@ msgstr "Breadcrumb"
 #: src/features/catalogEdit/common/ui/EditActions.tsx:32
 #: src/features/grantAdmin/common/ui/GrantAdminBody.tsx:82
 #: src/features/logTick/common/ui/DeleteTickActions.tsx:17
-#: src/features/logTick/common/ui/TickForm.tsx:207
+#: src/features/logTick/common/ui/TickForm.tsx:219
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:276
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:450
 #: src/features/routeComment/common/ui/DeleteRouteCommentActions.tsx:17
@@ -505,7 +510,7 @@ msgstr "Close editing"
 msgid "Close the editor"
 msgstr "Close the editor"
 
-#: src/features/logTick/common/ui/TickForm.tsx:181
+#: src/features/logTick/common/ui/TickForm.tsx:193
 msgid "Comment"
 msgstr "Comment"
 
@@ -697,7 +702,7 @@ msgstr "Description"
 msgid "dew {0}°"
 msgstr "dew {0}°"
 
-#: src/features/logTick/common/ui/TickForm.tsx:167
+#: src/features/logTick/common/ui/TickForm.tsx:179
 msgid "Did you like it?"
 msgstr "Did you like it?"
 
@@ -785,6 +790,10 @@ msgstr "Filters"
 msgid "Find your next climb"
 msgstr "Find your next climb"
 
+#: src/features/logTick/common/ui/RepeatAscentNotice.tsx:24
+msgid "First on {firstDate}, <0/>. This one is repeat #{sendCount}."
+msgstr "First on {firstDate}, <0/>. This one is repeat #{sendCount}."
+
 #: src/features/topo/common/ui/TopoZoomControls.tsx:26
 msgid "Fit the photo"
 msgstr "Fit the photo"
@@ -847,11 +856,11 @@ msgstr "Has video"
 msgid "Hourly"
 msgstr "Hourly"
 
-#: src/features/logTick/common/ui/TickForm.tsx:141
+#: src/features/logTick/common/ui/TickForm.tsx:149
 msgid "How did you climb it?"
 msgstr "How did you climb it?"
 
-#: src/features/logTick/common/ui/TickForm.tsx:157
+#: src/features/logTick/common/ui/TickForm.tsx:169
 msgid "How hard is the route?"
 msgstr "How hard is the route?"
 
@@ -928,14 +937,19 @@ msgstr "Light"
 msgid "Location is blocked for this site. Allow it in the browser to see where you are."
 msgstr "Location is blocked for this site. Allow it in the browser to see where you are."
 
-#: src/features/logTick/common/ui/TickForm.tsx:215
-#: src/pages/route/common/ui/LogTickButton.tsx:40
+#: src/features/logTick/common/ui/TickForm.tsx:234
+#: src/pages/route/common/ui/LogTickButton.tsx:49
 msgid "Log ascent"
 msgstr "Log ascent"
 
 #: src/shared/ui/SignInBenefits.tsx:39
 msgid "Log every ascent and watch your grade pyramid build up"
 msgstr "Log every ascent and watch your grade pyramid build up"
+
+#: src/features/logTick/common/ui/TickForm.tsx:232
+#: src/pages/route/common/ui/LogTickButton.tsx:49
+msgid "Log repeat"
+msgstr "Log repeat"
 
 #: src/app/mobile/layout/AppBottomNavigation.tsx:34
 #: src/pages/route/common/ui/RouteTabs.tsx:41
@@ -1115,6 +1129,10 @@ msgstr "onsight"
 msgid "Onsight"
 msgstr "Onsight"
 
+#: src/features/logTick/common/ui/AscentTypeChoice.tsx:31
+msgid "Onsight and flash count on the first ascent only"
+msgstr "Onsight and flash count on the first ascent only"
+
 #: src/features/regionMap/common/ui/RegionPointCard.tsx:49
 msgid "Open region"
 msgstr "Open region"
@@ -1159,7 +1177,7 @@ msgstr "Original photo"
 msgid "Partly sheltered"
 msgstr "Partly sheltered"
 
-#: src/features/logTick/common/ui/TickForm.tsx:150
+#: src/features/logTick/common/ui/TickForm.tsx:162
 msgid "Partner"
 msgstr "Partner"
 
@@ -1176,7 +1194,7 @@ msgstr "Photo {0}"
 msgid "Photo {position}"
 msgstr "Photo {position}"
 
-#: src/features/logTick/common/ui/TickForm.tsx:197
+#: src/features/logTick/common/ui/TickForm.tsx:209
 msgid "Photo and video"
 msgstr "Photo and video"
 
@@ -1259,7 +1277,7 @@ msgstr "Precipitation"
 msgid "Preparing the download…"
 msgstr "Preparing the download…"
 
-#: src/features/logTick/common/ui/TickForm.tsx:186
+#: src/features/logTick/common/ui/TickForm.tsx:198
 msgid "Private comment"
 msgstr "Private comment"
 
@@ -1405,7 +1423,7 @@ msgstr "Routes you have climbed here"
 #: src/features/avatarUpload/desktop/CropAvatarDialog.tsx:37
 #: src/features/avatarUpload/mobile/CropAvatarSheet.tsx:31
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:213
+#: src/features/logTick/common/ui/TickForm.tsx:230
 #: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:44
 #: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:46
 #: src/features/routeComment/desktop/EditRouteCommentDialog.tsx:29
@@ -1435,7 +1453,7 @@ msgid "Saved for offline:"
 msgstr "Saved for offline:"
 
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:211
+#: src/features/logTick/common/ui/TickForm.tsx:228
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:54
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:95
 msgid "Saving…"
@@ -1492,7 +1510,11 @@ msgstr "Selected: {0}"
 msgid "Sending code…"
 msgstr "Sending code…"
 
-#: src/features/logTick/common/ui/TickForm.tsx:176
+#: src/pages/route/common/ui/LogTickButton.tsx:53
+msgid "Sent ×{sendCount}"
+msgstr "Sent ×{sendCount}"
+
+#: src/features/logTick/common/ui/TickForm.tsx:188
 msgid "Share your thoughts"
 msgstr "Share your thoughts"
 
@@ -1674,7 +1696,7 @@ msgstr "time"
 msgid "Time"
 msgstr "Time"
 
-#: src/features/sectorConditions/common/ui/ConditionsDayStrip.tsx:30
+#: src/features/sectorConditions/common/ui/ConditionsDayStrip.tsx:33
 msgid "today"
 msgstr "today"
 
@@ -1816,6 +1838,10 @@ msgstr "Written for you from the name above"
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:299
 msgid "Year"
 msgstr "Year"
+
+#: src/features/logTick/common/ui/RepeatAscentNotice.tsx:22
+msgid "You have sent this route before"
+msgstr "You have sent this route before"
 
 #: src/pages/profile/common/ui/ProfileTeaser.tsx:16
 msgid "Your account keeps your logbook, your beta and your settings in one place."

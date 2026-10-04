@@ -83,6 +83,15 @@ export class TicksController {
     return this.ticksService.findFeed(authUser, Number(limit), cursor);
   }
 
+  @Get('routes/:idRoute')
+  @ApiOkResponse({ type: [TickDto] })
+  findMineByRoute(
+    @CurrentUser() authUser: AuthUser,
+    @Param('idRoute') idRoute: string
+  ): Promise<TickDto[]> {
+    return this.ticksService.findMineByRoute(authUser, idRoute);
+  }
+
   @Post('weather/backfill')
   @ApiOkResponse({ type: WeatherBackfillDto })
   backfillWeather(

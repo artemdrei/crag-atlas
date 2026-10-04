@@ -10,10 +10,15 @@ import { LogTickButton } from './LogTickButton';
 
 const openModal = vi.fn();
 const user = { isAuthenticated: false };
+const sends = { sendCount: 0 };
 
 vi.mock('@web/app/providers', () => ({
   useModal: () => ({ openModal }),
   useUser: () => user
+}));
+
+vi.mock('@web/features/logTick', () => ({
+  useRouteSends: () => sends
 }));
 
 i18n.load('en', {});
@@ -31,6 +36,7 @@ const renderButton = () =>
 describe('LogTickButton', () => {
   beforeEach(() => {
     user.isAuthenticated = false;
+    sends.sendCount = 0;
     openModal.mockClear();
   });
 
@@ -60,5 +66,14 @@ describe('LogTickButton', () => {
       'LOG_TICK',
       expect.objectContaining({ idRoute: 'r1', routeName: 'Scarface' })
     );
+  });
+
+  it('offers a repeat once the route is sent', () => {
+    user.isAuthenticated = true;
+    sends.sendCount = 2;
+    renderButton();
+
+    expect(screen.getByRole('button', { name: 'Log repeat' })).toBeTruthy();
+    expect(screen.getByText('Sent ×2')).toBeTruthy();
   });
 });
