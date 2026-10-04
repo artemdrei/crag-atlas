@@ -14,11 +14,12 @@ import { useWeatherFailureMessage } from '@web/shared/lib';
 import type { AscentType } from '@web/shared/ui';
 
 import type { CreateTick, GradeOpinion, PendingMedia, Tick } from '../entities';
-import { useTickConditions } from '../hooks';
+import { useRouteSends, useTickConditions } from '../hooks';
 import { AscentTypeChoice } from './AscentTypeChoice';
 import { AttemptsStepper } from './AttemptsStepper';
 import { ConditionsSection } from './ConditionsSection';
 import { GradeFeelChoice } from './GradeFeelChoice';
+import { RepeatAscentNotice } from './RepeatAscentNotice';
 import { TickFormSection } from './TickFormSection';
 import { TickMediaField } from './TickMediaField';
 
@@ -75,6 +76,9 @@ export const TickForm = ({
   const [notePrivate, setNotePrivate] = useState(tick?.notePrivate ?? false);
   const [media, setMedia] = useState<PendingMedia>({ links: [], files: [] });
 
+  const { firstSend, sendCount } = useRouteSends(idRoute);
+  const isRepeat = !tick && !!firstSend;
+  const isFirstAscentLocked = !!firstSend && firstSend.id !== tick?.id;
   const hasAttempts = TYPES_WITH_ATTEMPTS.includes(ascentType);
   const describeWeatherFailure = useWeatherFailureMessage();
   const {
@@ -120,6 +124,10 @@ export const TickForm = ({
 
   return (
     <FormStyled onSubmit={handleSubmit}>
+      {!tick && firstSend && (
+        <RepeatAscentNotice firstSend={firstSend} sendCount={sendCount} />
+      )}
+
       <ConditionsSection
         climbedAt={climbedAt}
         climbedAtTime={climbedAtTime}
@@ -140,7 +148,11 @@ export const TickForm = ({
 
       <TickFormSection title={<Trans>How did you climb it?</Trans>}>
         <TypeRowStyled>
-          <AscentTypeChoice value={ascentType} onChange={setAscentType} />
+          <AscentTypeChoice
+            value={ascentType}
+            isFirstAscentLocked={isFirstAscentLocked}
+            onChange={setAscentType}
+          />
           {hasAttempts && (
             <AttemptsStepper value={attempts} onChange={setAttempts} />
           )}
@@ -206,11 +218,18 @@ export const TickForm = ({
         <Button type="button" onClick={onCancel}>
           <Trans>Cancel</Trans>
         </Button>
-        <Button type="submit" variant="contained" disabled={isPending}>
+        <Button
+          type="submit"
+          variant="contained"
+          color={isRepeat ? 'success' : 'primary'}
+          disabled={isPending}
+        >
           {isPending ? (
             <Trans>Saving…</Trans>
           ) : tick ? (
             <Trans>Save</Trans>
+          ) : isRepeat ? (
+            <Trans>Log repeat</Trans>
           ) : (
             <Trans>Log ascent</Trans>
           )}
@@ -240,7 +259,7 @@ const FormStyled = styled('form')`
 
 const TypeRowStyled = styled('div')`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: ${({ theme }) => theme.spacing(1.5)};
 `;
 

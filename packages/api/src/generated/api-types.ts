@@ -532,6 +532,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/ticks/routes/{idRoute}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["TicksController_findMineByRoute"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/ticks/weather/backfill": {
         parameters: {
             query?: never;
@@ -1183,6 +1199,10 @@ export interface components {
             avatarUrl?: string | null;
             media?: components["schemas"]["TickMediaDto"][];
             weather?: components["schemas"]["TickWeatherDto"] | null;
+            /** @description Repeats folded under this first ascent; only the logbook carries it */
+            repeatCount?: number;
+            /** @description A send of a route already sent; only GET /ticks/routes/:idRoute carries it */
+            isRepeat?: boolean;
             /** @description What the community makes of the route, 0..5 */
             routeRating?: number | null;
             routeHasPhoto?: boolean;
@@ -2401,6 +2421,27 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["TickFeedPageDto"];
+                };
+            };
+        };
+    };
+    TicksController_findMineByRoute: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idRoute: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TickDto"][];
                 };
             };
         };

@@ -14,12 +14,7 @@ import {
   buildSectorPath
 } from '@web/app/router/routes';
 import { TickActionsButton } from '@web/features/logTick';
-import {
-  countryName,
-  formatDate,
-  formatDateTime,
-  trackCatalogItemOpened
-} from '@web/shared/lib';
+import { countryName, trackCatalogItemOpened } from '@web/shared/lib';
 import { hoverRing } from '@web/shared/theme/surfaces';
 import {
   AscentTypeBadge,
@@ -30,9 +25,10 @@ import {
 import { RouteMediaButton } from '@web/widgets/routeMedia';
 
 import type { Tick } from '../entities';
-import { seasonOf } from '../lib';
+import { formatClimbedAt, seasonOf } from '../lib';
 import { SeasonIcon } from './SeasonIcon';
 import { TickConditions } from './TickConditions';
+import { TickRepeats } from './TickRepeats';
 
 interface Place {
   key: string;
@@ -178,12 +174,7 @@ export const TickCard = ({ tick, isCommunity, isGradeHidden }: Props) => {
         <DateStyled>
           {season && <SeasonIcon season={season} />}
           <Typography variant="body2" color="text.secondary">
-            {tick.climbedAtTime
-              ? formatDateTime(
-                  `${tick.climbedAt}T${tick.climbedAtTime}`,
-                  i18n.locale
-                )
-              : formatDate(tick.climbedAt, i18n.locale)}
+            {formatClimbedAt(tick, i18n.locale)}
           </Typography>
         </DateStyled>
         {!!tick.rating && (
@@ -196,6 +187,10 @@ export const TickCard = ({ tick, isCommunity, isGradeHidden }: Props) => {
       </StatsRowStyled>
 
       {tick.weather && <TickConditions weather={tick.weather} />}
+
+      {isMine && !!tick.repeatCount && (
+        <TickRepeats idRoute={tick.idRoute} repeatCount={tick.repeatCount} />
+      )}
     </CardStyled>
   );
 };

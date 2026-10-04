@@ -5,7 +5,12 @@ import type { ModalRegistration } from '@web/app/providers';
 import './types';
 
 export type { TickHeader } from './common';
-export { TickActionsButton } from './common';
+export {
+  TickActionsButton,
+  toRouteSends,
+  useApiGetMyRouteTicks,
+  useRouteSends
+} from './common';
 
 export const logTickDesktopRegistrations: ModalRegistration[] = [
   {
