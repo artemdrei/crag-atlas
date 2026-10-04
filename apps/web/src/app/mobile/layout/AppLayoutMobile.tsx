@@ -2,10 +2,10 @@ import { useRef } from 'react';
 import { Outlet, useLocation } from 'react-router';
 
 import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
+import { keyframes, styled } from '@mui/material/styles';
 
 import { ErrorBoundary } from '@web/app/ui/errorBoundary';
-import { useScrollTopOnNavigate } from '@web/shared/lib';
+import { useScrollRestoration } from '@web/shared/lib';
 
 import { AppBottomNavigation } from './AppBottomNavigation';
 import { HeaderMobile } from './HeaderMobile';
@@ -14,7 +14,7 @@ export const AppLayoutMobile = () => {
   const location = useLocation();
   const mainRef = useRef<HTMLDivElement>(null);
 
-  useScrollTopOnNavigate(mainRef);
+  useScrollRestoration(mainRef);
 
   return (
     <LayoutRootStyled>
@@ -25,7 +25,9 @@ export const AppLayoutMobile = () => {
         {/* Keyed by path: a crash on one screen must not follow the user to
             the next one, and a boundary only clears by remounting. */}
         <ErrorBoundary key={location.pathname}>
-          <Outlet />
+          <PageFadeStyled>
+            <Outlet />
+          </PageFadeStyled>
         </ErrorBoundary>
       </MainStyled>
       <NavSlotStyled>
@@ -57,6 +59,23 @@ const MainStyled = styled(Box)`
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
 ` as typeof Box;
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+const PageFadeStyled = styled(Box)`
+  animation: ${fadeIn} 0.2s ease-out;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+`;
 
 const NavSlotStyled = styled(Box)`
   flex-shrink: 0;
