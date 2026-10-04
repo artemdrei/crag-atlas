@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.3.0](https://github.com/artemdrei/crag-atlas/compare/web-v0.2.0...web-v0.3.0) (2026-10-04)
+
+### Features
+
+* repeat ascents ([#11](https://github.com/artemdrei/crag-atlas/issues/11)) ([a6f696f](https://github.com/artemdrei/crag-atlas/commit/a6f696fc2d47ee65f5ecc5538106bb87a365dac0))
+
 ## [0.2.0](https://github.com/artemdrei/crag-atlas/compare/web-v0.1.0...web-v0.2.0) (2026-10-04)
 
 ### Features
