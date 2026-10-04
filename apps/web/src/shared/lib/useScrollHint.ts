@@ -6,6 +6,7 @@ const EPSILON = 1;
 export const useScrollHint = () => {
   const ref = useRef<HTMLDivElement>(null);
   const [hasMore, setHasMore] = useState(false);
+  const [hasBefore, setHasBefore] = useState(false);
 
   const measure = useCallback(() => {
     const node = ref.current;
@@ -13,6 +14,7 @@ export const useScrollHint = () => {
     if (!node) return;
 
     setHasMore(node.scrollLeft + node.clientWidth < node.scrollWidth - EPSILON);
+    setHasBefore(node.scrollLeft > EPSILON);
   }, []);
 
   useEffect(() => {
@@ -30,5 +32,5 @@ export const useScrollHint = () => {
     return () => observer.disconnect();
   }, [measure]);
 
-  return { ref, hasMore, onScroll: measure };
+  return { ref, hasMore, hasBefore, onScroll: measure };
 };

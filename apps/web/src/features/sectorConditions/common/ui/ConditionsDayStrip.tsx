@@ -3,6 +3,7 @@ import ButtonBase from '@mui/material/ButtonBase';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
+import { useScrollHint } from '@web/shared/lib';
 import { getScoreColor } from '@web/shared/theme/palette';
 import { hoverRing } from '@web/shared/theme/surfaces';
 
@@ -17,32 +18,57 @@ export interface Props {
 
 export const ConditionsDayStrip = ({ date, days, onSelect }: Props) => {
   const { t, i18n } = useLingui();
+  const scroll = useScrollHint();
 
   return (
-    <StripStyled>
-      {days.map((day, index) => (
-        <ChipStyled
-          key={day.date}
-          isSelected={day.date === date}
-          onClick={() => onSelect(day.date)}
-        >
-          <DayStyled variant="caption">
-            {index === 0 ? t`today` : weekdayLabel(day.date, i18n.locale)}{' '}
-            <DateStyled>{dayNumber(day.date)}</DateStyled>
-          </DayStyled>
-          <ScoreStyled variant="subtitle1" band={day.band}>
-            {day.score ?? '—'}
-          </ScoreStyled>
-        </ChipStyled>
-      ))}
-    </StripStyled>
+    <ViewportStyled>
+      <StripStyled ref={scroll.ref} onScroll={scroll.onScroll}>
+        {days.map((day, index) => (
+          <ChipStyled
+            key={day.date}
+            isSelected={day.date === date}
+            onClick={() => onSelect(day.date)}
+          >
+            <DayStyled variant="caption">
+              {index === 0 ? t`today` : weekdayLabel(day.date, i18n.locale)}{' '}
+              <DateStyled>{dayNumber(day.date)}</DateStyled>
+            </DayStyled>
+            <ScoreStyled variant="subtitle1" band={day.band}>
+              {day.score ?? '—'}
+            </ScoreStyled>
+          </ChipStyled>
+        ))}
+      </StripStyled>
+      {scroll.hasBefore && <FadeStyled side="left" />}
+      {scroll.hasMore && <FadeStyled side="right" />}
+    </ViewportStyled>
   );
 };
 
+const ViewportStyled = styled('div')`
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+`;
+
+const FadeStyled = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'side'
+})<{ side: 'left' | 'right' }>`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  ${({ side }) => side}: 0;
+  width: ${({ theme }) => theme.spacing(6)};
+  pointer-events: none;
+  background: linear-gradient(
+    to ${({ side }) => side},
+    transparent,
+    ${({ theme }) => theme.palette.background.paper}
+  );
+`;
+
 const StripStyled = styled('div')`
   display: flex;
-  min-width: 0;
-  flex: 1 1 auto;
   gap: ${({ theme }) => theme.spacing(1)};
   overflow-x: auto;
   padding-bottom: ${({ theme }) => theme.spacing(0.5)};
