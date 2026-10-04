@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.0](https://github.com/artemdrei/crag-atlas/compare/web-v0.1.0...web-v0.2.0) (2026-10-04)
+
+### Features
+
+* **web:** restore scroll on back/forward and fade pages on mobile ([#9](https://github.com/artemdrei/crag-atlas/issues/9)) ([8993762](https://github.com/artemdrei/crag-atlas/commit/8993762fb0a1da69e20607776a3ba305d3699cce))
+
 ## 0.1.0 (2026-10-03)
 
 ### Features
