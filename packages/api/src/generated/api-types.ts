@@ -942,6 +942,77 @@ export interface components {
             comments: number;
             media: number;
         };
+        SectorRouteDto: {
+            id: string;
+            name: string;
+            grade: string;
+            /**
+             * @description The system the grade is written in; a grade alone is ambiguous
+             * @enum {string}
+             */
+            gradeScale: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux" | "font" | "vscale";
+            /** @enum {string} */
+            type: "sport" | "boulder";
+            length?: number | null;
+            /** @description Community rating, 0..5 */
+            rating?: number | null;
+            ascentsCount?: number | null;
+        };
+        SectorListItemDto: {
+            id: string;
+            idRegion: string;
+            /** @description Label for breadcrumbs; ids carry no meaning */
+            regionName: string;
+            name: string;
+            /** @description The name in its own writing system; null when there is none */
+            nameLocal?: string | null;
+            /** @description First topo photo, used as the card thumbnail */
+            photoUrl?: string | null;
+            description: string;
+            routeCount: number;
+            /** @description Easiest grade among the routes; null when there are none */
+            gradeMin?: string | null;
+            /**
+             * @description System gradeMin is written in
+             * @enum {string|null}
+             */
+            gradeMinScale?: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux" | "font" | "vscale" | null;
+            gradeMax?: string | null;
+            /**
+             * @description System gradeMax is written in
+             * @enum {string|null}
+             */
+            gradeMaxScale?: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux" | "font" | "vscale" | null;
+            /** @description Grade spread, one group per climbing type; empty when there are no routes */
+            gradeHistogram: components["schemas"]["GradeHistogramGroupDto"][];
+            lat?: number | null;
+            lng?: number | null;
+            /** @description Direction the wall faces, 0 = north, clockwise. Null leaves it to the slope the skyline was read from */
+            aspectDeg?: number | null;
+            /**
+             * @description How much of the rain the wall keeps off a climber
+             * @enum {string}
+             */
+            shelter: "open" | "partial" | "full";
+            /** @description Out of the catalog, because it carries the mark or an ancestor does */
+            isArchived: boolean;
+            /** @description Deleted directly, so restoring this row is what brings it back */
+            isDeleted: boolean;
+            /** @description Its routes, so a region can be narrowed by route; empty in the archive */
+            routes: components["schemas"]["SectorRouteDto"][];
+        };
+        SectorTickCountDto: {
+            idSector: string;
+            /** @description Routes the climber has ticked in this sector */
+            tickedCount: number;
+            idRoutes: string[];
+        };
+        CreateSectorDto: {
+            name: string;
+            /** @description The name in its own writing system; null when there is none */
+            nameLocal?: string | null;
+            description?: string | null;
+        };
         SectorDto: {
             id: string;
             idRegion: string;
@@ -982,17 +1053,6 @@ export interface components {
             isArchived: boolean;
             /** @description Deleted directly, so restoring this row is what brings it back */
             isDeleted: boolean;
-        };
-        SectorTickCountDto: {
-            idSector: string;
-            /** @description Routes the climber has ticked in this sector */
-            tickedCount: number;
-        };
-        CreateSectorDto: {
-            name: string;
-            /** @description The name in its own writing system; null when there is none */
-            nameLocal?: string | null;
-            description?: string | null;
         };
         UpdateSectorDto: {
             name: string;
@@ -1857,7 +1917,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["SectorDto"][];
+                    "application/json": components["schemas"]["SectorListItemDto"][];
                 };
             };
         };
@@ -1903,7 +1963,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["SectorDto"][];
+                    "application/json": components["schemas"]["SectorListItemDto"][];
                 };
             };
         };

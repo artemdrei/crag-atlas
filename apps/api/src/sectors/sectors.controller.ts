@@ -9,6 +9,7 @@ import { SectorsService } from './sectors.service';
 import {
   CreateSectorDto,
   SectorDto,
+  SectorListItemDto,
   SectorTickCountDto
 } from './sectors.types';
 
@@ -17,15 +18,19 @@ export class SectorsController {
   constructor(private readonly sectorsService: SectorsService) {}
 
   @Get()
-  @ApiOkResponse({ type: SectorDto, isArray: true })
-  findByRegion(@Param('idRegion') idRegion: string): Promise<SectorDto[]> {
+  @ApiOkResponse({ type: SectorListItemDto, isArray: true })
+  findByRegion(
+    @Param('idRegion') idRegion: string
+  ): Promise<SectorListItemDto[]> {
     return this.sectorsService.findByRegion(idRegion);
   }
 
   @Get('archived')
   @UseGuards(SupabaseAuthGuard, AdminGuard)
-  @ApiOkResponse({ type: SectorDto, isArray: true })
-  findArchived(@Param('idRegion') idRegion: string): Promise<SectorDto[]> {
+  @ApiOkResponse({ type: SectorListItemDto, isArray: true })
+  findArchived(
+    @Param('idRegion') idRegion: string
+  ): Promise<SectorListItemDto[]> {
     return this.sectorsService.findByRegion(idRegion, true);
   }
 

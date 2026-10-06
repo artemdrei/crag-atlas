@@ -1,1 +1,1 @@
-export type { Sector } from '@crag-atlas/api';
+export type { Sector, SectorListItem } from '@crag-atlas/api';

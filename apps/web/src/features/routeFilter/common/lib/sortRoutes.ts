@@ -1,13 +1,17 @@
 import { gradeKey } from '@web/shared/lib';
 
-import type { Route, RouteSort, RouteSortDirection } from '../entities';
+import type {
+  FilterableRoute,
+  RouteSort,
+  RouteSortDirection
+} from '../entities';
 
 // Below every known grade, so an unlisted route cannot lead a descending
 // sort.
 const UNRANKED = -1;
 
-const rankOf = (
-  route: Route,
+export const rankRoute = (
+  route: FilterableRoute,
   sort: RouteSort,
   order: Record<string, number>
 ): number => {
@@ -25,18 +29,18 @@ const rankOf = (
   }
 };
 
-export const sortRoutes = (
-  routes: Route[],
+export const sortRoutes = <R extends FilterableRoute>(
+  routes: R[],
   sort: RouteSort,
   direction: RouteSortDirection,
   order: Record<string, number>
-): Route[] => {
+): R[] => {
   if (sort === 'default') return routes;
 
   const sign = direction === 'asc' ? -1 : 1;
 
   return [...routes].sort(
     (one, other) =>
-      sign * (rankOf(other, sort, order) - rankOf(one, sort, order))
+      sign * (rankRoute(other, sort, order) - rankRoute(one, sort, order))
   );
 };

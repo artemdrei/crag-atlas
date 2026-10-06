@@ -28,5 +28,10 @@ export const useApiGetTickedSectors = (idRegion: string) => {
     [data, isAuthenticated]
   );
 
-  return { tickedOf };
+  const tickedRoutes = useMemo(
+    () => new Set((data ?? []).flatMap(({ idRoutes }) => idRoutes)),
+    [data]
+  );
+
+  return { tickedOf, tickedRoutes };
 };

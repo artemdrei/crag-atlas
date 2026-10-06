@@ -15,6 +15,7 @@ export interface Props {
   isSelected?: boolean;
   isUnsaved?: boolean;
   actions?: ReactNode;
+  className?: string;
   onSelect: () => void;
 }
 
@@ -24,10 +25,11 @@ export const CatalogCard = ({
   isSelected,
   isUnsaved,
   actions,
+  className,
   children,
   onSelect
 }: PropsWithChildren<Props>) => (
-  <RootStyled>
+  <RootStyled className={className}>
     <CardAreaStyled isSelected={!!isSelected} onClick={onSelect}>
       {isUnsaved && <UnsavedBadge />}
       <ThumbnailStyled>

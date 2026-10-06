@@ -3,10 +3,14 @@ import { useMemo } from 'react';
 import type { Topo } from '@crag-atlas/api';
 import { useLingui } from '@lingui/react/macro';
 
+import {
+  type RouteSort,
+  type RouteSortDirection,
+  sortRoutes
+} from '@web/features/routeFilter';
 import { sortByNumber, usePhotoLabel } from '@web/features/topo';
 
-import type { Route, RouteSort, RouteSortDirection } from '../entities';
-import { sortRoutes } from '../lib';
+import type { Route } from '../entities';
 
 export interface RouteGroup {
   id: string;

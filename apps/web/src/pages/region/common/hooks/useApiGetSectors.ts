@@ -5,13 +5,13 @@ import {
   useSeedDetailCache
 } from '@web/shared/api';
 
-import type { Sector } from '../entities';
+import type { SectorListItem } from '../entities';
 
 export const useApiGetSectors = (idRegion: string, isArchiveOnly = false) => {
   const { data, isLoading, failure } = useApiQuery({
     queryKey: QUERY_KEYS.sectorList(idRegion, isArchiveOnly),
     queryFn: () =>
-      apiGet<Sector[]>(
+      apiGet<SectorListItem[]>(
         `/regions/${idRegion}/sectors${isArchiveOnly ? '/archived' : ''}`
       )
   });

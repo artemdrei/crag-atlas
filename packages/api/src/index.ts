@@ -3,6 +3,8 @@ import type { components } from './generated/api-types';
 export type { components };
 export type Region = components['schemas']['RegionDto'];
 export type Sector = components['schemas']['SectorDto'];
+export type SectorListItem = components['schemas']['SectorListItemDto'];
+export type SectorRoute = components['schemas']['SectorRouteDto'];
 export type Route = components['schemas']['RouteDto'];
 export type GradeScale = Route['gradeScale'];
 export type GradeHistogramGroup =

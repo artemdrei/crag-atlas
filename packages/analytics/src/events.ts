@@ -16,7 +16,7 @@ export type LoginMethod = 'google' | 'email';
 // restored, so a guest count never absorbs it.
 export type AuthState = 'guest' | 'member' | 'unknown';
 
-export type SignInPromptAction = 'tick' | 'logbook' | 'profile';
+export type SignInPromptAction = 'tick' | 'logbook' | 'profile' | 'filter';
 
 export type ContentType = 'tick' | 'comment' | 'media' | 'topo';
 
@@ -51,10 +51,14 @@ export type AnalyticsEvent =
   | {
       name: 'List Controls Used';
       props: {
-        list: 'routes' | 'route' | 'logbook' | 'sector';
+        list: 'routes' | 'route' | 'logbook' | 'sector' | 'region';
         control:
           | 'grade_filter'
           | 'grade_filter_reset'
+          | 'rating_filter'
+          | 'length_filter'
+          | 'ascents_filter'
+          | 'filters_reset'
           | 'sort'
           | 'sort_direction'
           | 'topo'

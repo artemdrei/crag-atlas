@@ -1,10 +1,11 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PickType } from '@nestjs/swagger';
 
 import { GradeHistogramGroupDto } from '../common/dto/gradeHistogram.dto';
 import type { GradeScale } from '../common/utils/grade';
 import { GRADE_SCALES } from '../common/utils/grade';
 import type { Shelter } from '../common/utils/shelter';
 import { SHELTERS } from '../common/utils/shelter';
+import { RouteDto } from '../routes/routes.types';
 
 export class SectorDto {
   @ApiProperty()
@@ -110,12 +111,36 @@ export class SectorDto {
   isDeleted!: boolean;
 }
 
+export class SectorRouteDto extends PickType(RouteDto, [
+  'id',
+  'name',
+  'grade',
+  'gradeScale',
+  'type',
+  'length',
+  'rating',
+  'ascentsCount'
+] as const) {}
+
+export class SectorListItemDto extends SectorDto {
+  @ApiProperty({
+    type: SectorRouteDto,
+    isArray: true,
+    description:
+      'Its routes, so a region can be narrowed by route; empty in the archive'
+  })
+  routes!: SectorRouteDto[];
+}
+
 export class SectorTickCountDto {
   @ApiProperty()
   idSector!: string;
 
   @ApiProperty({ description: 'Routes the climber has ticked in this sector' })
   tickedCount!: number;
+
+  @ApiProperty({ type: String, isArray: true })
+  idRoutes!: string[];
 }
 
 export class CreateSectorDto {

@@ -29,6 +29,8 @@ import { HorizonService } from '../horizon/horizon.service';
 import type {
   CreateSectorDto,
   SectorDto,
+  SectorListItemDto,
+  SectorRouteDto,
   SectorTickCountDto,
   UpdateSectorDto
 } from './sectors.types';
@@ -37,6 +39,25 @@ import type {
 // have no breadcrumb label.
 const COLUMNS =
   'id, id_region, name, name_local, description, lat, lng, aspect_deg, shelter, route_count, grade_min, grade_min_scale, grade_max, grade_max_scale, grade_histogram, is_archived, deleted_at, regions (name), topos (storage_path, sort_order)';
+
+// Must not exceed `max_rows` in supabase/config.toml: a page the server cuts
+// short would read as the last one.
+const ROUTE_PAGE_SIZE = 1000;
+
+const ROUTE_COLUMNS =
+  'id, id_sector, name, grade, grade_scale, type, length, rating, ascents_count_total';
+
+interface SectorRouteRow {
+  id: string;
+  id_sector: string;
+  name: string;
+  grade: string;
+  grade_scale: GradeScale;
+  type: SectorRouteDto['type'];
+  length: number | null;
+  rating: number | null;
+  ascents_count_total: number | null;
+}
 
 interface TickedRow {
   id_route: string;
@@ -78,7 +99,7 @@ export class SectorsService {
   async findByRegion(
     idRegion: string,
     isArchiveOnly = false
-  ): Promise<SectorDto[]> {
+  ): Promise<SectorListItemDto[]> {
     const query = publicSupabase()
       .from('sectors_with_stats')
       .select(COLUMNS)
@@ -100,7 +121,57 @@ export class SectorsService {
       );
     }
 
-    return data.map(toSectorDto);
+    const routesOf = isArchiveOnly
+      ? new Map<string, SectorRouteDto[]>()
+      : await this.findRoutesOf(data.map(({ id }) => id));
+
+    return data.map((row) => ({
+      ...toSectorDto(row),
+      routes: routesOf.get(row.id) ?? []
+    }));
+  }
+
+  private async findRoutesOf(
+    idSectors: string[]
+  ): Promise<Map<string, SectorRouteDto[]>> {
+    const routesOf = new Map<string, SectorRouteDto[]>();
+
+    if (idSectors.length === 0) return routesOf;
+
+    const rows: SectorRouteRow[] = [];
+
+    for (let from = 0; ; from += ROUTE_PAGE_SIZE) {
+      const { data, error } = await publicSupabase()
+        .from('routes_with_stats')
+        .select(ROUTE_COLUMNS)
+        .in('id_sector', idSectors)
+        .is('deleted_at', null)
+        .order('name')
+        .order('id')
+        .range(from, from + ROUTE_PAGE_SIZE - 1)
+        .returns<SectorRouteRow[]>();
+
+      if (error) {
+        throw readFailed(
+          'Could not load the routes',
+          'ROUTES_READ_FAILED',
+          error
+        );
+      }
+
+      rows.push(...data);
+
+      if (data.length < ROUTE_PAGE_SIZE) break;
+    }
+
+    for (const row of rows) {
+      const routes = routesOf.get(row.id_sector) ?? [];
+
+      routes.push(toSectorRouteDto(row));
+      routesOf.set(row.id_sector, routes);
+    }
+
+    return routesOf;
   }
 
   // Counted the way `route_count` is, so a card never shows more ascents than
@@ -140,7 +211,8 @@ export class SectorsService {
 
     return [...routesBySector].map(([idSector, routes]) => ({
       idSector,
-      tickedCount: routes.size
+      tickedCount: routes.size,
+      idRoutes: [...routes]
     }));
   }
 
@@ -312,6 +384,17 @@ const toSectorDto = (row: SectorRow): SectorDto => ({
   gradeHistogram: row.grade_histogram,
   isArchived: row.is_archived,
   isDeleted: !!row.deleted_at
+});
+
+const toSectorRouteDto = (row: SectorRouteRow): SectorRouteDto => ({
+  id: row.id,
+  name: row.name,
+  grade: row.grade,
+  gradeScale: row.grade_scale,
+  type: row.type,
+  length: row.length,
+  rating: row.rating,
+  ascentsCount: row.ascents_count_total
 });
 
 const toPhotoUrl = (row: SectorRow): string | null => {

@@ -60,7 +60,6 @@ export { useScrollHint } from './useScrollHint';
 export { useScrollRestoration } from './useScrollRestoration';
 export { useScrollTopOnNavigate } from './useScrollTopOnNavigate';
 export { useSearchParamFlags } from './useSearchParamFlags';
-export { useSearchParamList } from './useSearchParamList';
 export { useStoredChoice } from './useStoredChoice';
 export { useStoredFlag } from './useStoredFlag';
 export { useTransliteration } from './useTransliteration';

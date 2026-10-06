@@ -27,9 +27,12 @@ const LayoutStyled = styled('div', {
   min-height: 0;
 `;
 
+// Anchoring would hold a card below in place and slide the filters above it
+// away from the pointer as the list narrows.
 const ListStyled = styled('div')`
   min-height: 0;
   overflow-y: auto;
+  overflow-anchor: none;
 `;
 
 const MapAreaStyled = styled('div')`

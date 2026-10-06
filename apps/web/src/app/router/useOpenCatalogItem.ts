@@ -27,8 +27,8 @@ export const catalogItemPath = ({
 export const useOpenCatalogItem = () => {
   const navigate = useNavigate();
 
-  return (source: CatalogSource, item: CatalogItem) => {
+  return (source: CatalogSource, item: CatalogItem, search = '') => {
     trackCatalogItemOpened({ source, ...item });
-    navigate(catalogItemPath(item));
+    navigate({ pathname: catalogItemPath(item), search });
   };
 };

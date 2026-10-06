@@ -1,6 +1,6 @@
+import type { Route } from '@crag-atlas/api';
 import { describe, expect, it } from 'vitest';
 
-import type { Route } from '../entities';
 import { sortRoutes } from './sortRoutes';
 
 const order = { 'french|6a': 0, 'french|6c': 1, 'french|7a': 2 };
