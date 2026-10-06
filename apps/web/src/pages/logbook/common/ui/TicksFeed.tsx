@@ -2,10 +2,10 @@ import { Trans } from '@lingui/react/macro';
 import Typography from '@mui/material/Typography';
 
 import { ApiFeedback } from '@web/shared/ui';
+import { TicksList } from '@web/widgets/tickList';
 
 import { useApiGetTicksFeed } from '../hooks';
 import { LoadMoreOnScroll } from './LoadMoreOnScroll';
-import { TicksList } from './TicksList';
 
 export interface Props {
   columns?: number;

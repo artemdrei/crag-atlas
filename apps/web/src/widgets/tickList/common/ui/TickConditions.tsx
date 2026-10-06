@@ -6,7 +6,7 @@ import ThermostatIcon from '@mui/icons-material/Thermostat';
 import WaterDropIcon from '@mui/icons-material/WaterDrop';
 import { styled } from '@mui/material/styles';
 
-import { IconValue, SunTimes } from '@web/shared/ui';
+import { IconValue } from '@web/shared/ui';
 
 export interface Props {
   weather: TickWeather;
@@ -34,11 +34,6 @@ export const TickConditions = ({ weather }: Props) => (
         <Trans>{weather.windSpeedMs} m/s</Trans>
       </IconValue>
     )}
-    {weather.sunrise && weather.sunset && (
-      <SunStyled>
-        <SunTimes sunrise={weather.sunrise} sunset={weather.sunset} />
-      </SunStyled>
-    )}
   </RowStyled>
 );
 
@@ -49,14 +44,4 @@ const RowStyled = styled('div')`
   gap: ${({ theme }) => theme.spacing(1.5)};
   padding-top: ${({ theme }) => theme.spacing(1.5)};
   border-top: 1px solid ${({ theme }) => theme.palette.divider};
-`;
-
-const SunStyled = styled('div')`
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing(0.5)};
-
-  ${({ theme }) => theme.breakpoints.down('sm')} {
-    display: none;
-  }
 `;

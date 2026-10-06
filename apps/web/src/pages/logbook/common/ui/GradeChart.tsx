@@ -4,7 +4,8 @@ import Typography from '@mui/material/Typography';
 
 import type { AscentTypeTone } from '@web/shared/theme/palette';
 import { resolveAscentTypeInk } from '@web/shared/theme/palette';
-import { ASCENT_TYPES, GradeBadge } from '@web/shared/ui';
+import { ASCENT_TYPES } from '@web/shared/types';
+import { GradeBadge } from '@web/shared/ui';
 
 import type { GradeBar } from '../entities';
 

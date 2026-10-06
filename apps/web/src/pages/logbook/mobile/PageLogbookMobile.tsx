@@ -1,25 +1,22 @@
 import { Trans } from '@lingui/react/macro';
-import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { ApiFeedback, PageShell } from '@web/shared/ui';
+import { LogbookTabs, TicksList } from '@web/widgets/tickList';
 
 import {
   AscentTypeFilter,
-  BackfillWeatherButton,
   DisciplineTabs,
   GradeChart,
   LoadMoreOnScroll,
-  LogbookTabs,
+  LogbookFilterFields,
   TicksFeed,
   TicksGroupedList,
-  TicksList,
   useApiGetTickStats,
   useApiGetTicks,
   useLogbookControls,
   useLogbookView
 } from '../common';
-import { LogbookFiltersButton } from './LogbookFiltersButton';
 
 export const PageLogbookMobile = () => {
   const {
@@ -27,10 +24,12 @@ export const PageLogbookMobile = () => {
     discipline,
     sort,
     ascentType,
+    view: tickView,
     changeTab,
     changeDiscipline,
     changeSort,
-    changeAscentType
+    changeAscentType,
+    changeView
   } = useLogbookControls();
   const { ticks, isLoading, isLoadingMore, hasMore, failure, loadMore } =
     useApiGetTicks({ discipline, ascentType, sort });
@@ -40,22 +39,9 @@ export const PageLogbookMobile = () => {
 
   return (
     <PageShell spacing={2} isCompact>
-      <HeaderRowStyled>
-        <Typography variant="h5">
-          <Trans>My logbook</Trans>
-        </Typography>
-        {tab === 'mine' && (
-          <ToolbarStyled>
-            <BackfillWeatherButton />
-            <LogbookFiltersButton
-              sort={sort}
-              ascentType={ascentType}
-              onSortChange={changeSort}
-              onAscentTypeChange={changeAscentType}
-            />
-          </ToolbarStyled>
-        )}
-      </HeaderRowStyled>
+      <Typography variant="h5">
+        <Trans>Logbook</Trans>
+      </Typography>
 
       <LogbookTabs tab={tab} onChange={changeTab} />
 
@@ -78,14 +64,28 @@ export const PageLogbookMobile = () => {
 
           {view.bars.length > 0 && <GradeChart bars={view.bars} isCompact />}
 
+          <LogbookFilterFields
+            sort={sort}
+            ascentType={ascentType}
+            view={tickView}
+            onSortChange={changeSort}
+            onAscentTypeChange={changeAscentType}
+            onViewChange={changeView}
+          />
+
           {sort === 'grade' ? (
             <TicksGroupedList
               groups={view.groups}
               ungraded={view.ungraded}
+              isCompact={tickView === 'compact'}
               isLoading={isLoading}
             />
           ) : (
-            <TicksList ticks={ticks} isLoading={isLoading} />
+            <TicksList
+              ticks={ticks}
+              isCompact={tickView === 'compact'}
+              isLoading={isLoading}
+            />
           )}
 
           <LoadMoreOnScroll
@@ -100,16 +100,3 @@ export const PageLogbookMobile = () => {
     </PageShell>
   );
 };
-
-const HeaderRowStyled = styled('div')`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: ${({ theme }) => theme.spacing(1)};
-`;
-
-const ToolbarStyled = styled('div')`
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing(0.5)};
-`;

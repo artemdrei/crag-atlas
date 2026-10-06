@@ -10,6 +10,8 @@ export interface Props {
   ticks: Tick[];
   columns?: number;
   isCommunity?: boolean;
+  isCompact?: boolean;
+  isRouteHidden?: boolean;
   isLoading: boolean;
 }
 
@@ -17,6 +19,8 @@ export const TicksList = ({
   ticks,
   columns = 1,
   isCommunity,
+  isCompact,
+  isRouteHidden,
   isLoading
 }: Props) => {
   if (isLoading) return <TicksSkeleton />;
@@ -32,7 +36,13 @@ export const TicksList = ({
   return (
     <ListStyled columns={columns}>
       {ticks.map((tick) => (
-        <TickCard key={tick.id} tick={tick} isCommunity={isCommunity} />
+        <TickCard
+          key={tick.id}
+          tick={tick}
+          isCommunity={isCommunity}
+          isCompact={isCompact}
+          isRouteHidden={isRouteHidden}
+        />
       ))}
     </ListStyled>
   );

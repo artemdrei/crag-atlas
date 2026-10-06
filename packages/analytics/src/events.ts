@@ -60,7 +60,8 @@ export type AnalyticsEvent =
           | 'topo'
           | 'tab'
           | 'discipline'
-          | 'ascent_type';
+          | 'ascent_type'
+          | 'view';
         value: string;
       };
     }

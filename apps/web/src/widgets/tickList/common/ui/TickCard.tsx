@@ -25,8 +25,7 @@ import {
 import { RouteMediaButton } from '@web/widgets/routeMedia';
 
 import type { Tick } from '../entities';
-import { formatClimbedAt, seasonOf } from '../lib';
-import { SeasonIcon } from './SeasonIcon';
+import { formatClimbedAt } from '../lib';
 import { TickConditions } from './TickConditions';
 import { TickRepeats } from './TickRepeats';
 
@@ -40,14 +39,21 @@ export interface Props {
   tick: Tick;
   isCommunity?: boolean;
   isGradeHidden?: boolean;
+  isCompact?: boolean;
+  isRouteHidden?: boolean;
 }
 
-export const TickCard = ({ tick, isCommunity, isGradeHidden }: Props) => {
+export const TickCard = ({
+  tick,
+  isCommunity,
+  isGradeHidden,
+  isCompact,
+  isRouteHidden
+}: Props) => {
   const { i18n } = useLingui();
   const { idUser } = useUser();
   const isMine = !!idUser && idUser === tick.idUser;
   const title = tick.routeName ?? tick.idRoute;
-  const season = seasonOf(tick.climbedAt);
   const places: Place[] = [
     tick.regionCountry
       ? { key: 'country', label: countryName(tick.regionCountry) }
@@ -84,74 +90,10 @@ export const TickCard = ({ tick, isCommunity, isGradeHidden }: Props) => {
       idRoute
     });
 
-  return (
-    <CardStyled elevation={0}>
-      {tick.idRegion && tick.idSector && (
-        <CardLinkStyled
-          to={buildRoutePath(tick.idRegion, tick.idSector, tick.idRoute)}
-          aria-label={title}
-          onClick={() => trackOpen(title, tick.idSector, tick.idRoute)}
-        />
-      )}
-      <HeaderRowStyled>
-        <TitleGroupStyled>
-          <TitleStyled>
-            <NameRowStyled>
-              <Typography variant="h6" noWrap>
-                {title}
-                <LocalName name={title} nameLocal={tick.routeNameLocal} />
-              </Typography>
-              {!isGradeHidden && tick.routeGrade && (
-                <GradeBadge
-                  grade={tick.routeGrade}
-                  scale={tick.routeGradeScale}
-                />
-              )}
-            </NameRowStyled>
-            {places.length > 0 && (
-              <PlaceRowStyled>
-                {places.map(({ key, label, to }, index) => (
-                  <Fragment key={key}>
-                    {index > 0 && (
-                      <Typography variant="body2" color="text.secondary">
-                        ·
-                      </Typography>
-                    )}
-                    {to ? (
-                      <PlaceLinkStyled
-                        to={to}
-                        onClick={() =>
-                          trackOpen(
-                            label,
-                            key === 'sector' ? tick.idSector : undefined
-                          )
-                        }
-                      >
-                        {label}
-                      </PlaceLinkStyled>
-                    ) : (
-                      <Typography variant="body2" color="text.secondary" noWrap>
-                        {label}
-                      </Typography>
-                    )}
-                  </Fragment>
-                ))}
-              </PlaceRowStyled>
-            )}
-          </TitleStyled>
-        </TitleGroupStyled>
-        <ActionsStyled>
-          <RouteMediaButton
-            idRoute={tick.idRoute}
-            hasPhoto={!!tick.routeHasPhoto}
-            hasVideo={!!tick.routeHasVideo}
-          />
-          {isMine && <TickActionsButton tick={tick} />}
-        </ActionsStyled>
-      </HeaderRowStyled>
-
-      {isCommunity && tick.authorName && (
-        <AuthorRowStyled>
+  const author = (
+    <AuthorRowStyled>
+      {tick.authorName && (
+        <>
           <AvatarStyled
             name={tick.authorName}
             avatarUrl={tick.avatarUrl ?? undefined}
@@ -159,24 +101,107 @@ export const TickCard = ({ tick, isCommunity, isGradeHidden }: Props) => {
           <Typography variant="body2" noWrap>
             {tick.authorName}
           </Typography>
-        </AuthorRowStyled>
+        </>
+      )}
+    </AuthorRowStyled>
+  );
+
+  return (
+    <CardStyled elevation={0}>
+      {!isRouteHidden && tick.idRegion && tick.idSector && (
+        <CardLinkStyled
+          to={buildRoutePath(tick.idRegion, tick.idSector, tick.idRoute)}
+          aria-label={title}
+          onClick={() => trackOpen(title, tick.idSector, tick.idRoute)}
+        />
+      )}
+      <HeaderRowStyled isRouteHidden={!!isRouteHidden}>
+        {isRouteHidden ? (
+          author
+        ) : (
+          <TitleGroupStyled>
+            <TitleStyled>
+              <NameRowStyled>
+                <Typography variant="h6" noWrap>
+                  {title}
+                  <LocalName name={title} nameLocal={tick.routeNameLocal} />
+                </Typography>
+                {!isGradeHidden && tick.routeGrade && (
+                  <GradeBadge
+                    grade={tick.routeGrade}
+                    scale={tick.routeGradeScale}
+                  />
+                )}
+              </NameRowStyled>
+              {places.length > 0 && (
+                <PlaceRowStyled>
+                  {places.map(({ key, label, to }, index) => (
+                    <Fragment key={key}>
+                      {index > 0 && (
+                        <Typography variant="body2" color="text.secondary">
+                          ·
+                        </Typography>
+                      )}
+                      {to ? (
+                        <PlaceLinkStyled
+                          to={to}
+                          onClick={() =>
+                            trackOpen(
+                              label,
+                              key === 'sector' ? tick.idSector : undefined
+                            )
+                          }
+                        >
+                          {label}
+                        </PlaceLinkStyled>
+                      ) : (
+                        <Typography
+                          variant="body2"
+                          color="text.secondary"
+                          noWrap
+                        >
+                          {label}
+                        </Typography>
+                      )}
+                    </Fragment>
+                  ))}
+                </PlaceRowStyled>
+              )}
+            </TitleStyled>
+          </TitleGroupStyled>
+        )}
+        <ActionsStyled>
+          <RouteMediaButton
+            idRoute={tick.idRoute}
+            hasPhoto={
+              !!tick.routeHasPhoto ||
+              !!tick.media?.some(({ kind }) => kind === 'photo')
+            }
+            hasVideo={
+              !!tick.routeHasVideo ||
+              !!tick.media?.some(({ kind }) => kind === 'video')
+            }
+          />
+          {isMine && <TickActionsButton tick={tick} />}
+        </ActionsStyled>
+      </HeaderRowStyled>
+
+      {!isRouteHidden && isCommunity && tick.authorName && author}
+
+      {!isCompact && tick.note && (
+        <NoteStyled variant="body2">{tick.note}</NoteStyled>
       )}
 
-      {tick.note && <NoteStyled variant="body2">{tick.note}</NoteStyled>}
-
-      {tick.partnerName && (
+      {!isCompact && tick.partnerName && (
         <Typography variant="body2" color="text.secondary">
           <Trans>Belayer</Trans>: {tick.partnerName}
         </Typography>
       )}
 
       <StatsRowStyled>
-        <DateStyled>
-          {season && <SeasonIcon season={season} />}
-          <Typography variant="body2" color="text.secondary">
-            {formatClimbedAt(tick, i18n.locale)}
-          </Typography>
-        </DateStyled>
+        <Typography variant="body2" color="text.secondary">
+          {formatClimbedAt(tick, i18n.locale)}
+        </Typography>
         {!!tick.rating && (
           <Rating value={tick.rating} precision={0.5} size="small" readOnly />
         )}
@@ -186,9 +211,9 @@ export const TickCard = ({ tick, isCommunity, isGradeHidden }: Props) => {
         />
       </StatsRowStyled>
 
-      {tick.weather && <TickConditions weather={tick.weather} />}
+      {!isCompact && tick.weather && <TickConditions weather={tick.weather} />}
 
-      {isMine && !!tick.repeatCount && (
+      {!isCompact && !isRouteHidden && isMine && !!tick.repeatCount && (
         <TickRepeats idRoute={tick.idRoute} repeatCount={tick.repeatCount} />
       )}
     </CardStyled>
@@ -222,7 +247,7 @@ const CardStyled = styled(Paper)`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(1.5)};
-  padding: ${({ theme }) => theme.spacing(2.5)};
+  padding: ${({ theme }) => theme.spacing(1, 1.5)};
   border: 2px solid ${({ theme }) => theme.palette.divider};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
 
@@ -231,15 +256,10 @@ const CardStyled = styled(Paper)`
   }
 `;
 
-const DateStyled = styled('div')`
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing(0.5)};
-`;
-
 const AuthorRowStyled = styled('div')`
   display: flex;
   align-items: center;
+  min-width: 0;
   gap: ${({ theme }) => theme.spacing(1)};
 `;
 
@@ -307,9 +327,13 @@ const TitleGroupStyled = styled('div')`
   min-width: 0;
 `;
 
-const HeaderRowStyled = styled('div')`
+const HeaderRowStyled = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'isRouteHidden'
+})<{ isRouteHidden: boolean }>`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacing(2)};
+  margin-bottom: ${({ theme, isRouteHidden }) =>
+    isRouteHidden ? theme.spacing(-1) : 0};
 `;

@@ -5,23 +5,21 @@ import Typography from '@mui/material/Typography';
 
 import { useGridColumns } from '@web/shared/lib';
 import { ApiFeedback, GridColumnsMenu, PageShell } from '@web/shared/ui';
+import { LogbookTabs, TicksList } from '@web/widgets/tickList';
 
 import {
   AscentTypeFilter,
-  BackfillWeatherButton,
   DisciplineTabs,
   GradeChart,
   LoadMoreOnScroll,
-  LogbookTabs,
+  LogbookFilterFields,
   TicksFeed,
   TicksGroupedList,
-  TicksList,
   useApiGetTickStats,
   useApiGetTicks,
   useLogbookControls,
   useLogbookView
 } from '../common';
-import { LogbookFiltersButton } from './LogbookFiltersButton';
 
 export const PageLogbookDesktop = () => {
   const {
@@ -29,10 +27,12 @@ export const PageLogbookDesktop = () => {
     discipline,
     sort,
     ascentType,
+    view: tickView,
     changeTab,
     changeDiscipline,
     changeSort,
-    changeAscentType
+    changeAscentType,
+    changeView
   } = useLogbookControls();
   const { ticks, isLoading, isLoadingMore, hasMore, failure, loadMore } =
     useApiGetTicks({ discipline, ascentType, sort });
@@ -45,22 +45,9 @@ export const PageLogbookDesktop = () => {
     <PageShell spacing={3}>
       <HeaderRowStyled>
         <Typography variant="h4">
-          <Trans>My logbook</Trans>
+          <Trans>Logbook</Trans>
         </Typography>
-        {tab === 'mine' ? (
-          <ToolbarStyled>
-            <BackfillWeatherButton />
-            {sort === 'date' && (
-              <GridColumnsMenu columns={columns} onChange={changeColumns} />
-            )}
-            <LogbookFiltersButton
-              sort={sort}
-              ascentType={ascentType}
-              onSortChange={changeSort}
-              onAscentTypeChange={changeAscentType}
-            />
-          </ToolbarStyled>
-        ) : (
+        {(tab === 'feed' || sort === 'date') && (
           <GridColumnsMenu columns={columns} onChange={changeColumns} />
         )}
       </HeaderRowStyled>
@@ -90,14 +77,29 @@ export const PageLogbookDesktop = () => {
             </ChartCardStyled>
           )}
 
+          <LogbookFilterFields
+            sort={sort}
+            ascentType={ascentType}
+            view={tickView}
+            onSortChange={changeSort}
+            onAscentTypeChange={changeAscentType}
+            onViewChange={changeView}
+          />
+
           {sort === 'grade' ? (
             <TicksGroupedList
               groups={view.groups}
               ungraded={view.ungraded}
+              isCompact={tickView === 'compact'}
               isLoading={isLoading}
             />
           ) : (
-            <TicksList ticks={ticks} columns={columns} isLoading={isLoading} />
+            <TicksList
+              ticks={ticks}
+              columns={columns}
+              isCompact={tickView === 'compact'}
+              isLoading={isLoading}
+            />
           )}
 
           <LoadMoreOnScroll
@@ -118,12 +120,6 @@ const HeaderRowStyled = styled('div')`
   align-items: center;
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacing(2)};
-`;
-
-const ToolbarStyled = styled('div')`
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing(1)};
 `;
 
 const ChartCardStyled = styled(Paper)`
