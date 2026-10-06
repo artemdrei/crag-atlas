@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.6.0](https://github.com/artemdrei/crag-atlas/compare/web-v0.5.0...web-v0.6.0) (2026-10-06)
+
+### Features
+
+* sector QR codes, admin section and shelter badge ([#14](https://github.com/artemdrei/crag-atlas/issues/14)) ([70243c0](https://github.com/artemdrei/crag-atlas/commit/70243c0e4999a2710788f98b77778f2ab1a27938))
+
 ## [0.5.0](https://github.com/artemdrei/crag-atlas/compare/web-v0.4.0...web-v0.5.0) (2026-10-06)
 
 ### Features
