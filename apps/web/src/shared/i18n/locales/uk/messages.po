@@ -11,10 +11,14 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
+#: src/pages/route/common/ui/LogTickButton.tsx:28
+msgid "(Sent · {sendCount, plural, one {# time} other {# times}})"
+msgstr "(Проліз · {sendCount, plural, one {# раз} few {# рази} many {# разів} other {# разу}})"
+
 #. placeholder {0}: content.ascents
 #. placeholder {0}: ungraded.length
 #: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:35
-#: src/pages/logbook/common/ui/TicksGroupedList.tsx:57
+#: src/pages/logbook/common/ui/TicksGroupedList.tsx:67
 msgid "{0, plural, one {# ascent} few {# ascents} many {# ascents} other {# ascents}}"
 msgstr "{0, plural, one {# пролаз} few {# пролази} many {# пролазів} other {# пролази}}"
 
@@ -46,11 +50,17 @@ msgstr "{0, plural, one {# фото чи посилання} few {# фото ч�
 #: src/features/regionMap/common/ui/RegionPointCard.tsx:31
 #: src/features/sectorMap/common/ui/SectorPointCard.tsx:21
 #: src/pages/home/common/ui/RegionCard.tsx:66
-#: src/pages/region/common/ui/SectorCard.tsx:77
+#: src/pages/region/common/ui/SectorCard.tsx:90
 #: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:83
 #: src/shared/ui/GradeHistogram.tsx:81
 msgid "{0, plural, one {# route} few {# routes} many {# routes} other {# routes}}"
 msgstr "{0, plural, one {# маршрут} few {# маршрути} many {# маршрутів} other {# маршрутів}}"
+
+#. placeholder {0}: visibleRoutes.length
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:185
+#: src/pages/sector/mobile/PageSectorMobile.tsx:151
+msgid "{0, plural, one {# route} other {# routes}}"
+msgstr "{0, plural, one {# маршрут} few {# маршрути} many {# маршрутів} other {# маршруту}}"
 
 #. placeholder {0}: region.sectorCount
 #: src/pages/home/common/ui/RegionCard.tsx:74
@@ -74,7 +84,7 @@ msgid "{0} m"
 msgstr "{0} м"
 
 #. placeholder {0}: weather.windSpeedMs
-#: src/pages/logbook/common/ui/TickConditions.tsx:34
+#: src/widgets/tickList/common/ui/TickConditions.tsx:34
 msgid "{0} m/s"
 msgstr "{0} м/с"
 
@@ -86,9 +96,15 @@ msgstr "{0} мм"
 #. placeholder {0}: conditions.precipitation24hMm
 #. placeholder {0}: weather.precipitation24hMm
 #: src/features/logTick/common/ui/ConditionsSection.tsx:172
-#: src/pages/logbook/common/ui/TickConditions.tsx:29
+#: src/widgets/tickList/common/ui/TickConditions.tsx:29
 msgid "{0} mm / 24 h"
 msgstr "{0} мм / 24 год"
+
+#. placeholder {0}: match.matchedCount
+#. placeholder {1}: sector.routeCount
+#: src/pages/region/common/ui/SectorCard.tsx:86
+msgid "{0} of {1} match"
+msgstr "{0} з {1} підходять"
 
 #. placeholder {0}: Math.round(hour.humidityPct)
 #: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:49
@@ -98,6 +114,14 @@ msgstr "{0}%"
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:423
 msgid "{failed} file(s) could not be read as photos."
 msgstr "{failed} файл(ів) не вдалося прочитати як фото."
+
+#: src/features/routeFilter/mobile/RouteFilterPanelMobile.tsx:69
+msgid "{matchedCount, plural, one {Show # route} other {Show # routes}}"
+msgstr "{matchedCount, plural, one {Показати # маршрут} few {Показати # маршрути} many {Показати # маршрутів} other {Показати # маршруту}}"
+
+#: src/features/routeFilter/common/hooks/useRouteFilterLabels.ts:22
+msgid "{meters} m+"
+msgstr "{meters} м+"
 
 #. placeholder {0}: formatBytes(MAX_PHOTO_BYTES, i18n.locale)
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:407
@@ -112,7 +136,7 @@ msgstr "{region} порожній, тож з каталогу зникне ли�
 msgid "{region} leaves the catalog for everyone, together with its sectors and their routes. Nothing is erased: everything climbers left stays, and you can bring the region back from the archive."
 msgstr "{region} зникне з каталогу для всіх разом зі своїми секторами і їхніми маршрутами. Нічого не стирається: усе, що лишили скелелази, залишається, а регіон можна повернути з архіву."
 
-#: src/pages/logbook/common/ui/TickRepeats.tsx:42
+#: src/widgets/tickList/common/ui/TickRepeats.tsx:42
 msgid "{repeatCount, plural, one {# repeat} few {# repeats} many {# repeats} other {# repeats}}"
 msgstr "{repeatCount, plural, one {# повтор} few {# повтори} many {# повторів} other {# повтори}}"
 
@@ -124,7 +148,11 @@ msgstr "{route} зникне з каталогу для всіх разом зі
 msgid "{route} was never saved, so it just disappears from this panel."
 msgstr "{route} ще не збережено, тож він просто зникне з панелі."
 
-#: src/pages/sector/common/ui/RoutesPanelHeader.tsx:33
+#: src/pages/region/common/ui/RegionRoutesTitle.tsx:19
+msgid "{routes} in {sectorsCount, plural, one {# sector} other {# sectors}}"
+msgstr "{routes} у {sectorsCount, plural, one {# секторі} few {# секторах} many {# секторах} other {# секторах}}"
+
+#: src/pages/region/common/ui/RegionRoutesTitle.tsx:14
 msgid "{routesCount, plural, one {# route} other {# routes}}"
 msgstr "{routesCount, plural, one {# маршрут} few {# маршрути} many {# маршрутів} other {# маршруту}}"
 
@@ -144,7 +172,7 @@ msgstr "{size} · збережено {savedAt}"
 msgid "{stars} of 5"
 msgstr "{stars} з 5"
 
-#: src/pages/logbook/common/ui/TicksGroupedList.tsx:35
+#: src/pages/logbook/common/ui/TicksGroupedList.tsx:40
 msgid "{total, plural, one {# ascent} few {# ascents} many {# ascents} other {# ascents}}"
 msgstr "{total, plural, one {# пролаз} few {# пролази} many {# пролазів} other {# пролази}}"
 
@@ -155,6 +183,10 @@ msgstr "{total, plural, one {# голос} few {# голоси} many {# голо
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:50
 msgid "°C"
 msgstr "°C"
+
+#: src/features/routeFilter/common/hooks/useRouteFilterLabels.ts:21
+msgid "< {meters} m"
+msgstr "< {meters} м"
 
 #: src/features/catalogEdit/desktop/PurgeDialog.tsx:24
 msgid "<0>{name}</0> and everything filed under it leave the database for good — the archive will have nothing left to bring back. Climbers left nothing here, so none of their work goes with it."
@@ -169,7 +201,7 @@ msgstr "Доступи"
 #. placeholder {0}: region.name
 #. placeholder {0}: sector.name
 #: src/pages/home/common/ui/RegionCard.tsx:45
-#: src/pages/region/common/ui/SectorCard.tsx:49
+#: src/pages/region/common/ui/SectorCard.tsx:55
 msgid "Actions for {0}"
 msgstr "Дії для {0}"
 
@@ -212,10 +244,6 @@ msgstr "Додати адміна"
 msgid "Add beta and photos that help the next climber"
 msgstr "Додавай бету й фото, які допоможуть наступному"
 
-#: src/pages/logbook/common/ui/BackfillWeatherButton.tsx:17
-msgid "Add conditions"
-msgstr "Додати умови"
-
 #: src/features/logTick/common/ui/TickMediaField.tsx:84
 #: src/features/logTick/common/ui/TickMediaField.tsx:92
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:188
@@ -254,15 +282,11 @@ msgstr "Додати відео або фото"
 msgid "Add yours"
 msgstr "Додати своє"
 
-#: src/pages/logbook/common/ui/BackfillWeatherButton.tsx:17
-msgid "Adding…"
-msgstr "Додаємо…"
-
 #: src/features/grantAdmin/common/hooks/useApiGrantAdmins.ts:25
 msgid "Admin access granted"
 msgstr "Доступ адміна надано"
 
-#: src/pages/logbook/common/ui/AscentTypeFilter.tsx:47
+#: src/pages/logbook/common/ui/AscentTypeFilter.tsx:48
 msgid "All"
 msgstr "Усі"
 
@@ -274,11 +298,11 @@ msgstr "Усі"
 msgid "All {0}: {1} → {2} ({3})"
 msgstr "Разом {0}: {1} → {2} ({3})"
 
-#: src/pages/logbook/common/ui/GradeChart.tsx:28
+#: src/pages/logbook/common/ui/GradeChart.tsx:29
 msgid "All ascents by grade"
 msgstr "Усі пролази за грейдом"
 
-#: src/pages/logbook/common/ui/LogbookFilterFields.tsx:53
+#: src/pages/logbook/common/ui/LogbookFilterFields.tsx:65
 msgid "All styles"
 msgstr "Усі стилі"
 
@@ -293,6 +317,12 @@ msgstr "Акаунт тримає твій щоденник, бету й фот�
 #: src/features/topoEditor/desktop/ui/TopoPointMenu.tsx:44
 msgid "Anchor"
 msgstr "Станція"
+
+#: src/features/routeFilter/common/hooks/useRouteFilterLabels.ts:15
+#: src/features/routeFilter/common/hooks/useRouteFilterLabels.ts:20
+#: src/features/routeFilter/common/hooks/useRouteFilterLabels.ts:25
+msgid "any"
+msgstr "будь-які"
 
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:285
 msgid "Apply"
@@ -321,11 +351,11 @@ msgstr "Архівувати сектор"
 msgid "Archived routes"
 msgstr "Архівні маршрути"
 
-#: src/pages/sector/common/ui/RoutesSortDirectionButton.tsx:27
+#: src/features/routeFilter/common/ui/RoutesSortDirectionButton.tsx:30
 msgid "Ascending"
 msgstr "За зростанням"
 
-#: src/features/logTick/common/ui/TickActionsButton.tsx:25
+#: src/features/logTick/common/ui/TickActionsButton.tsx:23
 msgid "Ascent actions"
 msgstr "Дії з пролазом"
 
@@ -341,8 +371,8 @@ msgstr "Пролаз записано"
 msgid "Ascent saved"
 msgstr "Пролаз збережено"
 
-#: src/features/logTick/common/ui/AscentTypeChoice.tsx:28
-#: src/pages/logbook/common/ui/LogbookFilterFields.tsx:46
+#: src/features/logTick/common/ui/AscentTypeChoice.tsx:29
+#: src/pages/logbook/common/ui/LogbookFilterFields.tsx:57
 msgid "Ascent type"
 msgstr "Тип пролазу"
 
@@ -350,7 +380,9 @@ msgstr "Тип пролазу"
 msgid "ascents"
 msgstr "пролазів"
 
-#: src/pages/sector/common/hooks/useRouteSortLabel.ts:12
+#: src/features/routeFilter/common/hooks/useRouteSortLabel.ts:12
+#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:65
+#: src/pages/route/common/ui/RouteAscents.tsx:60
 msgid "Ascents"
 msgstr "Пролази"
 
@@ -358,17 +390,13 @@ msgstr "Пролази"
 msgid "Aspect, °"
 msgstr "Орієнтація, °"
 
-#: src/shared/ui/AscentTypeLabel.tsx:28
+#: src/shared/ui/AscentTypeLabel.tsx:18
 msgid "Attempt"
 msgstr "Спроба"
 
 #: src/shared/ui/NameFields.tsx:96
 msgid "Auto"
 msgstr "Авто"
-
-#: src/pages/logbook/common/ui/SeasonIcon.tsx:20
-msgid "Autumn"
-msgstr "Осінь"
 
 #: src/shared/ui/ArchivedToggle.tsx:17
 msgid "Back to the catalog"
@@ -386,8 +414,8 @@ msgstr "Погано"
 msgid "Be the first to show this route"
 msgstr "Покажи цей маршрут першим"
 
-#: src/pages/logbook/common/ui/TickCard.tsx:169
-#: src/pages/logbook/common/ui/TickRepeats.tsx:93
+#: src/widgets/tickList/common/ui/TickCard.tsx:197
+#: src/widgets/tickList/common/ui/TickRepeats.tsx:93
 msgid "Belayer"
 msgstr "Страхуючий"
 
@@ -469,6 +497,12 @@ msgstr "Оберіть фото"
 msgid "Clear"
 msgstr "Очистити"
 
+#: src/features/routeFilter/common/ui/ActiveFilterChips.tsx:36
+#: src/features/routeFilter/common/ui/FiltersHeader.tsx:26
+#: src/features/routeFilter/desktop/RouteFilterPanelDesktop.tsx:71
+msgid "Clear all filters"
+msgstr "Скинути фільтри"
+
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:292
 msgid "Clear the climber above to type a name"
 msgstr "Очистіть вибір вище, щоб ввести ім'я"
@@ -481,6 +515,7 @@ msgstr "Очистити пошук"
 msgid "Click the map, or paste coordinates from Google Maps."
 msgstr "Клікни по карті або встав координати з Google Maps."
 
+#: src/features/topo/common/ui/TopoRouteBadge.tsx:65
 #: src/pages/sector/common/ui/RouteCard.tsx:44
 msgid "Climbed"
 msgstr "Пролізено"
@@ -510,6 +545,10 @@ msgstr "Закрити редагування"
 msgid "Close the editor"
 msgstr "Закрити редагування"
 
+#: src/features/routeFilter/desktop/RouteFilterPanelDesktop.tsx:80
+msgid "Collapse"
+msgstr "Згорнути"
+
 #: src/features/logTick/common/ui/TickForm.tsx:193
 msgid "Comment"
 msgstr "Коментар"
@@ -526,13 +565,18 @@ msgstr "Коментар видалено"
 msgid "Comment saved"
 msgstr "Коментар збережено"
 
-#: src/pages/route/common/ui/RouteTabs.tsx:40
+#: src/pages/route/common/ui/RouteTabs.tsx:43
 msgid "Comments"
 msgstr "Коментарі"
 
-#: src/pages/logbook/common/ui/LogbookTabs.tsx:22
+#: src/widgets/tickList/common/ui/LogbookTabs.tsx:23
+#: src/widgets/tickList/common/ui/LogbookTabs.tsx:35
 msgid "Community feed"
 msgstr "Стрічка спільноти"
+
+#: src/widgets/tickList/common/ui/TickViewSelect.tsx:31
+msgid "Compact"
+msgstr "Компактно"
 
 #: src/features/photoUpload/desktop/ui/PhotoCompare.tsx:76
 msgid "Compressed"
@@ -545,18 +589,6 @@ msgstr "Стиснуте фото"
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:309
 msgid "Compressing the photo…"
 msgstr "Стискаємо фото…"
-
-#: src/pages/logbook/common/hooks/useApiBackfillWeather.ts:32
-msgid "Conditions added to {filled} ascents"
-msgstr "Умови додано до {filled} пролазів"
-
-#: src/pages/logbook/common/hooks/useApiBackfillWeather.ts:23
-msgid "Conditions added to {filled} ascents, {failed} failed: {reason}"
-msgstr "Умови додано до {filled} пролазів, не вдалося для {failed}: {reason}"
-
-#: src/pages/logbook/common/hooks/useApiBackfillWeather.ts:31
-msgid "Conditions added to {filled} ascents, {remaining} still to go"
-msgstr "Умови додано до {filled} пролазів, лишилося {remaining}"
 
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:40
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:75
@@ -626,11 +658,11 @@ msgid "Dark"
 msgstr "Темна"
 
 #: src/features/logTick/common/ui/ConditionsSection.tsx:98
-#: src/pages/logbook/common/ui/LogbookFilterFields.tsx:39
+#: src/pages/logbook/common/ui/LogbookFilterFields.tsx:50
 msgid "Date"
 msgstr "Дата"
 
-#: src/pages/sector/common/hooks/useRouteSortLabel.ts:8
+#: src/features/routeFilter/common/hooks/useRouteSortLabel.ts:8
 msgid "Default"
 msgstr "За замовчуванням"
 
@@ -687,7 +719,7 @@ msgstr "Видалити фото?"
 msgid "Deleting…"
 msgstr "Видаляємо…"
 
-#: src/pages/sector/common/ui/RoutesSortDirectionButton.tsx:27
+#: src/features/routeFilter/common/ui/RoutesSortDirectionButton.tsx:30
 msgid "Descending"
 msgstr "За спаданням"
 
@@ -696,6 +728,10 @@ msgstr "За спаданням"
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:313
 msgid "Description"
 msgstr "Опис"
+
+#: src/widgets/tickList/common/ui/TickViewSelect.tsx:28
+msgid "Detailed"
+msgstr "Детально"
 
 #. placeholder {0}: conditions.dewPointC
 #: src/features/logTick/common/ui/ConditionsSection.tsx:163
@@ -709,6 +745,10 @@ msgstr "Як тобі маршрут?"
 #: src/shared/ui/DirectionsButton.tsx:34
 msgid "Directions"
 msgstr "Маршрут"
+
+#: src/features/routeFilter/common/hooks/useRouteFilterLabels.ts:27
+msgid "done"
+msgstr "пройдені"
 
 #: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:41
 msgid "Downloading photos: {done} of {total}"
@@ -737,7 +777,7 @@ msgstr "Відпущено на {0}"
 #: src/features/catalogEdit/common/ui/EditToggleButton.tsx:24
 #: src/features/logTick/common/ui/TickMenuItems.tsx:28
 #: src/features/routeComment/common/hooks/useRouteCommentMenuItems.tsx:34
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:155
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:149
 #: src/shared/ui/CatalogCardMenu.tsx:85
 msgid "Edit"
 msgstr "Редагувати"
@@ -780,9 +820,8 @@ msgstr "Стирання забере з собою {0, plural, one {# сект�
 msgid "Excellent"
 msgstr "Чудово"
 
-#: src/pages/logbook/desktop/LogbookFiltersButton.tsx:33
-#: src/pages/logbook/mobile/LogbookFiltersButton.tsx:31
-#: src/pages/logbook/mobile/LogbookFiltersButton.tsx:37
+#: src/features/routeFilter/common/ui/FiltersHeader.tsx:15
+#: src/features/routeFilter/common/ui/FiltersToggleButton.tsx:28
 msgid "Filters"
 msgstr "Фільтри"
 
@@ -798,7 +837,7 @@ msgstr "Уперше {firstDate}, <0/>. Цей пролаз — повтор №
 msgid "Fit the photo"
 msgstr "Вмістити фото"
 
-#: src/shared/ui/AscentTypeLabel.tsx:24
+#: src/shared/ui/AscentTypeLabel.tsx:14
 msgid "Flash"
 msgstr "Флеш"
 
@@ -810,9 +849,10 @@ msgstr "Вільно"
 msgid "Good"
 msgstr "Добре"
 
+#: src/features/routeFilter/common/hooks/useRouteSortLabel.ts:11
+#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:38
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:239
-#: src/pages/logbook/common/ui/LogbookFilterFields.tsx:36
-#: src/pages/sector/common/hooks/useRouteSortLabel.ts:11
+#: src/pages/logbook/common/ui/LogbookFilterFields.tsx:47
 msgid "Grade"
 msgstr "Категорія"
 
@@ -921,7 +961,8 @@ msgstr "Вийти"
 msgid "Leave without saving?"
 msgstr "Вийти без збереження?"
 
-#: src/pages/sector/common/hooks/useRouteSortLabel.ts:10
+#: src/features/routeFilter/common/hooks/useRouteSortLabel.ts:10
+#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:58
 msgid "Length"
 msgstr "Довжина"
 
@@ -938,7 +979,8 @@ msgid "Location is blocked for this site. Allow it in the browser to see where y
 msgstr "Геолокацію для цього сайту заблоковано. Дозволь її в браузері, щоб бачити, де ти."
 
 #: src/features/logTick/common/ui/TickForm.tsx:234
-#: src/pages/route/common/ui/LogTickButton.tsx:49
+#: src/pages/route/common/ui/LogTickButton.tsx:34
+#: src/pages/route/common/ui/RouteAscentsInvite.tsx:45
 msgid "Log ascent"
 msgstr "Відмітити пролаз"
 
@@ -947,12 +989,24 @@ msgid "Log every ascent and watch your grade pyramid build up"
 msgstr "Записуй кожен пролаз і дивись, як росте твоя піраміда категорій"
 
 #: src/features/logTick/common/ui/TickForm.tsx:232
-#: src/pages/route/common/ui/LogTickButton.tsx:49
+#: src/pages/route/common/ui/LogTickButton.tsx:26
 msgid "Log repeat"
 msgstr "Записати повтор"
 
+#: src/pages/route/common/ui/RouteAscentsInvite.tsx:22
+msgid "Log the first ascent"
+msgstr "Додай перший пролаз"
+
+#: src/pages/route/common/ui/RouteAscentsInvite.tsx:27
+msgid "Log your ascent to keep the result, follow your progress and build your own grade pyramid."
+msgstr "Додай пролаз у логбук, щоб зберегти результат, стежити за своїм прогресом і будувати власну піраміду категорій."
+
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:32
 #: src/app/mobile/layout/AppBottomNavigation.tsx:34
-#: src/pages/route/common/ui/RouteTabs.tsx:41
+#: src/pages/logbook/common/ui/LogbookTeaser.tsx:18
+#: src/pages/logbook/desktop/PageLogbookDesktop.tsx:48
+#: src/pages/logbook/mobile/PageLogbookMobile.tsx:43
+#: src/pages/route/common/ui/RouteTabs.tsx:44
 msgid "Logbook"
 msgstr "Логбук"
 
@@ -989,16 +1043,10 @@ msgstr "Перенести сектор до архіву?"
 msgid "Moved to {0}"
 msgstr "Перенесено на {0}"
 
-#: src/pages/logbook/common/ui/LogbookTabs.tsx:21
+#: src/widgets/tickList/common/ui/LogbookTabs.tsx:22
+#: src/widgets/tickList/common/ui/LogbookTabs.tsx:34
 msgid "My ascents"
 msgstr "Мої пролази"
-
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:32
-#: src/pages/logbook/common/ui/LogbookTeaser.tsx:18
-#: src/pages/logbook/desktop/PageLogbookDesktop.tsx:48
-#: src/pages/logbook/mobile/PageLogbookMobile.tsx:45
-msgid "My logbook"
-msgstr "Мій логбук"
 
 #: src/shared/ui/NameFields.tsx:72
 msgid "Name"
@@ -1017,8 +1065,8 @@ msgstr "Новий маршрут"
 msgid "No admins yet"
 msgstr "Адмінів ще немає"
 
-#: src/pages/logbook/common/ui/TicksGroupedList.tsx:23
-#: src/pages/logbook/common/ui/TicksList.tsx:27
+#: src/pages/logbook/common/ui/TicksGroupedList.tsx:28
+#: src/widgets/tickList/common/ui/TicksList.tsx:31
 msgid "No ascents logged yet."
 msgstr "Поки що жодного пролазу."
 
@@ -1033,6 +1081,10 @@ msgstr "Країну не знайдено"
 #: src/shared/lib/useWeatherFailureMessage.ts:12
 msgid "No forecast is published that far ahead"
 msgstr "Прогнозу на таку далеку дату ще немає"
+
+#: src/pages/region/common/ui/SectorCard.tsx:84
+msgid "no matches"
+msgstr "немає збігів"
 
 #: src/features/offlineRegions/common/ui/OfflineRegionPicker.tsx:34
 msgid "No region found"
@@ -1064,11 +1116,11 @@ msgstr "Нікого не знайдено"
 msgid "Nobody has logged an ascent yet."
 msgstr "Ще ніхто не записав жодного пролазу."
 
-#: src/pages/route/common/ui/RouteLogbook.tsx:35
-msgid "Nobody has logged this route yet."
-msgstr "Цей маршрут ще ніхто не відмітив."
+#: src/features/routeFilter/common/hooks/useRouteFilterLabels.ts:26
+msgid "not done"
+msgstr "не пройдені"
 
-#: src/pages/sector/common/hooks/useRoutesByTopo.ts:73
+#: src/pages/sector/common/hooks/useRoutesByTopo.ts:77
 msgid "Not on a photo"
 msgstr "Не на фото"
 
@@ -1076,7 +1128,7 @@ msgstr "Не на фото"
 msgid "Not on a photo yet"
 msgstr "Ще не на фото"
 
-#: src/pages/region/common/ui/SectorCard.tsx:67
+#: src/pages/region/common/ui/SectorCard.tsx:73
 msgid "not on the map"
 msgstr "немає на карті"
 
@@ -1125,11 +1177,11 @@ msgstr "Лише посилання на YouTube або Instagram."
 msgid "onsight"
 msgstr "онсайт"
 
-#: src/shared/ui/AscentTypeLabel.tsx:23
+#: src/shared/ui/AscentTypeLabel.tsx:13
 msgid "Onsight"
 msgstr "Онсайт"
 
-#: src/features/logTick/common/ui/AscentTypeChoice.tsx:31
+#: src/features/logTick/common/ui/AscentTypeChoice.tsx:32
 msgid "Onsight and flash count on the first ascent only"
 msgstr "Онсайт і флеш бувають лише на першому пролазі"
 
@@ -1142,7 +1194,7 @@ msgstr "Відкрити регіон"
 msgid "Open sector"
 msgstr "Відкрити сектор"
 
-#: src/pages/route/desktop/PageRouteDesktop.tsx:100
+#: src/pages/route/desktop/PageRouteDesktop.tsx:99
 msgid "Open the photo"
 msgstr "Відкрити фото"
 
@@ -1289,7 +1341,8 @@ msgstr "Приватний коментар"
 msgid "Profile"
 msgstr "Профіль"
 
-#: src/pages/sector/common/hooks/useRouteSortLabel.ts:9
+#: src/features/routeFilter/common/hooks/useRouteSortLabel.ts:9
+#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:51
 msgid "Rating"
 msgstr "Рейтинг"
 
@@ -1302,7 +1355,7 @@ msgstr "Як бачить користувач"
 msgid "Redo"
 msgstr "Повторити"
 
-#: src/shared/ui/AscentTypeLabel.tsx:26
+#: src/shared/ui/AscentTypeLabel.tsx:16
 msgid "Redpoint"
 msgstr "Редпоінт"
 
@@ -1362,10 +1415,6 @@ msgstr "Замінити фото"
 msgid "Resend code"
 msgstr "Надіслати код ще раз"
 
-#: src/pages/sector/common/ui/RoutesPanelHeader.tsx:41
-msgid "Reset filters"
-msgstr "Скинути фільтри"
-
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:149
 msgid "Reset to the saved state"
 msgstr "Скинути до збереженого стану"
@@ -1386,7 +1435,7 @@ msgstr "Відновлення поверне його сектори й мар�
 msgid "Restoring puts it back in its sector, lines and all."
 msgstr "Відновлення поверне його в сектор разом із лініями."
 
-#: src/shared/ui/AscentTypeLabel.tsx:25
+#: src/shared/ui/AscentTypeLabel.tsx:15
 msgid "Retro flash"
 msgstr "Ретрофлеш"
 
@@ -1510,10 +1559,6 @@ msgstr "Обрано: {0}"
 msgid "Sending code…"
 msgstr "Надсилаємо код…"
 
-#: src/pages/route/common/ui/LogTickButton.tsx:53
-msgid "Sent ×{sendCount}"
-msgstr "Пройдено ×{sendCount}"
-
 #: src/features/logTick/common/ui/TickForm.tsx:188
 msgid "Share your thoughts"
 msgstr "Що скажеш?"
@@ -1559,29 +1604,19 @@ msgstr "Мʼякше"
 msgid "Something went wrong"
 msgstr "Щось пішло не так"
 
-#: src/pages/logbook/common/ui/LogbookFilterFields.tsx:31
-msgid "Sort by"
+#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:76
+msgid "Sort"
 msgstr "Сортування"
 
-#: src/pages/sector/desktop/RoutesSortButton.tsx:36
-#: src/pages/sector/mobile/RoutesSortButton.tsx:36
-#: src/pages/sector/mobile/RoutesSortButton.tsx:44
-msgid "Sort routes"
-msgstr "Сортувати маршрути"
+#: src/pages/logbook/common/ui/LogbookFilterFields.tsx:41
+msgid "Sort by"
+msgstr "Сортування"
 
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:215
 #: src/pages/logbook/common/ui/DisciplineTabs.tsx:27
 #: src/shared/ui/GradeHistogram.tsx:63
 msgid "Sport"
 msgstr "Спорт"
-
-#: src/pages/logbook/common/ui/SeasonIcon.tsx:18
-msgid "Spring"
-msgstr "Весна"
-
-#: src/pages/logbook/common/ui/SeasonIcon.tsx:19
-msgid "Summer"
-msgstr "Літо"
 
 #. placeholder {0}: sunShade.firstSunAt
 #. placeholder {1}: sunShade.lastSunAt
@@ -1700,9 +1735,13 @@ msgstr "Час"
 msgid "today"
 msgstr "сьогодні"
 
-#: src/shared/ui/AscentTypeLabel.tsx:27
+#: src/shared/ui/AscentTypeLabel.tsx:17
 msgid "Top rope"
 msgstr "Верхня страховка"
+
+#: src/pages/route/common/ui/RouteAscentsInvite.tsx:20
+msgid "Track your progress"
+msgstr "Зафіксуй свій прогрес"
 
 #: src/shared/ui/SignInBenefits.tsx:55
 msgid "Track your progress sector by sector"
@@ -1771,16 +1810,20 @@ msgstr "Версія {version}"
 msgid "Video {position}"
 msgstr "Відео {position}"
 
-#: src/pages/route/common/ui/RouteTabs.tsx:37
+#: src/pages/route/common/ui/RouteTabs.tsx:40
 #: src/widgets/routeMedia/common/ui/RouteMediaButton.tsx:22
 #: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:29
 #: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:29
 msgid "Video and photo"
 msgstr "Відео та фото"
 
-#: src/pages/route/common/ui/RouteTabs.tsx:37
+#: src/pages/route/common/ui/RouteTabs.tsx:40
 msgid "Video and photo ({mediaCount})"
 msgstr "Відео та фото ({mediaCount})"
+
+#: src/widgets/tickList/common/ui/TickViewSelect.tsx:21
+msgid "View"
+msgstr "Вигляд"
 
 #. placeholder {0}: email.trim()
 #: src/pages/login/common/ui/EmailOtpForm.tsx:53
@@ -1819,11 +1862,7 @@ msgstr "Чи дістає дощ до того, хто лізе"
 msgid "Wind"
 msgstr "Вітер"
 
-#: src/pages/logbook/common/ui/SeasonIcon.tsx:17
-msgid "Winter"
-msgstr "Зима"
-
-#: src/pages/logbook/common/ui/TicksGroupedList.tsx:54
+#: src/pages/logbook/common/ui/TicksGroupedList.tsx:64
 msgid "Without a grade"
 msgstr "Без грейду"
 
@@ -1854,6 +1893,10 @@ msgstr "Твоя бета"
 #: src/features/logTick/common/ui/ConditionsSection.tsx:151
 msgid "Your corrections were reset for the new date and time"
 msgstr "Ваші виправлення скинуто для нової дати й часу"
+
+#: src/pages/route/common/ui/RouteAscentsInvite.tsx:32
+msgid "Your experience helps others judge the quality of the line — and helps the community pin down its grade."
+msgstr "Твій досвід допоможе іншим оцінити якість лінії, а спільноті — точніше визначити її категорію."
 
 #: src/features/logTick/common/ui/GradeFeelChoice.tsx:44
 msgid "Your grade"
