@@ -6,7 +6,5 @@ export const invalidateRouteLists = (queryClient: QueryClient): Promise<void> =>
   queryClient.invalidateQueries({
     predicate: ({ queryKey }) =>
       (queryKey[0] === 'sectors' && queryKey[3] === 'routes') ||
-      (queryKey[0] === 'regions' &&
-        queryKey[3] === 'sectors' &&
-        queryKey[4] === 'ticked')
+      (queryKey[0] === 'regions' && queryKey[3] === 'sectors')
   });

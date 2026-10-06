@@ -15,7 +15,7 @@ export const LogbookTeaser = ({ isCompact }: Props) => {
       to={to}
       from={from}
       action="logbook"
-      title={<Trans>My logbook</Trans>}
+      title={<Trans>Logbook</Trans>}
       message={
         <Trans>Your logbook keeps every ascent you have ever logged.</Trans>
       }

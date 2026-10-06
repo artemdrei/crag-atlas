@@ -73,7 +73,8 @@ describe('LogTickButton', () => {
     sends.sendCount = 2;
     renderButton();
 
-    expect(screen.getByRole('button', { name: 'Log repeat' })).toBeTruthy();
-    expect(screen.getByText('Sent ×2')).toBeTruthy();
+    expect(
+      screen.getByRole('button', { name: 'Log repeat (Sent · 2 times)' })
+    ).toBeTruthy();
   });
 });

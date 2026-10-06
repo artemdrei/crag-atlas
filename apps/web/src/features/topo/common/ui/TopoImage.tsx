@@ -29,6 +29,7 @@ export interface Props {
   idHighlightedRoute?: string;
   colorOf?: (idRoute: string) => string | undefined;
   numberOf?: Record<string, number>;
+  tickedRoutes?: ReadonlySet<string>;
   isTopAligned?: boolean;
   onSelectRoute?: (idRoute: string) => void;
   onSelectPhoto?: () => void;
@@ -42,6 +43,7 @@ export const TopoImage = ({
   idHighlightedRoute,
   colorOf,
   numberOf,
+  tickedRoutes,
   onSelectRoute,
   onSelectPhoto,
   onHoverRoute,
@@ -198,6 +200,7 @@ export const TopoImage = ({
                 x={start[0] + line.labelOffsetX}
                 y={start[1] + line.labelOffsetY}
                 isDimmed={hasHighlight && idHighlightedRoute !== line.idRoute}
+                isTicked={tickedRoutes?.has(line.idRoute)}
                 onSelect={
                   onSelectRoute ? () => onSelectRoute(line.idRoute) : undefined
                 }

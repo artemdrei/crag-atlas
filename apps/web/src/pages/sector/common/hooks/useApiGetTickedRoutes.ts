@@ -3,10 +3,7 @@ import { useMemo } from 'react';
 import { useUser } from '@web/app/providers';
 import { apiGet, QUERY_KEYS, useApiQuery } from '@web/shared/api';
 
-export const useApiGetTickedRoutes = (
-  idSector: string,
-  visibleRoutes: readonly { id: string }[]
-) => {
+export const useApiGetTickedRoutes = (idSector: string) => {
   const { isAuthenticated } = useUser();
 
   const { data } = useApiQuery({
@@ -17,13 +14,5 @@ export const useApiGetTickedRoutes = (
 
   const tickedRoutes = useMemo(() => new Set(data ?? []), [data]);
 
-  const tickedCount = useMemo(
-    () =>
-      isAuthenticated
-        ? visibleRoutes.filter(({ id }) => tickedRoutes.has(id)).length
-        : undefined,
-    [isAuthenticated, tickedRoutes, visibleRoutes]
-  );
-
-  return { tickedRoutes, tickedCount };
+  return { tickedRoutes };
 };

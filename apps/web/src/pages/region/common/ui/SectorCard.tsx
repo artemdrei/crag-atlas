@@ -11,11 +11,13 @@ import {
 } from '@web/shared/ui';
 
 import type { Sector } from '../entities';
+import type { SectorMatchSummary } from '../lib';
 
 export interface Props {
   sector: Sector;
   pinColor?: string;
   tickedCount?: number;
+  match?: SectorMatchSummary;
   isSelected?: boolean;
   isMissingOnMap?: boolean;
   isUnsaved?: boolean;
@@ -28,6 +30,7 @@ export const SectorCard = ({
   sector,
   pinColor,
   tickedCount,
+  match,
   isSelected,
   isMissingOnMap,
   isUnsaved,
@@ -36,9 +39,12 @@ export const SectorCard = ({
   onEdit
 }: Props) => {
   const { t } = useLingui();
+  const isUnmatched = match?.matchedCount === 0;
+  const gradeHistogram = match?.gradeHistogram ?? sector.gradeHistogram;
 
   return (
-    <CatalogCard
+    <CardStyled
+      isMuted={isUnmatched}
       alt={sector.name}
       photoUrl={sector.photoUrl}
       isSelected={isSelected}
@@ -74,13 +80,21 @@ export const SectorCard = ({
       <FooterStyled>
         <CountRowStyled>
           <Typography variant="caption" color="text.secondary" noWrap>
-            <Plural
-              value={sector.routeCount}
-              one="# route"
-              few="# routes"
-              many="# routes"
-              other="# routes"
-            />
+            {isUnmatched ? (
+              <Trans>no matches</Trans>
+            ) : match ? (
+              <Trans>
+                {match.matchedCount} of {sector.routeCount} match
+              </Trans>
+            ) : (
+              <Plural
+                value={sector.routeCount}
+                one="# route"
+                few="# routes"
+                many="# routes"
+                other="# routes"
+              />
+            )}
           </Typography>
           {tickedCount !== undefined && (
             <ProgressStyled
@@ -89,13 +103,19 @@ export const SectorCard = ({
             />
           )}
         </CountRowStyled>
-        {sector.gradeHistogram.map((group) => (
+        {gradeHistogram.map((group) => (
           <GradeHistogram key={group.type} group={group} isCompact />
         ))}
       </FooterStyled>
-    </CatalogCard>
+    </CardStyled>
   );
 };
+
+const CardStyled = styled(CatalogCard, {
+  shouldForwardProp: (prop) => prop !== 'isMuted'
+})<{ isMuted: boolean }>`
+  opacity: ${({ isMuted }) => (isMuted ? 0.5 : 1)};
+`;
 
 const HeaderRowStyled = styled('div')`
   display: flex;

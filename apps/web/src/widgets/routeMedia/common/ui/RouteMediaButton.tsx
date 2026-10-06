@@ -19,7 +19,7 @@ export const RouteMediaButton = ({ idRoute, hasPhoto, hasVideo }: Props) => {
   const open = () => openModal('ROUTE_MEDIA_VIEW', { idRoute });
 
   return (
-    <IconButton size="small" aria-label={t`Video and photo`} onClick={open}>
+    <IconButton aria-label={t`Video and photo`} onClick={open}>
       <MediaBadge hasPhoto={hasPhoto} hasVideo={hasVideo} />
     </IconButton>
   );

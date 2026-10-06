@@ -31,6 +31,7 @@ import {
   RouteSkeleton,
   RouteStats,
   RouteTabs,
+  toLogTickTarget,
   useApiGetRoute
 } from '../common';
 
@@ -124,16 +125,10 @@ export const PageRouteMobile = () => {
               />
             )}
           </StatsRowStyled>
-          <RouteTabs idRoute={route.id} />
+          <RouteTabs route={route} hasLogbookTab />
           {!route.isArchived && (
             <ActionBarStyled>
-              <LogTickButton
-                idRoute={route.id}
-                routeName={route.name}
-                routeGrade={route.grade}
-                routeGradeScale={route.gradeScale}
-                place={`${route.sectorName}, ${route.regionName}`}
-              />
+              <LogTickButton {...toLogTickTarget(route)} />
             </ActionBarStyled>
           )}
         </>
@@ -168,6 +163,5 @@ const ActionBarStyled = styled('div')`
   bottom: 0;
   display: flex;
   flex-direction: column;
-  padding-bottom: ${({ theme }) => theme.spacing(1)};
-  background: ${({ theme }) => theme.palette.background.default};
+  padding: ${({ theme }) => theme.spacing(1, 0)};
 `;

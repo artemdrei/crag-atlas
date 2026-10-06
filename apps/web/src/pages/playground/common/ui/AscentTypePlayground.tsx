@@ -1,6 +1,7 @@
 import Chip from '@mui/material/Chip';
 
-import { ASCENT_TYPES, AscentTypeLabel } from '@web/shared/ui';
+import { ASCENT_TYPES } from '@web/shared/types';
+import { AscentTypeLabel } from '@web/shared/ui';
 
 import { PlaygroundSection } from './PlaygroundSection';
 

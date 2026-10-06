@@ -506,7 +506,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SectorDto"
+                    "$ref": "#/components/schemas/SectorListItemDto"
                   }
                 }
               }
@@ -573,7 +573,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SectorDto"
+                    "$ref": "#/components/schemas/SectorListItemDto"
                   }
                 }
               }
@@ -2497,6 +2497,218 @@
         },
         "required": ["ascents", "comments", "media"]
       },
+      "SectorRouteDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "grade": {
+            "type": "string"
+          },
+          "gradeScale": {
+            "type": "string",
+            "enum": [
+              "french",
+              "yds",
+              "uiaa",
+              "saxon",
+              "ewbank",
+              "norwegian",
+              "brazilian_crux",
+              "font",
+              "vscale"
+            ],
+            "description": "The system the grade is written in; a grade alone is ambiguous"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["sport", "boulder"]
+          },
+          "length": {
+            "type": "number",
+            "nullable": true
+          },
+          "rating": {
+            "type": "number",
+            "nullable": true,
+            "description": "Community rating, 0..5"
+          },
+          "ascentsCount": {
+            "type": "number",
+            "nullable": true
+          }
+        },
+        "required": ["id", "name", "grade", "gradeScale", "type"]
+      },
+      "SectorListItemDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "idRegion": {
+            "type": "string"
+          },
+          "regionName": {
+            "type": "string",
+            "description": "Label for breadcrumbs; ids carry no meaning"
+          },
+          "name": {
+            "type": "string"
+          },
+          "nameLocal": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name in its own writing system; null when there is none"
+          },
+          "photoUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "First topo photo, used as the card thumbnail"
+          },
+          "description": {
+            "type": "string"
+          },
+          "routeCount": {
+            "type": "number"
+          },
+          "gradeMin": {
+            "type": "string",
+            "nullable": true,
+            "description": "Easiest grade among the routes; null when there are none"
+          },
+          "gradeMinScale": {
+            "type": "string",
+            "enum": [
+              "french",
+              "yds",
+              "uiaa",
+              "saxon",
+              "ewbank",
+              "norwegian",
+              "brazilian_crux",
+              "font",
+              "vscale"
+            ],
+            "nullable": true,
+            "description": "System gradeMin is written in"
+          },
+          "gradeMax": {
+            "type": "string",
+            "nullable": true
+          },
+          "gradeMaxScale": {
+            "type": "string",
+            "enum": [
+              "french",
+              "yds",
+              "uiaa",
+              "saxon",
+              "ewbank",
+              "norwegian",
+              "brazilian_crux",
+              "font",
+              "vscale"
+            ],
+            "nullable": true,
+            "description": "System gradeMax is written in"
+          },
+          "gradeHistogram": {
+            "description": "Grade spread, one group per climbing type; empty when there are no routes",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GradeHistogramGroupDto"
+            }
+          },
+          "lat": {
+            "type": "number",
+            "nullable": true
+          },
+          "lng": {
+            "type": "number",
+            "nullable": true
+          },
+          "aspectDeg": {
+            "type": "number",
+            "nullable": true,
+            "description": "Direction the wall faces, 0 = north, clockwise. Null leaves it to the slope the skyline was read from"
+          },
+          "shelter": {
+            "type": "string",
+            "enum": ["open", "partial", "full"],
+            "description": "How much of the rain the wall keeps off a climber"
+          },
+          "isArchived": {
+            "type": "boolean",
+            "description": "Out of the catalog, because it carries the mark or an ancestor does"
+          },
+          "isDeleted": {
+            "type": "boolean",
+            "description": "Deleted directly, so restoring this row is what brings it back"
+          },
+          "routes": {
+            "description": "Its routes, so a region can be narrowed by route; empty in the archive",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SectorRouteDto"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "idRegion",
+          "regionName",
+          "name",
+          "description",
+          "routeCount",
+          "gradeHistogram",
+          "shelter",
+          "isArchived",
+          "isDeleted",
+          "routes"
+        ]
+      },
+      "SectorTickCountDto": {
+        "type": "object",
+        "properties": {
+          "idSector": {
+            "type": "string"
+          },
+          "tickedCount": {
+            "type": "number",
+            "description": "Routes the climber has ticked in this sector"
+          },
+          "idRoutes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": ["idSector", "tickedCount", "idRoutes"]
+      },
+      "CreateSectorDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "nameLocal": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name in its own writing system; null when there is none"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": ["name"]
+      },
       "SectorDto": {
         "type": "object",
         "properties": {
@@ -2616,37 +2828,6 @@
           "isArchived",
           "isDeleted"
         ]
-      },
-      "SectorTickCountDto": {
-        "type": "object",
-        "properties": {
-          "idSector": {
-            "type": "string"
-          },
-          "tickedCount": {
-            "type": "number",
-            "description": "Routes the climber has ticked in this sector"
-          }
-        },
-        "required": ["idSector", "tickedCount"]
-      },
-      "CreateSectorDto": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "nameLocal": {
-            "type": "string",
-            "nullable": true,
-            "description": "The name in its own writing system; null when there is none"
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "required": ["name"]
       },
       "UpdateSectorDto": {
         "type": "object",

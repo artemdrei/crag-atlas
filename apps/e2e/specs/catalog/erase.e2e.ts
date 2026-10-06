@@ -12,6 +12,7 @@ import {
   makeSector
 } from '../../fixtures/catalog';
 import {
+  ascentsPanel,
   card,
   catalogPath,
   confirm,
@@ -66,8 +67,11 @@ test('a route can be erased once nothing climbers made points at it', async ({
   // No reload from here on: the count behind the button is cached for five
   // minutes, so it can only be right if deleting the content invalidates it.
   await test.step('delete the ascent', async () => {
-    await openTab(page, 'Logbook');
-    await page.getByRole('button', { name: 'Ascent actions' }).first().click();
+    await openTab(page, 'My ascents');
+    await ascentsPanel(page)
+      .getByRole('button', { name: 'Ascent actions' })
+      .first()
+      .click();
     await page.getByRole('menuitem', { name: 'Delete' }).click();
     await confirm(page, 'Delete');
   });

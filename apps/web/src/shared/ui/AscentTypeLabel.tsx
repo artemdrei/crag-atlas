@@ -1,16 +1,6 @@
-import type { Tick } from '@crag-atlas/api';
 import { useLingui } from '@lingui/react/macro';
 
-export type AscentType = Tick['ascentType'];
-
-export const ASCENT_TYPES: AscentType[] = [
-  'onsight',
-  'flash',
-  'retro_flash',
-  'redpoint',
-  'toprope',
-  'attempt'
-];
+import type { AscentType } from '@web/shared/types';
 
 export interface Props {
   ascentType: AscentType;

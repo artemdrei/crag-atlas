@@ -11,6 +11,7 @@ declare module '@mui/material/styles' {
     ascentType: Record<AscentTypeTone, GradeColor>;
     conditionBand: Record<ConditionBand, string>;
     sectorPin: string[];
+    inverse: Palette['primary'];
   }
 
   interface PaletteOptions {
@@ -18,6 +19,13 @@ declare module '@mui/material/styles' {
     ascentType?: Record<AscentTypeTone, GradeColor>;
     conditionBand?: Record<ConditionBand, string>;
     sectorPin?: string[];
+    inverse?: PaletteOptions['primary'];
+  }
+}
+
+declare module '@mui/material/Button' {
+  interface ButtonPropsColorOverrides {
+    inverse: true;
   }
 }
 

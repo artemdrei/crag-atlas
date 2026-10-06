@@ -7,7 +7,8 @@ import Typography from '@mui/material/Typography';
 
 import type { AscentTypeTone } from '@web/shared/theme/palette';
 import { hoverRing } from '@web/shared/theme/surfaces';
-import { ASCENT_TYPES, AscentTypeLabel } from '@web/shared/ui';
+import { ASCENT_TYPES } from '@web/shared/types';
+import { AscentTypeLabel } from '@web/shared/ui';
 
 import type { AscentFilter } from '../entities';
 

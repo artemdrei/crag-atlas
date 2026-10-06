@@ -2,11 +2,7 @@ export { ApiFeedback } from './ApiFeedback';
 export { ArchivedNotice } from './ArchivedNotice';
 export { ArchivedToggle } from './ArchivedToggle';
 export { AscentTypeBadge } from './AscentTypeBadge';
-export {
-  ASCENT_TYPES,
-  type AscentType,
-  AscentTypeLabel
-} from './AscentTypeLabel';
+export { AscentTypeLabel } from './AscentTypeLabel';
 export { BottomSheet } from './BottomSheet';
 export { CatalogCard } from './CatalogCard';
 export { CatalogCardMenu } from './CatalogCardMenu';
@@ -17,6 +13,7 @@ export { DangerButton } from './DangerButton';
 export { DirectionsButton } from './DirectionsButton';
 export { EditorPageShell } from './EditorPageShell';
 export { EmptyState } from './EmptyState';
+export { FilterTextField } from './FilterTextField';
 export { FormActions } from './FormActions';
 export { GradeBadge } from './GradeBadge';
 export { GradeHistogram } from './GradeHistogram';

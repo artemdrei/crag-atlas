@@ -1,34 +1,45 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import MenuItem from '@mui/material/MenuItem';
 import { styled } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
 
-import { ASCENT_TYPES, AscentTypeLabel } from '@web/shared/ui';
+import { ASCENT_TYPES } from '@web/shared/types';
+import { AscentTypeLabel, FilterTextField } from '@web/shared/ui';
+import { type TickView, TickViewSelect } from '@web/widgets/tickList';
 
-import type { AscentFilter, TickSort } from '../entities';
+import {
+  type AscentFilter,
+  DEFAULT_ASCENT_FILTER,
+  DEFAULT_TICK_SORT,
+  type TickSort
+} from '../entities';
 
 export interface Props {
   sort: TickSort;
   ascentType: AscentFilter;
+  view: TickView;
   onSortChange: (sort: TickSort) => void;
   onAscentTypeChange: (ascentType: AscentFilter) => void;
+  onViewChange: (view: TickView) => void;
 }
 
 export const LogbookFilterFields = ({
   sort,
   ascentType,
+  view,
   onSortChange,
-  onAscentTypeChange
+  onAscentTypeChange,
+  onViewChange
 }: Props) => {
   const { t } = useLingui();
 
   return (
     <FieldsStyled>
-      <TextField
+      <FilterTextField
         select
         fullWidth
         size="small"
         label={t`Sort by`}
+        isActive={sort !== DEFAULT_TICK_SORT}
         value={sort}
         onChange={(event) => onSortChange(event.target.value as TickSort)}
       >
@@ -38,12 +49,13 @@ export const LogbookFilterFields = ({
         <MenuItem value="date">
           <Trans>Date</Trans>
         </MenuItem>
-      </TextField>
-      <TextField
+      </FilterTextField>
+      <FilterTextField
         select
         fullWidth
         size="small"
         label={t`Ascent type`}
+        isActive={ascentType !== DEFAULT_ASCENT_FILTER}
         value={ascentType}
         onChange={(event) =>
           onAscentTypeChange(event.target.value as AscentFilter)
@@ -57,15 +69,19 @@ export const LogbookFilterFields = ({
             <AscentTypeLabel ascentType={type} />
           </MenuItem>
         ))}
-      </TextField>
+      </FilterTextField>
+      <TickViewSelect view={view} onChange={onViewChange} />
     </FieldsStyled>
   );
 };
 
 const FieldsStyled = styled('div')`
   display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(2)};
-  min-width: ${({ theme }) => theme.spacing(28)};
-  padding: ${({ theme }) => theme.spacing(2)};
+  justify-content: flex-end;
+  gap: ${({ theme }) => theme.spacing(1.5)};
+
+  & > * {
+    flex: 1 1 0;
+    max-width: ${({ theme }) => theme.spacing(30)};
+  }
 `;

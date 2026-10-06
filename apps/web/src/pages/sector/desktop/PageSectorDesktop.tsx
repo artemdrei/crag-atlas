@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import type { CatalogSource } from '@crag-atlas/analytics';
-import { Trans } from '@lingui/react/macro';
+import { Plural, Trans } from '@lingui/react/macro';
 import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
 import { styled, useTheme } from '@mui/material/styles';
@@ -11,6 +11,11 @@ import Typography from '@mui/material/Typography';
 import { useUser } from '@web/app/providers';
 import { buildRegionPath, buildSectorEditPath } from '@web/app/router/routes';
 import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
+import {
+  gradeOrder,
+  RouteFilterPanelDesktop,
+  useRouteFilter
+} from '@web/features/routeFilter';
 import { SectorConditionsDesktop } from '@web/features/sectorConditions';
 import {
   findTopoOfRoute,
@@ -19,7 +24,7 @@ import {
   useApiGetTopos,
   useTopoGallery
 } from '@web/features/topo';
-import { coordsOf, useSearchParamList } from '@web/shared/lib';
+import { coordsOf } from '@web/shared/lib';
 import { getGradeColor } from '@web/shared/theme/palette';
 import {
   ApiFeedback,
@@ -32,19 +37,14 @@ import {
 import type { Route } from '../common';
 import {
   ArchivedSectorNotice,
-  gradeOrder,
   RoutesList,
-  RoutesPanelHeader,
-  RoutesSortDirectionButton,
   useApiGetRoutes,
   useApiGetSector,
   useApiGetTickedRoutes,
-  useGradeFilter,
   useRoutesByTopo,
-  useRoutesSort,
-  useSectorSelection
+  useSectorSelection,
+  useVisibleRoutes
 } from '../common';
-import { RoutesSortButton } from './RoutesSortButton';
 
 export const PageSectorDesktop = () => {
   const theme = useTheme();
@@ -55,24 +55,18 @@ export const PageSectorDesktop = () => {
   const { sector } = useApiGetSector(idSector);
   const { routes, isLoading, failure } = useApiGetRoutes(idSector);
   const { topos } = useApiGetTopos(idSector);
-  const [selectedGrades, selectGrades] = useSearchParamList('grades');
-  const { toggleGrade, clearGrades, visibleRoutes, visibleTopos } =
-    useGradeFilter({
-      routes,
-      topos,
-      selectedGrades,
-      onSelectGrades: selectGrades
-    });
-  const { tickedRoutes, tickedCount } = useApiGetTickedRoutes(
-    idSector,
-    visibleRoutes
-  );
+  const filterState = useRouteFilter('routes');
+  const { tickedRoutes } = useApiGetTickedRoutes(idSector);
+  const { visibleRoutes, visibleTopos, tickedCount } = useVisibleRoutes({
+    routes,
+    topos,
+    filter: filterState.filter,
+    tickedRoutes
+  });
   const { idActiveTopo, selectTopo } = useTopoGallery({
     topos: visibleTopos
   });
   const { idHighlightedRoute, highlightRoute } = useSectorSelection();
-
-  const { sort, direction, changeSort, toggleDirection } = useRoutesSort();
 
   const orderOfGrade = useMemo(
     () => gradeOrder(sector?.gradeHistogram ?? []),
@@ -92,8 +86,8 @@ export const PageSectorDesktop = () => {
     routes: visibleRoutes,
     topos: visibleTopos,
     numberOf,
-    sort,
-    direction,
+    sort: filterState.sort,
+    direction: filterState.direction,
     gradeOrder: orderOfGrade
   });
 
@@ -176,6 +170,7 @@ export const PageSectorDesktop = () => {
               idHighlightedRoute={idHighlightedRoute}
               colorOf={colorOf}
               numberOf={numberOf}
+              tickedRoutes={tickedRoutes}
               onSelectTopo={selectTopo}
               onSelectRoute={openRouteById}
               onHoverRoute={highlightRoute}
@@ -184,23 +179,19 @@ export const PageSectorDesktop = () => {
         </MainColumnStyled>
         <PanelStyled>
           <SectorConditionsDesktop idSector={idSector} />
-          <RoutesPanelHeader
+          <RouteFilterPanelDesktop
+            state={filterState}
+            title={
+              <Plural
+                value={visibleRoutes.length}
+                one="# route"
+                other="# routes"
+              />
+            }
             routesCount={visibleRoutes.length}
             tickedCount={tickedCount}
             gradeHistogram={sector?.gradeHistogram ?? []}
-            selectedGrades={selectedGrades}
-            sortButton={
-              <>
-                <RoutesSortDirectionButton
-                  direction={direction}
-                  isVisible={sort !== 'default'}
-                  onToggleDirection={toggleDirection}
-                />
-                <RoutesSortButton sort={sort} onSortChange={changeSort} />
-              </>
-            }
-            onToggleGrade={toggleGrade}
-            onClearGrades={clearGrades}
+            gradeOrder={orderOfGrade}
           />
           <ApiFeedback failure={failure} />
           <ScrollAreaStyled>

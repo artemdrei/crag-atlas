@@ -3,18 +3,23 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { GradeBadge } from '@web/shared/ui';
+import { TickCard, TicksSkeleton } from '@web/widgets/tickList';
 
 import type { GradeGroup, Tick } from '../entities';
-import { TickCard } from './TickCard';
-import { TicksSkeleton } from './TicksSkeleton';
 
 export interface Props {
   groups: GradeGroup[];
   ungraded: Tick[];
+  isCompact?: boolean;
   isLoading: boolean;
 }
 
-export const TicksGroupedList = ({ groups, ungraded, isLoading }: Props) => {
+export const TicksGroupedList = ({
+  groups,
+  ungraded,
+  isCompact,
+  isLoading
+}: Props) => {
   if (isLoading) return <TicksSkeleton />;
 
   if (groups.length === 0 && ungraded.length === 0) {
@@ -43,7 +48,12 @@ export const TicksGroupedList = ({ groups, ungraded, isLoading }: Props) => {
             <RuleStyled />
           </HeaderStyled>
           {ticks.map((tick) => (
-            <TickCard key={tick.id} tick={tick} isGradeHidden />
+            <TickCard
+              key={tick.id}
+              tick={tick}
+              isGradeHidden
+              isCompact={isCompact}
+            />
           ))}
         </SectionStyled>
       ))}
@@ -65,7 +75,12 @@ export const TicksGroupedList = ({ groups, ungraded, isLoading }: Props) => {
             <RuleStyled />
           </HeaderStyled>
           {ungraded.map((tick) => (
-            <TickCard key={tick.id} tick={tick} isGradeHidden />
+            <TickCard
+              key={tick.id}
+              tick={tick}
+              isGradeHidden
+              isCompact={isCompact}
+            />
           ))}
         </SectionStyled>
       )}

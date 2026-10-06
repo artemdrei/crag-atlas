@@ -14,6 +14,7 @@ export interface Props {
   idHighlightedRoute?: string;
   colorOf?: (idRoute: string) => string | undefined;
   numberOf?: Record<string, number>;
+  tickedRoutes?: ReadonlySet<string>;
   isTopAligned?: boolean;
   onSelectRoute?: (idRoute: string) => void;
   onHoverRoute?: (idRoute?: string) => void;
@@ -30,6 +31,7 @@ export const TopoZoomStage = ({
   idHighlightedRoute,
   colorOf,
   numberOf,
+  tickedRoutes,
   onSelectRoute,
   onHoverRoute,
   isTopAligned,
@@ -60,6 +62,7 @@ export const TopoZoomStage = ({
             idHighlightedRoute={idHighlightedRoute}
             colorOf={colorOf}
             numberOf={numberOf}
+            tickedRoutes={tickedRoutes}
             onSelectRoute={onSelectRoute}
             onHoverRoute={onHoverRoute}
             isTopAligned={isTopAligned}

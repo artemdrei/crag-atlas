@@ -1,9 +1,8 @@
 import { readFile } from 'node:fs/promises';
 import { basename } from 'node:path';
 
-import { createClient } from '@supabase/supabase-js';
-
 import { env } from '../setup/env';
+import { signIn } from '../setup/session';
 
 const tokens = new Map<string, string>();
 
@@ -12,16 +11,11 @@ const tokenFor = async (email: string, password: string): Promise<string> => {
 
   if (known) return known;
 
-  const { data, error } = await createClient(env.supabaseUrl, env.anonKey, {
-    auth: { persistSession: false, autoRefreshToken: false }
-  }).auth.signInWithPassword({ email, password });
+  const { access_token } = await signIn(email, password);
 
-  if (error || !data.session)
-    throw new Error(`Could not sign ${email} in: ${error?.message}`);
+  tokens.set(email, access_token);
 
-  tokens.set(email, data.session.access_token);
-
-  return data.session.access_token;
+  return access_token;
 };
 
 const accessToken = () => tokenFor(env.adminEmail, env.adminPassword);
@@ -29,7 +23,7 @@ const accessToken = () => tokenFor(env.adminEmail, env.adminPassword);
 /** The same calls as `api`, made by the ordinary climber. */
 const memberToken = () => tokenFor(env.memberEmail, env.memberPassword);
 
-const call = async <T>(
+export const call = async <T>(
   method: string,
   path: string,
   body?: unknown,

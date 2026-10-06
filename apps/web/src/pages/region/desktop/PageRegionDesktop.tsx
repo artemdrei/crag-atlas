@@ -1,11 +1,16 @@
 import { useMemo } from 'react';
 import { useParams } from 'react-router';
 
+import type { CatalogSource } from '@crag-atlas/analytics';
 import { styled, useTheme } from '@mui/material/styles';
 
 import { useEditModeInUrl, useUser } from '@web/app/providers';
 import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
 import { CatalogEditActions } from '@web/features/catalogEdit';
+import {
+  RouteFilterPanelDesktop,
+  useRouteFilterSearch
+} from '@web/features/routeFilter';
 import { RegionConditionsDesktop } from '@web/features/sectorConditions';
 import {
   mapSectors,
@@ -22,10 +27,13 @@ import {
 
 import {
   ArchivedRegionNotice,
+  RegionRoutesTitle,
+  type Sector,
   SectorsList,
   useApiGetRegion,
   useApiGetSectors,
-  useApiGetTickedSectors
+  useApiGetTickedSectors,
+  useRegionRouteFilter
 } from '../common';
 import { RegionEditSection, RegionEditSidebar } from './ui';
 
@@ -41,7 +49,22 @@ export const PageRegionDesktop = () => {
     idRegion,
     isArchiveShown
   );
-  const { tickedOf } = useApiGetTickedSectors(idRegion);
+  const { tickedOf, tickedRoutes } = useApiGetTickedSectors(idRegion);
+  const filterSearch = useRouteFilterSearch();
+  const isFilterShown = !isEditing && !isArchiveShown;
+  const {
+    state: filterState,
+    gradeOrder,
+    orderedSectors,
+    matchOf,
+    matchedCount,
+    matchedSectorCount
+  } = useRegionRouteFilter({
+    sectors,
+    gradeHistogram: region?.gradeHistogram,
+    tickedRoutes,
+    isEnabled: isFilterShown
+  });
   const {
     idSelected: idSelectedSector,
     isDirty: isSelectedDirty,
@@ -69,6 +92,13 @@ export const PageRegionDesktop = () => {
 
   const selectedSector = sectors.find(({ id }) => id === idSelectedSector);
 
+  const openSector = (source: CatalogSource, sector: Sector) =>
+    openCatalogItem(
+      source,
+      { name: sector.name, idRegion, idSector: sector.id },
+      filterSearch
+    );
+
   return (
     <PageShell spacing={1} isFixedHeight>
       <HeaderRowStyled>
@@ -93,8 +123,24 @@ export const PageRegionDesktop = () => {
             <ConditionsSlotStyled>
               <RegionConditionsDesktop idRegion={idRegion} />
             </ConditionsSlotStyled>
+            {isFilterShown && (
+              <RouteFilterPanelDesktop
+                state={filterState}
+                title={
+                  <RegionRoutesTitle
+                    routesCount={matchedCount}
+                    sectorsCount={matchedSectorCount}
+                    isFiltered={filterState.activeCount > 0}
+                  />
+                }
+                routesCount={matchedCount}
+                gradeHistogram={region?.gradeHistogram ?? []}
+                gradeOrder={gradeOrder}
+              />
+            )}
             <SectorsList
-              sectors={sectors}
+              sectors={orderedSectors}
+              matchOf={matchOf}
               pinColors={pinColors}
               tickedOf={tickedOf}
               idSelectedSector={idSelectedSector}
@@ -102,13 +148,7 @@ export const PageRegionDesktop = () => {
               isEditing={isEditing}
               isLoading={isLoading}
               onSelect={(sector) =>
-                isEditing
-                  ? selectSector(sector.id)
-                  : openCatalogItem('card', {
-                      name: sector.name,
-                      idRegion,
-                      idSector: sector.id
-                    })
+                isEditing ? selectSector(sector.id) : openSector('card', sector)
               }
               onShowOnMap={(sector) => selectSector(sector.id)}
               onEdit={
@@ -127,13 +167,7 @@ export const PageRegionDesktop = () => {
             mapped={mapped}
             selectedSector={selectedSector}
             isEditing={isEditing}
-            onOpenSector={(sector) =>
-              openCatalogItem('map', {
-                name: sector.name,
-                idRegion,
-                idSector: sector.id
-              })
-            }
+            onOpenSector={(sector) => openSector('map', sector)}
             onSelectSector={selectSector}
             onPlacePoint={setDraftPoint}
           />

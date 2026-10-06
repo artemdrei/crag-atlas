@@ -5,5 +5,6 @@ export interface TopoPhotoPayload {
   label: string;
   lines: RouteLine[];
   numberOf?: Record<string, number>;
+  tickedRoutes?: ReadonlySet<string>;
   colorOf?: (idRoute: string) => string | undefined;
 }

@@ -20,12 +20,8 @@ export const TickActionsButton = ({ tick }: Props) => {
     openModal('TICK_MENU', { tick }, { anchorEl: event.currentTarget });
 
   return (
-    <IconButton
-      size="small"
-      aria-label={t`Ascent actions`}
-      onClick={handleOpenMenu}
-    >
-      <MoreVertIcon fontSize="small" />
+    <IconButton aria-label={t`Ascent actions`} onClick={handleOpenMenu}>
+      <MoreVertIcon />
     </IconButton>
   );
 };

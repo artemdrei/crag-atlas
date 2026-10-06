@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import { TicksSkeleton } from './TicksSkeleton';
+import { TicksSkeleton } from '@web/widgets/tickList';
 
 export interface Props {
   hasMore: boolean;

@@ -1,9 +1,14 @@
 import { useMemo } from 'react';
 import { useParams } from 'react-router';
 
+import type { CatalogSource } from '@crag-atlas/analytics';
 import { useTheme } from '@mui/material/styles';
 
 import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
+import {
+  RouteFilterPanelMobile,
+  useRouteFilterSearch
+} from '@web/features/routeFilter';
 import { RegionConditionsMobile } from '@web/features/sectorConditions';
 import {
   mapSectors,
@@ -14,11 +19,14 @@ import { ApiFeedback, PageShell, PageTitle } from '@web/shared/ui';
 
 import {
   ArchivedRegionNotice,
+  RegionRoutesTitle,
+  type Sector,
   SectorCard,
   SectorsList,
   useApiGetRegion,
   useApiGetSectors,
-  useApiGetTickedSectors
+  useApiGetTickedSectors,
+  useRegionRouteFilter
 } from '../common';
 
 export const PageRegionMobile = () => {
@@ -27,12 +35,33 @@ export const PageRegionMobile = () => {
   const theme = useTheme();
   const { region, failure: regionFailure } = useApiGetRegion(idRegion);
   const { sectors, isLoading, failure } = useApiGetSectors(idRegion);
-  const { tickedOf } = useApiGetTickedSectors(idRegion);
+  const { tickedOf, tickedRoutes } = useApiGetTickedSectors(idRegion);
+  const filterSearch = useRouteFilterSearch();
+  const {
+    state: filterState,
+    gradeOrder,
+    orderedSectors,
+    matchOf,
+    matchedCount,
+    matchedSectorCount
+  } = useRegionRouteFilter({
+    sectors,
+    gradeHistogram: region?.gradeHistogram,
+    tickedRoutes,
+    isEnabled: true
+  });
   const mapped = useMemo(() => mapSectors(sectors), [sectors]);
   const pinColors = useMemo(
     () => sectorPinColors(mapped, theme.palette.sectorPin),
     [mapped, theme.palette.sectorPin]
   );
+
+  const openSector = (source: CatalogSource, sector: Sector) =>
+    openCatalogItem(
+      source,
+      { name: sector.name, idRegion, idSector: sector.id },
+      filterSearch
+    );
 
   return (
     <PageShell spacing={2} isCompact>
@@ -49,36 +78,32 @@ export const PageRegionMobile = () => {
           <SectorCard
             sector={sector}
             pinColor={pinColors[sector.id]}
-            onSelect={() =>
-              openCatalogItem('map', {
-                name: sector.name,
-                idRegion,
-                idSector: sector.id
-              })
-            }
+            onSelect={() => openSector('map', sector)}
           />
         )}
-        onOpenSector={(sector) =>
-          openCatalogItem('map', {
-            name: sector.name,
-            idRegion,
-            idSector: sector.id
-          })
-        }
+        onOpenSector={(sector) => openSector('map', sector)}
       />
       <RegionConditionsMobile idRegion={idRegion} />
+      <RouteFilterPanelMobile
+        state={filterState}
+        title={
+          <RegionRoutesTitle
+            routesCount={matchedCount}
+            sectorsCount={matchedSectorCount}
+            isFiltered={filterState.activeCount > 0}
+          />
+        }
+        routesCount={matchedCount}
+        gradeHistogram={region?.gradeHistogram ?? []}
+        gradeOrder={gradeOrder}
+      />
       <SectorsList
-        sectors={sectors}
+        sectors={orderedSectors}
+        matchOf={matchOf}
         pinColors={pinColors}
         tickedOf={tickedOf}
         isLoading={isLoading}
-        onSelect={(sector) =>
-          openCatalogItem('card', {
-            name: sector.name,
-            idRegion,
-            idSector: sector.id
-          })
-        }
+        onSelect={(sector) => openSector('card', sector)}
       />
     </PageShell>
   );

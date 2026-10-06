@@ -11,10 +11,11 @@ import { routeCommentDesktopRegistrations } from '@web/features/routeComment';
 import { signInPromptDesktopRegistrations } from '@web/features/signInPrompt';
 import { topoDesktopRegistrations } from '@web/features/topo';
 import { topoEditorDesktopRegistrations } from '@web/features/topoEditor';
-import { LogbookTeaser, TicksSkeleton } from '@web/pages/logbook/common';
+import { LogbookTeaser } from '@web/pages/logbook/common';
 import { playgroundDesktopRegistrations } from '@web/pages/playground/registrations';
 import { ProfileSkeleton, ProfileTeaser } from '@web/pages/profile/common';
 import { routeMediaDesktopRegistrations } from '@web/widgets/routeMedia';
+import { TicksSkeleton } from '@web/widgets/tickList';
 
 import { lazyPage as page } from '../router/lazyPage';
 import {

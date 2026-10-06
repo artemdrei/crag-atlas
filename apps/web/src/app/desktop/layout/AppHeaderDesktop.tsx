@@ -29,7 +29,7 @@ export const AppHeaderDesktop = ({ hasSearch }: { hasSearch?: boolean }) => {
           <Trans>Regions</Trans>
         </Button>
         <Button color="inherit" component={Link} to={ROUTES.LOGBOOK}>
-          <Trans>My logbook</Trans>
+          <Trans>Logbook</Trans>
         </Button>
         <SpacerStyled />
         {hasSearch && (

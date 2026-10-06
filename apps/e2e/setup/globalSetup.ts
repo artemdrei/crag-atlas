@@ -2,17 +2,9 @@ import { execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname } from 'node:path';
 
-import { createClient } from '@supabase/supabase-js';
-
-import { assertLocalStack, authStorageKey, env } from './env';
+import { assertLocalStack, env } from './env';
+import { serviceClient, sessionState, signIn } from './session';
 import { STORAGE_STATE, STORAGE_STATE_MEMBER } from './storageState';
-
-const LOCALE_KEY = 'crag-atlas:locale';
-
-const serviceClient = () =>
-  createClient(env.supabaseUrl, env.serviceRoleKey, {
-    auth: { persistSession: false, autoRefreshToken: false }
-  });
 
 const findOrCreate = async (
   email: string,
@@ -35,44 +27,15 @@ const findOrCreate = async (
   return user.id;
 };
 
-/**
- * The app signs in through Google or an emailed code, neither of which a test
- * can drive. The session is written straight into the storage the web client
- * reads instead, together with the locale, so the specs assert the English
- * source strings.
- */
 const saveSession = async (
   file: string,
   email: string,
   password: string
 ): Promise<void> => {
-  const anon = createClient(env.supabaseUrl, env.anonKey, {
-    auth: { persistSession: false, autoRefreshToken: false }
-  });
-  const { data, error } = await anon.auth.signInWithPassword({
-    email,
-    password
-  });
-
-  if (error || !data.session)
-    throw new Error(`Could not sign ${email} in: ${error?.message}`);
+  const session = await signIn(email, password);
 
   mkdirSync(dirname(file), { recursive: true });
-  writeFileSync(
-    file,
-    JSON.stringify({
-      cookies: [],
-      origins: [
-        {
-          origin: env.webUrl,
-          localStorage: [
-            { name: authStorageKey(), value: JSON.stringify(data.session) },
-            { name: LOCALE_KEY, value: 'en' }
-          ]
-        }
-      ]
-    })
-  );
+  writeFileSync(file, JSON.stringify(sessionState(session)));
 };
 
 /**

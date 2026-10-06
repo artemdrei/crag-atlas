@@ -8,7 +8,7 @@ import {
   makeRoute,
   makeSector
 } from '../../fixtures/catalog';
-import { breadcrumb, card } from '../../fixtures/ui';
+import { breadcrumb, card, pickGrade } from '../../fixtures/ui';
 
 test.describe.configure({ mode: 'serial' });
 
@@ -47,7 +47,8 @@ test('the catalog walks down to a route and back up again', async ({
   });
 
   await test.step('the sector lists its routes', async () => {
-    await expect(page.getByText('2 routes')).toBeVisible();
+    await expect(card(page, easy.name)).toBeVisible();
+    await expect(page.getByText('2 routes')).toHaveCount(1);
     await card(page, easy.name).click();
   });
 
@@ -57,7 +58,8 @@ test('the catalog walks down to a route and back up again', async ({
 
   await test.step('and the trail leads back', async () => {
     await breadcrumb(page, sector.name).click();
-    await expect(page.getByText('2 routes')).toBeVisible();
+    await expect(card(page, easy.name)).toBeVisible();
+    await expect(page.getByText('2 routes')).toHaveCount(1);
 
     await breadcrumb(page, region.name).click();
     await expect(card(page, sector.name)).toBeVisible();
@@ -76,7 +78,7 @@ test('the grade histogram narrows the sector down', async ({ page }) => {
   await expect(page.getByText('2 routes')).toBeVisible();
 
   await test.step('picking a grade leaves only what climbs at it', async () => {
-    await page.getByRole('button', { name: '7a', exact: true }).click();
+    await pickGrade(page, '7a');
 
     await expect(page.getByText('1 route', { exact: true })).toBeVisible();
     await expect(card(page, hard.name)).toBeVisible();
@@ -84,7 +86,7 @@ test('the grade histogram narrows the sector down', async ({ page }) => {
   });
 
   await test.step('and resetting brings the rest back', async () => {
-    await page.getByRole('button', { name: 'Reset filters' }).click();
+    await page.getByRole('button', { name: 'Clear all filters' }).click();
 
     await expect(page.getByText('2 routes')).toBeVisible();
     await expect(card(page, easy.name)).toBeVisible();
@@ -93,7 +95,7 @@ test('the grade histogram narrows the sector down', async ({ page }) => {
 
 test('the filter lives in the URL, not in the page', async ({ page }) => {
   await page.goto(`/regions/${region.id}/sectors/${sector.id}`);
-  await page.getByRole('button', { name: '7a', exact: true }).click();
+  await pickGrade(page, '7a');
 
   await test.step('picking a grade writes it into the address', async () => {
     await expect(page).toHaveURL(/[?&]grades=french%7C7a/);
@@ -116,7 +118,7 @@ test('the filter lives in the URL, not in the page', async ({ page }) => {
   });
 
   await test.step('and clearing it takes the parameter away', async () => {
-    await page.getByRole('button', { name: 'Reset filters' }).click();
+    await page.getByRole('button', { name: 'Clear all filters' }).click();
 
     await expect(page).not.toHaveURL(/grades=/);
     await expect(page.getByText('2 routes')).toBeVisible();
@@ -125,7 +127,7 @@ test('the filter lives in the URL, not in the page', async ({ page }) => {
 
 test('every filter is a step the back button can walk', async ({ page }) => {
   await page.goto(`/regions/${region.id}/sectors/${sector.id}`);
-  await page.getByRole('button', { name: '7a', exact: true }).click();
+  await pickGrade(page, '7a');
 
   await expect(page).toHaveURL(/grades=french%7C7a/);
 
@@ -141,6 +143,33 @@ test('every filter is a step the back button can walk', async ({ page }) => {
 
     await expect(page).toHaveURL(/grades=french%7C7a/);
     await expect(page.getByText('1 route', { exact: true })).toBeVisible();
+  });
+});
+
+test('a region narrows its sectors by route, and the sector keeps it', async ({
+  page
+}) => {
+  await page.goto(`/regions/${region.id}`);
+  await pickGrade(page, '7a');
+
+  await test.step('each sector counts what matches, and an empty one sinks', async () => {
+    await expect(card(page, sector.name)).toContainText('1 of 2 match');
+    await expect(card(page, bare.name)).toContainText('no matches');
+
+    const full = await card(page, sector.name).boundingBox();
+    const empty = await card(page, bare.name).boundingBox();
+
+    expect(full?.y).toBeLessThan(empty?.y ?? 0);
+  });
+
+  await test.step('opening the sector carries the filter into it', async () => {
+    await card(page, sector.name).click();
+
+    await expect(page).toHaveURL(
+      new RegExp(`/sectors/${sector.id}\\?grades=french%7C7a`)
+    );
+    await expect(card(page, hard.name)).toBeVisible();
+    await expect(card(page, easy.name)).toHaveCount(0);
   });
 });
 

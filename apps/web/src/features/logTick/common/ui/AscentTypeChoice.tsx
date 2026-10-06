@@ -2,7 +2,8 @@ import { useLingui } from '@lingui/react/macro';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 
-import { ASCENT_TYPES, type AscentType, AscentTypeLabel } from '@web/shared/ui';
+import { ASCENT_TYPES, type AscentType } from '@web/shared/types';
+import { AscentTypeLabel } from '@web/shared/ui';
 
 import { FIRST_ASCENT_TYPES } from '../lib';
 

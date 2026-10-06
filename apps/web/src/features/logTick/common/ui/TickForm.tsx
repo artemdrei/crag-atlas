@@ -11,7 +11,7 @@ import TextField from '@mui/material/TextField';
 
 import { ClimberPicker } from '@web/features/climberPicker';
 import { useWeatherFailureMessage } from '@web/shared/lib';
-import type { AscentType } from '@web/shared/ui';
+import type { AscentType } from '@web/shared/types';
 
 import type { CreateTick, GradeOpinion, PendingMedia, Tick } from '../entities';
 import { useRouteSends, useTickConditions } from '../hooks';

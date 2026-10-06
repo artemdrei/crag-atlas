@@ -139,12 +139,15 @@ const NumberBadgeStyled = styled('span', {
   justify-content: center;
   width: 28px;
   height: 28px;
-  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
+  border-radius: 50%;
   font-weight: 700;
   font-size: ${({ theme }) => theme.typography.caption.fontSize};
-  color: ${({ theme }) => theme.palette.text.secondary};
+  color: ${({ theme, isTicked }) =>
+    isTicked ? theme.palette.background.paper : theme.palette.text.secondary};
   background: ${({ theme, isTicked }) =>
-    isTicked ? theme.palette.background.paper : theme.palette.action.hover};
+    isTicked
+      ? resolveAscentTypeInk(theme.palette.mode, 'onsight')
+      : theme.palette.action.hover};
 `;
 
 const CheckIconStyled = styled(CheckIcon)`
@@ -154,9 +157,8 @@ const CheckIconStyled = styled(CheckIcon)`
   padding: 1px;
   font-size: 12px;
   border-radius: 50%;
-  color: ${({ theme }) => theme.palette.background.paper};
-  background: ${({ theme }) =>
-    resolveAscentTypeInk(theme.palette.mode, 'onsight')};
+  color: ${({ theme }) => resolveAscentTypeInk(theme.palette.mode, 'onsight')};
+  background: ${({ theme }) => theme.palette.background.paper};
 `;
 
 const MetaStyled = styled(Typography)`

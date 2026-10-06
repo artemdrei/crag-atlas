@@ -8,7 +8,7 @@ import {
   makeRoute,
   makeSector
 } from '../../fixtures/catalog';
-import { breadcrumb, card } from '../../fixtures/ui';
+import { breadcrumb, card, pickGrade } from '../../fixtures/ui';
 
 /**
  * The phone gets its own tree: its own pages, a bottom navigation instead of a
@@ -50,7 +50,8 @@ test('the catalog walks down to a route on a phone too', async ({ page }) => {
   await expect(card(page, sector.name)).toBeVisible();
 
   await card(page, sector.name).click();
-  await expect(page.getByText('2 routes')).toBeVisible();
+  await expect(card(page, route.name)).toBeVisible();
+  await expect(page.getByText('2 routes')).toHaveCount(1);
 
   await card(page, route.name).click();
   await expect(page.getByRole('heading', { name: route.name })).toBeVisible();
@@ -78,7 +79,7 @@ test('the bottom navigation reaches the logbook and the profile', async ({
 
 test('the phone keeps its filter in the URL too', async ({ page }) => {
   await page.goto(`/regions/${region.id}/sectors/${sector.id}`);
-  await page.getByRole('button', { name: '7a', exact: true }).click();
+  await pickGrade(page, '7a');
 
   await test.step('the address carries the grade', async () => {
     await expect(page).toHaveURL(/[?&]grades=french%7C7a/);
@@ -102,7 +103,7 @@ test('the phone keeps its filter in the URL too', async ({ page }) => {
   });
 
   await test.step('and clearing it takes the parameter away', async () => {
-    await page.getByRole('button', { name: 'Reset filters' }).click();
+    await page.getByRole('button', { name: 'Clear all filters' }).click();
 
     await expect(page).not.toHaveURL(/grades=/);
     await expect(page.getByText('2 routes')).toBeVisible();

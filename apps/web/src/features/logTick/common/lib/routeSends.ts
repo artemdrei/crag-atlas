@@ -1,4 +1,4 @@
-import type { AscentType } from '@web/shared/ui';
+import type { AscentType } from '@web/shared/types';
 
 import type { Tick } from '../entities';
 
