@@ -20,8 +20,25 @@ test.afterAll(async () => {
   await climber.remove();
 });
 
-test('an admin grants the role and takes it back', async ({ page }) => {
+test('an admin reaches the Access tab from the header', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('link', { name: 'Admin', exact: true }).click();
+
+  await expect(page).toHaveURL(/\/admin\/access$/);
+
+  await page.getByRole('tab', { name: 'QR codes' }).click();
+
+  await expect(page).toHaveURL(/\/admin\/qr-codes$/);
+});
+
+test('the old Access address still lands on the tab', async ({ page }) => {
   await page.goto('/access');
+
+  await expect(page).toHaveURL(/\/admin\/access$/);
+});
+
+test('an admin grants the role and takes it back', async ({ page }) => {
+  await page.goto('/admin/access');
 
   await test.step('the climber is not an admin yet', async () => {
     expect(await climber.status('GET', '/admins')).toBe(403);
@@ -65,10 +82,15 @@ test('an admin grants the role and takes it back', async ({ page }) => {
 test.describe('a climber who is not an admin', () => {
   test.use({ storageState: STORAGE_STATE_MEMBER });
 
-  test('is turned away from the Access page', async ({ page }) => {
-    await page.goto('/access');
+  test('is turned away from the admin page and never sees it', async ({
+    page
+  }) => {
+    await page.goto('/admin/access');
 
-    await expect(page).not.toHaveURL(/\/access/);
+    await expect(page).not.toHaveURL(/\/admin/);
+    await expect(
+      page.getByRole('link', { name: 'Admin', exact: true })
+    ).toHaveCount(0);
     await expect(page.getByRole('button', { name: 'Add admin' })).toHaveCount(
       0
     );
