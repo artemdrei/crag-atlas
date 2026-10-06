@@ -398,6 +398,10 @@ msgstr "Attempt"
 msgid "Auto"
 msgstr "Auto"
 
+#: src/app/mobile/layout/HeaderBackButton.tsx:24
+msgid "Back"
+msgstr "Back"
+
 #: src/shared/ui/ArchivedToggle.tsx:17
 msgid "Back to the catalog"
 msgstr "Back to the catalog"

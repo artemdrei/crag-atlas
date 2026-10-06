@@ -398,6 +398,10 @@ msgstr "Спроба"
 msgid "Auto"
 msgstr "Авто"
 
+#: src/app/mobile/layout/HeaderBackButton.tsx:24
+msgid "Back"
+msgstr "Назад"
+
 #: src/shared/ui/ArchivedToggle.tsx:17
 msgid "Back to the catalog"
 msgstr "Назад до каталогу"

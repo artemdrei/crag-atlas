@@ -115,3 +115,39 @@ test('the phone keeps its filter in the URL too', async ({ page }) => {
     await expect(page).not.toHaveURL(/grades=french%7C6a/);
   });
 });
+
+test('a filter cleared in a sector stays cleared in its region', async ({
+  page
+}) => {
+  await page.goto(`/regions/${region.id}`);
+  await pickGrade(page, '7a');
+  await card(page, sector.name).click();
+
+  await expect(page).toHaveURL(/\/sectors\/.+grades=french%7C7a/);
+
+  await page.getByRole('button', { name: 'Clear all filters' }).click();
+  await page.getByRole('button', { name: 'Back', exact: true }).click();
+
+  await expect(page).toHaveURL(new RegExp(`/regions/${region.id}$`));
+});
+
+test('the header back climbs up from a sector opened by its address', async ({
+  page
+}) => {
+  const back = page.getByRole('button', { name: 'Back', exact: true });
+
+  await page.goto(`/regions/${region.id}/sectors/${sector.id}`);
+  await pickGrade(page, '7a');
+
+  await test.step('a filter does not make it leave the app', async () => {
+    await back.click();
+
+    await expect(page).toHaveURL(new RegExp(`/regions/${region.id}(\\?|$)`));
+  });
+
+  await test.step('and the next one reaches the crags', async () => {
+    await back.click();
+
+    await expect(card(page, region.name)).toBeVisible();
+  });
+});

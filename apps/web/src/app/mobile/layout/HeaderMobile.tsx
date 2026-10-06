@@ -1,21 +1,35 @@
+import { useLocation } from 'react-router';
+
 import AppBar from '@mui/material/AppBar';
 import { styled } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 
+import { parentPathOf } from '@web/app/router/parentPathOf';
 import { ROUTES } from '@web/app/router/routes';
 import { CatalogSearchMobile } from '@web/features/catalogSearch';
 import { Wordmark } from '@web/shared/ui';
 
-export const HeaderMobile = () => (
-  <HeaderStyled position="static" color="transparent" elevation={0}>
-    <ToolbarStyled>
-      <Wordmark to={ROUTES.INDEX} />
-      <SearchSlotStyled>
-        <CatalogSearchMobile />
-      </SearchSlotStyled>
-    </ToolbarStyled>
-  </HeaderStyled>
-);
+import { HeaderBackButton } from './HeaderBackButton';
+
+export const HeaderMobile = () => {
+  const { pathname } = useLocation();
+  const parentPath = parentPathOf(pathname);
+
+  return (
+    <HeaderStyled position="static" color="transparent" elevation={0}>
+      <ToolbarStyled>
+        {parentPath ? (
+          <HeaderBackButton parentPath={parentPath} />
+        ) : (
+          <Wordmark to={ROUTES.INDEX} />
+        )}
+        <SearchSlotStyled>
+          <CatalogSearchMobile />
+        </SearchSlotStyled>
+      </ToolbarStyled>
+    </HeaderStyled>
+  );
+};
 
 const HeaderStyled = styled(AppBar)`
   background-color: ${({ theme }) => theme.palette.background.default};
