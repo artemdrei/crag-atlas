@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.5.0](https://github.com/artemdrei/crag-atlas/compare/web-v0.4.0...web-v0.5.0) (2026-10-06)
+
+### Features
+
+* mobile back navigation, shared route filter, install hint and login benefits ([#13](https://github.com/artemdrei/crag-atlas/issues/13)) ([957bdfc](https://github.com/artemdrei/crag-atlas/commit/957bdfc5947835eaed05d51eaff39b7ef1cbd626))
+
 ## [0.4.0](https://github.com/artemdrei/crag-atlas/compare/web-v0.3.0...web-v0.4.0) (2026-10-06)
 
 ### Features
