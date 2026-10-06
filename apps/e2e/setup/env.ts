@@ -13,7 +13,7 @@ const required = (name: string, fallback?: string): string => {
 };
 
 export const env = {
-  supabaseUrl: required('SUPABASE_URL', 'http://127.0.0.1:54321'),
+  supabaseUrl: required('SUPABASE_URL', 'http://127.0.0.1:55321'),
   anonKey: required('SUPABASE_ANON_KEY'),
   serviceRoleKey: required('SUPABASE_SERVICE_ROLE_KEY'),
   // Deliberately not 4000/4001: the developer's own dev servers live there,

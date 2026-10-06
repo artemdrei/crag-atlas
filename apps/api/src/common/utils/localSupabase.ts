@@ -9,7 +9,7 @@ const env = (name: string, fallback?: string): string => {
   return value;
 };
 
-const url = () => env('SUPABASE_URL', 'http://127.0.0.1:54321');
+const url = () => env('SUPABASE_URL', 'http://127.0.0.1:55321');
 
 const LOCAL_HOSTS = ['127.0.0.1', 'localhost', '::1', 'host.docker.internal'];
 
