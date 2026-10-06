@@ -13,6 +13,7 @@ export const TopoPhotoViewer = ({
   label,
   lines,
   numberOf,
+  tickedRoutes,
   colorOf,
   className
 }: Props) => (
@@ -22,6 +23,7 @@ export const TopoPhotoViewer = ({
     label={label}
     lines={lines}
     numberOf={numberOf}
+    tickedRoutes={tickedRoutes}
     colorOf={colorOf}
   >
     <TopoZoomControls />

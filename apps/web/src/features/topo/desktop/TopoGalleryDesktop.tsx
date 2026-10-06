@@ -17,6 +17,7 @@ export const TopoGalleryDesktop = ({
   idHighlightedRoute,
   colorOf,
   numberOf,
+  tickedRoutes,
   onSelectTopo,
   onSelectRoute,
   onHoverRoute
@@ -35,6 +36,7 @@ export const TopoGalleryDesktop = ({
           idHighlightedRoute={idHighlightedRoute}
           colorOf={colorOf}
           numberOf={numberOf}
+          tickedRoutes={tickedRoutes}
           onSelectRoute={onSelectRoute}
           onHoverRoute={onHoverRoute}
           isTopAligned

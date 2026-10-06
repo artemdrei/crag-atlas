@@ -16,6 +16,7 @@ export const TopoGalleryMobile = ({
   idHighlightedRoute,
   colorOf,
   numberOf,
+  tickedRoutes,
   onSelectTopo,
   onSelectRoute,
   onHoverRoute
@@ -30,6 +31,7 @@ export const TopoGalleryMobile = ({
       topo: activeTopo,
       label: photoLabel(idxActiveTopo),
       numberOf,
+      tickedRoutes,
       colorOf
     });
 
@@ -44,6 +46,7 @@ export const TopoGalleryMobile = ({
             idHighlightedRoute={idHighlightedRoute}
             colorOf={colorOf}
             numberOf={numberOf}
+            tickedRoutes={tickedRoutes}
             onSelectRoute={onSelectRoute}
             onSelectPhoto={handleSelectPhoto}
             onHoverRoute={onHoverRoute}

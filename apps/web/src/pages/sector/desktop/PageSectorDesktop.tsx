@@ -176,6 +176,7 @@ export const PageSectorDesktop = () => {
               idHighlightedRoute={idHighlightedRoute}
               colorOf={colorOf}
               numberOf={numberOf}
+              tickedRoutes={tickedRoutes}
               onSelectTopo={selectTopo}
               onSelectRoute={openRouteById}
               onHoverRoute={highlightRoute}

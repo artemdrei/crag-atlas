@@ -144,6 +144,7 @@ export const PageSectorMobile = () => {
         idActiveTopo={idActiveTopo}
         colorOf={colorOf}
         numberOf={numberOf}
+        tickedRoutes={tickedRoutes}
         onSelectTopo={selectTopo}
         onSelectRoute={openRouteById}
       />

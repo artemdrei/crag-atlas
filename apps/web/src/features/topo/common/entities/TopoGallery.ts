@@ -6,6 +6,7 @@ export interface TopoGalleryProps {
   idHighlightedRoute?: string;
   colorOf?: (idRoute: string) => string | undefined;
   numberOf?: Record<string, number>;
+  tickedRoutes?: ReadonlySet<string>;
   onSelectTopo: (idTopo: string) => void;
   onSelectRoute?: (idRoute: string) => void;
   onHoverRoute?: (idRoute?: string) => void;

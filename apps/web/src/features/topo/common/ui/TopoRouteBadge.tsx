@@ -1,9 +1,14 @@
 import type { GradeScale } from '@crag-atlas/api';
+import { useLingui } from '@lingui/react/macro';
+import CheckIcon from '@mui/icons-material/Check';
 import { styled } from '@mui/material/styles';
 
 import { useDisplayGrade } from '@web/shared/lib';
 import type { GradeTone } from '@web/shared/theme/palette';
-import { resolveGradeTone } from '@web/shared/theme/palette';
+import {
+  resolveAscentTypeInk,
+  resolveGradeTone
+} from '@web/shared/theme/palette';
 
 export interface Props {
   number: number;
@@ -13,6 +18,7 @@ export interface Props {
   x: number;
   y: number;
   isDimmed?: boolean;
+  isTicked?: boolean;
   onSelect?: () => void;
   onHover?: (isOver: boolean) => void;
 }
@@ -25,9 +31,11 @@ export const TopoRouteBadge = ({
   x,
   y,
   isDimmed,
+  isTicked,
   onSelect,
   onHover
 }: Props) => {
+  const { t } = useLingui();
   const displayGrade = useDisplayGrade();
 
   const tone = resolveGradeTone(grade, gradeScale);
@@ -52,7 +60,10 @@ export const TopoRouteBadge = ({
       <GradeStyled tone={tone}>
         {name ? `${name} · ${shownGrade}` : shownGrade}
       </GradeStyled>
-      <NumberStyled>{number}</NumberStyled>
+      <NumberStyled isTicked={!!isTicked}>
+        {number}
+        {isTicked && <CheckIconStyled titleAccess={t`Climbed`} />}
+      </NumberStyled>
     </BadgeStyled>
   );
 };
@@ -131,7 +142,10 @@ const GradeStyled = styled('span', {
   filter: drop-shadow(0 0 2px rgb(0 0 0 / 60%));
 `;
 
-const NumberStyled = styled('span')`
+const NumberStyled = styled('span', {
+  shouldForwardProp: (prop) => prop !== 'isTicked'
+})<{ isTicked: boolean }>`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -139,9 +153,24 @@ const NumberStyled = styled('span')`
   height: 22px;
   padding: 0 ${({ theme }) => theme.spacing(0.5)};
   border-radius: 11px;
-  background: rgb(0 0 0 / 55%);
-  color: rgb(255 255 255 / 80%);
+  background: ${({ theme, isTicked }) =>
+    isTicked
+      ? resolveAscentTypeInk(theme.palette.mode, 'onsight')
+      : 'rgb(0 0 0 / 55%)'};
+  color: ${({ theme, isTicked }) =>
+    isTicked ? theme.palette.background.paper : 'rgb(255 255 255 / 80%)'};
   font-size: ${({ theme }) => theme.typography.caption.fontSize};
   font-weight: 600;
   line-height: 1;
+`;
+
+const CheckIconStyled = styled(CheckIcon)`
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  padding: 1px;
+  font-size: 12px;
+  border-radius: 50%;
+  color: ${({ theme }) => resolveAscentTypeInk(theme.palette.mode, 'onsight')};
+  background: ${({ theme }) => theme.palette.background.paper};
 `;
