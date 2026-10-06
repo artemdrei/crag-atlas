@@ -152,7 +152,7 @@ msgstr "{routes} у {sectorsCount, plural, one {# секторі} few {# сек�
 msgid "{routesCount, plural, one {# route} other {# routes}}"
 msgstr "{routesCount, plural, one {# маршрут} few {# маршрути} many {# маршрутів} other {# маршруту}}"
 
-#: src/features/routeFilter/mobile/RouteFilterPanelMobile.tsx:67
+#: src/features/routeFilter/mobile/RouteFilterPanelMobile.tsx:75
 msgid "{routesCount, plural, one {Show # route} other {Show # routes}}"
 msgstr "{routesCount, plural, one {Показати # маршрут} few {Показати # маршрути} many {Показати # маршрутів} other {Показати # маршруту}}"
 
@@ -322,7 +322,7 @@ msgstr "Станція"
 #: src/features/routeFilter/common/hooks/useRouteFilterLabels.ts:20
 #: src/features/routeFilter/common/hooks/useRouteFilterLabels.ts:25
 msgid "any"
-msgstr "будь-які"
+msgstr "усі"
 
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:285
 msgid "Apply"
@@ -502,7 +502,7 @@ msgid "Clear"
 msgstr "Очистити"
 
 #: src/features/routeFilter/common/ui/ActiveFilterChips.tsx:36
-#: src/features/routeFilter/common/ui/FiltersHeader.tsx:26
+#: src/features/routeFilter/common/ui/FiltersHeader.tsx:30
 #: src/features/routeFilter/desktop/RouteFilterPanelDesktop.tsx:71
 msgid "Clear all filters"
 msgstr "Скинути фільтри"
@@ -532,6 +532,7 @@ msgstr "Скелелаз з акаунтом"
 msgid "Climbers left nothing here — no ascents, no comments, no photos."
 msgstr "Скелелази тут нічого не лишали — ні пролазів, ні коментарів, ні фото."
 
+#: src/features/routeFilter/mobile/RouteFilterPanelMobile.tsx:69
 #: src/features/topo/desktop/TopoPhotoDialog.tsx:31
 #: src/features/topo/mobile/TopoPhotoModal.tsx:34
 #: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:31
@@ -824,7 +825,7 @@ msgstr "Стирання забере з собою {0, plural, one {# сект�
 msgid "Excellent"
 msgstr "Чудово"
 
-#: src/features/routeFilter/common/ui/FiltersHeader.tsx:15
+#: src/features/routeFilter/common/ui/FiltersHeader.tsx:18
 #: src/features/routeFilter/common/ui/FiltersToggleButton.tsx:28
 msgid "Filters"
 msgstr "Фільтри"

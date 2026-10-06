@@ -151,3 +151,18 @@ test('the header back climbs up from a sector opened by its address', async ({
     await expect(card(page, region.name)).toBeVisible();
   });
 });
+
+test('the filter sheet names its count and closes without a choice', async ({
+  page
+}) => {
+  await page.goto(`/regions/${region.id}/sectors/${sector.id}`);
+  await page.getByRole('button', { name: /^Filters/ }).click();
+
+  const heading = page.getByRole('heading', { name: 'Filters · 2 routes' });
+
+  await expect(heading).toBeVisible();
+
+  await page.getByRole('button', { name: 'Close', exact: true }).click();
+
+  await expect(heading).toBeHidden();
+});
