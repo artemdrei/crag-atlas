@@ -115,10 +115,6 @@ msgstr "{0}%"
 msgid "{failed} file(s) could not be read as photos."
 msgstr "{failed} файл(ів) не вдалося прочитати як фото."
 
-#: src/features/routeFilter/mobile/RouteFilterPanelMobile.tsx:69
-msgid "{matchedCount, plural, one {Show # route} other {Show # routes}}"
-msgstr "{matchedCount, plural, one {Показати # маршрут} few {Показати # маршрути} many {Показати # маршрутів} other {Показати # маршруту}}"
-
 #: src/features/routeFilter/common/hooks/useRouteFilterLabels.ts:22
 msgid "{meters} m+"
 msgstr "{meters} м+"
@@ -155,6 +151,10 @@ msgstr "{routes} у {sectorsCount, plural, one {# секторі} few {# сек�
 #: src/pages/region/common/ui/RegionRoutesTitle.tsx:14
 msgid "{routesCount, plural, one {# route} other {# routes}}"
 msgstr "{routesCount, plural, one {# маршрут} few {# маршрути} many {# маршрутів} other {# маршруту}}"
+
+#: src/features/routeFilter/mobile/RouteFilterPanelMobile.tsx:67
+msgid "{routesCount, plural, one {Show # route} other {Show # routes}}"
+msgstr "{routesCount, plural, one {Показати # маршрут} few {Показати # маршрути} many {Показати # маршрутів} other {Показати # маршруту}}"
 
 #: src/features/catalogEdit/desktop/ArchiveSectorDialog.tsx:37
 msgid "{sector} is empty, so only the sector itself and its photos leave the catalog. You can bring it back from the archive."

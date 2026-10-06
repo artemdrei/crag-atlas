@@ -109,9 +109,9 @@ test('the phone keeps its filter in the URL too', async ({ page }) => {
     await expect(page.getByText('2 routes')).toBeVisible();
   });
 
-  await test.step('back walks the filter off again', async () => {
+  await test.step('clearing it is not a step back can undo', async () => {
     await page.goBack();
 
-    await expect(page).toHaveURL(/grades=french%7C6a/);
+    await expect(page).not.toHaveURL(/grades=french%7C6a/);
   });
 });

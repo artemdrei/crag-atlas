@@ -125,20 +125,35 @@ test('the filter lives in the URL, not in the page', async ({ page }) => {
   });
 });
 
-test('every filter is a step the back button can walk', async ({ page }) => {
+test('a filter cleared in a sector stays cleared in its region', async ({
+  page
+}) => {
+  await page.goto(`/regions/${region.id}`);
+  await pickGrade(page, '7a');
+  await card(page, sector.name).click();
+
+  await expect(page).toHaveURL(/\/sectors\/.+grades=french%7C7a/);
+
+  await page.getByRole('button', { name: 'Clear all filters' }).click();
+  await page.goBack();
+
+  await expect(page).toHaveURL(new RegExp(`/regions/${region.id}$`));
+});
+
+test('a filter is not a step the back button walks', async ({ page }) => {
+  await page.goto(`/regions/${region.id}`);
   await page.goto(`/regions/${region.id}/sectors/${sector.id}`);
   await pickGrade(page, '7a');
 
   await expect(page).toHaveURL(/grades=french%7C7a/);
 
-  await test.step('back undoes the filter rather than leaving the sector', async () => {
+  await test.step('back leaves the sector rather than undoing the filter', async () => {
     await page.goBack();
 
-    await expect(page).toHaveURL(new RegExp(`/sectors/${sector.id}$`));
-    await expect(page.getByText('2 routes')).toBeVisible();
+    await expect(page).toHaveURL(new RegExp(`/regions/${region.id}$`));
   });
 
-  await test.step('forward puts it on again', async () => {
+  await test.step('and the sector comes back with the filter still on', async () => {
     await page.goForward();
 
     await expect(page).toHaveURL(/grades=french%7C7a/);
