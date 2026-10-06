@@ -109,9 +109,60 @@ test('the phone keeps its filter in the URL too', async ({ page }) => {
     await expect(page.getByText('2 routes')).toBeVisible();
   });
 
-  await test.step('back walks the filter off again', async () => {
+  await test.step('clearing it is not a step back can undo', async () => {
     await page.goBack();
 
-    await expect(page).toHaveURL(/grades=french%7C6a/);
+    await expect(page).not.toHaveURL(/grades=french%7C6a/);
   });
+});
+
+test('a filter cleared in a sector stays cleared in its region', async ({
+  page
+}) => {
+  await page.goto(`/regions/${region.id}`);
+  await pickGrade(page, '7a');
+  await card(page, sector.name).click();
+
+  await expect(page).toHaveURL(/\/sectors\/.+grades=french%7C7a/);
+
+  await page.getByRole('button', { name: 'Clear all filters' }).click();
+  await page.getByRole('button', { name: 'Back', exact: true }).click();
+
+  await expect(page).toHaveURL(new RegExp(`/regions/${region.id}$`));
+});
+
+test('the header back climbs up from a sector opened by its address', async ({
+  page
+}) => {
+  const back = page.getByRole('button', { name: 'Back', exact: true });
+
+  await page.goto(`/regions/${region.id}/sectors/${sector.id}`);
+  await pickGrade(page, '7a');
+
+  await test.step('a filter does not make it leave the app', async () => {
+    await back.click();
+
+    await expect(page).toHaveURL(new RegExp(`/regions/${region.id}(\\?|$)`));
+  });
+
+  await test.step('and the next one reaches the crags', async () => {
+    await back.click();
+
+    await expect(card(page, region.name)).toBeVisible();
+  });
+});
+
+test('the filter sheet names its count and closes without a choice', async ({
+  page
+}) => {
+  await page.goto(`/regions/${region.id}/sectors/${sector.id}`);
+  await page.getByRole('button', { name: /^Filters/ }).click();
+
+  const heading = page.getByRole('heading', { name: 'Filters · 2 routes' });
+
+  await expect(heading).toBeVisible();
+
+  await page.getByRole('button', { name: 'Close', exact: true }).click();
+
+  await expect(heading).toBeHidden();
 });

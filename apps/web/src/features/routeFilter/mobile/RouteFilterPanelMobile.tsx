@@ -1,7 +1,7 @@
 import { type ReactNode, useState } from 'react';
 
 import type { GradeHistogramGroup } from '@crag-atlas/api';
-import { Plural } from '@lingui/react/macro';
+import { Plural, Trans } from '@lingui/react/macro';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 
@@ -55,21 +55,30 @@ export const RouteFilterPanelMobile = ({
       <BottomSheet isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <SheetBodyStyled>
           <FiltersHeader
+            summary={title}
             isActive={state.activeCount > 0}
             onClearAll={state.clearFilters}
           />
           <RouteFilterFields state={state} gradeHistogram={gradeHistogram} />
-          <Button
-            variant="contained"
-            fullWidth
-            onClick={() => setIsOpen(false)}
-          >
-            <Plural
-              value={routesCount}
-              one="Show # route"
-              other="Show # routes"
-            />
-          </Button>
+          <ActionsStyled>
+            <Button
+              variant="outlined"
+              color="inverse"
+              onClick={() => setIsOpen(false)}
+            >
+              <Trans>Close</Trans>
+            </Button>
+            <ShowButtonStyled
+              variant="contained"
+              onClick={() => setIsOpen(false)}
+            >
+              <Plural
+                value={routesCount}
+                one="Show # route"
+                other="Show # routes"
+              />
+            </ShowButtonStyled>
+          </ActionsStyled>
         </SheetBodyStyled>
       </BottomSheet>
     </PanelStyled>
@@ -91,4 +100,13 @@ const SheetBodyStyled = styled('div')`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(1.5)};
+`;
+
+const ActionsStyled = styled('div')`
+  display: flex;
+  gap: ${({ theme }) => theme.spacing(1)};
+`;
+
+const ShowButtonStyled = styled(Button)`
+  flex: 1 1 auto;
 `;

@@ -5,6 +5,7 @@ import { styled } from '@mui/material/styles';
 import { useSignInReturnPath } from '@web/app/router/useSignInLink';
 
 import { LoginCard } from '../common';
+import { LoginBenefits } from './ui';
 
 export const PageLoginDesktop = () => {
   const navigate = useNavigate();
@@ -19,7 +20,9 @@ export const PageLoginDesktop = () => {
         />
       </FormPanelStyled>
 
-      <DecorPanelStyled />
+      <DecorPanelStyled>
+        <LoginBenefits />
+      </DecorPanelStyled>
     </PageStyled>
   );
 };
@@ -41,6 +44,10 @@ const FormPanelStyled = styled('div')`
 
 const DecorPanelStyled = styled('div')`
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: ${({ theme }) => theme.spacing(6)};
   background: linear-gradient(
     160deg,
     ${({ theme }) => theme.palette.primary.main},

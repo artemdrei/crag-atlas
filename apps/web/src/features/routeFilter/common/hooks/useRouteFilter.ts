@@ -1,5 +1,5 @@
-import { useCallback, useMemo } from 'react';
-import { useSearchParams } from 'react-router';
+import { useCallback, useEffect, useMemo } from 'react';
+import { useParams, useSearchParams } from 'react-router';
 
 import { track } from '@crag-atlas/analytics';
 
@@ -19,7 +19,13 @@ import {
   TICKED_FILTERS,
   type TickedFilter
 } from '../entities';
-import { countActiveFilters } from '../lib';
+import {
+  countActiveFilters,
+  filterSearchOf,
+  rememberSessionFilter,
+  sessionFilterOf,
+  withFilterSearch
+} from '../lib';
 
 export type RouteFilterList = 'routes' | 'region';
 
@@ -32,9 +38,32 @@ const pick = <T extends string>(
 ): T => options.find((option) => option === value) ?? fallback;
 
 export const useRouteFilter = (list: RouteFilterList) => {
-  const [params, setParams] = useSearchParams();
+  const { idRegion } = useParams();
+  const [urlParams, setParams] = useSearchParams();
   const { isAuthenticated } = useUser();
   const { openModal } = useModal();
+
+  const urlFilter = filterSearchOf(urlParams);
+  const sessionFilter = idRegion ? sessionFilterOf(idRegion) : undefined;
+  const params =
+    sessionFilter === undefined
+      ? urlParams
+      : new URLSearchParams(sessionFilter);
+
+  // The region and its sectors share one filter for the session: an entry
+  // that Back restores carries the filter it was left with, so the session's
+  // wins over the address. A first visit is still read from the address.
+  useEffect(() => {
+    if (!idRegion) return;
+
+    if (sessionFilter === undefined) {
+      rememberSessionFilter(idRegion, urlFilter);
+    } else if (sessionFilter !== urlFilter) {
+      setParams((next) => withFilterSearch(next, sessionFilter), {
+        replace: true
+      });
+    }
+  }, [idRegion, sessionFilter, urlFilter, setParams]);
 
   const rawGrades = params.get(KEYS.grades);
   const rating = pick(params.get(KEYS.rating), RATING_FILTERS, 'any');
@@ -58,20 +87,29 @@ export const useRouteFilter = (list: RouteFilterList) => {
     [rawGrades, rating, length, ticked]
   );
 
-  // Pushed, not replaced: the address is the filter, so Back steps through.
+  // Replaced, not pushed: Back leaves the screen instead of undoing filters
+  // one by one.
   const update = useCallback(
     (entries: Partial<Record<keyof typeof KEYS, string>>) =>
-      setParams((next) => {
-        for (const [field, value] of Object.entries(entries)) {
-          const key = KEYS[field as keyof typeof KEYS];
+      setParams(
+        (next) => {
+          const current = idRegion ? sessionFilterOf(idRegion) : undefined;
+          if (current !== undefined) withFilterSearch(next, current);
 
-          if (value) next.set(key, value);
-          else next.delete(key);
-        }
+          for (const [field, value] of Object.entries(entries)) {
+            const key = KEYS[field as keyof typeof KEYS];
 
-        return next;
-      }),
-    [setParams]
+            if (value) next.set(key, value);
+            else next.delete(key);
+          }
+
+          if (idRegion) rememberSessionFilter(idRegion, filterSearchOf(next));
+
+          return next;
+        },
+        { replace: true }
+      ),
+    [idRegion, setParams]
   );
 
   const toggleGrade = (key: string) => {

@@ -115,10 +115,6 @@ msgstr "{0}%"
 msgid "{failed} file(s) could not be read as photos."
 msgstr "{failed} файл(ів) не вдалося прочитати як фото."
 
-#: src/features/routeFilter/mobile/RouteFilterPanelMobile.tsx:69
-msgid "{matchedCount, plural, one {Show # route} other {Show # routes}}"
-msgstr "{matchedCount, plural, one {Показати # маршрут} few {Показати # маршрути} many {Показати # маршрутів} other {Показати # маршруту}}"
-
 #: src/features/routeFilter/common/hooks/useRouteFilterLabels.ts:22
 msgid "{meters} m+"
 msgstr "{meters} м+"
@@ -155,6 +151,10 @@ msgstr "{routes} у {sectorsCount, plural, one {# секторі} few {# сек�
 #: src/pages/region/common/ui/RegionRoutesTitle.tsx:14
 msgid "{routesCount, plural, one {# route} other {# routes}}"
 msgstr "{routesCount, plural, one {# маршрут} few {# маршрути} many {# маршрутів} other {# маршруту}}"
+
+#: src/features/routeFilter/mobile/RouteFilterPanelMobile.tsx:75
+msgid "{routesCount, plural, one {Show # route} other {Show # routes}}"
+msgstr "{routesCount, plural, one {Показати # маршрут} few {Показати # маршрути} many {Показати # маршрутів} other {Показати # маршруту}}"
 
 #: src/features/catalogEdit/desktop/ArchiveSectorDialog.tsx:37
 msgid "{sector} is empty, so only the sector itself and its photos leave the catalog. You can bring it back from the archive."
@@ -244,6 +244,10 @@ msgstr "Додати адміна"
 msgid "Add beta and photos that help the next climber"
 msgstr "Додавай бету й фото, які допоможуть наступному"
 
+#: src/features/installHint/mobile/InstallHintBody.tsx:24
+msgid "Add crag-atlas to your home screen: it opens in one tap, full screen, like any other app."
+msgstr "Додай crag-atlas на головний екран: він відкриватиметься одним дотиком, на весь екран, як звичайний застосунок."
+
 #: src/features/logTick/common/ui/TickMediaField.tsx:84
 #: src/features/logTick/common/ui/TickMediaField.tsx:92
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:188
@@ -256,6 +260,10 @@ msgstr "Додати фото"
 #: src/widgets/routeMedia/common/ui/RouteMediaInvite.tsx:27
 msgid "Add photo or video"
 msgstr "Додати фото чи відео"
+
+#: src/pages/login/common/hooks/useLoginBenefits.ts:33
+msgid "Add photos and comments, and see what others have climbed."
+msgstr "Додавай фото й коментарі та дивись пролази інших."
 
 #: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:87
 #: src/pages/home/desktop/ui/HomeEditSidebar.tsx:78
@@ -322,7 +330,11 @@ msgstr "Станція"
 #: src/features/routeFilter/common/hooks/useRouteFilterLabels.ts:20
 #: src/features/routeFilter/common/hooks/useRouteFilterLabels.ts:25
 msgid "any"
-msgstr "будь-які"
+msgstr "усі"
+
+#: src/pages/profile/mobile/InstallAppSetting.tsx:14
+msgid "App"
+msgstr "Застосунок"
 
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:285
 msgid "Apply"
@@ -398,6 +410,10 @@ msgstr "Спроба"
 msgid "Auto"
 msgstr "Авто"
 
+#: src/app/mobile/layout/HeaderBackButton.tsx:24
+msgid "Back"
+msgstr "Назад"
+
 #: src/shared/ui/ArchivedToggle.tsx:17
 msgid "Back to the catalog"
 msgstr "Назад до каталогу"
@@ -413,6 +429,10 @@ msgstr "Погано"
 #: src/widgets/routeMedia/common/ui/RouteMediaInvite.tsx:18
 msgid "Be the first to show this route"
 msgstr "Покажи цей маршрут першим"
+
+#: src/features/installHint/mobile/InstallHintBody.tsx:48
+msgid "Before a trip, save a region in Profile → Offline regions. Its topos then open at the crag with no connection."
+msgstr "Перед поїздкою збережи регіон у Профіль → Офлайн-регіони. Тоді його топо відкриються на скелях без зв'язку."
 
 #: src/widgets/tickList/common/ui/TickCard.tsx:197
 #: src/widgets/tickList/common/ui/TickRepeats.tsx:93
@@ -451,6 +471,7 @@ msgid "Boulder"
 msgstr "Болдер"
 
 #: src/pages/logbook/common/ui/DisciplineTabs.tsx:36
+#: src/pages/profile/common/ui/GradeScaleSetting.tsx:43
 #: src/shared/ui/GradeHistogram.tsx:65
 msgid "Bouldering"
 msgstr "Болдеринг"
@@ -498,7 +519,7 @@ msgid "Clear"
 msgstr "Очистити"
 
 #: src/features/routeFilter/common/ui/ActiveFilterChips.tsx:36
-#: src/features/routeFilter/common/ui/FiltersHeader.tsx:26
+#: src/features/routeFilter/common/ui/FiltersHeader.tsx:30
 #: src/features/routeFilter/desktop/RouteFilterPanelDesktop.tsx:71
 msgid "Clear all filters"
 msgstr "Скинути фільтри"
@@ -528,6 +549,7 @@ msgstr "Скелелаз з акаунтом"
 msgid "Climbers left nothing here — no ascents, no comments, no photos."
 msgstr "Скелелази тут нічого не лишали — ні пролазів, ні коментарів, ні фото."
 
+#: src/features/routeFilter/mobile/RouteFilterPanelMobile.tsx:69
 #: src/features/topo/desktop/TopoPhotoDialog.tsx:31
 #: src/features/topo/mobile/TopoPhotoModal.tsx:34
 #: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:31
@@ -599,17 +621,20 @@ msgstr "Оцінка умов"
 msgid "Conditions, read at the sector"
 msgstr "Умови, зчитані за координатами сектора"
 
+#: src/features/installHint/common/hooks/useInstallSteps.ts:19
+msgid "Confirm. crag-atlas appears with your other apps."
+msgstr "Підтверди. crag-atlas з'явиться поруч з іншими застосунками."
+
 #: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:50
 #: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:52
 msgid "Connect to the internet to save or refresh a region."
 msgstr "Підключіться до інтернету, щоб зберегти або оновити регіон."
 
 #: src/pages/login/common/ui/EmailOtpForm.tsx:75
-#: src/pages/login/common/ui/EmailOtpForm.tsx:114
 msgid "Continue"
 msgstr "Продовжити"
 
-#: src/pages/login/common/ui/LoginCard.tsx:39
+#: src/pages/login/common/ui/LoginCard.tsx:34
 msgid "Continue with Google"
 msgstr "Продовжити з Google"
 
@@ -820,10 +845,14 @@ msgstr "Стирання забере з собою {0, plural, one {# сект�
 msgid "Excellent"
 msgstr "Чудово"
 
-#: src/features/routeFilter/common/ui/FiltersHeader.tsx:15
+#: src/features/routeFilter/common/ui/FiltersHeader.tsx:18
 #: src/features/routeFilter/common/ui/FiltersToggleButton.tsx:28
 msgid "Filters"
 msgstr "Фільтри"
+
+#: src/pages/login/common/hooks/useLoginBenefits.ts:27
+msgid "Find new routes"
+msgstr "Знаходь нові маршрути"
 
 #: src/pages/home/common/ui/HomeHeading.tsx:11
 msgid "Find your next climb"
@@ -849,6 +878,10 @@ msgstr "Вільно"
 msgid "Good"
 msgstr "Добре"
 
+#: src/features/installHint/mobile/InstallHintBody.tsx:67
+msgid "Got it"
+msgstr "Зрозуміло"
+
 #: src/features/routeFilter/common/hooks/useRouteSortLabel.ts:11
 #: src/features/routeFilter/common/ui/RouteFilterFields.tsx:38
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:239
@@ -861,14 +894,14 @@ msgid "Grade consensus"
 msgstr "Консенсус категорії"
 
 #: src/pages/profile/common/ui/GradeScaleSetting.tsx:29
-#: src/pages/profile/common/ui/GradeScaleSetting.tsx:55
-#: src/pages/profile/common/ui/GradeScaleSetting.tsx:59
+msgid "Grade system"
+msgstr "Система складності"
+
+#: src/pages/profile/common/ui/GradeScaleSetting.tsx:44
 msgid "Grade system — boulder"
 msgstr "Система складності — болдеринг"
 
-#: src/pages/profile/common/ui/GradeScaleSetting.tsx:26
-#: src/pages/profile/common/ui/GradeScaleSetting.tsx:38
-#: src/pages/profile/common/ui/GradeScaleSetting.tsx:42
+#: src/pages/profile/common/ui/GradeScaleSetting.tsx:34
 msgid "Grade system — routes"
 msgstr "Система складності — маршрути"
 
@@ -916,6 +949,18 @@ msgstr "У тіні весь день"
 msgid "In the sun all day"
 msgstr "На сонці весь день"
 
+#: src/features/installHint/mobile/InstallHintBody.tsx:59
+msgid "Install"
+msgstr "Встановити"
+
+#: src/pages/profile/mobile/InstallAppSetting.tsx:16
+msgid "Install as app"
+msgstr "Встановити як застосунок"
+
+#: src/features/installHint/mobile/InstallHintSheet.tsx:19
+msgid "Install crag-atlas"
+msgstr "Встанови crag-atlas"
+
 #: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:82
 msgid "It is out of the catalog, and a direct link still opens everything on it."
 msgstr "З каталогу він зник, але за прямим посиланням усе на ньому лишається доступним."
@@ -923,6 +968,10 @@ msgstr "З каталогу він зник, але за прямим посил
 #: src/pages/adminAccess/common/ui/AdminRow.tsx:32
 msgid "It's you"
 msgstr "Це ви"
+
+#: src/pages/login/common/hooks/useLoginBenefits.ts:17
+msgid "Keep a logbook"
+msgstr "Веди логбук"
 
 #: src/features/topoEditor/desktop/LeaveEditorDialog.tsx:41
 msgid "Keep editing"
@@ -1000,6 +1049,10 @@ msgstr "Додай перший пролаз"
 #: src/pages/route/common/ui/RouteAscentsInvite.tsx:27
 msgid "Log your ascent to keep the result, follow your progress and build your own grade pyramid."
 msgstr "Додай пролаз у логбук, щоб зберегти результат, стежити за своїм прогресом і будувати власну піраміду категорій."
+
+#: src/pages/login/common/hooks/useLoginBenefits.ts:18
+msgid "Log your ascents and watch your level grow."
+msgstr "Записуй пролази й дивись, як зростає твій рівень."
 
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:32
 #: src/app/mobile/layout/AppBottomNavigation.tsx:34
@@ -1146,6 +1199,10 @@ msgstr "Нічого не знайдено"
 msgid "Now over {0}"
 msgstr "Зараз над {0}"
 
+#: src/pages/login/common/hooks/useLoginBenefits.ts:22
+msgid "Offline mode"
+msgstr "Офлайн-режим"
+
 #: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:21
 #: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:21
 msgid "Offline regions"
@@ -1198,11 +1255,19 @@ msgstr "Відкрити сектор"
 msgid "Open the photo"
 msgstr "Відкрити фото"
 
+#: src/features/installHint/common/hooks/useInstallSteps.ts:17
+msgid "Open this page in Chrome and tap the ⋮ menu."
+msgstr "Відкрий цю сторінку в Chrome і натисни меню ⋮."
+
+#: src/features/installHint/common/hooks/useInstallSteps.ts:10
+msgid "Open this page in Safari and tap Share in the toolbar."
+msgstr "Відкрий цю сторінку в Safari і натисни «Поділитися» на панелі."
+
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:128
 msgid "Open to the rain"
 msgstr "Відкритий дощу"
 
-#: src/pages/login/common/ui/LoginCard.tsx:43
+#: src/pages/login/common/ui/LoginCard.tsx:38
 msgid "or"
 msgstr "або"
 
@@ -1337,7 +1402,7 @@ msgstr "Приватний коментар"
 #: src/app/mobile/layout/AppBottomNavigation.tsx:41
 #: src/pages/profile/common/ui/ProfileTeaser.tsx:14
 #: src/pages/profile/desktop/PageProfileDesktop.tsx:25
-#: src/pages/profile/mobile/PageProfileMobile.tsx:25
+#: src/pages/profile/mobile/PageProfileMobile.tsx:26
 msgid "Profile"
 msgstr "Профіль"
 
@@ -1462,6 +1527,7 @@ msgstr "Маршрут збережено"
 
 #: src/features/catalogSearch/common/ui/CatalogSearchGroup.tsx:36
 #: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:132
+#: src/pages/profile/common/ui/GradeScaleSetting.tsx:33
 msgid "Routes"
 msgstr "Маршрути"
 
@@ -1489,6 +1555,10 @@ msgstr "Збережіть регіон із секторами, маршрут�
 msgid "Save changes"
 msgstr "Відредагувати"
 
+#: src/pages/login/common/hooks/useLoginBenefits.ts:23
+msgid "Save regions and open them offline."
+msgstr "Зберігай регіони та відкривай їх офлайн."
+
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:321
 msgid "Saved changes go live for everyone straight away."
 msgstr "Збережені зміни одразу стають видимими всім."
@@ -1507,6 +1577,10 @@ msgstr "Збережені для офлайну:"
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:95
 msgid "Saving…"
 msgstr "Зберігаємо…"
+
+#: src/features/installHint/common/hooks/useInstallSteps.ts:11
+msgid "Scroll down and tap Add to Home Screen."
+msgstr "Прокрути вниз і натисни «На екран “Додому”»."
 
 #: src/features/catalogSearch/mobile/CatalogSearchMobile.tsx:17
 #: src/features/catalogSearch/mobile/CatalogSearchMobile.tsx:25
@@ -1559,6 +1633,10 @@ msgstr "Обрано: {0}"
 msgid "Sending code…"
 msgstr "Надсилаємо код…"
 
+#: src/pages/login/common/hooks/useLoginBenefits.ts:32
+msgid "Share your experience"
+msgstr "Ділися досвідом"
+
 #: src/features/logTick/common/ui/TickForm.tsx:188
 msgid "Share your thoughts"
 msgstr "Що скажеш?"
@@ -1575,6 +1653,11 @@ msgstr "Під дахом · сухо в дощ"
 msgid "Show on map"
 msgstr "Показати на карті"
 
+#: src/pages/login/common/hooks/useLoginBenefits.ts:28
+msgid "Show only the ones you haven't climbed yet."
+msgstr "Показуй лише ті, які ти ще не проліз."
+
+#: src/pages/login/common/ui/EmailOtpForm.tsx:114
 #: src/shared/ui/SignInCta.tsx:32
 msgid "Sign in"
 msgstr "Увійти"
@@ -1583,10 +1666,6 @@ msgstr "Увійти"
 #: src/features/signInPrompt/mobile/SignInPromptSheet.tsx:20
 msgid "Sign in to log this ascent"
 msgstr "Увійди, щоб записати цей пролаз"
-
-#: src/pages/login/common/ui/LoginCard.tsx:27
-msgid "Sign in to log your sends"
-msgstr "Увійдіть, щоб відмічати пролази"
 
 #: src/pages/profile/common/ui/SignOutButton.tsx:12
 msgid "Sign out"
@@ -1627,6 +1706,14 @@ msgstr "Сонце орієнтовно {0} – {1}"
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:225
 msgid "System"
 msgstr "Система"
+
+#: src/features/installHint/common/hooks/useInstallSteps.ts:12
+msgid "Tap Add. crag-atlas appears on your home screen."
+msgstr "Натисни «Додати». crag-atlas з'явиться на головному екрані."
+
+#: src/features/installHint/common/hooks/useInstallSteps.ts:18
+msgid "Tap Install app or Add to Home screen."
+msgstr "Натисни «Установити додаток» або «Додати на головний екран»."
 
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:41
 #: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:26
@@ -1866,6 +1953,10 @@ msgstr "Вітер"
 msgid "Without a grade"
 msgstr "Без грейду"
 
+#: src/features/installHint/mobile/InstallHintBody.tsx:45
+msgid "Works with no signal"
+msgstr "Працює без зв'язку"
+
 #: src/shared/ui/NameFields.tsx:63
 msgid "Write it in your own language — it will be searchable both in Latin and in yours"
 msgstr "Напишіть рідною мовою — шукати можна буде і латиницею, і вашою"
@@ -1889,6 +1980,10 @@ msgstr "Акаунт тримає щоденник, бету й налаштув
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:39
 msgid "Your beta"
 msgstr "Твоя бета"
+
+#: src/pages/login/desktop/ui/LoginBenefits.tsx:26
+msgid "Your climbing, all in one place"
+msgstr "Твоє скелелазіння — в одному місці"
 
 #: src/features/logTick/common/ui/ConditionsSection.tsx:151
 msgid "Your corrections were reset for the new date and time"

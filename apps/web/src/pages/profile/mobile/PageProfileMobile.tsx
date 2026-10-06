@@ -15,6 +15,7 @@ import {
   SignOutButton,
   ThemeModeSetting
 } from '../common';
+import { InstallAppSetting } from './InstallAppSetting';
 
 export const PageProfileMobile = () => {
   const { email, name, avatarUrl } = useProfileIdentity();
@@ -37,6 +38,7 @@ export const PageProfileMobile = () => {
       <LocaleSetting />
       <GradeScaleSetting />
       <AccessSetting />
+      <InstallAppSetting />
       <OfflineRegionsMobile />
       <SignOutButton />
       <AppVersion />
