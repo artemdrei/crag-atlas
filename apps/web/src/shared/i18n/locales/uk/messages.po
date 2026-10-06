@@ -471,6 +471,7 @@ msgid "Boulder"
 msgstr "Болдер"
 
 #: src/pages/logbook/common/ui/DisciplineTabs.tsx:36
+#: src/pages/profile/common/ui/GradeScaleSetting.tsx:43
 #: src/shared/ui/GradeHistogram.tsx:65
 msgid "Bouldering"
 msgstr "Болдеринг"
@@ -893,14 +894,14 @@ msgid "Grade consensus"
 msgstr "Консенсус категорії"
 
 #: src/pages/profile/common/ui/GradeScaleSetting.tsx:29
-#: src/pages/profile/common/ui/GradeScaleSetting.tsx:55
-#: src/pages/profile/common/ui/GradeScaleSetting.tsx:59
+msgid "Grade system"
+msgstr "Система складності"
+
+#: src/pages/profile/common/ui/GradeScaleSetting.tsx:44
 msgid "Grade system — boulder"
 msgstr "Система складності — болдеринг"
 
-#: src/pages/profile/common/ui/GradeScaleSetting.tsx:26
-#: src/pages/profile/common/ui/GradeScaleSetting.tsx:38
-#: src/pages/profile/common/ui/GradeScaleSetting.tsx:42
+#: src/pages/profile/common/ui/GradeScaleSetting.tsx:34
 msgid "Grade system — routes"
 msgstr "Система складності — маршрути"
 
@@ -1526,6 +1527,7 @@ msgstr "Маршрут збережено"
 
 #: src/features/catalogSearch/common/ui/CatalogSearchGroup.tsx:36
 #: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:132
+#: src/pages/profile/common/ui/GradeScaleSetting.tsx:33
 msgid "Routes"
 msgstr "Маршрути"
 
