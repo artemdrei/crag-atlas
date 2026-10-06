@@ -58,3 +58,5 @@ export type ConditionBand = NonNullable<ConditionsDay['band']>;
 export type Shelter = Sector['shelter'];
 export type SunInterval = components['schemas']['SunIntervalDto'];
 export type HorizonBackfill = components['schemas']['HorizonBackfillDto'];
+export type SectorQr = components['schemas']['SectorQrDto'];
+export type QrPathTarget = components['schemas']['QrPathTargetDto'];

@@ -814,6 +814,142 @@
         "tags": ["Horizon"]
       }
     },
+    "/qr-paths/resolve": {
+      "get": {
+        "operationId": "QrPathsController_resolve",
+        "parameters": [
+          {
+            "name": "path",
+            "required": true,
+            "in": "query",
+            "description": "`country/region/sector`",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QrPathTargetDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["QrPaths"]
+      }
+    },
+    "/qr-paths": {
+      "get": {
+        "operationId": "QrPathsController_list",
+        "parameters": [
+          {
+            "name": "idRegion",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idSector",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SectorQrDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["QrPaths"]
+      },
+      "post": {
+        "operationId": "QrPathsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateQrPathsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SectorQrDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["QrPaths"]
+      }
+    },
+    "/qr-paths/sectors/{idSector}": {
+      "put": {
+        "operationId": "QrPathsController_setSlug",
+        "parameters": [
+          {
+            "name": "idSector",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetQrSlugDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SectorQrDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["QrPaths"]
+      }
+    },
     "/sectors/{idSector}/routes": {
       "get": {
         "operationId": "RoutesController_findBySector",
@@ -2886,6 +3022,90 @@
           }
         },
         "required": ["built", "remaining", "failed", "failureCode"]
+      },
+      "QrPathTargetDto": {
+        "type": "object",
+        "properties": {
+          "idRegion": {
+            "type": "string"
+          },
+          "idSector": {
+            "type": "string"
+          }
+        },
+        "required": ["idRegion", "idSector"]
+      },
+      "SectorQrDto": {
+        "type": "object",
+        "properties": {
+          "idSector": {
+            "type": "string"
+          },
+          "idRegion": {
+            "type": "string"
+          },
+          "regionName": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string",
+            "nullable": true,
+            "description": "ISO country code; a region without one cannot get a QR path"
+          },
+          "sectorName": {
+            "type": "string"
+          },
+          "sectorNameLocal": {
+            "type": "string",
+            "nullable": true
+          },
+          "isArchived": {
+            "type": "boolean",
+            "description": "The sector or its region is archived"
+          },
+          "path": {
+            "type": "string",
+            "nullable": true,
+            "description": "The `country/region/sector` path printed now; null when none"
+          },
+          "oldPaths": {
+            "description": "Earlier paths, still resolving for plaques already printed",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "idSector",
+          "idRegion",
+          "regionName",
+          "sectorName",
+          "isArchived",
+          "oldPaths"
+        ]
+      },
+      "CreateQrPathsDto": {
+        "type": "object",
+        "properties": {
+          "idSectors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": ["idSectors"]
+      },
+      "SetQrSlugDto": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string",
+            "description": "The sector part of the path"
+          }
+        },
+        "required": ["slug"]
       },
       "RouteDto": {
         "type": "object",

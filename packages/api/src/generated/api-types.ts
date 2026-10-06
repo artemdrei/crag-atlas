@@ -356,6 +356,54 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/qr-paths/resolve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["QrPathsController_resolve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/qr-paths": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["QrPathsController_list"];
+        put?: never;
+        post: operations["QrPathsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/qr-paths/sectors/{idSector}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["QrPathsController_setSlug"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/sectors/{idSector}/routes": {
         parameters: {
             query?: never;
@@ -1075,6 +1123,32 @@ export interface components {
             failed: number;
             /** @description Error code of the first sector that failed */
             failureCode: string | null;
+        };
+        QrPathTargetDto: {
+            idRegion: string;
+            idSector: string;
+        };
+        SectorQrDto: {
+            idSector: string;
+            idRegion: string;
+            regionName: string;
+            /** @description ISO country code; a region without one cannot get a QR path */
+            country?: string | null;
+            sectorName: string;
+            sectorNameLocal?: string | null;
+            /** @description The sector or its region is archived */
+            isArchived: boolean;
+            /** @description The `country/region/sector` path printed now; null when none */
+            path?: string | null;
+            /** @description Earlier paths, still resolving for plaques already printed */
+            oldPaths: string[];
+        };
+        CreateQrPathsDto: {
+            idSectors: string[];
+        };
+        SetQrSlugDto: {
+            /** @description The sector part of the path */
+            slug: string;
         };
         RouteDto: {
             id: string;
@@ -2150,6 +2224,98 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    QrPathsController_resolve: {
+        parameters: {
+            query: {
+                /** @description `country/region/sector` */
+                path: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["QrPathTargetDto"];
+                };
+            };
+        };
+    };
+    QrPathsController_list: {
+        parameters: {
+            query?: {
+                idRegion?: string;
+                idSector?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SectorQrDto"][];
+                };
+            };
+        };
+    };
+    QrPathsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateQrPathsDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SectorQrDto"][];
+                };
+            };
+        };
+    };
+    QrPathsController_setSlug: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idSector: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SetQrSlugDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SectorQrDto"];
+                };
             };
         };
     };
