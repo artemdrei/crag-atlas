@@ -50,8 +50,8 @@ msgstr "{0, plural, one {# photo or link} few {# photos or links} many {# photos
 #: src/features/regionMap/common/ui/RegionPointCard.tsx:31
 #: src/features/sectorMap/common/ui/SectorPointCard.tsx:21
 #: src/pages/home/common/ui/RegionCard.tsx:66
-#: src/pages/region/common/ui/SectorCard.tsx:90
-#: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:83
+#: src/pages/region/common/ui/SectorCard.tsx:94
+#: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:84
 #: src/shared/ui/GradeHistogram.tsx:81
 msgid "{0, plural, one {# route} few {# routes} many {# routes} other {# routes}}"
 msgstr "{0, plural, one {# route} few {# routes} many {# routes} other {# routes}}"
@@ -102,9 +102,15 @@ msgstr "{0} mm / 24 h"
 
 #. placeholder {0}: match.matchedCount
 #. placeholder {1}: sector.routeCount
-#: src/pages/region/common/ui/SectorCard.tsx:86
+#: src/pages/region/common/ui/SectorCard.tsx:90
 msgid "{0} of {1} match"
 msgstr "{0} of {1} match"
+
+#. placeholder {0}: table.coverage.withPath
+#. placeholder {1}: table.coverage.total
+#: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:56
+msgid "{0} of {1} sectors have a QR code"
+msgstr "{0} of {1} sectors have a QR code"
 
 #. placeholder {0}: Math.round(hour.humidityPct)
 #: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:49
@@ -188,20 +194,22 @@ msgstr "°C"
 msgid "< {meters} m"
 msgstr "< {meters} m"
 
-#: src/features/catalogEdit/desktop/PurgeDialog.tsx:24
+#: src/features/catalogEdit/desktop/PurgeDialog.tsx:28
 msgid "<0>{name}</0> and everything filed under it leave the database for good — the archive will have nothing left to bring back. Climbers left nothing here, so none of their work goes with it."
 msgstr "<0>{name}</0> and everything filed under it leave the database for good — the archive will have nothing left to bring back. Climbers left nothing here, so none of their work goes with it."
 
-#: src/pages/adminAccess/desktop/PageAdminAccessDesktop.tsx:11
-#: src/pages/adminAccess/mobile/PageAdminAccessMobile.tsx:10
-#: src/pages/profile/common/ui/AccessSetting.tsx:17
+#: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:108
+msgid "A QR code's link cannot be deleted. It only goes away with the sector, if the sector is deleted for good, and then its printed plaques stop working."
+msgstr "A QR code's link cannot be deleted. It only goes away with the sector, if the sector is deleted for good, and then its printed plaques stop working."
+
+#: src/pages/admin/desktop/PageAdminDesktop.tsx:12
 msgid "Access"
 msgstr "Access"
 
 #. placeholder {0}: region.name
 #. placeholder {0}: sector.name
 #: src/pages/home/common/ui/RegionCard.tsx:45
-#: src/pages/region/common/ui/SectorCard.tsx:55
+#: src/pages/region/common/ui/SectorCard.tsx:59
 msgid "Actions for {0}"
 msgstr "Actions for {0}"
 
@@ -230,7 +238,7 @@ msgstr "Add a cover photo"
 msgid "Add a photo"
 msgstr "Add a photo"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:162
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:163
 msgid "Add a photo to start drawing routes on it."
 msgstr "Add a photo to start drawing routes on it."
 
@@ -271,7 +279,7 @@ msgstr "Add photos and comments, and see what others have climbed."
 msgid "Add region"
 msgstr "Add region"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:280
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:272
 msgid "Add route"
 msgstr "Add route"
 
@@ -289,6 +297,17 @@ msgstr "Add video or photo"
 #: src/widgets/routeMedia/common/ui/RouteMedia.tsx:38
 msgid "Add yours"
 msgstr "Add yours"
+
+#: src/pages/qrCodes/desktop/ui/QrCodesTable.tsx:48
+msgid "Address"
+msgstr "Address"
+
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:36
+#: src/pages/admin/desktop/PageAdminDesktop.tsx:23
+#: src/pages/admin/mobile/PageAdminMobile.tsx:10
+#: src/pages/profile/common/ui/AdminSetting.tsx:17
+msgid "Admin"
+msgstr "Admin"
 
 #: src/features/grantAdmin/common/hooks/useApiGrantAdmins.ts:25
 msgid "Admin access granted"
@@ -398,10 +417,6 @@ msgstr "ascents"
 msgid "Ascents"
 msgstr "Ascents"
 
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:114
-msgid "Aspect, °"
-msgstr "Aspect, °"
-
 #: src/shared/ui/AscentTypeLabel.tsx:18
 msgid "Attempt"
 msgstr "Attempt"
@@ -502,6 +517,18 @@ msgstr "Cancel"
 msgid "Cards per row"
 msgstr "Cards per row"
 
+#: src/features/sectorQr/desktop/QrSlugEditor.tsx:65
+msgid "Change"
+msgstr "Change"
+
+#: src/features/sectorQr/desktop/ConfirmQrSlugDialog.tsx:20
+msgid "Change the address"
+msgstr "Change the address"
+
+#: src/features/sectorQr/desktop/ConfirmQrSlugDialog.tsx:19
+msgid "Change the QR address?"
+msgstr "Change the QR address?"
+
 #: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:54
 #: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:69
 #: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:54
@@ -513,6 +540,14 @@ msgstr "Change your photo"
 #: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:92
 msgid "Choose a photo"
 msgstr "Choose a photo"
+
+#: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:42
+msgid "Choose a region"
+msgstr "Choose a region"
+
+#: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:83
+msgid "Choose a region to see its sectors and QR codes."
+msgstr "Choose a region to see its sectors and QR codes."
 
 #: src/shared/ui/PointEditor.tsx:72
 msgid "Clear"
@@ -662,6 +697,10 @@ msgstr "Cover"
 msgid "Crags"
 msgstr "Crags"
 
+#: src/features/sectorQr/desktop/CreateQrButton.tsx:22
+msgid "Create a QR code"
+msgstr "Create a QR code"
+
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:329
 msgid "Create route"
 msgstr "Create route"
@@ -775,6 +814,20 @@ msgstr "Directions"
 msgid "done"
 msgstr "done"
 
+#. placeholder {0}: printable.length
+#: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:69
+msgid "Download all ({0})"
+msgstr "Download all ({0})"
+
+#: src/features/sectorQr/desktop/SectorQrPanel.tsx:58
+msgid "Download PDF"
+msgstr "Download PDF"
+
+#. placeholder {0}: printable.length
+#: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:67
+msgid "Download selected ({0})"
+msgstr "Download selected ({0})"
+
 #: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:41
 msgid "Downloading photos: {done} of {total}"
 msgstr "Downloading photos: {done} of {total}"
@@ -799,6 +852,10 @@ msgstr "Draw the route first, then it can move between photos."
 msgid "Dropped on {0}"
 msgstr "Dropped on {0}"
 
+#: src/features/sectorQr/desktop/SectorQrPanel.tsx:65
+msgid "Earlier addresses, still opening this sector:"
+msgstr "Earlier addresses, still opening this sector:"
+
 #: src/features/catalogEdit/common/ui/EditToggleButton.tsx:24
 #: src/features/logTick/common/ui/TickMenuItems.tsx:28
 #: src/features/routeComment/common/hooks/useRouteCommentMenuItems.tsx:34
@@ -820,24 +877,24 @@ msgstr "Enter code"
 msgid "Enter email address"
 msgstr "Enter email address"
 
-#: src/features/catalogEdit/common/ui/ArchivedItemPanel.tsx:64
-#: src/features/catalogEdit/desktop/PurgeDialog.tsx:20
+#: src/features/catalogEdit/common/ui/ArchivedItemPanel.tsx:67
+#: src/features/catalogEdit/desktop/PurgeDialog.tsx:24
 #: src/features/topoEditor/desktop/ui/TopoEditorArchivedRoutes.tsx:86
 msgid "Erase for good"
 msgstr "Erase for good"
 
-#: src/features/catalogEdit/desktop/PurgeDialog.tsx:19
+#: src/features/catalogEdit/desktop/PurgeDialog.tsx:23
 msgid "Erase this from the database?"
 msgstr "Erase this from the database?"
 
 #. placeholder {0}: sector.routeCount
-#: src/features/catalogEdit/common/ui/ArchivedSectorPanel.tsx:23
+#: src/features/catalogEdit/common/ui/ArchivedSectorPanel.tsx:30
 msgid "Erasing takes {0, plural, one {# route} few {# routes} many {# routes} other {# routes}} with it."
 msgstr "Erasing takes {0, plural, one {# route} few {# routes} many {# routes} other {# routes}} with it."
 
 #. placeholder {0}: region.sectorCount
 #. placeholder {1}: region.routeCount
-#: src/features/catalogEdit/common/ui/ArchivedRegionPanel.tsx:24
+#: src/features/catalogEdit/common/ui/ArchivedRegionPanel.tsx:30
 msgid "Erasing takes {0, plural, one {# sector} few {# sectors} many {# sectors} other {# sectors}} and {1, plural, one {# route} few {# routes} many {# routes} other {# routes}} with it."
 msgstr "Erasing takes {0, plural, one {# sector} few {# sectors} many {# sectors} other {# sectors}} and {1, plural, one {# route} few {# routes} many {# routes} other {# routes}} with it."
 
@@ -873,6 +930,11 @@ msgstr "Flash"
 #: src/shared/ui/ImageCropper.tsx:92
 msgid "Free"
 msgstr "Free"
+
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:133
+#: src/pages/region/common/ui/ShelterBadge.tsx:17
+msgid "Fully sheltered: a roof or overhang keeps it dry"
+msgstr "Fully sheltered: a roof or overhang keeps it dry"
 
 #: src/features/sectorConditions/common/hooks/useBandLabel.ts:10
 msgid "Good"
@@ -936,6 +998,10 @@ msgstr "How did you climb it?"
 #: src/features/logTick/common/ui/TickForm.tsx:169
 msgid "How hard is the route?"
 msgstr "How hard is the route?"
+
+#: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:91
+msgid "How QR codes work"
+msgstr "How QR codes work"
 
 #: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:46
 msgid "Humidity"
@@ -1063,9 +1129,9 @@ msgstr "Log your ascents and watch your level grow."
 msgid "Logbook"
 msgstr "Logbook"
 
-#: src/pages/profile/common/ui/AccessSetting.tsx:19
-msgid "Manage admins"
-msgstr "Manage admins"
+#: src/features/sectorQr/desktop/QrSlugEditor.tsx:54
+msgid "Lowercase Latin letters and digits, joined by single hyphens"
+msgstr "Lowercase Latin letters and digits, joined by single hyphens"
 
 #: src/widgets/routeMedia/common/hooks/useAddRouteMedia.ts:17
 msgid "Media added"
@@ -1135,9 +1201,13 @@ msgstr "No country found"
 msgid "No forecast is published that far ahead"
 msgstr "No forecast is published that far ahead"
 
-#: src/pages/region/common/ui/SectorCard.tsx:84
+#: src/pages/region/common/ui/SectorCard.tsx:88
 msgid "no matches"
 msgstr "no matches"
+
+#: src/features/sectorQr/common/hooks/useQrWarningLabels.ts:10
+msgid "No QR code yet"
+msgstr "No QR code yet"
 
 #: src/features/offlineRegions/common/ui/OfflineRegionPicker.tsx:34
 msgid "No region found"
@@ -1155,6 +1225,10 @@ msgstr "No routes yet — add the first one, then drag it onto the photo it is d
 #: src/shared/ui/PhotoPlaceholder.tsx:15
 msgid "No topo yet"
 msgstr "No topo yet"
+
+#: src/features/sectorQr/common/hooks/useQrWarningLabels.ts:11
+msgid "No Ukrainian name: the plaque shows only the Latin one"
+msgstr "No Ukrainian name: the plaque shows only the Latin one"
 
 #: src/widgets/routeMedia/common/ui/RouteMedia.tsx:52
 msgid "No videos or photos yet."
@@ -1177,11 +1251,11 @@ msgstr "not done"
 msgid "Not on a photo"
 msgstr "Not on a photo"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:113
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:114
 msgid "Not on a photo yet"
 msgstr "Not on a photo yet"
 
-#: src/pages/region/common/ui/SectorCard.tsx:73
+#: src/pages/region/common/ui/SectorCard.tsx:77
 msgid "not on the map"
 msgstr "not on the map"
 
@@ -1242,6 +1316,10 @@ msgstr "Onsight"
 msgid "Onsight and flash count on the first ascent only"
 msgstr "Onsight and flash count on the first ascent only"
 
+#: src/pages/profile/common/ui/AdminSetting.tsx:19
+msgid "Open"
+msgstr "Open"
+
 #: src/features/regionMap/common/ui/RegionPointCard.tsx:49
 msgid "Open region"
 msgstr "Open region"
@@ -1250,6 +1328,10 @@ msgstr "Open region"
 #: src/features/sectorMap/mobile/SectorMapMobile.tsx:56
 msgid "Open sector"
 msgstr "Open sector"
+
+#: src/pages/qrRedirect/common/ui/QrRedirect.tsx:30
+msgid "Open the crags"
+msgstr "Open the crags"
 
 #: src/pages/route/desktop/PageRouteDesktop.tsx:99
 msgid "Open the photo"
@@ -1264,14 +1346,18 @@ msgid "Open this page in Safari and tap Share in the toolbar."
 msgstr "Open this page in Safari and tap Share in the toolbar."
 
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:128
-msgid "Open to the rain"
-msgstr "Open to the rain"
+msgid "Open: gets wet in rain"
+msgstr "Open: gets wet in rain"
+
+#: src/pages/qrRedirect/common/ui/QrRedirect.tsx:22
+msgid "Opening the sector"
+msgstr "Opening the sector"
 
 #: src/pages/login/common/ui/LoginCard.tsx:38
 msgid "or"
 msgstr "or"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:270
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:262
 #: src/pages/home/desktop/ui/HomeEditSidebar.tsx:120
 #: src/pages/region/desktop/ui/RegionEditSidebar.tsx:120
 msgid "Or"
@@ -1289,10 +1375,14 @@ msgstr "Original"
 msgid "Original photo"
 msgstr "Original photo"
 
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:129
 #: src/features/sectorConditions/common/ui/ConditionsCard.tsx:32
 msgid "Partly sheltered"
 msgstr "Partly sheltered"
+
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:130
+#: src/pages/region/common/ui/ShelterBadge.tsx:18
+msgid "Partly sheltered: some routes stay dry"
+msgstr "Partly sheltered: some routes stay dry"
 
 #: src/features/logTick/common/ui/TickForm.tsx:162
 msgid "Partner"
@@ -1337,7 +1427,7 @@ msgstr "Photos uploaded"
 msgid "Pick a region on the left to edit it."
 msgstr "Pick a region on the left to edit it."
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:267
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:259
 msgid "Pick a route on the left to edit it."
 msgstr "Pick a route on the left to edit it."
 
@@ -1367,6 +1457,10 @@ msgstr "Pinch or double-click to zoom — both panes follow the same view."
 msgid "Plain point"
 msgstr "Plain point"
 
+#: src/features/sectorQr/desktop/ConfirmQrSlugDialog.tsx:24
+msgid "Plaques already printed with <0>/q/{oldPath}</0> keep opening this sector. New plaques carry <1>/q/{newPath}</1>: download and print them again."
+msgstr "Plaques already printed with <0>/q/{oldPath}</0> keep opening this sector. New plaques carry <1>/q/{newPath}</1>: download and print them again."
+
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:49
 msgid "points"
 msgstr "points"
@@ -1394,17 +1488,48 @@ msgstr "Precipitation"
 msgid "Preparing the download…"
 msgstr "Preparing the download…"
 
+#: src/features/catalogEdit/common/ui/ArchivedRegionPanel.tsx:53
+msgid "Printed QR codes of its sectors stop working."
+msgstr "Printed QR codes of its sectors stop working."
+
+#: src/features/catalogEdit/common/ui/ArchivedSectorPanel.tsx:45
+msgid "Printed QR codes of this sector stop working."
+msgstr "Printed QR codes of this sector stop working."
+
 #: src/features/logTick/common/ui/TickForm.tsx:198
 msgid "Private comment"
 msgstr "Private comment"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:43
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:48
 #: src/app/mobile/layout/AppBottomNavigation.tsx:41
 #: src/pages/profile/common/ui/ProfileTeaser.tsx:14
-#: src/pages/profile/desktop/PageProfileDesktop.tsx:25
+#: src/pages/profile/desktop/PageProfileDesktop.tsx:24
 #: src/pages/profile/mobile/PageProfileMobile.tsx:26
 msgid "Profile"
 msgstr "Profile"
+
+#: src/features/sectorQr/desktop/QrSlugEditor.tsx:44
+msgid "QR address"
+msgstr "QR address"
+
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:210
+#: src/pages/qrCodes/desktop/ui/QrCodesTable.tsx:45
+msgid "QR code"
+msgstr "QR code"
+
+#. placeholder {0}: row.sectorName
+#: src/features/sectorQr/desktop/SectorQrPanel.tsx:52
+#: src/pages/qrCodes/desktop/ui/QrCodesTable.tsx:100
+msgid "QR code of {0}"
+msgstr "QR code of {0}"
+
+#: src/pages/admin/desktop/PageAdminDesktop.tsx:13
+msgid "QR codes"
+msgstr "QR codes"
+
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:123
+msgid "Rain shelter"
+msgstr "Rain shelter"
 
 #: src/features/routeFilter/common/hooks/useRouteSortLabel.ts:9
 #: src/features/routeFilter/common/ui/RouteFilterFields.tsx:51
@@ -1429,6 +1554,7 @@ msgid "Refresh"
 msgstr "Refresh"
 
 #: src/features/offlineRegions/common/ui/OfflineRegionPicker.tsx:35
+#: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:34
 #: src/pages/region/desktop/ui/RegionEditSection.tsx:29
 msgid "Region"
 msgstr "Region"
@@ -1460,6 +1586,10 @@ msgstr "Remove"
 msgid "Remove your photo"
 msgstr "Remove your photo"
 
+#: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:95
+msgid "Renaming the sector, in Ukrainian or English, does not touch its QR code: a printed plaque still opens it."
+msgstr "Renaming the sector, in Ukrainian or English, does not touch its QR code: a printed plaque still opens it."
+
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:184
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:464
 #: src/features/topoEditor/desktop/ui/TopoThumb.tsx:82
@@ -1488,11 +1618,11 @@ msgstr "Reset to the saved state"
 msgid "Restore"
 msgstr "Restore"
 
-#: src/features/catalogEdit/common/ui/ArchivedSectorPanel.tsx:17
+#: src/features/catalogEdit/common/ui/ArchivedSectorPanel.tsx:23
 msgid "Restoring brings back its routes, except the ones archived on their own."
 msgstr "Restoring brings back its routes, except the ones archived on their own."
 
-#: src/features/catalogEdit/common/ui/ArchivedRegionPanel.tsx:17
+#: src/features/catalogEdit/common/ui/ArchivedRegionPanel.tsx:23
 msgid "Restoring brings back its sectors and routes, except the ones archived on their own."
 msgstr "Restoring brings back its sectors and routes, except the ones archived on their own."
 
@@ -1599,7 +1729,8 @@ msgstr "Search by name or email"
 msgid "Searching…"
 msgstr "Searching…"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:212
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:206
+#: src/pages/qrCodes/desktop/ui/QrCodesTable.tsx:42
 msgid "Sector"
 msgstr "Sector"
 
@@ -1624,6 +1755,15 @@ msgstr "Sectors"
 msgid "See what everyone else has climbed on a route"
 msgstr "See what everyone else has climbed on a route"
 
+#. placeholder {0}: row.sectorName
+#: src/pages/qrCodes/desktop/ui/QrCodesTable.tsx:81
+msgid "Select {0}"
+msgstr "Select {0}"
+
+#: src/pages/qrCodes/desktop/ui/QrCodesTable.tsx:37
+msgid "Select every sector"
+msgstr "Select every sector"
+
 #. placeholder {0}: selected.length
 #: src/features/grantAdmin/common/ui/GrantAdminBody.tsx:77
 msgid "Selected: {0}"
@@ -1640,10 +1780,6 @@ msgstr "Share your experience"
 #: src/features/logTick/common/ui/TickForm.tsx:188
 msgid "Share your thoughts"
 msgstr "Share your thoughts"
-
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:123
-msgid "Shelter"
-msgstr "Shelter"
 
 #: src/features/sectorConditions/common/ui/ConditionsCard.tsx:30
 msgid "Sheltered · dry in rain"
@@ -1720,6 +1856,10 @@ msgstr "Tap Install app or Add to Home screen."
 msgid "Temperature"
 msgstr "Temperature"
 
+#: src/features/sectorQr/common/hooks/useQrWarningLabels.ts:12
+msgid "The address is numbered: another sector has the same name"
+msgstr "The address is numbered: another sector has the same name"
+
 #: src/features/topoEditor/desktop/LeaveEditorDialog.tsx:33
 msgid "The edits you have not saved yet are dropped, and the catalog keeps what it had."
 msgstr "The edits you have not saved yet are dropped, and the catalog keeps what it had."
@@ -1732,9 +1872,21 @@ msgstr "The line drawn for {routeName} disappears from this photo, for everyone,
 msgid "The lines are kept. The proportions match, so they should land where they are now — check them after replacing."
 msgstr "The lines are kept. The proportions match, so they should land where they are now — check them after replacing."
 
+#: src/features/sectorQr/common/hooks/useQrWarningLabels.ts:13
+msgid "The name is long and prints small"
+msgstr "The name is long and prints small"
+
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:432
 msgid "The new photo has different proportions. The lines are kept, but they will sit off the rock until you drag their points onto it."
 msgstr "The new photo has different proportions. The lines are kept, but they will sit off the rock until you drag their points onto it."
+
+#: src/features/sectorQr/desktop/useDownloadQrPlaques.ts:34
+msgid "The PDF could not be built"
+msgstr "The PDF could not be built"
+
+#: src/features/sectorQr/common/hooks/useQrWarningLabels.ts:9
+msgid "The region has no country, so it cannot get a QR code"
+msgstr "The region has no country, so it cannot get a QR code"
 
 #: src/features/topoEditor/desktop/TopoEditorRouteDesktop.tsx:101
 msgid "The sector has no photo yet — add one in the sector editor."
@@ -1743,6 +1895,10 @@ msgstr "The sector has no photo yet — add one in the sector editor."
 #: src/features/logTick/common/ui/ConditionsSection.tsx:118
 msgid "The sector has no point — fill the conditions in"
 msgstr "The sector has no point — fill the conditions in"
+
+#: src/features/sectorQr/common/hooks/useQrWarningLabels.ts:14
+msgid "The sector is archived"
+msgstr "The sector is archived"
 
 #: src/shared/lib/useWeatherFailureMessage.ts:8
 msgid "The weather service is unavailable right now"
@@ -1781,6 +1937,10 @@ msgstr "This photo carries the lines of: {routeNames}. It disappears from the se
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:413
 msgid "This photo stays over {0} even compressed."
 msgstr "This photo stays over {0} even compressed."
+
+#: src/pages/qrRedirect/common/ui/QrRedirect.tsx:27
+msgid "This QR code does not lead to a sector."
+msgstr "This QR code does not lead to a sector."
 
 #: src/pages/region/common/ui/ArchivedRegionNotice.tsx:11
 msgid "This region is in the archive, so it is out of the catalog. Its sectors, routes and everything climbers left on them — ascents, photos, links and comments — are still here."
@@ -1851,10 +2011,6 @@ msgstr "Type at least {MIN_SEARCH_LENGTH} letters"
 msgid "Type at least {MIN_SEARCH_LENGTH} letters of a name"
 msgstr "Type at least {MIN_SEARCH_LENGTH} letters of a name"
 
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:130
-msgid "Under a roof"
-msgstr "Under a roof"
-
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:136
 msgid "Undo"
 msgstr "Undo"
@@ -1912,6 +2068,10 @@ msgstr "Video and photo ({mediaCount})"
 msgid "View"
 msgstr "View"
 
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:114
+msgid "Wall orientation, °"
+msgstr "Wall orientation, °"
+
 #. placeholder {0}: email.trim()
 #: src/pages/login/common/ui/EmailOtpForm.tsx:53
 msgid "We sent a code to <0>{0}</0>"
@@ -1935,13 +2095,13 @@ msgstr "Weather forecast not available yet"
 msgid "When did you climb it?"
 msgstr "When did you climb it?"
 
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:115
-msgid "Where the wall looks: 0 north, 90 east. Left empty it is read off the slope"
-msgstr "Where the wall looks: 0 north, 90 east. Left empty it is read off the slope"
-
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:124
-msgid "Whether the rain reaches a climber on the wall"
-msgstr "Whether the rain reaches a climber on the wall"
+msgid "Whether the wall stays dry in rain. The conditions forecast keeps a sheltered sector climbable on a wet day."
+msgstr "Whether the wall stays dry in rain. The conditions forecast keeps a sheltered sector climbable on a wet day."
+
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:115
+msgid "Which way the wall faces, in compass degrees: 0 north, 90 east, 180 south, 270 west. It sets when the wall is in sun or shade. Leave it empty to work it out from the terrain."
+msgstr "Which way the wall faces, in compass degrees: 0 north, 90 east, 180 south, 270 west. It sets when the wall is in sun or shade. Leave it empty to work it out from the terrain."
 
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:43
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:84
@@ -1968,6 +2128,10 @@ msgstr "Written for you from the name above"
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:299
 msgid "Year"
 msgstr "Year"
+
+#: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:101
+msgid "You can edit a QR code's address. The old address stays and keeps working; the new one is added alongside it for the next plaques."
+msgstr "You can edit a QR code's address. The old address stays and keeps working; the new one is added alongside it for the next plaques."
 
 #: src/features/logTick/common/ui/RepeatAscentNotice.tsx:22
 msgid "You have sent this route before"

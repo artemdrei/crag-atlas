@@ -1,0 +1,1 @@
+export { downloadQrPlaques } from './downloadQrPlaques';

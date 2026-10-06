@@ -7,7 +7,6 @@ import { AvatarPickerDesktop } from '@web/features/avatarUpload';
 import { OfflineRegionsDesktop } from '@web/features/offlineRegions';
 
 import {
-  AccessSetting,
   AppVersion,
   GradeScaleSetting,
   LocaleSetting,
@@ -36,7 +35,6 @@ export const PageProfileDesktop = () => {
       <ThemeModeSetting />
       <LocaleSetting />
       <GradeScaleSetting />
-      <AccessSetting />
       <OfflineRegionsDesktop />
       <SignOutButton />
       <AppVersion />

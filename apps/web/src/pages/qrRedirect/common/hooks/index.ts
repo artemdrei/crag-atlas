@@ -1,0 +1,1 @@
+export { useQrRedirect } from './useQrRedirect';

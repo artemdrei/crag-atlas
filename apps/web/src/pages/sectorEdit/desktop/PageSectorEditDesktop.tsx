@@ -7,6 +7,7 @@ import { Plural } from '@lingui/react/macro';
 import { useEditModeWhileMounted, useModal } from '@web/app/providers';
 import { buildSectorPath } from '@web/app/router/routes';
 import { useApiArchiveAction } from '@web/features/catalogEdit';
+import { SectorQrPanel } from '@web/features/sectorQr';
 import {
   hasUnsavedChanges,
   TopoEditorDesktop,
@@ -107,6 +108,7 @@ export const PageSectorEditDesktop = () => {
           editor={editor}
           actions={actions}
           isArchiveShown={isArchiveShown}
+          qrPanel={<SectorQrPanel idSector={idSector} />}
           onRestoreRoute={restoreRoute}
           onEraseRoute={(route) =>
             openModal('PURGE_CATALOG_ITEM', {

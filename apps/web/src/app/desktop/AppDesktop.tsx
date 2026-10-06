@@ -8,6 +8,7 @@ import { grantAdminDesktopRegistrations } from '@web/features/grantAdmin';
 import { logTickDesktopRegistrations } from '@web/features/logTick';
 import { photoUploadDesktopRegistrations } from '@web/features/photoUpload';
 import { routeCommentDesktopRegistrations } from '@web/features/routeComment';
+import { sectorQrDesktopRegistrations } from '@web/features/sectorQr';
 import { signInPromptDesktopRegistrations } from '@web/features/signInPrompt';
 import { topoDesktopRegistrations } from '@web/features/topo';
 import { topoEditorDesktopRegistrations } from '@web/features/topoEditor';
@@ -40,9 +41,14 @@ const registrations = [
   ...routeCommentDesktopRegistrations,
   ...signInPromptDesktopRegistrations,
   ...routeMediaDesktopRegistrations,
+  ...sectorQrDesktopRegistrations,
   ...playgroundDesktopRegistrations
 ];
 
+const PageAdminDesktop = page(
+  () => import('@web/pages/admin'),
+  'PageAdminDesktop'
+);
 const PageAdminAccessDesktop = page(
   () => import('@web/pages/adminAccess'),
   'PageAdminAccessDesktop'
@@ -62,6 +68,14 @@ const PageLoginDesktop = page(
 const PageProfileDesktop = page(
   () => import('@web/pages/profile'),
   'PageProfileDesktop'
+);
+const PageQrCodesDesktop = page(
+  () => import('@web/pages/qrCodes'),
+  'PageQrCodesDesktop'
+);
+const PageQrRedirectDesktop = page(
+  () => import('@web/pages/qrRedirect'),
+  'PageQrRedirectDesktop'
 );
 const PageRegionDesktop = page(
   () => import('@web/pages/region'),
@@ -112,13 +126,31 @@ const AppDesktop = () => (
             <Route path={ROUTES.REGION} element={<PageRegionDesktop />} />
             <Route path={ROUTES.SECTOR} element={<PageSectorDesktop />} />
             <Route path={ROUTES.ROUTE_DETAIL} element={<PageRouteDesktop />} />
+            <Route path={ROUTES.QR} element={<PageQrRedirectDesktop />} />
             <Route
-              path={ROUTES.ACCESS}
+              path={ROUTES.ADMIN}
               element={
                 <ProtectedRoute requiredRole="admin">
-                  <PageAdminAccessDesktop />
+                  <PageAdminDesktop />
                 </ProtectedRoute>
               }
+            >
+              <Route
+                index
+                element={<Navigate to={ROUTES.ADMIN_ACCESS} replace />}
+              />
+              <Route
+                path={ROUTES.ADMIN_ACCESS}
+                element={<PageAdminAccessDesktop />}
+              />
+              <Route
+                path={ROUTES.ADMIN_QR_CODES}
+                element={<PageQrCodesDesktop />}
+              />
+            </Route>
+            <Route
+              path={ROUTES.ACCESS}
+              element={<Navigate to={ROUTES.ADMIN_ACCESS} replace />}
             />
             {PagePlaygroundDesktop && (
               <Route

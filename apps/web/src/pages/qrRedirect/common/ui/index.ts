@@ -1,0 +1,1 @@
+export { QrRedirect } from './QrRedirect';

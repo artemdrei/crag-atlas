@@ -1,0 +1,1 @@
+export { QrCodesTable } from './QrCodesTable';

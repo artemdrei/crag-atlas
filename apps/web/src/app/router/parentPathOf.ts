@@ -14,7 +14,7 @@ export const parentPathOf = (pathname: string): string | null => {
   if (sector) return buildRegionPath(sector.params.idRegion ?? '');
 
   if (matchPath(ROUTES.REGION, pathname)) return ROUTES.INDEX;
-  if (matchPath(ROUTES.ACCESS, pathname)) return ROUTES.PROFILE;
+  if (matchPath(`${ROUTES.ADMIN}/*`, pathname)) return ROUTES.PROFILE;
 
   return null;
 };

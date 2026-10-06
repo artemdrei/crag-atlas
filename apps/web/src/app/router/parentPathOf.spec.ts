@@ -17,8 +17,8 @@ describe('parentPathOf', () => {
     expect(parentPathOf('/regions/r1')).toBe('/');
   });
 
-  it('climbs from access management to the profile', () => {
-    expect(parentPathOf('/access')).toBe('/profile');
+  it('climbs from the admin page to the profile', () => {
+    expect(parentPathOf('/admin/access')).toBe('/profile');
   });
 
   it('has nothing above a tab', () => {
