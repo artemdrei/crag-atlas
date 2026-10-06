@@ -61,7 +61,8 @@ const fadeIn = keyframes`
 const NavPaperStyled = styled(Paper)`
   border-radius: 24px 24px 0 0;
   overflow: hidden;
-  padding-bottom: env(safe-area-inset-bottom);
+  /* Dark-mode elevation tint would part the nav from the safe area below it. */
+  background-image: none;
   animation: ${fadeIn} 0.3s ease-in-out;
 `;
 
