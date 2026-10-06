@@ -61,7 +61,10 @@ const fadeIn = keyframes`
 const NavPaperStyled = styled(Paper)`
   border-radius: 24px 24px 0 0;
   overflow: hidden;
-  /* Dark-mode elevation tint would part the nav from the safe area below it. */
+  /* The safe area is part of the nav, so the nav's shadow falls off-screen
+     instead of across it. Without the elevation tint it stays the colour of
+     the navigation inside. */
+  padding-bottom: env(safe-area-inset-bottom);
   background-image: none;
   animation: ${fadeIn} 0.3s ease-in-out;
 `;
