@@ -8,7 +8,12 @@ import {
   makeRoute,
   makeSector
 } from '../../fixtures/catalog';
-import { openTab, routePath } from '../../fixtures/ui';
+import {
+  ascentsPanel,
+  logTickButton,
+  openTab,
+  routePath
+} from '../../fixtures/ui';
 
 /**
  * A route climbed again is a repeat: the climber keeps every one, everyone
@@ -39,8 +44,10 @@ test('a sent route is logged again as a repeat', async ({ page }) => {
   await page.goto(routePath(region.id, sector.id, route.id));
 
   await test.step('the route page knows it was sent', async () => {
-    await expect(page.getByText('Sent ×1')).toBeVisible();
-    await page.getByRole('button', { name: 'Log repeat' }).click();
+    await expect(logTickButton(page)).toHaveAccessibleName(
+      'Log repeat (Sent · 1 time)'
+    );
+    await logTickButton(page).click();
   });
 
   const dialog = page.getByRole('dialog');
@@ -67,11 +74,24 @@ test('a sent route is logged again as a repeat', async ({ page }) => {
     await expect(dialog).toBeHidden();
   });
 
-  await test.step('the route logbook shows the first send only', async () => {
-    await openTab(page, 'Logbook');
+  await test.step('the count goes up without a reload', async () => {
+    await expect(logTickButton(page)).toHaveAccessibleName(
+      'Log repeat (Sent · 2 times)'
+    );
+  });
 
-    await expect(page.getByText('First go at it')).toBeVisible();
-    await expect(page.getByText('Second lap')).toHaveCount(0);
+  await test.step('my ascents keep every lap', async () => {
+    await openTab(page, 'My ascents');
+
+    await expect(ascentsPanel(page).getByText('First go at it')).toBeVisible();
+    await expect(ascentsPanel(page).getByText('Second lap')).toBeVisible();
+  });
+
+  await test.step('the community feed shows the first send only', async () => {
+    await openTab(page, 'Community feed');
+
+    await expect(ascentsPanel(page).getByText('First go at it')).toBeVisible();
+    await expect(ascentsPanel(page).getByText('Second lap')).toHaveCount(0);
   });
 
   await test.step('the climber finds it under the first send', async () => {

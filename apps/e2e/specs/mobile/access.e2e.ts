@@ -51,7 +51,7 @@ test.describe('a visitor who has not signed in', () => {
       await phone.getByRole('link', { name: 'Logbook' }).click();
       await expect(phone).toHaveURL(/\/logbook/);
       await expect(
-        phone.getByRole('heading', { name: 'My logbook' })
+        phone.getByRole('heading', { name: 'Logbook' })
       ).toBeVisible();
 
       await phone.getByRole('link', { name: 'Sign in' }).click();

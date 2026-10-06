@@ -118,3 +118,92 @@ export const breadcrumb = (page: Page, name: string) =>
  */
 export const card = (page: Page, name: string) =>
   page.getByRole('button', { name: new RegExp(name) }).first();
+
+/**
+ * The ascents on the route page: the right-hand panel on a desktop, the
+ * Logbook tab on a phone. An empty list offers its own `Log ascent`, so a
+ * button inside it is reached through this region.
+ */
+export const ascentsPanel = (page: Page) =>
+  page.getByRole('region', { name: 'Ascents' });
+
+/**
+ * The route page's own log button. Its name changes once the route is sent,
+ * and an empty ascents list repeats it, so it is reached by its test id.
+ */
+export const logTickButton = (page: Page) => page.getByTestId('log-tick');
+
+/**
+ * A select is a combobox whose options open in a portal, so the option is
+ * picked from the page rather than from inside the field.
+ */
+export const pickOption = async (page: Page, field: string, option: string) => {
+  await page.getByRole('combobox', { name: field }).click();
+  await page.getByRole('option', { name: option, exact: true }).click();
+};
+
+/**
+ * The grades are picked inside the filters, which a phone opens as a sheet
+ * and closes again to show the list.
+ */
+export const pickGrade = async (page: Page, grade: string) => {
+  const toggle = page.getByRole('button', { name: /^Filters/ });
+
+  if ((await toggle.getAttribute('aria-expanded')) !== 'true')
+    await toggle.click();
+
+  await page.getByRole('button', { name: grade, exact: true }).click();
+
+  const show = page.getByRole('button', { name: /^Show \d+ routes?$/ });
+
+  if (await show.isVisible()) await show.click();
+};
+
+/**
+ * A filter set away from its default carries a mark on its field, so the
+ * climber sees at a glance that the list is not the whole picture.
+ */
+export const expectFilters = async (
+  page: Page,
+  values: Record<string, string>
+) => {
+  for (const [field, value] of Object.entries(values))
+    await expect(page.getByRole('combobox', { name: field })).toHaveText(value);
+};
+
+export const isFilterActive = (page: Page, field: string) =>
+  page
+    .locator('[data-active]')
+    .filter({ has: page.getByRole('combobox', { name: field }) });
+
+const isoDate = (offset: number) => {
+  const day = new Date();
+
+  day.setDate(day.getDate() + offset);
+
+  return day.toISOString().slice(0, 10);
+};
+
+/**
+ * A sector's conditions as the API would send them, with the given scores
+ * one day apart from today. The real reading comes from Open-Meteo through
+ * the API, so a spec answers the browser's request with this instead.
+ */
+export const conditionsOf = (scores: number[], hasPoint = true) => ({
+  hasPoint,
+  isHorizonReady: true,
+  shelter: 'none',
+  aspectDeg: 180,
+  days: scores.map((score, offset) => ({
+    date: isoDate(offset),
+    hasForecast: true,
+    score,
+    band: null,
+    bestFromAt: null,
+    bestUntilAt: null,
+    sunriseAt: null,
+    sunsetAt: null,
+    sunIntervals: [],
+    hours: []
+  }))
+});

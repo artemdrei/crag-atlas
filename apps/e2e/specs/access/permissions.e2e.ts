@@ -11,6 +11,7 @@ import {
 import {
   card,
   editorPath,
+  logTickButton,
   openTab,
   regionPath,
   routePath
@@ -47,7 +48,7 @@ test.describe('a visitor who has not signed in', () => {
     });
 
     await test.step('logging an ascent asks them to sign in first', async () => {
-      await page.getByRole('button', { name: 'Log ascent' }).click();
+      await logTickButton(page).click();
 
       const prompt = page.getByRole('dialog', {
         name: 'Sign in to log this ascent'
@@ -85,9 +86,8 @@ test.describe('a climber who is not an admin', () => {
   test('may log and write, but not edit the catalog', async ({ page }) => {
     await page.goto(routePath(region.id, sector.id, route.id));
 
-    await expect(
-      page.getByRole('button', { name: 'Log ascent' })
-    ).toBeVisible();
+    await expect(logTickButton(page)).toBeVisible();
+    await expect(logTickButton(page)).toHaveAccessibleName('Log ascent');
 
     await openTab(page, 'Comments');
 
