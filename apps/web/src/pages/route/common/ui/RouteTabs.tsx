@@ -9,15 +9,18 @@ import { trackListControl } from '@web/shared/lib';
 import { RouteComments } from '@web/widgets/routeComments';
 import { RouteMedia, useRouteMediaCount } from '@web/widgets/routeMedia';
 
-import { RouteLogbook } from './RouteLogbook';
+import type { Route } from '../entities';
+import { RouteAscents } from './RouteAscents';
 
 type TabId = 'media' | 'comments' | 'logbook';
 
 export interface Props {
-  idRoute: string;
+  route: Route;
+  hasLogbookTab?: boolean;
 }
 
-export const RouteTabs = ({ idRoute }: Props) => {
+export const RouteTabs = ({ route, hasLogbookTab }: Props) => {
+  const idRoute = route.id;
   const { t } = useLingui();
   const [tab, setTab] = useState<TabId>('media');
   const mediaCount = useRouteMediaCount(idRoute);
@@ -38,11 +41,11 @@ export const RouteTabs = ({ idRoute }: Props) => {
           }
         />
         <Tab value="comments" label={t`Comments`} />
-        <Tab value="logbook" label={t`Logbook`} />
+        {hasLogbookTab && <Tab value="logbook" label={t`Logbook`} />}
       </Tabs>
       {tab === 'media' && <RouteMedia idRoute={idRoute} />}
       {tab === 'comments' && <RouteComments idRoute={idRoute} />}
-      {tab === 'logbook' && <RouteLogbook idRoute={idRoute} />}
+      {tab === 'logbook' && <RouteAscents route={route} isPill />}
     </SectionStyled>
   );
 };

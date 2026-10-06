@@ -30,10 +30,12 @@ import {
   ArchivedRouteActions,
   ArchivedRouteNotice,
   LogTickButton,
+  RouteAscents,
   RouteDetails,
   RouteSkeleton,
   RouteStats,
   RouteTabs,
+  toLogTickTarget,
   useApiGetRoute
 } from '../common';
 
@@ -61,94 +63,87 @@ export const PageRouteDesktop = () => {
     });
 
   return (
-    <PageShell
-      spacing={2}
-      header={
-        <HeaderRowStyled>
-          <PageBreadcrumbs
-            items={[
-              {
-                label: route?.regionName ?? '…',
-                to: buildRegionPath(idRegion)
-              },
-              {
-                label: route?.sectorName ?? '…',
-                to: buildSectorPath(idRegion, idSector)
-              },
-              { label: route?.name ?? '…' }
-            ]}
+    <PageShell spacing={1} isFixedHeight>
+      <HeaderRowStyled>
+        <PageBreadcrumbs
+          items={[
+            {
+              label: route?.regionName ?? '…',
+              to: buildRegionPath(idRegion)
+            },
+            {
+              label: route?.sectorName ?? '…',
+              to: buildSectorPath(idRegion, idSector)
+            },
+            { label: route?.name ?? '…' }
+          ]}
+        />
+        {route && !route.isArchived && (
+          <EditToggleButton
+            onClick={() =>
+              navigate(buildRouteEditPath(idRegion, idSector, idRoute))
+            }
           />
-          {route && !route.isArchived && (
-            <EditToggleButton
-              onClick={() =>
-                navigate(buildRouteEditPath(idRegion, idSector, idRoute))
-              }
-            />
-          )}
-        </HeaderRowStyled>
-      }
-    >
+        )}
+      </HeaderRowStyled>
       <ApiFeedback failure={failure} />
       {isLoading && <RouteSkeleton />}
+      {route?.isArchived && <ArchivedRouteNotice />}
       {route && (
         <ColumnsStyled>
-          {route.isArchived && <NoticeStyled />}
-          <PhotoStyled>
-            {topo ? (
-              <PhotoButtonStyled
-                type="button"
-                aria-label={t`Open the photo`}
-                onClick={openPhoto}
-              >
-                <TopoImage
-                  photoUrl={topo.photoUrl}
-                  label={photoLabel(photoIndex)}
-                  lines={lines}
-                  numberOf={numberOf}
-                  colorOf={colorOf}
-                />
-              </PhotoButtonStyled>
-            ) : (
-              <PhotoPlaceholder variant="wide" />
-            )}
-          </PhotoStyled>
-          <MainColumnStyled>
-            <DetailsBlockStyled>
-              <PageTitle name={route.name} nameLocal={route.nameLocal} />
-              <RouteDetails route={route} />
-            </DetailsBlockStyled>
-            <StatsRowStyled>
-              {!!route.ascentsCount && (
-                <StatsStyled
-                  ascentsCount={route.ascentsCount}
-                  onsightCount={route.onsightCount}
-                />
+          <ContentStyled>
+            <PhotoStyled>
+              {topo ? (
+                <PhotoButtonStyled
+                  type="button"
+                  aria-label={t`Open the photo`}
+                  onClick={openPhoto}
+                >
+                  <TopoImage
+                    photoUrl={topo.photoUrl}
+                    label={photoLabel(photoIndex)}
+                    lines={lines}
+                    numberOf={numberOf}
+                    colorOf={colorOf}
+                  />
+                </PhotoButtonStyled>
+              ) : (
+                <PhotoPlaceholder variant="wide" />
               )}
-              {!!route.votesNeutral && (
-                <ConsensusStyled
-                  grade={route.grade}
-                  votesSoft={route.votesSoft ?? 0}
-                  votesNeutral={route.votesNeutral}
-                  votesHard={route.votesHard ?? 0}
-                />
-              )}
-            </StatsRowStyled>
-            <RouteTabs idRoute={route.id} />
-          </MainColumnStyled>
-          <ActionsStyled>
+            </PhotoStyled>
+            <MainColumnStyled>
+              <DetailsBlockStyled>
+                <PageTitle name={route.name} nameLocal={route.nameLocal} />
+                <RouteDetails route={route} />
+              </DetailsBlockStyled>
+              <StatsRowStyled>
+                {!!route.ascentsCount && (
+                  <StatsStyled
+                    ascentsCount={route.ascentsCount}
+                    onsightCount={route.onsightCount}
+                  />
+                )}
+                {!!route.votesNeutral && (
+                  <ConsensusStyled
+                    grade={route.grade}
+                    votesSoft={route.votesSoft ?? 0}
+                    votesNeutral={route.votesNeutral}
+                    votesHard={route.votesHard ?? 0}
+                  />
+                )}
+              </StatsRowStyled>
+              <RouteTabs route={route} />
+            </MainColumnStyled>
+          </ContentStyled>
+          <PanelStyled>
             {route.isDeleted && hasRole('admin') && (
               <ArchivedRouteActions route={route} />
             )}
-            {!route.isArchived && (
-              <LogTickButton
-                idRoute={route.id}
-                routeName={route.name}
-                routeGrade={route.grade}
-                routeGradeScale={route.gradeScale}
-                place={`${route.sectorName}, ${route.regionName}`}
-              />
-            )}
-          </ActionsStyled>
+            {!route.isArchived && <LogTickButton {...toLogTickTarget(route)} />}
+            <ScrollAreaStyled>
+              <RouteAscents route={route} />
+            </ScrollAreaStyled>
+          </PanelStyled>
         </ColumnsStyled>
       )}
     </PageShell>
@@ -162,18 +157,33 @@ const HeaderRowStyled = styled('div')`
   gap: ${({ theme }) => theme.spacing(2)};
 `;
 
-const NoticeStyled = styled(ArchivedRouteNotice)`
-  grid-column: 1 / -1;
-`;
-
 const ColumnsStyled = styled('div')`
   display: grid;
-  grid-template-columns: 320px minmax(0, 1fr) 320px;
+  grid-template-columns: minmax(0, 1fr) 480px;
   gap: ${({ theme }) => theme.spacing(3)};
-  align-items: start;
+  align-items: stretch;
+  flex-grow: 1;
+  min-height: 0;
+  margin-top: ${({ theme }) => theme.spacing(1)};
 
   ${({ theme }) => theme.breakpoints.down('lg')} {
     grid-template-columns: minmax(0, 1fr);
+    overflow-y: auto;
+  }
+`;
+
+const ContentStyled = styled('div')`
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: ${({ theme }) => theme.spacing(3)};
+  align-items: start;
+  min-height: 0;
+  overflow-y: auto;
+
+  ${({ theme }) => theme.breakpoints.down('lg')} {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: auto;
+    overflow-y: visible;
   }
 `;
 
@@ -222,7 +232,7 @@ const PhotoButtonStyled = styled('button')`
 
 const PhotoStyled = styled('div')`
   position: sticky;
-  top: ${({ theme }) => theme.spacing(2)};
+  top: 0;
   height: 320px;
   display: flex;
 
@@ -231,14 +241,26 @@ const PhotoStyled = styled('div')`
   }
 `;
 
-const ActionsStyled = styled('div')`
-  position: sticky;
-  top: ${({ theme }) => theme.spacing(2)};
+const PanelStyled = styled('div')`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(1.5)};
+  min-height: 0;
+  padding: ${({ theme }) => theme.spacing(2)};
+  border: 1px solid ${({ theme }) => theme.palette.divider};
+  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
 
   ${({ theme }) => theme.breakpoints.down('lg')} {
-    position: static;
+    min-height: auto;
+  }
+`;
+
+const ScrollAreaStyled = styled('div')`
+  flex-grow: 1;
+  min-height: 0;
+  overflow-y: auto;
+
+  ${({ theme }) => theme.breakpoints.down('lg')} {
+    overflow-y: visible;
   }
 `;
