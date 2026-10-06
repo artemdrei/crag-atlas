@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
 import { ThemeProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -35,6 +35,12 @@ export const ThemeModeProvider = ({
     () => createAppTheme(mode, isEditing),
     [mode, isEditing]
   );
+
+  useEffect(() => {
+    for (const meta of document.querySelectorAll('meta[name="theme-color"]')) {
+      meta.setAttribute('content', theme.palette.background.default);
+    }
+  }, [theme]);
 
   const toggle = () => {
     setMode((prev) => {
