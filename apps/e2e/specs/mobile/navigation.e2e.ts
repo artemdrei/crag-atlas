@@ -25,6 +25,8 @@ test.describe('a visitor who has not signed in', () => {
     await phone.goto('/login');
 
     await expect(phone).toHaveURL('/login');
-    await expect(phone.getByText('Sign in to log your sends')).toBeVisible();
+    await expect(
+      phone.getByRole('button', { name: 'Continue with Google' })
+    ).toBeVisible();
   });
 });

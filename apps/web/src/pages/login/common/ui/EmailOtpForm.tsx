@@ -111,7 +111,7 @@ export const EmailOtpForm = ({ onVerified }: Props) => {
         variant="contained"
         disabled={isSending}
       >
-        {isSending ? <Trans>Sending code…</Trans> : <Trans>Continue</Trans>}
+        {isSending ? <Trans>Sending code…</Trans> : <Trans>Sign in</Trans>}
       </SubmitButtonStyled>
     </FormStyled>
   );

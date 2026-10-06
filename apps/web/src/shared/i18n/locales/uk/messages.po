@@ -261,6 +261,10 @@ msgstr "Додати фото"
 msgid "Add photo or video"
 msgstr "Додати фото чи відео"
 
+#: src/pages/login/common/hooks/useLoginBenefits.ts:33
+msgid "Add photos and comments, and see what others have climbed."
+msgstr "Додавай фото й коментарі та дивись пролази інших."
+
 #: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:87
 #: src/pages/home/desktop/ui/HomeEditSidebar.tsx:78
 #: src/pages/home/desktop/ui/HomeEditSidebar.tsx:128
@@ -626,11 +630,10 @@ msgid "Connect to the internet to save or refresh a region."
 msgstr "Підключіться до інтернету, щоб зберегти або оновити регіон."
 
 #: src/pages/login/common/ui/EmailOtpForm.tsx:75
-#: src/pages/login/common/ui/EmailOtpForm.tsx:114
 msgid "Continue"
 msgstr "Продовжити"
 
-#: src/pages/login/common/ui/LoginCard.tsx:39
+#: src/pages/login/common/ui/LoginCard.tsx:34
 msgid "Continue with Google"
 msgstr "Продовжити з Google"
 
@@ -846,6 +849,10 @@ msgstr "Чудово"
 msgid "Filters"
 msgstr "Фільтри"
 
+#: src/pages/login/common/hooks/useLoginBenefits.ts:27
+msgid "Find new routes"
+msgstr "Знаходь нові маршрути"
+
 #: src/pages/home/common/ui/HomeHeading.tsx:11
 msgid "Find your next climb"
 msgstr "Знайдіть свій маршрут"
@@ -961,6 +968,10 @@ msgstr "З каталогу він зник, але за прямим посил
 msgid "It's you"
 msgstr "Це ви"
 
+#: src/pages/login/common/hooks/useLoginBenefits.ts:17
+msgid "Keep a logbook"
+msgstr "Веди логбук"
+
 #: src/features/topoEditor/desktop/LeaveEditorDialog.tsx:41
 msgid "Keep editing"
 msgstr "Продовжити редагування"
@@ -1037,6 +1048,10 @@ msgstr "Додай перший пролаз"
 #: src/pages/route/common/ui/RouteAscentsInvite.tsx:27
 msgid "Log your ascent to keep the result, follow your progress and build your own grade pyramid."
 msgstr "Додай пролаз у логбук, щоб зберегти результат, стежити за своїм прогресом і будувати власну піраміду категорій."
+
+#: src/pages/login/common/hooks/useLoginBenefits.ts:18
+msgid "Log your ascents and watch your level grow."
+msgstr "Записуй пролази й дивись, як зростає твій рівень."
 
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:32
 #: src/app/mobile/layout/AppBottomNavigation.tsx:34
@@ -1183,6 +1198,10 @@ msgstr "Нічого не знайдено"
 msgid "Now over {0}"
 msgstr "Зараз над {0}"
 
+#: src/pages/login/common/hooks/useLoginBenefits.ts:22
+msgid "Offline mode"
+msgstr "Офлайн-режим"
+
 #: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:21
 #: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:21
 msgid "Offline regions"
@@ -1247,7 +1266,7 @@ msgstr "Відкрий цю сторінку в Safari і натисни «По�
 msgid "Open to the rain"
 msgstr "Відкритий дощу"
 
-#: src/pages/login/common/ui/LoginCard.tsx:43
+#: src/pages/login/common/ui/LoginCard.tsx:38
 msgid "or"
 msgstr "або"
 
@@ -1534,6 +1553,10 @@ msgstr "Збережіть регіон із секторами, маршрут�
 msgid "Save changes"
 msgstr "Відредагувати"
 
+#: src/pages/login/common/hooks/useLoginBenefits.ts:23
+msgid "Save regions and open them offline."
+msgstr "Зберігай регіони та відкривай їх офлайн."
+
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:321
 msgid "Saved changes go live for everyone straight away."
 msgstr "Збережені зміни одразу стають видимими всім."
@@ -1608,6 +1631,10 @@ msgstr "Обрано: {0}"
 msgid "Sending code…"
 msgstr "Надсилаємо код…"
 
+#: src/pages/login/common/hooks/useLoginBenefits.ts:32
+msgid "Share your experience"
+msgstr "Ділися досвідом"
+
 #: src/features/logTick/common/ui/TickForm.tsx:188
 msgid "Share your thoughts"
 msgstr "Що скажеш?"
@@ -1624,6 +1651,11 @@ msgstr "Під дахом · сухо в дощ"
 msgid "Show on map"
 msgstr "Показати на карті"
 
+#: src/pages/login/common/hooks/useLoginBenefits.ts:28
+msgid "Show only the ones you haven't climbed yet."
+msgstr "Показуй лише ті, які ти ще не проліз."
+
+#: src/pages/login/common/ui/EmailOtpForm.tsx:114
 #: src/shared/ui/SignInCta.tsx:32
 msgid "Sign in"
 msgstr "Увійти"
@@ -1632,10 +1664,6 @@ msgstr "Увійти"
 #: src/features/signInPrompt/mobile/SignInPromptSheet.tsx:20
 msgid "Sign in to log this ascent"
 msgstr "Увійди, щоб записати цей пролаз"
-
-#: src/pages/login/common/ui/LoginCard.tsx:27
-msgid "Sign in to log your sends"
-msgstr "Увійдіть, щоб відмічати пролази"
 
 #: src/pages/profile/common/ui/SignOutButton.tsx:12
 msgid "Sign out"
@@ -1950,6 +1978,10 @@ msgstr "Акаунт тримає щоденник, бету й налаштув
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:39
 msgid "Your beta"
 msgstr "Твоя бета"
+
+#: src/pages/login/desktop/ui/LoginBenefits.tsx:26
+msgid "Your climbing, all in one place"
+msgstr "Твоє скелелазіння — в одному місці"
 
 #: src/features/logTick/common/ui/ConditionsSection.tsx:151
 msgid "Your corrections were reset for the new date and time"

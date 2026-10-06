@@ -261,6 +261,10 @@ msgstr "Add photo"
 msgid "Add photo or video"
 msgstr "Add photo or video"
 
+#: src/pages/login/common/hooks/useLoginBenefits.ts:33
+msgid "Add photos and comments, and see what others have climbed."
+msgstr "Add photos and comments, and see what others have climbed."
+
 #: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:87
 #: src/pages/home/desktop/ui/HomeEditSidebar.tsx:78
 #: src/pages/home/desktop/ui/HomeEditSidebar.tsx:128
@@ -626,11 +630,10 @@ msgid "Connect to the internet to save or refresh a region."
 msgstr "Connect to the internet to save or refresh a region."
 
 #: src/pages/login/common/ui/EmailOtpForm.tsx:75
-#: src/pages/login/common/ui/EmailOtpForm.tsx:114
 msgid "Continue"
 msgstr "Continue"
 
-#: src/pages/login/common/ui/LoginCard.tsx:39
+#: src/pages/login/common/ui/LoginCard.tsx:34
 msgid "Continue with Google"
 msgstr "Continue with Google"
 
@@ -846,6 +849,10 @@ msgstr "Excellent"
 msgid "Filters"
 msgstr "Filters"
 
+#: src/pages/login/common/hooks/useLoginBenefits.ts:27
+msgid "Find new routes"
+msgstr "Find new routes"
+
 #: src/pages/home/common/ui/HomeHeading.tsx:11
 msgid "Find your next climb"
 msgstr "Find your next climb"
@@ -961,6 +968,10 @@ msgstr "It is out of the catalog, and a direct link still opens everything on it
 msgid "It's you"
 msgstr "It's you"
 
+#: src/pages/login/common/hooks/useLoginBenefits.ts:17
+msgid "Keep a logbook"
+msgstr "Keep a logbook"
+
 #: src/features/topoEditor/desktop/LeaveEditorDialog.tsx:41
 msgid "Keep editing"
 msgstr "Keep editing"
@@ -1037,6 +1048,10 @@ msgstr "Log the first ascent"
 #: src/pages/route/common/ui/RouteAscentsInvite.tsx:27
 msgid "Log your ascent to keep the result, follow your progress and build your own grade pyramid."
 msgstr "Log your ascent to keep the result, follow your progress and build your own grade pyramid."
+
+#: src/pages/login/common/hooks/useLoginBenefits.ts:18
+msgid "Log your ascents and watch your level grow."
+msgstr "Log your ascents and watch your level grow."
 
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:32
 #: src/app/mobile/layout/AppBottomNavigation.tsx:34
@@ -1183,6 +1198,10 @@ msgstr "Nothing found"
 msgid "Now over {0}"
 msgstr "Now over {0}"
 
+#: src/pages/login/common/hooks/useLoginBenefits.ts:22
+msgid "Offline mode"
+msgstr "Offline mode"
+
 #: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:21
 #: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:21
 msgid "Offline regions"
@@ -1247,7 +1266,7 @@ msgstr "Open this page in Safari and tap Share in the toolbar."
 msgid "Open to the rain"
 msgstr "Open to the rain"
 
-#: src/pages/login/common/ui/LoginCard.tsx:43
+#: src/pages/login/common/ui/LoginCard.tsx:38
 msgid "or"
 msgstr "or"
 
@@ -1534,6 +1553,10 @@ msgstr "Save a region with its sectors, routes and topos to open it without a co
 msgid "Save changes"
 msgstr "Save changes"
 
+#: src/pages/login/common/hooks/useLoginBenefits.ts:23
+msgid "Save regions and open them offline."
+msgstr "Save regions and open them offline."
+
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:321
 msgid "Saved changes go live for everyone straight away."
 msgstr "Saved changes go live for everyone straight away."
@@ -1608,6 +1631,10 @@ msgstr "Selected: {0}"
 msgid "Sending code…"
 msgstr "Sending code…"
 
+#: src/pages/login/common/hooks/useLoginBenefits.ts:32
+msgid "Share your experience"
+msgstr "Share your experience"
+
 #: src/features/logTick/common/ui/TickForm.tsx:188
 msgid "Share your thoughts"
 msgstr "Share your thoughts"
@@ -1624,6 +1651,11 @@ msgstr "Sheltered · dry in rain"
 msgid "Show on map"
 msgstr "Show on map"
 
+#: src/pages/login/common/hooks/useLoginBenefits.ts:28
+msgid "Show only the ones you haven't climbed yet."
+msgstr "Show only the ones you haven't climbed yet."
+
+#: src/pages/login/common/ui/EmailOtpForm.tsx:114
 #: src/shared/ui/SignInCta.tsx:32
 msgid "Sign in"
 msgstr "Sign in"
@@ -1632,10 +1664,6 @@ msgstr "Sign in"
 #: src/features/signInPrompt/mobile/SignInPromptSheet.tsx:20
 msgid "Sign in to log this ascent"
 msgstr "Sign in to log this ascent"
-
-#: src/pages/login/common/ui/LoginCard.tsx:27
-msgid "Sign in to log your sends"
-msgstr "Sign in to log your sends"
 
 #: src/pages/profile/common/ui/SignOutButton.tsx:12
 msgid "Sign out"
@@ -1950,6 +1978,10 @@ msgstr "Your account keeps your logbook, your beta and your settings in one plac
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:39
 msgid "Your beta"
 msgstr "Your beta"
+
+#: src/pages/login/desktop/ui/LoginBenefits.tsx:26
+msgid "Your climbing, all in one place"
+msgstr "Your climbing, all in one place"
 
 #: src/features/logTick/common/ui/ConditionsSection.tsx:151
 msgid "Your corrections were reset for the new date and time"
