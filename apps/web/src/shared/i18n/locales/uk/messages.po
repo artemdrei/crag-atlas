@@ -244,6 +244,10 @@ msgstr "Додати адміна"
 msgid "Add beta and photos that help the next climber"
 msgstr "Додавай бету й фото, які допоможуть наступному"
 
+#: src/features/installHint/mobile/InstallHintBody.tsx:24
+msgid "Add crag-atlas to your home screen: it opens in one tap, full screen, like any other app."
+msgstr "Додай crag-atlas на головний екран: він відкриватиметься одним дотиком, на весь екран, як звичайний застосунок."
+
 #: src/features/logTick/common/ui/TickMediaField.tsx:84
 #: src/features/logTick/common/ui/TickMediaField.tsx:92
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:188
@@ -323,6 +327,10 @@ msgstr "Станція"
 #: src/features/routeFilter/common/hooks/useRouteFilterLabels.ts:25
 msgid "any"
 msgstr "усі"
+
+#: src/pages/profile/mobile/InstallAppSetting.tsx:14
+msgid "App"
+msgstr "Застосунок"
 
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:285
 msgid "Apply"
@@ -417,6 +425,10 @@ msgstr "Погано"
 #: src/widgets/routeMedia/common/ui/RouteMediaInvite.tsx:18
 msgid "Be the first to show this route"
 msgstr "Покажи цей маршрут першим"
+
+#: src/features/installHint/mobile/InstallHintBody.tsx:48
+msgid "Before a trip, save a region in Profile → Offline regions. Its topos then open at the crag with no connection."
+msgstr "Перед поїздкою збережи регіон у Профіль → Офлайн-регіони. Тоді його топо відкриються на скелях без зв'язку."
 
 #: src/widgets/tickList/common/ui/TickCard.tsx:197
 #: src/widgets/tickList/common/ui/TickRepeats.tsx:93
@@ -603,6 +615,10 @@ msgstr "Оцінка умов"
 #: src/features/logTick/common/ui/ConditionsSection.tsx:116
 msgid "Conditions, read at the sector"
 msgstr "Умови, зчитані за координатами сектора"
+
+#: src/features/installHint/common/hooks/useInstallSteps.ts:19
+msgid "Confirm. crag-atlas appears with your other apps."
+msgstr "Підтверди. crag-atlas з'явиться поруч з іншими застосунками."
 
 #: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:50
 #: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:52
@@ -854,6 +870,10 @@ msgstr "Вільно"
 msgid "Good"
 msgstr "Добре"
 
+#: src/features/installHint/mobile/InstallHintBody.tsx:67
+msgid "Got it"
+msgstr "Зрозуміло"
+
 #: src/features/routeFilter/common/hooks/useRouteSortLabel.ts:11
 #: src/features/routeFilter/common/ui/RouteFilterFields.tsx:38
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:239
@@ -920,6 +940,18 @@ msgstr "У тіні весь день"
 #: src/features/sectorConditions/common/ui/ConditionsScore.tsx:56
 msgid "In the sun all day"
 msgstr "На сонці весь день"
+
+#: src/features/installHint/mobile/InstallHintBody.tsx:59
+msgid "Install"
+msgstr "Встановити"
+
+#: src/pages/profile/mobile/InstallAppSetting.tsx:16
+msgid "Install as app"
+msgstr "Встановити як застосунок"
+
+#: src/features/installHint/mobile/InstallHintSheet.tsx:19
+msgid "Install crag-atlas"
+msgstr "Встанови crag-atlas"
 
 #: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:82
 msgid "It is out of the catalog, and a direct link still opens everything on it."
@@ -1203,6 +1235,14 @@ msgstr "Відкрити сектор"
 msgid "Open the photo"
 msgstr "Відкрити фото"
 
+#: src/features/installHint/common/hooks/useInstallSteps.ts:17
+msgid "Open this page in Chrome and tap the ⋮ menu."
+msgstr "Відкрий цю сторінку в Chrome і натисни меню ⋮."
+
+#: src/features/installHint/common/hooks/useInstallSteps.ts:10
+msgid "Open this page in Safari and tap Share in the toolbar."
+msgstr "Відкрий цю сторінку в Safari і натисни «Поділитися» на панелі."
+
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:128
 msgid "Open to the rain"
 msgstr "Відкритий дощу"
@@ -1342,7 +1382,7 @@ msgstr "Приватний коментар"
 #: src/app/mobile/layout/AppBottomNavigation.tsx:41
 #: src/pages/profile/common/ui/ProfileTeaser.tsx:14
 #: src/pages/profile/desktop/PageProfileDesktop.tsx:25
-#: src/pages/profile/mobile/PageProfileMobile.tsx:25
+#: src/pages/profile/mobile/PageProfileMobile.tsx:26
 msgid "Profile"
 msgstr "Профіль"
 
@@ -1513,6 +1553,10 @@ msgstr "Збережені для офлайну:"
 msgid "Saving…"
 msgstr "Зберігаємо…"
 
+#: src/features/installHint/common/hooks/useInstallSteps.ts:11
+msgid "Scroll down and tap Add to Home Screen."
+msgstr "Прокрути вниз і натисни «На екран “Додому”»."
+
 #: src/features/catalogSearch/mobile/CatalogSearchMobile.tsx:17
 #: src/features/catalogSearch/mobile/CatalogSearchMobile.tsx:25
 msgid "Search"
@@ -1632,6 +1676,14 @@ msgstr "Сонце орієнтовно {0} – {1}"
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:225
 msgid "System"
 msgstr "Система"
+
+#: src/features/installHint/common/hooks/useInstallSteps.ts:12
+msgid "Tap Add. crag-atlas appears on your home screen."
+msgstr "Натисни «Додати». crag-atlas з'явиться на головному екрані."
+
+#: src/features/installHint/common/hooks/useInstallSteps.ts:18
+msgid "Tap Install app or Add to Home screen."
+msgstr "Натисни «Установити додаток» або «Додати на головний екран»."
 
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:41
 #: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:26
@@ -1870,6 +1922,10 @@ msgstr "Вітер"
 #: src/pages/logbook/common/ui/TicksGroupedList.tsx:64
 msgid "Without a grade"
 msgstr "Без грейду"
+
+#: src/features/installHint/mobile/InstallHintBody.tsx:45
+msgid "Works with no signal"
+msgstr "Працює без зв'язку"
 
 #: src/shared/ui/NameFields.tsx:63
 msgid "Write it in your own language — it will be searchable both in Latin and in yours"

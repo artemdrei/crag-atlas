@@ -109,7 +109,10 @@ test.describe('signing out', () => {
       origins: [
         {
           origin: env.webUrl,
-          localStorage: [{ name: 'crag-atlas:locale', value: 'en' }]
+          localStorage: [
+            { name: 'crag-atlas:locale', value: 'en' },
+            { name: 'crag-atlas:install-hint-seen', value: 'true' }
+          ]
         }
       ]
     }

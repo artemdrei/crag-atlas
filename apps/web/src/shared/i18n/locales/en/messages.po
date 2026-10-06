@@ -244,6 +244,10 @@ msgstr "Add admin"
 msgid "Add beta and photos that help the next climber"
 msgstr "Add beta and photos that help the next climber"
 
+#: src/features/installHint/mobile/InstallHintBody.tsx:24
+msgid "Add crag-atlas to your home screen: it opens in one tap, full screen, like any other app."
+msgstr "Add crag-atlas to your home screen: it opens in one tap, full screen, like any other app."
+
 #: src/features/logTick/common/ui/TickMediaField.tsx:84
 #: src/features/logTick/common/ui/TickMediaField.tsx:92
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:188
@@ -323,6 +327,10 @@ msgstr "Anchor"
 #: src/features/routeFilter/common/hooks/useRouteFilterLabels.ts:25
 msgid "any"
 msgstr "any"
+
+#: src/pages/profile/mobile/InstallAppSetting.tsx:14
+msgid "App"
+msgstr "App"
 
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:285
 msgid "Apply"
@@ -417,6 +425,10 @@ msgstr "Bad"
 #: src/widgets/routeMedia/common/ui/RouteMediaInvite.tsx:18
 msgid "Be the first to show this route"
 msgstr "Be the first to show this route"
+
+#: src/features/installHint/mobile/InstallHintBody.tsx:48
+msgid "Before a trip, save a region in Profile → Offline regions. Its topos then open at the crag with no connection."
+msgstr "Before a trip, save a region in Profile → Offline regions. Its topos then open at the crag with no connection."
 
 #: src/widgets/tickList/common/ui/TickCard.tsx:197
 #: src/widgets/tickList/common/ui/TickRepeats.tsx:93
@@ -603,6 +615,10 @@ msgstr "Conditions score"
 #: src/features/logTick/common/ui/ConditionsSection.tsx:116
 msgid "Conditions, read at the sector"
 msgstr "Conditions, read at the sector"
+
+#: src/features/installHint/common/hooks/useInstallSteps.ts:19
+msgid "Confirm. crag-atlas appears with your other apps."
+msgstr "Confirm. crag-atlas appears with your other apps."
 
 #: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:50
 #: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:52
@@ -854,6 +870,10 @@ msgstr "Free"
 msgid "Good"
 msgstr "Good"
 
+#: src/features/installHint/mobile/InstallHintBody.tsx:67
+msgid "Got it"
+msgstr "Got it"
+
 #: src/features/routeFilter/common/hooks/useRouteSortLabel.ts:11
 #: src/features/routeFilter/common/ui/RouteFilterFields.tsx:38
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:239
@@ -920,6 +940,18 @@ msgstr "In the shade all day"
 #: src/features/sectorConditions/common/ui/ConditionsScore.tsx:56
 msgid "In the sun all day"
 msgstr "In the sun all day"
+
+#: src/features/installHint/mobile/InstallHintBody.tsx:59
+msgid "Install"
+msgstr "Install"
+
+#: src/pages/profile/mobile/InstallAppSetting.tsx:16
+msgid "Install as app"
+msgstr "Install as app"
+
+#: src/features/installHint/mobile/InstallHintSheet.tsx:19
+msgid "Install crag-atlas"
+msgstr "Install crag-atlas"
 
 #: src/features/catalogEdit/common/ui/ClimberContentNote.tsx:82
 msgid "It is out of the catalog, and a direct link still opens everything on it."
@@ -1203,6 +1235,14 @@ msgstr "Open sector"
 msgid "Open the photo"
 msgstr "Open the photo"
 
+#: src/features/installHint/common/hooks/useInstallSteps.ts:17
+msgid "Open this page in Chrome and tap the ⋮ menu."
+msgstr "Open this page in Chrome and tap the ⋮ menu."
+
+#: src/features/installHint/common/hooks/useInstallSteps.ts:10
+msgid "Open this page in Safari and tap Share in the toolbar."
+msgstr "Open this page in Safari and tap Share in the toolbar."
+
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:128
 msgid "Open to the rain"
 msgstr "Open to the rain"
@@ -1342,7 +1382,7 @@ msgstr "Private comment"
 #: src/app/mobile/layout/AppBottomNavigation.tsx:41
 #: src/pages/profile/common/ui/ProfileTeaser.tsx:14
 #: src/pages/profile/desktop/PageProfileDesktop.tsx:25
-#: src/pages/profile/mobile/PageProfileMobile.tsx:25
+#: src/pages/profile/mobile/PageProfileMobile.tsx:26
 msgid "Profile"
 msgstr "Profile"
 
@@ -1513,6 +1553,10 @@ msgstr "Saved for offline:"
 msgid "Saving…"
 msgstr "Saving…"
 
+#: src/features/installHint/common/hooks/useInstallSteps.ts:11
+msgid "Scroll down and tap Add to Home Screen."
+msgstr "Scroll down and tap Add to Home Screen."
+
 #: src/features/catalogSearch/mobile/CatalogSearchMobile.tsx:17
 #: src/features/catalogSearch/mobile/CatalogSearchMobile.tsx:25
 msgid "Search"
@@ -1632,6 +1676,14 @@ msgstr "Sun roughly {0} – {1}"
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:225
 msgid "System"
 msgstr "System"
+
+#: src/features/installHint/common/hooks/useInstallSteps.ts:12
+msgid "Tap Add. crag-atlas appears on your home screen."
+msgstr "Tap Add. crag-atlas appears on your home screen."
+
+#: src/features/installHint/common/hooks/useInstallSteps.ts:18
+msgid "Tap Install app or Add to Home screen."
+msgstr "Tap Install app or Add to Home screen."
 
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:41
 #: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:26
@@ -1870,6 +1922,10 @@ msgstr "Wind"
 #: src/pages/logbook/common/ui/TicksGroupedList.tsx:64
 msgid "Without a grade"
 msgstr "Without a grade"
+
+#: src/features/installHint/mobile/InstallHintBody.tsx:45
+msgid "Works with no signal"
+msgstr "Works with no signal"
 
 #: src/shared/ui/NameFields.tsx:63
 msgid "Write it in your own language — it will be searchable both in Latin and in yours"

@@ -4,6 +4,10 @@ import { Navigate, Route, Routes } from 'react-router';
 import { ModalProvider } from '@web/app/providers';
 import { avatarUploadMobileRegistrations } from '@web/features/avatarUpload';
 import { grantAdminMobileRegistrations } from '@web/features/grantAdmin';
+import {
+  InstallHintTrigger,
+  installHintMobileRegistrations
+} from '@web/features/installHint';
 import { logTickMobileRegistrations } from '@web/features/logTick';
 import { routeCommentMobileRegistrations } from '@web/features/routeComment';
 import { signInPromptMobileRegistrations } from '@web/features/signInPrompt';
@@ -29,6 +33,7 @@ import { ErrorBoundary } from '../ui/errorBoundary';
 const registrations = [
   ...avatarUploadMobileRegistrations,
   ...grantAdminMobileRegistrations,
+  ...installHintMobileRegistrations,
   ...logTickMobileRegistrations,
   ...routeCommentMobileRegistrations,
   ...signInPromptMobileRegistrations,
@@ -80,6 +85,7 @@ const PagePlaygroundMobile = import.meta.env.DEV
 const AppMobile = () => (
   <ErrorBoundary>
     <ModalProvider registrations={registrations}>
+      <InstallHintTrigger />
       <Suspense>
         <Routes>
           <Route
