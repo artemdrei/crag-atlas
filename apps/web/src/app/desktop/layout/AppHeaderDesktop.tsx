@@ -17,7 +17,7 @@ import { SignInCta, UserAvatar, Wordmark } from '@web/shared/ui';
 
 export const AppHeaderDesktop = ({ hasSearch }: { hasSearch?: boolean }) => {
   const { t } = useLingui();
-  const { isAuthenticated, isLoading } = useUser();
+  const { isAuthenticated, isLoading, hasRole } = useUser();
   const { avatarUrl, displayName } = useProfileIdentity();
   const signInLink = useSignInLink();
 
@@ -31,6 +31,11 @@ export const AppHeaderDesktop = ({ hasSearch }: { hasSearch?: boolean }) => {
         <Button color="inherit" component={Link} to={ROUTES.LOGBOOK}>
           <Trans>Logbook</Trans>
         </Button>
+        {hasRole('admin') && (
+          <Button color="inherit" component={Link} to={ROUTES.ADMIN}>
+            <Trans>Admin</Trans>
+          </Button>
+        )}
         <SpacerStyled />
         {hasSearch && (
           <SearchSlotStyled>

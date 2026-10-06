@@ -31,7 +31,10 @@ export const HeaderMobile = () => {
   );
 };
 
+// `viewport-fit=cover` lets the page run under the status bar; the inset keeps
+// the logo and search below it.
 const HeaderStyled = styled(AppBar)`
+  padding-top: env(safe-area-inset-top);
   background-color: ${({ theme }) => theme.palette.background.default};
 `;
 

@@ -50,8 +50,8 @@ msgstr "{0, plural, one {# фото чи посилання} few {# фото ч�
 #: src/features/regionMap/common/ui/RegionPointCard.tsx:31
 #: src/features/sectorMap/common/ui/SectorPointCard.tsx:21
 #: src/pages/home/common/ui/RegionCard.tsx:66
-#: src/pages/region/common/ui/SectorCard.tsx:90
-#: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:83
+#: src/pages/region/common/ui/SectorCard.tsx:94
+#: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:84
 #: src/shared/ui/GradeHistogram.tsx:81
 msgid "{0, plural, one {# route} few {# routes} many {# routes} other {# routes}}"
 msgstr "{0, plural, one {# маршрут} few {# маршрути} many {# маршрутів} other {# маршрутів}}"
@@ -102,9 +102,15 @@ msgstr "{0} мм / 24 год"
 
 #. placeholder {0}: match.matchedCount
 #. placeholder {1}: sector.routeCount
-#: src/pages/region/common/ui/SectorCard.tsx:86
+#: src/pages/region/common/ui/SectorCard.tsx:90
 msgid "{0} of {1} match"
 msgstr "{0} з {1} підходять"
+
+#. placeholder {0}: table.coverage.withPath
+#. placeholder {1}: table.coverage.total
+#: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:56
+msgid "{0} of {1} sectors have a QR code"
+msgstr "{0} з {1} секторів мають QR-код"
 
 #. placeholder {0}: Math.round(hour.humidityPct)
 #: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:49
@@ -188,20 +194,22 @@ msgstr "°C"
 msgid "< {meters} m"
 msgstr "< {meters} м"
 
-#: src/features/catalogEdit/desktop/PurgeDialog.tsx:24
+#: src/features/catalogEdit/desktop/PurgeDialog.tsx:28
 msgid "<0>{name}</0> and everything filed under it leave the database for good — the archive will have nothing left to bring back. Climbers left nothing here, so none of their work goes with it."
 msgstr "<0>{name}</0> і все, що всередині, назавжди зникне з бази — в архіві не лишиться чого повертати. Скелелази тут нічого не лишали, тож їхня робота не постраждає."
 
-#: src/pages/adminAccess/desktop/PageAdminAccessDesktop.tsx:11
-#: src/pages/adminAccess/mobile/PageAdminAccessMobile.tsx:10
-#: src/pages/profile/common/ui/AccessSetting.tsx:17
+#: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:108
+msgid "A QR code's link cannot be deleted. It only goes away with the sector, if the sector is deleted for good, and then its printed plaques stop working."
+msgstr "Посилання QR-коду не можна видалити. Воно зникає лише разом із сектором, якщо видалити сектор назавжди, — і тоді його надруковані таблички перестануть працювати."
+
+#: src/pages/admin/desktop/PageAdminDesktop.tsx:12
 msgid "Access"
 msgstr "Доступи"
 
 #. placeholder {0}: region.name
 #. placeholder {0}: sector.name
 #: src/pages/home/common/ui/RegionCard.tsx:45
-#: src/pages/region/common/ui/SectorCard.tsx:55
+#: src/pages/region/common/ui/SectorCard.tsx:59
 msgid "Actions for {0}"
 msgstr "Дії для {0}"
 
@@ -230,7 +238,7 @@ msgstr "Додати обкладинку"
 msgid "Add a photo"
 msgstr "Додати фото"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:162
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:163
 msgid "Add a photo to start drawing routes on it."
 msgstr "Додайте фото, щоб малювати на ньому маршрути."
 
@@ -271,7 +279,7 @@ msgstr "Додавай фото й коментарі та дивись прол
 msgid "Add region"
 msgstr "Додати регіон"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:280
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:272
 msgid "Add route"
 msgstr "Додати маршрут"
 
@@ -289,6 +297,17 @@ msgstr "Додати відео або фото"
 #: src/widgets/routeMedia/common/ui/RouteMedia.tsx:38
 msgid "Add yours"
 msgstr "Додати своє"
+
+#: src/pages/qrCodes/desktop/ui/QrCodesTable.tsx:48
+msgid "Address"
+msgstr "Адреса"
+
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:36
+#: src/pages/admin/desktop/PageAdminDesktop.tsx:23
+#: src/pages/admin/mobile/PageAdminMobile.tsx:10
+#: src/pages/profile/common/ui/AdminSetting.tsx:17
+msgid "Admin"
+msgstr "Адмін"
 
 #: src/features/grantAdmin/common/hooks/useApiGrantAdmins.ts:25
 msgid "Admin access granted"
@@ -398,10 +417,6 @@ msgstr "пролазів"
 msgid "Ascents"
 msgstr "Пролази"
 
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:114
-msgid "Aspect, °"
-msgstr "Орієнтація, °"
-
 #: src/shared/ui/AscentTypeLabel.tsx:18
 msgid "Attempt"
 msgstr "Спроба"
@@ -502,6 +517,18 @@ msgstr "Скасувати"
 msgid "Cards per row"
 msgstr "Карток у рядку"
 
+#: src/features/sectorQr/desktop/QrSlugEditor.tsx:65
+msgid "Change"
+msgstr "Змінити"
+
+#: src/features/sectorQr/desktop/ConfirmQrSlugDialog.tsx:20
+msgid "Change the address"
+msgstr "Змінити адресу"
+
+#: src/features/sectorQr/desktop/ConfirmQrSlugDialog.tsx:19
+msgid "Change the QR address?"
+msgstr "Змінити адресу QR-коду?"
+
 #: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:54
 #: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:69
 #: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:54
@@ -513,6 +540,14 @@ msgstr "Змінити фото"
 #: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:92
 msgid "Choose a photo"
 msgstr "Оберіть фото"
+
+#: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:42
+msgid "Choose a region"
+msgstr "Оберіть регіон"
+
+#: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:83
+msgid "Choose a region to see its sectors and QR codes."
+msgstr "Оберіть регіон, щоб побачити його сектори та QR-коди."
 
 #: src/shared/ui/PointEditor.tsx:72
 msgid "Clear"
@@ -662,6 +697,10 @@ msgstr "Головне"
 msgid "Crags"
 msgstr "Скелі"
 
+#: src/features/sectorQr/desktop/CreateQrButton.tsx:22
+msgid "Create a QR code"
+msgstr "Створити QR-код"
+
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:329
 msgid "Create route"
 msgstr "Створити маршрут"
@@ -775,6 +814,20 @@ msgstr "Маршрут"
 msgid "done"
 msgstr "пройдені"
 
+#. placeholder {0}: printable.length
+#: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:69
+msgid "Download all ({0})"
+msgstr "Завантажити всі ({0})"
+
+#: src/features/sectorQr/desktop/SectorQrPanel.tsx:58
+msgid "Download PDF"
+msgstr "Завантажити PDF"
+
+#. placeholder {0}: printable.length
+#: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:67
+msgid "Download selected ({0})"
+msgstr "Завантажити вибрані ({0})"
+
 #: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:41
 msgid "Downloading photos: {done} of {total}"
 msgstr "Завантаження фото: {done} з {total}"
@@ -799,6 +852,10 @@ msgstr "Спершу намалюйте маршрут, тоді його мож
 msgid "Dropped on {0}"
 msgstr "Відпущено на {0}"
 
+#: src/features/sectorQr/desktop/SectorQrPanel.tsx:65
+msgid "Earlier addresses, still opening this sector:"
+msgstr "Попередні адреси, які досі відкривають цей сектор:"
+
 #: src/features/catalogEdit/common/ui/EditToggleButton.tsx:24
 #: src/features/logTick/common/ui/TickMenuItems.tsx:28
 #: src/features/routeComment/common/hooks/useRouteCommentMenuItems.tsx:34
@@ -820,24 +877,24 @@ msgstr "Введіть код"
 msgid "Enter email address"
 msgstr "Введіть email"
 
-#: src/features/catalogEdit/common/ui/ArchivedItemPanel.tsx:64
-#: src/features/catalogEdit/desktop/PurgeDialog.tsx:20
+#: src/features/catalogEdit/common/ui/ArchivedItemPanel.tsx:67
+#: src/features/catalogEdit/desktop/PurgeDialog.tsx:24
 #: src/features/topoEditor/desktop/ui/TopoEditorArchivedRoutes.tsx:86
 msgid "Erase for good"
 msgstr "Стерти назавжди"
 
-#: src/features/catalogEdit/desktop/PurgeDialog.tsx:19
+#: src/features/catalogEdit/desktop/PurgeDialog.tsx:23
 msgid "Erase this from the database?"
 msgstr "Стерти це з бази?"
 
 #. placeholder {0}: sector.routeCount
-#: src/features/catalogEdit/common/ui/ArchivedSectorPanel.tsx:23
+#: src/features/catalogEdit/common/ui/ArchivedSectorPanel.tsx:30
 msgid "Erasing takes {0, plural, one {# route} few {# routes} many {# routes} other {# routes}} with it."
 msgstr "Стирання забере з собою {0, plural, one {# маршрут} few {# маршрути} many {# маршрутів} other {# маршрути}}."
 
 #. placeholder {0}: region.sectorCount
 #. placeholder {1}: region.routeCount
-#: src/features/catalogEdit/common/ui/ArchivedRegionPanel.tsx:24
+#: src/features/catalogEdit/common/ui/ArchivedRegionPanel.tsx:30
 msgid "Erasing takes {0, plural, one {# sector} few {# sectors} many {# sectors} other {# sectors}} and {1, plural, one {# route} few {# routes} many {# routes} other {# routes}} with it."
 msgstr "Стирання забере з собою {0, plural, one {# сектор} few {# сектори} many {# секторів} other {# сектори}} і {1, plural, one {# маршрут} few {# маршрути} many {# маршрутів} other {# маршрути}}."
 
@@ -873,6 +930,11 @@ msgstr "Флеш"
 #: src/shared/ui/ImageCropper.tsx:92
 msgid "Free"
 msgstr "Вільно"
+
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:133
+#: src/pages/region/common/ui/ShelterBadge.tsx:17
+msgid "Fully sheltered: a roof or overhang keeps it dry"
+msgstr "Повністю: дах або навис тримає стіну сухою"
 
 #: src/features/sectorConditions/common/hooks/useBandLabel.ts:10
 msgid "Good"
@@ -936,6 +998,10 @@ msgstr "Як ти це проліз?"
 #: src/features/logTick/common/ui/TickForm.tsx:169
 msgid "How hard is the route?"
 msgstr "Складність маршруту"
+
+#: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:91
+msgid "How QR codes work"
+msgstr "Як працюють QR-коди"
 
 #: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:46
 msgid "Humidity"
@@ -1063,9 +1129,9 @@ msgstr "Записуй пролази й дивись, як зростає тв�
 msgid "Logbook"
 msgstr "Логбук"
 
-#: src/pages/profile/common/ui/AccessSetting.tsx:19
-msgid "Manage admins"
-msgstr "Керувати адмінами"
+#: src/features/sectorQr/desktop/QrSlugEditor.tsx:54
+msgid "Lowercase Latin letters and digits, joined by single hyphens"
+msgstr "Малі латинські літери й цифри, розділені одинарними дефісами"
 
 #: src/widgets/routeMedia/common/hooks/useAddRouteMedia.ts:17
 msgid "Media added"
@@ -1135,9 +1201,13 @@ msgstr "Країну не знайдено"
 msgid "No forecast is published that far ahead"
 msgstr "Прогнозу на таку далеку дату ще немає"
 
-#: src/pages/region/common/ui/SectorCard.tsx:84
+#: src/pages/region/common/ui/SectorCard.tsx:88
 msgid "no matches"
 msgstr "немає збігів"
+
+#: src/features/sectorQr/common/hooks/useQrWarningLabels.ts:10
+msgid "No QR code yet"
+msgstr "QR-коду ще немає"
 
 #: src/features/offlineRegions/common/ui/OfflineRegionPicker.tsx:34
 msgid "No region found"
@@ -1155,6 +1225,10 @@ msgstr "Маршрутів ще немає — додайте перший, а �
 #: src/shared/ui/PhotoPlaceholder.tsx:15
 msgid "No topo yet"
 msgstr "Топо ще немає"
+
+#: src/features/sectorQr/common/hooks/useQrWarningLabels.ts:11
+msgid "No Ukrainian name: the plaque shows only the Latin one"
+msgstr "Немає української назви: на табличці буде лише латинська"
 
 #: src/widgets/routeMedia/common/ui/RouteMedia.tsx:52
 msgid "No videos or photos yet."
@@ -1177,11 +1251,11 @@ msgstr "не пройдені"
 msgid "Not on a photo"
 msgstr "Не на фото"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:113
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:114
 msgid "Not on a photo yet"
 msgstr "Ще не на фото"
 
-#: src/pages/region/common/ui/SectorCard.tsx:73
+#: src/pages/region/common/ui/SectorCard.tsx:77
 msgid "not on the map"
 msgstr "немає на карті"
 
@@ -1242,6 +1316,10 @@ msgstr "Онсайт"
 msgid "Onsight and flash count on the first ascent only"
 msgstr "Онсайт і флеш бувають лише на першому пролазі"
 
+#: src/pages/profile/common/ui/AdminSetting.tsx:19
+msgid "Open"
+msgstr "Відкрити"
+
 #: src/features/regionMap/common/ui/RegionPointCard.tsx:49
 msgid "Open region"
 msgstr "Відкрити регіон"
@@ -1250,6 +1328,10 @@ msgstr "Відкрити регіон"
 #: src/features/sectorMap/mobile/SectorMapMobile.tsx:56
 msgid "Open sector"
 msgstr "Відкрити сектор"
+
+#: src/pages/qrRedirect/common/ui/QrRedirect.tsx:30
+msgid "Open the crags"
+msgstr "Відкрити скелі"
 
 #: src/pages/route/desktop/PageRouteDesktop.tsx:99
 msgid "Open the photo"
@@ -1264,14 +1346,18 @@ msgid "Open this page in Safari and tap Share in the toolbar."
 msgstr "Відкрий цю сторінку в Safari і натисни «Поділитися» на панелі."
 
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:128
-msgid "Open to the rain"
-msgstr "Відкритий дощу"
+msgid "Open: gets wet in rain"
+msgstr "Відкритий: мокне під дощем"
+
+#: src/pages/qrRedirect/common/ui/QrRedirect.tsx:22
+msgid "Opening the sector"
+msgstr "Відкриваємо сектор"
 
 #: src/pages/login/common/ui/LoginCard.tsx:38
 msgid "or"
 msgstr "або"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:270
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:262
 #: src/pages/home/desktop/ui/HomeEditSidebar.tsx:120
 #: src/pages/region/desktop/ui/RegionEditSidebar.tsx:120
 msgid "Or"
@@ -1289,10 +1375,14 @@ msgstr "Оригінал"
 msgid "Original photo"
 msgstr "Оригінальне фото"
 
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:129
 #: src/features/sectorConditions/common/ui/ConditionsCard.tsx:32
 msgid "Partly sheltered"
 msgstr "Частково вкритий"
+
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:130
+#: src/pages/region/common/ui/ShelterBadge.tsx:18
+msgid "Partly sheltered: some routes stay dry"
+msgstr "Частково: частина маршрутів лишається сухою"
 
 #: src/features/logTick/common/ui/TickForm.tsx:162
 msgid "Partner"
@@ -1337,7 +1427,7 @@ msgstr "Фото завантажено"
 msgid "Pick a region on the left to edit it."
 msgstr "Оберіть регіон ліворуч, щоб редагувати його."
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:267
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:259
 msgid "Pick a route on the left to edit it."
 msgstr "Оберіть маршрут ліворуч, щоб редагувати його."
 
@@ -1367,6 +1457,10 @@ msgstr "Зум пінчем або подвійним кліком — обид�
 msgid "Plain point"
 msgstr "Звичайна точка"
 
+#: src/features/sectorQr/desktop/ConfirmQrSlugDialog.tsx:24
+msgid "Plaques already printed with <0>/q/{oldPath}</0> keep opening this sector. New plaques carry <1>/q/{newPath}</1>: download and print them again."
+msgstr "Уже надруковані таблички з <0>/q/{oldPath}</0> і далі відкриватимуть цей сектор. Нові таблички матимуть <1>/q/{newPath}</1>: завантажте й надрукуйте їх знову."
+
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:49
 msgid "points"
 msgstr "бали"
@@ -1394,17 +1488,48 @@ msgstr "Опади"
 msgid "Preparing the download…"
 msgstr "Готуємо завантаження…"
 
+#: src/features/catalogEdit/common/ui/ArchivedRegionPanel.tsx:53
+msgid "Printed QR codes of its sectors stop working."
+msgstr "Надруковані QR-коди його секторів перестануть працювати."
+
+#: src/features/catalogEdit/common/ui/ArchivedSectorPanel.tsx:45
+msgid "Printed QR codes of this sector stop working."
+msgstr "Надруковані QR-коди цього сектора перестануть працювати."
+
 #: src/features/logTick/common/ui/TickForm.tsx:198
 msgid "Private comment"
 msgstr "Приватний коментар"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:43
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:48
 #: src/app/mobile/layout/AppBottomNavigation.tsx:41
 #: src/pages/profile/common/ui/ProfileTeaser.tsx:14
-#: src/pages/profile/desktop/PageProfileDesktop.tsx:25
+#: src/pages/profile/desktop/PageProfileDesktop.tsx:24
 #: src/pages/profile/mobile/PageProfileMobile.tsx:26
 msgid "Profile"
 msgstr "Профіль"
+
+#: src/features/sectorQr/desktop/QrSlugEditor.tsx:44
+msgid "QR address"
+msgstr "Адреса QR-коду"
+
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:210
+#: src/pages/qrCodes/desktop/ui/QrCodesTable.tsx:45
+msgid "QR code"
+msgstr "QR-код"
+
+#. placeholder {0}: row.sectorName
+#: src/features/sectorQr/desktop/SectorQrPanel.tsx:52
+#: src/pages/qrCodes/desktop/ui/QrCodesTable.tsx:100
+msgid "QR code of {0}"
+msgstr "QR-код сектора {0}"
+
+#: src/pages/admin/desktop/PageAdminDesktop.tsx:13
+msgid "QR codes"
+msgstr "QR-коди"
+
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:123
+msgid "Rain shelter"
+msgstr "Захист від дощу"
 
 #: src/features/routeFilter/common/hooks/useRouteSortLabel.ts:9
 #: src/features/routeFilter/common/ui/RouteFilterFields.tsx:51
@@ -1429,6 +1554,7 @@ msgid "Refresh"
 msgstr "Оновити"
 
 #: src/features/offlineRegions/common/ui/OfflineRegionPicker.tsx:35
+#: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:34
 #: src/pages/region/desktop/ui/RegionEditSection.tsx:29
 msgid "Region"
 msgstr "Регіон"
@@ -1460,6 +1586,10 @@ msgstr "Видалити"
 msgid "Remove your photo"
 msgstr "Прибрати фото"
 
+#: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:95
+msgid "Renaming the sector, in Ukrainian or English, does not touch its QR code: a printed plaque still opens it."
+msgstr "Перейменування сектора українською чи англійською не впливає на QR-код: надрукована табличка й далі відкриває цей сектор."
+
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:184
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:464
 #: src/features/topoEditor/desktop/ui/TopoThumb.tsx:82
@@ -1488,11 +1618,11 @@ msgstr "Скинути до збереженого стану"
 msgid "Restore"
 msgstr "Відновити"
 
-#: src/features/catalogEdit/common/ui/ArchivedSectorPanel.tsx:17
+#: src/features/catalogEdit/common/ui/ArchivedSectorPanel.tsx:23
 msgid "Restoring brings back its routes, except the ones archived on their own."
 msgstr "Відновлення поверне його маршрути, окрім тих, які архівували окремо."
 
-#: src/features/catalogEdit/common/ui/ArchivedRegionPanel.tsx:17
+#: src/features/catalogEdit/common/ui/ArchivedRegionPanel.tsx:23
 msgid "Restoring brings back its sectors and routes, except the ones archived on their own."
 msgstr "Відновлення поверне його сектори й маршрути, окрім тих, які архівували окремо."
 
@@ -1599,7 +1729,8 @@ msgstr "Пошук за іменем або email"
 msgid "Searching…"
 msgstr "Шукаємо…"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:212
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:206
+#: src/pages/qrCodes/desktop/ui/QrCodesTable.tsx:42
 msgid "Sector"
 msgstr "Сектор"
 
@@ -1624,6 +1755,15 @@ msgstr "Сектори"
 msgid "See what everyone else has climbed on a route"
 msgstr "Дивись, хто ще проходив цей маршрут і як"
 
+#. placeholder {0}: row.sectorName
+#: src/pages/qrCodes/desktop/ui/QrCodesTable.tsx:81
+msgid "Select {0}"
+msgstr "Вибрати {0}"
+
+#: src/pages/qrCodes/desktop/ui/QrCodesTable.tsx:37
+msgid "Select every sector"
+msgstr "Вибрати всі сектори"
+
 #. placeholder {0}: selected.length
 #: src/features/grantAdmin/common/ui/GrantAdminBody.tsx:77
 msgid "Selected: {0}"
@@ -1640,10 +1780,6 @@ msgstr "Ділися досвідом"
 #: src/features/logTick/common/ui/TickForm.tsx:188
 msgid "Share your thoughts"
 msgstr "Що скажеш?"
-
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:123
-msgid "Shelter"
-msgstr "Укриття"
 
 #: src/features/sectorConditions/common/ui/ConditionsCard.tsx:30
 msgid "Sheltered · dry in rain"
@@ -1720,6 +1856,10 @@ msgstr "Натисни «Установити додаток» або «Дода
 msgid "Temperature"
 msgstr "Температура"
 
+#: src/features/sectorQr/common/hooks/useQrWarningLabels.ts:12
+msgid "The address is numbered: another sector has the same name"
+msgstr "Адреса з номером: інший сектор має таку саму назву"
+
 #: src/features/topoEditor/desktop/LeaveEditorDialog.tsx:33
 msgid "The edits you have not saved yet are dropped, and the catalog keeps what it had."
 msgstr "Незбережені правки зникнуть, а в каталозі залишиться те, що було."
@@ -1732,9 +1872,21 @@ msgstr "Лінію маршруту «{routeName}» буде видалено з
 msgid "The lines are kept. The proportions match, so they should land where they are now — check them after replacing."
 msgstr "Лінії зберігаються. Пропорції збігаються, тож вони мають лягти там само — перевірте їх після заміни."
 
+#: src/features/sectorQr/common/hooks/useQrWarningLabels.ts:13
+msgid "The name is long and prints small"
+msgstr "Назва довга й надрукується дрібно"
+
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:432
 msgid "The new photo has different proportions. The lines are kept, but they will sit off the rock until you drag their points onto it."
 msgstr "Нове фото має інші пропорції. Лінії зберігаються, але лежатимуть не на скелі, доки ви не перетягнете їхні точки на місце."
+
+#: src/features/sectorQr/desktop/useDownloadQrPlaques.ts:34
+msgid "The PDF could not be built"
+msgstr "Не вдалося створити PDF"
+
+#: src/features/sectorQr/common/hooks/useQrWarningLabels.ts:9
+msgid "The region has no country, so it cannot get a QR code"
+msgstr "У регіону не вказана країна, тому QR-код створити не можна"
 
 #: src/features/topoEditor/desktop/TopoEditorRouteDesktop.tsx:101
 msgid "The sector has no photo yet — add one in the sector editor."
@@ -1743,6 +1895,10 @@ msgstr "У секторі ще немає фото — додайте його �
 #: src/features/logTick/common/ui/ConditionsSection.tsx:118
 msgid "The sector has no point — fill the conditions in"
 msgstr "Сектор без координат — заповніть умови вручну"
+
+#: src/features/sectorQr/common/hooks/useQrWarningLabels.ts:14
+msgid "The sector is archived"
+msgstr "Сектор в архіві"
 
 #: src/shared/lib/useWeatherFailureMessage.ts:8
 msgid "The weather service is unavailable right now"
@@ -1781,6 +1937,10 @@ msgstr "На цьому фото є лінії маршрутів: {routeNames}.
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:413
 msgid "This photo stays over {0} even compressed."
 msgstr "Це фото навіть стиснутим важче за {0}."
+
+#: src/pages/qrRedirect/common/ui/QrRedirect.tsx:27
+msgid "This QR code does not lead to a sector."
+msgstr "Цей QR-код не веде до жодного сектора."
 
 #: src/pages/region/common/ui/ArchivedRegionNotice.tsx:11
 msgid "This region is in the archive, so it is out of the catalog. Its sectors, routes and everything climbers left on them — ascents, photos, links and comments — are still here."
@@ -1851,10 +2011,6 @@ msgstr "Введи щонайменше {MIN_SEARCH_LENGTH} літери"
 msgid "Type at least {MIN_SEARCH_LENGTH} letters of a name"
 msgstr "Введи щонайменше {MIN_SEARCH_LENGTH} літери імені"
 
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:130
-msgid "Under a roof"
-msgstr "Під дахом"
-
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:136
 msgid "Undo"
 msgstr "Скасувати"
@@ -1912,6 +2068,10 @@ msgstr "Відео та фото ({mediaCount})"
 msgid "View"
 msgstr "Вигляд"
 
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:114
+msgid "Wall orientation, °"
+msgstr "Орієнтація стіни, °"
+
 #. placeholder {0}: email.trim()
 #: src/pages/login/common/ui/EmailOtpForm.tsx:53
 msgid "We sent a code to <0>{0}</0>"
@@ -1935,13 +2095,13 @@ msgstr "Прогнозу погоди ще немає"
 msgid "When did you climb it?"
 msgstr "Коли ти це проліз?"
 
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:115
-msgid "Where the wall looks: 0 north, 90 east. Left empty it is read off the slope"
-msgstr "Куди дивиться стіна: 0 північ, 90 схід. Порожнє — визначається зі схилу"
-
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:124
-msgid "Whether the rain reaches a climber on the wall"
-msgstr "Чи дістає дощ до того, хто лізе"
+msgid "Whether the wall stays dry in rain. The conditions forecast keeps a sheltered sector climbable on a wet day."
+msgstr "Чи лишається стіна сухою під дощем. Прогноз умов вважає захищений сектор придатним для лазіння навіть у дощовий день."
+
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:115
+msgid "Which way the wall faces, in compass degrees: 0 north, 90 east, 180 south, 270 west. It sets when the wall is in sun or shade. Leave it empty to work it out from the terrain."
+msgstr "Куди дивиться стіна, у градусах за компасом: 0 — північ, 90 — схід, 180 — південь, 270 — захід. Від цього залежить, коли на стіні сонце, а коли тінь. Якщо залишити порожнім, напрямок визначиться за рельєфом."
 
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:43
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:84
@@ -1968,6 +2128,10 @@ msgstr "Заповнено автоматично з назви вище"
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:299
 msgid "Year"
 msgstr "Рік"
+
+#: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:101
+msgid "You can edit a QR code's address. The old address stays and keeps working; the new one is added alongside it for the next plaques."
+msgstr "Адресу QR-коду можна редагувати. Стара адреса при цьому не зникає й працює далі, а нова дописується поруч — її отримають наступні таблички."
 
 #: src/features/logTick/common/ui/RepeatAscentNotice.tsx:22
 msgid "You have sent this route before"

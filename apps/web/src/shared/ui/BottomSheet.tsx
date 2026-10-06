@@ -44,7 +44,12 @@ const TitleStyled = styled(Typography)`
 
 // react-modal-sheet renders its own DOM, so its classes are the only hook.
 const SheetStyled = styled(Sheet)`
+  /* The backdrop is a <button>: without this the browser frames the page
+     in its default button border. */
   .react-modal-sheet-backdrop {
+    appearance: none;
+    border: 0;
+    padding: 0;
     background-color: ${({ theme }) => alpha(theme.palette.common.black, 0.5)};
   }
 

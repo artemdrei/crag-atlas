@@ -7,7 +7,7 @@ import { AvatarPickerMobile } from '@web/features/avatarUpload';
 import { OfflineRegionsMobile } from '@web/features/offlineRegions';
 
 import {
-  AccessSetting,
+  AdminSetting,
   AppVersion,
   GradeScaleSetting,
   LocaleSetting,
@@ -37,7 +37,7 @@ export const PageProfileMobile = () => {
       <ThemeModeSetting />
       <LocaleSetting />
       <GradeScaleSetting />
-      <AccessSetting />
+      <AdminSetting />
       <InstallAppSetting />
       <OfflineRegionsMobile />
       <SignOutButton />

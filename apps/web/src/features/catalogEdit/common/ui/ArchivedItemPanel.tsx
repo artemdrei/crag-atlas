@@ -18,6 +18,7 @@ export interface Props {
   name: string;
   notice: ReactNode;
   catalogLoss?: ReactNode;
+  purgeWarning?: ReactNode;
   onDone: () => void;
 }
 
@@ -27,6 +28,7 @@ export const ArchivedItemPanel = ({
   name,
   notice,
   catalogLoss,
+  purgeWarning,
   onDone
 }: Props) => {
   const { openModal } = useModal();
@@ -57,6 +59,7 @@ export const ArchivedItemPanel = ({
           onClick={() =>
             openModal('PURGE_CATALOG_ITEM', {
               name,
+              warning: purgeWarning,
               onConfirm: () => erase(id)
             })
           }

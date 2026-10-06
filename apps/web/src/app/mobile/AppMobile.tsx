@@ -42,6 +42,10 @@ const registrations = [
   ...playgroundMobileRegistrations
 ];
 
+const PageAdminMobile = page(
+  () => import('@web/pages/admin'),
+  'PageAdminMobile'
+);
 const PageAdminAccessMobile = page(
   () => import('@web/pages/adminAccess'),
   'PageAdminAccessMobile'
@@ -58,6 +62,10 @@ const PageLoginMobile = page(
 const PageProfileMobile = page(
   () => import('@web/pages/profile'),
   'PageProfileMobile'
+);
+const PageQrRedirectMobile = page(
+  () => import('@web/pages/qrRedirect'),
+  'PageQrRedirectMobile'
 );
 const PageRegionMobile = page(
   () => import('@web/pages/region'),
@@ -101,6 +109,7 @@ const AppMobile = () => (
             <Route path={ROUTES.REGION} element={<PageRegionMobile />} />
             <Route path={ROUTES.SECTOR} element={<PageSectorMobile />} />
             <Route path={ROUTES.ROUTE_DETAIL} element={<PageRouteMobile />} />
+            <Route path={ROUTES.QR} element={<PageQrRedirectMobile />} />
             {PagePlaygroundMobile && (
               <Route
                 path={ROUTES.PLAYGROUND}
@@ -108,12 +117,29 @@ const AppMobile = () => (
               />
             )}
             <Route
-              path={ROUTES.ACCESS}
+              path={ROUTES.ADMIN}
               element={
                 <ProtectedRoute requiredRole="admin">
-                  <PageAdminAccessMobile />
+                  <PageAdminMobile />
                 </ProtectedRoute>
               }
+            >
+              <Route
+                index
+                element={<Navigate to={ROUTES.ADMIN_ACCESS} replace />}
+              />
+              <Route
+                path={ROUTES.ADMIN_ACCESS}
+                element={<PageAdminAccessMobile />}
+              />
+              <Route
+                path={ROUTES.ADMIN_QR_CODES}
+                element={<Navigate to={ROUTES.ADMIN_ACCESS} replace />}
+              />
+            </Route>
+            <Route
+              path={ROUTES.ACCESS}
+              element={<Navigate to={ROUTES.ADMIN_ACCESS} replace />}
             />
             <Route
               path={ROUTES.LOGBOOK}

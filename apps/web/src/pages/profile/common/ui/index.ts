@@ -1,4 +1,4 @@
-export { AccessSetting } from './AccessSetting';
+export { AdminSetting } from './AdminSetting';
 export { AppVersion } from './AppVersion';
 export { GradeScaleSetting } from './GradeScaleSetting';
 export { LocaleSetting } from './LocaleSetting';

@@ -12,6 +12,7 @@ import {
 
 import type { Sector } from '../entities';
 import type { SectorMatchSummary } from '../lib';
+import { ShelterBadge } from './ShelterBadge';
 
 export interface Props {
   sector: Sector;
@@ -49,6 +50,9 @@ export const SectorCard = ({
       photoUrl={sector.photoUrl}
       isSelected={isSelected}
       isUnsaved={isUnsaved}
+      thumbnailBadge={
+        sector.shelter !== 'open' && <ShelterBadge shelter={sector.shelter} />
+      }
       actions={
         onShowOnMap && (
           <CatalogCardMenu

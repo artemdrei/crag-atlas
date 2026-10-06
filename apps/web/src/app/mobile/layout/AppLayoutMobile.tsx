@@ -79,6 +79,4 @@ const PageFadeStyled = styled(Box)`
 
 const NavSlotStyled = styled(Box)`
   flex-shrink: 0;
-  padding-bottom: env(safe-area-inset-bottom);
-  background-color: ${({ theme }) => theme.palette.background.paper};
 `;

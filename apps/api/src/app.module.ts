@@ -8,6 +8,7 @@ import { HealthModule } from './health/health.module';
 import { HorizonModule } from './horizon/horizon.module';
 import { MeModule } from './me/me.module';
 import { MediaModule } from './media/media.module';
+import { QrPathsModule } from './qrPaths/qrPaths.module';
 import { RegionsModule } from './regions/regions.module';
 import { RoutesModule } from './routes/routes.module';
 import { SearchModule } from './search/search.module';
@@ -25,6 +26,7 @@ import { WeatherModule } from './weather/weather.module';
     MeModule,
     RegionsModule,
     SectorsModule,
+    QrPathsModule,
     RoutesModule,
     SearchModule,
     TicksModule,

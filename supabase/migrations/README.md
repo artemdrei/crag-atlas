@@ -30,3 +30,4 @@ data: the catalog starts empty and is filled from the editor or by an import.
 | 015 | `015_search_route_stats.sql` | Ascent counts and rating on a search hit, read from `routes_with_stats` |
 | 016 | `016_sector_conditions.sql` | `sectors.aspect_deg` / `sectors.shelter` and `sector_horizon` — which way a wall faces, whether rain reaches it, and the skyline around it |
 | 017 | `017_repeat_ascents.sql` | Drops the one-tick-per-day key, adds `is_repeat()`, keeps onsight and flash to the first send by trigger, and counts only first sends in `routes_with_stats`, `tick_page()` and `tick_stats()` |
+| 018 | `018_sector_qr_paths.sql` | `regions.qr_slug` and `sector_qr_paths` — the append-only `country/region/sector` paths printed on QR plaques, and `set_sector_qr_path()` that moves a sector's current one |

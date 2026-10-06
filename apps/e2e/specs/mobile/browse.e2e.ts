@@ -143,12 +143,13 @@ test('the header back climbs up from a sector opened by its address', async ({
     await back.click();
 
     await expect(page).toHaveURL(new RegExp(`/regions/${region.id}(\\?|$)`));
+    await expect(card(page, sector.name)).toBeVisible();
   });
 
   await test.step('and the next one reaches the crags', async () => {
     await back.click();
 
-    await expect(card(page, region.name)).toBeVisible();
+    await expect(page).toHaveURL(/\/$/);
   });
 });
 

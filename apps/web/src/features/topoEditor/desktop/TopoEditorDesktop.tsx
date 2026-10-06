@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { type ReactNode, useCallback, useMemo, useState } from 'react';
 
 import type { Route, Sector } from '@crag-atlas/api';
 import { Trans, useLingui } from '@lingui/react/macro';
@@ -50,6 +50,7 @@ export interface Props {
   editor: TopoEditorSessionApi;
   actions: TopoEditorActions;
   isArchiveShown: boolean;
+  qrPanel?: ReactNode;
   onRestoreRoute: (idRoute: string) => void;
   onEraseRoute: (route: Route) => void;
 }
@@ -61,6 +62,7 @@ export const TopoEditorDesktop = ({
   editor,
   actions,
   isArchiveShown,
+  qrPanel,
   onRestoreRoute,
   onEraseRoute
 }: Props) => {
@@ -69,7 +71,6 @@ export const TopoEditorDesktop = ({
   const { numberOf, gradeOf, gradeScaleOf, nameOf, colorOf, selectRoute } =
     useTopoEditorDerived(editor);
   const [idHoveredRoute, setIdHoveredRoute] = useState<string>();
-  const [isSectorOpen, setIsSectorOpen] = useState(false);
 
   const activeTopo = session.idActiveTopo
     ? session.topos[session.idActiveTopo]
@@ -201,24 +202,15 @@ export const TopoEditorDesktop = ({
         )}
       </ColumnStyled>
       {!isArchiveShown && (
-        <ColumnStyled>
-          <SectorSectionStyled>
-            <SectionToggleStyled
-              type="button"
-              aria-expanded={isSectorOpen}
-              onClick={() => setIsSectorOpen((open) => !open)}
-            >
-              <Typography variant="subtitle2">
-                <Trans>Sector</Trans>
-              </Typography>
-              <ExpandMoreIcon fontSize="small" />
-            </SectionToggleStyled>
-            <Collapse in={isSectorOpen} unmountOnExit>
-              <SectorFormStyled>
-                {sector && <SectorEditForm sector={sector} />}
-              </SectorFormStyled>
-            </Collapse>
-          </SectorSectionStyled>
+        <SideColumnStyled>
+          <CollapsibleSection title={<Trans>Sector</Trans>}>
+            {sector && <SectorEditForm sector={sector} />}
+          </CollapsibleSection>
+          {qrPanel && (
+            <CollapsibleSection title={<Trans>QR code</Trans>}>
+              {qrPanel}
+            </CollapsibleSection>
+          )}
           {selectedRoute && (
             <TopoEditorRoutePanel
               route={selectedRoute}
@@ -281,9 +273,34 @@ export const TopoEditorDesktop = ({
               </Button>
             </HintStyled>
           )}
-        </ColumnStyled>
+        </SideColumnStyled>
       )}
     </LayoutStyled>
+  );
+};
+
+interface CollapsibleSectionProps {
+  title: ReactNode;
+  children: ReactNode;
+}
+
+const CollapsibleSection = ({ title, children }: CollapsibleSectionProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <SectorSectionStyled>
+      <SectionToggleStyled
+        type="button"
+        aria-expanded={isOpen}
+        onClick={() => setIsOpen((open) => !open)}
+      >
+        <Typography variant="subtitle2">{title}</Typography>
+        <ExpandMoreIcon fontSize="small" />
+      </SectionToggleStyled>
+      <Collapse in={isOpen} unmountOnExit>
+        <SectorFormStyled>{children}</SectorFormStyled>
+      </Collapse>
+    </SectorSectionStyled>
   );
 };
 
@@ -357,6 +374,10 @@ const ColumnStyled = styled('div')`
   padding: ${({ theme }) => theme.spacing(2)};
   border: 1px solid ${({ theme }) => theme.palette.divider};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
+`;
+
+const SideColumnStyled = styled(ColumnStyled)`
+  overflow-y: auto;
 `;
 
 const HintStyled = styled('div')`

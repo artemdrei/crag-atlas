@@ -8,15 +8,15 @@ import { ROUTES } from '@web/app/router/routes';
 
 import { ProfileSettingRow } from './ProfileSettingRow';
 
-export const AccessSetting = () => {
+export const AdminSetting = () => {
   const { hasRole } = useUser();
 
   if (!hasRole('admin')) return null;
 
   return (
-    <ProfileSettingRow label={<Trans>Access</Trans>}>
-      <Button color="inherit" component={Link} to={ROUTES.ACCESS}>
-        <Trans>Manage admins</Trans>
+    <ProfileSettingRow label={<Trans>Admin</Trans>}>
+      <Button color="inherit" component={Link} to={ROUTES.ADMIN}>
+        <Trans>Open</Trans>
       </Button>
     </ProfileSettingRow>
   );
