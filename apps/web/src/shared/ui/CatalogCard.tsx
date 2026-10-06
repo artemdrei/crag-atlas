@@ -1,7 +1,7 @@
 import type { PropsWithChildren, ReactNode } from 'react';
 
 import CardActionArea from '@mui/material/CardActionArea';
-import { styled } from '@mui/material/styles';
+import { alpha, styled } from '@mui/material/styles';
 
 import { photoFrame } from '@web/shared/theme/photoFrame';
 import { hoverRing } from '@web/shared/theme/surfaces';
@@ -14,6 +14,7 @@ export interface Props {
   photoUrl?: string | null;
   isSelected?: boolean;
   isUnsaved?: boolean;
+  thumbnailBadge?: ReactNode;
   actions?: ReactNode;
   className?: string;
   onSelect: () => void;
@@ -24,6 +25,7 @@ export const CatalogCard = ({
   photoUrl,
   isSelected,
   isUnsaved,
+  thumbnailBadge,
   actions,
   className,
   children,
@@ -38,6 +40,7 @@ export const CatalogCard = ({
         ) : (
           <PhotoPlaceholder />
         )}
+        {thumbnailBadge && <BadgeStyled>{thumbnailBadge}</BadgeStyled>}
       </ThumbnailStyled>
       <BodyStyled>{children}</BodyStyled>
     </CardAreaStyled>
@@ -84,8 +87,21 @@ const CardAreaStyled = styled(CardActionArea, {
 `;
 
 const ThumbnailStyled = styled('div')`
+  position: relative;
   flex-shrink: 0;
   width: 96px;
+`;
+
+const BadgeStyled = styled('span')`
+  position: absolute;
+  top: ${({ theme }) => theme.spacing(0.75)};
+  left: ${({ theme }) => theme.spacing(0.75)};
+  display: flex;
+  padding: ${({ theme }) => theme.spacing(0.5)};
+  border: 1px solid ${({ theme }) => theme.palette.divider};
+  border-radius: 50%;
+  color: ${({ theme }) => theme.palette.text.primary};
+  background-color: ${({ theme }) => alpha(theme.palette.background.default, 0.9)};
 `;
 
 const PhotoStyled = styled('img')`

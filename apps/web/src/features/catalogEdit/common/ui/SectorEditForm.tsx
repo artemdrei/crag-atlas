@@ -111,8 +111,8 @@ export const SectorEditForm = ({
         <TextField
           fullWidth
           type="number"
-          label={t`Aspect, °`}
-          helperText={t`Where the wall looks: 0 north, 90 east. Left empty it is read off the slope`}
+          label={t`Wall orientation, °`}
+          helperText={t`Which way the wall faces, in compass degrees: 0 north, 90 east, 180 south, 270 west. It sets when the wall is in sun or shade. Leave it empty to work it out from the terrain.`}
           value={aspectDeg}
           slotProps={{ htmlInput: { min: 0, max: 359 } }}
           onChange={(event) => setAspectDeg(event.target.value)}
@@ -120,14 +120,18 @@ export const SectorEditForm = ({
         <TextField
           select
           fullWidth
-          label={t`Shelter`}
-          helperText={t`Whether the rain reaches a climber on the wall`}
+          label={t`Rain shelter`}
+          helperText={t`Whether the wall stays dry in rain. The conditions forecast keeps a sheltered sector climbable on a wet day.`}
           value={shelter}
           onChange={(event) => setShelter(event.target.value as Shelter)}
         >
-          <MenuItem value="open">{t`Open to the rain`}</MenuItem>
-          <MenuItem value="partial">{t`Partly sheltered`}</MenuItem>
-          <MenuItem value="full">{t`Under a roof`}</MenuItem>
+          <MenuItem value="open">{t`Open: gets wet in rain`}</MenuItem>
+          <MenuItem value="partial">
+            {t`Partly sheltered: some routes stay dry`}
+          </MenuItem>
+          <MenuItem value="full">
+            {t`Fully sheltered: a roof or overhang keeps it dry`}
+          </MenuItem>
         </TextField>
       </RowStyled>
       {children}
