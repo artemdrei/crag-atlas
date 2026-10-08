@@ -56,9 +56,11 @@ msgstr "{0, plural, one {# фото чи посилання} few {# фото ч�
 msgid "{0, plural, one {# route} few {# routes} many {# routes} other {# routes}}"
 msgstr "{0, plural, one {# маршрут} few {# маршрути} many {# маршрутів} other {# маршрутів}}"
 
+#. placeholder {0}: save.region.routeCount
 #. placeholder {0}: visibleRoutes.length
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:185
-#: src/pages/sector/mobile/PageSectorMobile.tsx:151
+#: src/features/offlineRegions/common/ui/SaveRegionOfflineBody.tsx:63
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:197
+#: src/pages/sector/mobile/PageSectorMobile.tsx:157
 msgid "{0, plural, one {# route} other {# routes}}"
 msgstr "{0, plural, one {# маршрут} few {# маршрути} many {# маршрутів} other {# маршруту}}"
 
@@ -67,13 +69,18 @@ msgstr "{0, plural, one {# маршрут} few {# маршрути} many {# ма
 msgid "{0, plural, one {# sector} few {# sectors} many {# sectors} other {# sectors}}"
 msgstr "{0, plural, one {# сектор} few {# сектори} many {# секторів} other {# сектора}}"
 
+#. placeholder {0}: save.region.sectorCount
+#: src/features/offlineRegions/common/ui/SaveRegionOfflineBody.tsx:69
+msgid "{0, plural, one {# sector} other {# sectors}}"
+msgstr "{0, plural, one {# сектор} few {# сектори} many {# секторів} other {# сектора}}"
+
 #. placeholder {0}: Math.round(hour.temperatureC)
-#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:29
+#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:30
 msgid "{0} °C"
 msgstr "{0} °C"
 
 #. placeholder {0}: toKmh(hour.windSpeedMs)
-#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:59
+#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:60
 msgid "{0} km/h"
 msgstr "{0} км/год"
 
@@ -88,14 +95,9 @@ msgstr "{0} м"
 msgid "{0} m/s"
 msgstr "{0} м/с"
 
-#. placeholder {0}: hour.precipitationMm
-#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:39
-msgid "{0} mm"
-msgstr "{0} мм"
-
 #. placeholder {0}: conditions.precipitation24hMm
 #. placeholder {0}: weather.precipitation24hMm
-#: src/features/logTick/common/ui/ConditionsSection.tsx:172
+#: src/features/logTick/common/ui/ConditionsSection.tsx:178
 #: src/widgets/tickList/common/ui/TickConditions.tsx:29
 msgid "{0} mm / 24 h"
 msgstr "{0} мм / 24 год"
@@ -113,7 +115,7 @@ msgid "{0} of {1} sectors have a QR code"
 msgstr "{0} з {1} секторів мають QR-код"
 
 #. placeholder {0}: Math.round(hour.humidityPct)
-#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:49
+#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:50
 msgid "{0}%"
 msgstr "{0}%"
 
@@ -125,10 +127,22 @@ msgstr "{failed} файл(ів) не вдалося прочитати як фо
 msgid "{meters} m+"
 msgstr "{meters} м+"
 
+#: src/features/offlineRegions/common/ui/SaveRegionOfflineBody.tsx:33
+msgid "{name} is saved"
+msgstr "{name} збережено"
+
 #. placeholder {0}: formatBytes(MAX_PHOTO_BYTES, i18n.locale)
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:407
 msgid "{oversized} photo(s) stay over {0} even compressed and will be skipped."
 msgstr "{oversized} фото навіть стиснутими більші за {0} — їх буде пропущено."
+
+#: src/features/offlineRegions/common/hooks/useSaveRegionOffline.ts:42
+msgid "{perSecond}/s"
+msgstr "{perSecond}/с"
+
+#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:40
+msgid "{rainMm} mm"
+msgstr "{rainMm} мм"
 
 #: src/features/catalogEdit/desktop/ArchiveRegionDialog.tsx:37
 msgid "{region} is empty, so only the region itself and its photo leave the catalog. You can bring it back from the archive."
@@ -158,7 +172,7 @@ msgstr "{routes} у {sectorsCount, plural, one {# секторі} few {# сек�
 msgid "{routesCount, plural, one {# route} other {# routes}}"
 msgstr "{routesCount, plural, one {# маршрут} few {# маршрути} many {# маршрутів} other {# маршруту}}"
 
-#: src/features/routeFilter/mobile/RouteFilterPanelMobile.tsx:75
+#: src/features/routeFilter/mobile/RouteFilterPanelMobile.tsx:79
 msgid "{routesCount, plural, one {Show # route} other {Show # routes}}"
 msgstr "{routesCount, plural, one {Показати # маршрут} few {Показати # маршрути} many {Показати # маршрутів} other {Показати # маршруту}}"
 
@@ -170,11 +184,11 @@ msgstr "{sector} порожній, тож з каталогу зникне ли�
 msgid "{sector} leaves the catalog for everyone, together with its routes. Nothing is erased: everything climbers left stays, and you can bring the sector back from the archive."
 msgstr "{sector} зникне з каталогу для всіх разом зі своїми маршрутами. Нічого не стирається: усе, що лишили скелелази, залишається, а сектор можна повернути з архіву."
 
-#: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:71
+#: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:53
 msgid "{size} · saved {savedAt}"
 msgstr "{size} · збережено {savedAt}"
 
-#: src/features/logTick/common/ui/TickForm.tsx:183
+#: src/features/logTick/common/ui/TickForm.tsx:187
 msgid "{stars} of 5"
 msgstr "{stars} з 5"
 
@@ -213,7 +227,6 @@ msgstr "Доступи"
 msgid "Actions for {0}"
 msgstr "Дії для {0}"
 
-#: src/features/logTick/common/ui/TickMediaField.tsx:74
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:95
 msgid "Add"
 msgstr "Додати"
@@ -248,16 +261,16 @@ msgstr "Додайте фото, щоб малювати на ньому мар�
 msgid "Add admin"
 msgstr "Додати адміна"
 
+#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:144
+msgid "Add as many as you like — everyone will see them."
+msgstr "Додавайте скільки завгодно — їх побачать усі."
+
 #: src/shared/ui/SignInBenefits.tsx:63
 msgid "Add beta and photos that help the next climber"
 msgstr "Додавай бету й фото, які допоможуть наступному"
 
-#: src/features/installHint/mobile/InstallHintBody.tsx:24
-msgid "Add crag-atlas to your home screen: it opens in one tap, full screen, like any other app."
-msgstr "Додай crag-atlas на головний екран: він відкриватиметься одним дотиком, на весь екран, як звичайний застосунок."
-
-#: src/features/logTick/common/ui/TickMediaField.tsx:84
-#: src/features/logTick/common/ui/TickMediaField.tsx:92
+#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:165
+#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:177
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:188
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:160
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:74
@@ -288,6 +301,10 @@ msgstr "Додати маршрут"
 #: src/pages/region/desktop/ui/RegionEditSidebar.tsx:128
 msgid "Add sector"
 msgstr "Додати сектор"
+
+#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:90
+msgid "Add the link"
+msgstr "Додати посилання"
 
 #: src/widgets/routeMedia/desktop/AddRouteMediaDialog.tsx:19
 #: src/widgets/routeMedia/mobile/AddRouteMediaSheet.tsx:17
@@ -394,7 +411,7 @@ msgstr "Дії з пролазом"
 msgid "Ascent deleted"
 msgstr "Пролаз видалено"
 
-#: src/features/logTick/common/hooks/useLogTick.ts:30
+#: src/features/logTick/common/hooks/useLogTick.ts:50
 msgid "Ascent logged"
 msgstr "Пролаз записано"
 
@@ -425,6 +442,11 @@ msgstr "Спроба"
 msgid "Auto"
 msgstr "Авто"
 
+#: src/features/offlineRegions/desktop/SaveRegionOfflineDialog.tsx:31
+#: src/features/offlineRegions/mobile/SaveRegionOfflineSheet.tsx:20
+msgid "Available offline"
+msgstr "Доступно офлайн"
+
 #: src/app/mobile/layout/HeaderBackButton.tsx:24
 msgid "Back"
 msgstr "Назад"
@@ -446,8 +468,8 @@ msgid "Be the first to show this route"
 msgstr "Покажи цей маршрут першим"
 
 #: src/features/installHint/mobile/InstallHintBody.tsx:48
-msgid "Before a trip, save a region in Profile → Offline regions. Its topos then open at the crag with no connection."
-msgstr "Перед поїздкою збережи регіон у Профіль → Офлайн-регіони. Тоді його топо відкриються на скелях без зв'язку."
+msgid "Before a trip, open Profile, tap Offline regions and save the region you are going to. Its sectors, routes and topo photos then open with no signal at all."
+msgstr "Перед поїздкою відкрий Профіль, натисни «Офлайн-регіони» і збережи регіон, куди їдеш. Його сектори, маршрути й фото з лініями відкриватимуться зовсім без звʼязку."
 
 #: src/widgets/tickList/common/ui/TickCard.tsx:197
 #: src/widgets/tickList/common/ui/TickRepeats.tsx:93
@@ -500,7 +522,7 @@ msgstr "Навігаційний ланцюжок"
 #: src/features/catalogEdit/common/ui/EditActions.tsx:32
 #: src/features/grantAdmin/common/ui/GrantAdminBody.tsx:82
 #: src/features/logTick/common/ui/DeleteTickActions.tsx:17
-#: src/features/logTick/common/ui/TickForm.tsx:219
+#: src/features/logTick/common/ui/TickForm.tsx:223
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:276
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:450
 #: src/features/routeComment/common/ui/DeleteRouteCommentActions.tsx:17
@@ -555,7 +577,7 @@ msgstr "Очистити"
 
 #: src/features/routeFilter/common/ui/ActiveFilterChips.tsx:36
 #: src/features/routeFilter/common/ui/FiltersHeader.tsx:30
-#: src/features/routeFilter/desktop/RouteFilterPanelDesktop.tsx:71
+#: src/features/routeFilter/desktop/RouteFilterPanelDesktop.tsx:80
 msgid "Clear all filters"
 msgstr "Скинути фільтри"
 
@@ -584,7 +606,7 @@ msgstr "Скелелаз з акаунтом"
 msgid "Climbers left nothing here — no ascents, no comments, no photos."
 msgstr "Скелелази тут нічого не лишали — ні пролазів, ні коментарів, ні фото."
 
-#: src/features/routeFilter/mobile/RouteFilterPanelMobile.tsx:69
+#: src/features/routeFilter/mobile/RouteFilterPanelMobile.tsx:73
 #: src/features/topo/desktop/TopoPhotoDialog.tsx:31
 #: src/features/topo/mobile/TopoPhotoModal.tsx:34
 #: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:31
@@ -602,11 +624,11 @@ msgstr "Закрити редагування"
 msgid "Close the editor"
 msgstr "Закрити редагування"
 
-#: src/features/routeFilter/desktop/RouteFilterPanelDesktop.tsx:80
+#: src/features/routeFilter/desktop/RouteFilterPanelDesktop.tsx:89
 msgid "Collapse"
 msgstr "Згорнути"
 
-#: src/features/logTick/common/ui/TickForm.tsx:193
+#: src/features/logTick/common/ui/TickForm.tsx:197
 msgid "Comment"
 msgstr "Коментар"
 
@@ -652,18 +674,22 @@ msgstr "Стискаємо фото…"
 msgid "Conditions score"
 msgstr "Оцінка умов"
 
-#: src/features/logTick/common/ui/ConditionsSection.tsx:116
+#: src/features/logTick/common/ui/ConditionsSection.tsx:121
 msgid "Conditions, read at the sector"
 msgstr "Умови, зчитані за координатами сектора"
 
 #: src/features/installHint/common/hooks/useInstallSteps.ts:19
-msgid "Confirm. crag-atlas appears with your other apps."
-msgstr "Підтверди. crag-atlas з'явиться поруч з іншими застосунками."
+msgid "Confirm. The crag-atlas icon appears with your other apps."
+msgstr "Підтверди. Іконка crag-atlas зʼявиться поруч з іншими додатками."
 
-#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:50
-#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:52
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:37
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:61
 msgid "Connect to the internet to save or refresh a region."
 msgstr "Підключіться до інтернету, щоб зберегти або оновити регіон."
+
+#: src/features/offlineRegions/common/ui/SaveRegionOfflineBody.tsx:92
+msgid "Connect to the internet to save this region."
+msgstr "Підключіться до інтернету, щоб зберегти цей регіон."
 
 #: src/pages/login/common/ui/EmailOtpForm.tsx:75
 msgid "Continue"
@@ -721,7 +747,7 @@ msgstr "Поточне фото"
 msgid "Dark"
 msgstr "Темна"
 
-#: src/features/logTick/common/ui/ConditionsSection.tsx:98
+#: src/features/logTick/common/ui/ConditionsSection.tsx:101
 #: src/pages/logbook/common/ui/LogbookFilterFields.tsx:50
 msgid "Date"
 msgstr "Дата"
@@ -798,11 +824,11 @@ msgid "Detailed"
 msgstr "Детально"
 
 #. placeholder {0}: conditions.dewPointC
-#: src/features/logTick/common/ui/ConditionsSection.tsx:163
+#: src/features/logTick/common/ui/ConditionsSection.tsx:169
 msgid "dew {0}°"
 msgstr "роса {0}°"
 
-#: src/features/logTick/common/ui/TickForm.tsx:179
+#: src/features/logTick/common/ui/TickForm.tsx:183
 msgid "Did you like it?"
 msgstr "Як тобі маршрут?"
 
@@ -813,6 +839,14 @@ msgstr "Маршрут"
 #: src/features/routeFilter/common/hooks/useRouteFilterLabels.ts:27
 msgid "done"
 msgstr "пройдені"
+
+#: src/features/offlineRegions/common/ui/SaveRegionOfflineBody.tsx:44
+msgid "Done"
+msgstr "Готово"
+
+#: src/features/offlineRegions/common/ui/SaveRegionOfflineBody.tsx:142
+msgid "Download"
+msgstr "Завантажити"
 
 #. placeholder {0}: printable.length
 #: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:69
@@ -828,9 +862,13 @@ msgstr "Завантажити PDF"
 msgid "Download selected ({0})"
 msgstr "Завантажити вибрані ({0})"
 
-#: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:41
+#: src/features/offlineRegions/common/hooks/useProgressLabel.ts:16
 msgid "Downloading photos: {done} of {total}"
 msgstr "Завантаження фото: {done} з {total}"
+
+#: src/features/offlineRegions/common/ui/SaveRegionOfflineBody.tsx:140
+msgid "Downloading…"
+msgstr "Завантаження…"
 
 #: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:149
 msgid "Drag a route here"
@@ -859,7 +897,7 @@ msgstr "Попередні адреси, які досі відкривають 
 #: src/features/catalogEdit/common/ui/EditToggleButton.tsx:24
 #: src/features/logTick/common/ui/TickMenuItems.tsx:28
 #: src/features/routeComment/common/hooks/useRouteCommentMenuItems.tsx:34
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:149
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:151
 #: src/shared/ui/CatalogCardMenu.tsx:85
 msgid "Edit"
 msgstr "Редагувати"
@@ -919,7 +957,7 @@ msgstr "Знайдіть свій маршрут"
 msgid "First on {firstDate}, <0/>. This one is repeat #{sendCount}."
 msgstr "Уперше {firstDate}, <0/>. Цей пролаз — повтор №{sendCount}."
 
-#: src/features/topo/common/ui/TopoZoomControls.tsx:26
+#: src/features/topo/common/ui/TopoZoomControls.tsx:42
 msgid "Fit the photo"
 msgstr "Вмістити фото"
 
@@ -932,7 +970,6 @@ msgid "Free"
 msgstr "Вільно"
 
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:133
-#: src/pages/region/common/ui/ShelterBadge.tsx:17
 msgid "Fully sheltered: a roof or overhang keeps it dry"
 msgstr "Повністю: дах або навис тримає стіну сухою"
 
@@ -940,7 +977,7 @@ msgstr "Повністю: дах або навис тримає стіну су�
 msgid "Good"
 msgstr "Добре"
 
-#: src/features/installHint/mobile/InstallHintBody.tsx:67
+#: src/features/installHint/mobile/InstallHintBody.tsx:68
 msgid "Got it"
 msgstr "Зрозуміло"
 
@@ -991,11 +1028,11 @@ msgstr "Є відео"
 msgid "Hourly"
 msgstr "Погодинно"
 
-#: src/features/logTick/common/ui/TickForm.tsx:149
+#: src/features/logTick/common/ui/TickForm.tsx:153
 msgid "How did you climb it?"
 msgstr "Як ти це проліз?"
 
-#: src/features/logTick/common/ui/TickForm.tsx:169
+#: src/features/logTick/common/ui/TickForm.tsx:173
 msgid "How hard is the route?"
 msgstr "Складність маршруту"
 
@@ -1003,7 +1040,7 @@ msgstr "Складність маршруту"
 msgid "How QR codes work"
 msgstr "Як працюють QR-коди"
 
-#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:46
+#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:47
 msgid "Humidity"
 msgstr "Вологість"
 
@@ -1015,7 +1052,7 @@ msgstr "У тіні весь день"
 msgid "In the sun all day"
 msgstr "На сонці весь день"
 
-#: src/features/installHint/mobile/InstallHintBody.tsx:59
+#: src/features/installHint/mobile/InstallHintBody.tsx:60
 msgid "Install"
 msgstr "Встановити"
 
@@ -1034,6 +1071,10 @@ msgstr "З каталогу він зник, але за прямим посил
 #: src/pages/adminAccess/common/ui/AdminRow.tsx:32
 msgid "It's you"
 msgstr "Це ви"
+
+#: src/features/offlineRegions/common/ui/SaveRegionOfflineBody.tsx:36
+msgid "Its routes, photos and lines now open without the internet. You can refresh or remove it in your profile."
+msgstr "Маршрути, фото та лінії тепер відкриваються без інтернету. Оновити або видалити регіон можна в профілі."
 
 #: src/pages/login/common/hooks/useLoginBenefits.ts:17
 msgid "Keep a logbook"
@@ -1093,7 +1134,7 @@ msgstr "Світла"
 msgid "Location is blocked for this site. Allow it in the browser to see where you are."
 msgstr "Геолокацію для цього сайту заблоковано. Дозволь її в браузері, щоб бачити, де ти."
 
-#: src/features/logTick/common/ui/TickForm.tsx:234
+#: src/features/logTick/common/ui/TickForm.tsx:238
 #: src/pages/route/common/ui/LogTickButton.tsx:34
 #: src/pages/route/common/ui/RouteAscentsInvite.tsx:45
 msgid "Log ascent"
@@ -1103,7 +1144,7 @@ msgstr "Відмітити пролаз"
 msgid "Log every ascent and watch your grade pyramid build up"
 msgstr "Записуй кожен пролаз і дивись, як росте твоя піраміда категорій"
 
-#: src/features/logTick/common/ui/TickForm.tsx:232
+#: src/features/logTick/common/ui/TickForm.tsx:236
 #: src/pages/route/common/ui/LogTickButton.tsx:26
 msgid "Log repeat"
 msgstr "Записати повтор"
@@ -1213,8 +1254,7 @@ msgstr "QR-коду ще немає"
 msgid "No region found"
 msgstr "Регіон не знайдено"
 
-#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:78
-#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:80
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:89
 msgid "No regions saved yet."
 msgstr "Збережених регіонів поки немає."
 
@@ -1234,6 +1274,11 @@ msgstr "Немає української назви: на табличці бу
 msgid "No videos or photos yet."
 msgstr "Відео та фото ще немає."
 
+#: src/features/logTick/common/ui/ConditionsSection.tsx:119
+#: src/features/sectorConditions/common/ui/ConditionsPanel.tsx:62
+msgid "No weather while you are offline"
+msgstr "Погода недоступна без інтернету"
+
 #: src/features/climberPicker/common/ui/ClimberPicker.tsx:65
 #: src/features/grantAdmin/common/ui/AdminCandidateList.tsx:80
 msgid "Nobody found"
@@ -1246,6 +1291,10 @@ msgstr "Ще ніхто не записав жодного пролазу."
 #: src/features/routeFilter/common/hooks/useRouteFilterLabels.ts:26
 msgid "not done"
 msgstr "не пройдені"
+
+#: src/features/offlineRegions/common/ui/SaveRegionOfflineBody.tsx:147
+msgid "Not now"
+msgstr "Не зараз"
 
 #: src/pages/sector/common/hooks/useRoutesByTopo.ts:77
 msgid "Not on a photo"
@@ -1273,12 +1322,16 @@ msgstr "Нічого не знайдено"
 msgid "Now over {0}"
 msgstr "Зараз над {0}"
 
+#: src/features/offlineRegions/mobile/OfflineCtaMobile.tsx:39
+msgid "Offline"
+msgstr "Офлайн"
+
 #: src/pages/login/common/hooks/useLoginBenefits.ts:22
 msgid "Offline mode"
 msgstr "Офлайн-режим"
 
-#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:21
-#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:21
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:23
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:30
 msgid "Offline regions"
 msgstr "Офлайн-регіони"
 
@@ -1299,7 +1352,7 @@ msgstr "На спробу більше"
 msgid "Only an image can be used as a photo"
 msgstr "Фото може бути лише зображенням"
 
-#: src/features/logTick/common/ui/TickMediaField.tsx:61
+#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:80
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:55
 msgid "Only YouTube and Instagram links."
 msgstr "Лише посилання на YouTube або Instagram."
@@ -1333,17 +1386,19 @@ msgstr "Відкрити сектор"
 msgid "Open the crags"
 msgstr "Відкрити скелі"
 
-#: src/pages/route/desktop/PageRouteDesktop.tsx:99
+#: src/features/topo/common/ui/TopoExpandButton.tsx:14
+#: src/features/topo/common/ui/TopoZoomControls.tsx:57
+#: src/pages/route/desktop/PageRouteDesktop.tsx:101
 msgid "Open the photo"
 msgstr "Відкрити фото"
 
 #: src/features/installHint/common/hooks/useInstallSteps.ts:17
-msgid "Open this page in Chrome and tap the ⋮ menu."
-msgstr "Відкрий цю сторінку в Chrome і натисни меню ⋮."
+msgid "Open this page in Chrome. Tap the ⋮ button in the top right corner."
+msgstr "Відкрий цю сторінку в Chrome. Натисни кнопку ⋮ у правому верхньому куті."
 
 #: src/features/installHint/common/hooks/useInstallSteps.ts:10
-msgid "Open this page in Safari and tap Share in the toolbar."
-msgstr "Відкрий цю сторінку в Safari і натисни «Поділитися» на панелі."
+msgid "Open this page in Safari. Tap the Share button (a square with an arrow) at the bottom of the screen. On iOS 26 it is behind the ⋯ button next to the address bar."
+msgstr "Відкрий цю сторінку в Safari. Натисни кнопку «Поділитися» (квадрат зі стрілкою) внизу екрана. На iOS 26 вона схована за кнопкою ⋯ поруч з адресним рядком."
 
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:128
 msgid "Open: gets wet in rain"
@@ -1380,11 +1435,10 @@ msgid "Partly sheltered"
 msgstr "Частково вкритий"
 
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:130
-#: src/pages/region/common/ui/ShelterBadge.tsx:18
 msgid "Partly sheltered: some routes stay dry"
 msgstr "Частково: частина маршрутів лишається сухою"
 
-#: src/features/logTick/common/ui/TickForm.tsx:162
+#: src/features/logTick/common/ui/TickForm.tsx:166
 msgid "Partner"
 msgstr "Партнер"
 
@@ -1401,7 +1455,7 @@ msgstr "Фото {0}"
 msgid "Photo {position}"
 msgstr "Фото {position}"
 
-#: src/features/logTick/common/ui/TickForm.tsx:209
+#: src/features/logTick/common/ui/TickForm.tsx:213
 msgid "Photo and video"
 msgstr "Фото та відео"
 
@@ -1418,6 +1472,10 @@ msgstr "Фото замінено"
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:174
 msgid "Photo uploaded"
 msgstr "Фото завантажено"
+
+#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:141
+msgid "Photos"
+msgstr "Фото"
 
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:174
 msgid "Photos uploaded"
@@ -1480,11 +1538,14 @@ msgstr "Опублікувати"
 
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:42
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:81
-#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:36
 msgid "Precipitation"
 msgstr "Опади"
 
-#: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:42
+#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:37
+msgid "Precipitation over the day"
+msgstr "Опади за день"
+
+#: src/features/offlineRegions/common/hooks/useProgressLabel.ts:17
 msgid "Preparing the download…"
 msgstr "Готуємо завантаження…"
 
@@ -1496,7 +1557,7 @@ msgstr "Надруковані QR-коди його секторів перес�
 msgid "Printed QR codes of this sector stop working."
 msgstr "Надруковані QR-коди цього сектора перестануть працювати."
 
-#: src/features/logTick/common/ui/TickForm.tsx:198
+#: src/features/logTick/common/ui/TickForm.tsx:202
 msgid "Private comment"
 msgstr "Приватний коментар"
 
@@ -1507,6 +1568,10 @@ msgstr "Приватний коментар"
 #: src/pages/profile/mobile/PageProfileMobile.tsx:26
 msgid "Profile"
 msgstr "Профіль"
+
+#: src/features/installHint/mobile/InstallHintBody.tsx:24
+msgid "Put crag-atlas on your home screen. It opens in one tap, full screen, and no browser bar gets in the way at the crag."
+msgstr "Додай crag-atlas на робочий стіл. Відкривається одним дотиком, на весь екран, і панель браузера не заважає на скелі."
 
 #: src/features/sectorQr/desktop/QrSlugEditor.tsx:44
 msgid "QR address"
@@ -1577,6 +1642,7 @@ msgstr "Регіони"
 msgid "Reload"
 msgstr "Перезавантажити"
 
+#: src/features/logTick/common/ui/tickMediaField/MediaThumb.tsx:39
 #: src/features/offlineRegions/common/ui/OfflineRegionRow.tsx:49
 msgid "Remove"
 msgstr "Видалити"
@@ -1668,22 +1734,28 @@ msgstr "Траси, які ви тут пролізли"
 #: src/features/avatarUpload/desktop/CropAvatarDialog.tsx:37
 #: src/features/avatarUpload/mobile/CropAvatarSheet.tsx:31
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:230
-#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:44
-#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:46
+#: src/features/logTick/common/ui/TickForm.tsx:234
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:55
 #: src/features/routeComment/desktop/EditRouteCommentDialog.tsx:29
 #: src/features/routeComment/mobile/EditRouteCommentSheet.tsx:24
 msgid "Save"
 msgstr "Зберегти"
 
-#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:24
-#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:24
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:31
+msgid "Save a region"
+msgstr "Зберегти регіон"
+
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:33
 msgid "Save a region with its sectors, routes and topos to open it without a connection."
 msgstr "Збережіть регіон із секторами, маршрутами й топо, щоб відкривати його без інтернету."
 
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:331
 msgid "Save changes"
 msgstr "Відредагувати"
+
+#: src/features/offlineRegions/common/ui/SaveRegionOfflineBody.tsx:83
+msgid "Save it once, and every route, photo and line on it will open without the internet."
+msgstr "Збережіть один раз — і всі маршрути, фото та лінії відкриватимуться без інтернету."
 
 #: src/pages/login/common/hooks/useLoginBenefits.ts:23
 msgid "Save regions and open them offline."
@@ -1693,7 +1765,7 @@ msgstr "Зберігай регіони та відкривай їх офлай�
 msgid "Saved changes go live for everyone straight away."
 msgstr "Збережені зміни одразу стають видимими всім."
 
-#: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:31
+#: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:30
 msgid "Saved for offline use"
 msgstr "Збережено для офлайн-доступу"
 
@@ -1702,18 +1774,19 @@ msgid "Saved for offline:"
 msgstr "Збережені для офлайну:"
 
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:228
+#: src/features/logTick/common/ui/TickForm.tsx:232
+#: src/features/offlineRegions/mobile/OfflineCtaMobile.tsx:39
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:54
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:95
 msgid "Saving…"
 msgstr "Зберігаємо…"
 
 #: src/features/installHint/common/hooks/useInstallSteps.ts:11
-msgid "Scroll down and tap Add to Home Screen."
-msgstr "Прокрути вниз і натисни «На екран “Додому”»."
+msgid "Scroll the list down and tap \"Add to Home Screen\"."
+msgstr "Прогорни список униз і натисни «На робочий стіл»."
 
-#: src/features/catalogSearch/mobile/CatalogSearchMobile.tsx:17
-#: src/features/catalogSearch/mobile/CatalogSearchMobile.tsx:25
+#: src/features/catalogSearch/mobile/CatalogSearchMobile.tsx:26
+#: src/features/catalogSearch/mobile/CatalogSearchMobile.tsx:34
 msgid "Search"
 msgstr "Пошук"
 
@@ -1777,7 +1850,7 @@ msgstr "Надсилаємо код…"
 msgid "Share your experience"
 msgstr "Ділися досвідом"
 
-#: src/features/logTick/common/ui/TickForm.tsx:188
+#: src/features/logTick/common/ui/TickForm.tsx:192
 msgid "Share your thoughts"
 msgstr "Що скажеш?"
 
@@ -1815,6 +1888,10 @@ msgstr "мʼяко"
 msgid "Softer"
 msgstr "Мʼякше"
 
+#: src/shared/ui/ShelterBadge.tsx:20
+msgid "Some routes stay dry in the rain"
+msgstr "Частина маршрутів лишається сухою під час дощу"
+
 #: src/app/ui/errorBoundary/ErrorFallback.tsx:13
 msgid "Something went wrong"
 msgstr "Щось пішло не так"
@@ -1843,16 +1920,16 @@ msgstr "Сонце орієнтовно {0} – {1}"
 msgid "System"
 msgstr "Система"
 
-#: src/features/installHint/common/hooks/useInstallSteps.ts:12
-msgid "Tap Add. crag-atlas appears on your home screen."
-msgstr "Натисни «Додати». crag-atlas з'явиться на головному екрані."
-
 #: src/features/installHint/common/hooks/useInstallSteps.ts:18
-msgid "Tap Install app or Add to Home screen."
-msgstr "Натисни «Установити додаток» або «Додати на головний екран»."
+msgid "Tap \"Add to Home screen\", then choose \"Install\". Older Chrome shows \"Install app\" right away."
+msgstr "Натисни «Додати на робочий стіл», потім вибери «Встановити». У старішому Chrome одразу буде «Встановити додаток»."
+
+#: src/features/installHint/common/hooks/useInstallSteps.ts:12
+msgid "Tap \"Add\" in the top right corner. The crag-atlas icon appears on your home screen."
+msgstr "Натисни «Додати» у правому верхньому куті. Іконка crag-atlas зʼявиться на робочому столі."
 
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:41
-#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:26
+#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:27
 msgid "Temperature"
 msgstr "Температура"
 
@@ -1892,7 +1969,7 @@ msgstr "У регіону не вказана країна, тому QR-код �
 msgid "The sector has no photo yet — add one in the sector editor."
 msgstr "У секторі ще немає фото — додайте його в редакторі сектора."
 
-#: src/features/logTick/common/ui/ConditionsSection.tsx:118
+#: src/features/logTick/common/ui/ConditionsSection.tsx:123
 msgid "The sector has no point — fill the conditions in"
 msgstr "Сектор без координат — заповніть умови вручну"
 
@@ -1974,7 +2051,7 @@ msgstr "Цей сектор в архіві, тож поза каталогом.
 msgid "time"
 msgstr "час"
 
-#: src/features/logTick/common/ui/ConditionsSection.tsx:107
+#: src/features/logTick/common/ui/ConditionsSection.tsx:110
 msgid "Time"
 msgstr "Час"
 
@@ -2001,6 +2078,10 @@ msgstr "Трад"
 #: src/features/logTick/common/ui/AttemptsStepper.tsx:35
 msgid "Tries"
 msgstr "Спроб"
+
+#: src/features/offlineRegions/common/ui/SaveRegionOfflineBody.tsx:138
+msgid "Try again"
+msgstr "Спробувати ще раз"
 
 #: src/features/catalogSearch/common/ui/CatalogSearchBox.tsx:67
 msgid "Type at least {MIN_SEARCH_LENGTH} letters"
@@ -2081,17 +2162,17 @@ msgstr "Ми надіслали код на <0>{0}</0>"
 msgid "Weather"
 msgstr "Погода"
 
-#: src/features/logTick/common/ui/ConditionsSection.tsx:185
-#: src/features/sectorConditions/common/ui/ConditionsCard.tsx:51
+#: src/features/logTick/common/ui/ConditionsSection.tsx:192
+#: src/features/sectorConditions/common/ui/ConditionsCard.tsx:53
 msgid "Weather by Open-Meteo.com"
 msgstr "Погода — Open-Meteo.com"
 
-#: src/features/sectorConditions/common/ui/ConditionsCard.tsx:44
+#: src/features/sectorConditions/common/ui/ConditionsCard.tsx:46
 #: src/features/sectorConditions/common/ui/ConditionsScore.tsx:33
 msgid "Weather forecast not available yet"
 msgstr "Прогнозу погоди ще немає"
 
-#: src/features/logTick/common/ui/ConditionsSection.tsx:91
+#: src/features/logTick/common/ui/ConditionsSection.tsx:94
 msgid "When did you climb it?"
 msgstr "Коли ти це проліз?"
 
@@ -2105,7 +2186,7 @@ msgstr "Куди дивиться стіна, у градусах за комп�
 
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:43
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:84
-#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:56
+#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:57
 msgid "Wind"
 msgstr "Вітер"
 
@@ -2129,6 +2210,14 @@ msgstr "Заповнено автоматично з назви вище"
 msgid "Year"
 msgstr "Рік"
 
+#: src/shared/ui/OfflineBanner.tsx:17
+msgid "You are offline — showing saved data"
+msgstr "Ви офлайн — показуємо збережені дані"
+
+#: src/shared/ui/ShelterBadge.tsx:19
+msgid "You can climb here in the rain"
+msgstr "Можна лазити під час дощу"
+
 #: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:101
 msgid "You can edit a QR code's address. The old address stays and keeps working; the new one is added alongside it for the next plaques."
 msgstr "Адресу QR-коду можна редагувати. Стара адреса при цьому не зникає й працює далі, а нова дописується поруч — її отримають наступні таблички."
@@ -2149,7 +2238,11 @@ msgstr "Твоя бета"
 msgid "Your climbing, all in one place"
 msgstr "Твоє скелелазіння — в одному місці"
 
-#: src/features/logTick/common/ui/ConditionsSection.tsx:151
+#: src/features/offlineRegions/common/ui/SaveRegionOfflineBody.tsx:103
+msgid "Your connection is slow right now, so the download may take a while. Keep the app open until it finishes."
+msgstr "Зараз у вас повільне з'єднання, тож завантаження може тривати довше. Не закривайте застосунок, доки воно не завершиться."
+
+#: src/features/logTick/common/ui/ConditionsSection.tsx:157
 msgid "Your corrections were reset for the new date and time"
 msgstr "Ваші виправлення скинуто для нової дати й часу"
 
@@ -2182,7 +2275,7 @@ msgstr "Фото оновлено"
 msgid "Your photo or send video helps the next climber read the line — and puts your ascent on the route page."
 msgstr "Твоє фото чи відео пролазу допоможе наступним скелелазам прочитати лінію — а твій пролаз з'явиться на сторінці маршруту."
 
-#: src/features/logTick/common/ui/TickMediaField.tsx:58
+#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:69
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:53
 msgid "YouTube or Instagram link"
 msgstr "Посилання на YouTube або Instagram"
@@ -2191,12 +2284,12 @@ msgstr "Посилання на YouTube або Instagram"
 msgid "Zoom"
 msgstr "Масштаб"
 
-#: src/features/topo/common/ui/TopoZoomControls.tsx:31
+#: src/features/topo/common/ui/TopoZoomControls.tsx:49
 #: src/shared/ui/ImageCropper.tsx:121
 msgid "Zoom in"
 msgstr "Збільшити"
 
-#: src/features/topo/common/ui/TopoZoomControls.tsx:19
+#: src/features/topo/common/ui/TopoZoomControls.tsx:35
 #: src/shared/ui/ImageCropper.tsx:103
 msgid "Zoom out"
 msgstr "Зменшити"
