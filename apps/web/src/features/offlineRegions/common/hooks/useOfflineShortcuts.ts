@@ -1,6 +1,6 @@
 import { buildRegionPath } from '@web/app/router/routes';
+import { useIsOnline } from '@web/shared/lib';
 
-import { useIsOnline } from './useIsOnline';
 import { useOfflineRegions } from './useOfflineRegions';
 
 // Reads the saved index only, never the session: offline, an expired token

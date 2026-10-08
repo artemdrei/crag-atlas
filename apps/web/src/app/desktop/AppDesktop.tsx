@@ -6,6 +6,7 @@ import { avatarUploadDesktopRegistrations } from '@web/features/avatarUpload';
 import { catalogEditDesktopRegistrations } from '@web/features/catalogEdit';
 import { grantAdminDesktopRegistrations } from '@web/features/grantAdmin';
 import { logTickDesktopRegistrations } from '@web/features/logTick';
+import { offlineRegionsDesktopRegistrations } from '@web/features/offlineRegions';
 import { photoUploadDesktopRegistrations } from '@web/features/photoUpload';
 import { routeCommentDesktopRegistrations } from '@web/features/routeComment';
 import { sectorQrDesktopRegistrations } from '@web/features/sectorQr';
@@ -39,6 +40,7 @@ const registrations = [
   ...topoEditorDesktopRegistrations,
   ...photoUploadDesktopRegistrations,
   ...routeCommentDesktopRegistrations,
+  ...offlineRegionsDesktopRegistrations,
   ...signInPromptDesktopRegistrations,
   ...routeMediaDesktopRegistrations,
   ...sectorQrDesktopRegistrations,

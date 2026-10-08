@@ -6,6 +6,7 @@ import { keyframes, styled } from '@mui/material/styles';
 
 import { ErrorBoundary } from '@web/app/ui/errorBoundary';
 import { useScrollRestoration } from '@web/shared/lib';
+import { OfflineBanner } from '@web/shared/ui';
 
 import { AppBottomNavigation } from './AppBottomNavigation';
 import { HeaderMobile } from './HeaderMobile';
@@ -20,6 +21,7 @@ export const AppLayoutMobile = () => {
     <LayoutRootStyled>
       <HeaderSlotStyled>
         <HeaderMobile />
+        <OfflineBanner />
       </HeaderSlotStyled>
       <MainStyled ref={mainRef} component="main">
         {/* Keyed by path: a crash on one screen must not follow the user to

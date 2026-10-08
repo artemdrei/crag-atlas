@@ -1,12 +1,15 @@
+import { useState } from 'react';
 import { useLocation } from 'react-router';
 
 import AppBar from '@mui/material/AppBar';
 import { styled } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 
+import { idRegionOf } from '@web/app/router/idRegionOf';
 import { parentPathOf } from '@web/app/router/parentPathOf';
 import { ROUTES } from '@web/app/router/routes';
 import { CatalogSearchMobile } from '@web/features/catalogSearch';
+import { OfflineCtaMobile } from '@web/features/offlineRegions';
 import { Wordmark } from '@web/shared/ui';
 
 import { HeaderBackButton } from './HeaderBackButton';
@@ -14,6 +17,8 @@ import { HeaderBackButton } from './HeaderBackButton';
 export const HeaderMobile = () => {
   const { pathname } = useLocation();
   const parentPath = parentPathOf(pathname);
+  const idRegion = idRegionOf(pathname);
+  const [isSearchExpanded, setIsSearchExpanded] = useState(false);
 
   return (
     <HeaderStyled position="static" color="transparent" elevation={0}>
@@ -24,7 +29,10 @@ export const HeaderMobile = () => {
           <Wordmark to={ROUTES.INDEX} />
         )}
         <SearchSlotStyled>
-          <CatalogSearchMobile />
+          {idRegion && !isSearchExpanded && (
+            <OfflineCtaMobile idRegion={idRegion} />
+          )}
+          <CatalogSearchMobile onExpandedChange={setIsSearchExpanded} />
         </SearchSlotStyled>
       </ToolbarStyled>
     </HeaderStyled>
@@ -50,8 +58,9 @@ const SearchSlotStyled = styled('div')`
   display: flex;
   flex: 1 1 auto;
   align-items: center;
+  gap: ${({ theme }) => theme.spacing(1)};
   justify-content: flex-end;
   min-width: 0;
   height: ${SEARCH_SLOT_HEIGHT}px;
-  padding-left: ${({ theme }) => theme.spacing(4)};
+  padding-left: ${({ theme }) => theme.spacing(2)};
 `;

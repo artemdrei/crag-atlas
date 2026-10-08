@@ -8,11 +8,20 @@ import {
   OfflineDownloadProgress,
   OfflineRegionPicker,
   OfflineRegionRow,
+  useOfflineRegionChoice,
   useOfflineRegionsPanel
 } from '../common';
 
 export const OfflineRegionsMobile = () => {
   const panel = useOfflineRegionsPanel();
+  const choice = useOfflineRegionChoice();
+
+  const download = async () => {
+    if (!choice.selected) return;
+
+    await panel.save(choice.selected.id);
+    choice.select(null);
+  };
 
   return (
     <SectionStyled elevation={0}>
@@ -30,18 +39,18 @@ export const OfflineRegionsMobile = () => {
 
       <ControlsStyled>
         <OfflineRegionPicker
-          options={panel.options}
-          value={panel.selected}
-          isLoading={panel.isRegionsLoading}
+          options={choice.options}
+          value={choice.selected}
+          isLoading={choice.isLoading}
           isDisabled={!panel.isOnline || panel.isDownloading}
-          onChange={panel.select}
+          onChange={choice.select}
         />
         <Button
           fullWidth
           size="large"
           variant="contained"
-          disabled={!panel.canDownload}
-          onClick={panel.download}
+          disabled={!panel.isOnline || !choice.selected || panel.isDownloading}
+          onClick={download}
         >
           <Trans>Save</Trans>
         </Button>

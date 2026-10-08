@@ -43,3 +43,4 @@ export { UnsavedBadge } from './UnsavedBadge';
 export { UserAvatar } from './UserAvatar';
 export { Wordmark } from './Wordmark';
 export { ZoomStageShell } from './ZoomStageShell';
+export { OfflineBanner } from './OfflineBanner';

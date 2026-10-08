@@ -9,6 +9,7 @@ import {
   installHintMobileRegistrations
 } from '@web/features/installHint';
 import { logTickMobileRegistrations } from '@web/features/logTick';
+import { offlineRegionsMobileRegistrations } from '@web/features/offlineRegions';
 import { routeCommentMobileRegistrations } from '@web/features/routeComment';
 import { signInPromptMobileRegistrations } from '@web/features/signInPrompt';
 import { topoMobileRegistrations } from '@web/features/topo';
@@ -36,6 +37,7 @@ const registrations = [
   ...installHintMobileRegistrations,
   ...logTickMobileRegistrations,
   ...routeCommentMobileRegistrations,
+  ...offlineRegionsMobileRegistrations,
   ...signInPromptMobileRegistrations,
   ...topoMobileRegistrations,
   ...routeMediaMobileRegistrations,

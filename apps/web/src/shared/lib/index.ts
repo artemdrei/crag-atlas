@@ -56,6 +56,7 @@ export {
   useImageCrop,
   ZOOM_STEP
 } from './useImageCrop';
+export { useIsOnline } from './useIsOnline';
 export { useLatinNames } from './useLatinNames';
 export { useObjectUrl } from './useObjectUrl';
 export { useScrollHint } from './useScrollHint';
