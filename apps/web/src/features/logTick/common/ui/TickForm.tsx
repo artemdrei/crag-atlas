@@ -21,7 +21,7 @@ import { ConditionsSection } from './ConditionsSection';
 import { GradeFeelChoice } from './GradeFeelChoice';
 import { RepeatAscentNotice } from './RepeatAscentNotice';
 import { TickFormSection } from './TickFormSection';
-import { TickMediaField } from './TickMediaField';
+import { TickMediaField } from './tickMediaField';
 
 const TYPES_WITH_ATTEMPTS: AscentType[] = ['redpoint', 'toprope', 'attempt'];
 
