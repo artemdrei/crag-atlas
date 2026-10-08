@@ -1,6 +1,5 @@
 import { useModal } from '@web/app/providers';
-
-import { isStandalone } from '../lib';
+import { isStandalone } from '@web/shared/lib';
 
 export const useOpenInstallHint = () => {
   const { openModal } = useModal();

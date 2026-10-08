@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router';
 
 import { ModalProvider } from '@web/app/providers';
 import { avatarUploadMobileRegistrations } from '@web/features/avatarUpload';
+import { feedbackMobileRegistrations } from '@web/features/feedback';
 import { grantAdminMobileRegistrations } from '@web/features/grantAdmin';
 import {
   InstallHintTrigger,
@@ -13,6 +14,7 @@ import { offlineRegionsMobileRegistrations } from '@web/features/offlineRegions'
 import { routeCommentMobileRegistrations } from '@web/features/routeComment';
 import { signInPromptMobileRegistrations } from '@web/features/signInPrompt';
 import { topoMobileRegistrations } from '@web/features/topo';
+import { adminFeedbackMobileRegistrations } from '@web/pages/adminFeedback/registrations';
 import { LogbookTeaser } from '@web/pages/logbook/common';
 import { playgroundMobileRegistrations } from '@web/pages/playground/registrations';
 import { ProfileSkeleton, ProfileTeaser } from '@web/pages/profile/common';
@@ -33,6 +35,7 @@ import { ErrorBoundary } from '../ui/errorBoundary';
 // devices' features.
 const registrations = [
   ...avatarUploadMobileRegistrations,
+  ...feedbackMobileRegistrations,
   ...grantAdminMobileRegistrations,
   ...installHintMobileRegistrations,
   ...logTickMobileRegistrations,
@@ -41,12 +44,17 @@ const registrations = [
   ...signInPromptMobileRegistrations,
   ...topoMobileRegistrations,
   ...routeMediaMobileRegistrations,
+  ...adminFeedbackMobileRegistrations,
   ...playgroundMobileRegistrations
 ];
 
 const PageAdminMobile = page(
   () => import('@web/pages/admin'),
   'PageAdminMobile'
+);
+const PageAdminFeedbackMobile = page(
+  () => import('@web/pages/adminFeedback'),
+  'PageAdminFeedbackMobile'
 );
 const PageAdminAccessMobile = page(
   () => import('@web/pages/adminAccess'),
@@ -137,6 +145,10 @@ const AppMobile = () => (
               <Route
                 path={ROUTES.ADMIN_QR_CODES}
                 element={<Navigate to={ROUTES.ADMIN_ACCESS} replace />}
+              />
+              <Route
+                path={ROUTES.ADMIN_FEEDBACK}
+                element={<PageAdminFeedbackMobile />}
               />
             </Route>
             <Route

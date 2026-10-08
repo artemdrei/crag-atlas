@@ -8,6 +8,11 @@ export const FIRST_ASCENT_TYPES: AscentType[] = [
   'retro_flash'
 ];
 
+const CELEBRATED_ASCENT_TYPES: AscentType[] = ['onsight', 'flash', 'redpoint'];
+
+export const isFirstSend = (tick: Tick) =>
+  !tick.isRepeat && CELEBRATED_ASCENT_TYPES.includes(tick.ascentType);
+
 export const toRouteSends = (ticks: Tick[]) => {
   const sends = ticks.filter((tick) => tick.ascentType !== 'attempt');
 

@@ -56,12 +56,10 @@ test('a climber hangs a link and a photo on a route', async ({ page }) => {
     const dialog = page.getByRole('dialog');
 
     await dialog
-      .getByRole('textbox', { name: 'YouTube or Instagram link' })
+      .getByRole('textbox', { name: 'YouTube link' })
       .fill('https://vimeo.com/123456');
 
-    await expect(
-      dialog.getByText('Only YouTube and Instagram links.')
-    ).toBeVisible();
+    await expect(dialog.getByText('This is not a YouTube link.')).toBeVisible();
     await expect(
       dialog.getByRole('button', { name: 'Add', exact: true })
     ).toBeDisabled();
@@ -70,9 +68,7 @@ test('a climber hangs a link and a photo on a route', async ({ page }) => {
   await test.step('a YouTube link goes in', async () => {
     const dialog = page.getByRole('dialog');
 
-    await dialog
-      .getByRole('textbox', { name: 'YouTube or Instagram link' })
-      .fill(YOUTUBE);
+    await dialog.getByRole('textbox', { name: 'YouTube link' }).fill(YOUTUBE);
     await dialog.getByRole('button', { name: 'Add', exact: true }).click();
 
     await expect(
@@ -90,7 +86,7 @@ test('a climber hangs a link and a photo on a route', async ({ page }) => {
 
     // One or the other, never both: the link field closes once a file is in.
     await expect(
-      dialog.getByRole('textbox', { name: 'YouTube or Instagram link' })
+      dialog.getByRole('textbox', { name: 'YouTube link' })
     ).toBeDisabled();
 
     await dialog.getByRole('button', { name: 'Add', exact: true }).click();

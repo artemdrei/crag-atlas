@@ -1,38 +1,26 @@
-import { Link, Outlet, useLocation } from 'react-router';
+import { Outlet } from 'react-router';
 
 import { Trans } from '@lingui/react/macro';
 import { styled } from '@mui/material/styles';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
 import Typography from '@mui/material/Typography';
 
 import { ROUTES } from '@web/app/router/routes';
 
+import { AdminTabs } from '../common/ui';
+
 const TABS = [
   { path: ROUTES.ADMIN_ACCESS, label: <Trans>Access</Trans> },
-  { path: ROUTES.ADMIN_QR_CODES, label: <Trans>QR codes</Trans> }
+  { path: ROUTES.ADMIN_QR_CODES, label: <Trans>QR codes</Trans> },
+  { path: ROUTES.ADMIN_FEEDBACK, label: <Trans>Feedback</Trans> }
 ];
 
 export const PageAdminDesktop = () => {
-  const { pathname } = useLocation();
-  const tab = TABS.find(({ path }) => pathname.startsWith(path))?.path ?? false;
-
   return (
     <PageStyled>
       <Typography variant="h4">
         <Trans>Admin</Trans>
       </Typography>
-      <Tabs value={tab}>
-        {TABS.map(({ path, label }) => (
-          <Tab
-            key={path}
-            value={path}
-            label={label}
-            component={Link}
-            to={path}
-          />
-        ))}
-      </Tabs>
+      <AdminTabs tabs={TABS} />
       <Outlet />
     </PageStyled>
   );

@@ -46,6 +46,7 @@ export const QUERY_KEYS = {
   climberContent: (scope: string, id: string) =>
     ['climberContent', scope, id] as const,
   admins: () => ['admins'] as const,
+  feedback: () => ['feedback'] as const,
   adminCandidates: () => ['admins', 'candidates'] as const,
   adminCandidateSearch: (query: string) =>
     ['admins', 'candidates', query] as const,

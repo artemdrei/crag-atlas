@@ -4,24 +4,17 @@ import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
+import { useModal } from '@web/app/providers';
+
 import {
   OfflineDownloadProgress,
-  OfflineRegionPicker,
   OfflineRegionRow,
-  useOfflineRegionChoice,
   useOfflineRegionsPanel
 } from '../common';
 
 export const OfflineRegionsMobile = () => {
   const panel = useOfflineRegionsPanel();
-  const choice = useOfflineRegionChoice();
-
-  const download = async () => {
-    if (!choice.selected) return;
-
-    await panel.save(choice.selected.id);
-    choice.select(null);
-  };
+  const { openModal } = useModal();
 
   return (
     <SectionStyled elevation={0}>
@@ -37,24 +30,16 @@ export const OfflineRegionsMobile = () => {
         </Typography>
       </div>
 
-      <ControlsStyled>
-        <OfflineRegionPicker
-          options={choice.options}
-          value={choice.selected}
-          isLoading={choice.isLoading}
-          isDisabled={!panel.isOnline || panel.isDownloading}
-          onChange={choice.select}
-        />
-        <Button
-          fullWidth
-          size="large"
-          variant="contained"
-          disabled={!panel.isOnline || !choice.selected || panel.isDownloading}
-          onClick={download}
-        >
-          <Trans>Save</Trans>
-        </Button>
-      </ControlsStyled>
+      <Button
+        fullWidth
+        size="large"
+        variant="outlined"
+        color="inherit"
+        disabled={!panel.isOnline || panel.isDownloading}
+        onClick={() => openModal('SAVE_REGION_OFFLINE', {})}
+      >
+        <Trans>Save a region</Trans>
+      </Button>
 
       {!panel.isOnline && (
         <Typography variant="caption" color="text.secondary">
@@ -69,7 +54,7 @@ export const OfflineRegionsMobile = () => {
         />
       )}
 
-      {panel.rows.length ? (
+      {panel.rows.length > 0 && (
         <ListStyled>
           {panel.rows.map((row) => (
             <OfflineRegionRow
@@ -84,10 +69,6 @@ export const OfflineRegionsMobile = () => {
             />
           ))}
         </ListStyled>
-      ) : (
-        <Typography variant="body2" color="text.secondary">
-          <Trans>No regions saved yet.</Trans>
-        </Typography>
       )}
     </SectionStyled>
   );
@@ -100,12 +81,6 @@ const SectionStyled = styled(Paper)`
   padding: ${({ theme }) => theme.spacing(1.5, 2)};
   border: 1px solid ${({ theme }) => theme.palette.divider};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
-`;
-
-const ControlsStyled = styled('div')`
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(1.5)};
 `;
 
 const ListStyled = styled('ul')`

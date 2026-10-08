@@ -12,4 +12,3 @@ export {
   getInstallPrompt,
   subscribeInstallPrompt
 } from './installPromptEvent';
-export { isStandalone } from './isStandalone';

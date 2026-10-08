@@ -66,7 +66,7 @@ export const TickMediaField = ({ media = [], pending, onChange }: Props) => {
     <FieldStyled>
       <GroupStyled>
         <Typography component="label" variant="subtitle2" htmlFor={idLink}>
-          <Trans>YouTube or Instagram link</Trans>
+          <Trans>YouTube link</Trans>
         </Typography>
         <TextField
           fullWidth
@@ -76,9 +76,7 @@ export const TickMediaField = ({ media = [], pending, onChange }: Props) => {
           error={isInvalid}
           placeholder="https://"
           helperText={
-            isInvalid ? (
-              <Trans>Only YouTube and Instagram links.</Trans>
-            ) : undefined
+            isInvalid ? <Trans>This is not a YouTube link.</Trans> : undefined
           }
           slotProps={{
             input: {

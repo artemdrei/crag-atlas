@@ -13,6 +13,7 @@ export interface Props {
   action: SignInPromptAction;
   title: ReactNode;
   message: ReactNode;
+  footer?: ReactNode;
   isCompact?: boolean;
 }
 
@@ -22,6 +23,7 @@ export const SignInTeaser = ({
   action,
   title,
   message,
+  footer,
   isCompact
 }: Props) => {
   useEffect(() => {
@@ -32,6 +34,7 @@ export const SignInTeaser = ({
     <PageShell spacing={3} isCompact={isCompact}>
       <TitleStyled variant={isCompact ? 'h5' : 'h4'}>{title}</TitleStyled>
       <SignInBenefits to={to} from={from} message={message} />
+      {footer}
     </PageShell>
   );
 };

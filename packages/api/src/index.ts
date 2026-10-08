@@ -60,3 +60,6 @@ export type SunInterval = components['schemas']['SunIntervalDto'];
 export type HorizonBackfill = components['schemas']['HorizonBackfillDto'];
 export type SectorQr = components['schemas']['SectorQrDto'];
 export type QrPathTarget = components['schemas']['QrPathTargetDto'];
+export type Feedback = components['schemas']['FeedbackDto'];
+export type FeedbackPage = components['schemas']['FeedbackPageDto'];
+export type CreateFeedback = components['schemas']['CreateFeedbackDto'];

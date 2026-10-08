@@ -10,6 +10,8 @@ export {
   useTrackPageView
 } from './analytics';
 export { buildDirectionsUrl } from './buildDirectionsUrl';
+export type { CelebrationName } from './celebration';
+export { celebrate, endCelebration, useCelebration } from './celebration';
 export { coordsOf } from './coordsOf';
 export { countryCodes, countryName } from './countries';
 export { digitsOnly } from './digitsOnly';
@@ -23,8 +25,9 @@ export { gradeKey, toGradeBars } from './gradeBars';
 export type { CompressedPhoto, SourceRect } from './imageToWebp';
 export { imageToWebp } from './imageToWebp';
 export { isSafeHttpUrl } from './isSafeHttpUrl';
+export { isStandalone } from './isStandalone';
 export { localNameOf } from './localNameOf';
-export type { MediaLink, MediaProvider } from './mediaLink';
+export type { MediaLink } from './mediaLink';
 export {
   mediaEmbedUrl,
   mediaThumbnailOf,

@@ -13,6 +13,8 @@ import {
 } from '../common/exceptions/database.exception';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
 import type { GradeScale } from '../common/utils/grade';
+import { applyCursor, toPage } from '../common/utils/keysetPage';
+import { assertWithinLimit, TEXT_LIMITS } from '../common/utils/textLimits';
 import { userClient } from '../common/utils/userClient';
 import { publicSupabase, storagePublicUrl } from '../config/supabase.client';
 import { MEDIA_BUCKET } from '../media/media.types';
@@ -308,41 +310,25 @@ export class TicksService {
       MAX_FEED_PAGE_SIZE
     );
 
-    let query = userClient(authUser)
-      .from('ticks')
-      .select(COLUMNS)
-      .eq('is_repeat', false)
-      .order('climbed_at', { ascending: false })
-      .order('id', { ascending: false })
-      // One row past the page, so no second count query.
-      .limit(pageSize + 1);
-
-    if (cursor) {
-      const [climbedAt, id] = cursor.split('|');
-
-      if (!climbedAt || !id) {
-        throw new ValidationException('The cursor is malformed');
-      }
-
-      query = query.or(
-        `climbed_at.lt.${climbedAt},and(climbed_at.eq.${climbedAt},id.lt.${id})`
-      );
-    }
-
-    const { data, error } = await query.returns<TickRow[]>();
+    const { data, error } = await applyCursor(
+      userClient(authUser)
+        .from('ticks')
+        .select(COLUMNS)
+        .eq('is_repeat', false)
+        .order('climbed_at', { ascending: false })
+        .order('id', { ascending: false })
+        .limit(pageSize + 1),
+      'climbed_at',
+      cursor
+    ).returns<TickRow[]>();
 
     if (error) {
       throw readFailed('Could not load the feed', 'TICKS_FEED_FAILED', error);
     }
 
-    const items = data.slice(0, pageSize);
-    const last = items[items.length - 1];
+    const { items, nextCursor } = toPage(data, pageSize, 'climbed_at');
 
-    return {
-      items: await toTickDtos(items, authUser.idUser),
-      nextCursor:
-        data.length > pageSize && last ? `${last.climbed_at}|${last.id}` : null
-    };
+    return { items: await toTickDtos(items, authUser.idUser), nextCursor };
   }
 
   async update(
@@ -432,7 +418,7 @@ const assertAscentType = (value: TickDto['ascentType']) => {
 
 const toTickColumns = (payload: CreateTickDto | UpdateTickDto) => ({
   attempts: payload.attempts ?? null,
-  note: payload.note ?? null,
+  note: limitedNote(payload.note),
   rating: payload.rating ?? null,
   grade_opinion: payload.gradeOpinion ?? null,
   grade_vote: payload.gradeVote ?? null,
@@ -553,3 +539,9 @@ const toTickDto = (
   createdAt: row.created_at,
   updatedAt: row.updated_at
 });
+
+const limitedNote = (note: string | null | undefined): string | null => {
+  assertWithinLimit(note, TEXT_LIMITS.tickNote, 'A note');
+
+  return note ?? null;
+};

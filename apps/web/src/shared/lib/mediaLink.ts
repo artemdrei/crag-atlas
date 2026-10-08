@@ -2,10 +2,7 @@ import type { RouteMedia } from '@crag-atlas/api';
 
 import { isSafeHttpUrl } from './isSafeHttpUrl';
 
-export type MediaProvider = 'youtube' | 'instagram';
-
 export interface MediaLink {
-  provider: MediaProvider;
   id: string;
   url: string;
 }
@@ -16,10 +13,6 @@ const YOUTUBE_HOSTS = [
   'm.youtube.com',
   'youtu.be'
 ];
-
-const INSTAGRAM_HOSTS = ['instagram.com', 'www.instagram.com'];
-
-const INSTAGRAM_PATHS = ['p', 'reel', 'reels', 'tv'];
 
 const ID_PATTERN = /^[\w-]{5,32}$/;
 
@@ -34,46 +27,21 @@ export const parseMediaLink = (value: string): MediaLink | undefined => {
 
   if (url.protocol !== 'http:' && url.protocol !== 'https:') return undefined;
 
-  const segments = url.pathname.split('/').filter(Boolean);
+  if (!YOUTUBE_HOSTS.includes(url.hostname)) return undefined;
 
-  if (YOUTUBE_HOSTS.includes(url.hostname)) {
-    const id = youtubeId(url, segments);
+  const id = youtubeId(url, url.pathname.split('/').filter(Boolean));
 
-    return id && ID_PATTERN.test(id)
-      ? { provider: 'youtube', id, url: url.toString() }
-      : undefined;
-  }
-
-  if (INSTAGRAM_HOSTS.includes(url.hostname)) {
-    const [kind, code] = segments;
-
-    return kind &&
-      INSTAGRAM_PATHS.includes(kind) &&
-      code &&
-      ID_PATTERN.test(code)
-      ? { provider: 'instagram', id: code, url: url.toString() }
-      : undefined;
-  }
-
-  return undefined;
+  return id && ID_PATTERN.test(id) ? { id, url: url.toString() } : undefined;
 };
 
 // Built from the parsed id, never the stored url: what a climber typed must
 // not reach an iframe `src` unchecked.
-export const mediaEmbedUrl = ({ provider, id }: MediaLink): string =>
-  provider === 'youtube'
-    ? // Without playsinline iOS hands the video to its fullscreen player.
-      `https://www.youtube-nocookie.com/embed/${id}?playsinline=1`
-    : `https://www.instagram.com/p/${id}/embed`;
+// Without playsinline iOS hands the video to its fullscreen player.
+export const mediaEmbedUrl = ({ id }: MediaLink): string =>
+  `https://www.youtube-nocookie.com/embed/${id}?playsinline=1`;
 
-// Instagram serves no thumbnail without an API token.
-export const mediaThumbnailUrl = ({
-  provider,
-  id
-}: MediaLink): string | undefined =>
-  provider === 'youtube'
-    ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
-    : undefined;
+export const mediaThumbnailUrl = ({ id }: MediaLink): string =>
+  `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 
 const youtubeId = (url: URL, segments: string[]): string | undefined => {
   if (url.hostname === 'youtu.be') return segments[0];

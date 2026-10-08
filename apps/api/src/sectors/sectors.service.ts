@@ -23,6 +23,7 @@ import type { GradeScale } from '../common/utils/grade';
 import { toLatinName, toLocalName } from '../common/utils/names';
 import { toPoint } from '../common/utils/point';
 import type { Shelter } from '../common/utils/shelter';
+import { limitedDescription } from '../common/utils/textLimits';
 import { userClient } from '../common/utils/userClient';
 import { publicSupabase, storagePublicUrl } from '../config/supabase.client';
 import { HorizonService } from '../horizon/horizon.service';
@@ -252,7 +253,7 @@ export class SectorsService {
         id_region: idRegion,
         name: toLatinName(payload.name, TARGET.entity),
         name_local: toLocalName(payload.nameLocal),
-        description: payload.description?.trim() ?? ''
+        description: limitedDescription(payload.description)
       })
       .select('id')
       .single<{ id: string }>();
@@ -281,7 +282,7 @@ export class SectorsService {
       .update({
         name: toLatinName(payload.name, TARGET.entity),
         name_local: toLocalName(payload.nameLocal),
-        description: payload.description ?? '',
+        description: limitedDescription(payload.description),
         aspect_deg: payload.aspectDeg ?? null,
         ...(payload.shelter ? { shelter: payload.shelter } : {}),
         ...point

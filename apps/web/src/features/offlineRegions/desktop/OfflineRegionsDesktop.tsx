@@ -19,9 +19,17 @@ export const OfflineRegionsDesktop = () => {
   return (
     <SectionStyled elevation={0}>
       <HeaderStyled>
-        <Typography variant="body1">
-          <Trans>Offline regions</Trans>
-        </Typography>
+        <div>
+          <Typography variant="body1">
+            <Trans>Offline regions</Trans>
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            <Trans>
+              Save a region with its sectors, routes and topos to open it
+              without a connection.
+            </Trans>
+          </Typography>
+        </div>
         <Button
           variant="outlined"
           color="inherit"
@@ -76,9 +84,13 @@ const SectionStyled = styled(Paper)`
 
 const HeaderStyled = styled('div')`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacing(2)};
+
+  button {
+    flex-shrink: 0;
+  }
 `;
 
 const ListStyled = styled('ul')`

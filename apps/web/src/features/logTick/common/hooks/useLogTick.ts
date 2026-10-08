@@ -7,16 +7,17 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useModal } from '@web/app/providers';
 import { recordInstallHintMoment } from '@web/features/installHint';
 import { invalidateRouteLists, QUERY_KEYS } from '@web/shared/api';
-import { toast } from '@web/shared/lib';
+import { celebrate, toast, useIsOnline } from '@web/shared/lib';
 
 import type { CreateTick, PendingMedia } from '../entities';
-import { saveTickMedia } from '../lib';
+import { isFirstSend, saveTickMedia } from '../lib';
 import { useApiCreateTick } from './useApiCreateTick';
 
 export const useLogTick = (idRoute: string) => {
   const { t } = useLingui();
   const { closeModal } = useModal();
   const queryClient = useQueryClient();
+  const isOnline = useIsOnline();
   const mediaRef = useRef<PendingMedia>({ links: [], files: [] });
 
   const dismiss = () => closeModal('LOG_TICK');
@@ -51,10 +52,18 @@ export const useLogTick = (idRoute: string) => {
       // The sheet calls onClose on its way out whoever asked for it.
       closeModal('LOG_TICK', { isCompleted: true });
       recordInstallHintMoment();
+      if (isFirstSend(tick)) celebrate('confetti');
     }
   });
 
   const save = (payload: Omit<CreateTick, 'idRoute'>, media: PendingMedia) => {
+    if (!isOnline) {
+      toast.error(
+        t`No internet connection. Log the ascent again once you are back online`
+      );
+
+      return;
+    }
     mediaRef.current = media;
     createTick({ ...payload, idRoute });
   };

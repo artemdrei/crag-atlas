@@ -1,10 +1,10 @@
 import { useEffect, useSyncExternalStore } from 'react';
 
 import { useModal, useUser } from '@web/app/providers';
+import { isStandalone } from '@web/shared/lib';
 
 import {
   getInstallHintState,
-  isStandalone,
   markInstallHintInstalled,
   recordInstallHintSession,
   recordInstallHintShown,

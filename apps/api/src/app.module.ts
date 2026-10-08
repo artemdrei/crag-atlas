@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 import { AdminsModule } from './admins/admins.module';
 import { CommentsModule } from './comments/comments.module';
 import { ConditionsModule } from './conditions/conditions.module';
+import { FeedbackModule } from './feedback/feedback.module';
 import { HealthModule } from './health/health.module';
 import { HorizonModule } from './horizon/horizon.module';
 import { MeModule } from './me/me.module';
@@ -21,6 +23,7 @@ import { WeatherModule } from './weather/weather.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    ThrottlerModule.forRoot([{ ttl: 60_000, limit: 5 }]),
     HealthModule,
     AdminsModule,
     MeModule,
@@ -36,7 +39,8 @@ import { WeatherModule } from './weather/weather.module';
     MediaModule,
     WeatherModule,
     HorizonModule,
-    ConditionsModule
+    ConditionsModule,
+    FeedbackModule
   ]
 })
 export class AppModule {}

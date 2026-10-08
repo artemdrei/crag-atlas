@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 
 import type { GradeScale, Route } from '@crag-atlas/api';
+import { TEXT_LIMITS } from '@crag-atlas/utils';
 import { Trans, useLingui } from '@lingui/react/macro';
 import RedoIcon from '@mui/icons-material/Redo';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
@@ -29,7 +30,12 @@ import {
   gradeScalesForType,
   isNameLatin
 } from '@web/shared/lib';
-import { ChangedTextField, DangerButton, NameFields } from '@web/shared/ui';
+import {
+  ChangedTextField,
+  DangerButton,
+  LimitedTextField,
+  NameFields
+} from '@web/shared/ui';
 
 import type { ChangedRouteFields, RouteDraft } from '../../common';
 
@@ -306,10 +312,11 @@ export const TopoEditorRoutePanel = ({
           />
         </RowStyled>
         <Divider />
-        <ChangedTextField
+        <LimitedTextField
           size="small"
           multiline
           minRows={3}
+          maxLength={TEXT_LIMITS.catalogDescription}
           label={t`Description`}
           value={route.description}
           isChanged={changed.description}

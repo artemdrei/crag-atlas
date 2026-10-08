@@ -3,6 +3,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { styled } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
 
 import { useModal } from '@web/app/providers';
 
@@ -32,13 +33,21 @@ const SaveRegionOfflineDialog = ({ open }: Props) => {
       </DialogTitle>
       <ContentStyled>
         {choice.isPickable && (
-          <OfflineRegionPicker
-            options={choice.options}
-            value={choice.selected}
-            isLoading={choice.isLoading}
-            isDisabled={false}
-            onChange={choice.select}
-          />
+          <>
+            <Typography variant="body2" color="text.secondary">
+              <Trans>
+                Choose a region to save its sectors, routes and topos for
+                offline use.
+              </Trans>
+            </Typography>
+            <OfflineRegionPicker
+              options={choice.options}
+              value={choice.selected}
+              isLoading={choice.isLoading}
+              isDisabled={false}
+              onChange={choice.select}
+            />
+          </>
         )}
         {choice.selected && (
           <SaveRegionOfflineBody

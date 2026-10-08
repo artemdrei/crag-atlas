@@ -1,6 +1,7 @@
 import { type FormEvent, type ReactNode, useEffect, useState } from 'react';
 
 import type { Sector, Shelter } from '@crag-atlas/api';
+import { TEXT_LIMITS } from '@crag-atlas/utils';
 import { useLingui } from '@lingui/react/macro';
 import MenuItem from '@mui/material/MenuItem';
 import { styled } from '@mui/material/styles';
@@ -8,7 +9,7 @@ import TextField from '@mui/material/TextField';
 
 import { coordsOf, toast, useLatinNames } from '@web/shared/lib';
 import type { Coords } from '@web/shared/types';
-import { ChangedTextField, NameFields } from '@web/shared/ui';
+import { LimitedTextField, NameFields } from '@web/shared/ui';
 
 import { useApiUpdateSector } from '../hooks';
 import { EditActions } from './EditActions';
@@ -98,10 +99,11 @@ export const SectorEditForm = ({
         onNameChange={setName}
         onNameLocalChange={setNameLocal}
       />
-      <ChangedTextField
+      <LimitedTextField
         fullWidth
         multiline
         minRows={2}
+        maxLength={TEXT_LIMITS.catalogDescription}
         label={t`Description`}
         value={description}
         isChanged={description !== sector.description}

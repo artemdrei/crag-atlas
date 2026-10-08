@@ -25,7 +25,8 @@ export type DialogName =
   | 'topo_photo'
   | 'route_media'
   | 'save_offline'
-  | 'install_hint';
+  | 'install_hint'
+  | 'feedback';
 
 export type OfflineAction =
   | 'save_started'
@@ -99,6 +100,7 @@ export type AnalyticsEvent =
       name: 'Directions Requested';
       props: { entity_type: 'region' | 'sector' };
     }
+  | { name: 'Feedback Sent'; props: { rating: number; has_message: boolean } }
   | {
       name: 'Tick Logged';
       props: {

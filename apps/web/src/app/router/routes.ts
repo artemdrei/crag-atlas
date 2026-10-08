@@ -4,6 +4,7 @@ export const ROUTES = {
   ADMIN: '/admin',
   ADMIN_ACCESS: '/admin/access',
   ADMIN_QR_CODES: '/admin/qr-codes',
+  ADMIN_FEEDBACK: '/admin/feedback',
   LOGBOOK: '/logbook',
   LOGIN: '/login',
   PROFILE: '/profile',

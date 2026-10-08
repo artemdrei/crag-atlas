@@ -8,6 +8,7 @@ import { OfflineRegionsDesktop } from '@web/features/offlineRegions';
 
 import {
   AppVersion,
+  FeedbackSetting,
   GradeScaleSetting,
   LocaleSetting,
   ProfileIdentity,
@@ -36,6 +37,7 @@ export const PageProfileDesktop = () => {
       <LocaleSetting />
       <GradeScaleSetting />
       <OfflineRegionsDesktop />
+      <FeedbackSetting />
       <SignOutButton />
       <AppVersion />
     </PageStyled>

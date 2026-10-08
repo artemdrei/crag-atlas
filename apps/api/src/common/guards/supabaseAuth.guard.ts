@@ -40,7 +40,9 @@ export class SupabaseAuthGuard implements CanActivate {
   }
 }
 
-const readBearerToken = (request: RequestWithAuthUser): string | null => {
+export const readBearerToken = (
+  request: RequestWithAuthUser
+): string | null => {
   const header = request.headers.authorization;
   const value = Array.isArray(header) ? header[0] : header;
 

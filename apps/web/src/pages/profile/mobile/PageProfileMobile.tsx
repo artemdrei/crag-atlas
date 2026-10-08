@@ -9,6 +9,7 @@ import { OfflineRegionsMobile } from '@web/features/offlineRegions';
 import {
   AdminSetting,
   AppVersion,
+  FeedbackSetting,
   GradeScaleSetting,
   LocaleSetting,
   ProfileIdentity,
@@ -37,9 +38,10 @@ export const PageProfileMobile = () => {
       <ThemeModeSetting />
       <LocaleSetting />
       <GradeScaleSetting />
+      <OfflineRegionsMobile />
+      <FeedbackSetting />
       <AdminSetting />
       <InstallAppSetting />
-      <OfflineRegionsMobile />
       <SignOutButton />
       <AppVersion />
     </PageStyled>

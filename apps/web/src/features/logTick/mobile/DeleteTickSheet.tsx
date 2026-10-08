@@ -33,6 +33,7 @@ const DeleteTickSheet = ({ open, idTick }: Props) => {
 
 const TextStyled = styled(Typography)`
   margin-bottom: ${({ theme }) => theme.spacing(2)};
+  text-align: center;
 `;
 
 export default DeleteTickSheet;

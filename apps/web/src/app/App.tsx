@@ -4,6 +4,7 @@ import { isMobile } from 'react-device-detect';
 import { AppProviders } from '@web/app/providers';
 import { OfflineDownloadProvider } from '@web/features/offlineRegions';
 
+import { CelebrationHost } from './ui/CelebrationHost';
 import { OfflineRegionsSync } from './ui/OfflineRegionsSync';
 import { PageViewTracker } from './ui/PageViewTracker';
 
@@ -15,6 +16,7 @@ export const App = () => (
     <OfflineDownloadProvider>
       <PageViewTracker />
       <OfflineRegionsSync />
+      <CelebrationHost />
       {isMobile ? <AppMobile /> : <AppDesktop />}
     </OfflineDownloadProvider>
   </AppProviders>

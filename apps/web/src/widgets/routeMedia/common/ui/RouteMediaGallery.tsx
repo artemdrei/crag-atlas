@@ -125,7 +125,6 @@ const MediaStage = ({ item, title }: MediaStageProps) => {
   return (
     <FrameStyled
       src={mediaEmbedUrl(link)}
-      data-provider={link.provider}
       title={title}
       allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
       // Someone else's page: it may run its player, but must not reach this
@@ -162,10 +161,6 @@ const FrameStyled = styled('iframe')`
   border: 0;
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
   background: ${({ theme }) => theme.palette.action.hover};
-
-  &[data-provider='instagram'] {
-    aspect-ratio: 4 / 5;
-  }
 `;
 
 const PhotoStyled = styled('img')`
