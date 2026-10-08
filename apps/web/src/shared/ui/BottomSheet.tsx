@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { createContext, type ReactNode, useContext } from 'react';
 import { Sheet } from 'react-modal-sheet';
 
 import { alpha, styled, useTheme } from '@mui/material/styles';
@@ -11,30 +11,36 @@ export interface Props {
   onClose: () => void;
 }
 
+const BottomSheetContext = createContext(false);
+
+export const useIsInBottomSheet = () => useContext(BottomSheetContext);
+
 export const BottomSheet = ({ title, isOpen, children, onClose }: Props) => {
   const theme = useTheme();
 
   return (
-    <SheetStyled
-      detent="content"
-      isOpen={isOpen}
-      // Without it the library paints a white sheet through inline styles.
-      unstyled
-      onClose={onClose}
-      // The library hard-codes z-index 9999 unless style.zIndex is given,
-      // burying every MUI menu opened from inside the sheet.
-      style={{ zIndex: theme.zIndex.drawer }}
-    >
-      <Sheet.Container>
-        <Sheet.Header />
-        <Sheet.Content>
-          {title && <TitleStyled variant="h6">{title}</TitleStyled>}
-          {children}
-        </Sheet.Content>
-      </Sheet.Container>
+    <BottomSheetContext.Provider value>
+      <SheetStyled
+        detent="content"
+        isOpen={isOpen}
+        // Without it the library paints a white sheet through inline styles.
+        unstyled
+        onClose={onClose}
+        // The library hard-codes z-index 9999 unless style.zIndex is given,
+        // burying every MUI menu opened from inside the sheet.
+        style={{ zIndex: theme.zIndex.drawer }}
+      >
+        <Sheet.Container>
+          <Sheet.Header />
+          <Sheet.Content>
+            {title && <TitleStyled variant="h6">{title}</TitleStyled>}
+            {children}
+          </Sheet.Content>
+        </Sheet.Container>
 
-      <Sheet.Backdrop onTap={onClose} />
-    </SheetStyled>
+        <Sheet.Backdrop onTap={onClose} />
+      </SheetStyled>
+    </BottomSheetContext.Provider>
   );
 };
 

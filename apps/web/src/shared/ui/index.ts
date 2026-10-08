@@ -3,7 +3,7 @@ export { ArchivedNotice } from './ArchivedNotice';
 export { ArchivedToggle } from './ArchivedToggle';
 export { AscentTypeBadge } from './AscentTypeBadge';
 export { AscentTypeLabel } from './AscentTypeLabel';
-export { BottomSheet } from './BottomSheet';
+export { BottomSheet, useIsInBottomSheet } from './BottomSheet';
 export { CatalogCard } from './CatalogCard';
 export { CatalogCardMenu } from './CatalogCardMenu';
 export { CatalogExplorerLayout } from './CatalogExplorerLayout';
