@@ -1,4 +1,5 @@
 import {
+  type ReactNode,
   type PointerEvent as ReactPointerEvent,
   useMemo,
   useRef,
@@ -34,6 +35,7 @@ export interface Props {
   onSelectRoute?: (idRoute: string) => void;
   onSelectPhoto?: () => void;
   onHoverRoute?: (idRoute?: string) => void;
+  children?: ReactNode;
 }
 
 export const TopoImage = ({
@@ -47,7 +49,8 @@ export const TopoImage = ({
   onSelectRoute,
   onSelectPhoto,
   onHoverRoute,
-  isTopAligned
+  isTopAligned,
+  children
 }: Props) => {
   const [loadedUrl, setLoadedUrl] = useState<string>();
   const overlayRef = useRef<SVGSVGElement>(null);
@@ -210,6 +213,7 @@ export const TopoImage = ({
               />
             ) : null;
           })}
+        {children}
       </FrameStyled>
     </StageStyled>
   );

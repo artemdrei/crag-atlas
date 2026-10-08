@@ -22,6 +22,7 @@ export {
   pointerToPhoto,
   smoothPath,
   sortByNumber,
+  TopoExpandButton,
   TopoImage,
   TopoPhotoViewer,
   TopoPointMark,

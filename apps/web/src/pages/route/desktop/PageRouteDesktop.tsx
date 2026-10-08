@@ -11,6 +11,7 @@ import {
 } from '@web/app/router/routes';
 import { EditToggleButton } from '@web/features/catalogEdit';
 import {
+  TopoExpandButton,
   TopoImage,
   useOpenTopoPhoto,
   usePhotoLabel,
@@ -94,19 +95,22 @@ export const PageRouteDesktop = () => {
           <ContentStyled>
             <PhotoStyled>
               {topo ? (
-                <PhotoButtonStyled
-                  type="button"
-                  aria-label={t`Open the photo`}
-                  onClick={openPhoto}
-                >
-                  <TopoImage
-                    photoUrl={topo.photoUrl}
-                    label={photoLabel(photoIndex)}
-                    lines={lines}
-                    numberOf={numberOf}
-                    colorOf={colorOf}
-                  />
-                </PhotoButtonStyled>
+                <>
+                  <PhotoButtonStyled
+                    type="button"
+                    aria-label={t`Open the photo`}
+                    onClick={openPhoto}
+                  >
+                    <TopoImage
+                      photoUrl={topo.photoUrl}
+                      label={photoLabel(photoIndex)}
+                      lines={lines}
+                      numberOf={numberOf}
+                      colorOf={colorOf}
+                    />
+                  </PhotoButtonStyled>
+                  <TopoExpandButton onClick={openPhoto} />
+                </>
               ) : (
                 <PhotoPlaceholder variant="wide" />
               )}
@@ -237,7 +241,7 @@ const PhotoStyled = styled('div')`
   display: flex;
 
   ${({ theme }) => theme.breakpoints.down('lg')} {
-    position: static;
+    position: relative;
   }
 `;
 

@@ -4,6 +4,7 @@ import { styled, useTheme } from '@mui/material/styles';
 
 import { buildRegionPath, buildSectorPath } from '@web/app/router/routes';
 import {
+  TopoExpandButton,
   TopoImage,
   useOpenTopoPhoto,
   usePhotoLabel,
@@ -100,7 +101,9 @@ export const PageRouteMobile = () => {
                   numberOf={numberOf}
                   colorOf={colorOf}
                   onSelectPhoto={handleSelectPhoto}
-                />
+                >
+                  <TopoExpandButton onClick={handleSelectPhoto} />
+                </TopoImage>
               </ZoomStageShell>
             ) : (
               <PhotoPlaceholder variant="wide" />

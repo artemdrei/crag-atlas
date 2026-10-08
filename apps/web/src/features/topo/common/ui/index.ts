@@ -1,3 +1,4 @@
+export { TopoExpandButton } from './TopoExpandButton';
 export { TopoImage } from './TopoImage';
 export { TopoPhotoViewer } from './TopoPhotoViewer';
 export type { TopoMarkKind } from './TopoPointMark';

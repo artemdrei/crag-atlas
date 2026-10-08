@@ -8,6 +8,7 @@ import {
   TopoThumbStrip,
   TopoZoomControls,
   TopoZoomStage,
+  useOpenTopoPhoto,
   usePhotoLabel
 } from '../common';
 
@@ -22,9 +23,19 @@ export const TopoGalleryDesktop = ({
   onSelectRoute,
   onHoverRoute
 }: TopoGalleryProps) => {
+  const openTopoPhoto = useOpenTopoPhoto();
   const photoLabel = usePhotoLabel();
   const idxActiveTopo = topos.findIndex(({ id }) => id === idActiveTopo);
   const activeTopo = topos[idxActiveTopo];
+
+  const handleSelectPhoto = () =>
+    openTopoPhoto({
+      topo: activeTopo,
+      label: photoLabel(idxActiveTopo),
+      numberOf,
+      tickedRoutes,
+      colorOf
+    });
 
   return (
     <GalleryStyled>
@@ -44,7 +55,7 @@ export const TopoGalleryDesktop = ({
           <CaptionStyled variant="caption">
             {photoLabel(idxActiveTopo)}
           </CaptionStyled>
-          <TopoZoomControls />
+          <TopoZoomControls list="sector" onExpand={handleSelectPhoto} />
         </ZoomStageStyled>
       ) : (
         <PhotoPlaceholder variant="wide" />
