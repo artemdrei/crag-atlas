@@ -1095,6 +1095,8 @@ export interface components {
         QrPathTargetDto: {
             idRegion: string;
             idSector: string;
+            regionName: string;
+            sectorName: string;
         };
         SectorQrDto: {
             idSector: string;

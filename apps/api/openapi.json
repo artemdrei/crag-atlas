@@ -3233,11 +3233,19 @@
           },
           "idSector": {
             "type": "string"
+          },
+          "regionName": {
+            "type": "string"
+          },
+          "sectorName": {
+            "type": "string"
           }
         },
         "required": [
           "idRegion",
-          "idSector"
+          "idSector",
+          "regionName",
+          "sectorName"
         ]
       },
       "SectorQrDto": {
