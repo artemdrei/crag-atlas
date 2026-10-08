@@ -1,18 +1,22 @@
 import { type FormEvent, useState } from 'react';
 
 import type { GradeScale, UserSummary } from '@crag-atlas/api';
+import { TEXT_LIMITS } from '@crag-atlas/utils';
 import { Trans, useLingui } from '@lingui/react/macro';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Rating from '@mui/material/Rating';
 import { styled } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
 
 import { ClimberPicker } from '@web/features/climberPicker';
 import { coordsOf, useWeatherFailureMessage } from '@web/shared/lib';
 import type { AscentType, Coords } from '@web/shared/types';
-import { FormActions, useIsInBottomSheet } from '@web/shared/ui';
+import {
+  FormActions,
+  LimitedTextField,
+  useIsInBottomSheet
+} from '@web/shared/ui';
 
 import type { CreateTick, GradeOpinion, PendingMedia, Tick } from '../entities';
 import { useRouteSends, useTickConditions } from '../hooks';
@@ -192,10 +196,11 @@ export const TickForm = ({
       </TickFormSection>
 
       <TickFormSection title={<Trans>Share your thoughts</Trans>}>
-        <TextField
+        <LimitedTextField
           fullWidth
           multiline
           minRows={2}
+          maxLength={TEXT_LIMITS.tickNote}
           label={t`Comment`}
           value={note}
           onChange={(event) => setNote(event.target.value)}

@@ -1,11 +1,11 @@
 import { type FormEvent, useState } from 'react';
 
+import { TEXT_LIMITS } from '@crag-atlas/utils';
 import { Trans, useLingui } from '@lingui/react/macro';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
 
-import { FormActions } from '@web/shared/ui';
+import { FormActions, LimitedTextField } from '@web/shared/ui';
 
 export interface Props {
   submitLabel: string;
@@ -32,10 +32,11 @@ export const RouteCommentForm = ({
 
   return (
     <FormStyled onSubmit={handleSubmit}>
-      <TextField
+      <LimitedTextField
         fullWidth
         multiline
         minRows={2}
+        maxLength={TEXT_LIMITS.routeComment}
         label={t`Your beta`}
         value={body}
         onChange={(event) => setBody(event.target.value)}

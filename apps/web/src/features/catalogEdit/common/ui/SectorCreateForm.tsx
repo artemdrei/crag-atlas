@@ -1,11 +1,11 @@
 import { type FormEvent, useState } from 'react';
 
 import type { Sector } from '@crag-atlas/api';
+import { TEXT_LIMITS } from '@crag-atlas/utils';
 import { Trans, useLingui } from '@lingui/react/macro';
-import TextField from '@mui/material/TextField';
 
 import { toast, useLatinNames } from '@web/shared/lib';
-import { NameFields } from '@web/shared/ui';
+import { LimitedTextField, NameFields } from '@web/shared/ui';
 
 import { useApiCreateSector } from '../hooks';
 import { EditActions } from './EditActions';
@@ -63,11 +63,12 @@ export const SectorCreateForm = ({ idRegion, onCreated, onClose }: Props) => {
         onNameChange={setName}
         onNameLocalChange={setNameLocal}
       />
-      <TextField
+      <LimitedTextField
         fullWidth
         multiline
         size="small"
         minRows={2}
+        maxLength={TEXT_LIMITS.catalogDescription}
         label={t`Description`}
         value={description}
         onChange={(event) => setDescription(event.target.value)}

@@ -26,6 +26,7 @@ import {
   isValidGrade
 } from '../common/utils/grade';
 import { toLatinName, toLocalName } from '../common/utils/names';
+import { limitedDescription } from '../common/utils/textLimits';
 import { userClient } from '../common/utils/userClient';
 import { publicSupabase } from '../config/supabase.client';
 import type {
@@ -201,7 +202,7 @@ export class RoutesService {
         length: payload.length ?? null,
         bolts_count: payload.boltsCount ?? null,
         ...toBolter(payload),
-        description: payload.description?.trim() ?? ''
+        description: limitedDescription(payload.description)
       })
       .select('id')
       .single<{ id: string }>();
@@ -236,7 +237,7 @@ export class RoutesService {
         length: payload.length ?? null,
         bolts_count: payload.boltsCount ?? null,
         ...toBolter(payload),
-        description: payload.description ?? ''
+        description: limitedDescription(payload.description)
       })
       .eq('id', idRoute);
 

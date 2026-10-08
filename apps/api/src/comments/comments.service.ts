@@ -9,6 +9,7 @@ import {
   writeFailed
 } from '../common/exceptions/database.exception';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
+import { assertWithinLimit, TEXT_LIMITS } from '../common/utils/textLimits';
 import { userClient } from '../common/utils/userClient';
 import { publicSupabase } from '../config/supabase.client';
 import type {
@@ -133,6 +134,8 @@ const requireBody = (body: string): string => {
   if (!trimmed) {
     throw new ValidationException('A comment cannot be empty', 'BODY_EMPTY');
   }
+
+  assertWithinLimit(trimmed, TEXT_LIMITS.routeComment, 'A comment');
 
   return trimmed;
 };

@@ -20,6 +20,7 @@ export { GradeHistogram } from './GradeHistogram';
 export { GridColumnsMenu } from './GridColumnsMenu';
 export { IconValue } from './IconValue';
 export { ImageCropper } from './ImageCropper';
+export { LimitedTextField } from './LimitedTextField';
 export { ListSkeleton } from './ListSkeleton';
 export { LocalName } from './LocalName';
 export { LottieOverlay } from './LottieOverlay';
