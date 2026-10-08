@@ -150,11 +150,9 @@ test('an ascent logged with a link marks the route without a reload', async ({
   const dialog = page.getByRole('dialog');
 
   await dialog
-    .getByRole('textbox', { name: 'YouTube or Instagram link' })
+    .getByRole('textbox', { name: 'YouTube link' })
     .fill('https://youtu.be/dQw4w9WgXcQ');
-  await dialog
-    .getByRole('textbox', { name: 'YouTube or Instagram link' })
-    .press('Enter');
+  await dialog.getByRole('textbox', { name: 'YouTube link' }).press('Enter');
   await dialog.getByRole('button', { name: 'Log ascent' }).click();
 
   // No navigation between logging it and reading the mark: the media belongs

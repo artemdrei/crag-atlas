@@ -40,16 +40,12 @@ test('a link is added from a sheet', async ({ page: phone }) => {
   await phone.getByRole('button', { name: 'Add photo or video' }).click();
 
   await phone
-    .getByRole('textbox', { name: 'YouTube or Instagram link' })
+    .getByRole('textbox', { name: 'YouTube link' })
     .fill('https://vimeo.com/123456');
 
-  await expect(
-    phone.getByText('Only YouTube and Instagram links.')
-  ).toBeVisible();
+  await expect(phone.getByText('This is not a YouTube link.')).toBeVisible();
 
-  await phone
-    .getByRole('textbox', { name: 'YouTube or Instagram link' })
-    .fill(YOUTUBE);
+  await phone.getByRole('textbox', { name: 'YouTube link' }).fill(YOUTUBE);
   await phone.getByRole('button', { name: 'Add', exact: true }).click();
 
   await expect(
