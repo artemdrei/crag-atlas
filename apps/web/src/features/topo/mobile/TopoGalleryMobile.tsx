@@ -52,9 +52,8 @@ export const TopoGalleryMobile = ({
             onSelectPhoto={handleSelectPhoto}
             onHoverRoute={onHoverRoute}
             isTopAligned
-          >
-            <TopoExpandButton onClick={handleSelectPhoto} />
-          </TopoImage>
+          />
+          <TopoExpandButton onClick={handleSelectPhoto} />
         </StageStyled>
       ) : (
         <PhotoPlaceholder variant="wide" />

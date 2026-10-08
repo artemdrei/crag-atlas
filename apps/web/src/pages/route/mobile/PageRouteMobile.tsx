@@ -101,9 +101,8 @@ export const PageRouteMobile = () => {
                   numberOf={numberOf}
                   colorOf={colorOf}
                   onSelectPhoto={handleSelectPhoto}
-                >
-                  <TopoExpandButton onClick={handleSelectPhoto} />
-                </TopoImage>
+                />
+                <TopoExpandButton onClick={handleSelectPhoto} />
               </ZoomStageShell>
             ) : (
               <PhotoPlaceholder variant="wide" />
