@@ -4,6 +4,7 @@ import { Navigate, Route, Routes } from 'react-router';
 import { ModalProvider } from '@web/app/providers';
 import { avatarUploadDesktopRegistrations } from '@web/features/avatarUpload';
 import { catalogEditDesktopRegistrations } from '@web/features/catalogEdit';
+import { feedbackDesktopRegistrations } from '@web/features/feedback';
 import { grantAdminDesktopRegistrations } from '@web/features/grantAdmin';
 import { logTickDesktopRegistrations } from '@web/features/logTick';
 import { offlineRegionsDesktopRegistrations } from '@web/features/offlineRegions';
@@ -34,6 +35,7 @@ import { ErrorBoundary } from '../ui/errorBoundary';
 const registrations = [
   ...avatarUploadDesktopRegistrations,
   ...catalogEditDesktopRegistrations,
+  ...feedbackDesktopRegistrations,
   ...grantAdminDesktopRegistrations,
   ...logTickDesktopRegistrations,
   ...topoDesktopRegistrations,

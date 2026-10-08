@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router';
 
 import { ModalProvider } from '@web/app/providers';
 import { avatarUploadMobileRegistrations } from '@web/features/avatarUpload';
+import { feedbackMobileRegistrations } from '@web/features/feedback';
 import { grantAdminMobileRegistrations } from '@web/features/grantAdmin';
 import {
   InstallHintTrigger,
@@ -33,6 +34,7 @@ import { ErrorBoundary } from '../ui/errorBoundary';
 // devices' features.
 const registrations = [
   ...avatarUploadMobileRegistrations,
+  ...feedbackMobileRegistrations,
   ...grantAdminMobileRegistrations,
   ...installHintMobileRegistrations,
   ...logTickMobileRegistrations,

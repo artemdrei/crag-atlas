@@ -1,6 +1,7 @@
 import { Trans } from '@lingui/react/macro';
 
 import { useSignInLink } from '@web/app/router/useSignInLink';
+import { FeedbackButton } from '@web/features/feedback';
 import { SignInTeaser } from '@web/shared/ui';
 
 export const ProfileTeaser = () => {
@@ -18,6 +19,7 @@ export const ProfileTeaser = () => {
           place.
         </Trans>
       }
+      footer={<FeedbackButton />}
     />
   );
 };
