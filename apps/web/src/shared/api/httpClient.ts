@@ -107,6 +107,8 @@ const sendJson = <T>(
 
     if (!response.ok) await throwResponseFailure(response, `${method} ${path}`);
 
+    if (response.status === 204) return undefined as T;
+
     return response.json() as Promise<T>;
   });
 

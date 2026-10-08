@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { apiGet } from './httpClient';
 
-const signOut = vi.fn(async () => ({ error: null }));
+const signOut = vi.fn(async (_options?: unknown) => ({ error: null }));
 const getUser = vi.fn(
   async (): Promise<{ error: unknown }> => ({
     error: new AuthApiError('Session not found', 403, 'session_not_found')

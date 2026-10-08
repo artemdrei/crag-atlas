@@ -14,6 +14,7 @@ import { sectorQrDesktopRegistrations } from '@web/features/sectorQr';
 import { signInPromptDesktopRegistrations } from '@web/features/signInPrompt';
 import { topoDesktopRegistrations } from '@web/features/topo';
 import { topoEditorDesktopRegistrations } from '@web/features/topoEditor';
+import { adminFeedbackDesktopRegistrations } from '@web/pages/adminFeedback/registrations';
 import { LogbookTeaser } from '@web/pages/logbook/common';
 import { playgroundDesktopRegistrations } from '@web/pages/playground/registrations';
 import { ProfileSkeleton, ProfileTeaser } from '@web/pages/profile/common';
@@ -46,12 +47,17 @@ const registrations = [
   ...signInPromptDesktopRegistrations,
   ...routeMediaDesktopRegistrations,
   ...sectorQrDesktopRegistrations,
+  ...adminFeedbackDesktopRegistrations,
   ...playgroundDesktopRegistrations
 ];
 
 const PageAdminDesktop = page(
   () => import('@web/pages/admin'),
   'PageAdminDesktop'
+);
+const PageAdminFeedbackDesktop = page(
+  () => import('@web/pages/adminFeedback'),
+  'PageAdminFeedbackDesktop'
 );
 const PageAdminAccessDesktop = page(
   () => import('@web/pages/adminAccess'),
@@ -150,6 +156,10 @@ const AppDesktop = () => (
               <Route
                 path={ROUTES.ADMIN_QR_CODES}
                 element={<PageQrCodesDesktop />}
+              />
+              <Route
+                path={ROUTES.ADMIN_FEEDBACK}
+                element={<PageAdminFeedbackDesktop />}
               />
             </Route>
             <Route
