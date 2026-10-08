@@ -1,4 +1,12 @@
-export { isInstallHintSeen, markInstallHintSeen } from './installHintSeen';
+export {
+  getInstallHintState,
+  markInstallHintInstalled,
+  recordInstallHintMoment,
+  recordInstallHintSession,
+  recordInstallHintShown,
+  shouldShowInstallHint,
+  subscribeInstallHintState
+} from './installHintState';
 export {
   consumeInstallPrompt,
   getInstallPrompt,
