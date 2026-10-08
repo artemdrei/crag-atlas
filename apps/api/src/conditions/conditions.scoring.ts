@@ -9,7 +9,7 @@ export interface HourInput {
   precipitationMm: number | null;
   precipitation24hMm: number | null;
   weatherCode: number | null;
-  hoursSinceRain: number | null;
+  wetnessMm: number;
   isSun: boolean;
 }
 
@@ -25,20 +25,50 @@ const step = (table: readonly Step[], value: number): number =>
   (table.find((row) => value < row.upTo) ?? table[table.length - 1])?.score ??
   0;
 
+const ramp = (table: readonly Step[], value: number): number => {
+  const first = table[0];
+  const last = table[table.length - 1];
+
+  if (!first || !last) return 0;
+  if (value <= first.upTo) return first.score;
+  if (value >= last.upTo) return last.score;
+
+  const above = table.findIndex((row) => value < row.upTo);
+  const from = table[above - 1];
+  const to = table[above];
+
+  if (!from || !to) return last.score;
+
+  const share = (value - from.upTo) / (to.upTo - from.upTo);
+
+  return from.score + (to.score - from.score) * share;
+};
+
+export const dryingMm = ({
+  temperatureC,
+  humidityPct,
+  windSpeedMs
+}: Pick<HourInput, 'temperatureC' | 'humidityPct' | 'windSpeedMs'>): number => {
+  const rule = CONDITIONS_CONFIG.drying;
+  const windKmh = (windSpeedMs ?? 0) * MS_TO_KMH;
+
+  return (
+    rule.baseMmPerHour *
+    (windKmh > rule.windyKmhAbove ? rule.windyFactor : 1) *
+    ((humidityPct ?? 60) > rule.humidPctAbove ? rule.humidFactor : 1) *
+    ((temperatureC ?? 15) < rule.coldCBelow ? rule.coldFactor : 1)
+  );
+};
+
 export const rainScore = (
-  { precipitationMm, precipitation24hMm, hoursSinceRain }: HourInput,
+  { precipitationMm, precipitation24hMm, wetnessMm }: HourInput,
   shelter: Shelter
 ): number => {
   const rule = CONDITIONS_CONFIG.shelter[shelter];
   const now = step(CONDITIONS_CONFIG.rainNow, precipitationMm ?? 0);
-  const recent = step(
-    CONDITIONS_CONFIG.rainRecency,
-    hoursSinceRain ?? Number.POSITIVE_INFINITY
-  );
+  const wet = ramp(CONDITIONS_CONFIG.wetness, wetnessMm);
 
-  // The worse of the two: a dry hour does not dry the rock, and rock that
-  // dried out days ago is still wet while it rains.
-  const open = Math.min(now, recent);
+  const open = Math.min(now, wet);
 
   if (shelter === 'open') return open;
 
@@ -114,18 +144,30 @@ export const scoreHour = (hour: HourInput, shelter: Shelter): HourScore => {
     other: weatherCodeScore(hour.weatherCode)
   };
 
-  const weighted =
-    factors.rain * weights.rain +
-    factors.temperature * weights.temperature +
-    factors.humidity * weights.humidity +
-    factors.sunShade * weights.sunShade +
-    factors.wind * weights.wind +
-    factors.other * weights.other;
+  const mean = Math.exp(
+    (Object.keys(weights) as (keyof typeof weights)[]).reduce(
+      (sum, key) => sum + weights[key] * Math.log(Math.max(factors[key], 1)),
+      0
+    )
+  );
 
   const cap = hardCap(hour, shelter);
-  const score = Math.round(Math.min(weighted, cap?.maxScore ?? 100));
+  const score = Math.round(Math.min(mean, cap?.maxScore ?? 100));
 
   return { score, band: bandOf(score), cappedBy: cap?.code ?? null };
+};
+
+export const dayScore = (scoresByHour: (number | null)[]): number | null => {
+  const known = scoresByHour
+    .filter((score): score is number => score !== null)
+    .sort((one, other) => other - one)
+    .slice(0, CONDITIONS_CONFIG.dayTopHours);
+
+  if (known.length === 0) return null;
+
+  return Math.round(
+    known.reduce((total, one) => total + one, 0) / known.length
+  );
 };
 
 export interface Window {

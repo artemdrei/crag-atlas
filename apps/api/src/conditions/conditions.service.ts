@@ -8,7 +8,13 @@ import { HorizonService } from '../horizon/horizon.service';
 import { CONDITIONS_CONFIG } from './conditions.config';
 import { assertForecast } from './conditions.forecast';
 import type { HourInput } from './conditions.scoring';
-import { bandOf, bestWindow, scoreHour } from './conditions.scoring';
+import {
+  bandOf,
+  bestWindow,
+  dayScore,
+  dryingMm,
+  scoreHour
+} from './conditions.scoring';
 import type { SunDay } from './conditions.sun';
 import { sunDay, toClock } from './conditions.sun';
 import type {
@@ -235,16 +241,12 @@ const buildDay = ({
     });
   }
 
-  const known = scoresByHour.filter((score): score is number => score !== null);
-  const score =
-    known.length === 0
-      ? null
-      : Math.round(known.reduce((total, one) => total + one, 0) / known.length);
+  const score = dayScore(scoresByHour);
   const best = bestWindow(scoresByHour);
 
   return {
     date,
-    hasForecast: known.length > 0,
+    hasForecast: score !== null,
     score,
     band: score === null ? null : bandOf(score),
     bestFromAt: best ? onTheHour(best.fromHour) : null,
@@ -280,18 +282,20 @@ type Reading = Omit<HourInput, 'isSun'>;
 interface ForecastSeries {
   window: ForecastDto;
   indexAt: Map<string, number>;
-  sinceRain: (number | null)[];
+  wetness: number[];
   rain24h: number[];
 }
 
 // Every hour of the strip asks the same two questions of the hours behind it,
 // so the whole series answers them once instead of walking backwards per hour.
+// Wetness is read before the hour dries anything: the rock is still wet when
+// the climber arrives at the start of it.
 const indexSeries = (window: ForecastDto): ForecastSeries => {
   const indexAt = new Map<string, number>();
-  const sinceRain: (number | null)[] = [];
+  const wetness: number[] = [];
   const rain24h: number[] = [];
 
-  let lastRain: number | null = null;
+  let wet = 0;
   let running = 0;
 
   window.time.forEach((at, index) => {
@@ -305,13 +309,24 @@ const indexSeries = (window: ForecastDto): ForecastSeries => {
 
     if (leaving !== undefined) running -= leaving ?? 0;
 
-    if (fell >= RAIN_MM) lastRain = index;
-
-    sinceRain.push(lastRain === null ? null : index - lastRain);
+    wet = Math.min(CONDITIONS_CONFIG.drying.surfaceMm, wet + fell);
+    wetness.push(wet);
     rain24h.push(running);
+
+    if (fell < RAIN_MM) {
+      wet = Math.max(
+        0,
+        wet -
+          dryingMm({
+            temperatureC: window.temperatureC[index] ?? null,
+            humidityPct: window.humidityPct[index] ?? null,
+            windSpeedMs: window.windSpeedMs[index] ?? null
+          })
+      );
+    }
   });
 
-  return { window, indexAt, sinceRain, rain24h };
+  return { window, indexAt, wetness, rain24h };
 };
 
 const readingAt = (series: ForecastSeries, at: string): Reading | null => {
@@ -328,7 +343,7 @@ const readingAt = (series: ForecastSeries, at: string): Reading | null => {
     precipitationMm: window.precipitationMm[index] ?? null,
     precipitation24hMm: series.rain24h[index] ?? 0,
     weatherCode: window.weatherCode[index] ?? null,
-    hoursSinceRain: series.sinceRain[index] ?? null
+    wetnessMm: series.wetness[index] ?? 0
   };
 };
 
