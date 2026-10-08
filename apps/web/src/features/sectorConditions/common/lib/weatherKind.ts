@@ -8,8 +8,20 @@ export type WeatherKind =
   | 'snow'
   | 'thunder';
 
-// WMO 4677 codes as Open-Meteo publishes them.
-export const weatherKindOf = (code: number | null): WeatherKind | null => {
+const DRIZZLE_MM = 0.1;
+const RAIN_MM = 0.5;
+
+// WMO 4677 codes as Open-Meteo publishes them. The code describes the sky
+// and may say "overcast" through a drizzle, so what falls wins over it.
+export const weatherKindOf = (
+  code: number | null,
+  precipitationMm: number | null = null
+): WeatherKind | null => {
+  const falling = precipitationMm ?? 0;
+
+  if (falling >= RAIN_MM)
+    return code != null && code >= 95 ? 'thunder' : 'rain';
+  if (falling >= DRIZZLE_MM) return 'drizzle';
   if (code == null) return null;
   if (code === 0) return 'clear';
   if (code <= 2) return 'partlyCloudy';

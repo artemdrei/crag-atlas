@@ -106,11 +106,11 @@ const VerdictStyled = styled('span')`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background-color: ${({ theme }) => theme.palette.background.paper};
-  font-size: ${({ theme }) => theme.typography.h6.fontSize};
+  font-size: ${({ theme }) => theme.typography.h5.fontSize};
   line-height: 1;
   transform: translate(25%, 25%);
 `;

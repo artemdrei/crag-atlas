@@ -12,9 +12,10 @@ import { toKmh } from '../lib';
 
 export interface Props {
   hour: ConditionsHour;
+  rainMm: number | null;
 }
 
-export const ConditionsReadings = ({ hour }: Props) => {
+export const ConditionsReadings = ({ hour, rainMm }: Props) => {
   const { t } = useLingui();
 
   return (
@@ -29,14 +30,14 @@ export const ConditionsReadings = ({ hour }: Props) => {
           <Trans>{Math.round(hour.temperatureC)} °C</Trans>
         </IconValue>
       )}
-      {hour.precipitationMm != null && (
+      {rainMm != null && (
         <IconValue
           isMuted
           variant="body2"
-          hint={t`Precipitation`}
+          hint={t`Precipitation over the day`}
           icon={<GrainIcon fontSize="small" color="info" />}
         >
-          <Trans>{hour.precipitationMm} mm</Trans>
+          <Trans>{rainMm} mm</Trans>
         </IconValue>
       )}
       {hour.humidityPct != null && (

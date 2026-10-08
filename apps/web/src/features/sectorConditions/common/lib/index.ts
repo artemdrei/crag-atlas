@@ -1,4 +1,5 @@
 export * from './dayLabel';
+export * from './dayRainMm';
 export * from './hourMetric';
 export * from './representativeHour';
 export * from './sunShade';

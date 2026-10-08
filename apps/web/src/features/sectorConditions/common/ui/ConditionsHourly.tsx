@@ -144,7 +144,11 @@ const MetricIcon = ({ hour, metric }: HourCellProps) => {
     case 'wind':
       return <AirIcon color="action" />;
     default:
-      return <WeatherIcon kind={weatherKindOf(hour.weatherCode)} />;
+      return (
+        <WeatherIcon
+          kind={weatherKindOf(hour.weatherCode, hour.precipitationMm)}
+        />
+      );
   }
 };
 
