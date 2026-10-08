@@ -1,3 +1,5 @@
+import type { Coords } from '@web/shared/types';
+
 // Every key lives here, not next to its hook: a mutation in one slice
 // invalidates a query owned by another, and cross-slice imports are banned.
 export const QUERY_KEYS = {
@@ -34,7 +36,10 @@ export const QUERY_KEYS = {
   routeLogbook: (idRoute: string) => ['ticks', 'route', idRoute] as const,
   myRouteTicks: (idRoute: string) => ['ticks', 'mine', idRoute] as const,
   ticksFeed: () => ['ticks', 'feed'] as const,
-  weather: (idRoute: string, at: string) => ['weather', idRoute, at] as const,
+  forecastWindow: ({ lat, lng }: Coords) =>
+    ['forecast', 'window', lat.toFixed(2), lng.toFixed(2)] as const,
+  forecastDay: (coords: Coords | undefined, date: string) =>
+    ['forecast', coords?.lat, coords?.lng, date] as const,
   catalogSearch: (query: string) => ['catalog', 'search', query] as const,
   userSearch: (query: string) => ['users', 'search', query] as const,
   climberContents: () => ['climberContent'] as const,

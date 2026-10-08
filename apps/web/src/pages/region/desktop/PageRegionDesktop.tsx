@@ -17,7 +17,8 @@ import {
   SectorMapDesktop,
   sectorPinColors
 } from '@web/features/sectorMap';
-import { useCatalogSelection } from '@web/shared/lib';
+import { useApiGetRegion } from '@web/shared/api';
+import { coordsOf, useCatalogSelection } from '@web/shared/lib';
 import {
   ApiFeedback,
   CatalogExplorerLayout,
@@ -30,7 +31,6 @@ import {
   RegionRoutesTitle,
   type Sector,
   SectorsList,
-  useApiGetRegion,
   useApiGetSectors,
   useApiGetTickedSectors,
   useRegionRouteFilter
@@ -121,7 +121,12 @@ export const PageRegionDesktop = () => {
         list={
           <>
             <ConditionsSlotStyled>
-              <RegionConditionsDesktop idRegion={idRegion} />
+              {region && (
+                <RegionConditionsDesktop
+                  idRegion={idRegion}
+                  coords={coordsOf(region)}
+                />
+              )}
             </ConditionsSlotStyled>
             {isFilterShown && (
               <RouteFilterPanelDesktop

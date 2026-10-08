@@ -8,7 +8,13 @@ import {
   makeRoute,
   makeSector
 } from '../../fixtures/catalog';
-import { card, conditionsOf, pickOption, sectorPath } from '../../fixtures/ui';
+import {
+  answerOpenMeteo,
+  card,
+  conditionsOf,
+  pickOption,
+  sectorPath
+} from '../../fixtures/ui';
 
 /**
  * What a sector offers besides its routes: when to come, how to get there,
@@ -43,6 +49,7 @@ test.afterAll(cleanup);
 test('the days ahead are scored, and a day opens its reading', async ({
   page
 }) => {
+  await answerOpenMeteo(page);
   await page.route(/\/sectors\/[^/]+\/conditions$/, (request) =>
     request.fulfill({ json: conditionsOf([94, 41]) })
   );
@@ -61,6 +68,7 @@ test('the days ahead are scored, and a day opens its reading', async ({
 });
 
 test('a sector without a pin has no conditions to show', async ({ page }) => {
+  await answerOpenMeteo(page);
   await page.route(/\/sectors\/[^/]+\/conditions$/, (request) =>
     request.fulfill({ json: conditionsOf([94], false) })
   );

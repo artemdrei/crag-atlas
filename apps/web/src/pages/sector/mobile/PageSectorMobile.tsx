@@ -144,7 +144,9 @@ export const PageSectorMobile = () => {
         onSelectTopo={selectTopo}
         onSelectRoute={openRouteById}
       />
-      <SectorConditionsMobile idSector={idSector} />
+      {sector && (
+        <SectorConditionsMobile idSector={idSector} coords={coordsOf(sector)} />
+      )}
       <RouteFilterPanelMobile
         state={filterState}
         title={

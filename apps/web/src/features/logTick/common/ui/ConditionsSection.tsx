@@ -12,6 +12,7 @@ import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
+import { OPEN_METEO } from '@web/shared/api';
 import { IconValue, SunTimes } from '@web/shared/ui';
 
 import type { WeatherFieldName } from '../hooks';
@@ -63,6 +64,7 @@ export interface Props {
   failureMessage: string | null;
   hasPoint: boolean;
   isLoading: boolean;
+  isOffline: boolean;
   isEditsReset: boolean;
   isEdited: (field: WeatherFieldName) => boolean;
   onDateChange: (value: string) => void;
@@ -78,6 +80,7 @@ export const ConditionsSection = ({
   failureMessage,
   hasPoint,
   isLoading,
+  isOffline,
   isEditsReset,
   isEdited,
   onDateChange,
@@ -112,33 +115,36 @@ export const ConditionsSection = ({
       </RowStyled>
 
       <Typography variant="body2" color="text.secondary">
-        {hasPoint ? (
+        {isOffline ? (
+          <Trans>No weather while you are offline</Trans>
+        ) : hasPoint ? (
           <Trans>Conditions, read at the sector</Trans>
         ) : (
           <Trans>The sector has no point — fill the conditions in</Trans>
         )}
       </Typography>
 
-      {isLoading ? (
-        <Skeleton variant="rounded" height={40} />
-      ) : (
-        <RowStyled>
-          {FIELDS.map(({ name, icon, label, unit, min, max }) => (
-            <WeatherField
-              key={name}
-              icon={icon}
-              label={label(t)}
-              unit={unit(t)}
-              value={conditions?.[name]}
-              min={min}
-              max={max}
-              isEdited={isEdited(name)}
-              onChange={(value) => onFieldChange(name, value)}
-              onReset={() => onFieldReset(name)}
-            />
-          ))}
-        </RowStyled>
-      )}
+      {!isOffline &&
+        (isLoading ? (
+          <Skeleton variant="rounded" height={40} />
+        ) : (
+          <RowStyled>
+            {FIELDS.map(({ name, icon, label, unit, min, max }) => (
+              <WeatherField
+                key={name}
+                icon={icon}
+                label={label(t)}
+                unit={unit(t)}
+                value={conditions?.[name]}
+                min={min}
+                max={max}
+                isEdited={isEdited(name)}
+                onChange={(value) => onFieldChange(name, value)}
+                onReset={() => onFieldReset(name)}
+              />
+            ))}
+          </RowStyled>
+        ))}
 
       {failureMessage && (
         <Typography variant="caption" color="error">
@@ -181,9 +187,11 @@ export const ConditionsSection = ({
               />
             </SunStyled>
           )}
-          <AttributionStyled variant="caption" color="text.disabled">
-            <Trans>Weather by Open-Meteo.com</Trans>
-          </AttributionStyled>
+          {conditions.source === OPEN_METEO && (
+            <AttributionStyled variant="caption" color="text.disabled">
+              <Trans>Weather by Open-Meteo.com</Trans>
+            </AttributionStyled>
+          )}
         </SummaryStyled>
       )}
     </TickFormSection>

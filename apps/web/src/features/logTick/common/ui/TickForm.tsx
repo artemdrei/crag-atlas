@@ -10,8 +10,8 @@ import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 
 import { ClimberPicker } from '@web/features/climberPicker';
-import { useWeatherFailureMessage } from '@web/shared/lib';
-import type { AscentType } from '@web/shared/types';
+import { coordsOf, useWeatherFailureMessage } from '@web/shared/lib';
+import type { AscentType, Coords } from '@web/shared/types';
 
 import type { CreateTick, GradeOpinion, PendingMedia, Tick } from '../entities';
 import { useRouteSends, useTickConditions } from '../hooks';
@@ -28,6 +28,7 @@ const TYPES_WITH_ATTEMPTS: AscentType[] = ['redpoint', 'toprope', 'attempt'];
 export interface Props {
   tick?: Tick;
   idRoute: string;
+  coords?: Coords;
   routeGrade?: string | null;
   routeGradeScale?: GradeScale | null;
   isPending: boolean;
@@ -38,6 +39,7 @@ export interface Props {
 export const TickForm = ({
   tick,
   idRoute,
+  coords,
   routeGrade,
   routeGradeScale,
   isPending,
@@ -87,12 +89,13 @@ export const TickForm = ({
     failure,
     hasPoint,
     isLoading,
+    isOffline,
     isEditsReset,
     isEdited,
     setField,
     resetField
   } = useTickConditions({
-    idRoute,
+    coords: coords ?? coordsOf({ lat: tick?.sectorLat, lng: tick?.sectorLng }),
     climbedAt,
     climbedAtTime,
     stored: tick?.weather
@@ -138,6 +141,7 @@ export const TickForm = ({
         }
         hasPoint={hasPoint}
         isLoading={isLoading}
+        isOffline={isOffline}
         isEditsReset={isEditsReset}
         isEdited={isEdited}
         onDateChange={setClimbedAt}

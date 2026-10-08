@@ -155,7 +155,10 @@ export const PageSectorDesktop = () => {
       <ColumnsStyled>
         <MainColumnStyled>
           <TitleRowStyled>
-            <PageTitle name={sector?.name} nameLocal={sector?.nameLocal} />
+            <PageTitle
+              name={sector?.name}
+              nameLocal={sector?.nameLocal}
+            />
             <DirectionsButton entityType="sector" point={coordsOf(sector)} />
           </TitleRowStyled>
           {sector?.description && (
@@ -178,7 +181,12 @@ export const PageSectorDesktop = () => {
           </GalleryAreaStyled>
         </MainColumnStyled>
         <PanelStyled>
-          <SectorConditionsDesktop idSector={idSector} />
+          {sector && (
+            <SectorConditionsDesktop
+              idSector={idSector}
+              coords={coordsOf(sector)}
+            />
+          )}
           <RouteFilterPanelDesktop
             state={filterState}
             title={

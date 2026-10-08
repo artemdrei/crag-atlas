@@ -15,6 +15,8 @@ import {
   SectorMapMobile,
   sectorPinColors
 } from '@web/features/sectorMap';
+import { useApiGetRegion } from '@web/shared/api';
+import { coordsOf } from '@web/shared/lib';
 import { ApiFeedback, PageShell, PageTitle } from '@web/shared/ui';
 
 import {
@@ -23,7 +25,6 @@ import {
   type Sector,
   SectorCard,
   SectorsList,
-  useApiGetRegion,
   useApiGetSectors,
   useApiGetTickedSectors,
   useRegionRouteFilter
@@ -83,7 +84,9 @@ export const PageRegionMobile = () => {
         )}
         onOpenSector={(sector) => openSector('map', sector)}
       />
-      <RegionConditionsMobile idRegion={idRegion} />
+      {region && (
+        <RegionConditionsMobile idRegion={idRegion} coords={coordsOf(region)} />
+      )}
       <RouteFilterPanelMobile
         state={filterState}
         title={

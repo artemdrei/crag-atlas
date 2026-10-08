@@ -1,29 +1,43 @@
-import type { WeatherLookup } from '@crag-atlas/api';
+import {
+  getForecastDay,
+  OPEN_METEO,
+  QUERY_KEYS,
+  useApiQuery
+} from '@web/shared/api';
+import { trackWeatherFailure, useIsOnline } from '@web/shared/lib';
+import type { Coords } from '@web/shared/types';
 
-import { apiGet, QUERY_KEYS, useApiQuery } from '@web/shared/api';
+import { tickWeatherAt } from '../lib';
 
 export interface Params {
-  idRoute: string;
+  coords?: Coords;
   at: string;
   enabled?: boolean;
 }
 
-export const useApiGetWeather = ({ idRoute, at, enabled = true }: Params) => {
-  const { data, isLoading, failure } = useApiQuery<WeatherLookup>({
-    queryKey: QUERY_KEYS.weather(idRoute, at),
-    queryFn: () =>
-      apiGet<WeatherLookup>(
-        `/weather?idRoute=${idRoute}&at=${encodeURIComponent(at)}`
-      ),
-    enabled: enabled && !!idRoute && !!at
+// Keyed by the day, so moving the hour picks another reading from the same
+// answer instead of asking again.
+export const useApiGetWeather = ({ coords, at, enabled = true }: Params) => {
+  const isOnline = useIsOnline();
+  const date = at.slice(0, 10);
+
+  const { data, isLoading, failure } = useApiQuery({
+    queryKey: QUERY_KEYS.forecastDay(coords, date),
+    queryFn: async () =>
+      coords
+        ? getForecastDay(coords, date).catch((error: unknown) => {
+            trackWeatherFailure('tick', OPEN_METEO, error);
+            throw error;
+          })
+        : null,
+    enabled: enabled && isOnline && !!coords && !!date
   });
 
   return {
-    weather: data?.weather ?? null,
-    // Assumed until the answer arrives, so a slow lookup never disables the
-    // fields on someone who wants to type the numbers in.
-    hasPoint: data?.hasPoint ?? true,
+    weather: data && coords ? tickWeatherAt(data, coords, at) : null,
+    hasPoint: !!coords,
     isLoading,
+    isOffline: !isOnline,
     failure
   };
 };

@@ -1,14 +1,18 @@
-import type { SectorConditions } from '@crag-atlas/api';
+import { QUERY_KEYS } from '@web/shared/api';
+import type { Coords } from '@web/shared/types';
 
-import { apiGet, QUERY_KEYS, useApiQuery } from '@web/shared/api';
+import { useApiGetConditionsAt } from './useApiGetConditionsAt';
+
+interface Params {
+  idSector: string;
+  coords?: Coords;
+}
 
 // The whole strip in one request: the provider publishes its window at once,
 // so stepping to another day is a click and never a fetch.
-export const useApiGetConditions = (idSector: string) => {
-  const { data, isLoading, failure } = useApiQuery({
+export const useApiGetConditions = ({ idSector, coords }: Params) =>
+  useApiGetConditionsAt({
+    path: `/sectors/${idSector}/conditions`,
     queryKey: QUERY_KEYS.sectorConditions(idSector),
-    queryFn: () => apiGet<SectorConditions>(`/sectors/${idSector}/conditions`)
+    coords
   });
-
-  return { conditions: data ?? null, isLoading, failure };
-};
