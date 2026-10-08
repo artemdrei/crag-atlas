@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.7.0](https://github.com/artemdrei/crag-atlas/compare/web-v0.6.0...web-v0.7.0) (2026-10-08)
+
+### Features
+
+* browser weather, offline regions and analytics ([#15](https://github.com/artemdrei/crag-atlas/issues/15)) ([345e181](https://github.com/artemdrei/crag-atlas/commit/345e18141c2840342b9ff923b6339c8b01a78cc5))
+
 ## [0.6.0](https://github.com/artemdrei/crag-atlas/compare/web-v0.5.0...web-v0.6.0) (2026-10-06)
 
 ### Features
