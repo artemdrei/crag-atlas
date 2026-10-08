@@ -28,7 +28,9 @@ import {
   PageBreadcrumbs,
   PageShell,
   PageTitle,
-  PageTitleRow
+  PageTitleRow,
+  ShelterBadge,
+  ShelterNote
 } from '@web/shared/ui';
 
 import type { Route } from '../common';
@@ -127,6 +129,8 @@ export const PageSectorMobile = () => {
           name={sector?.name}
           nameLocal={sector?.nameLocal}
           variant="h5"
+          icon={sector && <ShelterBadge shelter={sector.shelter} />}
+          aside={sector && <ShelterNote shelter={sector.shelter} />}
         />
         <DirectionsButton entityType="sector" point={coordsOf(sector)} />
       </PageTitleRow>
