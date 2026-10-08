@@ -25,6 +25,7 @@ export { gradeKey, toGradeBars } from './gradeBars';
 export type { CompressedPhoto, SourceRect } from './imageToWebp';
 export { imageToWebp } from './imageToWebp';
 export { isSafeHttpUrl } from './isSafeHttpUrl';
+export { isStandalone } from './isStandalone';
 export { localNameOf } from './localNameOf';
 export type { MediaLink, MediaProvider } from './mediaLink';
 export {
