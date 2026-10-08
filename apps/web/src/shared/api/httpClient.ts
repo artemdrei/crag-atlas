@@ -1,4 +1,5 @@
 import { domainFailure, wrapApiCall } from '@crag-atlas/utils';
+import { isAuthApiError } from '@supabase/supabase-js';
 
 import { supabase } from '@web/shared/supabase';
 
@@ -27,11 +28,31 @@ const throwResponseFailure = async (
     .json()
     .catch(() => null)) as ErrorResponseBody | null;
 
+  if (response.status === 401) await dropRevokedSession();
+
   throw domainFailure(
     body?.code ?? `http.${response.status}`,
     body?.message ?? `${label} failed with ${response.status}`,
     { status: response.status, data: body?.data }
   );
+};
+
+let pendingSessionCheck: Promise<void> | null = null;
+
+// A session Supabase revoked still looks valid locally until it expires;
+// left signed in, every query would keep answering with another 401. The API
+// also answers 401 when it cannot reach Supabase Auth, so only Supabase's own
+// verdict on the token signs out: SIGNED_OUT wipes the saved offline regions.
+const dropRevokedSession = (): Promise<void> => {
+  pendingSessionCheck ??= (async () => {
+    const { error } = await supabase.auth.getUser();
+
+    if (isAuthApiError(error)) await supabase.auth.signOut({ scope: 'local' });
+  })().finally(() => {
+    pendingSessionCheck = null;
+  });
+
+  return pendingSessionCheck;
 };
 
 export const apiPost = <T>(path: string, payload: unknown): Promise<T> =>
