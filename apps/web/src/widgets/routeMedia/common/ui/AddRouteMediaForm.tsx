@@ -50,9 +50,9 @@ export const AddRouteMediaForm = ({ isPending, onSubmit, onCancel }: Props) => {
         value={url}
         disabled={!!file}
         error={!!url && !link}
-        label={t`YouTube or Instagram link`}
+        label={t`YouTube link`}
         helperText={
-          url && !link ? <Trans>Only YouTube and Instagram links.</Trans> : ' '
+          url && !link ? <Trans>This is not a YouTube link.</Trans> : ' '
         }
         onChange={(event) => setUrl(event.target.value)}
       />

@@ -1,6 +1,5 @@
 import { useLingui } from '@lingui/react/macro';
 import CloseIcon from '@mui/icons-material/Close';
-import InstagramIcon from '@mui/icons-material/Instagram';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
@@ -25,11 +24,7 @@ export const MediaThumb = ({ label, photoUrl, videoUrl, onRemove }: Props) => {
 
   return (
     <ThumbStyled title={label}>
-      {src ? (
-        <ImageStyled src={src} alt={label} />
-      ) : (
-        link?.provider === 'instagram' && <InstagramIcon color="action" />
-      )}
+      {src && <ImageStyled src={src} alt={label} />}
       {videoUrl && (
         <PlayBadgeStyled>
           <PlayArrowRoundedIcon fontSize="small" />
