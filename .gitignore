@@ -12,3 +12,7 @@ docs-private/
 
 # scraped reference data — never committed
 apps/api/data/
+
+# stray tsc output next to sources
+packages/*/src/**/*.js
+packages/*/src/**/*.js.map
