@@ -5,9 +5,8 @@ import { readFailed } from '../common/exceptions/database.exception';
 import type { Shelter } from '../common/utils/shelter';
 import { publicSupabase } from '../config/supabase.client';
 import { HorizonService } from '../horizon/horizon.service';
-import type { ForecastWindow } from '../weather/weather.service';
-import { WeatherService } from '../weather/weather.service';
 import { CONDITIONS_CONFIG } from './conditions.config';
+import { assertForecast } from './conditions.forecast';
 import type { HourInput } from './conditions.scoring';
 import { bandOf, bestWindow, scoreHour } from './conditions.scoring';
 import type { SunDay } from './conditions.sun';
@@ -15,6 +14,7 @@ import { sunDay, toClock } from './conditions.sun';
 import type {
   ConditionsDayDto,
   ConditionsHourDto,
+  ForecastDto,
   SectorConditionsDto
 } from './conditions.types';
 
@@ -47,12 +47,12 @@ interface SectorRow {
 
 @Injectable()
 export class ConditionsService {
-  constructor(
-    private readonly weatherService: WeatherService,
-    private readonly horizonService: HorizonService
-  ) {}
+  constructor(private readonly horizonService: HorizonService) {}
 
-  async forSector(idSector: string): Promise<SectorConditionsDto> {
+  async forSector(
+    idSector: string,
+    forecast: ForecastDto | null
+  ): Promise<SectorConditionsDto> {
     const sector = await this.sector(idSector);
     const { lat, lng, shelter } = sector;
 
@@ -66,7 +66,7 @@ export class ConditionsService {
       };
     }
 
-    const forecast = this.weatherService.window(lat, lng).catch(() => null);
+    const window = forecast ? assertForecast(forecast) : null;
     const horizon = await this.horizonService.find(idSector);
     // Nothing is awaited: the card answers now with a flat horizon and the
     // skyline is there the next time the sector is opened.
@@ -77,13 +77,16 @@ export class ConditionsService {
     // neither is lit from every direction the skyline allows.
     const aspectDeg = sector.aspect_deg ?? horizon?.aspect_deg ?? null;
 
-    return this.atPoint({ lat, lng, shelter, profile, aspectDeg }, forecast);
+    return this.atPoint({ lat, lng, shelter, profile, aspectDeg }, window);
   }
 
   // A region is weather, not geometry: one crag's wall faces one way and the
   // next one faces another, so the card here answers "is it worth driving
   // out" and the sector's own card answers "which hours".
-  async forRegion(idRegion: string): Promise<SectorConditionsDto> {
+  async forRegion(
+    idRegion: string,
+    forecast: ForecastDto | null
+  ): Promise<SectorConditionsDto> {
     const { data, error } = await publicSupabase()
       .from('regions')
       .select('lat, lng')
@@ -116,21 +119,22 @@ export class ConditionsService {
       };
     }
 
-    return this.atPoint({
-      lat: data.lat,
-      lng: data.lng,
-      shelter: 'open',
-      profile: null,
-      aspectDeg: null
-    });
+    return this.atPoint(
+      {
+        lat: data.lat,
+        lng: data.lng,
+        shelter: 'open',
+        profile: null,
+        aspectDeg: null
+      },
+      forecast ? assertForecast(forecast) : null
+    );
   }
 
-  private async atPoint(
+  private atPoint(
     { lat, lng, shelter, profile, aspectDeg }: PointParams,
-    forecast?: Promise<ForecastWindow | null>
-  ): Promise<SectorConditionsDto> {
-    const window = await (forecast ??
-      this.weatherService.window(lat, lng).catch(() => null));
+    window: ForecastDto | null
+  ): SectorConditionsDto {
     const offsetSeconds = window?.utcOffsetSeconds ?? localOffsetSeconds(lng);
     const today = firstForecastDate(window) ?? localDate(offsetSeconds);
     const series = window ? indexSeries(window) : null;
@@ -274,7 +278,7 @@ const climbingHours = (sun: SunDay): [number, number] => {
 type Reading = Omit<HourInput, 'isSun'>;
 
 interface ForecastSeries {
-  window: ForecastWindow;
+  window: ForecastDto;
   indexAt: Map<string, number>;
   sinceRain: (number | null)[];
   rain24h: number[];
@@ -282,7 +286,7 @@ interface ForecastSeries {
 
 // Every hour of the strip asks the same two questions of the hours behind it,
 // so the whole series answers them once instead of walking backwards per hour.
-const indexSeries = (window: ForecastWindow): ForecastSeries => {
+const indexSeries = (window: ForecastDto): ForecastSeries => {
   const indexAt = new Map<string, number>();
   const sinceRain: (number | null)[] = [];
   const rain24h: number[] = [];
@@ -293,11 +297,11 @@ const indexSeries = (window: ForecastWindow): ForecastSeries => {
   window.time.forEach((at, index) => {
     indexAt.set(at, index);
 
-    const fell = window.precipitation[index] ?? 0;
+    const fell = window.precipitationMm[index] ?? 0;
 
     running += fell;
 
-    const leaving = window.precipitation[index - 24];
+    const leaving = window.precipitationMm[index - 24];
 
     if (leaving !== undefined) running -= leaving ?? 0;
 
@@ -318,10 +322,10 @@ const readingAt = (series: ForecastSeries, at: string): Reading | null => {
   const { window } = series;
 
   return {
-    temperatureC: window.temperature[index] ?? null,
-    humidityPct: window.humidity[index] ?? null,
-    windSpeedMs: window.windSpeed[index] ?? null,
-    precipitationMm: window.precipitation[index] ?? null,
+    temperatureC: window.temperatureC[index] ?? null,
+    humidityPct: window.humidityPct[index] ?? null,
+    windSpeedMs: window.windSpeedMs[index] ?? null,
+    precipitationMm: window.precipitationMm[index] ?? null,
     precipitation24hMm: series.rain24h[index] ?? 0,
     weatherCode: window.weatherCode[index] ?? null,
     hoursSinceRain: series.sinceRain[index] ?? null
@@ -339,10 +343,10 @@ const shiftDate = (date: string, days: number): string => {
 // The provider's own first forecast day, which the hourly series is keyed
 // on. Reading today off a clock instead would miss every lookup whenever the
 // two disagree by an hour at the edge of a zone.
-const firstForecastDate = (window: ForecastWindow | null): string | null =>
+const firstForecastDate = (window: ForecastDto | null): string | null =>
   window?.time[WINDOW_PAST_HOURS]?.slice(0, 10) ?? null;
 
-// Only reached when the provider is unreachable: today at the crag, which is
+// Only reached without a forecast: today at the crag, which is
 // not today on the server — a sector three zones east has turned the page.
 const localDate = (offsetSeconds: number): string =>
   new Date(Date.now() + offsetSeconds * 1000).toISOString().slice(0, 10);

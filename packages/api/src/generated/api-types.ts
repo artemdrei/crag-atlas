@@ -596,22 +596,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/ticks/weather/backfill": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["TicksController_backfillWeather"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/ticks/{idTick}": {
         parameters: {
             query?: never;
@@ -636,22 +620,6 @@ export interface paths {
             cookie?: never;
         };
         get: operations["RouteTicksController_findByRoute"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/weather": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["WeatherController_lookup"];
         put?: never;
         post?: never;
         delete?: never;
@@ -843,9 +811,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["ConditionsController_forSector"];
+        get?: never;
         put?: never;
-        post?: never;
+        post: operations["ConditionsController_forSector"];
         delete?: never;
         options?: never;
         head?: never;
@@ -859,9 +827,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["ConditionsController_forRegion"];
+        get?: never;
         put?: never;
-        post?: never;
+        post: operations["ConditionsController_forRegion"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1155,6 +1123,9 @@ export interface components {
             idSector: string;
             /** @description Label for breadcrumbs; ids carry no meaning */
             sectorName: string;
+            /** @description Where the weather is read; null when the sector has no pin */
+            sectorLat: number | null;
+            sectorLng: number | null;
             idRegion: string;
             regionName: string;
             name: string;
@@ -1289,6 +1260,11 @@ export interface components {
             weatherCode?: number | null;
             sunrise?: string | null;
             sunset?: string | null;
+            /**
+             * @description The provider the reading came from; null when it was written by hand
+             * @enum {string|null}
+             */
+            source?: "open-meteo" | null;
             /** @description The climber corrected the numbers the provider answered with */
             isManual?: boolean;
         };
@@ -1309,6 +1285,9 @@ export interface components {
              */
             routeGradeScale?: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux" | "font" | "vscale" | null;
             sectorName?: string | null;
+            /** @description Where the weather is read; null when the sector has no pin */
+            sectorLat?: number | null;
+            sectorLng?: number | null;
             regionName?: string | null;
             /** @description ISO 3166-1 alpha-2 code of the region's country */
             regionCountry?: string | null;
@@ -1370,16 +1349,6 @@ export interface components {
             /** @description Pass back as `cursor` to get the next page */
             nextCursor?: string | null;
         };
-        WeatherBackfillDto: {
-            /** @description Ascents this call gave conditions to */
-            filled: number;
-            /** @description Ascents still waiting, because one call fills a batch at most */
-            remaining: number;
-            /** @description Ascents the provider had no answer for */
-            failed: number;
-            /** @description Error code of the first ascent that failed */
-            failureCode: string | null;
-        };
         CreateTickDto: {
             idRoute: string;
             /** @enum {string} */
@@ -1420,11 +1389,6 @@ export interface components {
             notePrivate?: boolean;
             /** @description Null erases the conditions recorded for this ascent */
             weather?: components["schemas"]["TickWeatherDto"] | null;
-        };
-        WeatherLookupDto: {
-            /** @description False when the sector has no coordinates — nothing can be looked up and the conditions are written by hand */
-            hasPoint: boolean;
-            weather: components["schemas"]["TickWeatherDto"] | null;
         };
         RouteLineDto: {
             idRoute: string;
@@ -1515,6 +1479,22 @@ export interface components {
             url: string;
             title?: string | null;
             durationSeconds?: number | null;
+        };
+        ForecastDto: {
+            /** @description Offset of the crag’s zone from UTC */
+            utcOffsetSeconds: number;
+            /** @description Local wall clock per hour, e.g. 2026-10-01T16:00, starting at midnight the day before today — the strip reads today from hour 24 */
+            time: string[];
+            temperatureC: (number | null)[];
+            humidityPct: (number | null)[];
+            precipitationMm: (number | null)[];
+            /** @description WMO weather code */
+            weatherCode: (number | null)[];
+            windSpeedMs: (number | null)[];
+        };
+        ConditionsRequestDto: {
+            /** @description Fetched by the browser; null when it could not be, and the strip then carries sun and shade alone */
+            forecast: components["schemas"]["ForecastDto"] | null;
         };
         SunIntervalDto: {
             fromAt: string;
@@ -2672,25 +2652,6 @@ export interface operations {
             };
         };
     };
-    TicksController_backfillWeather: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["WeatherBackfillDto"];
-                };
-            };
-        };
-    };
     TicksController_remove: {
         parameters: {
             query?: never;
@@ -2752,30 +2713,6 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["TickDto"][];
-                };
-            };
-        };
-    };
-    WeatherController_lookup: {
-        parameters: {
-            query: {
-                /** @description Read at its sector’s point */
-                idRoute: string;
-                /** @description Local wall clock, 2026-10-01T16:00 */
-                at: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["WeatherLookupDto"];
                 };
             };
         };
@@ -3168,7 +3105,11 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConditionsRequestDto"];
+            };
+        };
         responses: {
             200: {
                 headers: {
@@ -3189,7 +3130,11 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConditionsRequestDto"];
+            };
+        };
         responses: {
             200: {
                 headers: {

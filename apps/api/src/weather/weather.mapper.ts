@@ -1,4 +1,4 @@
-import type { TickWeatherDto } from './weather.types';
+import type { TickWeatherDto, WeatherSource } from './weather.types';
 
 const ASSUMED_HOUR = '14:00';
 
@@ -19,6 +19,7 @@ export interface TickWeatherRow {
   weather_code: number | null;
   sunrise: string | null;
   sunset: string | null;
+  source: WeatherSource | null;
   is_manual: boolean;
 }
 
@@ -50,6 +51,7 @@ export const toWeatherDto = (row: TickWeatherRow): TickWeatherDto => ({
   weatherCode: row.weather_code,
   sunrise: row.sunrise?.slice(0, 5) ?? null,
   sunset: row.sunset?.slice(0, 5) ?? null,
+  source: row.source,
   isManual: row.is_manual
 });
 
@@ -70,5 +72,6 @@ export const toWeatherColumns = ({ idTick, at, weather }: WeatherEntry) => ({
   weather_code: weather.weatherCode ?? null,
   sunrise: weather.sunrise || null,
   sunset: weather.sunset || null,
+  source: weather.source ?? null,
   is_manual: weather.isManual ?? false
 });

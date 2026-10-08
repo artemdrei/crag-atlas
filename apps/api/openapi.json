@@ -10,7 +10,9 @@
             "description": ""
           }
         },
-        "tags": ["Health"]
+        "tags": [
+          "Health"
+        ]
       }
     },
     "/admins": {
@@ -32,7 +34,9 @@
             }
           }
         },
-        "tags": ["Admins"]
+        "tags": [
+          "Admins"
+        ]
       },
       "post": {
         "operationId": "AdminsController_grant",
@@ -62,7 +66,9 @@
             }
           }
         },
-        "tags": ["Admins"]
+        "tags": [
+          "Admins"
+        ]
       }
     },
     "/admins/candidates": {
@@ -93,7 +99,9 @@
             }
           }
         },
-        "tags": ["Admins"]
+        "tags": [
+          "Admins"
+        ]
       }
     },
     "/admins/{idUser}": {
@@ -114,7 +122,9 @@
             "description": ""
           }
         },
-        "tags": ["Admins"]
+        "tags": [
+          "Admins"
+        ]
       }
     },
     "/me": {
@@ -133,7 +143,9 @@
             }
           }
         },
-        "tags": ["Me"]
+        "tags": [
+          "Me"
+        ]
       },
       "patch": {
         "operationId": "MeController_update",
@@ -160,7 +172,9 @@
             }
           }
         },
-        "tags": ["Me"]
+        "tags": [
+          "Me"
+        ]
       }
     },
     "/me/photo": {
@@ -173,7 +187,9 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": ["file"],
+                "required": [
+                  "file"
+                ],
                 "properties": {
                   "file": {
                     "type": "string",
@@ -196,7 +212,9 @@
             }
           }
         },
-        "tags": ["Me"]
+        "tags": [
+          "Me"
+        ]
       },
       "delete": {
         "operationId": "MeController_removePhoto",
@@ -206,7 +224,9 @@
             "description": ""
           }
         },
-        "tags": ["Me"]
+        "tags": [
+          "Me"
+        ]
       }
     },
     "/regions": {
@@ -228,7 +248,9 @@
             }
           }
         },
-        "tags": ["Regions"]
+        "tags": [
+          "Regions"
+        ]
       },
       "post": {
         "operationId": "RegionsController_create",
@@ -255,7 +277,9 @@
             }
           }
         },
-        "tags": ["Regions"]
+        "tags": [
+          "Regions"
+        ]
       }
     },
     "/regions/archived": {
@@ -277,7 +301,9 @@
             }
           }
         },
-        "tags": ["Regions"]
+        "tags": [
+          "Regions"
+        ]
       }
     },
     "/regions/{idRegion}": {
@@ -305,7 +331,9 @@
             }
           }
         },
-        "tags": ["Regions"]
+        "tags": [
+          "Regions"
+        ]
       },
       "patch": {
         "operationId": "RegionsController_update",
@@ -341,7 +369,9 @@
             }
           }
         },
-        "tags": ["Regions"]
+        "tags": [
+          "Regions"
+        ]
       },
       "delete": {
         "operationId": "RegionsController_remove",
@@ -360,7 +390,9 @@
             "description": ""
           }
         },
-        "tags": ["Regions"]
+        "tags": [
+          "Regions"
+        ]
       }
     },
     "/regions/{idRegion}/photo": {
@@ -382,7 +414,9 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": ["file"],
+                "required": [
+                  "file"
+                ],
                 "properties": {
                   "file": {
                     "type": "string",
@@ -405,7 +439,9 @@
             }
           }
         },
-        "tags": ["Regions"]
+        "tags": [
+          "Regions"
+        ]
       }
     },
     "/regions/{idRegion}/restore": {
@@ -433,7 +469,9 @@
             }
           }
         },
-        "tags": ["Regions"]
+        "tags": [
+          "Regions"
+        ]
       }
     },
     "/regions/{idRegion}/content": {
@@ -461,7 +499,9 @@
             }
           }
         },
-        "tags": ["Regions"]
+        "tags": [
+          "Regions"
+        ]
       }
     },
     "/regions/{idRegion}/permanent": {
@@ -482,7 +522,9 @@
             "description": ""
           }
         },
-        "tags": ["Regions"]
+        "tags": [
+          "Regions"
+        ]
       }
     },
     "/regions/{idRegion}/sectors": {
@@ -513,7 +555,9 @@
             }
           }
         },
-        "tags": ["Sectors"]
+        "tags": [
+          "Sectors"
+        ]
       },
       "post": {
         "operationId": "SectorsController_create",
@@ -549,7 +593,9 @@
             }
           }
         },
-        "tags": ["Sectors"]
+        "tags": [
+          "Sectors"
+        ]
       }
     },
     "/regions/{idRegion}/sectors/archived": {
@@ -580,7 +626,9 @@
             }
           }
         },
-        "tags": ["Sectors"]
+        "tags": [
+          "Sectors"
+        ]
       }
     },
     "/regions/{idRegion}/sectors/ticked": {
@@ -611,7 +659,9 @@
             }
           }
         },
-        "tags": ["Sectors"]
+        "tags": [
+          "Sectors"
+        ]
       }
     },
     "/sectors/{idSector}": {
@@ -639,7 +689,9 @@
             }
           }
         },
-        "tags": ["Sector"]
+        "tags": [
+          "Sector"
+        ]
       },
       "patch": {
         "operationId": "SectorController_update",
@@ -675,7 +727,9 @@
             }
           }
         },
-        "tags": ["Sector"]
+        "tags": [
+          "Sector"
+        ]
       },
       "delete": {
         "operationId": "SectorController_remove",
@@ -694,7 +748,9 @@
             "description": ""
           }
         },
-        "tags": ["Sector"]
+        "tags": [
+          "Sector"
+        ]
       }
     },
     "/sectors/{idSector}/restore": {
@@ -722,7 +778,9 @@
             }
           }
         },
-        "tags": ["Sector"]
+        "tags": [
+          "Sector"
+        ]
       }
     },
     "/sectors/{idSector}/content": {
@@ -750,7 +808,9 @@
             }
           }
         },
-        "tags": ["Sector"]
+        "tags": [
+          "Sector"
+        ]
       }
     },
     "/sectors/{idSector}/permanent": {
@@ -771,7 +831,9 @@
             "description": ""
           }
         },
-        "tags": ["Sector"]
+        "tags": [
+          "Sector"
+        ]
       }
     },
     "/horizon/backfill": {
@@ -790,7 +852,9 @@
             }
           }
         },
-        "tags": ["Horizon"]
+        "tags": [
+          "Horizon"
+        ]
       }
     },
     "/horizon/{idSector}/recompute": {
@@ -811,7 +875,9 @@
             "description": ""
           }
         },
-        "tags": ["Horizon"]
+        "tags": [
+          "Horizon"
+        ]
       }
     },
     "/qr-paths/resolve": {
@@ -840,7 +906,9 @@
             }
           }
         },
-        "tags": ["QrPaths"]
+        "tags": [
+          "QrPaths"
+        ]
       }
     },
     "/qr-paths": {
@@ -879,7 +947,9 @@
             }
           }
         },
-        "tags": ["QrPaths"]
+        "tags": [
+          "QrPaths"
+        ]
       },
       "post": {
         "operationId": "QrPathsController_create",
@@ -909,7 +979,9 @@
             }
           }
         },
-        "tags": ["QrPaths"]
+        "tags": [
+          "QrPaths"
+        ]
       }
     },
     "/qr-paths/sectors/{idSector}": {
@@ -947,7 +1019,9 @@
             }
           }
         },
-        "tags": ["QrPaths"]
+        "tags": [
+          "QrPaths"
+        ]
       }
     },
     "/sectors/{idSector}/routes": {
@@ -968,7 +1042,10 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "enum": ["sport", "boulder"]
+              "enum": [
+                "sport",
+                "boulder"
+              ]
             }
           },
           {
@@ -1025,7 +1102,9 @@
             }
           }
         },
-        "tags": ["Routes"]
+        "tags": [
+          "Routes"
+        ]
       },
       "post": {
         "operationId": "RoutesController_create",
@@ -1061,7 +1140,9 @@
             }
           }
         },
-        "tags": ["Routes"]
+        "tags": [
+          "Routes"
+        ]
       }
     },
     "/sectors/{idSector}/routes/archived": {
@@ -1092,7 +1173,9 @@
             }
           }
         },
-        "tags": ["Routes"]
+        "tags": [
+          "Routes"
+        ]
       }
     },
     "/sectors/{idSector}/routes/ticked": {
@@ -1123,7 +1206,9 @@
             }
           }
         },
-        "tags": ["Routes"]
+        "tags": [
+          "Routes"
+        ]
       }
     },
     "/routes/{idRoute}": {
@@ -1151,7 +1236,9 @@
             }
           }
         },
-        "tags": ["Route"]
+        "tags": [
+          "Route"
+        ]
       },
       "patch": {
         "operationId": "RouteController_update",
@@ -1187,7 +1274,9 @@
             }
           }
         },
-        "tags": ["Route"]
+        "tags": [
+          "Route"
+        ]
       },
       "delete": {
         "operationId": "RouteController_remove",
@@ -1206,7 +1295,9 @@
             "description": ""
           }
         },
-        "tags": ["Route"]
+        "tags": [
+          "Route"
+        ]
       }
     },
     "/routes/{idRoute}/restore": {
@@ -1234,7 +1325,9 @@
             }
           }
         },
-        "tags": ["Route"]
+        "tags": [
+          "Route"
+        ]
       }
     },
     "/routes/{idRoute}/content": {
@@ -1262,7 +1355,9 @@
             }
           }
         },
-        "tags": ["Route"]
+        "tags": [
+          "Route"
+        ]
       }
     },
     "/routes/{idRoute}/permanent": {
@@ -1283,7 +1378,9 @@
             "description": ""
           }
         },
-        "tags": ["Route"]
+        "tags": [
+          "Route"
+        ]
       }
     },
     "/catalog/search": {
@@ -1311,7 +1408,9 @@
             }
           }
         },
-        "tags": ["Search"]
+        "tags": [
+          "Search"
+        ]
       }
     },
     "/ticks": {
@@ -1323,7 +1422,10 @@
             "required": false,
             "in": "query",
             "schema": {
-              "enum": ["sport", "boulder"],
+              "enum": [
+                "sport",
+                "boulder"
+              ],
               "type": "string"
             }
           },
@@ -1332,7 +1434,10 @@
             "required": false,
             "in": "query",
             "schema": {
-              "enum": ["date", "grade"],
+              "enum": [
+                "date",
+                "grade"
+              ],
               "type": "string"
             }
           },
@@ -1381,7 +1486,9 @@
             }
           }
         },
-        "tags": ["Ticks"]
+        "tags": [
+          "Ticks"
+        ]
       },
       "post": {
         "operationId": "TicksController_create",
@@ -1408,7 +1515,9 @@
             }
           }
         },
-        "tags": ["Ticks"]
+        "tags": [
+          "Ticks"
+        ]
       }
     },
     "/ticks/stats": {
@@ -1427,7 +1536,9 @@
             }
           }
         },
-        "tags": ["Ticks"]
+        "tags": [
+          "Ticks"
+        ]
       }
     },
     "/ticks/feed": {
@@ -1463,7 +1574,9 @@
             }
           }
         },
-        "tags": ["Ticks"]
+        "tags": [
+          "Ticks"
+        ]
       }
     },
     "/ticks/routes/{idRoute}": {
@@ -1494,26 +1607,9 @@
             }
           }
         },
-        "tags": ["Ticks"]
-      }
-    },
-    "/ticks/weather/backfill": {
-      "post": {
-        "operationId": "TicksController_backfillWeather",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/WeatherBackfillDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": ["Ticks"]
+        "tags": [
+          "Ticks"
+        ]
       }
     },
     "/ticks/{idTick}": {
@@ -1551,7 +1647,9 @@
             }
           }
         },
-        "tags": ["Ticks"]
+        "tags": [
+          "Ticks"
+        ]
       },
       "delete": {
         "operationId": "TicksController_remove",
@@ -1570,7 +1668,9 @@
             "description": ""
           }
         },
-        "tags": ["Ticks"]
+        "tags": [
+          "Ticks"
+        ]
       }
     },
     "/routes/{idRoute}/ticks": {
@@ -1601,45 +1701,9 @@
             }
           }
         },
-        "tags": ["RouteTicks"]
-      }
-    },
-    "/weather": {
-      "get": {
-        "operationId": "WeatherController_lookup",
-        "parameters": [
-          {
-            "name": "idRoute",
-            "required": true,
-            "in": "query",
-            "description": "Read at its sector’s point",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "at",
-            "required": true,
-            "in": "query",
-            "description": "Local wall clock, 2026-10-01T16:00",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/WeatherLookupDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": ["Weather"]
+        "tags": [
+          "RouteTicks"
+        ]
       }
     },
     "/sectors/{idSector}/topos": {
@@ -1670,7 +1734,9 @@
             }
           }
         },
-        "tags": ["Topos"]
+        "tags": [
+          "Topos"
+        ]
       },
       "post": {
         "operationId": "ToposController_create",
@@ -1690,7 +1756,11 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": ["file", "width", "height"],
+                "required": [
+                  "file",
+                  "width",
+                  "height"
+                ],
                 "properties": {
                   "file": {
                     "type": "string",
@@ -1719,7 +1789,9 @@
             }
           }
         },
-        "tags": ["Topos"]
+        "tags": [
+          "Topos"
+        ]
       }
     },
     "/sectors/{idSector}/topos/order": {
@@ -1760,7 +1832,9 @@
             }
           }
         },
-        "tags": ["Topos"]
+        "tags": [
+          "Topos"
+        ]
       }
     },
     "/topos/{idTopo}/photo": {
@@ -1782,7 +1856,11 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": ["file", "width", "height"],
+                "required": [
+                  "file",
+                  "width",
+                  "height"
+                ],
                 "properties": {
                   "file": {
                     "type": "string",
@@ -1811,7 +1889,9 @@
             }
           }
         },
-        "tags": ["Topo"]
+        "tags": [
+          "Topo"
+        ]
       }
     },
     "/topos/{idTopo}": {
@@ -1840,7 +1920,9 @@
             "description": ""
           }
         },
-        "tags": ["Topo"]
+        "tags": [
+          "Topo"
+        ]
       }
     },
     "/routes/{idRoute}/topos/{idTopo}/line": {
@@ -1886,7 +1968,9 @@
             }
           }
         },
-        "tags": ["RouteLine"]
+        "tags": [
+          "RouteLine"
+        ]
       },
       "delete": {
         "operationId": "RouteLineController_remove",
@@ -1913,7 +1997,9 @@
             "description": ""
           }
         },
-        "tags": ["RouteLine"]
+        "tags": [
+          "RouteLine"
+        ]
       }
     },
     "/users": {
@@ -1944,7 +2030,9 @@
             }
           }
         },
-        "tags": ["Users"]
+        "tags": [
+          "Users"
+        ]
       }
     },
     "/routes/{idRoute}/comments": {
@@ -1975,7 +2063,9 @@
             }
           }
         },
-        "tags": ["Comments"]
+        "tags": [
+          "Comments"
+        ]
       },
       "post": {
         "operationId": "CommentsController_create",
@@ -2011,7 +2101,9 @@
             }
           }
         },
-        "tags": ["Comments"]
+        "tags": [
+          "Comments"
+        ]
       }
     },
     "/routes/{idRoute}/comments/{idComment}": {
@@ -2049,7 +2141,9 @@
             }
           }
         },
-        "tags": ["Comments"]
+        "tags": [
+          "Comments"
+        ]
       },
       "delete": {
         "operationId": "CommentsController_remove",
@@ -2068,7 +2162,9 @@
             "description": ""
           }
         },
-        "tags": ["Comments"]
+        "tags": [
+          "Comments"
+        ]
       }
     },
     "/routes/{idRoute}/media": {
@@ -2099,7 +2195,9 @@
             }
           }
         },
-        "tags": ["Media"]
+        "tags": [
+          "Media"
+        ]
       },
       "post": {
         "operationId": "MediaController_create",
@@ -2135,7 +2233,9 @@
             }
           }
         },
-        "tags": ["Media"]
+        "tags": [
+          "Media"
+        ]
       }
     },
     "/routes/{idRoute}/media/photo": {
@@ -2165,7 +2265,9 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": ["file"],
+                "required": [
+                  "file"
+                ],
                 "properties": {
                   "file": {
                     "type": "string",
@@ -2188,7 +2290,9 @@
             }
           }
         },
-        "tags": ["Media"]
+        "tags": [
+          "Media"
+        ]
       }
     },
     "/routes/{idRoute}/media/{idMedia}": {
@@ -2209,11 +2313,13 @@
             "description": ""
           }
         },
-        "tags": ["Media"]
+        "tags": [
+          "Media"
+        ]
       }
     },
     "/sectors/{idSector}/conditions": {
-      "get": {
+      "post": {
         "operationId": "ConditionsController_forSector",
         "parameters": [
           {
@@ -2225,6 +2331,16 @@
             }
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConditionsRequestDto"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "",
@@ -2237,11 +2353,13 @@
             }
           }
         },
-        "tags": ["Conditions"]
+        "tags": [
+          "Conditions"
+        ]
       }
     },
     "/regions/{idRegion}/conditions": {
-      "get": {
+      "post": {
         "operationId": "ConditionsController_forRegion",
         "parameters": [
           {
@@ -2253,6 +2371,16 @@
             }
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConditionsRequestDto"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "",
@@ -2265,7 +2393,9 @@
             }
           }
         },
-        "tags": ["Conditions"]
+        "tags": [
+          "Conditions"
+        ]
       }
     }
   },
@@ -2296,7 +2426,11 @@
             "type": "string"
           }
         },
-        "required": ["idUser", "displayName", "email"]
+        "required": [
+          "idUser",
+          "displayName",
+          "email"
+        ]
       },
       "AdminCandidateDto": {
         "type": "object",
@@ -2318,7 +2452,12 @@
             "type": "boolean"
           }
         },
-        "required": ["idUser", "displayName", "email", "isAdmin"]
+        "required": [
+          "idUser",
+          "displayName",
+          "email",
+          "isAdmin"
+        ]
       },
       "GrantAdminDto": {
         "type": "object",
@@ -2330,7 +2469,9 @@
             }
           }
         },
-        "required": ["idUsers"]
+        "required": [
+          "idUsers"
+        ]
       },
       "MeDto": {
         "type": "object",
@@ -2362,7 +2503,10 @@
           },
           "gradeScaleBoulder": {
             "type": "string",
-            "enum": ["font", "vscale"],
+            "enum": [
+              "font",
+              "vscale"
+            ],
             "description": "Boulder grades never convert into route grades, so they pick their own"
           }
         },
@@ -2390,7 +2534,10 @@
           },
           "gradeScaleBoulder": {
             "type": "string",
-            "enum": ["font", "vscale"]
+            "enum": [
+              "font",
+              "vscale"
+            ]
           }
         }
       },
@@ -2420,14 +2567,22 @@
             "description": "Routes listed at this exact grade"
           }
         },
-        "required": ["grade", "scale", "count"]
+        "required": [
+          "grade",
+          "scale",
+          "count"
+        ]
       },
       "GradeHistogramGroupDto": {
         "type": "object",
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["sport", "trad", "boulder"]
+            "enum": [
+              "sport",
+              "trad",
+              "boulder"
+            ]
           },
           "routeCount": {
             "type": "number",
@@ -2441,7 +2596,11 @@
             }
           }
         },
-        "required": ["type", "routeCount", "grades"]
+        "required": [
+          "type",
+          "routeCount",
+          "grades"
+        ]
       },
       "RegionDto": {
         "type": "object",
@@ -2581,7 +2740,9 @@
             "nullable": true
           }
         },
-        "required": ["name"]
+        "required": [
+          "name"
+        ]
       },
       "UpdateRegionDto": {
         "type": "object",
@@ -2616,7 +2777,10 @@
             "nullable": true
           }
         },
-        "required": ["name", "rockType"]
+        "required": [
+          "name",
+          "rockType"
+        ]
       },
       "ClimberContentDto": {
         "type": "object",
@@ -2631,7 +2795,11 @@
             "type": "number"
           }
         },
-        "required": ["ascents", "comments", "media"]
+        "required": [
+          "ascents",
+          "comments",
+          "media"
+        ]
       },
       "SectorRouteDto": {
         "type": "object",
@@ -2662,7 +2830,10 @@
           },
           "type": {
             "type": "string",
-            "enum": ["sport", "boulder"]
+            "enum": [
+              "sport",
+              "boulder"
+            ]
           },
           "length": {
             "type": "number",
@@ -2678,7 +2849,13 @@
             "nullable": true
           }
         },
-        "required": ["id", "name", "grade", "gradeScale", "type"]
+        "required": [
+          "id",
+          "name",
+          "grade",
+          "gradeScale",
+          "type"
+        ]
       },
       "SectorListItemDto": {
         "type": "object",
@@ -2775,7 +2952,11 @@
           },
           "shelter": {
             "type": "string",
-            "enum": ["open", "partial", "full"],
+            "enum": [
+              "open",
+              "partial",
+              "full"
+            ],
             "description": "How much of the rain the wall keeps off a climber"
           },
           "isArchived": {
@@ -2825,7 +3006,11 @@
             }
           }
         },
-        "required": ["idSector", "tickedCount", "idRoutes"]
+        "required": [
+          "idSector",
+          "tickedCount",
+          "idRoutes"
+        ]
       },
       "CreateSectorDto": {
         "type": "object",
@@ -2843,7 +3028,9 @@
             "nullable": true
           }
         },
-        "required": ["name"]
+        "required": [
+          "name"
+        ]
       },
       "SectorDto": {
         "type": "object",
@@ -2940,7 +3127,11 @@
           },
           "shelter": {
             "type": "string",
-            "enum": ["open", "partial", "full"],
+            "enum": [
+              "open",
+              "partial",
+              "full"
+            ],
             "description": "How much of the rain the wall keeps off a climber"
           },
           "isArchived": {
@@ -2995,10 +3186,16 @@
           },
           "shelter": {
             "type": "string",
-            "enum": ["open", "partial", "full"]
+            "enum": [
+              "open",
+              "partial",
+              "full"
+            ]
           }
         },
-        "required": ["name"]
+        "required": [
+          "name"
+        ]
       },
       "HorizonBackfillDto": {
         "type": "object",
@@ -3021,7 +3218,12 @@
             "description": "Error code of the first sector that failed"
           }
         },
-        "required": ["built", "remaining", "failed", "failureCode"]
+        "required": [
+          "built",
+          "remaining",
+          "failed",
+          "failureCode"
+        ]
       },
       "QrPathTargetDto": {
         "type": "object",
@@ -3033,7 +3235,10 @@
             "type": "string"
           }
         },
-        "required": ["idRegion", "idSector"]
+        "required": [
+          "idRegion",
+          "idSector"
+        ]
       },
       "SectorQrDto": {
         "type": "object",
@@ -3095,7 +3300,9 @@
             }
           }
         },
-        "required": ["idSectors"]
+        "required": [
+          "idSectors"
+        ]
       },
       "SetQrSlugDto": {
         "type": "object",
@@ -3105,7 +3312,9 @@
             "description": "The sector part of the path"
           }
         },
-        "required": ["slug"]
+        "required": [
+          "slug"
+        ]
       },
       "RouteDto": {
         "type": "object",
@@ -3119,6 +3328,15 @@
           "sectorName": {
             "type": "string",
             "description": "Label for breadcrumbs; ids carry no meaning"
+          },
+          "sectorLat": {
+            "type": "number",
+            "nullable": true,
+            "description": "Where the weather is read; null when the sector has no pin"
+          },
+          "sectorLng": {
+            "type": "number",
+            "nullable": true
           },
           "idRegion": {
             "type": "string"
@@ -3154,7 +3372,10 @@
           },
           "type": {
             "type": "string",
-            "enum": ["sport", "boulder"]
+            "enum": [
+              "sport",
+              "boulder"
+            ]
           },
           "length": {
             "type": "number",
@@ -3238,6 +3459,8 @@
           "id",
           "idSector",
           "sectorName",
+          "sectorLat",
+          "sectorLng",
           "idRegion",
           "regionName",
           "name",
@@ -3282,7 +3505,10 @@
           },
           "type": {
             "type": "string",
-            "enum": ["sport", "boulder"]
+            "enum": [
+              "sport",
+              "boulder"
+            ]
           },
           "length": {
             "type": "number",
@@ -3311,7 +3537,12 @@
             "nullable": true
           }
         },
-        "required": ["name", "grade", "gradeScale", "type"]
+        "required": [
+          "name",
+          "grade",
+          "gradeScale",
+          "type"
+        ]
       },
       "UpdateRouteDto": {
         "type": "object",
@@ -3344,7 +3575,10 @@
           },
           "type": {
             "type": "string",
-            "enum": ["sport", "boulder"]
+            "enum": [
+              "sport",
+              "boulder"
+            ]
           },
           "length": {
             "type": "number",
@@ -3373,7 +3607,12 @@
             "nullable": true
           }
         },
-        "required": ["name", "grade", "gradeScale", "type"]
+        "required": [
+          "name",
+          "grade",
+          "gradeScale",
+          "type"
+        ]
       },
       "SearchHitDto": {
         "type": "object",
@@ -3433,7 +3672,11 @@
             "description": "Routes only; logged ascents plus imported ones"
           }
         },
-        "required": ["id", "name", "idRegion"]
+        "required": [
+          "id",
+          "name",
+          "idRegion"
+        ]
       },
       "CatalogSearchDto": {
         "type": "object",
@@ -3457,7 +3700,11 @@
             }
           }
         },
-        "required": ["regions", "sectors", "routes"]
+        "required": [
+          "regions",
+          "sectors",
+          "routes"
+        ]
       },
       "TickMediaDto": {
         "type": "object",
@@ -3467,13 +3714,20 @@
           },
           "kind": {
             "type": "string",
-            "enum": ["video", "photo"]
+            "enum": [
+              "video",
+              "photo"
+            ]
           },
           "url": {
             "type": "string"
           }
         },
-        "required": ["id", "kind", "url"]
+        "required": [
+          "id",
+          "kind",
+          "url"
+        ]
       },
       "TickWeatherDto": {
         "type": "object",
@@ -3540,12 +3794,22 @@
             "type": "string",
             "nullable": true
           },
+          "source": {
+            "type": "string",
+            "enum": [
+              "open-meteo"
+            ],
+            "nullable": true,
+            "description": "The provider the reading came from; null when it was written by hand"
+          },
           "isManual": {
             "type": "boolean",
             "description": "The climber corrected the numbers the provider answered with"
           }
         },
-        "required": ["observedAt"]
+        "required": [
+          "observedAt"
+        ]
       },
       "TickDto": {
         "type": "object",
@@ -3601,6 +3865,15 @@
             "type": "string",
             "nullable": true
           },
+          "sectorLat": {
+            "type": "number",
+            "nullable": true,
+            "description": "Where the weather is read; null when the sector has no pin"
+          },
+          "sectorLng": {
+            "type": "number",
+            "nullable": true
+          },
           "regionName": {
             "type": "string",
             "nullable": true
@@ -3644,7 +3917,11 @@
           },
           "gradeOpinion": {
             "type": "string",
-            "enum": ["soft", "neutral", "hard"],
+            "enum": [
+              "soft",
+              "neutral",
+              "hard"
+            ],
             "nullable": true
           },
           "gradeVote": {
@@ -3743,7 +4020,10 @@
             "description": "Pass back as `offset` to get the next page; null when done"
           }
         },
-        "required": ["items", "total"]
+        "required": [
+          "items",
+          "total"
+        ]
       },
       "TickGradeCountDto": {
         "type": "object",
@@ -3780,7 +4060,12 @@
             "type": "number"
           }
         },
-        "required": ["grade", "scale", "ascentType", "count"]
+        "required": [
+          "grade",
+          "scale",
+          "ascentType",
+          "count"
+        ]
       },
       "TickStatsDto": {
         "type": "object",
@@ -3799,7 +4084,11 @@
             }
           }
         },
-        "required": ["sportCount", "boulderCount", "grades"]
+        "required": [
+          "sportCount",
+          "boulderCount",
+          "grades"
+        ]
       },
       "TickFeedPageDto": {
         "type": "object",
@@ -3816,30 +4105,9 @@
             "description": "Pass back as `cursor` to get the next page"
           }
         },
-        "required": ["items"]
-      },
-      "WeatherBackfillDto": {
-        "type": "object",
-        "properties": {
-          "filled": {
-            "type": "number",
-            "description": "Ascents this call gave conditions to"
-          },
-          "remaining": {
-            "type": "number",
-            "description": "Ascents still waiting, because one call fills a batch at most"
-          },
-          "failed": {
-            "type": "number",
-            "description": "Ascents the provider had no answer for"
-          },
-          "failureCode": {
-            "type": "string",
-            "nullable": true,
-            "description": "Error code of the first ascent that failed"
-          }
-        },
-        "required": ["filled", "remaining", "failed", "failureCode"]
+        "required": [
+          "items"
+        ]
       },
       "CreateTickDto": {
         "type": "object",
@@ -3881,7 +4149,11 @@
           },
           "gradeOpinion": {
             "type": "string",
-            "enum": ["soft", "neutral", "hard"],
+            "enum": [
+              "soft",
+              "neutral",
+              "hard"
+            ],
             "nullable": true
           },
           "idPartner": {
@@ -3911,7 +4183,10 @@
             ]
           }
         },
-        "required": ["idRoute", "ascentType"]
+        "required": [
+          "idRoute",
+          "ascentType"
+        ]
       },
       "UpdateTickDto": {
         "type": "object",
@@ -3950,7 +4225,11 @@
           },
           "gradeOpinion": {
             "type": "string",
-            "enum": ["soft", "neutral", "hard"],
+            "enum": [
+              "soft",
+              "neutral",
+              "hard"
+            ],
             "nullable": true
           },
           "idPartner": {
@@ -3980,25 +4259,6 @@
             ]
           }
         }
-      },
-      "WeatherLookupDto": {
-        "type": "object",
-        "properties": {
-          "hasPoint": {
-            "type": "boolean",
-            "description": "False when the sector has no coordinates — nothing can be looked up and the conditions are written by hand"
-          },
-          "weather": {
-            "nullable": true,
-            "type": "object",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/TickWeatherDto"
-              }
-            ]
-          }
-        },
-        "required": ["hasPoint", "weather"]
       },
       "RouteLineDto": {
         "type": "object",
@@ -4107,7 +4367,12 @@
             }
           }
         },
-        "required": ["id", "photoUrl", "sortOrder", "lines"]
+        "required": [
+          "id",
+          "photoUrl",
+          "sortOrder",
+          "lines"
+        ]
       },
       "TopoOrderDto": {
         "type": "object",
@@ -4119,7 +4384,10 @@
             "type": "number"
           }
         },
-        "required": ["idTopo", "sortOrder"]
+        "required": [
+          "idTopo",
+          "sortOrder"
+        ]
       },
       "ReorderToposDto": {
         "type": "object",
@@ -4131,7 +4399,9 @@
             }
           }
         },
-        "required": ["items"]
+        "required": [
+          "items"
+        ]
       },
       "SaveRouteLineDto": {
         "type": "object",
@@ -4169,7 +4439,9 @@
             "type": "number"
           }
         },
-        "required": ["points"]
+        "required": [
+          "points"
+        ]
       },
       "UserSummaryDto": {
         "type": "object",
@@ -4185,7 +4457,10 @@
             "nullable": true
           }
         },
-        "required": ["id", "displayName"]
+        "required": [
+          "id",
+          "displayName"
+        ]
       },
       "CommentDto": {
         "type": "object",
@@ -4231,7 +4506,9 @@
             "type": "string"
           }
         },
-        "required": ["body"]
+        "required": [
+          "body"
+        ]
       },
       "UpdateCommentDto": {
         "type": "object",
@@ -4240,7 +4517,9 @@
             "type": "string"
           }
         },
-        "required": ["body"]
+        "required": [
+          "body"
+        ]
       },
       "MediaDto": {
         "type": "object",
@@ -4260,7 +4539,10 @@
           },
           "kind": {
             "type": "string",
-            "enum": ["video", "photo"]
+            "enum": [
+              "video",
+              "photo"
+            ]
           },
           "url": {
             "type": "string"
@@ -4297,7 +4579,10 @@
         "properties": {
           "kind": {
             "type": "string",
-            "enum": ["video", "photo"]
+            "enum": [
+              "video",
+              "photo"
+            ]
           },
           "idTick": {
             "type": "string",
@@ -4315,7 +4600,89 @@
             "nullable": true
           }
         },
-        "required": ["kind", "url"]
+        "required": [
+          "kind",
+          "url"
+        ]
+      },
+      "ForecastDto": {
+        "type": "object",
+        "properties": {
+          "utcOffsetSeconds": {
+            "type": "number",
+            "description": "Offset of the crag’s zone from UTC"
+          },
+          "time": {
+            "description": "Local wall clock per hour, e.g. 2026-10-01T16:00, starting at midnight the day before today — the strip reads today from hour 24",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "temperatureC": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "nullable": true
+            }
+          },
+          "humidityPct": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "nullable": true
+            }
+          },
+          "precipitationMm": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "nullable": true
+            }
+          },
+          "weatherCode": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "nullable": true
+            },
+            "description": "WMO weather code"
+          },
+          "windSpeedMs": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "nullable": true
+            }
+          }
+        },
+        "required": [
+          "utcOffsetSeconds",
+          "time",
+          "temperatureC",
+          "humidityPct",
+          "precipitationMm",
+          "weatherCode",
+          "windSpeedMs"
+        ]
+      },
+      "ConditionsRequestDto": {
+        "type": "object",
+        "properties": {
+          "forecast": {
+            "nullable": true,
+            "description": "Fetched by the browser; null when it could not be, and the strip then carries sun and shade alone",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ForecastDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "forecast"
+        ]
       },
       "SunIntervalDto": {
         "type": "object",
@@ -4327,7 +4694,10 @@
             "type": "string"
           }
         },
-        "required": ["fromAt", "untilAt"]
+        "required": [
+          "fromAt",
+          "untilAt"
+        ]
       },
       "ConditionsHourDto": {
         "type": "object",
@@ -4343,7 +4713,13 @@
           },
           "band": {
             "type": "string",
-            "enum": ["excellent", "good", "ok", "poor", "bad"],
+            "enum": [
+              "excellent",
+              "good",
+              "ok",
+              "poor",
+              "bad"
+            ],
             "nullable": true,
             "description": "The band the hour falls in, so a bar is coloured once"
           },
@@ -4402,7 +4778,13 @@
           },
           "band": {
             "type": "string",
-            "enum": ["excellent", "good", "ok", "poor", "bad"],
+            "enum": [
+              "excellent",
+              "good",
+              "ok",
+              "poor",
+              "bad"
+            ],
             "nullable": true
           },
           "bestFromAt": {
@@ -4462,7 +4844,11 @@
           },
           "shelter": {
             "type": "string",
-            "enum": ["open", "partial", "full"]
+            "enum": [
+              "open",
+              "partial",
+              "full"
+            ]
           },
           "aspectDeg": {
             "type": "number",
