@@ -38,10 +38,10 @@ export const PageProfileMobile = () => {
       <ThemeModeSetting />
       <LocaleSetting />
       <GradeScaleSetting />
-      <AdminSetting />
-      <InstallAppSetting />
       <OfflineRegionsMobile />
       <FeedbackSetting />
+      <AdminSetting />
+      <InstallAppSetting />
       <SignOutButton />
       <AppVersion />
     </PageStyled>
