@@ -10,6 +10,8 @@ export {
   useTrackPageView
 } from './analytics';
 export { buildDirectionsUrl } from './buildDirectionsUrl';
+export type { CelebrationName } from './celebration';
+export { celebrate, endCelebration, useCelebration } from './celebration';
 export { coordsOf } from './coordsOf';
 export { countryCodes, countryName } from './countries';
 export { digitsOnly } from './digitsOnly';

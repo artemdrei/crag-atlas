@@ -22,6 +22,7 @@ export { IconValue } from './IconValue';
 export { ImageCropper } from './ImageCropper';
 export { ListSkeleton } from './ListSkeleton';
 export { LocalName } from './LocalName';
+export { LottieOverlay } from './LottieOverlay';
 export { MapArea } from './MapArea';
 export { MapCanvas } from './MapCanvas';
 export { MediaBadge } from './MediaBadge';

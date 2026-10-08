@@ -12,6 +12,7 @@ import TextField from '@mui/material/TextField';
 import { ClimberPicker } from '@web/features/climberPicker';
 import { coordsOf, useWeatherFailureMessage } from '@web/shared/lib';
 import type { AscentType, Coords } from '@web/shared/types';
+import { FormActions, useIsInBottomSheet } from '@web/shared/ui';
 
 import type { CreateTick, GradeOpinion, PendingMedia, Tick } from '../entities';
 import { useRouteSends, useTickConditions } from '../hooks';
@@ -47,6 +48,7 @@ export const TickForm = ({
   onCancel
 }: Props) => {
   const { t } = useLingui();
+  const isInSheet = useIsInBottomSheet();
   const [ascentType, setAscentType] = useState<AscentType>(
     tick?.ascentType ?? 'redpoint'
   );
@@ -218,26 +220,28 @@ export const TickForm = ({
         />
       </TickFormSection>
 
-      <ActionsStyled>
-        <Button type="button" onClick={onCancel}>
-          <Trans>Cancel</Trans>
-        </Button>
-        <Button
-          type="submit"
-          variant="contained"
-          color={isRepeat ? 'success' : 'primary'}
-          disabled={isPending}
-        >
-          {isPending ? (
-            <Trans>Saving…</Trans>
-          ) : tick ? (
-            <Trans>Save</Trans>
-          ) : isRepeat ? (
-            <Trans>Log repeat</Trans>
-          ) : (
-            <Trans>Log ascent</Trans>
-          )}
-        </Button>
+      <ActionsStyled isInSheet={isInSheet}>
+        <FormActions>
+          <Button type="button" onClick={onCancel}>
+            <Trans>Cancel</Trans>
+          </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            color={isRepeat ? 'success' : 'primary'}
+            disabled={isPending}
+          >
+            {isPending ? (
+              <Trans>Saving…</Trans>
+            ) : tick ? (
+              <Trans>Save</Trans>
+            ) : isRepeat ? (
+              <Trans>Log repeat</Trans>
+            ) : (
+              <Trans>Log ascent</Trans>
+            )}
+          </Button>
+        </FormActions>
       </ActionsStyled>
     </FormStyled>
   );
@@ -267,14 +271,14 @@ const TypeRowStyled = styled('div')`
   gap: ${({ theme }) => theme.spacing(1.5)};
 `;
 
-const ActionsStyled = styled('div')`
+const ActionsStyled = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'isInSheet'
+})<{ isInSheet: boolean }>`
   position: sticky;
   z-index: 1;
   bottom: 0;
-  display: flex;
-  justify-content: flex-end;
-  gap: ${({ theme }) => theme.spacing(1)};
-  padding: ${({ theme }) => theme.spacing(1.5, 0, 2.5)};
+  padding: ${({ theme, isInSheet }) =>
+    isInSheet ? theme.spacing(1.5, 0, 0) : theme.spacing(1.5, 0, 2.5)};
   background-color: ${({ theme }) => theme.palette.background.paper};
   border-top: 1px solid ${({ theme }) => theme.palette.divider};
 `;

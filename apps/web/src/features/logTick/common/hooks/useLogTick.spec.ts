@@ -9,6 +9,9 @@ import { i18n } from '@web/shared/i18n/i18n';
 import { useLogTick } from './useLogTick';
 
 const track = vi.fn();
+const celebrate = vi.fn();
+const toastError = vi.fn();
+const createTick = vi.fn();
 let onCreated: (tick: unknown) => Promise<void> = async () => {};
 
 vi.mock('@crag-atlas/analytics', () => ({
@@ -27,13 +30,20 @@ vi.mock('@web/shared/api', () => ({
   invalidateRouteLists: vi.fn(),
   QUERY_KEYS: { routeMedia: () => [], ticks: () => [] }
 }));
-vi.mock('@web/shared/lib', () => ({ toast: { success: vi.fn() } }));
-vi.mock('../lib', () => ({ saveTickMedia: vi.fn() }));
+vi.mock('@web/shared/lib', () => ({
+  celebrate: (name: string) => celebrate(name),
+  toast: { success: vi.fn(), error: (message: string) => toastError(message) },
+  useIsOnline: () => navigator.onLine
+}));
+vi.mock('../lib', async () => ({
+  ...(await vi.importActual<typeof import('../lib')>('../lib')),
+  saveTickMedia: vi.fn()
+}));
 vi.mock('./useApiCreateTick', () => ({
   useApiCreateTick: (params: { onCreated: typeof onCreated }) => {
     onCreated = params.onCreated;
 
-    return { isPending: false, createTick: vi.fn() };
+    return { isPending: false, createTick };
   }
 }));
 
@@ -44,7 +54,13 @@ const wrapper = ({ children }: { children: ReactNode }) =>
   createElement(I18nProvider, { i18n }, children);
 
 describe('useLogTick', () => {
-  beforeEach(() => track.mockClear());
+  beforeEach(() => {
+    track.mockClear();
+    celebrate.mockClear();
+    toastError.mockClear();
+    createTick.mockClear();
+    vi.spyOn(navigator, 'onLine', 'get').mockReturnValue(true);
+  });
 
   it('reports the ascent with its conditions and what was attached', async () => {
     const { result } = renderHook(() => useLogTick('route'), { wrapper });
@@ -84,5 +100,39 @@ describe('useLogTick', () => {
         video_count: 1
       }
     });
+  });
+
+  it('celebrates a first send', async () => {
+    renderHook(() => useLogTick('route'), { wrapper });
+
+    await act(() =>
+      onCreated({ id: 't1', ascentType: 'flash', isRepeat: false })
+    );
+
+    expect(celebrate).toHaveBeenCalledWith('confetti');
+  });
+
+  it('stays quiet on a repeat', async () => {
+    renderHook(() => useLogTick('route'), { wrapper });
+
+    await act(() =>
+      onCreated({ id: 't1', ascentType: 'redpoint', isRepeat: true })
+    );
+
+    expect(celebrate).not.toHaveBeenCalled();
+  });
+
+  it('refuses to log while offline', () => {
+    vi.spyOn(navigator, 'onLine', 'get').mockReturnValue(false);
+    const { result } = renderHook(() => useLogTick('route'), { wrapper });
+
+    act(() =>
+      result.current.save({ ascentType: 'flash' }, { links: [], files: [] })
+    );
+
+    expect(createTick).not.toHaveBeenCalled();
+    expect(toastError).toHaveBeenCalledWith(
+      'No internet connection. Log the ascent again once you are back online'
+    );
   });
 });
