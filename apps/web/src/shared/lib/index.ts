@@ -1,10 +1,12 @@
 export {
   catalogIdsOfPath,
+  failureCodeOf,
   rememberLoginAttempt,
   resolveLoginEvent,
   takeLoginAttempt,
   trackCatalogItemOpened,
   trackListControl,
+  trackWeatherFailure,
   useTrackPageView
 } from './analytics';
 export { buildDirectionsUrl } from './buildDirectionsUrl';

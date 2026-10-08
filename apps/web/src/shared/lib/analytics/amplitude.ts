@@ -89,7 +89,8 @@ const stampSurfacePlugin: Types.EnrichmentPlugin = {
     event.event_properties = {
       ...event.event_properties,
       app_surface: isMobile ? 'mobile' : 'desktop',
-      auth_state: authState
+      auth_state: authState,
+      is_online: navigator.onLine
     };
 
     return event;

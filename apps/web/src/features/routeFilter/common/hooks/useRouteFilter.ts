@@ -167,6 +167,7 @@ export const useRouteFilter = (list: RouteFilterList) => {
   };
 
   return {
+    list,
     filter,
     sort,
     direction,
