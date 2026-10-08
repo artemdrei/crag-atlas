@@ -5,6 +5,7 @@ import { Plural, Trans } from '@lingui/react/macro';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 
+import { trackListControl } from '@web/shared/lib';
 import { BottomSheet } from '@web/shared/ui';
 
 import {
@@ -47,7 +48,10 @@ export const RouteFilterPanelMobile = ({
           <FiltersToggleButton
             activeCount={state.activeCount}
             isExpanded={isOpen}
-            onClick={() => setIsOpen(true)}
+            onClick={() => {
+              trackListControl(state.list, 'filters_toggle', 'open');
+              setIsOpen(true);
+            }}
           />
         }
       />

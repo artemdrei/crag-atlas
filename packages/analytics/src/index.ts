@@ -14,5 +14,7 @@ export type {
   DialogName,
   EntityType,
   LoginMethod,
+  OfflineAction,
+  OfflineSource,
   SignInPromptAction
 } from './events';

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import type { TickWeather } from '@crag-atlas/api';
 
 import { observedHour } from '@web/shared/lib';
+import type { Coords } from '@web/shared/types';
 
 import { useApiGetWeather } from './useApiGetWeather';
 
@@ -15,14 +16,14 @@ const EDITABLE_FIELDS = [
 export type WeatherFieldName = (typeof EDITABLE_FIELDS)[number];
 
 export interface Params {
-  idRoute: string;
+  coords?: Coords;
   climbedAt: string;
   climbedAtTime: string;
   stored?: TickWeather | null;
 }
 
 export const useTickConditions = ({
-  idRoute,
+  coords,
   climbedAt,
   climbedAtTime,
   stored
@@ -43,11 +44,13 @@ export const useTickConditions = ({
 
   const isStoredHour = stored?.observedAt === at;
 
-  const { weather, hasPoint, isLoading, failure } = useApiGetWeather({
-    idRoute,
-    at,
-    enabled: !isStoredHour
-  });
+  const { weather, hasPoint, isLoading, isOffline, failure } = useApiGetWeather(
+    {
+      coords,
+      at,
+      enabled: !isStoredHour
+    }
+  );
 
   const base = isStoredHour ? stored : weather;
   const conditions = toConditions(base, edits, at);
@@ -58,6 +61,7 @@ export const useTickConditions = ({
     failure: isStoredHour ? null : failure,
     hasPoint: isStoredHour ? stored.lat != null : hasPoint,
     isLoading: isLoading && !base,
+    isOffline: isOffline && !base,
     isEditsReset,
     isEdited: (field: WeatherFieldName) => field in edits,
     setField: (field: WeatherFieldName, value: number | null) => {

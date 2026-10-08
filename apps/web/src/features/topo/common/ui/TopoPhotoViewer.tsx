@@ -26,7 +26,7 @@ export const TopoPhotoViewer = ({
     tickedRoutes={tickedRoutes}
     colorOf={colorOf}
   >
-    <TopoZoomControls />
+    <TopoZoomControls list="topo_photo" />
   </StageStyled>
 );
 

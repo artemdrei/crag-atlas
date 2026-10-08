@@ -1,62 +1,44 @@
-import { useState } from 'react';
-
-import type { Region } from '@crag-atlas/api';
 import { resolveFailureMessage, toFailure } from '@crag-atlas/utils';
 import { useLingui } from '@lingui/react/macro';
 
 import { buildRegionPath } from '@web/app/router/routes';
-import { formatBytes, formatDateTime, toast } from '@web/shared/lib';
+import {
+  formatBytes,
+  formatDateTime,
+  toast,
+  useIsOnline
+} from '@web/shared/lib';
 
-import { useApiGetRegionOptions } from './useApiGetRegionOptions';
+import { progressPercentOf } from '../lib';
+import { useOfflineDownload } from '../providers';
 import { useDeleteOfflineRegion } from './useDeleteOfflineRegion';
-import { useDownloadOfflineRegion } from './useDownloadOfflineRegion';
-import { useIsOnline } from './useIsOnline';
 import { useOfflineRegions } from './useOfflineRegions';
+import { useProgressLabel } from './useProgressLabel';
 
 export const useOfflineRegionsPanel = () => {
   const { t, i18n } = useLingui();
   const isOnline = useIsOnline();
-  const { regions, isLoading: isRegionsLoading } = useApiGetRegionOptions();
   const { offlineRegions } = useOfflineRegions();
-  const { downloadRegion, idDownloading, isDownloading, progress } =
-    useDownloadOfflineRegion();
+  const { downloadRegion, idDownloading, progress } = useOfflineDownload();
   const { deleteRegion } = useDeleteOfflineRegion();
-  const [selected, setSelected] = useState<Region | null>(null);
 
-  const savedIds = new Set(offlineRegions.map((region) => region.id));
+  const progressLabel = useProgressLabel(progress);
 
   const save = async (idRegion: string) => {
     try {
-      await downloadRegion(idRegion);
+      await downloadRegion(idRegion, 'profile');
       toast.success(t`Saved for offline use`);
     } catch (error) {
       toast.error(resolveFailureMessage(toFailure(error)));
     }
   };
 
-  const { done = 0, total = 0 } = progress ?? {};
-  const progressLabel = !progress
-    ? null
-    : total
-      ? t`Downloading photos: ${done} of ${total}`
-      : t`Preparing the download…`;
-
   return {
     isOnline,
-    isRegionsLoading,
-    options: regions.filter((region) => !savedIds.has(region.id)),
-    selected,
-    select: setSelected,
-    canDownload: isOnline && !!selected && !isDownloading,
-    download: async () => {
-      if (!selected) return;
-
-      await save(selected.id);
-      setSelected(null);
-    },
-    isDownloading,
+    isDownloading: idDownloading !== null,
+    save,
     progressLabel,
-    progressPercent: total ? (done / total) * 100 : null,
+    progressPercent: progressPercentOf(progress),
     rows: offlineRegions.map((region) => {
       const size = formatBytes(region.bytes, i18n.locale);
       const savedAt = formatDateTime(

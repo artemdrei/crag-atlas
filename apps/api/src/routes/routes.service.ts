@@ -37,7 +37,7 @@ import type {
 import { ROUTE_TYPES } from './routes.types';
 
 const COLUMNS =
-  'id, id_sector, name, name_local, grade, grade_scale, type, length, bolts_count, id_bolter, bolter_label, bolter_avatar_url, bolted_year, rating, rating_votes, ascents_count_total, onsight_count_total, votes_soft_total, votes_neutral_total, votes_hard_total, has_photo, has_video, description, is_archived, deleted_at, sectors (name, id_region, regions (name))';
+  'id, id_sector, name, name_local, grade, grade_scale, type, length, bolts_count, id_bolter, bolter_label, bolter_avatar_url, bolted_year, rating, rating_votes, ascents_count_total, onsight_count_total, votes_soft_total, votes_neutral_total, votes_hard_total, has_photo, has_video, description, is_archived, deleted_at, sectors (name, id_region, lat, lng, regions (name))';
 
 interface RouteRow {
   id: string;
@@ -68,6 +68,8 @@ interface RouteRow {
   sectors: {
     name: string;
     id_region: string;
+    lat: number | null;
+    lng: number | null;
     regions: { name: string } | null;
   } | null;
 }
@@ -333,6 +335,8 @@ const toRouteDto = (row: RouteRow): RouteDto => ({
   id: row.id,
   idSector: row.id_sector,
   sectorName: row.sectors?.name ?? '',
+  sectorLat: row.sectors?.lat ?? null,
+  sectorLng: row.sectors?.lng ?? null,
   idRegion: row.sectors?.id_region ?? '',
   regionName: row.sectors?.regions?.name ?? '',
   name: row.name,

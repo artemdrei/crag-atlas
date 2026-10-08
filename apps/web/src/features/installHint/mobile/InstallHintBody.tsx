@@ -22,8 +22,8 @@ export const InstallHintBody = ({ onClose }: Props) => {
     <BodyStyled>
       <LeadStyled variant="body2">
         <Trans>
-          Add crag-atlas to your home screen: it opens in one tap, full screen,
-          like any other app.
+          Put crag-atlas on your home screen. It opens in one tap, full screen,
+          and no browser bar gets in the way at the crag.
         </Trans>
       </LeadStyled>
 
@@ -46,8 +46,9 @@ export const InstallHintBody = ({ onClose }: Props) => {
           </Typography>
           <LeadStyled variant="body2">
             <Trans>
-              Before a trip, save a region in Profile → Offline regions. Its
-              topos then open at the crag with no connection.
+              Before a trip, open Profile, tap Offline regions and save the
+              region you are going to. Its sectors, routes and topo photos then
+              open with no signal at all.
             </Trans>
           </LeadStyled>
         </div>

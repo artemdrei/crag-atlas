@@ -185,9 +185,18 @@ const isoDate = (offset: number) => {
 };
 
 /**
+ * The browser asks Open-Meteo itself, and a spec must not depend on somebody
+ * else's forecast or spend a shared runner's quota. The API answer is stubbed
+ * alongside, so this one only has to be well-formed.
+ */
+export const answerOpenMeteo = (page: Page) =>
+  page.route(/open-meteo\.com/, (request) =>
+    request.fulfill({ json: { utc_offset_seconds: 0, hourly: { time: [] } } })
+  );
+
+/**
  * A sector's conditions as the API would send them, with the given scores
- * one day apart from today. The real reading comes from Open-Meteo through
- * the API, so a spec answers the browser's request with this instead.
+ * one day apart from today.
  */
 export const conditionsOf = (scores: number[], hasPoint = true) => ({
   hasPoint,

@@ -1,8 +1,7 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 import {
-  AppException,
   NotFoundException,
   ValidationException
 } from '../common/exceptions/app.exception';
@@ -14,21 +13,16 @@ import {
 } from '../common/exceptions/database.exception';
 import type { AuthUser } from '../common/guards/supabaseAuth.guard';
 import type { GradeScale } from '../common/utils/grade';
-import type { Coords } from '../common/utils/point';
 import { userClient } from '../common/utils/userClient';
 import { publicSupabase, storagePublicUrl } from '../config/supabase.client';
 import { MEDIA_BUCKET } from '../media/media.types';
 import {
   observedHour,
   type TickWeatherRow,
-  toWeatherDto,
-  type WeatherEntry
+  toWeatherDto
 } from '../weather/weather.mapper';
 import { WeatherService } from '../weather/weather.service';
-import type {
-  TickWeatherDto,
-  WeatherBackfillDto
-} from '../weather/weather.types';
+import type { TickWeatherDto } from '../weather/weather.types';
 import {
   ASCENT_TYPES,
   type CreateTickDto,
@@ -51,13 +45,6 @@ export interface TickPageParams {
   offset?: number;
 }
 
-interface BackfillRow {
-  id: string;
-  climbed_at: string;
-  climbed_at_time: string | null;
-  routes: { sectors: Coords } | null;
-}
-
 interface TickPageIds {
   ids: string[];
   total: number;
@@ -67,15 +54,7 @@ interface TickPageIds {
 // Embedded through the ticks → routes → sectors foreign keys, so a logbook
 // page is one query, not one per tick.
 const COLUMNS =
-  '*, routes (id_sector, name, name_local, grade, grade_scale, sectors (name, id_region, regions (name, country))), users!ticks_id_user_fkey (display_name, avatar_url), partner:users!ticks_id_partner_fkey (display_name), route_media (id, kind, url, storage_path), tick_weather (*)';
-
-// `!inner` on both joins is what lets the point filter below reach the
-// sector, and the weather embed is what lets the null filter reach the row.
-const BACKFILL_COLUMNS =
-  'id,climbed_at,climbed_at_time,routes!inner(sectors!inner(lat,lng)),tick_weather!left(id_tick)';
-const BACKFILL_BATCH = 50;
-
-const logger = new Logger('TicksService');
+  '*, routes (id_sector, name, name_local, grade, grade_scale, sectors (name, id_region, lat, lng, regions (name, country))), users!ticks_id_user_fkey (display_name, avatar_url), partner:users!ticks_id_partner_fkey (display_name), route_media (id, kind, url, storage_path), tick_weather (*)';
 
 const PAGE_SIZE = 100;
 const MAX_PAGE_SIZE = 200;
@@ -102,6 +81,8 @@ interface TickRow {
     sectors: {
       name: string;
       id_region: string;
+      lat: number | null;
+      lng: number | null;
       regions: { name: string; country: string | null } | null;
     } | null;
   } | null;
@@ -406,67 +387,6 @@ export class TicksService {
     return toTickDto(data, authUser.idUser);
   }
 
-  async backfillWeather(authUser: AuthUser): Promise<WeatherBackfillDto> {
-    const client = userClient(authUser);
-    const { data, count, error } = await client
-      .from('ticks')
-      .select(BACKFILL_COLUMNS, { count: 'exact' })
-      .eq('id_user', authUser.idUser)
-      .is('tick_weather', null)
-      .not('routes.sectors.lat', 'is', null)
-      .order('climbed_at', { ascending: false })
-      .limit(BACKFILL_BATCH)
-      .returns<BackfillRow[]>();
-
-    if (error) {
-      throw readFailed(
-        'Could not load the logbook',
-        'TICKS_READ_FAILED',
-        error
-      );
-    }
-
-    const entries: WeatherEntry[] = [];
-    const failureCodes: string[] = [];
-
-    for (const tick of data) {
-      const { lat, lng } = tick.routes?.sectors ?? {};
-
-      if (lat == null || lng == null) continue;
-
-      const at = observedHour(tick.climbed_at, tick.climbed_at_time);
-
-      try {
-        entries.push({
-          idTick: tick.id,
-          at,
-          weather: await this.weatherService.at(lat, lng, at)
-        });
-      } catch (cause) {
-        // Not rethrown: a day the provider has nothing for must not cost the
-        // whole run.
-        const code =
-          cause instanceof AppException && cause.code
-            ? cause.code
-            : 'WEATHER_FETCH_FAILED';
-
-        failureCodes.push(code);
-        logger.warn(
-          `No weather for tick ${tick.id} at ${at}: ${String(cause)}`
-        );
-      }
-    }
-
-    await this.weatherService.saveMany(client, entries);
-
-    return {
-      filled: entries.length,
-      remaining: Math.max((count ?? 0) - entries.length, 0),
-      failed: failureCodes.length,
-      failureCode: failureCodes[0] ?? null
-    };
-  }
-
   private applyWeather(
     client: SupabaseClient,
     row: TickRow,
@@ -604,6 +524,8 @@ const toTickDto = (
   routeGrade: row.routes?.grade ?? null,
   routeGradeScale: row.routes?.grade_scale ?? null,
   sectorName: row.routes?.sectors?.name ?? null,
+  sectorLat: row.routes?.sectors?.lat ?? null,
+  sectorLng: row.routes?.sectors?.lng ?? null,
   regionName: row.routes?.sectors?.regions?.name ?? null,
   regionCountry: row.routes?.sectors?.regions?.country ?? null,
   ascentType: row.ascent_type,

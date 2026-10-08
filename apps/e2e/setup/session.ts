@@ -3,8 +3,10 @@ import { createClient, type Session } from '@supabase/supabase-js';
 import { authStorageKey, env } from './env';
 
 const LOCALE_KEY = 'crag-atlas:locale';
-// The first signed-in visit opens the install hint over every page; no spec is about it.
-const INSTALL_HINT_KEY = 'crag-atlas:install-hint-seen';
+// A returning climber's first tick opens the install hint over every page;
+// no spec is about it.
+const INSTALL_HINT_KEY = 'crag-atlas:install-hint';
+const INSTALL_HINT_VALUE = JSON.stringify({ isInstalled: true });
 
 const CLIENT_OPTIONS = {
   auth: { persistSession: false, autoRefreshToken: false }
@@ -43,7 +45,7 @@ export const sessionState = (session: Session) => ({
       localStorage: [
         { name: authStorageKey(), value: JSON.stringify(session) },
         { name: LOCALE_KEY, value: 'en' },
-        { name: INSTALL_HINT_KEY, value: 'true' }
+        { name: INSTALL_HINT_KEY, value: INSTALL_HINT_VALUE }
       ]
     }
   ]

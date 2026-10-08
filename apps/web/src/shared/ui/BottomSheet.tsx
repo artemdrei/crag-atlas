@@ -40,6 +40,7 @@ export const BottomSheet = ({ title, isOpen, children, onClose }: Props) => {
 
 const TitleStyled = styled(Typography)`
   margin-bottom: ${({ theme }) => theme.spacing(1)};
+  text-align: center;
 `;
 
 // react-modal-sheet renders its own DOM, so its classes are the only hook.

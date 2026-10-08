@@ -126,9 +126,16 @@ export class QrPathsService {
 
     const { data, error } = await publicSupabase()
       .from('sector_qr_paths')
-      .select('id_sector, sectors (id_region)')
+      .select('id_sector, sectors (id_region, name, regions (name))')
       .eq('path', normalized)
-      .maybeSingle<{ id_sector: string; sectors: { id_region: string } }>();
+      .maybeSingle<{
+        id_sector: string;
+        sectors: {
+          id_region: string;
+          name: string;
+          regions: { name: string } | null;
+        };
+      }>();
 
     if (error) {
       throw readFailed(
@@ -145,7 +152,12 @@ export class QrPathsService {
       );
     }
 
-    return { idRegion: data.sectors.id_region, idSector: data.id_sector };
+    return {
+      idRegion: data.sectors.id_region,
+      idSector: data.id_sector,
+      regionName: data.sectors.regions?.name ?? '',
+      sectorName: data.sectors.name
+    };
   }
 
   private async rowsOf(

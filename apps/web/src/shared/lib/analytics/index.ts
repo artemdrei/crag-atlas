@@ -1,8 +1,10 @@
 export { catalogIdsOfPath } from './catalogIdsOfPath';
+export { failureCodeOf } from './failureCodeOf';
 export { rememberLoginAttempt, takeLoginAttempt } from './loginAttempt';
 export { normalizePath } from './normalizePath';
 export { normalizeUrl } from './normalizeUrl';
 export { resolveLoginEvent } from './resolveLoginEvent';
 export { trackCatalogItemOpened } from './trackCatalogItemOpened';
 export { trackListControl } from './trackListControl';
+export { trackWeatherFailure } from './trackWeatherFailure';
 export { useTrackPageView } from './useTrackPageView';

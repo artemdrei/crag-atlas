@@ -1,3 +1,9 @@
+import { isAndroid, isIOS } from 'react-device-detect';
+
+import { track } from '@crag-atlas/analytics';
+
+import { markInstallHintInstalled } from './installHintState';
+
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
 }
@@ -20,6 +26,11 @@ addEventListener('beforeinstallprompt', (event) => {
 addEventListener('appinstalled', () => {
   deferred = null;
   notify();
+  markInstallHintInstalled();
+  track({
+    name: 'App Installed',
+    props: { platform: isIOS ? 'ios' : isAndroid ? 'android' : 'desktop' }
+  });
 });
 
 export const subscribeInstallPrompt = (onChange: () => void) => {

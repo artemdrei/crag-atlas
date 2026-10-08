@@ -9,6 +9,7 @@ interface Lookup {
   weather: TickWeather | null;
   hasPoint: boolean;
   isLoading: boolean;
+  isOffline: boolean;
   failure: Failure | null;
 }
 
@@ -31,7 +32,6 @@ const STORED: TickWeather = {
 const renderConditions = (params: Partial<Params> = {}) =>
   renderHook((props: Params) => useTickConditions(props), {
     initialProps: {
-      idRoute: 'route',
       climbedAt: '2026-10-01',
       climbedAtTime: '16:30',
       stored: STORED,
@@ -41,7 +41,13 @@ const renderConditions = (params: Partial<Params> = {}) =>
 
 describe('useTickConditions', () => {
   beforeEach(() => {
-    lookup = { weather: null, hasPoint: true, isLoading: false, failure: null };
+    lookup = {
+      weather: null,
+      hasPoint: true,
+      isLoading: false,
+      isOffline: false,
+      failure: null
+    };
   });
 
   it('sends the stored reading back while the hour is unchanged', () => {
@@ -97,7 +103,6 @@ describe('useTickConditions', () => {
     act(() => result.current.setField('temperatureC', 12));
 
     rerender({
-      idRoute: 'route',
       climbedAt: '2026-10-01',
       climbedAtTime: '18:00',
       stored: STORED

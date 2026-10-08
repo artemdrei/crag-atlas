@@ -13,6 +13,16 @@ export class RouteDto {
   @ApiProperty({ description: 'Label for breadcrumbs; ids carry no meaning' })
   sectorName!: string;
 
+  @ApiProperty({
+    type: Number,
+    nullable: true,
+    description: 'Where the weather is read; null when the sector has no pin'
+  })
+  sectorLat!: number | null;
+
+  @ApiProperty({ type: Number, nullable: true })
+  sectorLng!: number | null;
+
   @ApiProperty()
   idRegion!: string;
 

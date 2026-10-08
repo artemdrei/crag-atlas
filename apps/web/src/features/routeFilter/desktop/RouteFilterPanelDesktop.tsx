@@ -8,6 +8,8 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import { styled } from '@mui/material/styles';
 
+import { trackListControl } from '@web/shared/lib';
+
 import {
   ActiveFilterChips,
   FiltersToggleButton,
@@ -47,7 +49,14 @@ export const RouteFilterPanelDesktop = ({
           <FiltersToggleButton
             activeCount={state.activeCount}
             isExpanded={isExpanded}
-            onClick={() => setIsExpanded(!isExpanded)}
+            onClick={() => {
+              trackListControl(
+                state.list,
+                'filters_toggle',
+                isExpanded ? 'closed' : 'open'
+              );
+              setIsExpanded(!isExpanded);
+            }}
           />
         }
       />

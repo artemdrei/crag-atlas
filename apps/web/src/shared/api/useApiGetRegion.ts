@@ -1,6 +1,8 @@
-import { apiGet, QUERY_KEYS, useApiQuery } from '@web/shared/api';
+import type { Region } from '@crag-atlas/api';
 
-import type { Region } from '../entities';
+import { apiGet } from './httpClient';
+import { QUERY_KEYS } from './queryKeys';
+import { useApiQuery } from './useApiQuery';
 
 export const useApiGetRegion = (idRegion: string) => {
   const { data, isLoading, failure } = useApiQuery({

@@ -14,6 +14,13 @@ describe('weather kind', () => {
     expect(weatherKindOf(95)).toBe('thunder');
   });
 
+  it('shows what falls over what the sky code says', () => {
+    expect(weatherKindOf(3, 0.2)).toBe('drizzle');
+    expect(weatherKindOf(3, 0.7)).toBe('rain');
+    expect(weatherKindOf(95, 1)).toBe('thunder');
+    expect(weatherKindOf(3, 0)).toBe('cloudy');
+  });
+
   it('names nothing for a missing or unknown code', () => {
     expect(weatherKindOf(null)).toBeNull();
     expect(weatherKindOf(20)).toBeNull();

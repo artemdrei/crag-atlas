@@ -1,22 +1,32 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, HttpCode, Param, Post } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
 
 import { ConditionsService } from './conditions.service';
-import { SectorConditionsDto } from './conditions.types';
+import { ConditionsRequestDto, SectorConditionsDto } from './conditions.types';
 
+// POST only because the browser hands over the forecast it fetched; nothing
+// is written.
 @Controller()
 export class ConditionsController {
   constructor(private readonly conditionsService: ConditionsService) {}
 
-  @Get('sectors/:idSector/conditions')
+  @Post('sectors/:idSector/conditions')
+  @HttpCode(200)
   @ApiOkResponse({ type: SectorConditionsDto })
-  forSector(@Param('idSector') idSector: string): Promise<SectorConditionsDto> {
-    return this.conditionsService.forSector(idSector);
+  forSector(
+    @Param('idSector') idSector: string,
+    @Body() body: ConditionsRequestDto
+  ): Promise<SectorConditionsDto> {
+    return this.conditionsService.forSector(idSector, body.forecast ?? null);
   }
 
-  @Get('regions/:idRegion/conditions')
+  @Post('regions/:idRegion/conditions')
+  @HttpCode(200)
   @ApiOkResponse({ type: SectorConditionsDto })
-  forRegion(@Param('idRegion') idRegion: string): Promise<SectorConditionsDto> {
-    return this.conditionsService.forRegion(idRegion);
+  forRegion(
+    @Param('idRegion') idRegion: string,
+    @Body() body: ConditionsRequestDto
+  ): Promise<SectorConditionsDto> {
+    return this.conditionsService.forRegion(idRegion, body.forecast ?? null);
   }
 }

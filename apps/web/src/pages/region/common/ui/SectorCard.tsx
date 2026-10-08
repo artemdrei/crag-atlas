@@ -7,12 +7,12 @@ import {
   CatalogCardMenu,
   GradeHistogram,
   LocalName,
+  ShelterBadge,
   TickProgress
 } from '@web/shared/ui';
 
 import type { Sector } from '../entities';
 import type { SectorMatchSummary } from '../lib';
-import { ShelterBadge } from './ShelterBadge';
 
 export interface Props {
   sector: Sector;

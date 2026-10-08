@@ -124,3 +124,45 @@ export class SectorConditionsDto {
   @ApiProperty({ type: ConditionsDayDto, isArray: true })
   days!: ConditionsDayDto[];
 }
+
+const HOURLY_SERIES = {
+  type: 'array',
+  items: { type: 'number', nullable: true }
+} as const;
+
+export class ForecastDto {
+  @ApiProperty({ description: 'Offset of the crag’s zone from UTC' })
+  utcOffsetSeconds!: number;
+
+  @ApiProperty({
+    type: [String],
+    description:
+      'Local wall clock per hour, e.g. 2026-10-01T16:00, starting at midnight the day before today — the strip reads today from hour 24'
+  })
+  time!: string[];
+
+  @ApiProperty(HOURLY_SERIES)
+  temperatureC!: (number | null)[];
+
+  @ApiProperty(HOURLY_SERIES)
+  humidityPct!: (number | null)[];
+
+  @ApiProperty(HOURLY_SERIES)
+  precipitationMm!: (number | null)[];
+
+  @ApiProperty({ ...HOURLY_SERIES, description: 'WMO weather code' })
+  weatherCode!: (number | null)[];
+
+  @ApiProperty(HOURLY_SERIES)
+  windSpeedMs!: (number | null)[];
+}
+
+export class ConditionsRequestDto {
+  @ApiProperty({
+    type: ForecastDto,
+    nullable: true,
+    description:
+      'Fetched by the browser; null when it could not be, and the strip then carries sun and shade alone'
+  })
+  forecast!: ForecastDto | null;
+}

@@ -9,4 +9,6 @@ export interface OfflineRegion {
 export interface DownloadProgress {
   done: number;
   total: number;
+  bytes: number;
+  startedAt: number;
 }

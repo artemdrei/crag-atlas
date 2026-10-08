@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import type { ConditionsDay, SectorConditions } from '../entities';
-import { isSunKnown, representativeHour } from '../lib';
+import { dayRainMm, isSunKnown, representativeHour } from '../lib';
 import { ConditionsHourly } from './ConditionsHourly';
 import { ConditionsReadings } from './ConditionsReadings';
 import { ConditionsScore } from './ConditionsScore';
@@ -37,7 +37,9 @@ export const ConditionsCard = ({ conditions, day }: Props) => {
 
       <ConditionsScore day={day} isSunKnown={isSunKnown(conditions)} />
 
-      {hour && day.hasForecast && <ConditionsReadings hour={hour} />}
+      {hour && day.hasForecast && (
+        <ConditionsReadings hour={hour} rainMm={dayRainMm(day)} />
+      )}
 
       {!day.hasForecast && (
         <Typography variant="body2" color="text.secondary">

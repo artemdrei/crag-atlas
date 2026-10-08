@@ -2,14 +2,30 @@ import { useControls, useTransformComponent } from 'react-zoom-pan-pinch';
 
 import { useLingui } from '@lingui/react/macro';
 import AddIcon from '@mui/icons-material/Add';
+import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import RemoveIcon from '@mui/icons-material/Remove';
 import IconButton from '@mui/material/IconButton';
-import { styled } from '@mui/material/styles';
+import { alpha, styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-export const TopoZoomControls = () => {
+import { trackListControl } from '@web/shared/lib';
+
+export interface Props {
+  list?: 'sector' | 'topo_photo';
+  onExpand?: () => void;
+}
+
+export const TopoZoomControls = ({ list, onExpand }: Props) => {
   const { t } = useLingui();
-  const { zoomIn, zoomOut, resetTransform } = useControls();
+  const controls = useControls();
+
+  const zoom = (value: 'in' | 'out' | 'reset') => {
+    if (list) trackListControl(list, 'zoom', value);
+
+    if (value === 'in') controls.zoomIn();
+    else if (value === 'out') controls.zoomOut();
+    else controls.resetTransform();
+  };
   const scale = useTransformComponent(({ state }) => state.scale);
 
   return (
@@ -17,20 +33,33 @@ export const TopoZoomControls = () => {
       <IconButton
         size="small"
         aria-label={t`Zoom out`}
-        onClick={() => zoomOut()}
+        onClick={() => zoom('out')}
       >
         <RemoveIcon fontSize="small" />
       </IconButton>
       <ScaleStyled
         type="button"
         aria-label={t`Fit the photo`}
-        onClick={() => resetTransform()}
+        onClick={() => zoom('reset')}
       >
         <Typography variant="caption">{Math.round(scale * 100)}%</Typography>
       </ScaleStyled>
-      <IconButton size="small" aria-label={t`Zoom in`} onClick={() => zoomIn()}>
+      <IconButton
+        size="small"
+        aria-label={t`Zoom in`}
+        onClick={() => zoom('in')}
+      >
         <AddIcon fontSize="small" />
       </IconButton>
+      {onExpand && (
+        <IconButton
+          size="small"
+          aria-label={t`Open the photo`}
+          onClick={onExpand}
+        >
+          <OpenInFullIcon fontSize="small" />
+        </IconButton>
+      )}
     </ControlsStyled>
   );
 };
@@ -45,8 +74,8 @@ const ControlsStyled = styled('div')`
   padding: ${({ theme }) => theme.spacing(0.25)};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
   border: 1px solid ${({ theme }) => theme.palette.divider};
-  background: ${({ theme }) => theme.palette.background.paper};
-  opacity: 0.6;
+  background: ${({ theme }) => alpha(theme.palette.background.paper, 0.6)};
+  opacity: 0.45;
   transition: opacity 0.15s ease-out;
 
   &:hover {

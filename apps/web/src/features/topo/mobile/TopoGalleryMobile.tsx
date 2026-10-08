@@ -4,6 +4,7 @@ import { PhotoPlaceholder, ZoomStageShell } from '@web/shared/ui';
 
 import type { TopoGalleryProps } from '../common';
 import {
+  TopoExpandButton,
   TopoImage,
   TopoThumbStrip,
   useOpenTopoPhoto,
@@ -51,7 +52,9 @@ export const TopoGalleryMobile = ({
             onSelectPhoto={handleSelectPhoto}
             onHoverRoute={onHoverRoute}
             isTopAligned
-          />
+          >
+            <TopoExpandButton onClick={handleSelectPhoto} />
+          </TopoImage>
         </StageStyled>
       ) : (
         <PhotoPlaceholder variant="wide" />

@@ -8,9 +8,18 @@ import { keyframes, styled } from '@mui/material/styles';
 
 import { CatalogSearchBox } from '../common';
 
-export const CatalogSearchMobile = () => {
+export interface Props {
+  onExpandedChange?: (isExpanded: boolean) => void;
+}
+
+export const CatalogSearchMobile = ({ onExpandedChange }: Props) => {
   const { t } = useLingui();
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setExpanded] = useState(false);
+
+  const setIsExpanded = (next: boolean) => {
+    setExpanded(next);
+    onExpandedChange?.(next);
+  };
 
   if (!isExpanded) {
     return (

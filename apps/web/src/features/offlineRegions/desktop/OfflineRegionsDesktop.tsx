@@ -4,46 +4,33 @@ import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
+import { useModal } from '@web/app/providers';
+
 import {
   OfflineDownloadProgress,
-  OfflineRegionPicker,
   OfflineRegionRow,
   useOfflineRegionsPanel
 } from '../common';
 
 export const OfflineRegionsDesktop = () => {
   const panel = useOfflineRegionsPanel();
+  const { openModal } = useModal();
 
   return (
     <SectionStyled elevation={0}>
-      <div>
+      <HeaderStyled>
         <Typography variant="body1">
           <Trans>Offline regions</Trans>
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          <Trans>
-            Save a region with its sectors, routes and topos to open it without
-            a connection.
-          </Trans>
-        </Typography>
-      </div>
-
-      <ControlsStyled>
-        <OfflineRegionPicker
-          options={panel.options}
-          value={panel.selected}
-          isLoading={panel.isRegionsLoading}
-          isDisabled={!panel.isOnline || panel.isDownloading}
-          onChange={panel.select}
-        />
         <Button
-          variant="contained"
-          disabled={!panel.canDownload}
-          onClick={panel.download}
+          variant="outlined"
+          color="inherit"
+          disabled={!panel.isOnline || panel.isDownloading}
+          onClick={() => openModal('SAVE_REGION_OFFLINE', {})}
         >
-          <Trans>Save</Trans>
+          <Trans>Save a region</Trans>
         </Button>
-      </ControlsStyled>
+      </HeaderStyled>
 
       {!panel.isOnline && (
         <Typography variant="caption" color="text.secondary">
@@ -58,7 +45,7 @@ export const OfflineRegionsDesktop = () => {
         />
       )}
 
-      {panel.rows.length ? (
+      {panel.rows.length > 0 && (
         <ListStyled>
           {panel.rows.map((row) => (
             <OfflineRegionRow
@@ -73,10 +60,6 @@ export const OfflineRegionsDesktop = () => {
             />
           ))}
         </ListStyled>
-      ) : (
-        <Typography variant="body2" color="text.secondary">
-          <Trans>No regions saved yet.</Trans>
-        </Typography>
       )}
     </SectionStyled>
   );
@@ -91,10 +74,11 @@ const SectionStyled = styled(Paper)`
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
 `;
 
-const ControlsStyled = styled('div')`
+const HeaderStyled = styled('div')`
   display: flex;
   align-items: center;
-  gap: ${({ theme }) => theme.spacing(1.5)};
+  justify-content: space-between;
+  gap: ${({ theme }) => theme.spacing(2)};
 `;
 
 const ListStyled = styled('ul')`

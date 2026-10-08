@@ -34,15 +34,20 @@ const saveForOffline = async (page: Page) => {
   await page.goto('/profile');
   await waitForServiceWorker(page);
 
-  await page
+  await page.getByRole('button', { name: 'Save a region' }).click();
+
+  const dialog = page.getByRole('dialog');
+
+  await dialog
     .getByRole('combobox', { name: 'Region', exact: true })
     .fill(region.name);
   await page.getByRole('option', { name: region.name }).click();
-  await page.getByRole('button', { name: 'Save', exact: true }).click();
+  await dialog.getByRole('button', { name: 'Download' }).click();
 
-  await expect(page.getByText('Saved for offline use')).toBeVisible({
+  await expect(dialog.getByText(`${region.name} is saved`)).toBeVisible({
     timeout: 30_000
   });
+  await dialog.getByRole('button', { name: 'Done' }).click();
 };
 
 const offlineStorage = (page: Page) =>
@@ -111,7 +116,10 @@ test.describe('signing out', () => {
           origin: env.webUrl,
           localStorage: [
             { name: 'crag-atlas:locale', value: 'en' },
-            { name: 'crag-atlas:install-hint-seen', value: 'true' }
+            {
+              name: 'crag-atlas:install-hint',
+              value: '{"isInstalled":true}'
+            }
           ]
         }
       ]
@@ -180,7 +188,9 @@ test.describe('signing out', () => {
       await signIn(page, memberSession);
       await page.goto('/profile');
 
-      await expect(page.getByText('No regions saved yet.')).toBeVisible();
+      await expect(
+        page.getByRole('button', { name: 'Save a region' })
+      ).toBeVisible();
       await expect(page.getByRole('link', { name: region.name })).toHaveCount(
         0
       );

@@ -1,10 +1,12 @@
 export {
   catalogIdsOfPath,
+  failureCodeOf,
   rememberLoginAttempt,
   resolveLoginEvent,
   takeLoginAttempt,
   trackCatalogItemOpened,
   trackListControl,
+  trackWeatherFailure,
   useTrackPageView
 } from './analytics';
 export { buildDirectionsUrl } from './buildDirectionsUrl';
@@ -54,6 +56,7 @@ export {
   useImageCrop,
   ZOOM_STEP
 } from './useImageCrop';
+export { useIsOnline } from './useIsOnline';
 export { useLatinNames } from './useLatinNames';
 export { useObjectUrl } from './useObjectUrl';
 export { useScrollHint } from './useScrollHint';

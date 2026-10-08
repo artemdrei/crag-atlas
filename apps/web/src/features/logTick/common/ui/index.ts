@@ -7,6 +7,6 @@ export { TickActionsButton } from './TickActionsButton';
 export { TickForm } from './TickForm';
 export { TickFormHeader } from './TickFormHeader';
 export { TickFormSection } from './TickFormSection';
-export { TickMediaField } from './TickMediaField';
 export { useTickMenuItems } from './TickMenuItems';
+export { TickMediaField } from './tickMediaField';
 export { WeatherField } from './WeatherField';

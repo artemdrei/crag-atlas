@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import { api } from '../../fixtures/apiClient';
 import type { Row } from '../../fixtures/catalog';
 import { cleanup, makeRegion, makeSector } from '../../fixtures/catalog';
-import { conditionsOf, sectorPath } from '../../fixtures/ui';
+import { answerOpenMeteo, conditionsOf, sectorPath } from '../../fixtures/ui';
 
 /**
  * A sector's conditions and directions on a phone, where the climber is most
@@ -34,6 +34,7 @@ test.afterAll(cleanup);
 test('the days ahead and the way there are on the phone', async ({
   page: phone
 }) => {
+  await answerOpenMeteo(phone);
   await phone.route(/\/sectors\/[^/]+\/conditions$/, (request) =>
     request.fulfill({ json: conditionsOf([88, 35]) })
   );

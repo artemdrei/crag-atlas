@@ -40,6 +40,8 @@ const ROUTE_ROW = {
   sectors: {
     name: 'Бастіон',
     id_region: 'kamianets',
+    lat: 48.6744,
+    lng: 26.5809,
     regions: { name: "Кам'янець-Подільський" }
   }
 };
@@ -61,6 +63,8 @@ describe('RoutesService', () => {
         id: 'mizerna-lohika',
         idSector: 'bastion',
         sectorName: 'Бастіон',
+        sectorLat: 48.6744,
+        sectorLng: 26.5809,
         idRegion: 'kamianets',
         regionName: "Кам'янець-Подільський",
         name: 'Мізерна логіка',

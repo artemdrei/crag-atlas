@@ -49,11 +49,14 @@ export interface ShelterRule {
 }
 
 export const CONDITIONS_CONFIG = {
+  // Combined as a weighted geometric mean: one poor factor drags the hour
+  // down on its own, and a hundred needs every factor there at once. Rain
+  // carries enough weight that wet rock alone holds a perfect hour at forty.
   weights: {
-    rain: 0.3,
-    temperature: 0.25,
+    rain: 0.4,
+    temperature: 0.2,
     humidity: 0.15,
-    sunShade: 0.15,
+    sunShade: 0.1,
     wind: 0.1,
     other: 0.05
   },
@@ -61,35 +64,54 @@ export const CONDITIONS_CONFIG = {
   // What is falling this hour.
   rainNow: [
     { upTo: 0.1, score: 100 },
-    { upTo: 0.5, score: 20 },
+    { upTo: 0.5, score: 10 },
     { upTo: Number.POSITIVE_INFINITY, score: 0 }
   ] satisfies Step[],
 
-  // Hours since the last hour that saw rain. A dry hour on a wall that took
-  // eight millimetres overnight is still a wet wall.
-  rainRecency: [
-    { upTo: 3, score: 10 },
-    { upTo: 12, score: 40 },
-    { upTo: 24, score: 70 },
-    { upTo: Number.POSITIVE_INFINITY, score: 100 }
+  // Water still on the rock, in millimetres: what fell, less what the hours
+  // since have dried off. Read as a ramp between the rows, so an hour of
+  // drying always shows.
+  wetness: [
+    { upTo: 0, score: 100 },
+    { upTo: 0.3, score: 70 },
+    { upTo: 1, score: 40 },
+    { upTo: 2, score: 20 },
+    { upTo: 3, score: 10 }
   ] satisfies Step[],
 
+  // How much a dry hour takes off the rock, and what speeds it up or slows
+  // it down. Read in km/h for wind, like the wind table. A face holds only
+  // so much water; the rest of a downpour runs off.
+  drying: {
+    surfaceMm: 3,
+    baseMmPerHour: 0.5,
+    windyKmhAbove: 15,
+    windyFactor: 1.3,
+    humidPctAbove: 80,
+    humidFactor: 0.5,
+    coldCBelow: 5,
+    coldFactor: 0.6
+  },
+
+  // A hundred is the crisp band only; a mild afternoon is good, not perfect.
   temperature: [
     { upTo: 0, score: 20 },
     { upTo: 5, score: 50 },
-    { upTo: 10, score: 80 },
-    { upTo: 18, score: 100 },
-    { upTo: 23, score: 90 },
-    { upTo: 28, score: 65 },
+    { upTo: 8, score: 80 },
+    { upTo: 16, score: 100 },
+    { upTo: 20, score: 90 },
+    { upTo: 24, score: 70 },
+    { upTo: 28, score: 50 },
     { upTo: Number.POSITIVE_INFINITY, score: 35 }
   ] satisfies Step[],
 
   humidity: [
     { upTo: 40, score: 90 },
-    { upTo: 65, score: 100 },
-    { upTo: 80, score: 75 },
-    { upTo: 90, score: 45 },
-    { upTo: Number.POSITIVE_INFINITY, score: 20 }
+    { upTo: 55, score: 100 },
+    { upTo: 65, score: 90 },
+    { upTo: 75, score: 75 },
+    { upTo: 85, score: 50 },
+    { upTo: Number.POSITIVE_INFINITY, score: 25 }
   ] satisfies Step[],
 
   // Read in km/h, stored in m/s everywhere else.
@@ -154,8 +176,8 @@ export const CONDITIONS_CONFIG = {
     }
   } satisfies Record<Shelter, ShelterRule>,
 
-  // Applied after the weighted sum: no amount of perfect temperature makes a
-  // downpour climbable.
+  // Applied after the mean: no amount of perfect temperature makes a
+  // downpour climbable. The rain cap skips a sheltered wall.
   hardCaps: [
     { code: 'heavy_rain', maxScore: 20, precipitationMmAbove: 0.5 },
     { code: 'thunderstorm', maxScore: 15, weatherCodes: [95, 96, 99] },
@@ -175,6 +197,10 @@ export const CONDITIONS_CONFIG = {
   // are neither shown nor averaged into the day.
   dayStartHour: 6,
   dayEndHour: 21,
+
+  // The day is its best session, not its average: a dry afternoon after a
+  // wet morning is a day to go, and two dry hours after a soaking is not.
+  dayTopHours: 6,
 
   bestWindow: {
     minHours: 2,

@@ -90,7 +90,7 @@ const expectedBytes = () => {
 
 describe('downloadRegion', () => {
   it('saves the region, a detail entry per route and each photo once', async () => {
-    const region = await downloadRegion('r1', () => {});
+    const region = await downloadRegion('r1', true, () => {});
 
     expect(urlsOf()).toEqual(
       [
@@ -112,22 +112,29 @@ describe('downloadRegion', () => {
     expect((await readOfflineRegions()).r1?.urls).toHaveLength(11);
   });
 
+  it('leaves the members-only ticked lists out for a visitor', async () => {
+    await downloadRegion('r1', false, () => {});
+
+    expect(urlsOf().filter((url) => url.endsWith('/ticked'))).toEqual([]);
+    expect((await readOfflineRegions()).r1?.urls).toHaveLength(9);
+  });
+
   it('drops what a refresh no longer finds in the region', async () => {
-    await downloadRegion('r1', () => {});
+    await downloadRegion('r1', true, () => {});
     catalog = buildCatalog(['a']);
 
-    await downloadRegion('r1', () => {});
+    await downloadRegion('r1', true, () => {});
 
     expect(cached.has(`${API}/routes/b`)).toBe(false);
     expect(cached.has(`${API}/routes/a`)).toBe(true);
   });
 
   it('keeps the previous copy and removes the new leftovers when a photo fails', async () => {
-    await downloadRegion('r1', () => {});
+    await downloadRegion('r1', true, () => {});
     catalog = buildCatalog(['a', 'b', 'c']);
     failingPhoto = `${PHOTO}/topo.jpg`;
 
-    await expect(downloadRegion('r1', () => {})).rejects.toThrow();
+    await expect(downloadRegion('r1', true, () => {})).rejects.toThrow();
 
     expect(cached.has(`${API}/routes/c`)).toBe(false);
     expect(cached.has(`${API}/routes/b`)).toBe(true);
@@ -137,7 +144,7 @@ describe('downloadRegion', () => {
   });
 
   it('does not bring back a region deleted while it was downloading', async () => {
-    const download = downloadRegion('r1', () => {});
+    const download = downloadRegion('r1', true, () => {});
     const removal = deleteOfflineRegion('r1');
 
     await Promise.all([download, removal]);
@@ -147,7 +154,7 @@ describe('downloadRegion', () => {
   });
 
   it('skips a background refresh of a region wiped by sign-out', async () => {
-    await downloadRegion('r1', () => {});
+    await downloadRegion('r1', true, () => {});
 
     await Promise.all([deleteAllOfflineRegions(), refreshRegion('r1')]);
 

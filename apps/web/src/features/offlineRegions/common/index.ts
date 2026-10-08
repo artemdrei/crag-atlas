@@ -1,9 +1,11 @@
 export * from './entities';
 export * from './hooks';
 export { deleteAllOfflineRegions } from './lib';
+export * from './providers';
 export {
   OfflineDownloadProgress,
   OfflineRegionPicker,
   OfflineRegionRow,
-  OfflineShortcutLinks
+  OfflineShortcutLinks,
+  SaveRegionOfflineBody
 } from './ui';

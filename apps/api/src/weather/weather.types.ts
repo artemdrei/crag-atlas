@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 
+// Extend together with the check on `tick_weather.source` when a provider is
+// added; readings already saved keep naming the one they came from.
+export const WEATHER_SOURCES = ['open-meteo'] as const;
+
+export type WeatherSource = (typeof WEATHER_SOURCES)[number];
+
 export class TickWeatherDto {
   @ApiProperty({
     description:
@@ -60,39 +66,17 @@ export class TickWeatherDto {
   sunset?: string | null;
 
   @ApiProperty({
+    enum: WEATHER_SOURCES,
+    required: false,
+    nullable: true,
+    description:
+      'The provider the reading came from; null when it was written by hand'
+  })
+  source?: WeatherSource | null;
+
+  @ApiProperty({
     required: false,
     description: 'The climber corrected the numbers the provider answered with'
   })
   isManual?: boolean;
-}
-
-export class WeatherLookupDto {
-  @ApiProperty({
-    description:
-      'False when the sector has no coordinates — nothing can be looked up and the conditions are written by hand'
-  })
-  hasPoint!: boolean;
-
-  @ApiProperty({ type: TickWeatherDto, nullable: true })
-  weather!: TickWeatherDto | null;
-}
-
-export class WeatherBackfillDto {
-  @ApiProperty({ description: 'Ascents this call gave conditions to' })
-  filled!: number;
-
-  @ApiProperty({
-    description: 'Ascents still waiting, because one call fills a batch at most'
-  })
-  remaining!: number;
-
-  @ApiProperty({ description: 'Ascents the provider had no answer for' })
-  failed!: number;
-
-  @ApiProperty({
-    type: String,
-    nullable: true,
-    description: 'Error code of the first ascent that failed'
-  })
-  failureCode!: string | null;
 }

@@ -76,6 +76,17 @@ export class TickDto {
   @ApiProperty({ type: String, required: false, nullable: true })
   sectorName?: string | null;
 
+  @ApiProperty({
+    type: Number,
+    required: false,
+    nullable: true,
+    description: 'Where the weather is read; null when the sector has no pin'
+  })
+  sectorLat?: number | null;
+
+  @ApiProperty({ type: Number, required: false, nullable: true })
+  sectorLng?: number | null;
+
   @ApiProperty({ type: String, required: false, nullable: true })
   regionName?: string | null;
 

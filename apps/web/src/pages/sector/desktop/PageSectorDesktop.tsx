@@ -31,7 +31,9 @@ import {
   DirectionsButton,
   PageBreadcrumbs,
   PageShell,
-  PageTitle
+  PageTitle,
+  ShelterBadge,
+  ShelterNote
 } from '@web/shared/ui';
 
 import type { Route } from '../common';
@@ -155,7 +157,12 @@ export const PageSectorDesktop = () => {
       <ColumnsStyled>
         <MainColumnStyled>
           <TitleRowStyled>
-            <PageTitle name={sector?.name} nameLocal={sector?.nameLocal} />
+            <PageTitle
+              name={sector?.name}
+              nameLocal={sector?.nameLocal}
+              icon={sector && <ShelterBadge shelter={sector.shelter} />}
+              aside={sector && <ShelterNote shelter={sector.shelter} />}
+            />
             <DirectionsButton entityType="sector" point={coordsOf(sector)} />
           </TitleRowStyled>
           {sector?.description && (
@@ -178,7 +185,12 @@ export const PageSectorDesktop = () => {
           </GalleryAreaStyled>
         </MainColumnStyled>
         <PanelStyled>
-          <SectorConditionsDesktop idSector={idSector} />
+          {sector && (
+            <SectorConditionsDesktop
+              idSector={idSector}
+              coords={coordsOf(sector)}
+            />
+          )}
           <RouteFilterPanelDesktop
             state={filterState}
             title={

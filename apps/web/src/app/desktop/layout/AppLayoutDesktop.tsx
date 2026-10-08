@@ -7,6 +7,7 @@ import { styled } from '@mui/material/styles';
 import { ErrorBoundary } from '@web/app/ui/errorBoundary';
 import { useScrollTopOnNavigate } from '@web/shared/lib';
 import { CONTENT_MAX_WIDTH } from '@web/shared/theme/layout';
+import { OfflineBanner } from '@web/shared/ui';
 
 import { AppHeaderDesktop } from './AppHeaderDesktop';
 
@@ -19,6 +20,7 @@ export const AppLayoutDesktop = ({ hasSearch }: { hasSearch?: boolean }) => {
   return (
     <LayoutRootStyled>
       <AppHeaderDesktop hasSearch={hasSearch} />
+      <OfflineBanner />
       <MainStyled ref={mainRef} component="main">
         {/* Keyed by path: a crash on one screen must not follow the user to
             the next one, and a boundary only clears by remounting. */}

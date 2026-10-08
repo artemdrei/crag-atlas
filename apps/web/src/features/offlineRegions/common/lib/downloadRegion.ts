@@ -16,7 +16,7 @@ import { warmAppForOffline } from './warmAppForOffline';
 // arrive as one burst.
 const CONCURRENCY = 4;
 
-const collectResponses = async (idRegion: string) => {
+const collectResponses = async (idRegion: string, hasTicks: boolean) => {
   const responses = new Map<string, unknown>();
 
   const fetchAndKeep = async <T>(path: string) => {
@@ -27,10 +27,11 @@ const collectResponses = async (idRegion: string) => {
     return data;
   };
 
+  // The ticked lists are members-only: a visitor saves the catalog alone.
   const [region, sectors] = await Promise.all([
     fetchAndKeep<Region>(`/regions/${idRegion}`),
     fetchAndKeep<Sector[]>(`/regions/${idRegion}/sectors`),
-    fetchAndKeep(`/regions/${idRegion}/sectors/ticked`)
+    hasTicks && fetchAndKeep(`/regions/${idRegion}/sectors/ticked`)
   ]);
   const photoUrls = [region.photoUrl, ...sectors.map((s) => s.photoUrl)];
 
@@ -40,7 +41,7 @@ const collectResponses = async (idRegion: string) => {
     const [routes, topos] = await Promise.all([
       fetchAndKeep<Route[]>(`/sectors/${sector.id}/routes`),
       fetchAndKeep<Topo[]>(`/sectors/${sector.id}/topos`),
-      fetchAndKeep(`/sectors/${sector.id}/routes/ticked`)
+      hasTicks && fetchAndKeep(`/sectors/${sector.id}/routes/ticked`)
     ]);
 
     // The list and the detail endpoint return the same shape, so a route page
@@ -61,18 +62,26 @@ const collectResponses = async (idRegion: string) => {
 
 const saveRegion = async (
   idRegion: string,
+  hasTicks: boolean,
   onProgress: (progress: DownloadProgress) => void
 ): Promise<OfflineRegion> => {
   await warmAppForOffline();
 
-  const { region, responses, photoUrls } = await collectResponses(idRegion);
+  const { region, responses, photoUrls } = await collectResponses(
+    idRegion,
+    hasTicks
+  );
   const previous = (await readOfflineRegions())[idRegion];
   const urls = [...responses.keys(), ...photoUrls];
   const cache = await caches.open(OFFLINE_CACHE_NAME);
+  const startedAt = Date.now();
   let bytes = 0;
   let done = 0;
 
-  onProgress({ done, total: photoUrls.length });
+  const report = () =>
+    onProgress({ done, total: photoUrls.length, bytes, startedAt });
+
+  report();
 
   try {
     for (const [url, data] of responses) {
@@ -94,8 +103,9 @@ const saveRegion = async (
       const { size } = await response.clone().blob();
 
       bytes += size;
+      done += 1;
       await cache.put(url, response);
-      onProgress({ done: ++done, total: photoUrls.length });
+      report();
     });
   } catch (error) {
     const kept = new Set(previous?.urls);
@@ -130,8 +140,9 @@ const saveRegion = async (
 
 export const downloadRegion = (
   idRegion: string,
+  hasTicks: boolean,
   onProgress: (progress: DownloadProgress) => void
-) => runExclusive(() => saveRegion(idRegion, onProgress));
+) => runExclusive(() => saveRegion(idRegion, hasTicks, onProgress));
 
 // A background refresh must not bring back a region deleted, or wiped by a
 // sign-out, while it waited in the queue.
@@ -139,5 +150,5 @@ export const refreshRegion = (idRegion: string) =>
   runExclusive(async () => {
     if (!(await readOfflineRegions())[idRegion]) return;
 
-    await saveRegion(idRegion, () => {});
+    await saveRegion(idRegion, true, () => {});
   });

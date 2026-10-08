@@ -95,10 +95,9 @@ describe('the paths printed on QR plaques', () => {
   it('opens a sector by its path, whatever the case or slashes', async () => {
     const path = await currentPathOf();
 
-    await expect(service.resolve(`/${path.toUpperCase()}/`)).resolves.toEqual({
-      idRegion,
-      idSector
-    });
+    await expect(
+      service.resolve(`/${path.toUpperCase()}/`)
+    ).resolves.toMatchObject({ idRegion, idSector });
   });
 
   it('keeps an old path working after the slug changes', async () => {

@@ -58,4 +58,10 @@ export class QrPathTargetDto {
 
   @ApiProperty()
   idSector!: string;
+
+  @ApiProperty()
+  regionName!: string;
+
+  @ApiProperty()
+  sectorName!: string;
 }

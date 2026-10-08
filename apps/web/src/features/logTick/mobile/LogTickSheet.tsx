@@ -1,3 +1,4 @@
+import type { Coords } from '@web/shared/types';
 import { BottomSheet } from '@web/shared/ui';
 
 import type { TickHeader } from '../common';
@@ -6,11 +7,13 @@ import { TickForm, TickFormHeader, useLogTick } from '../common';
 export interface Props extends TickHeader {
   open: boolean;
   idRoute: string;
+  coords?: Coords;
 }
 
 const LogTickSheet = ({
   open,
   idRoute,
+  coords,
   routeName,
   routeGrade,
   routeGradeScale,
@@ -28,6 +31,7 @@ const LogTickSheet = ({
       />
       <TickForm
         idRoute={idRoute}
+        coords={coords}
         routeGrade={routeGrade}
         routeGradeScale={routeGradeScale}
         isPending={isPending}

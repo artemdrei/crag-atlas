@@ -20,7 +20,21 @@ export type SignInPromptAction = 'tick' | 'logbook' | 'profile' | 'filter';
 
 export type ContentType = 'tick' | 'comment' | 'media' | 'topo';
 
-export type DialogName = 'tick' | 'topo_photo' | 'route_media';
+export type DialogName =
+  | 'tick'
+  | 'topo_photo'
+  | 'route_media'
+  | 'save_offline'
+  | 'install_hint';
+
+export type OfflineAction =
+  | 'save_started'
+  | 'save_completed'
+  | 'save_failed'
+  | 'refreshed'
+  | 'removed';
+
+export type OfflineSource = 'header' | 'profile';
 
 export type AnalyticsEvent =
   | { name: 'Page Viewed'; props: { path: string } }
@@ -51,7 +65,13 @@ export type AnalyticsEvent =
   | {
       name: 'List Controls Used';
       props: {
-        list: 'routes' | 'route' | 'logbook' | 'sector' | 'region';
+        list:
+          | 'routes'
+          | 'route'
+          | 'logbook'
+          | 'sector'
+          | 'region'
+          | 'topo_photo';
         control:
           | 'grade_filter'
           | 'grade_filter_reset'
@@ -65,7 +85,11 @@ export type AnalyticsEvent =
           | 'tab'
           | 'discipline'
           | 'ascent_type'
-          | 'view';
+          | 'view'
+          | 'filters_toggle'
+          | 'zoom'
+          | 'conditions_day'
+          | 'conditions_expand';
         value: string;
       };
     }
@@ -84,6 +108,10 @@ export type AnalyticsEvent =
         has_rating: boolean;
         has_partner: boolean;
         has_grade_vote: boolean;
+        has_weather: boolean;
+        weather_edited: boolean;
+        photo_count: number;
+        video_count: number;
       };
     }
   | {
@@ -96,6 +124,38 @@ export type AnalyticsEvent =
     }
   | { name: 'Content Updated'; props: { content_type: ContentType } }
   | { name: 'Content Deleted'; props: { content_type: ContentType } }
+  | {
+      name: 'Offline Region Action';
+      props: {
+        action: OfflineAction;
+        id_region: string;
+        source: OfflineSource;
+        photo_count?: number;
+        bytes?: number;
+        duration_ms?: number;
+        code?: string;
+      };
+    }
+  | {
+      name: 'Weather Load Failed';
+      props: {
+        context: 'conditions' | 'tick';
+        code: string;
+        provider: string;
+      };
+    }
+  | {
+      name: 'QR Code Scanned';
+      props: {
+        result: 'opened' | 'not_found';
+        qr_path: string;
+        id_region?: string;
+        id_sector?: string;
+        region_name?: string;
+        sector_name?: string;
+      };
+    }
+  | { name: 'App Installed'; props: { platform: string } }
   | {
       name: 'Setting Changed';
       props: {

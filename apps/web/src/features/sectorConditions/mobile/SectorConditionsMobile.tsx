@@ -1,19 +1,27 @@
 import { styled } from '@mui/material/styles';
 
+import type { Coords } from '@web/shared/types';
+
 import { ConditionsSection, useApiGetConditions } from '../common';
 
 export interface Props {
   idSector: string;
+  coords?: Coords;
 }
 
-export const SectorConditionsMobile = ({ idSector }: Props) => {
-  const { conditions, isLoading, failure } = useApiGetConditions(idSector);
+export const SectorConditionsMobile = ({ idSector, coords }: Props) => {
+  const { conditions, isLoading, isOffline, failure } = useApiGetConditions({
+    idSector,
+    coords
+  });
 
   return (
     <SectionStyled
+      list="sector"
       conditions={conditions}
       failure={failure}
       isLoading={isLoading}
+      isOffline={isOffline}
     />
   );
 };

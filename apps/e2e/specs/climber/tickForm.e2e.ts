@@ -11,9 +11,9 @@ import {
 import { ascentsPanel, logTickButton, routePath } from '../../fixtures/ui';
 
 /**
- * Everything the tick form asks, filled in and read back. The conditions are
- * read from Open-Meteo by the API, so the browser's lookup is answered here
- * instead: the spec must not depend on somebody else's forecast.
+ * Everything the tick form asks, filled in and read back. The browser reads
+ * the conditions from Open-Meteo, so its answer is stubbed here: the spec must
+ * not depend on somebody else's forecast.
  */
 test.describe.configure({ mode: 'serial' });
 
@@ -39,25 +39,56 @@ let route: Row;
 test.beforeAll(async () => {
   region = await makeRegion('Form-Region');
   sector = await makeSector(region.id, 'Form-Sector');
+  // The weather is read at the sector's pin, which a new sector lacks.
+  await api.patch(`/sectors/${sector.id}`, {
+    name: sector.name,
+    lat: 48.68291,
+    lng: 26.56402
+  });
   route = await makeRoute(sector.id, 'Form-Route');
 });
 
 test.afterAll(cleanup);
 
+// Every hour of the days the browser asks for, so whatever time the form
+// starts with finds a reading.
 const answerWeather = (page: Page) =>
-  page.route(/\/weather\?/, (request) =>
-    request.fulfill({
+  page.route(/open-meteo\.com/, (request) => {
+    const params = new URL(request.request().url()).searchParams;
+    const dates = [params.get('start_date'), params.get('end_date')].filter(
+      (date): date is string => !!date
+    );
+    const time = dates.flatMap((date) =>
+      Array.from(
+        { length: 24 },
+        (_, hour) => `${date}T${String(hour).padStart(2, '0')}:00`
+      )
+    );
+    const filled = (value: number) => time.map(() => value);
+
+    return request.fulfill({
       json: {
-        hasPoint: true,
-        weather: {
-          observedAt: '2026-05-02T10:00:00Z',
-          temperatureC: 14,
-          humidityPct: 41,
-          windSpeedMs: 3
+        utc_offset_seconds: 10800,
+        hourly: {
+          time,
+          temperature_2m: filled(14),
+          apparent_temperature: filled(13),
+          relative_humidity_2m: filled(41),
+          dew_point_2m: filled(1),
+          precipitation: filled(0),
+          cloud_cover: filled(20),
+          weather_code: filled(1),
+          wind_speed_10m: filled(3),
+          wind_gusts_10m: filled(6)
+        },
+        daily: {
+          time: dates,
+          sunrise: dates.map((date) => `${date}T06:00`),
+          sunset: dates.map((date) => `${date}T20:00`)
         }
       }
-    })
-  );
+    });
+  });
 
 // Known bug: the condition fields render with an empty label and unit — the
 // labels are built with a `t` passed in as an argument, which the Lingui macro
