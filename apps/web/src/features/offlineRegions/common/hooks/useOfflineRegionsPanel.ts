@@ -36,7 +36,6 @@ export const useOfflineRegionsPanel = () => {
   return {
     isOnline,
     isDownloading: idDownloading !== null,
-    save,
     progressLabel,
     progressPercent: progressPercentOf(progress),
     rows: offlineRegions.map((region) => {
