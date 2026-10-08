@@ -184,11 +184,16 @@ msgstr "{sector} is empty, so only the sector itself and its photos leave the ca
 msgid "{sector} leaves the catalog for everyone, together with its routes. Nothing is erased: everything climbers left stays, and you can bring the sector back from the archive."
 msgstr "{sector} leaves the catalog for everyone, together with its routes. Nothing is erased: everything climbers left stays, and you can bring the sector back from the archive."
 
+#: src/pages/adminFeedback/common/ui/FeedbackRatingFilter.tsx:34
+#~ msgid "{shown} of {total}"
+#~ msgstr "{shown} of {total}"
+
 #: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:52
 msgid "{size} · saved {savedAt}"
 msgstr "{size} · saved {savedAt}"
 
-#: src/features/logTick/common/ui/TickForm.tsx:189
+#: src/features/feedback/common/ui/FeedbackForm.tsx:65
+#: src/features/logTick/common/ui/TickForm.tsx:193
 msgid "{stars} of 5"
 msgstr "{stars} of 5"
 
@@ -199,6 +204,10 @@ msgstr "{total, plural, one {# ascent} few {# ascents} many {# ascents} other {#
 #: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:39
 msgid "{total, plural, one {# vote} other {# votes}}"
 msgstr "{total, plural, one {# vote} other {# votes}}"
+
+#: src/pages/adminFeedback/common/ui/FeedbackRatingFilter.tsx:32
+#~ msgid "{total} entries"
+#~ msgstr "{total} entries"
 
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:50
 msgid "°C"
@@ -217,6 +226,7 @@ msgid "A QR code's link cannot be deleted. It only goes away with the sector, if
 msgstr "A QR code's link cannot be deleted. It only goes away with the sector, if the sector is deleted for good, and then its printed plaques stop working."
 
 #: src/pages/admin/desktop/PageAdminDesktop.tsx:12
+#: src/pages/admin/mobile/PageAdminMobile.tsx:12
 msgid "Access"
 msgstr "Access"
 
@@ -261,7 +271,7 @@ msgstr "Add a photo to start drawing routes on it."
 msgid "Add admin"
 msgstr "Add admin"
 
-#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:144
+#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:142
 msgid "Add as many as you like — everyone will see them."
 msgstr "Add as many as you like — everyone will see them."
 
@@ -269,8 +279,8 @@ msgstr "Add as many as you like — everyone will see them."
 msgid "Add beta and photos that help the next climber"
 msgstr "Add beta and photos that help the next climber"
 
-#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:165
-#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:177
+#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:163
+#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:175
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:188
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:160
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:74
@@ -296,13 +306,13 @@ msgstr "Add region"
 msgid "Add route"
 msgstr "Add route"
 
-#: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:76
+#: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:77
 #: src/pages/region/desktop/ui/RegionEditSidebar.tsx:71
 #: src/pages/region/desktop/ui/RegionEditSidebar.tsx:128
 msgid "Add sector"
 msgstr "Add sector"
 
-#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:90
+#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:88
 msgid "Add the link"
 msgstr "Add the link"
 
@@ -320,8 +330,8 @@ msgid "Address"
 msgstr "Address"
 
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:36
-#: src/pages/admin/desktop/PageAdminDesktop.tsx:23
-#: src/pages/admin/mobile/PageAdminMobile.tsx:10
+#: src/pages/admin/desktop/PageAdminDesktop.tsx:21
+#: src/pages/admin/mobile/PageAdminMobile.tsx:20
 #: src/pages/profile/common/ui/AdminSetting.tsx:17
 msgid "Admin"
 msgstr "Admin"
@@ -390,7 +400,7 @@ msgid "Archive region"
 msgstr "Archive region"
 
 #: src/features/topoEditor/desktop/ArchiveRouteDialog.tsx:39
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:347
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:354
 msgid "Archive route"
 msgstr "Archive route"
 
@@ -490,7 +500,7 @@ msgstr "best {0} – {1}"
 msgid "Bolt"
 msgstr "Bolt"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:275
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:281
 msgid "Bolted by"
 msgstr "Bolted by"
 
@@ -503,11 +513,11 @@ msgstr "Bolted by:"
 msgid "Bolted in {0}"
 msgstr "Bolted in {0}"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:263
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:269
 msgid "Bolts"
 msgstr "Bolts"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:218
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:224
 msgid "Boulder"
 msgstr "Boulder"
 
@@ -524,15 +534,17 @@ msgstr "Breadcrumb"
 #: src/features/avatarUpload/desktop/CropAvatarDialog.tsx:29
 #: src/features/avatarUpload/mobile/CropAvatarSheet.tsx:23
 #: src/features/catalogEdit/common/ui/EditActions.tsx:32
+#: src/features/feedback/common/ui/FeedbackForm.tsx:98
 #: src/features/grantAdmin/common/ui/GrantAdminBody.tsx:82
 #: src/features/logTick/common/ui/DeleteTickActions.tsx:17
-#: src/features/logTick/common/ui/TickForm.tsx:226
+#: src/features/logTick/common/ui/TickForm.tsx:231
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:276
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:450
 #: src/features/routeComment/common/ui/DeleteRouteCommentActions.tsx:17
-#: src/features/routeComment/common/ui/RouteCommentForm.tsx:46
+#: src/features/routeComment/common/ui/RouteCommentForm.tsx:47
 #: src/features/topoEditor/desktop/DeleteLineDialog.tsx:42
 #: src/features/topoEditor/desktop/DeletePhotoDialog.tsx:43
+#: src/pages/adminFeedback/mobile/DeleteFeedbackSheet.tsx:38
 #: src/shared/ui/ConfirmDialog.tsx:37
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:88
 #: src/widgets/routeMedia/common/ui/DeleteRouteMediaActions.tsx:17
@@ -590,7 +602,7 @@ msgstr "Clear"
 msgid "Clear all filters"
 msgstr "Clear all filters"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:292
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:298
 msgid "Clear the climber above to type a name"
 msgstr "Clear the climber above to type a name"
 
@@ -607,7 +619,7 @@ msgstr "Click the map, or paste coordinates from Google Maps."
 msgid "Climbed"
 msgstr "Climbed"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:279
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:285
 msgid "Climber with an account"
 msgstr "Climber with an account"
 
@@ -637,7 +649,7 @@ msgstr "Close the editor"
 msgid "Collapse"
 msgstr "Collapse"
 
-#: src/features/logTick/common/ui/TickForm.tsx:199
+#: src/features/logTick/common/ui/TickForm.tsx:204
 msgid "Comment"
 msgstr "Comment"
 
@@ -736,7 +748,7 @@ msgstr "Crags"
 msgid "Create a QR code"
 msgstr "Create a QR code"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:329
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:336
 msgid "Create route"
 msgstr "Create route"
 
@@ -769,6 +781,8 @@ msgstr "Default"
 #: src/features/logTick/common/ui/TickMenuItems.tsx:34
 #: src/features/routeComment/common/hooks/useRouteCommentMenuItems.tsx:44
 #: src/features/routeComment/common/ui/DeleteRouteCommentActions.tsx:26
+#: src/pages/adminFeedback/desktop/DeleteFeedbackDialog.tsx:28
+#: src/pages/adminFeedback/mobile/DeleteFeedbackSheet.tsx:46
 #: src/widgets/routeMedia/common/ui/DeleteRouteMediaActions.tsx:26
 msgid "Delete"
 msgstr "Delete"
@@ -783,8 +797,17 @@ msgstr "Delete ascent"
 msgid "Delete comment"
 msgstr "Delete comment"
 
+#: src/pages/adminFeedback/common/ui/DeleteFeedbackButton.tsx:22
+msgid "Delete feedback"
+msgstr "Delete feedback"
+
+#: src/pages/adminFeedback/desktop/DeleteFeedbackDialog.tsx:27
+#: src/pages/adminFeedback/mobile/DeleteFeedbackSheet.tsx:28
+msgid "Delete feedback?"
+msgstr "Delete feedback?"
+
 #: src/features/topoEditor/desktop/DeleteLineDialog.tsx:45
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:340
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:347
 msgid "Delete line"
 msgstr "Delete line"
 
@@ -814,6 +837,7 @@ msgstr "Delete the photo?"
 
 #: src/features/logTick/common/ui/DeleteTickActions.tsx:26
 #: src/features/routeComment/common/ui/DeleteRouteCommentActions.tsx:26
+#: src/pages/adminFeedback/mobile/DeleteFeedbackSheet.tsx:46
 #: src/widgets/routeMedia/common/ui/DeleteRouteMediaActions.tsx:26
 msgid "Deleting…"
 msgstr "Deleting…"
@@ -822,9 +846,9 @@ msgstr "Deleting…"
 msgid "Descending"
 msgstr "Descending"
 
-#: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:71
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:105
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:313
+#: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:72
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:107
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:320
 msgid "Description"
 msgstr "Description"
 
@@ -837,7 +861,7 @@ msgstr "Detailed"
 msgid "dew {0}°"
 msgstr "dew {0}°"
 
-#: src/features/logTick/common/ui/TickForm.tsx:185
+#: src/features/logTick/common/ui/TickForm.tsx:189
 msgid "Did you like it?"
 msgstr "Did you like it?"
 
@@ -890,7 +914,7 @@ msgstr "Drag a route here"
 msgid "Drag cancelled"
 msgstr "Drag cancelled"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:194
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:200
 msgid "Draw the route first, then it can move between photos."
 msgstr "Draw the route first, then it can move between photos."
 
@@ -915,6 +939,10 @@ msgstr "Edit"
 #: src/features/routeComment/mobile/EditRouteCommentSheet.tsx:22
 msgid "Edit comment"
 msgstr "Edit comment"
+
+#: src/features/feedback/common/ui/FeedbackForm.tsx:82
+msgid "Email, if you want a reply"
+msgstr "Email, if you want a reply"
 
 #: src/pages/login/common/ui/EmailOtpForm.tsx:62
 msgid "Enter code"
@@ -949,6 +977,18 @@ msgstr "Erasing takes {0, plural, one {# sector} few {# sectors} many {# sectors
 msgid "Excellent"
 msgstr "Excellent"
 
+#: src/features/feedback/desktop/FeedbackDialog.tsx:22
+#: src/features/feedback/mobile/FeedbackSheet.tsx:19
+#: src/pages/admin/desktop/PageAdminDesktop.tsx:14
+#: src/pages/admin/mobile/PageAdminMobile.tsx:13
+#: src/pages/profile/common/ui/FeedbackSetting.tsx:8
+msgid "Feedback"
+msgstr "Feedback"
+
+#: src/pages/adminFeedback/common/hooks/useApiDeleteFeedback.ts:35
+msgid "Feedback deleted"
+msgstr "Feedback deleted"
+
 #: src/features/routeFilter/common/ui/FiltersHeader.tsx:18
 #: src/features/routeFilter/common/ui/FiltersToggleButton.tsx:28
 msgid "Filters"
@@ -978,7 +1018,11 @@ msgstr "Flash"
 msgid "Free"
 msgstr "Free"
 
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:133
+#: src/pages/adminFeedback/desktop/ui/FeedbackTable.tsx:37
+msgid "From"
+msgstr "From"
+
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:135
 msgid "Fully sheltered: a roof or overhang keeps it dry"
 msgstr "Fully sheltered: a roof or overhang keeps it dry"
 
@@ -992,7 +1036,7 @@ msgstr "Got it"
 
 #: src/features/routeFilter/common/hooks/useRouteSortLabel.ts:11
 #: src/features/routeFilter/common/ui/RouteFilterFields.tsx:38
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:239
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:245
 #: src/pages/logbook/common/ui/LogbookFilterFields.tsx:47
 msgid "Grade"
 msgstr "Grade"
@@ -1017,6 +1061,11 @@ msgstr "Grade system — routes"
 msgid "Grant access"
 msgstr "Grant access"
 
+#: src/pages/adminFeedback/common/ui/DeleteFeedbackSummary.tsx:20
+#: src/pages/adminFeedback/common/ui/FeedbackAuthor.tsx:23
+msgid "Guest"
+msgstr "Guest"
+
 #: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:27
 msgid "hard"
 msgstr "hard"
@@ -1037,11 +1086,15 @@ msgstr "Has video"
 msgid "Hourly"
 msgstr "Hourly"
 
-#: src/features/logTick/common/ui/TickForm.tsx:155
+#: src/features/logTick/common/ui/TickForm.tsx:159
 msgid "How did you climb it?"
 msgstr "How did you climb it?"
 
-#: src/features/logTick/common/ui/TickForm.tsx:175
+#: src/features/feedback/common/ui/FeedbackForm.tsx:60
+msgid "How do you find Crag Atlas?"
+msgstr "How do you find Crag Atlas?"
+
+#: src/features/logTick/common/ui/TickForm.tsx:179
 msgid "How hard is the route?"
 msgstr "How hard is the route?"
 
@@ -1131,7 +1184,7 @@ msgstr "Leave without saving?"
 msgid "Length"
 msgstr "Length"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:252
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:258
 msgid "Length, m"
 msgstr "Length, m"
 
@@ -1139,11 +1192,19 @@ msgstr "Length, m"
 msgid "Light"
 msgstr "Light"
 
+#: src/pages/adminFeedback/common/ui/LoadMoreButton.tsx:17
+msgid "Load more"
+msgstr "Load more"
+
+#: src/pages/adminFeedback/common/ui/LoadMoreButton.tsx:17
+msgid "Loading…"
+msgstr "Loading…"
+
 #: src/shared/ui/MapCanvas.tsx:103
 msgid "Location is blocked for this site. Allow it in the browser to see where you are."
 msgstr "Location is blocked for this site. Allow it in the browser to see where you are."
 
-#: src/features/logTick/common/ui/TickForm.tsx:241
+#: src/features/logTick/common/ui/TickForm.tsx:246
 #: src/pages/route/common/ui/LogTickButton.tsx:34
 #: src/pages/route/common/ui/RouteAscentsInvite.tsx:45
 msgid "Log ascent"
@@ -1153,7 +1214,7 @@ msgstr "Log ascent"
 msgid "Log every ascent and watch your grade pyramid build up"
 msgstr "Log every ascent and watch your grade pyramid build up"
 
-#: src/features/logTick/common/ui/TickForm.tsx:239
+#: src/features/logTick/common/ui/TickForm.tsx:244
 #: src/pages/route/common/ui/LogTickButton.tsx:26
 msgid "Log repeat"
 msgstr "Log repeat"
@@ -1191,6 +1252,10 @@ msgstr "Media added"
 msgid "Media deleted"
 msgstr "Media deleted"
 
+#: src/pages/adminFeedback/desktop/ui/FeedbackTable.tsx:34
+msgid "Message"
+msgstr "Message"
+
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:51
 msgid "mm"
 msgstr "mm"
@@ -1225,7 +1290,7 @@ msgstr "Name"
 msgid "New photo"
 msgstr "New photo"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:167
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:173
 #: src/pages/routeEdit/desktop/PageRouteEditDesktop.tsx:72
 msgid "New route"
 msgstr "New route"
@@ -1247,6 +1312,10 @@ msgstr "No comments yet — be the first to add beta."
 msgid "No country found"
 msgstr "No country found"
 
+#: src/pages/adminFeedback/common/ui/FeedbackListState.tsx:30
+msgid "No feedback yet"
+msgstr "No feedback yet"
+
 #: src/shared/lib/useWeatherFailureMessage.ts:12
 msgid "No forecast is published that far ahead"
 msgstr "No forecast is published that far ahead"
@@ -1254,6 +1323,10 @@ msgstr "No forecast is published that far ahead"
 #: src/features/logTick/common/hooks/useLogTick.ts:62
 msgid "No internet connection. Log the ascent again once you are back online"
 msgstr "No internet connection. Log the ascent again once you are back online"
+
+#: src/features/feedback/common/hooks/useSendFeedback.ts:51
+msgid "No internet connection. Send your feedback again once you are back online"
+msgstr "No internet connection. Send your feedback again once you are back online"
 
 #: src/pages/region/common/ui/SectorCard.tsx:88
 msgid "no matches"
@@ -1357,6 +1430,10 @@ msgstr "One less try"
 msgid "One more try"
 msgstr "One more try"
 
+#: src/pages/adminFeedback/common/ui/FeedbackRatingFilter.tsx:27
+#~ msgid "Only {stars} of 5"
+#~ msgstr "Only {stars} of 5"
+
 #: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:31
 #: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:31
 msgid "Only an image can be used as a photo"
@@ -1364,8 +1441,8 @@ msgstr "Only an image can be used as a photo"
 
 #: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:80
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:55
-msgid "Only YouTube and Instagram links."
-msgstr "Only YouTube and Instagram links."
+#~ msgid "Only YouTube and Instagram links."
+#~ msgstr "Only YouTube and Instagram links."
 
 #: src/pages/route/common/ui/RouteStats.tsx:28
 msgid "onsight"
@@ -1410,7 +1487,7 @@ msgstr "Open this page in Chrome. Tap the ⋮ button in the top right corner."
 msgid "Open this page in Safari. Tap the Share button (a square with an arrow) at the bottom of the screen. On iOS 26 it is behind the ⋯ button next to the address bar."
 msgstr "Open this page in Safari. Tap the Share button (a square with an arrow) at the bottom of the screen. On iOS 26 it is behind the ⋯ button next to the address bar."
 
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:128
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:130
 msgid "Open: gets wet in rain"
 msgstr "Open: gets wet in rain"
 
@@ -1428,7 +1505,7 @@ msgstr "or"
 msgid "Or"
 msgstr "Or"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:286
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:292
 msgid "Or a name"
 msgstr "Or a name"
 
@@ -1444,15 +1521,15 @@ msgstr "Original photo"
 msgid "Partly sheltered"
 msgstr "Partly sheltered"
 
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:130
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:132
 msgid "Partly sheltered: some routes stay dry"
 msgstr "Partly sheltered: some routes stay dry"
 
-#: src/features/logTick/common/ui/TickForm.tsx:168
+#: src/features/logTick/common/ui/TickForm.tsx:172
 msgid "Partner"
 msgstr "Partner"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:188
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:194
 msgid "Photo"
 msgstr "Photo"
 
@@ -1465,7 +1542,7 @@ msgstr "Photo {0}"
 msgid "Photo {position}"
 msgstr "Photo {position}"
 
-#: src/features/logTick/common/ui/TickForm.tsx:215
+#: src/features/logTick/common/ui/TickForm.tsx:220
 msgid "Photo and video"
 msgstr "Photo and video"
 
@@ -1483,7 +1560,7 @@ msgstr "Photo replaced"
 msgid "Photo uploaded"
 msgstr "Photo uploaded"
 
-#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:141
+#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:139
 msgid "Photos"
 msgstr "Photos"
 
@@ -1567,15 +1644,15 @@ msgstr "Printed QR codes of its sectors stop working."
 msgid "Printed QR codes of this sector stop working."
 msgstr "Printed QR codes of this sector stop working."
 
-#: src/features/logTick/common/ui/TickForm.tsx:204
+#: src/features/logTick/common/ui/TickForm.tsx:209
 msgid "Private comment"
 msgstr "Private comment"
 
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:48
 #: src/app/mobile/layout/AppBottomNavigation.tsx:41
-#: src/pages/profile/common/ui/ProfileTeaser.tsx:14
-#: src/pages/profile/desktop/PageProfileDesktop.tsx:24
-#: src/pages/profile/mobile/PageProfileMobile.tsx:26
+#: src/pages/profile/common/ui/ProfileTeaser.tsx:15
+#: src/pages/profile/desktop/PageProfileDesktop.tsx:25
+#: src/pages/profile/mobile/PageProfileMobile.tsx:27
 msgid "Profile"
 msgstr "Profile"
 
@@ -1602,21 +1679,22 @@ msgstr "QR code of {0}"
 msgid "QR codes"
 msgstr "QR codes"
 
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:123
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:125
 msgid "Rain shelter"
 msgstr "Rain shelter"
 
 #: src/features/routeFilter/common/hooks/useRouteSortLabel.ts:9
 #: src/features/routeFilter/common/ui/RouteFilterFields.tsx:51
+#: src/pages/adminFeedback/desktop/ui/FeedbackTable.tsx:31
 msgid "Rating"
 msgstr "Rating"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:155
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:157
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:161
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:163
 msgid "Reader view"
 msgstr "Reader view"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:142
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:148
 msgid "Redo"
 msgstr "Redo"
 
@@ -1652,7 +1730,7 @@ msgstr "Regions"
 msgid "Reload"
 msgstr "Reload"
 
-#: src/features/logTick/common/ui/tickMediaField/MediaThumb.tsx:39
+#: src/features/logTick/common/ui/tickMediaField/MediaThumb.tsx:34
 #: src/features/offlineRegions/common/ui/OfflineRegionRow.tsx:49
 msgid "Remove"
 msgstr "Remove"
@@ -1686,7 +1764,7 @@ msgstr "Replace the photo"
 msgid "Resend code"
 msgstr "Resend code"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:149
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:155
 msgid "Reset to the saved state"
 msgstr "Reset to the saved state"
 
@@ -1719,11 +1797,11 @@ msgstr "Revoke access"
 msgid "Rock type"
 msgstr "Rock type"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:169
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:175
 msgid "Route №{number}"
 msgstr "Route №{number}"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:171
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:177
 msgid "Route not on the wall yet"
 msgstr "Route not on the wall yet"
 
@@ -1744,7 +1822,7 @@ msgstr "Routes you have climbed here"
 #: src/features/avatarUpload/desktop/CropAvatarDialog.tsx:37
 #: src/features/avatarUpload/mobile/CropAvatarSheet.tsx:31
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:237
+#: src/features/logTick/common/ui/TickForm.tsx:242
 #: src/features/routeComment/desktop/EditRouteCommentDialog.tsx:29
 #: src/features/routeComment/mobile/EditRouteCommentSheet.tsx:24
 msgid "Save"
@@ -1760,7 +1838,7 @@ msgstr "Save a region"
 msgid "Save a region with its sectors, routes and topos to open it without a connection."
 msgstr "Save a region with its sectors, routes and topos to open it without a connection."
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:331
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:338
 msgid "Save changes"
 msgstr "Save changes"
 
@@ -1772,7 +1850,7 @@ msgstr "Save it once, and every route, photo and line on it will open without th
 msgid "Save regions and open them offline."
 msgstr "Save regions and open them offline."
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:321
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:328
 msgid "Saved changes go live for everyone straight away."
 msgstr "Saved changes go live for everyone straight away."
 
@@ -1785,9 +1863,9 @@ msgid "Saved for offline:"
 msgstr "Saved for offline:"
 
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:235
+#: src/features/logTick/common/ui/TickForm.tsx:240
 #: src/features/offlineRegions/mobile/OfflineCtaMobile.tsx:39
-#: src/features/routeComment/common/ui/RouteCommentForm.tsx:54
+#: src/features/routeComment/common/ui/RouteCommentForm.tsx:55
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:95
 msgid "Saving…"
 msgstr "Saving…"
@@ -1831,7 +1909,7 @@ msgstr "Sector {0} created"
 msgid "Sector cover"
 msgstr "Sector cover"
 
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:62
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:63
 msgid "Sector saved"
 msgstr "Sector saved"
 
@@ -1857,15 +1935,27 @@ msgstr "Select every sector"
 msgid "Selected: {0}"
 msgstr "Selected: {0}"
 
+#: src/features/feedback/common/ui/FeedbackForm.tsx:105
+msgid "Send"
+msgstr "Send"
+
+#: src/features/feedback/common/ui/FeedbackButton.tsx:11
+msgid "Send feedback"
+msgstr "Send feedback"
+
 #: src/pages/login/common/ui/EmailOtpForm.tsx:114
 msgid "Sending code…"
 msgstr "Sending code…"
+
+#: src/features/feedback/common/ui/FeedbackForm.tsx:105
+msgid "Sending…"
+msgstr "Sending…"
 
 #: src/pages/login/common/hooks/useLoginBenefits.ts:32
 msgid "Share your experience"
 msgstr "Share your experience"
 
-#: src/features/logTick/common/ui/TickForm.tsx:194
+#: src/features/logTick/common/ui/TickForm.tsx:198
 msgid "Share your thoughts"
 msgstr "Share your thoughts"
 
@@ -1911,6 +2001,10 @@ msgstr "Some routes stay dry in the rain"
 msgid "Something went wrong"
 msgstr "Something went wrong"
 
+#: src/features/feedback/common/ui/FeedbackForm.tsx:43
+msgid "Something went wrong, please try sending again"
+msgstr "Something went wrong, please try sending again"
+
 #: src/features/routeFilter/common/ui/RouteFilterFields.tsx:76
 msgid "Sort"
 msgstr "Sort"
@@ -1919,7 +2013,7 @@ msgstr "Sort"
 msgid "Sort by"
 msgstr "Sort by"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:215
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:221
 #: src/pages/logbook/common/ui/DisciplineTabs.tsx:27
 #: src/shared/ui/GradeHistogram.tsx:63
 msgid "Sport"
@@ -1931,7 +2025,7 @@ msgstr "Sport"
 msgid "Sun roughly {0} – {1}"
 msgstr "Sun roughly {0} – {1}"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:225
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:231
 msgid "System"
 msgstr "System"
 
@@ -1947,6 +2041,10 @@ msgstr "Tap \"Add\" in the top right corner. The crag-atlas icon appears on your
 #: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:27
 msgid "Temperature"
 msgstr "Temperature"
+
+#: src/features/feedback/common/ui/FeedbackSent.tsx:10
+msgid "Thank you!"
+msgstr "Thank you!"
 
 #: src/features/sectorQr/common/hooks/useQrWarningLabels.ts:12
 msgid "The address is numbered: another sector has the same name"
@@ -2004,6 +2102,7 @@ msgstr "Theme"
 #: src/features/logTick/mobile/DeleteTickSheet.tsx:21
 #: src/features/routeComment/desktop/DeleteRouteCommentDialog.tsx:29
 #: src/features/routeComment/mobile/DeleteRouteCommentSheet.tsx:25
+#: src/pages/adminFeedback/common/ui/DeleteFeedbackSummary.tsx:26
 #: src/widgets/routeMedia/desktop/DeleteRouteMediaDialog.tsx:29
 #: src/widgets/routeMedia/mobile/DeleteRouteMediaSheet.tsx:25
 msgid "This cannot be undone."
@@ -2012,6 +2111,11 @@ msgstr "This cannot be undone."
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:425
 msgid "This file could not be read as a photo."
 msgstr "This file could not be read as a photo."
+
+#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:79
+#: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:55
+msgid "This is not a YouTube link."
+msgstr "This is not a YouTube link."
 
 #: src/widgets/routeMedia/common/ui/RouteMediaGallery.tsx:38
 msgid "This media is gone."
@@ -2038,11 +2142,11 @@ msgstr "This QR code does not lead to a sector."
 msgid "This region is in the archive, so it is out of the catalog. Its sectors, routes and everything climbers left on them — ascents, photos, links and comments — are still here."
 msgstr "This region is in the archive, so it is out of the catalog. Its sectors, routes and everything climbers left on them — ascents, photos, links and comments — are still here."
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:98
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:104
 msgid "this route"
 msgstr "this route"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:104
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:110
 msgid "This route"
 msgstr "This route"
 
@@ -2107,7 +2211,7 @@ msgstr "Type at least {MIN_SEARCH_LENGTH} letters"
 msgid "Type at least {MIN_SEARCH_LENGTH} letters of a name"
 msgstr "Type at least {MIN_SEARCH_LENGTH} letters of a name"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:136
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:142
 msgid "Undo"
 msgstr "Undo"
 
@@ -2164,7 +2268,7 @@ msgstr "Video and photo ({mediaCount})"
 msgid "View"
 msgstr "View"
 
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:114
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:116
 msgid "Wall orientation, °"
 msgstr "Wall orientation, °"
 
@@ -2187,15 +2291,31 @@ msgstr "Weather by Open-Meteo.com"
 msgid "Weather forecast not available yet"
 msgstr "Weather forecast not available yet"
 
+#: src/features/feedback/common/ui/FeedbackForm.tsx:53
+msgid "What could be better?"
+msgstr "What could be better?"
+
+#: src/features/feedback/common/ui/FeedbackForm.tsx:54
+msgid "What do you like?"
+msgstr "What do you like?"
+
+#: src/pages/adminFeedback/desktop/ui/FeedbackTable.tsx:28
+msgid "When"
+msgstr "When"
+
 #: src/features/logTick/common/ui/ConditionsSection.tsx:94
 msgid "When did you climb it?"
 msgstr "When did you climb it?"
 
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:124
+#: src/pages/adminFeedback/desktop/ui/FeedbackTable.tsx:40
+msgid "Where"
+msgstr "Where"
+
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:126
 msgid "Whether the wall stays dry in rain. The conditions forecast keeps a sheltered sector climbable on a wet day."
 msgstr "Whether the wall stays dry in rain. The conditions forecast keeps a sheltered sector climbable on a wet day."
 
-#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:115
+#: src/features/catalogEdit/common/ui/SectorEditForm.tsx:117
 msgid "Which way the wall faces, in compass degrees: 0 north, 90 east, 180 south, 270 west. It sets when the wall is in sun or shade. Leave it empty to work it out from the terrain."
 msgstr "Which way the wall faces, in compass degrees: 0 north, 90 east, 180 south, 270 west. It sets when the wall is in sun or shade. Leave it empty to work it out from the terrain."
 
@@ -2221,7 +2341,7 @@ msgstr "Write it in your own language — it will be searchable both in Latin an
 msgid "Written for you from the name above"
 msgstr "Written for you from the name above"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:299
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:305
 msgid "Year"
 msgstr "Year"
 
@@ -2241,11 +2361,11 @@ msgstr "You can edit a QR code's address. The old address stays and keeps workin
 msgid "You have sent this route before"
 msgstr "You have sent this route before"
 
-#: src/pages/profile/common/ui/ProfileTeaser.tsx:16
+#: src/pages/profile/common/ui/ProfileTeaser.tsx:17
 msgid "Your account keeps your logbook, your beta and your settings in one place."
 msgstr "Your account keeps your logbook, your beta and your settings in one place."
 
-#: src/features/routeComment/common/ui/RouteCommentForm.tsx:39
+#: src/features/routeComment/common/ui/RouteCommentForm.tsx:40
 msgid "Your beta"
 msgstr "Your beta"
 
@@ -2264,6 +2384,10 @@ msgstr "Your corrections were reset for the new date and time"
 #: src/pages/route/common/ui/RouteAscentsInvite.tsx:32
 msgid "Your experience helps others judge the quality of the line — and helps the community pin down its grade."
 msgstr "Your experience helps others judge the quality of the line — and helps the community pin down its grade."
+
+#: src/features/feedback/common/ui/FeedbackSent.tsx:13
+msgid "Your feedback has been sent."
+msgstr "Your feedback has been sent."
 
 #: src/features/logTick/common/ui/GradeFeelChoice.tsx:44
 msgid "Your grade"
@@ -2292,8 +2416,13 @@ msgstr "Your photo or send video helps the next climber read the line — and pu
 
 #: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:69
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:53
-msgid "YouTube or Instagram link"
-msgstr "YouTube or Instagram link"
+msgid "YouTube link"
+msgstr "YouTube link"
+
+#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:69
+#: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:53
+#~ msgid "YouTube or Instagram link"
+#~ msgstr "YouTube or Instagram link"
 
 #: src/shared/ui/ImageCropper.tsx:114
 msgid "Zoom"
