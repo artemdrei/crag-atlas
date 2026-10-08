@@ -184,11 +184,11 @@ msgstr "{sector} is empty, so only the sector itself and its photos leave the ca
 msgid "{sector} leaves the catalog for everyone, together with its routes. Nothing is erased: everything climbers left stays, and you can bring the sector back from the archive."
 msgstr "{sector} leaves the catalog for everyone, together with its routes. Nothing is erased: everything climbers left stays, and you can bring the sector back from the archive."
 
-#: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:53
+#: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:52
 msgid "{size} · saved {savedAt}"
 msgstr "{size} · saved {savedAt}"
 
-#: src/features/logTick/common/ui/TickForm.tsx:187
+#: src/features/logTick/common/ui/TickForm.tsx:189
 msgid "{stars} of 5"
 msgstr "{stars} of 5"
 
@@ -346,6 +346,10 @@ msgstr "All {0}: {1} → {2} ({3})"
 msgid "All ascents by grade"
 msgstr "All ascents by grade"
 
+#: src/features/offlineRegions/mobile/OfflineRegionList.tsx:67
+msgid "All regions are already saved"
+msgstr "All regions are already saved"
+
 #: src/pages/logbook/common/ui/LogbookFilterFields.tsx:65
 msgid "All styles"
 msgstr "All styles"
@@ -411,7 +415,7 @@ msgstr "Ascent actions"
 msgid "Ascent deleted"
 msgstr "Ascent deleted"
 
-#: src/features/logTick/common/hooks/useLogTick.ts:50
+#: src/features/logTick/common/hooks/useLogTick.ts:51
 msgid "Ascent logged"
 msgstr "Ascent logged"
 
@@ -442,8 +446,8 @@ msgstr "Attempt"
 msgid "Auto"
 msgstr "Auto"
 
-#: src/features/offlineRegions/desktop/SaveRegionOfflineDialog.tsx:31
-#: src/features/offlineRegions/mobile/SaveRegionOfflineSheet.tsx:20
+#: src/features/offlineRegions/desktop/SaveRegionOfflineDialog.tsx:32
+#: src/features/offlineRegions/mobile/SaveRegionOfflineSheet.tsx:27
 msgid "Available offline"
 msgstr "Available offline"
 
@@ -522,7 +526,7 @@ msgstr "Breadcrumb"
 #: src/features/catalogEdit/common/ui/EditActions.tsx:32
 #: src/features/grantAdmin/common/ui/GrantAdminBody.tsx:82
 #: src/features/logTick/common/ui/DeleteTickActions.tsx:17
-#: src/features/logTick/common/ui/TickForm.tsx:223
+#: src/features/logTick/common/ui/TickForm.tsx:226
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:276
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:450
 #: src/features/routeComment/common/ui/DeleteRouteCommentActions.tsx:17
@@ -566,6 +570,11 @@ msgstr "Choose a photo"
 #: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:42
 msgid "Choose a region"
 msgstr "Choose a region"
+
+#: src/features/offlineRegions/desktop/SaveRegionOfflineDialog.tsx:38
+#: src/features/offlineRegions/mobile/SaveRegionOfflineSheet.tsx:38
+msgid "Choose a region to save its sectors, routes and topos for offline use."
+msgstr "Choose a region to save its sectors, routes and topos for offline use."
 
 #: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:83
 msgid "Choose a region to see its sectors and QR codes."
@@ -628,7 +637,7 @@ msgstr "Close the editor"
 msgid "Collapse"
 msgstr "Collapse"
 
-#: src/features/logTick/common/ui/TickForm.tsx:197
+#: src/features/logTick/common/ui/TickForm.tsx:199
 msgid "Comment"
 msgstr "Comment"
 
@@ -682,8 +691,8 @@ msgstr "Conditions, read at the sector"
 msgid "Confirm. The crag-atlas icon appears with your other apps."
 msgstr "Confirm. The crag-atlas icon appears with your other apps."
 
-#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:37
-#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:61
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:45
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:46
 msgid "Connect to the internet to save or refresh a region."
 msgstr "Connect to the internet to save or refresh a region."
 
@@ -828,7 +837,7 @@ msgstr "Detailed"
 msgid "dew {0}°"
 msgstr "dew {0}°"
 
-#: src/features/logTick/common/ui/TickForm.tsx:183
+#: src/features/logTick/common/ui/TickForm.tsx:185
 msgid "Did you like it?"
 msgstr "Did you like it?"
 
@@ -1028,11 +1037,11 @@ msgstr "Has video"
 msgid "Hourly"
 msgstr "Hourly"
 
-#: src/features/logTick/common/ui/TickForm.tsx:153
+#: src/features/logTick/common/ui/TickForm.tsx:155
 msgid "How did you climb it?"
 msgstr "How did you climb it?"
 
-#: src/features/logTick/common/ui/TickForm.tsx:173
+#: src/features/logTick/common/ui/TickForm.tsx:175
 msgid "How hard is the route?"
 msgstr "How hard is the route?"
 
@@ -1134,7 +1143,7 @@ msgstr "Light"
 msgid "Location is blocked for this site. Allow it in the browser to see where you are."
 msgstr "Location is blocked for this site. Allow it in the browser to see where you are."
 
-#: src/features/logTick/common/ui/TickForm.tsx:238
+#: src/features/logTick/common/ui/TickForm.tsx:241
 #: src/pages/route/common/ui/LogTickButton.tsx:34
 #: src/pages/route/common/ui/RouteAscentsInvite.tsx:45
 msgid "Log ascent"
@@ -1144,7 +1153,7 @@ msgstr "Log ascent"
 msgid "Log every ascent and watch your grade pyramid build up"
 msgstr "Log every ascent and watch your grade pyramid build up"
 
-#: src/features/logTick/common/ui/TickForm.tsx:236
+#: src/features/logTick/common/ui/TickForm.tsx:239
 #: src/pages/route/common/ui/LogTickButton.tsx:26
 msgid "Log repeat"
 msgstr "Log repeat"
@@ -1242,6 +1251,10 @@ msgstr "No country found"
 msgid "No forecast is published that far ahead"
 msgstr "No forecast is published that far ahead"
 
+#: src/features/logTick/common/hooks/useLogTick.ts:62
+msgid "No internet connection. Log the ascent again once you are back online"
+msgstr "No internet connection. Log the ascent again once you are back online"
+
 #: src/pages/region/common/ui/SectorCard.tsx:88
 msgid "no matches"
 msgstr "no matches"
@@ -1251,12 +1264,9 @@ msgid "No QR code yet"
 msgstr "No QR code yet"
 
 #: src/features/offlineRegions/common/ui/OfflineRegionPicker.tsx:34
+#: src/features/offlineRegions/mobile/OfflineRegionList.tsx:65
 msgid "No region found"
 msgstr "No region found"
-
-#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:89
-msgid "No regions saved yet."
-msgstr "No regions saved yet."
 
 #: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:137
 msgid "No routes yet — add the first one, then drag it onto the photo it is drawn on."
@@ -1330,8 +1340,8 @@ msgstr "Offline"
 msgid "Offline mode"
 msgstr "Offline mode"
 
-#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:23
-#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:30
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:24
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:23
 msgid "Offline regions"
 msgstr "Offline regions"
 
@@ -1438,7 +1448,7 @@ msgstr "Partly sheltered"
 msgid "Partly sheltered: some routes stay dry"
 msgstr "Partly sheltered: some routes stay dry"
 
-#: src/features/logTick/common/ui/TickForm.tsx:166
+#: src/features/logTick/common/ui/TickForm.tsx:168
 msgid "Partner"
 msgstr "Partner"
 
@@ -1455,7 +1465,7 @@ msgstr "Photo {0}"
 msgid "Photo {position}"
 msgstr "Photo {position}"
 
-#: src/features/logTick/common/ui/TickForm.tsx:213
+#: src/features/logTick/common/ui/TickForm.tsx:215
 msgid "Photo and video"
 msgstr "Photo and video"
 
@@ -1557,7 +1567,7 @@ msgstr "Printed QR codes of its sectors stop working."
 msgid "Printed QR codes of this sector stop working."
 msgstr "Printed QR codes of this sector stop working."
 
-#: src/features/logTick/common/ui/TickForm.tsx:202
+#: src/features/logTick/common/ui/TickForm.tsx:204
 msgid "Private comment"
 msgstr "Private comment"
 
@@ -1734,18 +1744,19 @@ msgstr "Routes you have climbed here"
 #: src/features/avatarUpload/desktop/CropAvatarDialog.tsx:37
 #: src/features/avatarUpload/mobile/CropAvatarSheet.tsx:31
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:234
-#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:55
+#: src/features/logTick/common/ui/TickForm.tsx:237
 #: src/features/routeComment/desktop/EditRouteCommentDialog.tsx:29
 #: src/features/routeComment/mobile/EditRouteCommentSheet.tsx:24
 msgid "Save"
 msgstr "Save"
 
-#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:31
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:39
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:41
 msgid "Save a region"
 msgstr "Save a region"
 
-#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:33
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:27
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:26
 msgid "Save a region with its sectors, routes and topos to open it without a connection."
 msgstr "Save a region with its sectors, routes and topos to open it without a connection."
 
@@ -1774,7 +1785,7 @@ msgid "Saved for offline:"
 msgstr "Saved for offline:"
 
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:232
+#: src/features/logTick/common/ui/TickForm.tsx:235
 #: src/features/offlineRegions/mobile/OfflineCtaMobile.tsx:39
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:54
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:95
@@ -1797,6 +1808,10 @@ msgstr "Search a region, sector or route"
 #: src/features/grantAdmin/common/ui/GrantAdminBody.tsx:47
 msgid "Search by name or email"
 msgstr "Search by name or email"
+
+#: src/features/offlineRegions/mobile/OfflineRegionList.tsx:33
+msgid "Search regions"
+msgstr "Search regions"
 
 #: src/features/catalogSearch/common/ui/CatalogSearchBox.tsx:63
 msgid "Searching…"
@@ -1850,7 +1865,7 @@ msgstr "Sending code…"
 msgid "Share your experience"
 msgstr "Share your experience"
 
-#: src/features/logTick/common/ui/TickForm.tsx:192
+#: src/features/logTick/common/ui/TickForm.tsx:194
 msgid "Share your thoughts"
 msgstr "Share your thoughts"
 

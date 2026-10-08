@@ -184,11 +184,11 @@ msgstr "{sector} порожній, тож з каталогу зникне ли�
 msgid "{sector} leaves the catalog for everyone, together with its routes. Nothing is erased: everything climbers left stays, and you can bring the sector back from the archive."
 msgstr "{sector} зникне з каталогу для всіх разом зі своїми маршрутами. Нічого не стирається: усе, що лишили скелелази, залишається, а сектор можна повернути з архіву."
 
-#: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:53
+#: src/features/offlineRegions/common/hooks/useOfflineRegionsPanel.ts:52
 msgid "{size} · saved {savedAt}"
 msgstr "{size} · збережено {savedAt}"
 
-#: src/features/logTick/common/ui/TickForm.tsx:187
+#: src/features/logTick/common/ui/TickForm.tsx:189
 msgid "{stars} of 5"
 msgstr "{stars} з 5"
 
@@ -346,6 +346,10 @@ msgstr "Разом {0}: {1} → {2} ({3})"
 msgid "All ascents by grade"
 msgstr "Усі пролази за грейдом"
 
+#: src/features/offlineRegions/mobile/OfflineRegionList.tsx:67
+msgid "All regions are already saved"
+msgstr "Усі регіони вже збережено"
+
 #: src/pages/logbook/common/ui/LogbookFilterFields.tsx:65
 msgid "All styles"
 msgstr "Усі стилі"
@@ -411,7 +415,7 @@ msgstr "Дії з пролазом"
 msgid "Ascent deleted"
 msgstr "Пролаз видалено"
 
-#: src/features/logTick/common/hooks/useLogTick.ts:50
+#: src/features/logTick/common/hooks/useLogTick.ts:51
 msgid "Ascent logged"
 msgstr "Пролаз записано"
 
@@ -442,8 +446,8 @@ msgstr "Спроба"
 msgid "Auto"
 msgstr "Авто"
 
-#: src/features/offlineRegions/desktop/SaveRegionOfflineDialog.tsx:31
-#: src/features/offlineRegions/mobile/SaveRegionOfflineSheet.tsx:20
+#: src/features/offlineRegions/desktop/SaveRegionOfflineDialog.tsx:32
+#: src/features/offlineRegions/mobile/SaveRegionOfflineSheet.tsx:27
 msgid "Available offline"
 msgstr "Доступно офлайн"
 
@@ -522,7 +526,7 @@ msgstr "Навігаційний ланцюжок"
 #: src/features/catalogEdit/common/ui/EditActions.tsx:32
 #: src/features/grantAdmin/common/ui/GrantAdminBody.tsx:82
 #: src/features/logTick/common/ui/DeleteTickActions.tsx:17
-#: src/features/logTick/common/ui/TickForm.tsx:223
+#: src/features/logTick/common/ui/TickForm.tsx:226
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:276
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:450
 #: src/features/routeComment/common/ui/DeleteRouteCommentActions.tsx:17
@@ -566,6 +570,11 @@ msgstr "Оберіть фото"
 #: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:42
 msgid "Choose a region"
 msgstr "Оберіть регіон"
+
+#: src/features/offlineRegions/desktop/SaveRegionOfflineDialog.tsx:38
+#: src/features/offlineRegions/mobile/SaveRegionOfflineSheet.tsx:38
+msgid "Choose a region to save its sectors, routes and topos for offline use."
+msgstr "Оберіть регіон, щоб зберегти його сектори, маршрути й топо для роботи офлайн."
 
 #: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:83
 msgid "Choose a region to see its sectors and QR codes."
@@ -628,7 +637,7 @@ msgstr "Закрити редагування"
 msgid "Collapse"
 msgstr "Згорнути"
 
-#: src/features/logTick/common/ui/TickForm.tsx:197
+#: src/features/logTick/common/ui/TickForm.tsx:199
 msgid "Comment"
 msgstr "Коментар"
 
@@ -682,8 +691,8 @@ msgstr "Умови, зчитані за координатами сектора"
 msgid "Confirm. The crag-atlas icon appears with your other apps."
 msgstr "Підтверди. Іконка crag-atlas зʼявиться поруч з іншими додатками."
 
-#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:37
-#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:61
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:45
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:46
 msgid "Connect to the internet to save or refresh a region."
 msgstr "Підключіться до інтернету, щоб зберегти або оновити регіон."
 
@@ -828,7 +837,7 @@ msgstr "Детально"
 msgid "dew {0}°"
 msgstr "роса {0}°"
 
-#: src/features/logTick/common/ui/TickForm.tsx:183
+#: src/features/logTick/common/ui/TickForm.tsx:185
 msgid "Did you like it?"
 msgstr "Як тобі маршрут?"
 
@@ -1028,11 +1037,11 @@ msgstr "Є відео"
 msgid "Hourly"
 msgstr "Погодинно"
 
-#: src/features/logTick/common/ui/TickForm.tsx:153
+#: src/features/logTick/common/ui/TickForm.tsx:155
 msgid "How did you climb it?"
 msgstr "Як ти це проліз?"
 
-#: src/features/logTick/common/ui/TickForm.tsx:173
+#: src/features/logTick/common/ui/TickForm.tsx:175
 msgid "How hard is the route?"
 msgstr "Складність маршруту"
 
@@ -1134,7 +1143,7 @@ msgstr "Світла"
 msgid "Location is blocked for this site. Allow it in the browser to see where you are."
 msgstr "Геолокацію для цього сайту заблоковано. Дозволь її в браузері, щоб бачити, де ти."
 
-#: src/features/logTick/common/ui/TickForm.tsx:238
+#: src/features/logTick/common/ui/TickForm.tsx:241
 #: src/pages/route/common/ui/LogTickButton.tsx:34
 #: src/pages/route/common/ui/RouteAscentsInvite.tsx:45
 msgid "Log ascent"
@@ -1144,7 +1153,7 @@ msgstr "Відмітити пролаз"
 msgid "Log every ascent and watch your grade pyramid build up"
 msgstr "Записуй кожен пролаз і дивись, як росте твоя піраміда категорій"
 
-#: src/features/logTick/common/ui/TickForm.tsx:236
+#: src/features/logTick/common/ui/TickForm.tsx:239
 #: src/pages/route/common/ui/LogTickButton.tsx:26
 msgid "Log repeat"
 msgstr "Записати повтор"
@@ -1242,6 +1251,10 @@ msgstr "Країну не знайдено"
 msgid "No forecast is published that far ahead"
 msgstr "Прогнозу на таку далеку дату ще немає"
 
+#: src/features/logTick/common/hooks/useLogTick.ts:62
+msgid "No internet connection. Log the ascent again once you are back online"
+msgstr "Немає інтернету. Залогуй пролаз ще раз, коли з'явиться з'єднання"
+
 #: src/pages/region/common/ui/SectorCard.tsx:88
 msgid "no matches"
 msgstr "немає збігів"
@@ -1251,12 +1264,9 @@ msgid "No QR code yet"
 msgstr "QR-коду ще немає"
 
 #: src/features/offlineRegions/common/ui/OfflineRegionPicker.tsx:34
+#: src/features/offlineRegions/mobile/OfflineRegionList.tsx:65
 msgid "No region found"
 msgstr "Регіон не знайдено"
-
-#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:89
-msgid "No regions saved yet."
-msgstr "Збережених регіонів поки немає."
 
 #: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:137
 msgid "No routes yet — add the first one, then drag it onto the photo it is drawn on."
@@ -1330,8 +1340,8 @@ msgstr "Офлайн"
 msgid "Offline mode"
 msgstr "Офлайн-режим"
 
-#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:23
-#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:30
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:24
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:23
 msgid "Offline regions"
 msgstr "Офлайн-регіони"
 
@@ -1438,7 +1448,7 @@ msgstr "Частково вкритий"
 msgid "Partly sheltered: some routes stay dry"
 msgstr "Частково: частина маршрутів лишається сухою"
 
-#: src/features/logTick/common/ui/TickForm.tsx:166
+#: src/features/logTick/common/ui/TickForm.tsx:168
 msgid "Partner"
 msgstr "Партнер"
 
@@ -1455,7 +1465,7 @@ msgstr "Фото {0}"
 msgid "Photo {position}"
 msgstr "Фото {position}"
 
-#: src/features/logTick/common/ui/TickForm.tsx:213
+#: src/features/logTick/common/ui/TickForm.tsx:215
 msgid "Photo and video"
 msgstr "Фото та відео"
 
@@ -1557,7 +1567,7 @@ msgstr "Надруковані QR-коди його секторів перес�
 msgid "Printed QR codes of this sector stop working."
 msgstr "Надруковані QR-коди цього сектора перестануть працювати."
 
-#: src/features/logTick/common/ui/TickForm.tsx:202
+#: src/features/logTick/common/ui/TickForm.tsx:204
 msgid "Private comment"
 msgstr "Приватний коментар"
 
@@ -1734,18 +1744,19 @@ msgstr "Траси, які ви тут пролізли"
 #: src/features/avatarUpload/desktop/CropAvatarDialog.tsx:37
 #: src/features/avatarUpload/mobile/CropAvatarSheet.tsx:31
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:234
-#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:55
+#: src/features/logTick/common/ui/TickForm.tsx:237
 #: src/features/routeComment/desktop/EditRouteCommentDialog.tsx:29
 #: src/features/routeComment/mobile/EditRouteCommentSheet.tsx:24
 msgid "Save"
 msgstr "Зберегти"
 
-#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:31
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:39
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:41
 msgid "Save a region"
 msgstr "Зберегти регіон"
 
-#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:33
+#: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:27
+#: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:26
 msgid "Save a region with its sectors, routes and topos to open it without a connection."
 msgstr "Збережіть регіон із секторами, маршрутами й топо, щоб відкривати його без інтернету."
 
@@ -1774,7 +1785,7 @@ msgid "Saved for offline:"
 msgstr "Збережені для офлайну:"
 
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:232
+#: src/features/logTick/common/ui/TickForm.tsx:235
 #: src/features/offlineRegions/mobile/OfflineCtaMobile.tsx:39
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:54
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:95
@@ -1797,6 +1808,10 @@ msgstr "Пошук регіону, сектора або маршруту"
 #: src/features/grantAdmin/common/ui/GrantAdminBody.tsx:47
 msgid "Search by name or email"
 msgstr "Пошук за іменем або email"
+
+#: src/features/offlineRegions/mobile/OfflineRegionList.tsx:33
+msgid "Search regions"
+msgstr "Пошук регіонів"
 
 #: src/features/catalogSearch/common/ui/CatalogSearchBox.tsx:63
 msgid "Searching…"
@@ -1850,7 +1865,7 @@ msgstr "Надсилаємо код…"
 msgid "Share your experience"
 msgstr "Ділися досвідом"
 
-#: src/features/logTick/common/ui/TickForm.tsx:192
+#: src/features/logTick/common/ui/TickForm.tsx:194
 msgid "Share your thoughts"
 msgstr "Що скажеш?"
 
