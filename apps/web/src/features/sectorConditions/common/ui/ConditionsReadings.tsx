@@ -26,7 +26,7 @@ export const ConditionsReadings = ({ hour, rainMm }: Props) => {
           isMuted
           variant="body2"
           hint={t`Temperature`}
-          icon={<ThermostatIcon fontSize="small" color="warning" />}
+          icon={<ThermostatIcon fontSize="small" color="disabled" />}
         >
           <Trans>{Math.round(hour.temperatureC)} °C</Trans>
         </IconValue>
@@ -39,9 +39,9 @@ export const ConditionsReadings = ({ hour, rainMm }: Props) => {
           icon={
             precipitationKindOf(hour.weatherCode, hour.precipitationMm) ===
             'snow' ? (
-              <AcUnitIcon fontSize="small" color="info" />
+              <AcUnitIcon fontSize="small" color="disabled" />
             ) : (
-              <GrainIcon fontSize="small" color="info" />
+              <GrainIcon fontSize="small" color="disabled" />
             )
           }
         >
@@ -53,7 +53,7 @@ export const ConditionsReadings = ({ hour, rainMm }: Props) => {
           isMuted
           variant="body2"
           hint={t`Humidity`}
-          icon={<WaterDropIcon fontSize="small" color="info" />}
+          icon={<WaterDropIcon fontSize="small" color="disabled" />}
         >
           <Trans>{Math.round(hour.humidityPct)}%</Trans>
         </IconValue>

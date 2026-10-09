@@ -33,7 +33,7 @@ interface Field {
 const FIELDS: Field[] = [
   {
     name: 'temperatureC',
-    icon: <ThermostatIcon fontSize="small" color="warning" />,
+    icon: <ThermostatIcon fontSize="small" color="disabled" />,
     label: (t) => t`Temperature`,
     unit: (t) => t`°C`,
     min: -40,
@@ -41,7 +41,7 @@ const FIELDS: Field[] = [
   },
   {
     name: 'humidityPct',
-    icon: <WaterDropIcon fontSize="small" color="info" />,
+    icon: <WaterDropIcon fontSize="small" color="disabled" />,
     label: (t) => t`Humidity`,
     unit: (t) => t`%`,
     min: 0,
@@ -164,7 +164,7 @@ export const ConditionsSection = ({
             <IconValue
               isMuted
               variant="caption"
-              icon={<WaterDropOutlinedIcon fontSize="small" color="info" />}
+              icon={<WaterDropOutlinedIcon fontSize="small" color="disabled" />}
             >
               <Trans>dew {conditions.dewPointC}°</Trans>
             </IconValue>
@@ -173,7 +173,7 @@ export const ConditionsSection = ({
             <IconValue
               isMuted
               variant="caption"
-              icon={<GrainIcon fontSize="small" color="info" />}
+              icon={<GrainIcon fontSize="small" color="disabled" />}
             >
               <Trans>{conditions.precipitation24hMm} mm / 24 h</Trans>
             </IconValue>
