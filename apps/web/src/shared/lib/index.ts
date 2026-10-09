@@ -36,6 +36,7 @@ export {
 } from './mediaLink';
 export { observedHour } from './observedHour';
 export { parseCoords } from './parseCoords';
+export { createPersistedStore } from './persistedStore';
 export { printVersion } from './printVersion';
 export { sleep } from './sleep';
 export { toast } from './toast';
@@ -45,6 +46,14 @@ export {
   isNameLatin,
   toLatin
 } from './toLatin';
+export type { UsageState } from './usageState';
+export {
+  getUsageState,
+  recordPromptShown,
+  recordUsageSession,
+  subscribeUsageState,
+  wasPromptShownToday
+} from './usageState';
 export { useCatalogSelection } from './useCatalogSelection';
 export {
   SEARCH_DEBOUNCE_MS,

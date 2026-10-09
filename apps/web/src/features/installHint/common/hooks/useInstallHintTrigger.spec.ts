@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const DAY = 24 * 60 * 60 * 1000;
 const STORAGE_KEY = 'crag-atlas:install-hint';
+const USAGE_KEY = 'crag-atlas:usage';
 
 const openModal = vi.fn();
 const getOpenedModals = vi.fn((): string[] => []);
@@ -16,7 +17,7 @@ vi.mock('@web/app/providers', () => ({
 
 const seedReturning = () =>
   localStorage.setItem(
-    STORAGE_KEY,
+    USAGE_KEY,
     JSON.stringify({ firstSeenAt: Date.now() - 2 * DAY, sessionsCount: 1 })
   );
 
@@ -62,13 +63,10 @@ describe('useInstallHintTrigger', () => {
   });
 
   it('opens on the next visit after a first-visit moment', async () => {
+    seedReturning();
     localStorage.setItem(
       STORAGE_KEY,
-      JSON.stringify({
-        firstSeenAt: Date.now() - 2 * DAY,
-        sessionsCount: 1,
-        momentAt: Date.now() - 2 * DAY
-      })
+      JSON.stringify({ momentAt: Date.now() - 2 * DAY })
     );
     const { useInstallHintTrigger: useTrigger } = await import(
       './useInstallHintTrigger'
@@ -115,6 +113,27 @@ describe('useInstallHintTrigger', () => {
   it('waits while another sheet is up', async () => {
     seedReturning();
     getOpenedModals.mockReturnValue(['LOG_TICK']);
+    const { useInstallHintTrigger: useTrigger } = await import(
+      './useInstallHintTrigger'
+    );
+    const { recordInstallHintMoment: recordMoment } = await import('../lib');
+    const { rerender } = renderHook(() => useTrigger());
+    recordMoment();
+    rerender();
+
+    expect(openModal).not.toHaveBeenCalled();
+  });
+
+  it('waits a day after another prompt', async () => {
+    seedReturning();
+    localStorage.setItem(
+      USAGE_KEY,
+      JSON.stringify({
+        firstSeenAt: Date.now() - 2 * DAY,
+        sessionsCount: 1,
+        lastPromptAt: Date.now()
+      })
+    );
     const { useInstallHintTrigger: useTrigger } = await import(
       './useInstallHintTrigger'
     );

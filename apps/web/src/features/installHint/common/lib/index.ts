@@ -2,7 +2,6 @@ export {
   getInstallHintState,
   markInstallHintInstalled,
   recordInstallHintMoment,
-  recordInstallHintSession,
   recordInstallHintShown,
   shouldShowInstallHint,
   subscribeInstallHintState
