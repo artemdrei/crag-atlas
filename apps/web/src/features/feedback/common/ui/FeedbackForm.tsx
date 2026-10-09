@@ -51,10 +51,17 @@ export const FeedbackForm = ({
   const messageLabel =
     rating !== null && rating < PRAISE_FROM
       ? t`What could be better?`
-      : t`What do you like?`;
+      : t`Share your impressions and ideas`;
 
   return (
     <FormStyled onSubmit={handleSubmit}>
+      <Typography variant="body2" color="text.secondary">
+        <Trans>
+          Your feedback truly matters to us. We read every message and build
+          Crag Atlas together with climbers, so it becomes your best partner at
+          the crag.
+        </Trans>
+      </Typography>
       <RatingStyled>
         <Typography variant="body1">
           <Trans>How do you find Crag Atlas?</Trans>

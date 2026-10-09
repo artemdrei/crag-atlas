@@ -8,6 +8,7 @@ import { useModal, useUser } from '@web/app/providers';
 import { isStandalone, toast, useIsOnline } from '@web/shared/lib';
 
 import type { FeedbackDraft } from '../entities';
+import { markFeedbackSent } from '../lib';
 import { useApiCreateFeedback } from './useApiCreateFeedback';
 
 const CLOSE_AFTER_SENT_MS = 1500;
@@ -30,6 +31,7 @@ export const useSendFeedback = () => {
         name: 'Feedback Sent',
         props: { rating: payload.rating, has_message: !!payload.message }
       });
+      markFeedbackSent();
       setIsSent(true);
     }
   });

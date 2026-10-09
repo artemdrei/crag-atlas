@@ -192,7 +192,7 @@ msgstr "{sector} зникне з каталогу для всіх разом з�
 msgid "{size} · saved {savedAt}"
 msgstr "{size} · збережено {savedAt}"
 
-#: src/features/feedback/common/ui/FeedbackForm.tsx:65
+#: src/features/feedback/common/ui/FeedbackForm.tsx:72
 #: src/features/logTick/common/ui/TickForm.tsx:193
 msgid "{stars} of 5"
 msgstr "{stars} з 5"
@@ -538,7 +538,7 @@ msgstr "Навігаційний ланцюжок"
 #: src/features/avatarUpload/desktop/CropAvatarDialog.tsx:29
 #: src/features/avatarUpload/mobile/CropAvatarSheet.tsx:23
 #: src/features/catalogEdit/common/ui/EditActions.tsx:32
-#: src/features/feedback/common/ui/FeedbackForm.tsx:98
+#: src/features/feedback/common/ui/FeedbackForm.tsx:105
 #: src/features/grantAdmin/common/ui/GrantAdminBody.tsx:82
 #: src/features/logTick/common/ui/DeleteTickActions.tsx:17
 #: src/features/logTick/common/ui/TickForm.tsx:231
@@ -952,7 +952,7 @@ msgstr "Редагувати"
 msgid "Edit comment"
 msgstr "Редагувати коментар"
 
-#: src/features/feedback/common/ui/FeedbackForm.tsx:82
+#: src/features/feedback/common/ui/FeedbackForm.tsx:89
 msgid "Email, if you want a reply"
 msgstr "Email, якщо хочете відповідь"
 
@@ -1110,7 +1110,7 @@ msgstr "Погодинно"
 msgid "How did you climb it?"
 msgstr "Як ти це проліз?"
 
-#: src/features/feedback/common/ui/FeedbackForm.tsx:60
+#: src/features/feedback/common/ui/FeedbackForm.tsx:67
 msgid "How do you find Crag Atlas?"
 msgstr "Як вам Crag Atlas?"
 
@@ -1348,7 +1348,7 @@ msgstr "Прогнозу на таку далеку дату ще немає"
 msgid "No internet connection. Log the ascent again once you are back online"
 msgstr "Немає інтернету. Залогуй пролаз ще раз, коли з'явиться з'єднання"
 
-#: src/features/feedback/common/hooks/useSendFeedback.ts:51
+#: src/features/feedback/common/hooks/useSendFeedback.ts:53
 msgid "No internet connection. Send your feedback again once you are back online"
 msgstr "Немає з'єднання з інтернетом. Надішліть відгук ще раз, коли знову будете онлайн"
 
@@ -1980,7 +1980,7 @@ msgstr "Вибрати всі сектори"
 msgid "Selected: {0}"
 msgstr "Обрано: {0}"
 
-#: src/features/feedback/common/ui/FeedbackForm.tsx:105
+#: src/features/feedback/common/ui/FeedbackForm.tsx:112
 msgid "Send"
 msgstr "Надіслати"
 
@@ -1992,13 +1992,17 @@ msgstr "Залишити відгук"
 msgid "Sending code…"
 msgstr "Надсилаємо код…"
 
-#: src/features/feedback/common/ui/FeedbackForm.tsx:105
+#: src/features/feedback/common/ui/FeedbackForm.tsx:112
 msgid "Sending…"
 msgstr "Надсилаємо…"
 
 #: src/pages/login/common/hooks/useLoginBenefits.ts:32
 msgid "Share your experience"
 msgstr "Ділися досвідом"
+
+#: src/features/feedback/common/ui/FeedbackForm.tsx:54
+msgid "Share your impressions and ideas"
+msgstr "Поділіться враженнями та пропозиціями"
 
 #: src/features/logTick/common/ui/TickForm.tsx:198
 msgid "Share your thoughts"
@@ -2341,8 +2345,8 @@ msgid "What could be better?"
 msgstr "Що можна покращити?"
 
 #: src/features/feedback/common/ui/FeedbackForm.tsx:54
-msgid "What do you like?"
-msgstr "Що вам подобається?"
+#~ msgid "What do you like?"
+#~ msgstr "Що вам подобається?"
 
 #: src/pages/adminFeedback/desktop/ui/FeedbackTable.tsx:28
 msgid "When"
@@ -2433,6 +2437,10 @@ msgstr "Твій досвід допоможе іншим оцінити які�
 #: src/features/feedback/common/ui/FeedbackSent.tsx:13
 msgid "Your feedback has been sent."
 msgstr "Ваш відгук надіслано."
+
+#: src/features/feedback/common/ui/FeedbackForm.tsx:59
+msgid "Your feedback truly matters to us. We read every message and build Crag Atlas together with climbers, so it becomes your best partner at the crag."
+msgstr "Ваш відгук для нас справді важливий. Ми читаємо кожне повідомлення і будуємо Crag Atlas разом зі скелелазами, щоб він став вашим найкращим помічником на скелях."
 
 #: src/features/logTick/common/ui/GradeFeelChoice.tsx:44
 msgid "Your grade"

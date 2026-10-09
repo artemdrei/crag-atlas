@@ -65,7 +65,9 @@ describe('FeedbackForm', () => {
     expect(screen.getByLabelText('What could be better?')).toBeDefined();
 
     fireEvent.click(screen.getByLabelText('5 of 5'));
-    expect(screen.getByLabelText('What do you like?')).toBeDefined();
+    expect(
+      screen.getByLabelText('Share your impressions and ideas')
+    ).toBeDefined();
   });
 
   it('offers a guest an email field only once they have written something', () => {
@@ -73,9 +75,12 @@ describe('FeedbackForm', () => {
 
     expect(screen.queryByLabelText(/Email/)).toBeNull();
 
-    fireEvent.change(screen.getByLabelText('What do you like?'), {
-      target: { value: 'The topos are great' }
-    });
+    fireEvent.change(
+      screen.getByLabelText('Share your impressions and ideas'),
+      {
+        target: { value: 'The topos are great' }
+      }
+    );
 
     expect(screen.getByLabelText(/Email/)).toBeDefined();
   });

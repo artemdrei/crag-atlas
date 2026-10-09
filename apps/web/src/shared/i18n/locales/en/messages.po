@@ -192,7 +192,7 @@ msgstr "{sector} leaves the catalog for everyone, together with its routes. Noth
 msgid "{size} · saved {savedAt}"
 msgstr "{size} · saved {savedAt}"
 
-#: src/features/feedback/common/ui/FeedbackForm.tsx:65
+#: src/features/feedback/common/ui/FeedbackForm.tsx:72
 #: src/features/logTick/common/ui/TickForm.tsx:193
 msgid "{stars} of 5"
 msgstr "{stars} of 5"
@@ -538,7 +538,7 @@ msgstr "Breadcrumb"
 #: src/features/avatarUpload/desktop/CropAvatarDialog.tsx:29
 #: src/features/avatarUpload/mobile/CropAvatarSheet.tsx:23
 #: src/features/catalogEdit/common/ui/EditActions.tsx:32
-#: src/features/feedback/common/ui/FeedbackForm.tsx:98
+#: src/features/feedback/common/ui/FeedbackForm.tsx:105
 #: src/features/grantAdmin/common/ui/GrantAdminBody.tsx:82
 #: src/features/logTick/common/ui/DeleteTickActions.tsx:17
 #: src/features/logTick/common/ui/TickForm.tsx:231
@@ -952,7 +952,7 @@ msgstr "Edit"
 msgid "Edit comment"
 msgstr "Edit comment"
 
-#: src/features/feedback/common/ui/FeedbackForm.tsx:82
+#: src/features/feedback/common/ui/FeedbackForm.tsx:89
 msgid "Email, if you want a reply"
 msgstr "Email, if you want a reply"
 
@@ -1110,7 +1110,7 @@ msgstr "Hourly"
 msgid "How did you climb it?"
 msgstr "How did you climb it?"
 
-#: src/features/feedback/common/ui/FeedbackForm.tsx:60
+#: src/features/feedback/common/ui/FeedbackForm.tsx:67
 msgid "How do you find Crag Atlas?"
 msgstr "How do you find Crag Atlas?"
 
@@ -1348,7 +1348,7 @@ msgstr "No forecast is published that far ahead"
 msgid "No internet connection. Log the ascent again once you are back online"
 msgstr "No internet connection. Log the ascent again once you are back online"
 
-#: src/features/feedback/common/hooks/useSendFeedback.ts:51
+#: src/features/feedback/common/hooks/useSendFeedback.ts:53
 msgid "No internet connection. Send your feedback again once you are back online"
 msgstr "No internet connection. Send your feedback again once you are back online"
 
@@ -1980,7 +1980,7 @@ msgstr "Select every sector"
 msgid "Selected: {0}"
 msgstr "Selected: {0}"
 
-#: src/features/feedback/common/ui/FeedbackForm.tsx:105
+#: src/features/feedback/common/ui/FeedbackForm.tsx:112
 msgid "Send"
 msgstr "Send"
 
@@ -1992,13 +1992,17 @@ msgstr "Send feedback"
 msgid "Sending code…"
 msgstr "Sending code…"
 
-#: src/features/feedback/common/ui/FeedbackForm.tsx:105
+#: src/features/feedback/common/ui/FeedbackForm.tsx:112
 msgid "Sending…"
 msgstr "Sending…"
 
 #: src/pages/login/common/hooks/useLoginBenefits.ts:32
 msgid "Share your experience"
 msgstr "Share your experience"
+
+#: src/features/feedback/common/ui/FeedbackForm.tsx:54
+msgid "Share your impressions and ideas"
+msgstr "Share your impressions and ideas"
 
 #: src/features/logTick/common/ui/TickForm.tsx:198
 msgid "Share your thoughts"
@@ -2341,8 +2345,8 @@ msgid "What could be better?"
 msgstr "What could be better?"
 
 #: src/features/feedback/common/ui/FeedbackForm.tsx:54
-msgid "What do you like?"
-msgstr "What do you like?"
+#~ msgid "What do you like?"
+#~ msgstr "What do you like?"
 
 #: src/pages/adminFeedback/desktop/ui/FeedbackTable.tsx:28
 msgid "When"
@@ -2433,6 +2437,10 @@ msgstr "Your experience helps others judge the quality of the line — and helps
 #: src/features/feedback/common/ui/FeedbackSent.tsx:13
 msgid "Your feedback has been sent."
 msgstr "Your feedback has been sent."
+
+#: src/features/feedback/common/ui/FeedbackForm.tsx:59
+msgid "Your feedback truly matters to us. We read every message and build Crag Atlas together with climbers, so it becomes your best partner at the crag."
+msgstr "Your feedback truly matters to us. We read every message and build Crag Atlas together with climbers, so it becomes your best partner at the crag."
 
 #: src/features/logTick/common/ui/GradeFeelChoice.tsx:44
 msgid "Your grade"
