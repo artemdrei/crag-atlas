@@ -1,12 +1,18 @@
 import { useEffect, useSyncExternalStore } from 'react';
 
 import { useModal, useUser } from '@web/app/providers';
-import { isStandalone } from '@web/shared/lib';
+import {
+  getUsageState,
+  isStandalone,
+  recordPromptShown,
+  recordUsageSession,
+  subscribeUsageState,
+  wasPromptShownToday
+} from '@web/shared/lib';
 
 import {
   getInstallHintState,
   markInstallHintInstalled,
-  recordInstallHintSession,
   recordInstallHintShown,
   shouldShowInstallHint,
   subscribeInstallHintState
@@ -19,17 +25,19 @@ export const useInstallHintTrigger = () => {
     subscribeInstallHintState,
     getInstallHintState
   );
+  const usage = useSyncExternalStore(subscribeUsageState, getUsageState);
 
   useEffect(() => {
     if (isStandalone()) markInstallHintInstalled();
-    else recordInstallHintSession();
+    else recordUsageSession();
   }, []);
 
   useEffect(() => {
-    if (!isAuthenticated || !shouldShowInstallHint(state)) return;
-    if (getOpenedModals().length) return;
+    if (!isAuthenticated || !shouldShowInstallHint(state, usage)) return;
+    if (wasPromptShownToday(usage) || getOpenedModals().length) return;
 
     recordInstallHintShown();
+    recordPromptShown();
     openModal('INSTALL_HINT');
-  }, [isAuthenticated, state, openModal, getOpenedModals]);
+  }, [isAuthenticated, state, usage, openModal, getOpenedModals]);
 };

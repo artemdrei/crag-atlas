@@ -46,7 +46,8 @@ test('a region cannot be created until it is complete', async ({ page }) => {
   const submit = form.getByRole('button', { name: 'Add region' });
 
   await test.step('the button waits for a name', async () => {
-    await form.getByRole('textbox', { name: 'Rock type' }).fill('Limestone');
+    await form.getByRole('combobox', { name: 'Rock type' }).click();
+    await page.getByRole('option', { name: 'Sandstone' }).click();
     await expect(submit).toBeDisabled();
   });
 

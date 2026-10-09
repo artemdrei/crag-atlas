@@ -2495,7 +2495,16 @@
             "description": "ISO 3166-1 alpha-2 code; null until an admin picks one"
           },
           "rockType": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "limestone",
+              "sandstone",
+              "granite",
+              "gneiss",
+              "basalt",
+              "conglomerate",
+              "other"
+            ]
           },
           "lat": {
             "type": "number",
@@ -2602,7 +2611,15 @@
           },
           "rockType": {
             "type": "string",
-            "nullable": true
+            "enum": [
+              "limestone",
+              "sandstone",
+              "granite",
+              "gneiss",
+              "basalt",
+              "conglomerate",
+              "other"
+            ]
           },
           "lat": {
             "type": "number",
@@ -2632,7 +2649,16 @@
             "description": "ISO 3166-1 alpha-2 code"
           },
           "rockType": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "limestone",
+              "sandstone",
+              "granite",
+              "gneiss",
+              "basalt",
+              "conglomerate",
+              "other"
+            ]
           },
           "photoUrl": {
             "type": "string",
@@ -4456,7 +4482,8 @@
           },
           "precipitationMm": {
             "type": "number",
-            "nullable": true
+            "nullable": true,
+            "description": "What the scoring took as fallen: the gauge, or the least a rain code can mean when the gauge rounds to nothing"
           },
           "humidityPct": {
             "type": "number",

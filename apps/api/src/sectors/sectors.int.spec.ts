@@ -20,7 +20,7 @@ describe('a region with more routes than one request returns', () => {
       .from('regions')
       .insert({
         name: `INT-Paged-${crypto.randomUUID()}`,
-        rock_type: 'Limestone'
+        rock_type: 'limestone'
       })
       .select('id')
       .single();

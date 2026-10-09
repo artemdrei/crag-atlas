@@ -1,4 +1,5 @@
 import { Trans, useLingui } from '@lingui/react/macro';
+import AcUnitIcon from '@mui/icons-material/AcUnit';
 import AirIcon from '@mui/icons-material/Air';
 import GrainIcon from '@mui/icons-material/Grain';
 import ThermostatIcon from '@mui/icons-material/Thermostat';
@@ -8,7 +9,7 @@ import { styled } from '@mui/material/styles';
 import { IconValue } from '@web/shared/ui';
 
 import type { ConditionsHour } from '../entities';
-import { toKmh } from '../lib';
+import { precipitationKindOf, toKmh } from '../lib';
 
 export interface Props {
   hour: ConditionsHour;
@@ -25,7 +26,7 @@ export const ConditionsReadings = ({ hour, rainMm }: Props) => {
           isMuted
           variant="body2"
           hint={t`Temperature`}
-          icon={<ThermostatIcon fontSize="small" color="warning" />}
+          icon={<ThermostatIcon fontSize="small" color="disabled" />}
         >
           <Trans>{Math.round(hour.temperatureC)} °C</Trans>
         </IconValue>
@@ -35,7 +36,14 @@ export const ConditionsReadings = ({ hour, rainMm }: Props) => {
           isMuted
           variant="body2"
           hint={t`Precipitation over the day`}
-          icon={<GrainIcon fontSize="small" color="info" />}
+          icon={
+            precipitationKindOf(hour.weatherCode, hour.precipitationMm) ===
+            'snow' ? (
+              <AcUnitIcon fontSize="small" color="disabled" />
+            ) : (
+              <GrainIcon fontSize="small" color="disabled" />
+            )
+          }
         >
           <Trans>{rainMm} mm</Trans>
         </IconValue>
@@ -45,7 +53,7 @@ export const ConditionsReadings = ({ hour, rainMm }: Props) => {
           isMuted
           variant="body2"
           hint={t`Humidity`}
-          icon={<WaterDropIcon fontSize="small" color="info" />}
+          icon={<WaterDropIcon fontSize="small" color="disabled" />}
         >
           <Trans>{Math.round(hour.humidityPct)}%</Trans>
         </IconValue>

@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
 import { useLingui } from '@lingui/react/macro';
-import { styled, useTheme } from '@mui/material/styles';
+import { alpha, styled, useTheme } from '@mui/material/styles';
 import {
   GeolocateControl,
   LngLatBounds,
@@ -339,6 +339,21 @@ const ShellStyled = styled('div', {
 
   .maplibregl-canvas {
     cursor: ${({ isEditing }) => (isEditing ? 'crosshair' : 'grab')};
+  }
+
+  .maplibregl-ctrl-attrib {
+    background-color: ${({ theme }) =>
+      alpha(theme.palette.background.paper, 0.6)};
+    color: ${({ theme }) => theme.palette.text.secondary};
+    font-size: 10px;
+  }
+
+  .maplibregl-ctrl-attrib a {
+    color: inherit;
+  }
+
+  .maplibregl-ctrl-attrib-button {
+    opacity: 0.6;
   }
 
   .maplibregl-marker.${SELECTED_CLASS} svg {

@@ -4,7 +4,7 @@ import type { ModalRegistration } from '@web/app/providers';
 
 import './types';
 
-export { FeedbackButton } from './common';
+export { FeedbackButton, FeedbackPromptTrigger } from './common';
 
 export const feedbackDesktopRegistrations: ModalRegistration[] = [
   {

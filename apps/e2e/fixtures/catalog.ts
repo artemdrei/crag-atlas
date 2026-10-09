@@ -66,7 +66,7 @@ export const makeRegion = (name: string, nameLocal?: string) =>
       name: `${prefix}-${name}`,
       nameLocal: nameLocal ?? `${prefix}-${name}`,
       country: 'UA',
-      rockType: 'Limestone',
+      rockType: 'limestone',
       lat: 48.68291,
       lng: 26.56402
     })

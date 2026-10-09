@@ -6,9 +6,11 @@ import {
   bestWindow,
   dayScore,
   dryingMm,
+  fallingMm,
   rainScore,
   scoreHour,
-  sunShadeScore
+  sunShadeScore,
+  surfaceMm
 } from './conditions.scoring';
 
 const hour = (overrides: Partial<HourInput> = {}): HourInput => ({
@@ -34,14 +36,33 @@ describe('rain', () => {
 
   it('dries faster in wind and slower in damp cold air', () => {
     expect(
-      dryingMm({ temperatureC: 15, humidityPct: 55, windSpeedMs: 2 })
-    ).toBe(0.5);
+      dryingMm(
+        { temperatureC: 15, humidityPct: 55, windSpeedMs: 2 },
+        'limestone'
+      )
+    ).toBe(0.3);
     expect(
-      dryingMm({ temperatureC: 15, humidityPct: 55, windSpeedMs: 6 })
-    ).toBe(0.65);
+      dryingMm(
+        { temperatureC: 15, humidityPct: 55, windSpeedMs: 6 },
+        'limestone'
+      )
+    ).toBeCloseTo(0.39);
     expect(
-      dryingMm({ temperatureC: 3, humidityPct: 90, windSpeedMs: 2 })
-    ).toBeCloseTo(0.15);
+      dryingMm(
+        { temperatureC: 3, humidityPct: 90, windSpeedMs: 2 },
+        'limestone'
+      )
+    ).toBeCloseTo(0.09);
+  });
+
+  it('dries by what the wall is made of', () => {
+    const mild = { temperatureC: 15, humidityPct: 55, windSpeedMs: 2 };
+
+    expect(dryingMm(mild, 'granite')).toBeCloseTo(0.42);
+    expect(dryingMm(mild, 'sandstone')).toBeCloseTo(0.15);
+    expect(dryingMm(mild, 'other')).toBe(0.3);
+    expect(surfaceMm('granite')).toBeCloseTo(2.1);
+    expect(surfaceMm('sandstone')).toBeCloseTo(4.8);
   });
 
   it('keeps a sheltered wall climbable in the rain', () => {
@@ -50,6 +71,15 @@ describe('rain', () => {
     expect(rainScore(pouring, 'open')).toBe(0);
     expect(rainScore(pouring, 'partial')).toBe(60);
     expect(rainScore(pouring, 'full')).toBe(95);
+  });
+
+  it('reads a rain code as rain when the gauge shows nothing', () => {
+    expect(fallingMm({ precipitationMm: 0, weatherCode: 61 })).toBe(0.2);
+    expect(fallingMm({ precipitationMm: 0.4, weatherCode: 61 })).toBe(0.4);
+    expect(fallingMm({ precipitationMm: 0, weatherCode: 3 })).toBe(0);
+    expect(
+      rainScore(hour({ precipitationMm: 0, weatherCode: 61 }), 'open')
+    ).toBe(10);
   });
 
   it('lets a roof seep after a long soaking', () => {
@@ -156,14 +186,22 @@ describe('an hour', () => {
 describe('day', () => {
   const empty = Array.from({ length: 24 }, () => null) as (number | null)[];
 
-  it('is its best session, not its average', () => {
+  it('is a hundred only when every hour is', () => {
+    const day = [...empty];
+
+    for (let at = 6; at <= 21; at += 1) day[at] = 100;
+
+    expect(dayScore(day)).toBe(100);
+  });
+
+  it('pays for the hours a wet morning takes off the day', () => {
     const day = [...empty];
 
     [40, 40, 60, 96, 97, 97, 97, 93, 93].forEach((score, offset) => {
       day[8 + offset] = score;
     });
 
-    expect(dayScore(day)).toBe(96);
+    expect(dayScore(day)).toBe(85);
   });
 
   it('stays honest when only two hours dry out', () => {
@@ -173,7 +211,16 @@ describe('day', () => {
       day[8 + offset] = score;
     });
 
-    expect(dayScore(day)).toBe(61);
+    expect(dayScore(day)).toBe(42);
+  });
+
+  it('is never excellent with real rain in it', () => {
+    const day = [...empty];
+
+    for (let at = 6; at <= 21; at += 1) day[at] = at < 9 ? 70 : 100;
+
+    expect(dayScore(day, 2)).toBe(100);
+    expect(dayScore(day, 3)).toBe(85);
   });
 
   it('is nothing without a forecast', () => {

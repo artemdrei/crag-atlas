@@ -4,7 +4,10 @@ import { Navigate, Route, Routes } from 'react-router';
 import { ModalProvider } from '@web/app/providers';
 import { avatarUploadDesktopRegistrations } from '@web/features/avatarUpload';
 import { catalogEditDesktopRegistrations } from '@web/features/catalogEdit';
-import { feedbackDesktopRegistrations } from '@web/features/feedback';
+import {
+  FeedbackPromptTrigger,
+  feedbackDesktopRegistrations
+} from '@web/features/feedback';
 import { grantAdminDesktopRegistrations } from '@web/features/grantAdmin';
 import { logTickDesktopRegistrations } from '@web/features/logTick';
 import { offlineRegionsDesktopRegistrations } from '@web/features/offlineRegions';
@@ -121,6 +124,7 @@ const PagePlaygroundDesktop = import.meta.env.DEV
 const AppDesktop = () => (
   <ErrorBoundary>
     <ModalProvider registrations={registrations}>
+      <FeedbackPromptTrigger />
       <Suspense>
         <Routes>
           <Route

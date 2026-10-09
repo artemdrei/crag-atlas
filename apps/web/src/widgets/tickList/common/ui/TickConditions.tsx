@@ -15,17 +15,17 @@ export interface Props {
 export const TickConditions = ({ weather }: Props) => (
   <RowStyled>
     {weather.temperatureC != null && (
-      <IconValue icon={<ThermostatIcon fontSize="small" color="warning" />}>
+      <IconValue icon={<ThermostatIcon fontSize="small" color="disabled" />}>
         {weather.temperatureC}°
       </IconValue>
     )}
     {weather.humidityPct != null && (
-      <IconValue icon={<WaterDropIcon fontSize="small" color="info" />}>
+      <IconValue icon={<WaterDropIcon fontSize="small" color="disabled" />}>
         {weather.humidityPct}%
       </IconValue>
     )}
     {weather.precipitation24hMm != null && (
-      <IconValue icon={<GrainIcon fontSize="small" color="info" />}>
+      <IconValue icon={<GrainIcon fontSize="small" color="disabled" />}>
         <Trans>{weather.precipitation24hMm} mm / 24 h</Trans>
       </IconValue>
     )}

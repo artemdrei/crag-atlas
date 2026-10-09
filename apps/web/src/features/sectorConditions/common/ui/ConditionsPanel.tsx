@@ -5,7 +5,6 @@ import { Trans } from '@lingui/react/macro';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
-import Skeleton from '@mui/material/Skeleton';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
@@ -15,12 +14,10 @@ import { ApiFeedback } from '@web/shared/ui';
 import type { SectorConditions } from '../entities';
 import { useSelectedDay } from '../hooks';
 import { ConditionsCard } from './ConditionsCard';
-import { ConditionsDayStrip } from './ConditionsDayStrip';
-
-const SKELETON_KEYS = Array.from(
-  { length: 7 },
-  (_, index) => `skeleton-${index}`
-);
+import {
+  ConditionsDayStrip,
+  ConditionsDayStripSkeleton
+} from './ConditionsDayStrip';
 
 export interface Props {
   list: 'sector' | 'region';
@@ -66,11 +63,12 @@ export const ConditionsPanel = ({
 
   if (isLoading) {
     return (
-      <SkeletonRowStyled>
-        {SKELETON_KEYS.map((key) => (
-          <SkeletonTileStyled key={key} variant="rounded" />
-        ))}
-      </SkeletonRowStyled>
+      <StripRowStyled>
+        <ConditionsDayStripSkeleton />
+        <IconButton disabled size="small">
+          <ChevronStyled isOpen={false} fontSize="small" />
+        </IconButton>
+      </StripRowStyled>
     );
   }
 
@@ -95,19 +93,6 @@ export const ConditionsPanel = ({
     </>
   );
 };
-
-const SkeletonRowStyled = styled('div')`
-  display: flex;
-  gap: ${({ theme }) => theme.spacing(1)};
-  overflow: hidden;
-  padding-bottom: ${({ theme }) => theme.spacing(0.5)};
-`;
-
-const SkeletonTileStyled = styled(Skeleton)`
-  flex: 0 0 auto;
-  width: 76px;
-  height: 70px;
-`;
 
 const StripRowStyled = styled('div')`
   display: flex;

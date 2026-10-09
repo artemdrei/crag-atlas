@@ -19,12 +19,14 @@ export const RouteFilterSummary = ({
   action
 }: Props) => (
   <TitleRowStyled>
-    <TitleStyled variant="subtitle1" noWrap aria-live="polite">
-      {title}
-    </TitleStyled>
-    {tickedCount !== undefined && (
-      <ProgressStyled tickedCount={tickedCount} routesCount={routesCount} />
-    )}
+    <TitleGroupStyled>
+      <TitleStyled variant="subtitle1" noWrap aria-live="polite">
+        {title}
+      </TitleStyled>
+      {tickedCount !== undefined && (
+        <ProgressStyled tickedCount={tickedCount} routesCount={routesCount} />
+      )}
+    </TitleGroupStyled>
     {action}
   </TitleRowStyled>
 );
@@ -35,12 +37,30 @@ const TitleRowStyled = styled('div')`
   gap: ${({ theme }) => theme.spacing(1.5)};
 `;
 
-const TitleStyled = styled(Typography)`
+const TitleGroupStyled = styled('div')`
+  display: flex;
   flex: 1 1 auto;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing(1.5)};
+  min-width: 0;
+`;
+
+const TitleStyled = styled(Typography)`
+  flex: 0 1 auto;
   min-width: 0;
 `;
 
 const ProgressStyled = styled(TickProgress)`
   flex: none;
-  width: 90px;
+  width: 80px;
+
+  & .MuiLinearProgress-root {
+    top: 0;
+    height: 6px;
+    border-radius: 3px;
+  }
+
+  & .MuiLinearProgress-bar {
+    border-radius: 3px;
+  }
 `;

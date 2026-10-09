@@ -3,6 +3,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { GradeHistogramGroupDto } from '../common/dto/gradeHistogram.dto';
 import type { GradeScale } from '../common/utils/grade';
 import { GRADE_SCALES } from '../common/utils/grade';
+import type { RockType } from '../common/utils/rockType';
+import { ROCK_TYPES } from '../common/utils/rockType';
 
 export class RegionDto {
   @ApiProperty()
@@ -27,8 +29,8 @@ export class RegionDto {
   })
   country?: string | null;
 
-  @ApiProperty()
-  rockType!: string;
+  @ApiProperty({ enum: ROCK_TYPES })
+  rockType!: RockType;
 
   @ApiProperty({ type: Number, required: false, nullable: true })
   lat?: number | null;
@@ -118,8 +120,8 @@ export class CreateRegionDto {
   })
   country?: string | null;
 
-  @ApiProperty({ type: String, required: false, nullable: true })
-  rockType?: string | null;
+  @ApiProperty({ enum: ROCK_TYPES, required: false })
+  rockType?: RockType;
 
   @ApiProperty({ type: Number, required: false, nullable: true })
   lat?: number | null;
@@ -148,8 +150,8 @@ export class UpdateRegionDto {
   })
   country?: string | null;
 
-  @ApiProperty()
-  rockType!: string;
+  @ApiProperty({ enum: ROCK_TYPES })
+  rockType!: RockType;
 
   @ApiProperty({
     type: String,

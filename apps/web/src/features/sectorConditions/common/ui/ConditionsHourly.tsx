@@ -3,12 +3,7 @@ import { useState } from 'react';
 import { Trans, useLingui } from '@lingui/react/macro';
 import AirIcon from '@mui/icons-material/Air';
 import BarChartIcon from '@mui/icons-material/BarChart';
-import CloudIcon from '@mui/icons-material/Cloud';
-import CloudySnowingIcon from '@mui/icons-material/CloudySnowing';
 import FilterDramaIcon from '@mui/icons-material/FilterDrama';
-import FoggyIcon from '@mui/icons-material/Foggy';
-import SunnyIcon from '@mui/icons-material/Sunny';
-import ThunderstormIcon from '@mui/icons-material/Thunderstorm';
 import WaterDropIcon from '@mui/icons-material/WaterDrop';
 import Fade from '@mui/material/Fade';
 import { styled } from '@mui/material/styles';
@@ -17,15 +12,16 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
 
 import type { ConditionsHour } from '../entities';
-import type { Metric, WeatherKind } from '../lib';
+import type { Metric } from '../lib';
 import { hourValueOf, verdictOf, weatherKindOf } from '../lib';
-import { DrizzleIcon, RainIcon } from './WeatherIcons';
+import { PrecipitationIcon, WeatherIcon, WindIcon } from './WeatherIcons';
 
 export interface Props {
   hours: ConditionsHour[];
 }
 
 const FADE_MS = 160;
+const HOUR_ICON_PX = 36;
 
 export const ConditionsHourly = ({ hours }: Props) => {
   const { t } = useLingui();
@@ -139,43 +135,23 @@ const MetricIcon = ({ hour, metric }: HourCellProps) => {
       return <VerdictStyled>{verdictOf(hour.band) ?? '—'}</VerdictStyled>;
     case 'precipitation':
       return (
-        <WaterDropIcon color={hour.precipitationMm ? 'info' : 'disabled'} />
+        <PrecipitationIcon
+          mm={hour.precipitationMm}
+          weatherCode={hour.weatherCode}
+          size={HOUR_ICON_PX}
+        />
       );
     case 'wind':
-      return <AirIcon color="action" />;
+      return (
+        <WindIcon metresPerSecond={hour.windSpeedMs} size={HOUR_ICON_PX} />
+      );
     default:
       return (
         <WeatherIcon
+          size={HOUR_ICON_PX}
           kind={weatherKindOf(hour.weatherCode, hour.precipitationMm)}
         />
       );
-  }
-};
-
-interface WeatherIconProps {
-  kind: WeatherKind | null;
-}
-
-const WeatherIcon = ({ kind }: WeatherIconProps) => {
-  switch (kind) {
-    case 'clear':
-      return <SunStyled />;
-    case 'partlyCloudy':
-      return <FilterDramaIcon color="action" />;
-    case 'cloudy':
-      return <CloudIcon color="action" />;
-    case 'fog':
-      return <FoggyIcon color="disabled" />;
-    case 'drizzle':
-      return <DrizzleIcon color="info" />;
-    case 'rain':
-      return <RainIcon color="info" />;
-    case 'snow':
-      return <CloudySnowingIcon color="info" />;
-    case 'thunder':
-      return <ThunderstormIcon color="warning" />;
-    default:
-      return <CloudIcon color="disabled" />;
   }
 };
 
@@ -250,8 +226,4 @@ const LegendStyled = styled('div')`
 const LegendLabelStyled = styled(Typography)`
   color: ${({ theme }) => theme.palette.text.disabled};
   white-space: nowrap;
-`;
-
-const SunStyled = styled(SunnyIcon)`
-  color: ${({ theme }) => theme.palette.secondary.main};
 `;
