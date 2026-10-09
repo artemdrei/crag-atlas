@@ -55,7 +55,7 @@ describe('the paths printed on QR plaques', () => {
 
     const { data: region, error } = await db
       .from('regions')
-      .insert({ name: `INT QR ${run}`, country: 'UA', rock_type: 'Limestone' })
+      .insert({ name: `INT QR ${run}`, country: 'UA', rock_type: 'limestone' })
       .select('id')
       .single();
 

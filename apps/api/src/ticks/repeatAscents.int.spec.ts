@@ -48,7 +48,7 @@ describe('repeat ascents', () => {
     ({ client: climber, idUser } = await authenticatedClient());
     idRegion = await insert('regions', {
       name: `INT-Repeats-${crypto.randomUUID()}`,
-      rock_type: 'Limestone'
+      rock_type: 'limestone'
     });
 
     const idSector = await insert('sectors', {

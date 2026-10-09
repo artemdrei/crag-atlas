@@ -32,6 +32,8 @@ import {
   uploadPhoto
 } from '../common/utils/photoStorage';
 import { toPoint } from '../common/utils/point';
+import type { RockType } from '../common/utils/rockType';
+import { isRockType, ROCK_TYPES } from '../common/utils/rockType';
 import { userClient } from '../common/utils/userClient';
 import { publicSupabase, storagePublicUrl } from '../config/supabase.client';
 
@@ -53,7 +55,7 @@ interface RegionRow {
   name: string;
   name_local: string | null;
   country: string | null;
-  rock_type: string;
+  rock_type: RockType;
   lat: number | null;
   lng: number | null;
   photo_path: string | null;
@@ -67,6 +69,19 @@ interface RegionRow {
   is_archived: boolean;
   deleted_at: string | null;
 }
+
+const toRockType = (rockType?: string | null): RockType => {
+  if (!rockType) return 'other';
+
+  if (!isRockType(rockType)) {
+    throw new ValidationException(
+      `A rock type is one of ${ROCK_TYPES.join(', ')}`,
+      'REGION_ROCK_TYPE_INVALID'
+    );
+  }
+
+  return rockType;
+};
 
 // The column's check would answer an unexpected code with an unreadable
 // write error.
@@ -152,7 +167,7 @@ export class RegionsService {
         name: toLatinName(payload.name, TARGET.entity),
         name_local: toLocalName(payload.nameLocal),
         country: normalizeCountry(payload.country),
-        rock_type: payload.rockType?.trim() ?? '',
+        rock_type: toRockType(payload.rockType),
         ...toPoint(payload, TARGET.entity)
       })
       .select('id')
@@ -232,7 +247,7 @@ export class RegionsService {
         name: toLatinName(payload.name, TARGET.entity),
         name_local: toLocalName(payload.nameLocal),
         country: normalizeCountry(payload.country),
-        rock_type: payload.rockType,
+        rock_type: toRockType(payload.rockType),
         ...toPoint(payload, TARGET.entity)
       })
       .eq('id', idRegion);

@@ -49,7 +49,7 @@ msgstr "{0, plural, one {# photo or link} few {# photos or links} many {# photos
 #. placeholder {0}: routes.length
 #: src/features/regionMap/common/ui/RegionPointCard.tsx:31
 #: src/features/sectorMap/common/ui/SectorPointCard.tsx:21
-#: src/pages/home/common/ui/RegionCard.tsx:66
+#: src/pages/home/common/ui/RegionCard.tsx:67
 #: src/pages/region/common/ui/SectorCard.tsx:94
 #: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:84
 #: src/shared/ui/GradeHistogram.tsx:81
@@ -65,7 +65,7 @@ msgid "{0, plural, one {# route} other {# routes}}"
 msgstr "{0, plural, one {# route} other {# routes}}"
 
 #. placeholder {0}: region.sectorCount
-#: src/pages/home/common/ui/RegionCard.tsx:74
+#: src/pages/home/common/ui/RegionCard.tsx:75
 msgid "{0, plural, one {# sector} few {# sectors} many {# sectors} other {# sectors}}"
 msgstr "{0, plural, one {# sector} few {# sectors} many {# sectors} other {# sectors}}"
 
@@ -232,7 +232,7 @@ msgstr "Access"
 
 #. placeholder {0}: region.name
 #. placeholder {0}: sector.name
-#: src/pages/home/common/ui/RegionCard.tsx:45
+#: src/pages/home/common/ui/RegionCard.tsx:46
 #: src/pages/region/common/ui/SectorCard.tsx:59
 msgid "Actions for {0}"
 msgstr "Actions for {0}"
@@ -296,7 +296,7 @@ msgstr "Add photo or video"
 msgid "Add photos and comments, and see what others have climbed."
 msgstr "Add photos and comments, and see what others have climbed."
 
-#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:87
+#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:90
 #: src/pages/home/desktop/ui/HomeEditSidebar.tsx:78
 #: src/pages/home/desktop/ui/HomeEditSidebar.tsx:128
 msgid "Add region"
@@ -476,6 +476,10 @@ msgstr "Back to the measured value"
 #: src/features/sectorConditions/common/hooks/useBandLabel.ts:13
 msgid "Bad"
 msgstr "Bad"
+
+#: src/shared/ui/RockTypeLabel.tsx:12
+msgid "Basalt"
+msgstr "Basalt"
 
 #: src/widgets/routeMedia/common/ui/RouteMediaInvite.tsx:18
 msgid "Be the first to show this route"
@@ -703,6 +707,10 @@ msgstr "Conditions, read at the sector"
 msgid "Confirm. The crag-atlas icon appears with your other apps."
 msgstr "Confirm. The crag-atlas icon appears with your other apps."
 
+#: src/shared/ui/RockTypeLabel.tsx:13
+msgid "Conglomerate"
+msgstr "Conglomerate"
+
 #: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:45
 #: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:46
 msgid "Connect to the internet to save or refresh a region."
@@ -772,6 +780,10 @@ msgstr "Dark"
 #: src/pages/logbook/common/ui/LogbookFilterFields.tsx:50
 msgid "Date"
 msgstr "Date"
+
+#: src/features/catalogEdit/common/ui/RockTypeSelect.tsx:29
+msgid "Decides how fast the conditions forecast lets the rock dry after rain."
+msgstr "Decides how fast the conditions forecast lets the rock dry after rain."
 
 #: src/features/routeFilter/common/hooks/useRouteSortLabel.ts:8
 msgid "Default"
@@ -1026,6 +1038,10 @@ msgstr "From"
 msgid "Fully sheltered: a roof or overhang keeps it dry"
 msgstr "Fully sheltered: a roof or overhang keeps it dry"
 
+#: src/shared/ui/RockTypeLabel.tsx:11
+msgid "Gneiss"
+msgstr "Gneiss"
+
 #: src/features/sectorConditions/common/hooks/useBandLabel.ts:10
 msgid "Good"
 msgstr "Good"
@@ -1056,6 +1072,10 @@ msgstr "Grade system — boulder"
 #: src/pages/profile/common/ui/GradeScaleSetting.tsx:34
 msgid "Grade system — routes"
 msgstr "Grade system — routes"
+
+#: src/shared/ui/RockTypeLabel.tsx:10
+msgid "Granite"
+msgstr "Granite"
 
 #: src/features/grantAdmin/common/ui/GrantAdminBody.tsx:89
 msgid "Grant access"
@@ -1191,6 +1211,10 @@ msgstr "Length, m"
 #: src/pages/profile/common/ui/ThemeModeSetting.tsx:30
 msgid "Light"
 msgstr "Light"
+
+#: src/shared/ui/RockTypeLabel.tsx:8
+msgid "Limestone"
+msgstr "Limestone"
 
 #: src/pages/adminFeedback/common/ui/LoadMoreButton.tsx:17
 msgid "Load more"
@@ -1517,6 +1541,10 @@ msgstr "Original"
 msgid "Original photo"
 msgstr "Original photo"
 
+#: src/shared/ui/RockTypeLabel.tsx:14
+msgid "Other rock"
+msgstr "Other rock"
+
 #: src/features/sectorConditions/common/ui/ConditionsCard.tsx:32
 msgid "Partly sheltered"
 msgstr "Partly sheltered"
@@ -1713,11 +1741,11 @@ msgid "Region"
 msgstr "Region"
 
 #. placeholder {0}: region.name
-#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:45
+#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:54
 msgid "Region {0} created"
 msgstr "Region {0} created"
 
-#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:56
+#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:57
 msgid "Region saved"
 msgstr "Region saved"
 
@@ -1792,8 +1820,7 @@ msgstr "Retro flash"
 msgid "Revoke access"
 msgstr "Revoke access"
 
-#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:81
-#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:99
+#: src/features/catalogEdit/common/ui/RockTypeSelect.tsx:28
 msgid "Rock type"
 msgstr "Rock type"
 
@@ -1818,6 +1845,10 @@ msgstr "Routes"
 #: src/shared/ui/TickProgress.tsx:24
 msgid "Routes you have climbed here"
 msgstr "Routes you have climbed here"
+
+#: src/shared/ui/RockTypeLabel.tsx:9
+msgid "Sandstone"
+msgstr "Sandstone"
 
 #: src/features/avatarUpload/desktop/CropAvatarDialog.tsx:37
 #: src/features/avatarUpload/mobile/CropAvatarSheet.tsx:31

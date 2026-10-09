@@ -37,6 +37,7 @@ export { PhotoPlaceholder } from './PhotoPlaceholder';
 export { type PillTabOption, PillTabs } from './PillTabs';
 export { PointEditor } from './PointEditor';
 export { RestoreButton } from './RestoreButton';
+export { RockTypeLabel, useRockTypeLabels } from './RockTypeLabel';
 export { ShelterBadge, ShelterNote } from './ShelterBadge';
 export { SignInBenefits } from './SignInBenefits';
 export { SignInCta } from './SignInCta';

@@ -7,7 +7,8 @@ import {
   CatalogCard,
   CatalogCardMenu,
   GradeBadge,
-  LocalName
+  LocalName,
+  RockTypeLabel
 } from '@web/shared/ui';
 
 import type { Region } from '../entities';
@@ -78,7 +79,12 @@ export const RegionCard = ({
           many="# sectors"
           other="# sectors"
         />
-        {region.rockType && ` · ${region.rockType}`}
+        {region.rockType !== 'other' && (
+          <>
+            {' · '}
+            <RockTypeLabel rockType={region.rockType} />
+          </>
+        )}
       </CountsStyled>
       <BadgeRowStyled>
         <GradeBadge grade={gradeRange} />

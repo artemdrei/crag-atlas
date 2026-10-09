@@ -56,6 +56,7 @@ export type ConditionsDay = components['schemas']['ConditionsDayDto'];
 export type ConditionsHour = components['schemas']['ConditionsHourDto'];
 export type ConditionBand = NonNullable<ConditionsDay['band']>;
 export type Shelter = Sector['shelter'];
+export type RockType = Region['rockType'];
 export type SunInterval = components['schemas']['SunIntervalDto'];
 export type HorizonBackfill = components['schemas']['HorizonBackfillDto'];
 export type SectorQr = components['schemas']['SectorQrDto'];

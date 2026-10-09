@@ -1,7 +1,7 @@
 import { type FormEvent, type ReactNode, useState } from 'react';
 
+import type { RockType } from '@crag-atlas/api';
 import { Trans, useLingui } from '@lingui/react/macro';
-import TextField from '@mui/material/TextField';
 
 import { toast, useLatinNames } from '@web/shared/lib';
 import type { Coords } from '@web/shared/types';
@@ -11,6 +11,7 @@ import { useApiCreateRegion } from '../hooks';
 import { CountryPicker } from './CountryPicker';
 import { EditActions } from './EditActions';
 import { EditFormStyled } from './EditFormStyled';
+import { RockTypeSelect } from './RockTypeSelect';
 
 export interface Props {
   point?: Coords;
@@ -18,6 +19,8 @@ export interface Props {
   onClose?: () => void;
   onPointChange?: (point?: Coords) => void;
 }
+
+const DEFAULT_ROCK_TYPE: RockType = 'limestone';
 
 export const RegionCreateForm = ({
   point,
@@ -29,14 +32,20 @@ export const RegionCreateForm = ({
   const { name, nameLocal, isNameLatin, setName, setNameLocal, resetNames } =
     useLatinNames();
   const [country, setCountry] = useState<string | null>(null);
-  const [rockType, setRockType] = useState('');
+  const [rockType, setRockType] = useState<RockType>(DEFAULT_ROCK_TYPE);
 
-  const isDirty = !!(name || nameLocal || country || rockType || point);
+  const isDirty = !!(
+    name ||
+    nameLocal ||
+    country ||
+    rockType !== DEFAULT_ROCK_TYPE ||
+    point
+  );
 
   const clear = () => {
     resetNames();
     setCountry(null);
-    setRockType('');
+    setRockType(DEFAULT_ROCK_TYPE);
   };
 
   const { isPending, createRegion } = useApiCreateRegion({
@@ -59,7 +68,7 @@ export const RegionCreateForm = ({
       name: name.trim(),
       nameLocal: nameLocal.trim() || null,
       country,
-      rockType: rockType.trim(),
+      rockType,
       lat: point?.lat ?? null,
       lng: point?.lng ?? null
     });
@@ -75,13 +84,7 @@ export const RegionCreateForm = ({
         onNameChange={setName}
         onNameLocalChange={setNameLocal}
       />
-      <TextField
-        fullWidth
-        size="small"
-        label={t`Rock type`}
-        value={rockType}
-        onChange={(event) => setRockType(event.target.value)}
-      />
+      <RockTypeSelect isCompact value={rockType} onChange={setRockType} />
       {children}
       <EditActions
         submitLabel={<Trans>Add region</Trans>}

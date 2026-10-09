@@ -1,16 +1,17 @@
 import { type FormEvent, type ReactNode, useEffect, useState } from 'react';
 
-import type { Region } from '@crag-atlas/api';
+import type { Region, RockType } from '@crag-atlas/api';
 import { useLingui } from '@lingui/react/macro';
 
 import { coordsOf, toast, useLatinNames } from '@web/shared/lib';
 import type { Coords } from '@web/shared/types';
-import { ChangedTextField, NameFields } from '@web/shared/ui';
+import { NameFields } from '@web/shared/ui';
 
 import { useApiUpdateRegion } from '../hooks';
 import { CountryPicker } from './CountryPicker';
 import { EditActions } from './EditActions';
 import { EditFormStyled } from './EditFormStyled';
+import { RockTypeSelect } from './RockTypeSelect';
 
 export interface Props {
   region: Region;
@@ -35,7 +36,7 @@ export const RegionEditForm = ({
   const { name, nameLocal, isNameLatin, setName, setNameLocal, resetNames } =
     useLatinNames(region.name, region.nameLocal ?? '');
   const [country, setCountry] = useState<string | null>(region.country ?? null);
-  const [rockType, setRockType] = useState(region.rockType);
+  const [rockType, setRockType] = useState<RockType>(region.rockType);
 
   const isDirty =
     name !== region.name ||
@@ -94,12 +95,10 @@ export const RegionEditForm = ({
         onNameChange={setName}
         onNameLocalChange={setNameLocal}
       />
-      <ChangedTextField
-        fullWidth
-        label={t`Rock type`}
+      <RockTypeSelect
         value={rockType}
         isChanged={rockType !== region.rockType}
-        onChange={(event) => setRockType(event.target.value)}
+        onChange={setRockType}
       />
       {children}
       <EditActions

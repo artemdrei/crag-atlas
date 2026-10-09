@@ -49,7 +49,7 @@ msgstr "{0, plural, one {# фото чи посилання} few {# фото ч�
 #. placeholder {0}: routes.length
 #: src/features/regionMap/common/ui/RegionPointCard.tsx:31
 #: src/features/sectorMap/common/ui/SectorPointCard.tsx:21
-#: src/pages/home/common/ui/RegionCard.tsx:66
+#: src/pages/home/common/ui/RegionCard.tsx:67
 #: src/pages/region/common/ui/SectorCard.tsx:94
 #: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:84
 #: src/shared/ui/GradeHistogram.tsx:81
@@ -65,7 +65,7 @@ msgid "{0, plural, one {# route} other {# routes}}"
 msgstr "{0, plural, one {# маршрут} few {# маршрути} many {# маршрутів} other {# маршруту}}"
 
 #. placeholder {0}: region.sectorCount
-#: src/pages/home/common/ui/RegionCard.tsx:74
+#: src/pages/home/common/ui/RegionCard.tsx:75
 msgid "{0, plural, one {# sector} few {# sectors} many {# sectors} other {# sectors}}"
 msgstr "{0, plural, one {# сектор} few {# сектори} many {# секторів} other {# сектора}}"
 
@@ -232,7 +232,7 @@ msgstr "Доступи"
 
 #. placeholder {0}: region.name
 #. placeholder {0}: sector.name
-#: src/pages/home/common/ui/RegionCard.tsx:45
+#: src/pages/home/common/ui/RegionCard.tsx:46
 #: src/pages/region/common/ui/SectorCard.tsx:59
 msgid "Actions for {0}"
 msgstr "Дії для {0}"
@@ -296,7 +296,7 @@ msgstr "Додати фото чи відео"
 msgid "Add photos and comments, and see what others have climbed."
 msgstr "Додавай фото й коментарі та дивись пролази інших."
 
-#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:87
+#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:90
 #: src/pages/home/desktop/ui/HomeEditSidebar.tsx:78
 #: src/pages/home/desktop/ui/HomeEditSidebar.tsx:128
 msgid "Add region"
@@ -475,7 +475,11 @@ msgstr "Повернути виміряне значення"
 
 #: src/features/sectorConditions/common/hooks/useBandLabel.ts:13
 msgid "Bad"
-msgstr "Погано"
+msgstr "Кепсько"
+
+#: src/shared/ui/RockTypeLabel.tsx:12
+msgid "Basalt"
+msgstr "Базальт"
 
 #: src/widgets/routeMedia/common/ui/RouteMediaInvite.tsx:18
 msgid "Be the first to show this route"
@@ -703,6 +707,10 @@ msgstr "Умови, зчитані за координатами сектора"
 msgid "Confirm. The crag-atlas icon appears with your other apps."
 msgstr "Підтверди. Іконка crag-atlas зʼявиться поруч з іншими додатками."
 
+#: src/shared/ui/RockTypeLabel.tsx:13
+msgid "Conglomerate"
+msgstr "Конгломерат"
+
 #: src/features/offlineRegions/desktop/OfflineRegionsDesktop.tsx:45
 #: src/features/offlineRegions/mobile/OfflineRegionsMobile.tsx:46
 msgid "Connect to the internet to save or refresh a region."
@@ -772,6 +780,10 @@ msgstr "Темна"
 #: src/pages/logbook/common/ui/LogbookFilterFields.tsx:50
 msgid "Date"
 msgstr "Дата"
+
+#: src/features/catalogEdit/common/ui/RockTypeSelect.tsx:29
+msgid "Decides how fast the conditions forecast lets the rock dry after rain."
+msgstr "Визначає, як швидко прогноз умов дає скелі висохнути після дощу."
 
 #: src/features/routeFilter/common/hooks/useRouteSortLabel.ts:8
 msgid "Default"
@@ -1026,6 +1038,10 @@ msgstr "Від кого"
 msgid "Fully sheltered: a roof or overhang keeps it dry"
 msgstr "Повністю: дах або навис тримає стіну сухою"
 
+#: src/shared/ui/RockTypeLabel.tsx:11
+msgid "Gneiss"
+msgstr "Гнейс"
+
 #: src/features/sectorConditions/common/hooks/useBandLabel.ts:10
 msgid "Good"
 msgstr "Добре"
@@ -1056,6 +1072,10 @@ msgstr "Система складності — болдеринг"
 #: src/pages/profile/common/ui/GradeScaleSetting.tsx:34
 msgid "Grade system — routes"
 msgstr "Система складності — маршрути"
+
+#: src/shared/ui/RockTypeLabel.tsx:10
+msgid "Granite"
+msgstr "Граніт"
 
 #: src/features/grantAdmin/common/ui/GrantAdminBody.tsx:89
 msgid "Grant access"
@@ -1191,6 +1211,10 @@ msgstr "Довжина, м"
 #: src/pages/profile/common/ui/ThemeModeSetting.tsx:30
 msgid "Light"
 msgstr "Світла"
+
+#: src/shared/ui/RockTypeLabel.tsx:8
+msgid "Limestone"
+msgstr "Вапняк"
 
 #: src/pages/adminFeedback/common/ui/LoadMoreButton.tsx:17
 msgid "Load more"
@@ -1517,6 +1541,10 @@ msgstr "Оригінал"
 msgid "Original photo"
 msgstr "Оригінальне фото"
 
+#: src/shared/ui/RockTypeLabel.tsx:14
+msgid "Other rock"
+msgstr "Інша порода"
+
 #: src/features/sectorConditions/common/ui/ConditionsCard.tsx:32
 msgid "Partly sheltered"
 msgstr "Частково вкритий"
@@ -1612,7 +1640,7 @@ msgstr "бали"
 
 #: src/features/sectorConditions/common/hooks/useBandLabel.ts:12
 msgid "Poor"
-msgstr "Кепсько"
+msgstr "Погано"
 
 #: src/features/avatarUpload/desktop/CropAvatarDialog.tsx:22
 #: src/features/avatarUpload/mobile/CropAvatarSheet.tsx:19
@@ -1713,11 +1741,11 @@ msgid "Region"
 msgstr "Регіон"
 
 #. placeholder {0}: region.name
-#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:45
+#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:54
 msgid "Region {0} created"
 msgstr "Регіон {0} створено"
 
-#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:56
+#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:57
 msgid "Region saved"
 msgstr "Регіон збережено"
 
@@ -1792,8 +1820,7 @@ msgstr "Ретрофлеш"
 msgid "Revoke access"
 msgstr "Забрати доступ"
 
-#: src/features/catalogEdit/common/ui/RegionCreateForm.tsx:81
-#: src/features/catalogEdit/common/ui/RegionEditForm.tsx:99
+#: src/features/catalogEdit/common/ui/RockTypeSelect.tsx:28
 msgid "Rock type"
 msgstr "Порода"
 
@@ -1818,6 +1845,10 @@ msgstr "Маршрути"
 #: src/shared/ui/TickProgress.tsx:24
 msgid "Routes you have climbed here"
 msgstr "Траси, які ви тут пролізли"
+
+#: src/shared/ui/RockTypeLabel.tsx:9
+msgid "Sandstone"
+msgstr "Пісковик"
 
 #: src/features/avatarUpload/desktop/CropAvatarDialog.tsx:37
 #: src/features/avatarUpload/mobile/CropAvatarSheet.tsx:31
@@ -2003,7 +2034,7 @@ msgstr "Щось пішло не так"
 
 #: src/features/feedback/common/ui/FeedbackForm.tsx:43
 msgid "Something went wrong, please try sending again"
-msgstr ""
+msgstr "Щось пішло не так, спробуйте надіслати ще раз"
 
 #: src/features/routeFilter/common/ui/RouteFilterFields.tsx:76
 msgid "Sort"

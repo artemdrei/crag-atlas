@@ -40,7 +40,7 @@ test('and the API refuses it too', async () => {
       name: 'Скелі',
       nameLocal: 'Скелі',
       country: 'UA',
-      rockType: 'Limestone',
+      rockType: 'limestone',
       lat: 48.68291,
       lng: 26.56402
     })

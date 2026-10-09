@@ -936,7 +936,8 @@ export interface components {
             nameLocal?: string | null;
             /** @description ISO 3166-1 alpha-2 code; null until an admin picks one */
             country?: string | null;
-            rockType: string;
+            /** @enum {string} */
+            rockType: "limestone" | "sandstone" | "granite" | "gneiss" | "basalt" | "conglomerate" | "other";
             lat?: number | null;
             lng?: number | null;
             /** @description Cover photo; null until an admin uploads one */
@@ -969,7 +970,8 @@ export interface components {
             nameLocal?: string | null;
             /** @description ISO 3166-1 alpha-2 code */
             country?: string | null;
-            rockType?: string | null;
+            /** @enum {string} */
+            rockType?: "limestone" | "sandstone" | "granite" | "gneiss" | "basalt" | "conglomerate" | "other";
             lat?: number | null;
             lng?: number | null;
         };
@@ -979,7 +981,8 @@ export interface components {
             nameLocal?: string | null;
             /** @description ISO 3166-1 alpha-2 code */
             country?: string | null;
-            rockType: string;
+            /** @enum {string} */
+            rockType: "limestone" | "sandstone" | "granite" | "gneiss" | "basalt" | "conglomerate" | "other";
             /** @description Cover photo; null until an admin uploads one */
             photoUrl?: string | null;
             lat?: number | null;
