@@ -25,6 +25,8 @@
     "@emotion/styled": "^11.14.1",
     "@lingui/core": "^6.7.0",
     "@lingui/react": "^6.7.0",
+    "@meteocons/svg": "^0.1.0",
+    "@meteocons/svg-static": "^0.1.0",
     "@mui/icons-material": "^9.4.0",
     "@mui/material": "^9.4.0",
     "@openbeta/sandbag": "^0.0.55",

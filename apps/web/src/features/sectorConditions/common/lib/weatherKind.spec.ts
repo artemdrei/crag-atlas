@@ -21,6 +21,16 @@ describe('weather kind', () => {
     expect(weatherKindOf(3, 0)).toBe('cloudy');
   });
 
+  it('is a thunderstorm whatever the gauge shows', () => {
+    expect(weatherKindOf(95, 0.3)).toBe('thunder');
+    expect(weatherKindOf(96, 0)).toBe('thunder');
+  });
+
+  it('keeps snow as snow however much melts in the gauge', () => {
+    expect(weatherKindOf(73, 1.2)).toBe('snow');
+    expect(weatherKindOf(85, 0.2)).toBe('snow');
+  });
+
   it('names nothing for a missing or unknown code', () => {
     expect(weatherKindOf(null)).toBeNull();
     expect(weatherKindOf(20)).toBeNull();

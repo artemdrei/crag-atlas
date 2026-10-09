@@ -75,12 +75,12 @@ msgid "{0, plural, one {# sector} other {# sectors}}"
 msgstr "{0, plural, one {# sector} other {# sectors}}"
 
 #. placeholder {0}: Math.round(hour.temperatureC)
-#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:30
+#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:31
 msgid "{0} °C"
 msgstr "{0} °C"
 
 #. placeholder {0}: toKmh(hour.windSpeedMs)
-#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:60
+#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:68
 msgid "{0} km/h"
 msgstr "{0} km/h"
 
@@ -115,7 +115,7 @@ msgid "{0} of {1} sectors have a QR code"
 msgstr "{0} of {1} sectors have a QR code"
 
 #. placeholder {0}: Math.round(hour.humidityPct)
-#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:50
+#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:58
 msgid "{0}%"
 msgstr "{0}%"
 
@@ -140,7 +140,7 @@ msgstr "{oversized} photo(s) stay over {0} even compressed and will be skipped."
 msgid "{perSecond}/s"
 msgstr "{perSecond}/s"
 
-#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:40
+#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:48
 msgid "{rainMm} mm"
 msgstr "{rainMm} mm"
 
@@ -209,7 +209,7 @@ msgstr "{total, plural, one {# vote} other {# votes}}"
 #~ msgid "{total} entries"
 #~ msgstr "{total} entries"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:50
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:46
 msgid "°C"
 msgstr "°C"
 
@@ -497,8 +497,8 @@ msgstr "Belayer"
 #. placeholder {0}: day.bestFromAt
 #. placeholder {1}: day.bestUntilAt
 #: src/features/sectorConditions/common/ui/ConditionsScore.tsx:39
-msgid "best {0} – {1}"
-msgstr "best {0} – {1}"
+#~ msgid "best {0} – {1}"
+#~ msgstr "best {0} – {1}"
 
 #: src/features/topoEditor/desktop/ui/TopoPointMenu.tsx:52
 msgid "Bolt"
@@ -694,8 +694,8 @@ msgstr "Compressed photo"
 msgid "Compressing the photo…"
 msgstr "Compressing the photo…"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:40
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:75
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:36
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:71
 msgid "Conditions score"
 msgstr "Conditions score"
 
@@ -1102,7 +1102,7 @@ msgstr "Has photo"
 msgid "Has video"
 msgstr "Has video"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:60
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:56
 msgid "Hourly"
 msgstr "Hourly"
 
@@ -1122,17 +1122,17 @@ msgstr "How hard is the route?"
 msgid "How QR codes work"
 msgstr "How QR codes work"
 
-#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:47
+#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:55
 msgid "Humidity"
 msgstr "Humidity"
 
 #: src/features/sectorConditions/common/ui/ConditionsScore.tsx:50
-msgid "In the shade all day"
-msgstr "In the shade all day"
+#~ msgid "In the shade all day"
+#~ msgstr "In the shade all day"
 
 #: src/features/sectorConditions/common/ui/ConditionsScore.tsx:56
-msgid "In the sun all day"
-msgstr "In the sun all day"
+#~ msgid "In the sun all day"
+#~ msgstr "In the sun all day"
 
 #: src/features/installHint/mobile/InstallHintBody.tsx:60
 msgid "Install"
@@ -1174,7 +1174,7 @@ msgstr "Keep the whole photo"
 msgid "Keep your grades, language and theme on every device"
 msgstr "Keep your grades, language and theme on every device"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:52
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:48
 msgid "km/h"
 msgstr "km/h"
 
@@ -1280,7 +1280,7 @@ msgstr "Media deleted"
 msgid "Message"
 msgstr "Message"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:51
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:47
 msgid "mm"
 msgstr "mm"
 
@@ -1382,7 +1382,7 @@ msgid "No videos or photos yet."
 msgstr "No videos or photos yet."
 
 #: src/features/logTick/common/ui/ConditionsSection.tsx:119
-#: src/features/sectorConditions/common/ui/ConditionsPanel.tsx:62
+#: src/features/sectorConditions/common/ui/ConditionsPanel.tsx:59
 msgid "No weather while you are offline"
 msgstr "No weather while you are offline"
 
@@ -1634,7 +1634,7 @@ msgstr "Plain point"
 msgid "Plaques already printed with <0>/q/{oldPath}</0> keep opening this sector. New plaques carry <1>/q/{newPath}</1>: download and print them again."
 msgstr "Plaques already printed with <0>/q/{oldPath}</0> keep opening this sector. New plaques carry <1>/q/{newPath}</1>: download and print them again."
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:49
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:45
 msgid "points"
 msgstr "points"
 
@@ -1651,12 +1651,12 @@ msgstr "Position your photo"
 msgid "Post"
 msgstr "Post"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:42
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:81
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:38
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:77
 msgid "Precipitation"
 msgstr "Precipitation"
 
-#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:37
+#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:38
 msgid "Precipitation over the day"
 msgstr "Precipitation over the day"
 
@@ -1940,6 +1940,20 @@ msgstr "Sector {0} created"
 msgid "Sector cover"
 msgstr "Sector cover"
 
+#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:46
+msgid "Sector in the shade all day"
+msgstr "Sector in the shade all day"
+
+#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:47
+msgid "Sector in the sun all day"
+msgstr "Sector in the sun all day"
+
+#. placeholder {0}: sunShade.firstSunAt
+#. placeholder {1}: sunShade.lastSunAt
+#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:49
+msgid "Sector in the sun roughly {0} – {1}"
+msgstr "Sector in the sun roughly {0} – {1}"
+
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:63
 msgid "Sector saved"
 msgstr "Sector saved"
@@ -2053,8 +2067,8 @@ msgstr "Sport"
 #. placeholder {0}: sunShade.firstSunAt
 #. placeholder {1}: sunShade.lastSunAt
 #: src/features/sectorConditions/common/ui/ConditionsScore.tsx:62
-msgid "Sun roughly {0} – {1}"
-msgstr "Sun roughly {0} – {1}"
+#~ msgid "Sun roughly {0} – {1}"
+#~ msgstr "Sun roughly {0} – {1}"
 
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:231
 msgid "System"
@@ -2068,8 +2082,8 @@ msgstr "Tap \"Add to Home screen\", then choose \"Install\". Older Chrome shows 
 msgid "Tap \"Add\" in the top right corner. The crag-atlas icon appears on your home screen."
 msgstr "Tap \"Add\" in the top right corner. The crag-atlas icon appears on your home screen."
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:41
-#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:27
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:37
+#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:28
 msgid "Temperature"
 msgstr "Temperature"
 
@@ -2197,7 +2211,7 @@ msgstr "This screen could not be drawn. Reloading usually gets past it."
 msgid "This sector is in the archive, so it is out of the catalog. Its routes and everything climbers left on them — ascents, photos, links and comments — are still here."
 msgstr "This sector is in the archive, so it is out of the catalog. Its routes and everything climbers left on them — ascents, photos, links and comments — are still here."
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:96
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:92
 msgid "time"
 msgstr "time"
 
@@ -2205,7 +2219,7 @@ msgstr "time"
 msgid "Time"
 msgstr "Time"
 
-#: src/features/sectorConditions/common/ui/ConditionsDayStrip.tsx:33
+#: src/features/sectorConditions/common/ui/ConditionsDayStrip.tsx:72
 msgid "today"
 msgstr "today"
 
@@ -2308,7 +2322,7 @@ msgstr "Wall orientation, °"
 msgid "We sent a code to <0>{0}</0>"
 msgstr "We sent a code to <0>{0}</0>"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:78
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:74
 msgid "Weather"
 msgstr "Weather"
 
@@ -2318,7 +2332,7 @@ msgid "Weather by Open-Meteo.com"
 msgstr "Weather by Open-Meteo.com"
 
 #: src/features/sectorConditions/common/ui/ConditionsCard.tsx:46
-#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:33
+#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:32
 msgid "Weather forecast not available yet"
 msgstr "Weather forecast not available yet"
 
@@ -2350,9 +2364,9 @@ msgstr "Whether the wall stays dry in rain. The conditions forecast keeps a shel
 msgid "Which way the wall faces, in compass degrees: 0 north, 90 east, 180 south, 270 west. It sets when the wall is in sun or shade. Leave it empty to work it out from the terrain."
 msgstr "Which way the wall faces, in compass degrees: 0 north, 90 east, 180 south, 270 west. It sets when the wall is in sun or shade. Leave it empty to work it out from the terrain."
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:43
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:84
-#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:57
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:39
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:80
+#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:65
 msgid "Wind"
 msgstr "Wind"
 

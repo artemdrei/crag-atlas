@@ -75,12 +75,12 @@ msgid "{0, plural, one {# sector} other {# sectors}}"
 msgstr "{0, plural, one {# сектор} few {# сектори} many {# секторів} other {# сектора}}"
 
 #. placeholder {0}: Math.round(hour.temperatureC)
-#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:30
+#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:31
 msgid "{0} °C"
 msgstr "{0} °C"
 
 #. placeholder {0}: toKmh(hour.windSpeedMs)
-#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:60
+#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:68
 msgid "{0} km/h"
 msgstr "{0} км/год"
 
@@ -115,7 +115,7 @@ msgid "{0} of {1} sectors have a QR code"
 msgstr "{0} з {1} секторів мають QR-код"
 
 #. placeholder {0}: Math.round(hour.humidityPct)
-#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:50
+#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:58
 msgid "{0}%"
 msgstr "{0}%"
 
@@ -140,7 +140,7 @@ msgstr "{oversized} фото навіть стиснутими більші за
 msgid "{perSecond}/s"
 msgstr "{perSecond}/с"
 
-#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:40
+#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:48
 msgid "{rainMm} mm"
 msgstr "{rainMm} мм"
 
@@ -209,7 +209,7 @@ msgstr "{total, plural, one {# голос} few {# голоси} many {# голо
 #~ msgid "{total} entries"
 #~ msgstr "Записів: {total}"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:50
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:46
 msgid "°C"
 msgstr "°C"
 
@@ -497,8 +497,8 @@ msgstr "Страхуючий"
 #. placeholder {0}: day.bestFromAt
 #. placeholder {1}: day.bestUntilAt
 #: src/features/sectorConditions/common/ui/ConditionsScore.tsx:39
-msgid "best {0} – {1}"
-msgstr "найкраще {0} – {1}"
+#~ msgid "best {0} – {1}"
+#~ msgstr "найкраще {0} – {1}"
 
 #: src/features/topoEditor/desktop/ui/TopoPointMenu.tsx:52
 msgid "Bolt"
@@ -694,8 +694,8 @@ msgstr "Стиснуте фото"
 msgid "Compressing the photo…"
 msgstr "Стискаємо фото…"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:40
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:75
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:36
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:71
 msgid "Conditions score"
 msgstr "Оцінка умов"
 
@@ -1102,7 +1102,7 @@ msgstr "Є фото"
 msgid "Has video"
 msgstr "Є відео"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:60
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:56
 msgid "Hourly"
 msgstr "Погодинно"
 
@@ -1122,17 +1122,17 @@ msgstr "Складність маршруту"
 msgid "How QR codes work"
 msgstr "Як працюють QR-коди"
 
-#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:47
+#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:55
 msgid "Humidity"
 msgstr "Вологість"
 
 #: src/features/sectorConditions/common/ui/ConditionsScore.tsx:50
-msgid "In the shade all day"
-msgstr "У тіні весь день"
+#~ msgid "In the shade all day"
+#~ msgstr "У тіні весь день"
 
 #: src/features/sectorConditions/common/ui/ConditionsScore.tsx:56
-msgid "In the sun all day"
-msgstr "На сонці весь день"
+#~ msgid "In the sun all day"
+#~ msgstr "На сонці весь день"
 
 #: src/features/installHint/mobile/InstallHintBody.tsx:60
 msgid "Install"
@@ -1174,7 +1174,7 @@ msgstr "Лишити фото цілим"
 msgid "Keep your grades, language and theme on every device"
 msgstr "Тримай категорії, мову й тему на всіх пристроях"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:52
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:48
 msgid "km/h"
 msgstr "км/год"
 
@@ -1280,7 +1280,7 @@ msgstr "Медіа видалено"
 msgid "Message"
 msgstr "Повідомлення"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:51
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:47
 msgid "mm"
 msgstr "мм"
 
@@ -1382,7 +1382,7 @@ msgid "No videos or photos yet."
 msgstr "Відео та фото ще немає."
 
 #: src/features/logTick/common/ui/ConditionsSection.tsx:119
-#: src/features/sectorConditions/common/ui/ConditionsPanel.tsx:62
+#: src/features/sectorConditions/common/ui/ConditionsPanel.tsx:59
 msgid "No weather while you are offline"
 msgstr "Погода недоступна без інтернету"
 
@@ -1634,7 +1634,7 @@ msgstr "Звичайна точка"
 msgid "Plaques already printed with <0>/q/{oldPath}</0> keep opening this sector. New plaques carry <1>/q/{newPath}</1>: download and print them again."
 msgstr "Уже надруковані таблички з <0>/q/{oldPath}</0> і далі відкриватимуть цей сектор. Нові таблички матимуть <1>/q/{newPath}</1>: завантажте й надрукуйте їх знову."
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:49
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:45
 msgid "points"
 msgstr "бали"
 
@@ -1651,12 +1651,12 @@ msgstr "Розмістіть фото"
 msgid "Post"
 msgstr "Опублікувати"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:42
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:81
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:38
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:77
 msgid "Precipitation"
 msgstr "Опади"
 
-#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:37
+#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:38
 msgid "Precipitation over the day"
 msgstr "Опади за день"
 
@@ -1940,6 +1940,20 @@ msgstr "Сектор {0} створено"
 msgid "Sector cover"
 msgstr "Обкладинка сектора"
 
+#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:46
+msgid "Sector in the shade all day"
+msgstr "Сектор весь день у тіні"
+
+#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:47
+msgid "Sector in the sun all day"
+msgstr "Сектор весь день під сонцем"
+
+#. placeholder {0}: sunShade.firstSunAt
+#. placeholder {1}: sunShade.lastSunAt
+#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:49
+msgid "Sector in the sun roughly {0} – {1}"
+msgstr "Сектор під сонцем орієнтовно {0} – {1}"
+
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:63
 msgid "Sector saved"
 msgstr "Сектор збережено"
@@ -2053,8 +2067,8 @@ msgstr "Спорт"
 #. placeholder {0}: sunShade.firstSunAt
 #. placeholder {1}: sunShade.lastSunAt
 #: src/features/sectorConditions/common/ui/ConditionsScore.tsx:62
-msgid "Sun roughly {0} – {1}"
-msgstr "Сонце орієнтовно {0} – {1}"
+#~ msgid "Sun roughly {0} – {1}"
+#~ msgstr "Сонце орієнтовно {0} – {1}"
 
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:231
 msgid "System"
@@ -2068,8 +2082,8 @@ msgstr "Натисни «Додати на робочий стіл», потім
 msgid "Tap \"Add\" in the top right corner. The crag-atlas icon appears on your home screen."
 msgstr "Натисни «Додати» у правому верхньому куті. Іконка crag-atlas зʼявиться на робочому столі."
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:41
-#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:27
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:37
+#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:28
 msgid "Temperature"
 msgstr "Температура"
 
@@ -2197,7 +2211,7 @@ msgstr "Цей екран не вдалося намалювати. Зазвич
 msgid "This sector is in the archive, so it is out of the catalog. Its routes and everything climbers left on them — ascents, photos, links and comments — are still here."
 msgstr "Цей сектор в архіві, тож поза каталогом. Його маршрути й усе, що лишили на них скелелази — пролази, фото, посилання й коментарі — досі тут."
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:96
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:92
 msgid "time"
 msgstr "час"
 
@@ -2205,7 +2219,7 @@ msgstr "час"
 msgid "Time"
 msgstr "Час"
 
-#: src/features/sectorConditions/common/ui/ConditionsDayStrip.tsx:33
+#: src/features/sectorConditions/common/ui/ConditionsDayStrip.tsx:72
 msgid "today"
 msgstr "сьогодні"
 
@@ -2308,7 +2322,7 @@ msgstr "Орієнтація стіни, °"
 msgid "We sent a code to <0>{0}</0>"
 msgstr "Ми надіслали код на <0>{0}</0>"
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:78
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:74
 msgid "Weather"
 msgstr "Погода"
 
@@ -2318,7 +2332,7 @@ msgid "Weather by Open-Meteo.com"
 msgstr "Погода — Open-Meteo.com"
 
 #: src/features/sectorConditions/common/ui/ConditionsCard.tsx:46
-#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:33
+#: src/features/sectorConditions/common/ui/ConditionsScore.tsx:32
 msgid "Weather forecast not available yet"
 msgstr "Прогнозу погоди ще немає"
 
@@ -2350,9 +2364,9 @@ msgstr "Чи лишається стіна сухою під дощем. Про�
 msgid "Which way the wall faces, in compass degrees: 0 north, 90 east, 180 south, 270 west. It sets when the wall is in sun or shade. Leave it empty to work it out from the terrain."
 msgstr "Куди дивиться стіна, у градусах за компасом: 0 — північ, 90 — схід, 180 — південь, 270 — захід. Від цього залежить, коли на стіні сонце, а коли тінь. Якщо залишити порожнім, напрямок визначиться за рельєфом."
 
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:43
-#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:84
-#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:57
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:39
+#: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:80
+#: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:65
 msgid "Wind"
 msgstr "Вітер"
 

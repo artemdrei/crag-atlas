@@ -1,18 +1,142 @@
-import { createSvgIcon } from '@mui/material/utils';
+import clearDayAnimated from '@meteocons/svg/monochrome/clear-day.svg';
+import cloudyAnimated from '@meteocons/svg/monochrome/cloudy.svg';
+import drizzleAnimated from '@meteocons/svg/monochrome/drizzle.svg';
+import fogAnimated from '@meteocons/svg/monochrome/fog.svg';
+import partlyCloudyDayAnimated from '@meteocons/svg/monochrome/partly-cloudy-day.svg';
+import rainAnimated from '@meteocons/svg/monochrome/rain.svg';
+import snowAnimated from '@meteocons/svg/monochrome/snow.svg';
+import thunderstormsDayRainAnimated from '@meteocons/svg/monochrome/thunderstorms-day-rain.svg';
+import clearDay from '@meteocons/svg-static/monochrome/clear-day.svg';
+import cloudy from '@meteocons/svg-static/monochrome/cloudy.svg';
+import drizzle from '@meteocons/svg-static/monochrome/drizzle.svg';
+import fog from '@meteocons/svg-static/monochrome/fog.svg';
+import partlyCloudyDay from '@meteocons/svg-static/monochrome/partly-cloudy-day.svg';
+import rain from '@meteocons/svg-static/monochrome/rain.svg';
+import raindrop from '@meteocons/svg-static/monochrome/raindrop.svg';
+import raindrops from '@meteocons/svg-static/monochrome/raindrops.svg';
+import snow from '@meteocons/svg-static/monochrome/snow.svg';
+import snowflake from '@meteocons/svg-static/monochrome/snowflake.svg';
+import thunderstormsDayRain from '@meteocons/svg-static/monochrome/thunderstorms-day-rain.svg';
+import windsock from '@meteocons/svg-static/monochrome/windsock.svg';
+import windsockCalm from '@meteocons/svg-static/monochrome/windsock-calm.svg';
+import windsockModerate from '@meteocons/svg-static/monochrome/windsock-moderate.svg';
+import windsockWeak from '@meteocons/svg-static/monochrome/windsock-weak.svg';
+import { styled } from '@mui/material/styles';
 
-// @mui/icons-material ships no rain glyph, so these reuse its CloudySnowing
-// cloud and draw the drops beneath it.
-const CLOUD =
-  'M17.5 16h-10C4.47 16 2 13.53 2 10.5c0-2.76 2.09-5.09 4.78-5.44C7.83 3.18 9.82 2 12 2c2.97 0 5.45 2.18 5.92 5.02C20.21 7.23 22 9.16 22 11.5c0 2.48-2.02 4.5-4.5 4.5';
+import type { PrecipitationKind, WeatherKind } from '../lib';
+import { precipitationKindOf, toKmh } from '../lib';
 
-export const RainIcon = createSvgIcon(
-  <path
-    d={`${CLOUD}M7.4 17.5H9l-1.4 4.5H6zm5 0H14l-1.4 4.5H11zm5 0H19l-1.4 4.5H16z`}
-  />,
-  'Rain'
-);
+const ICONS: Record<WeatherKind, string> = {
+  clear: clearDay,
+  partlyCloudy: partlyCloudyDay,
+  cloudy,
+  fog,
+  drizzle,
+  rain,
+  snow,
+  thunder: thunderstormsDayRain
+};
 
-export const DrizzleIcon = createSvgIcon(
-  <path d={`${CLOUD}M8.6 17.5h1.5l-.9 2.5H7.7zm5 0h1.5l-.9 2.5h-1.5z`} />,
-  'Drizzle'
-);
+const ANIMATED_ICONS: Record<WeatherKind, string> = {
+  clear: clearDayAnimated,
+  partlyCloudy: partlyCloudyDayAnimated,
+  cloudy: cloudyAnimated,
+  fog: fogAnimated,
+  drizzle: drizzleAnimated,
+  rain: rainAnimated,
+  snow: snowAnimated,
+  thunder: thunderstormsDayRainAnimated
+};
+
+const PRECIPITATION_ICONS: Record<PrecipitationKind, string> = {
+  dry: raindrop,
+  drizzle: raindrop,
+  rain: raindrops,
+  snow: snowflake
+};
+
+const CALM_KMH = 5;
+const WEAK_KMH = 15;
+const MODERATE_KMH = 25;
+
+export interface Props {
+  kind: WeatherKind | null;
+  size: number;
+  isAnimated?: boolean;
+}
+
+export const WeatherIcon = ({ kind, size, isAnimated }: Props) => {
+  if (!kind) return <UnknownStyled size={size} />;
+
+  return (
+    <ImageStyled
+      alt=""
+      src={(isAnimated ? ANIMATED_ICONS : ICONS)[kind]}
+      size={size}
+    />
+  );
+};
+
+const ImageStyled = styled('img', {
+  shouldForwardProp: (prop) => prop !== 'size' && prop !== 'isMuted'
+})<{ size: number; isMuted?: boolean }>`
+  width: ${({ size }) => size}px;
+  height: ${({ size }) => size}px;
+  flex: 0 0 auto;
+  opacity: ${({ isMuted }) => (isMuted ? 0.35 : 1)};
+  filter: ${({ theme }) => (theme.palette.mode === 'dark' ? 'invert(1)' : 'none')};
+`;
+
+const UnknownStyled = styled('span', {
+  shouldForwardProp: (prop) => prop !== 'size'
+})<{ size: number }>`
+  width: ${({ size }) => size}px;
+  height: ${({ size }) => size}px;
+  flex: 0 0 auto;
+`;
+
+interface PrecipitationProps {
+  mm: number | null;
+  weatherCode: number | null;
+  size: number;
+}
+
+export const PrecipitationIcon = ({
+  mm,
+  weatherCode,
+  size
+}: PrecipitationProps) => {
+  if (mm == null) return <UnknownStyled size={size} />;
+
+  const kind = precipitationKindOf(weatherCode, mm);
+
+  return (
+    <ImageStyled
+      alt=""
+      src={PRECIPITATION_ICONS[kind]}
+      size={size}
+      isMuted={kind === 'dry'}
+    />
+  );
+};
+
+interface WindProps {
+  metresPerSecond: number | null;
+  size: number;
+}
+
+const windsockOf = (kmh: number): string => {
+  if (kmh < CALM_KMH) return windsockCalm;
+  if (kmh < WEAK_KMH) return windsockWeak;
+  if (kmh < MODERATE_KMH) return windsockModerate;
+
+  return windsock;
+};
+
+export const WindIcon = ({ metresPerSecond, size }: WindProps) => {
+  if (metresPerSecond == null) return <UnknownStyled size={size} />;
+
+  return (
+    <ImageStyled alt="" src={windsockOf(toKmh(metresPerSecond))} size={size} />
+  );
+};

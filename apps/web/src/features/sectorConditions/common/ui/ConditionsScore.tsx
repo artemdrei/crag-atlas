@@ -1,10 +1,9 @@
 import { Trans } from '@lingui/react/macro';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
-import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { getScoreColor } from '@web/shared/theme/palette';
+import { SunTimes } from '@web/shared/ui';
 
 import type { ConditionsDay } from '../entities';
 import { useBandLabel } from '../hooks';
@@ -24,7 +23,7 @@ export const ConditionsScore = ({ day, isSunKnown }: Props) => {
     <RowStyled>
       <RingStyled band={day.band}>
         <Typography variant="h4">{day.score ?? '—'}</Typography>
-        {verdict && <VerdictStyled>{verdict}</VerdictStyled>}
+        {verdict && <BadgeStyled>{verdict}</BadgeStyled>}
       </RingStyled>
 
       <ColumnStyled>
@@ -34,37 +33,25 @@ export const ConditionsScore = ({ day, isSunKnown }: Props) => {
           )}
         </BandStyled>
 
-        {day.bestFromAt && day.bestUntilAt && (
-          <Typography variant="body2" color="text.secondary">
-            <Trans>
-              best {day.bestFromAt} – {day.bestUntilAt}
-            </Trans>
-          </Typography>
+        {day.sunriseAt && day.sunsetAt && (
+          <SunTimes
+            variant="body2"
+            sunrise={day.sunriseAt}
+            sunset={day.sunsetAt}
+          />
         )}
 
         {isSunKnown && (
-          <SunLineStyled variant="body2">
-            {sunShade.isNever && (
-              <>
-                <DarkModeIcon fontSize="inherit" />
-                <Trans>In the shade all day</Trans>
-              </>
-            )}
-            {sunShade.isAllDay && (
-              <>
-                <WbSunnyIcon fontSize="inherit" />
-                <Trans>In the sun all day</Trans>
-              </>
-            )}
+          <Typography variant="body2">
+            {sunShade.isNever && <Trans>Sector in the shade all day</Trans>}
+            {sunShade.isAllDay && <Trans>Sector in the sun all day</Trans>}
             {!sunShade.isNever && !sunShade.isAllDay && (
-              <>
-                <WbSunnyIcon fontSize="inherit" />
-                <Trans>
-                  Sun roughly {sunShade.firstSunAt} – {sunShade.lastSunAt}
-                </Trans>
-              </>
+              <Trans>
+                Sector in the sun roughly {sunShade.firstSunAt} –{' '}
+                {sunShade.lastSunAt}
+              </Trans>
             )}
-          </SunLineStyled>
+          </Typography>
         )}
       </ColumnStyled>
     </RowStyled>
@@ -99,7 +86,7 @@ const RingStyled = styled('div', {
 
 // Sat on the ring rather than inside it: the number owns the middle, and a
 // badge breaking the circle reads as a stamp on the verdict.
-const VerdictStyled = styled('span')`
+const BadgeStyled = styled('span')`
   position: absolute;
   right: 0;
   bottom: 0;
@@ -128,11 +115,4 @@ const BandStyled = styled(Typography, {
   color: ${({ theme, band }) =>
     getScoreColor(theme.palette.conditionBand, band) ??
     theme.palette.text.secondary};
-`;
-
-const SunLineStyled = styled(Typography)`
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing(0.75)};
-  color: ${({ theme }) => theme.palette.secondary.main};
 `;

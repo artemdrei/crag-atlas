@@ -216,9 +216,6 @@ const SummaryStyled = styled('div')`
 `;
 
 const SunStyled = styled('div')`
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing(0.5)};
   margin-left: auto;
 `;
 
