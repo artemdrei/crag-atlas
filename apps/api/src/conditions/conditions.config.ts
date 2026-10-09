@@ -1,3 +1,4 @@
+import type { RockType } from '../common/utils/rockType';
 import type { Shelter } from '../common/utils/shelter';
 
 export const CONDITION_BANDS = [
@@ -34,6 +35,13 @@ export interface HardCap {
   weatherCodes?: number[];
 }
 
+export interface RockRule {
+  // Multiplies what a dry hour takes off the face.
+  dryFactor: number;
+  // Multiplies how much water the face can hold before the rest runs off.
+  surfaceFactor: number;
+}
+
 export interface ShelterRule {
   // Rain can take the factor no lower than this, whatever is falling.
   rainFloor: number;
@@ -63,10 +71,20 @@ export const CONDITIONS_CONFIG = {
 
   // What is falling this hour.
   rainNow: [
-    { upTo: 0.1, score: 100 },
+    { upTo: 0.05, score: 100 },
     { upTo: 0.5, score: 10 },
     { upTo: Number.POSITIVE_INFINITY, score: 0 }
   ] satisfies Step[],
+
+  // The sky code can say rain through an hour the gauge rounds to nothing,
+  // and a drizzle still wets the holds: such an hour counts as at least this.
+  rainCode: {
+    ranges: [
+      { from: 51, to: 67 },
+      { from: 80, to: 82 }
+    ],
+    atLeastMm: 0.2
+  },
 
   // Water still on the rock, in millimetres: what fell, less what the hours
   // since have dried off. Read as a ramp between the rows, so an hour of
@@ -84,7 +102,7 @@ export const CONDITIONS_CONFIG = {
   // so much water; the rest of a downpour runs off.
   drying: {
     surfaceMm: 3,
-    baseMmPerHour: 0.5,
+    baseMmPerHour: 0.3,
     windyKmhAbove: 15,
     windyFactor: 1.3,
     humidPctAbove: 80,
@@ -92,6 +110,19 @@ export const CONDITIONS_CONFIG = {
     coldCBelow: 5,
     coldFactor: 0.6
   },
+
+  // Dense rock keeps the rain on its surface and sheds it fast; porous rock
+  // drinks it and gives it back over days. Sandstone is also brittle while
+  // wet, so it holds its water the longest on purpose.
+  rock: {
+    limestone: { dryFactor: 1, surfaceFactor: 1 },
+    sandstone: { dryFactor: 0.5, surfaceFactor: 1.6 },
+    granite: { dryFactor: 1.4, surfaceFactor: 0.7 },
+    gneiss: { dryFactor: 1.4, surfaceFactor: 0.7 },
+    basalt: { dryFactor: 1.4, surfaceFactor: 0.7 },
+    conglomerate: { dryFactor: 0.8, surfaceFactor: 1.2 },
+    other: { dryFactor: 1, surfaceFactor: 1 }
+  } satisfies Record<RockType, RockRule>,
 
   // A hundred is the crisp band only; a mild afternoon is good, not perfect.
   temperature: [
@@ -195,12 +226,22 @@ export const CONDITIONS_CONFIG = {
 
   // Nobody is at the crag at four in the morning, so the hours outside this
   // are neither shown nor averaged into the day.
-  dayStartHour: 6,
+  dayStartHour: 8,
   dayEndHour: 21,
 
-  // The day is its best session, not its average: a dry afternoon after a
-  // wet morning is a day to go, and two dry hours after a soaking is not.
-  dayTopHours: 6,
+  // The day starts from its best session, then pays for the hours a climber
+  // who came for the day would lose: the top hours are scaled by the share
+  // of the day that is at least ok, and a day with real rain in it is never
+  // excellent however dry the rest.
+  day: {
+    topHours: 6,
+    coverageFloor: 0.5,
+    coverageMinHourScore: 55,
+    // Real rain, not the trace a drizzle code is read as.
+    rainHourFromMm: 0.5,
+    rainHoursFrom: 3,
+    rainyMaxScore: 85
+  },
 
   bestWindow: {
     minHours: 2,

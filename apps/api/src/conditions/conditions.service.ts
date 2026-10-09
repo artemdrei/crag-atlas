@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { NotFoundException } from '../common/exceptions/app.exception';
 import { readFailed } from '../common/exceptions/database.exception';
+import type { RockType } from '../common/utils/rockType';
 import type { Shelter } from '../common/utils/shelter';
 import { publicSupabase } from '../config/supabase.client';
 import { HorizonService } from '../horizon/horizon.service';
@@ -13,7 +14,9 @@ import {
   bestWindow,
   dayScore,
   dryingMm,
-  scoreHour
+  fallingMm,
+  scoreHour,
+  surfaceMm
 } from './conditions.scoring';
 import type { SunDay } from './conditions.sun';
 import { sunDay, toClock } from './conditions.sun';
@@ -40,6 +43,7 @@ interface PointParams {
   lat: number;
   lng: number;
   shelter: Shelter;
+  rockType: RockType;
   profile: number[] | null;
   aspectDeg: number | null;
 }
@@ -49,6 +53,13 @@ interface SectorRow {
   lng: number | null;
   shelter: Shelter;
   aspect_deg: number | null;
+  regions: { rock_type: RockType } | null;
+}
+
+interface RegionRow {
+  lat: number | null;
+  lng: number | null;
+  rock_type: RockType;
 }
 
 @Injectable()
@@ -83,7 +94,17 @@ export class ConditionsService {
     // neither is lit from every direction the skyline allows.
     const aspectDeg = sector.aspect_deg ?? horizon?.aspect_deg ?? null;
 
-    return this.atPoint({ lat, lng, shelter, profile, aspectDeg }, window);
+    return this.atPoint(
+      {
+        lat,
+        lng,
+        shelter,
+        rockType: sector.regions?.rock_type ?? 'other',
+        profile,
+        aspectDeg
+      },
+      window
+    );
   }
 
   // A region is weather, not geometry: one crag's wall faces one way and the
@@ -95,10 +116,10 @@ export class ConditionsService {
   ): Promise<SectorConditionsDto> {
     const { data, error } = await publicSupabase()
       .from('regions')
-      .select('lat, lng')
+      .select('lat, lng, rock_type')
       .eq('id', idRegion)
       .is('deleted_at', null)
-      .maybeSingle<{ lat: number | null; lng: number | null }>();
+      .maybeSingle<RegionRow>();
 
     if (error) {
       throw readFailed(
@@ -130,6 +151,7 @@ export class ConditionsService {
         lat: data.lat,
         lng: data.lng,
         shelter: 'open',
+        rockType: data.rock_type,
         profile: null,
         aspectDeg: null
       },
@@ -138,12 +160,12 @@ export class ConditionsService {
   }
 
   private atPoint(
-    { lat, lng, shelter, profile, aspectDeg }: PointParams,
+    { lat, lng, shelter, rockType, profile, aspectDeg }: PointParams,
     window: ForecastDto | null
   ): SectorConditionsDto {
     const offsetSeconds = window?.utcOffsetSeconds ?? localOffsetSeconds(lng);
     const today = firstForecastDate(window) ?? localDate(offsetSeconds);
-    const series = window ? indexSeries(window) : null;
+    const series = window ? indexSeries(window, rockType) : null;
 
     const days = Array.from({ length: STRIP_DAYS }, (_, day) => {
       const date = shiftDate(today, day);
@@ -175,7 +197,7 @@ export class ConditionsService {
   private async sector(idSector: string): Promise<SectorRow> {
     const { data, error } = await publicSupabase()
       .from('sectors')
-      .select('lat, lng, shelter, aspect_deg')
+      .select('lat, lng, shelter, aspect_deg, regions (rock_type)')
       .eq('id', idSector)
       .is('deleted_at', null)
       .maybeSingle<SectorRow>();
@@ -214,6 +236,7 @@ const buildDay = ({
 }: DayParams): ConditionsDayDto => {
   const [dayStartHour, dayEndHour] = climbingHours(sun);
   const hours: ConditionsHourDto[] = [];
+  let rainHours = 0;
   const scoresByHour: (number | null)[] = Array.from(
     { length: 24 },
     () => null
@@ -227,6 +250,9 @@ const buildDay = ({
     const scored = reading ? scoreHour({ ...reading, isSun }, shelter) : null;
 
     if (scored) scoresByHour[hour] = scored.score;
+    if (reading && reading.fellMm >= CONDITIONS_CONFIG.day.rainHourFromMm) {
+      rainHours += 1;
+    }
 
     hours.push({
       at,
@@ -234,14 +260,14 @@ const buildDay = ({
       score: scored?.score ?? null,
       band: scored?.band ?? null,
       temperatureC: reading?.temperatureC ?? null,
-      precipitationMm: reading?.precipitationMm ?? null,
+      precipitationMm: reading ? reading.fellMm : null,
       humidityPct: reading?.humidityPct ?? null,
       windSpeedMs: reading?.windSpeedMs ?? null,
       weatherCode: reading?.weatherCode ?? null
     });
   }
 
-  const score = dayScore(scoresByHour);
+  const score = dayScore(scoresByHour, rainHours);
   const best = bestWindow(scoresByHour);
 
   return {
@@ -265,7 +291,9 @@ const onTheHour = (hour: number): string =>
 
 // Daylight, trimmed to the hours anyone climbs. Without this the best
 // window lands after sunset in October, where cool air and a shade score of
-// a hundred beat every hour the sun was actually up.
+// a hundred beat every hour the sun was actually up. The hour the sun sets
+// in still counts, and so does the one after it: a sunset at 18:40 is a
+// session that runs to 20.
 const climbingHours = (sun: SunDay): [number, number] => {
   const { dayStartHour, dayEndHour } = CONDITIONS_CONFIG;
 
@@ -273,15 +301,16 @@ const climbingHours = (sun: SunDay): [number, number] => {
 
   return [
     Math.max(dayStartHour, Number(sun.sunriseAt.slice(0, 2))),
-    Math.min(dayEndHour, Number(sun.sunsetAt.slice(0, 2)))
+    Math.min(dayEndHour, Number(sun.sunsetAt.slice(0, 2)) + 1)
   ];
 };
 
-type Reading = Omit<HourInput, 'isSun'>;
+type Reading = Omit<HourInput, 'isSun'> & { fellMm: number };
 
 interface ForecastSeries {
   window: ForecastDto;
   indexAt: Map<string, number>;
+  fellByHour: number[];
   wetness: number[];
   rain24h: number[];
 }
@@ -290,10 +319,15 @@ interface ForecastSeries {
 // so the whole series answers them once instead of walking backwards per hour.
 // Wetness is read before the hour dries anything: the rock is still wet when
 // the climber arrives at the start of it.
-const indexSeries = (window: ForecastDto): ForecastSeries => {
+const indexSeries = (
+  window: ForecastDto,
+  rockType: RockType
+): ForecastSeries => {
+  const holds = surfaceMm(rockType);
   const indexAt = new Map<string, number>();
   const wetness: number[] = [];
   const rain24h: number[] = [];
+  const fellByHour: number[] = [];
 
   let wet = 0;
   let running = 0;
@@ -301,15 +335,19 @@ const indexSeries = (window: ForecastDto): ForecastSeries => {
   window.time.forEach((at, index) => {
     indexAt.set(at, index);
 
-    const fell = window.precipitationMm[index] ?? 0;
+    const fell = fallingMm({
+      precipitationMm: window.precipitationMm[index] ?? null,
+      weatherCode: window.weatherCode[index] ?? null
+    });
 
+    fellByHour.push(fell);
     running += fell;
 
-    const leaving = window.precipitationMm[index - 24];
+    const leaving = fellByHour[index - 24];
 
-    if (leaving !== undefined) running -= leaving ?? 0;
+    if (leaving !== undefined) running -= leaving;
 
-    wet = Math.min(CONDITIONS_CONFIG.drying.surfaceMm, wet + fell);
+    wet = Math.min(holds, wet + fell);
     wetness.push(wet);
     rain24h.push(running);
 
@@ -317,16 +355,19 @@ const indexSeries = (window: ForecastDto): ForecastSeries => {
       wet = Math.max(
         0,
         wet -
-          dryingMm({
-            temperatureC: window.temperatureC[index] ?? null,
-            humidityPct: window.humidityPct[index] ?? null,
-            windSpeedMs: window.windSpeedMs[index] ?? null
-          })
+          dryingMm(
+            {
+              temperatureC: window.temperatureC[index] ?? null,
+              humidityPct: window.humidityPct[index] ?? null,
+              windSpeedMs: window.windSpeedMs[index] ?? null
+            },
+            rockType
+          )
       );
     }
   });
 
-  return { window, indexAt, wetness, rain24h };
+  return { window, indexAt, fellByHour, wetness, rain24h };
 };
 
 const readingAt = (series: ForecastSeries, at: string): Reading | null => {
@@ -343,7 +384,8 @@ const readingAt = (series: ForecastSeries, at: string): Reading | null => {
     precipitationMm: window.precipitationMm[index] ?? null,
     precipitation24hMm: series.rain24h[index] ?? 0,
     weatherCode: window.weatherCode[index] ?? null,
-    wetnessMm: series.wetness[index] ?? 0
+    wetnessMm: series.wetness[index] ?? 0,
+    fellMm: series.fellByHour[index] ?? 0
   };
 };
 

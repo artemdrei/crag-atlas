@@ -1,3 +1,4 @@
+import type { RockType } from '../common/utils/rockType';
 import type { Shelter } from '../common/utils/shelter';
 import type { ConditionBand, Step } from './conditions.config';
 import { CONDITIONS_CONFIG } from './conditions.config';
@@ -44,28 +45,48 @@ const ramp = (table: readonly Step[], value: number): number => {
   return from.score + (to.score - from.score) * share;
 };
 
-export const dryingMm = ({
-  temperatureC,
-  humidityPct,
-  windSpeedMs
-}: Pick<HourInput, 'temperatureC' | 'humidityPct' | 'windSpeedMs'>): number => {
+export const surfaceMm = (rockType: RockType): number =>
+  CONDITIONS_CONFIG.drying.surfaceMm *
+  CONDITIONS_CONFIG.rock[rockType].surfaceFactor;
+
+export const dryingMm = (
+  {
+    temperatureC,
+    humidityPct,
+    windSpeedMs
+  }: Pick<HourInput, 'temperatureC' | 'humidityPct' | 'windSpeedMs'>,
+  rockType: RockType
+): number => {
   const rule = CONDITIONS_CONFIG.drying;
   const windKmh = (windSpeedMs ?? 0) * MS_TO_KMH;
 
   return (
     rule.baseMmPerHour *
+    CONDITIONS_CONFIG.rock[rockType].dryFactor *
     (windKmh > rule.windyKmhAbove ? rule.windyFactor : 1) *
     ((humidityPct ?? 60) > rule.humidPctAbove ? rule.humidFactor : 1) *
     ((temperatureC ?? 15) < rule.coldCBelow ? rule.coldFactor : 1)
   );
 };
 
-export const rainScore = (
-  { precipitationMm, precipitation24hMm, wetnessMm }: HourInput,
-  shelter: Shelter
-): number => {
+export const fallingMm = ({
+  precipitationMm,
+  weatherCode
+}: Pick<HourInput, 'precipitationMm' | 'weatherCode'>): number => {
+  const { ranges, atLeastMm } = CONDITIONS_CONFIG.rainCode;
+  const saysRain =
+    weatherCode !== null &&
+    ranges.some(
+      (range) => weatherCode >= range.from && weatherCode <= range.to
+    );
+
+  return Math.max(precipitationMm ?? 0, saysRain ? atLeastMm : 0);
+};
+
+export const rainScore = (hour: HourInput, shelter: Shelter): number => {
+  const { precipitation24hMm, wetnessMm } = hour;
   const rule = CONDITIONS_CONFIG.shelter[shelter];
-  const now = step(CONDITIONS_CONFIG.rainNow, precipitationMm ?? 0);
+  const now = step(CONDITIONS_CONFIG.rainNow, fallingMm(hour));
   const wet = ramp(CONDITIONS_CONFIG.wetness, wetnessMm);
 
   const open = Math.min(now, wet);
@@ -118,7 +139,7 @@ const hardCap = (
     .filter(
       (cap) =>
         (cap.precipitationMmAbove === undefined ||
-          (hour.precipitationMm ?? 0) > cap.precipitationMmAbove) &&
+          fallingMm(hour) > cap.precipitationMmAbove) &&
         (cap.temperatureCBelow === undefined ||
           (hour.temperatureC ?? 0) < cap.temperatureCBelow) &&
         (cap.windKmhAbove === undefined || windKmh > cap.windKmhAbove) &&
@@ -157,17 +178,30 @@ export const scoreHour = (hour: HourInput, shelter: Shelter): HourScore => {
   return { score, band: bandOf(score), cappedBy: cap?.code ?? null };
 };
 
-export const dayScore = (scoresByHour: (number | null)[]): number | null => {
-  const known = scoresByHour
-    .filter((score): score is number => score !== null)
-    .sort((one, other) => other - one)
-    .slice(0, CONDITIONS_CONFIG.dayTopHours);
+export const dayScore = (
+  scoresByHour: (number | null)[],
+  rainHours = 0
+): number | null => {
+  const rule = CONDITIONS_CONFIG.day;
+  const known = scoresByHour.filter((score): score is number => score !== null);
 
   if (known.length === 0) return null;
 
-  return Math.round(
-    known.reduce((total, one) => total + one, 0) / known.length
-  );
+  const top = [...known]
+    .sort((one, other) => other - one)
+    .slice(0, rule.topHours);
+  const session = top.reduce((total, one) => total + one, 0) / top.length;
+  const coverage =
+    known.filter((score) => score >= rule.coverageMinHourScore).length /
+    known.length;
+  const whole =
+    session * (rule.coverageFloor + (1 - rule.coverageFloor) * coverage);
+  const capped =
+    rainHours >= rule.rainHoursFrom
+      ? Math.min(whole, rule.rainyMaxScore)
+      : whole;
+
+  return Math.round(capped);
 };
 
 export interface Window {

@@ -1550,6 +1550,7 @@ export interface components {
             /** @description Direct sun reaches the sector, cloud aside — geometry, not forecast */
             isSun: boolean;
             temperatureC: number | null;
+            /** @description What the scoring took as fallen: the gauge, or the least a rain code can mean when the gauge rounds to nothing */
             precipitationMm: number | null;
             humidityPct: number | null;
             windSpeedMs: number | null;

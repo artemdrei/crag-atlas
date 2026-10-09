@@ -32,7 +32,12 @@ export class ConditionsHourDto {
   @ApiProperty({ type: Number, nullable: true })
   temperatureC!: number | null;
 
-  @ApiProperty({ type: Number, nullable: true })
+  @ApiProperty({
+    type: Number,
+    nullable: true,
+    description:
+      'What the scoring took as fallen: the gauge, or the least a rain code can mean when the gauge rounds to nothing'
+  })
   precipitationMm!: number | null;
 
   @ApiProperty({ type: Number, nullable: true })
