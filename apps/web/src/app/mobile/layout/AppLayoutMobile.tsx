@@ -1,5 +1,5 @@
-import { useRef } from 'react';
-import { Outlet, useLocation } from 'react-router';
+import { useEffect, useRef } from 'react';
+import { Outlet, useLocation, useNavigationType } from 'react-router';
 
 import Box from '@mui/material/Box';
 import { keyframes, styled } from '@mui/material/styles';
@@ -13,7 +13,16 @@ import { HeaderMobile } from './HeaderMobile';
 
 export const AppLayoutMobile = () => {
   const location = useLocation();
+  const navigationType = useNavigationType();
   const mainRef = useRef<HTMLDivElement>(null);
+  // The first screen also arrives as POP; only a POP after another screen
+  // is the climber going back.
+  const hasNavigated = useRef(false);
+  const isBack = navigationType === 'POP' && hasNavigated.current;
+
+  useEffect(() => {
+    hasNavigated.current = true;
+  }, []);
 
   useScrollRestoration(mainRef);
 
@@ -27,7 +36,7 @@ export const AppLayoutMobile = () => {
         {/* Keyed by path: a crash on one screen must not follow the user to
             the next one, and a boundary only clears by remounting. */}
         <ErrorBoundary key={location.pathname}>
-          <PageFadeStyled>
+          <PageFadeStyled isAnimated={!isBack}>
             <Outlet />
           </PageFadeStyled>
         </ErrorBoundary>
@@ -71,8 +80,11 @@ const fadeIn = keyframes`
   }
 `;
 
-const PageFadeStyled = styled(Box)`
-  animation: ${fadeIn} 0.2s ease-out;
+const PageFadeStyled = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'isAnimated'
+})<{ isAnimated: boolean }>`
+  animation: ${({ isAnimated }) => (isAnimated ? fadeIn : 'none')} 0.2s
+    ease-out;
 
   @media (prefers-reduced-motion: reduce) {
     animation: none;
