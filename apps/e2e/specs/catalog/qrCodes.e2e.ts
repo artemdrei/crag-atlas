@@ -7,6 +7,7 @@ import type { Row } from '../../fixtures/catalog';
 import { cleanup, makeRegion, makeSector } from '../../fixtures/catalog';
 import { readQrPlaques } from '../../fixtures/qrPdf';
 import { confirm } from '../../fixtures/ui';
+import { env } from '../../setup/env';
 
 /**
  * A plaque on the rock carries a `/q/` address: the admin makes it, checks it
@@ -72,11 +73,38 @@ test('an admin makes a QR code and it opens the sector', async ({ page }) => {
 
   expect(path).toMatch(/^ua\/[a-z0-9-]+\/[a-z0-9-]+$/);
 
+  await page.route(env.amplitudeUrl, (route) =>
+    route.fulfill({ json: { code: 200 } })
+  );
+
+  // The SDK batches on a 10 s timer, so the wait has to outlast it.
+  const upload = page.waitForRequest(
+    (request) =>
+      request.url() === env.amplitudeUrl &&
+      !!request.postData()?.includes('QR Code Scanned'),
+    { timeout: 15_000 }
+  );
+
   await page.goto(`/q/${path}`);
 
   await expect(page).toHaveURL(
     new RegExp(`/regions/${region.id}/sectors/${sector.id}$`)
   );
+
+  const { events } = (await upload).postDataJSON() as {
+    events: { event_type: string; event_properties: Record<string, unknown> }[];
+  };
+
+  expect(
+    events.find((event) => event.event_type === 'QR Code Scanned')
+  ).toMatchObject({
+    event_properties: {
+      result: 'opened',
+      qr_path: path,
+      id_sector: sector.id,
+      sector_name: sector.name
+    }
+  });
 });
 
 test('a changed address keeps the old plaques working', async ({ page }) => {

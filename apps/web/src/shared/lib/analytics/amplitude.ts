@@ -106,6 +106,8 @@ export const initAmplitude = () => {
 
   init(apiKey, {
     appVersion: __APP_VERSION__,
+    // The e2e build points this at a stub so no test run reaches the project.
+    serverUrl: import.meta.env.VITE_AMPLITUDE_SERVER_URL || undefined,
     fetchRemoteConfig: false,
     flushIntervalMillis: 10_000,
     autocapture: {

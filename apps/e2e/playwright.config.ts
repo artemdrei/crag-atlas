@@ -85,7 +85,11 @@ export default defineConfig({
       env: {
         VITE_API_URL: env.apiUrl,
         VITE_SUPABASE_URL: env.supabaseUrl,
-        VITE_SUPABASE_ANON_KEY: env.anonKey
+        VITE_SUPABASE_ANON_KEY: env.anonKey,
+        // Set here or Vite falls back to apps/web/.env and the suite's events
+        // land in the developer's own Amplitude project.
+        VITE_AMPLITUDE_API_KEY: 'e2e',
+        VITE_AMPLITUDE_SERVER_URL: env.amplitudeUrl
       }
     }
   ]

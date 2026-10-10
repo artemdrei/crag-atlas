@@ -12,14 +12,17 @@ const required = (name: string, fallback?: string): string => {
   return value;
 };
 
+const webUrl = required('WEB_URL', 'http://localhost:4100');
+
 export const env = {
   supabaseUrl: required('SUPABASE_URL', 'http://127.0.0.1:55321'),
   anonKey: required('SUPABASE_ANON_KEY'),
   serviceRoleKey: required('SUPABASE_SERVICE_ROLE_KEY'),
   // Deliberately not 4000/4001: the developer's own dev servers live there,
   // pointed at a hosted project, and this suite erases rows.
-  webUrl: required('WEB_URL', 'http://localhost:4100'),
+  webUrl,
   apiUrl: required('API_URL', 'http://localhost:4101'),
+  amplitudeUrl: `${webUrl}/__amplitude`,
   adminEmail: process.env.E2E_ADMIN_EMAIL ?? 'e2e-admin@crag-atlas.test',
   adminPassword: process.env.E2E_ADMIN_PASSWORD ?? 'e2e-admin-password',
   memberEmail: process.env.E2E_MEMBER_EMAIL ?? 'e2e-member@crag-atlas.test',
