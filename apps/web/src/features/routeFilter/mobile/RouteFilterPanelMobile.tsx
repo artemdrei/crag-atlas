@@ -25,6 +25,7 @@ export interface Props {
   tickedCount?: number;
   gradeHistogram: GradeHistogramGroup[];
   gradeOrder: Record<string, number>;
+  extraAction?: ReactNode;
 }
 
 export const RouteFilterPanelMobile = ({
@@ -33,7 +34,8 @@ export const RouteFilterPanelMobile = ({
   routesCount,
   tickedCount,
   gradeHistogram,
-  gradeOrder
+  gradeOrder,
+  extraAction
 }: Props) => {
   const chips = useFilterChips(state, gradeOrder);
   const [isOpen, setIsOpen] = useState(false);
@@ -45,14 +47,17 @@ export const RouteFilterPanelMobile = ({
         routesCount={routesCount}
         tickedCount={tickedCount}
         action={
-          <FiltersToggleButton
-            activeCount={state.activeCount}
-            isExpanded={isOpen}
-            onClick={() => {
-              trackListControl(state.list, 'filters_toggle', 'open');
-              setIsOpen(true);
-            }}
-          />
+          <ActionsStyled>
+            {extraAction}
+            <FiltersToggleButton
+              activeCount={state.activeCount}
+              isExpanded={isOpen}
+              onClick={() => {
+                trackListControl(state.list, 'filters_toggle', 'open');
+                setIsOpen(true);
+              }}
+            />
+          </ActionsStyled>
         }
       />
       <ActiveFilterChips chips={chips} onClearAll={state.clearFilters} />
@@ -91,6 +96,13 @@ const PanelStyled = styled('div')`
   gap: ${({ theme }) => theme.spacing(1)};
   padding-bottom: ${({ theme }) => theme.spacing(1.5)};
   background-color: ${({ theme }) => theme.palette.background.default};
+`;
+
+const ActionsStyled = styled('div')`
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing(0.5)};
 `;
 
 const SheetBodyStyled = styled('div')`

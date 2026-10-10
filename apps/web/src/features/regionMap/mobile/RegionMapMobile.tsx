@@ -3,6 +3,7 @@ import { useState } from 'react';
 import type { Region } from '@crag-atlas/api';
 import { styled, useTheme } from '@mui/material/styles';
 
+import { useStoredFlag } from '@web/shared/lib';
 import { BottomSheet, CollapsibleMap, MapCanvas } from '@web/shared/ui';
 
 import type { MappedRegion } from '../common';
@@ -17,13 +18,14 @@ export interface Props {
 
 export const RegionMapMobile = ({ mapped, onOpenRegion }: Props) => {
   const theme = useTheme();
+  const { value: isCollapsed, toggle } = useStoredFlag(STORAGE_KEY, false);
   const [idSelectedRegion, setIdSelectedRegion] = useState<string>();
   const selected = mapped.find(
     ({ region }) => region.id === idSelectedRegion
   )?.region;
 
   return (
-    <CollapsibleMap storageKey={STORAGE_KEY}>
+    <CollapsibleMap isCollapsed={isCollapsed} onToggle={toggle}>
       <MapCanvas
         points={regionMapPoints(mapped, theme.palette.primary.main)}
         idSelected={idSelectedRegion}

@@ -2,6 +2,9 @@ import { useMemo } from 'react';
 import { useParams } from 'react-router';
 
 import type { CatalogSource } from '@crag-atlas/analytics';
+import { useLingui } from '@lingui/react/macro';
+import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
+import IconButton from '@mui/material/IconButton';
 import { useTheme } from '@mui/material/styles';
 
 import { useOpenCatalogItem } from '@web/app/router/useOpenCatalogItem';
@@ -15,6 +18,7 @@ import {
   sectorPinColors
 } from '@web/features/sectorMap';
 import { useApiGetRegion } from '@web/shared/api';
+import { useStoredFlag } from '@web/shared/lib';
 import { ApiFeedback, PageShell, PageTitle } from '@web/shared/ui';
 
 import {
@@ -28,10 +32,17 @@ import {
   useRegionRouteFilter
 } from '../common';
 
+const SECTOR_MAP_COLLAPSED_KEY = 'crag-atlas:sector-map-collapsed';
+
 export const PageRegionMobile = () => {
   const { idRegion = '' } = useParams();
   const openCatalogItem = useOpenCatalogItem();
+  const { t } = useLingui();
   const theme = useTheme();
+  const { value: isMapCollapsed, toggle: toggleMap } = useStoredFlag(
+    SECTOR_MAP_COLLAPSED_KEY,
+    false
+  );
   const { region, failure: regionFailure } = useApiGetRegion(idRegion);
   const { sectors, isLoading, failure } = useApiGetSectors(idRegion);
   const { tickedOf, tickedRoutes } = useApiGetTickedSectors(idRegion);
@@ -73,6 +84,8 @@ export const PageRegionMobile = () => {
       <ApiFeedback failure={regionFailure ?? failure} />
       <SectorMapMobile
         mapped={mapped}
+        isCollapsed={isMapCollapsed}
+        onToggleCollapsed={toggleMap}
         renderSector={(sector) => (
           <SectorCard
             sector={sector}
@@ -94,6 +107,13 @@ export const PageRegionMobile = () => {
         routesCount={matchedCount}
         gradeHistogram={region?.gradeHistogram ?? []}
         gradeOrder={gradeOrder}
+        extraAction={
+          isMapCollapsed && (
+            <IconButton aria-label={t`Show map`} onClick={toggleMap}>
+              <MapOutlinedIcon />
+            </IconButton>
+          )
+        }
       />
       <SectorsList
         sectors={orderedSectors}
