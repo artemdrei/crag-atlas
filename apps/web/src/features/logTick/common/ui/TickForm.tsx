@@ -27,6 +27,7 @@ import { AttemptsStepper } from './AttemptsStepper';
 import { ConditionsSection } from './ConditionsSection';
 import { GradeFeelChoice } from './GradeFeelChoice';
 import { RepeatAscentNotice } from './RepeatAscentNotice';
+import { TickFormRow } from './TickFormRow';
 import { TickFormSection } from './TickFormSection';
 import { TickMediaField } from './tickMediaField';
 
@@ -65,7 +66,7 @@ export const TickForm = ({
     tick ? (tick.climbedAtTime ?? '') : nowLocal().time
   );
   const [attempts, setAttempts] = useState<number | null>(
-    tick?.attempts ?? null
+    tick ? (tick.attempts ?? null) : 1
   );
   const [partner, setPartner] = useState<UserSummary | null>(
     tick?.idPartner && tick.partnerName
@@ -141,64 +142,62 @@ export const TickForm = ({
       )}
 
       <TickFormSection title={<Trans>How did you climb it?</Trans>}>
-        <TypeRowStyled>
-          <AscentTypeChoice
-            value={ascentType}
-            isFirstAscentLocked={isFirstAscentLocked}
-            onChange={setAscentType}
-          />
+        <AscentTypeChoice
+          value={ascentType}
+          isFirstAscentLocked={isFirstAscentLocked}
+          onChange={setAscentType}
+        />
+        <RowsStyled>
           {hasAttempts && (
-            <AttemptsStepper value={attempts} onChange={setAttempts} />
+            <TickFormRow label={<Trans>Tries</Trans>}>
+              <AttemptsStepper value={attempts} onChange={setAttempts} />
+            </TickFormRow>
           )}
-        </TypeRowStyled>
+          <TickFormRow label={<Trans>Grade feels</Trans>}>
+            <GradeFeelChoice
+              feel={gradeFeel}
+              grade={gradeVote}
+              scale={scale}
+              onFeelChange={setGradeFeel}
+              onGradeChange={setGradeVote}
+            />
+          </TickFormRow>
+          <TickFormRow label={<Trans>Rating</Trans>}>
+            <Rating
+              size="large"
+              value={rating}
+              getLabelText={(stars) => t`${stars} of 5`}
+              onChange={(_event, next) => setRating(next)}
+            />
+          </TickFormRow>
+        </RowsStyled>
       </TickFormSection>
 
-      <TickFormSection title={<Trans>How hard is the route?</Trans>}>
-        <GradeFeelChoice
-          feel={gradeFeel}
-          grade={gradeVote}
-          scale={scale}
-          onFeelChange={setGradeFeel}
-          onGradeChange={setGradeVote}
+      <NoteStyled>
+        <LimitedTextField
+          fullWidth
+          multiline
+          minRows={2}
+          maxLength={TEXT_LIMITS.tickNote}
+          label={t`Comment`}
+          value={note}
+          onChange={(event) => setNote(event.target.value)}
         />
-      </TickFormSection>
-
-      <TickFormSection title={<Trans>Did you like it?</Trans>}>
-        <Rating
-          size="large"
-          value={rating}
-          getLabelText={(stars) => t`${stars} of 5`}
-          onChange={(_event, next) => setRating(next)}
+        <FormControlLabel
+          label={t`Private comment`}
+          control={
+            <Checkbox
+              size="small"
+              checked={notePrivate}
+              onChange={(event) => setNotePrivate(event.target.checked)}
+            />
+          }
         />
-      </TickFormSection>
-
-      <TickFormSection title={<Trans>Share your thoughts</Trans>}>
-        <NoteStyled>
-          <LimitedTextField
-            fullWidth
-            multiline
-            minRows={2}
-            maxLength={TEXT_LIMITS.tickNote}
-            label={t`Comment`}
-            value={note}
-            onChange={(event) => setNote(event.target.value)}
-          />
-          <FormControlLabel
-            label={t`Private comment`}
-            control={
-              <Checkbox
-                size="small"
-                checked={notePrivate}
-                onChange={(event) => setNotePrivate(event.target.checked)}
-              />
-            }
-          />
-        </NoteStyled>
-      </TickFormSection>
+      </NoteStyled>
 
       <DetailsToggleStyled
         type="button"
-        variant="outlined"
+        color="inherit"
         fullWidth
         aria-expanded={isDetailsOpen}
         endIcon={<ExpandMoreIcon />}
@@ -307,20 +306,15 @@ const FormStyled = styled('form')`
   padding-top: ${({ theme }) => theme.spacing(1)};
 `;
 
-const TypeRowStyled = styled('div')`
+const RowsStyled = styled('div')`
   display: flex;
-  align-items: flex-start;
-  gap: ${({ theme }) => theme.spacing(1.5)};
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing(1)};
 `;
 
 const DetailsToggleStyled = styled(Button)`
   justify-content: space-between;
-  padding: ${({ theme }) => theme.spacing(1.25, 2)};
-
-  &,
-  &:hover {
-    border-style: dashed;
-  }
+  padding: ${({ theme }) => theme.spacing(1.25, 0)};
 
   & .MuiButton-endIcon {
     transition: transform 150ms ease-out;
@@ -350,7 +344,6 @@ const ActionsStyled = styled('div', {
   z-index: 1;
   bottom: 0;
   padding: ${({ theme, isInSheet }) =>
-    isInSheet ? theme.spacing(1.5, 0, 0) : theme.spacing(1.5, 0, 2.5)};
+    isInSheet ? theme.spacing(1.5, 0, 0) : theme.spacing(1.5, 0, 0.5)};
   background-color: ${({ theme }) => theme.palette.background.paper};
-  border-top: 1px solid ${({ theme }) => theme.palette.divider};
 `;

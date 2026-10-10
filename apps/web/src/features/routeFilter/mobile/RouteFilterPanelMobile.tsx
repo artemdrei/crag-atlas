@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 
 import { trackListControl } from '@web/shared/lib';
-import { BottomSheet } from '@web/shared/ui';
+import { BottomSheet, FormActions } from '@web/shared/ui';
 
 import {
   ActiveFilterChips,
@@ -25,6 +25,7 @@ export interface Props {
   tickedCount?: number;
   gradeHistogram: GradeHistogramGroup[];
   gradeOrder: Record<string, number>;
+  extraAction?: ReactNode;
 }
 
 export const RouteFilterPanelMobile = ({
@@ -33,7 +34,8 @@ export const RouteFilterPanelMobile = ({
   routesCount,
   tickedCount,
   gradeHistogram,
-  gradeOrder
+  gradeOrder,
+  extraAction
 }: Props) => {
   const chips = useFilterChips(state, gradeOrder);
   const [isOpen, setIsOpen] = useState(false);
@@ -45,14 +47,17 @@ export const RouteFilterPanelMobile = ({
         routesCount={routesCount}
         tickedCount={tickedCount}
         action={
-          <FiltersToggleButton
-            activeCount={state.activeCount}
-            isExpanded={isOpen}
-            onClick={() => {
-              trackListControl(state.list, 'filters_toggle', 'open');
-              setIsOpen(true);
-            }}
-          />
+          <ActionsStyled>
+            {extraAction}
+            <FiltersToggleButton
+              activeCount={state.activeCount}
+              isExpanded={isOpen}
+              onClick={() => {
+                trackListControl(state.list, 'filters_toggle', 'open');
+                setIsOpen(true);
+              }}
+            />
+          </ActionsStyled>
         }
       />
       <ActiveFilterChips chips={chips} onClearAll={state.clearFilters} />
@@ -64,25 +69,18 @@ export const RouteFilterPanelMobile = ({
             onClearAll={state.clearFilters}
           />
           <RouteFilterFields state={state} gradeHistogram={gradeHistogram} />
-          <ActionsStyled>
-            <Button
-              variant="outlined"
-              color="inverse"
-              onClick={() => setIsOpen(false)}
-            >
+          <FormActions>
+            <Button onClick={() => setIsOpen(false)}>
               <Trans>Close</Trans>
             </Button>
-            <ShowButtonStyled
-              variant="contained"
-              onClick={() => setIsOpen(false)}
-            >
+            <Button variant="contained" onClick={() => setIsOpen(false)}>
               <Plural
                 value={routesCount}
                 one="Show # route"
                 other="Show # routes"
               />
-            </ShowButtonStyled>
-          </ActionsStyled>
+            </Button>
+          </FormActions>
         </SheetBodyStyled>
       </BottomSheet>
     </PanelStyled>
@@ -100,17 +98,15 @@ const PanelStyled = styled('div')`
   background-color: ${({ theme }) => theme.palette.background.default};
 `;
 
+const ActionsStyled = styled('div')`
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing(0.5)};
+`;
+
 const SheetBodyStyled = styled('div')`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(1.5)};
-`;
-
-const ActionsStyled = styled('div')`
-  display: flex;
-  gap: ${({ theme }) => theme.spacing(1)};
-`;
-
-const ShowButtonStyled = styled(Button)`
-  flex: 1 1 auto;
 `;

@@ -17,17 +17,19 @@ import {
 import type { MappedSector } from '../common';
 import { sectorMapPoints } from '../common';
 
-const STORAGE_KEY = 'crag-atlas:sector-map-collapsed';
-
 export interface Props {
   mapped: MappedSector[];
   renderSector: (sector: Sector) => ReactNode;
+  isCollapsed: boolean;
+  onToggleCollapsed: () => void;
   onOpenSector: (sector: Sector) => void;
 }
 
 export const SectorMapMobile = ({
   mapped,
   renderSector,
+  isCollapsed,
+  onToggleCollapsed,
   onOpenSector
 }: Props) => {
   const theme = useTheme();
@@ -37,7 +39,11 @@ export const SectorMapMobile = ({
   )?.sector;
 
   return (
-    <CollapsibleMap storageKey={STORAGE_KEY}>
+    <CollapsibleMap
+      isCollapsed={isCollapsed}
+      hasShowButton={false}
+      onToggle={onToggleCollapsed}
+    >
       <MapCanvas
         points={sectorMapPoints(mapped, theme.palette.sectorPin)}
         idSelected={idSelectedSector}

@@ -193,7 +193,7 @@ msgid "{size} · saved {savedAt}"
 msgstr "{size} · saved {savedAt}"
 
 #: src/features/feedback/common/ui/FeedbackForm.tsx:72
-#: src/features/logTick/common/ui/TickForm.tsx:170
+#: src/features/logTick/common/ui/TickForm.tsx:169
 msgid "{stars} of 5"
 msgstr "{stars} of 5"
 
@@ -261,7 +261,7 @@ msgstr "Add a cover photo"
 msgid "Add a photo"
 msgstr "Add a photo"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:165
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:164
 msgid "Add a photo to start drawing routes on it."
 msgstr "Add a photo to start drawing routes on it."
 
@@ -300,7 +300,7 @@ msgstr "Add photos and comments, and see what others have climbed."
 msgid "Add region"
 msgstr "Add region"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:275
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:274
 msgid "Add route"
 msgstr "Add route"
 
@@ -539,7 +539,7 @@ msgstr "Breadcrumb"
 #: src/features/feedback/common/ui/FeedbackForm.tsx:105
 #: src/features/grantAdmin/common/ui/GrantAdminBody.tsx:82
 #: src/features/logTick/common/ui/DeleteTickActions.tsx:17
-#: src/features/logTick/common/ui/TickForm.tsx:259
+#: src/features/logTick/common/ui/TickForm.tsx:260
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:276
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:450
 #: src/features/routeComment/common/ui/DeleteRouteCommentActions.tsx:17
@@ -655,7 +655,7 @@ msgstr "Close the editor"
 msgid "Collapse"
 msgstr "Collapse"
 
-#: src/features/logTick/common/ui/TickForm.tsx:181
+#: src/features/logTick/common/ui/TickForm.tsx:182
 msgid "Comment"
 msgstr "Comment"
 
@@ -880,8 +880,8 @@ msgid "dew {0}°"
 msgstr "dew {0}°"
 
 #: src/features/logTick/common/ui/TickForm.tsx:166
-msgid "Did you like it?"
-msgstr "Did you like it?"
+#~ msgid "Did you like it?"
+#~ msgstr "Did you like it?"
 
 #: src/shared/ui/DirectionsButton.tsx:34
 msgid "Directions"
@@ -1069,6 +1069,10 @@ msgstr "Grade"
 msgid "Grade consensus"
 msgstr "Grade consensus"
 
+#: src/features/logTick/common/ui/TickForm.tsx:156
+msgid "Grade feels"
+msgstr "Grade feels"
+
 #: src/pages/profile/common/ui/GradeScaleSetting.tsx:29
 msgid "Grade system"
 msgstr "Grade system"
@@ -1110,7 +1114,7 @@ msgstr "Has photo"
 msgid "Has video"
 msgstr "Has video"
 
-#: src/features/logTick/common/ui/TickForm.tsx:206
+#: src/features/logTick/common/ui/TickForm.tsx:207
 msgid "Hide details"
 msgstr "Hide details"
 
@@ -1122,7 +1126,7 @@ msgstr "Hide map"
 msgid "Hourly"
 msgstr "Hourly"
 
-#: src/features/logTick/common/ui/TickForm.tsx:143
+#: src/features/logTick/common/ui/TickForm.tsx:144
 msgid "How did you climb it?"
 msgstr "How did you climb it?"
 
@@ -1131,8 +1135,8 @@ msgid "How do you find Crag Atlas?"
 msgstr "How do you find Crag Atlas?"
 
 #: src/features/logTick/common/ui/TickForm.tsx:156
-msgid "How hard is the route?"
-msgstr "How hard is the route?"
+#~ msgid "How hard is the route?"
+#~ msgstr "How hard is the route?"
 
 #: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:91
 msgid "How QR codes work"
@@ -1244,7 +1248,7 @@ msgstr "Loading…"
 msgid "Location is blocked for this site. Allow it in the browser to see where you are."
 msgstr "Location is blocked for this site. Allow it in the browser to see where you are."
 
-#: src/features/logTick/common/ui/TickForm.tsx:274
+#: src/features/logTick/common/ui/TickForm.tsx:275
 #: src/pages/route/common/ui/LogTickButton.tsx:34
 #: src/pages/route/common/ui/RouteAscentsInvite.tsx:45
 msgid "Log ascent"
@@ -1254,7 +1258,7 @@ msgstr "Log ascent"
 msgid "Log every ascent and watch your grade pyramid build up"
 msgstr "Log every ascent and watch your grade pyramid build up"
 
-#: src/features/logTick/common/ui/TickForm.tsx:272
+#: src/features/logTick/common/ui/TickForm.tsx:273
 #: src/pages/route/common/ui/LogTickButton.tsx:26
 msgid "Log repeat"
 msgstr "Log repeat"
@@ -1300,7 +1304,7 @@ msgstr "Message"
 msgid "mm"
 msgstr "mm"
 
-#: src/features/logTick/common/ui/TickForm.tsx:208
+#: src/features/logTick/common/ui/TickForm.tsx:209
 msgid "More details"
 msgstr "More details"
 
@@ -1431,7 +1435,7 @@ msgstr "Not now"
 msgid "Not on a photo"
 msgstr "Not on a photo"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:115
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:114
 msgid "Not on a photo yet"
 msgstr "Not on a photo yet"
 
@@ -1470,11 +1474,11 @@ msgstr "Offline regions"
 msgid "OK"
 msgstr "OK"
 
-#: src/features/logTick/common/ui/AttemptsStepper.tsx:26
+#: src/features/logTick/common/ui/AttemptsStepper.tsx:29
 msgid "One less try"
 msgstr "One less try"
 
-#: src/features/logTick/common/ui/AttemptsStepper.tsx:46
+#: src/features/logTick/common/ui/AttemptsStepper.tsx:45
 msgid "One more try"
 msgstr "One more try"
 
@@ -1547,7 +1551,7 @@ msgstr "Opening the sector"
 msgid "or"
 msgstr "or"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:265
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:264
 #: src/pages/home/desktop/ui/HomeEditSidebar.tsx:120
 #: src/pages/region/desktop/ui/RegionEditSidebar.tsx:120
 msgid "Or"
@@ -1577,7 +1581,7 @@ msgstr "Partly sheltered"
 msgid "Partly sheltered: some routes stay dry"
 msgstr "Partly sheltered: some routes stay dry"
 
-#: src/features/logTick/common/ui/TickForm.tsx:239
+#: src/features/logTick/common/ui/TickForm.tsx:240
 msgid "Partner"
 msgstr "Partner"
 
@@ -1624,7 +1628,7 @@ msgstr "Photos uploaded"
 msgid "Pick a region on the left to edit it."
 msgstr "Pick a region on the left to edit it."
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:262
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:261
 msgid "Pick a route on the left to edit it."
 msgstr "Pick a route on the left to edit it."
 
@@ -1696,7 +1700,7 @@ msgstr "Printed QR codes of its sectors stop working."
 msgid "Printed QR codes of this sector stop working."
 msgstr "Printed QR codes of this sector stop working."
 
-#: src/features/logTick/common/ui/TickForm.tsx:186
+#: src/features/logTick/common/ui/TickForm.tsx:187
 msgid "Private comment"
 msgstr "Private comment"
 
@@ -1716,7 +1720,7 @@ msgstr "Put crag-atlas on your home screen. It opens in one tap, full screen, an
 msgid "QR address"
 msgstr "QR address"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:212
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:211
 #: src/pages/qrCodes/desktop/ui/QrCodesTable.tsx:45
 msgid "QR code"
 msgstr "QR code"
@@ -1735,6 +1739,7 @@ msgstr "QR codes"
 msgid "Rain shelter"
 msgstr "Rain shelter"
 
+#: src/features/logTick/common/ui/TickForm.tsx:165
 #: src/features/routeFilter/common/hooks/useRouteSortLabel.ts:9
 #: src/features/routeFilter/common/ui/RouteFilterFields.tsx:55
 #: src/pages/adminFeedback/desktop/ui/FeedbackTable.tsx:31
@@ -1885,7 +1890,7 @@ msgstr "Sandstone"
 #: src/features/avatarUpload/desktop/CropAvatarDialog.tsx:37
 #: src/features/avatarUpload/mobile/CropAvatarSheet.tsx:31
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:270
+#: src/features/logTick/common/ui/TickForm.tsx:271
 #: src/features/routeComment/desktop/EditRouteCommentDialog.tsx:29
 #: src/features/routeComment/mobile/EditRouteCommentSheet.tsx:24
 msgid "Save"
@@ -1930,7 +1935,7 @@ msgid "Saved for offline:"
 msgstr "Saved for offline:"
 
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:268
+#: src/features/logTick/common/ui/TickForm.tsx:269
 #: src/features/offlineRegions/mobile/OfflineCtaMobile.tsx:39
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:55
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:95
@@ -1962,7 +1967,7 @@ msgstr "Search regions"
 msgid "Searching…"
 msgstr "Searching…"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:208
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:207
 #: src/pages/qrCodes/desktop/ui/QrCodesTable.tsx:42
 msgid "Sector"
 msgstr "Sector"
@@ -2040,9 +2045,9 @@ msgstr "Share your experience"
 msgid "Share your impressions and ideas"
 msgstr "Share your impressions and ideas"
 
-#: src/features/logTick/common/ui/TickForm.tsx:175
-msgid "Share your thoughts"
-msgstr "Share your thoughts"
+#: src/features/logTick/common/ui/TickForm.tsx:176
+#~ msgid "Share your thoughts"
+#~ msgstr "Share your thoughts"
 
 #: src/features/sectorConditions/common/ui/ConditionsCard.tsx:30
 msgid "Sheltered · dry in rain"
@@ -2078,7 +2083,7 @@ msgstr "Sign out"
 msgid "soft"
 msgstr "soft"
 
-#: src/features/logTick/common/ui/GradeFeelChoice.tsx:36
+#: src/features/logTick/common/ui/GradeFeelChoice.tsx:38
 msgid "Softer"
 msgstr "Softer"
 
@@ -2291,7 +2296,8 @@ msgstr "Track your progress sector by sector"
 msgid "Trad"
 msgstr "Trad"
 
-#: src/features/logTick/common/ui/AttemptsStepper.tsx:35
+#: src/features/logTick/common/ui/AttemptsStepper.tsx:38
+#: src/features/logTick/common/ui/TickForm.tsx:152
 msgid "Tries"
 msgstr "Tries"
 
@@ -2346,7 +2352,7 @@ msgstr "Verifying…"
 msgid "Version {version}"
 msgstr "Version {version}"
 
-#: src/features/logTick/common/ui/TickForm.tsx:246
+#: src/features/logTick/common/ui/TickForm.tsx:247
 msgid "Video"
 msgstr "Video"
 
@@ -2378,7 +2384,7 @@ msgstr "Wall orientation, °"
 msgid "We sent a code to <0>{0}</0>"
 msgstr "We sent a code to <0>{0}</0>"
 
-#: src/features/sectorConditions/common/ui/ConditionsButton.tsx:54
+#: src/features/sectorConditions/common/ui/ConditionsButton.tsx:34
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:74
 #: src/features/sectorConditions/desktop/ConditionsDialogDesktop.tsx:32
 #: src/features/sectorConditions/mobile/ConditionsSheetMobile.tsx:25
@@ -2423,7 +2429,7 @@ msgstr "Whether the wall stays dry in rain. The conditions forecast keeps a shel
 msgid "Which way the wall faces, in compass degrees: 0 north, 90 east, 180 south, 270 west. It sets when the wall is in sun or shade. Leave it empty to work it out from the terrain."
 msgstr "Which way the wall faces, in compass degrees: 0 north, 90 east, 180 south, 270 west. It sets when the wall is in sun or shade. Leave it empty to work it out from the terrain."
 
-#: src/features/logTick/common/ui/TickForm.tsx:235
+#: src/features/logTick/common/ui/TickForm.tsx:236
 msgid "Who did you climb with?"
 msgstr "Who did you climb with?"
 
@@ -2501,7 +2507,7 @@ msgstr "Your feedback has been sent."
 msgid "Your feedback truly matters to us. We read every message and build Crag Atlas together with climbers, so it becomes your best partner at the crag."
 msgstr "Your feedback truly matters to us. We read every message and build Crag Atlas together with climbers, so it becomes your best partner at the crag."
 
-#: src/features/logTick/common/ui/GradeFeelChoice.tsx:44
+#: src/features/logTick/common/ui/GradeFeelChoice.tsx:46
 msgid "Your grade"
 msgstr "Your grade"
 

@@ -6,24 +6,29 @@ import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 
-import { useStoredFlag } from '@web/shared/lib';
-
 export interface Props {
-  storageKey: string;
+  isCollapsed: boolean;
+  hasShowButton?: boolean;
+  onToggle: () => void;
   children: ReactNode;
 }
 
-export const CollapsibleMap = ({ storageKey, children }: Props) => {
-  const { value: isCollapsed, toggle } = useStoredFlag(storageKey, false);
-
+export const CollapsibleMap = ({
+  isCollapsed,
+  hasShowButton = true,
+  onToggle,
+  children
+}: Props) => {
   if (isCollapsed) {
+    if (!hasShowButton) return null;
+
     return (
       <ToggleRowStyled>
         <ToggleButtonStyled
           size="small"
           color="inherit"
           startIcon={<MapOutlinedIcon />}
-          onClick={toggle}
+          onClick={onToggle}
         >
           <Trans>Show map</Trans>
         </ToggleButtonStyled>
@@ -39,7 +44,7 @@ export const CollapsibleMap = ({ storageKey, children }: Props) => {
           size="small"
           color="inherit"
           startIcon={<ExpandLessIcon />}
-          onClick={toggle}
+          onClick={onToggle}
         >
           <Trans>Hide map</Trans>
         </ToggleButtonStyled>
