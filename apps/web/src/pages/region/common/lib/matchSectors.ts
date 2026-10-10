@@ -57,8 +57,9 @@ export const matchSectors = ({
     matching.sort((one, other) => other.bestRank - one.bestRank);
 
   return {
-    orderedSectors:
-      isFiltered || sort !== 'default'
+    orderedSectors: isFiltered
+      ? matching.map(({ sector }) => sector)
+      : sort !== 'default'
         ? [...matching, ...empty].map(({ sector }) => sector)
         : sectors,
     matchOf: isFiltered

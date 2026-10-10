@@ -40,12 +40,10 @@ export const SectorCard = ({
   onEdit
 }: Props) => {
   const { t } = useLingui();
-  const isUnmatched = match?.matchedCount === 0;
   const gradeHistogram = match?.gradeHistogram ?? sector.gradeHistogram;
 
   return (
-    <CardStyled
-      isMuted={isUnmatched}
+    <CatalogCard
       alt={sector.name}
       photoUrl={sector.photoUrl}
       isSelected={isSelected}
@@ -84,9 +82,7 @@ export const SectorCard = ({
       <FooterStyled>
         <CountRowStyled>
           <Typography variant="caption" color="text.secondary" noWrap>
-            {isUnmatched ? (
-              <Trans>no matches</Trans>
-            ) : match ? (
+            {match ? (
               <Trans>
                 {match.matchedCount} of {sector.routeCount} match
               </Trans>
@@ -101,7 +97,7 @@ export const SectorCard = ({
             )}
           </Typography>
           {tickedCount !== undefined && (
-            <ProgressStyled
+            <TickProgress
               tickedCount={tickedCount}
               routesCount={sector.routeCount}
             />
@@ -111,15 +107,9 @@ export const SectorCard = ({
           <GradeHistogram key={group.type} group={group} isCompact />
         ))}
       </FooterStyled>
-    </CardStyled>
+    </CatalogCard>
   );
 };
-
-const CardStyled = styled(CatalogCard, {
-  shouldForwardProp: (prop) => prop !== 'isMuted'
-})<{ isMuted: boolean }>`
-  opacity: ${({ isMuted }) => (isMuted ? 0.5 : 1)};
-`;
 
 const HeaderRowStyled = styled('div')`
   display: flex;
@@ -154,11 +144,6 @@ const CountRowStyled = styled('div')`
   align-items: center;
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacing(1.5)};
-`;
-
-const ProgressStyled = styled(TickProgress)`
-  flex: none;
-  width: 70px;
 `;
 
 const FooterStyled = styled('div')`

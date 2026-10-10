@@ -45,7 +45,7 @@ describe('matchSectors', () => {
       isFiltered: true
     });
 
-    expect(ids(result.orderedSectors)).toEqual(['Dalnij', 'Grizli', 'Cisne']);
+    expect(ids(result.orderedSectors)).toEqual(['Dalnij', 'Grizli']);
     expect(result.matchOf?.Dalnij?.matchedCount).toBe(2);
     expect(result.matchOf?.Grizli?.matchedCount).toBe(1);
     expect(result.matchOf?.Cisne?.matchedCount).toBe(0);

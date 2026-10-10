@@ -130,6 +130,8 @@ test('a filter cleared in a sector stays cleared in its region', async ({
 }) => {
   await page.goto(`/regions/${region.id}`);
   await pickGrade(page, '7a');
+  // The open panel is sticky and covers the cards on a short window.
+  await page.getByRole('button', { name: 'Collapse' }).click();
   await card(page, sector.name).click();
 
   await expect(page).toHaveURL(/\/sectors\/.+grades=french%7C7a/);
@@ -167,17 +169,13 @@ test('a region narrows its sectors by route, and the sector keeps it', async ({
   await page.goto(`/regions/${region.id}`);
   await pickGrade(page, '7a');
 
-  await test.step('each sector counts what matches, and an empty one sinks', async () => {
+  await test.step('each sector counts what matches, and an empty one is hidden', async () => {
     await expect(card(page, sector.name)).toContainText('1 of 2 match');
-    await expect(card(page, bare.name)).toContainText('no matches');
-
-    const full = await card(page, sector.name).boundingBox();
-    const empty = await card(page, bare.name).boundingBox();
-
-    expect(full?.y).toBeLessThan(empty?.y ?? 0);
+    await expect(card(page, bare.name)).toHaveCount(0);
   });
 
   await test.step('opening the sector carries the filter into it', async () => {
+    await page.getByRole('button', { name: 'Collapse' }).click();
     await card(page, sector.name).click();
 
     await expect(page).toHaveURL(
