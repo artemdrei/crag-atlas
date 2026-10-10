@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.7.1](https://github.com/artemdrei/crag-atlas/compare/web-v0.7.0...web-v0.7.1) (2026-10-10)
+
+### Bug Fixes
+
+* **web:** let embedded video open YouTube in a new tab ([#19](https://github.com/artemdrei/crag-atlas/issues/19)) ([507067f](https://github.com/artemdrei/crag-atlas/commit/507067f4c4ed346c025f594c8ea24cb4aeb874fe))
+
 ## [0.7.0](https://github.com/artemdrei/crag-atlas/compare/web-v0.6.0...web-v0.7.0) (2026-10-08)
 
 ### Features
