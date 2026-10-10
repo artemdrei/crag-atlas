@@ -7,10 +7,17 @@ import Button from '@mui/material/Button';
 import { styled, useTheme } from '@mui/material/styles';
 
 import { coordsOf } from '@web/shared/lib';
-import { BottomSheet, DirectionsButton, MapCanvas } from '@web/shared/ui';
+import {
+  BottomSheet,
+  CollapsibleMap,
+  DirectionsButton,
+  MapCanvas
+} from '@web/shared/ui';
 
 import type { MappedSector } from '../common';
 import { sectorMapPoints } from '../common';
+
+const STORAGE_KEY = 'crag-atlas:sector-map-collapsed';
 
 export interface Props {
   mapped: MappedSector[];
@@ -30,7 +37,7 @@ export const SectorMapMobile = ({
   )?.sector;
 
   return (
-    <MapAreaStyled>
+    <CollapsibleMap storageKey={STORAGE_KEY}>
       <MapCanvas
         points={sectorMapPoints(mapped, theme.palette.sectorPin)}
         idSelected={idSelectedSector}
@@ -59,14 +66,9 @@ export const SectorMapMobile = ({
           </>
         )}
       </BottomSheet>
-    </MapAreaStyled>
+    </CollapsibleMap>
   );
 };
-
-const MapAreaStyled = styled('div')`
-  height: 40vh;
-  height: 40dvh;
-`;
 
 const ActionsStyled = styled('div')`
   display: flex;

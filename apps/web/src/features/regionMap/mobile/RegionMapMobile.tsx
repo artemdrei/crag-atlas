@@ -3,10 +3,12 @@ import { useState } from 'react';
 import type { Region } from '@crag-atlas/api';
 import { styled, useTheme } from '@mui/material/styles';
 
-import { BottomSheet, MapCanvas } from '@web/shared/ui';
+import { BottomSheet, CollapsibleMap, MapCanvas } from '@web/shared/ui';
 
 import type { MappedRegion } from '../common';
 import { REGION_ZOOM, RegionPointCard, regionMapPoints } from '../common';
+
+const STORAGE_KEY = 'crag-atlas:region-map-collapsed';
 
 export interface Props {
   mapped: MappedRegion[];
@@ -21,7 +23,7 @@ export const RegionMapMobile = ({ mapped, onOpenRegion }: Props) => {
   )?.region;
 
   return (
-    <MapAreaStyled>
+    <CollapsibleMap storageKey={STORAGE_KEY}>
       <MapCanvas
         points={regionMapPoints(mapped, theme.palette.primary.main)}
         idSelected={idSelectedRegion}
@@ -42,14 +44,9 @@ export const RegionMapMobile = ({ mapped, onOpenRegion }: Props) => {
           </SheetStyled>
         )}
       </BottomSheet>
-    </MapAreaStyled>
+    </CollapsibleMap>
   );
 };
-
-const MapAreaStyled = styled('div')`
-  height: 40vh;
-  height: 40dvh;
-`;
 
 const SheetStyled = styled('div')`
   padding: ${({ theme }) => theme.spacing(0, 2, 2)};
