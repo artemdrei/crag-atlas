@@ -50,17 +50,17 @@ msgstr "{0, plural, one {# photo or link} few {# photos or links} many {# photos
 #: src/features/regionMap/common/ui/RegionPointCard.tsx:31
 #: src/features/sectorMap/common/ui/SectorPointCard.tsx:21
 #: src/pages/home/common/ui/RegionCard.tsx:67
-#: src/pages/region/common/ui/SectorCard.tsx:94
+#: src/pages/region/common/ui/SectorCard.tsx:90
 #: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:84
-#: src/shared/ui/GradeHistogram.tsx:81
+#: src/shared/ui/GradeHistogram.tsx:86
 msgid "{0, plural, one {# route} few {# routes} many {# routes} other {# routes}}"
 msgstr "{0, plural, one {# route} few {# routes} many {# routes} other {# routes}}"
 
 #. placeholder {0}: save.region.routeCount
 #. placeholder {0}: visibleRoutes.length
 #: src/features/offlineRegions/common/ui/SaveRegionOfflineBody.tsx:63
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:197
-#: src/pages/sector/mobile/PageSectorMobile.tsx:157
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:190
+#: src/pages/sector/mobile/PageSectorMobile.tsx:153
 msgid "{0, plural, one {# route} other {# routes}}"
 msgstr "{0, plural, one {# route} other {# routes}}"
 
@@ -97,14 +97,14 @@ msgstr "{0} m/s"
 
 #. placeholder {0}: conditions.precipitation24hMm
 #. placeholder {0}: weather.precipitation24hMm
-#: src/features/logTick/common/ui/ConditionsSection.tsx:178
+#: src/features/logTick/common/ui/ConditionsSection.tsx:166
 #: src/widgets/tickList/common/ui/TickConditions.tsx:29
 msgid "{0} mm / 24 h"
 msgstr "{0} mm / 24 h"
 
 #. placeholder {0}: match.matchedCount
 #. placeholder {1}: sector.routeCount
-#: src/pages/region/common/ui/SectorCard.tsx:90
+#: src/pages/region/common/ui/SectorCard.tsx:86
 msgid "{0} of {1} match"
 msgstr "{0} of {1} match"
 
@@ -193,7 +193,7 @@ msgid "{size} · saved {savedAt}"
 msgstr "{size} · saved {savedAt}"
 
 #: src/features/feedback/common/ui/FeedbackForm.tsx:72
-#: src/features/logTick/common/ui/TickForm.tsx:193
+#: src/features/logTick/common/ui/TickForm.tsx:170
 msgid "{stars} of 5"
 msgstr "{stars} of 5"
 
@@ -233,7 +233,7 @@ msgstr "Access"
 #. placeholder {0}: region.name
 #. placeholder {0}: sector.name
 #: src/pages/home/common/ui/RegionCard.tsx:46
-#: src/pages/region/common/ui/SectorCard.tsx:59
+#: src/pages/region/common/ui/SectorCard.tsx:57
 msgid "Actions for {0}"
 msgstr "Actions for {0}"
 
@@ -261,7 +261,7 @@ msgstr "Add a cover photo"
 msgid "Add a photo"
 msgstr "Add a photo"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:163
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:165
 msgid "Add a photo to start drawing routes on it."
 msgstr "Add a photo to start drawing routes on it."
 
@@ -272,15 +272,13 @@ msgid "Add admin"
 msgstr "Add admin"
 
 #: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:142
-msgid "Add as many as you like — everyone will see them."
-msgstr "Add as many as you like — everyone will see them."
+#~ msgid "Add as many as you like — everyone will see them."
+#~ msgstr "Add as many as you like — everyone will see them."
 
 #: src/shared/ui/SignInBenefits.tsx:63
 msgid "Add beta and photos that help the next climber"
 msgstr "Add beta and photos that help the next climber"
 
-#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:163
-#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:175
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:188
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:160
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:74
@@ -302,7 +300,7 @@ msgstr "Add photos and comments, and see what others have climbed."
 msgid "Add region"
 msgstr "Add region"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:272
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:275
 msgid "Add route"
 msgstr "Add route"
 
@@ -312,7 +310,7 @@ msgstr "Add route"
 msgid "Add sector"
 msgstr "Add sector"
 
-#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:88
+#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:75
 msgid "Add the link"
 msgstr "Add the link"
 
@@ -329,7 +327,7 @@ msgstr "Add yours"
 msgid "Address"
 msgstr "Address"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:36
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:39
 #: src/pages/admin/desktop/PageAdminDesktop.tsx:21
 #: src/pages/admin/mobile/PageAdminMobile.tsx:20
 #: src/pages/profile/common/ui/AdminSetting.tsx:17
@@ -400,7 +398,7 @@ msgid "Archive region"
 msgstr "Archive region"
 
 #: src/features/topoEditor/desktop/ArchiveRouteDialog.tsx:39
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:354
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:350
 msgid "Archive route"
 msgstr "Archive route"
 
@@ -443,7 +441,7 @@ msgid "ascents"
 msgstr "ascents"
 
 #: src/features/routeFilter/common/hooks/useRouteSortLabel.ts:12
-#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:65
+#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:69
 #: src/pages/route/common/ui/RouteAscents.tsx:60
 msgid "Ascents"
 msgstr "Ascents"
@@ -504,7 +502,7 @@ msgstr "Belayer"
 msgid "Bolt"
 msgstr "Bolt"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:281
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:275
 msgid "Bolted by"
 msgstr "Bolted by"
 
@@ -517,17 +515,17 @@ msgstr "Bolted by:"
 msgid "Bolted in {0}"
 msgstr "Bolted in {0}"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:269
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:263
 msgid "Bolts"
 msgstr "Bolts"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:224
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:218
 msgid "Boulder"
 msgstr "Boulder"
 
 #: src/pages/logbook/common/ui/DisciplineTabs.tsx:36
 #: src/pages/profile/common/ui/GradeScaleSetting.tsx:43
-#: src/shared/ui/GradeHistogram.tsx:65
+#: src/shared/ui/GradeHistogram.tsx:70
 msgid "Bouldering"
 msgstr "Bouldering"
 
@@ -541,7 +539,7 @@ msgstr "Breadcrumb"
 #: src/features/feedback/common/ui/FeedbackForm.tsx:105
 #: src/features/grantAdmin/common/ui/GrantAdminBody.tsx:82
 #: src/features/logTick/common/ui/DeleteTickActions.tsx:17
-#: src/features/logTick/common/ui/TickForm.tsx:231
+#: src/features/logTick/common/ui/TickForm.tsx:259
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:276
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:450
 #: src/features/routeComment/common/ui/DeleteRouteCommentActions.tsx:17
@@ -578,6 +576,10 @@ msgstr "Change the QR address?"
 msgid "Change your photo"
 msgstr "Change your photo"
 
+#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:38
+#~ msgid "Choose a grade"
+#~ msgstr "Choose a grade"
+
 #: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:92
 #: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:92
 msgid "Choose a photo"
@@ -601,12 +603,11 @@ msgid "Clear"
 msgstr "Clear"
 
 #: src/features/routeFilter/common/ui/ActiveFilterChips.tsx:36
-#: src/features/routeFilter/common/ui/FiltersHeader.tsx:30
 #: src/features/routeFilter/desktop/RouteFilterPanelDesktop.tsx:80
 msgid "Clear all filters"
 msgstr "Clear all filters"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:298
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:292
 msgid "Clear the climber above to type a name"
 msgstr "Clear the climber above to type a name"
 
@@ -623,7 +624,7 @@ msgstr "Click the map, or paste coordinates from Google Maps."
 msgid "Climbed"
 msgstr "Climbed"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:285
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:279
 msgid "Climber with an account"
 msgstr "Climber with an account"
 
@@ -632,8 +633,9 @@ msgid "Climbers left nothing here — no ascents, no comments, no photos."
 msgstr "Climbers left nothing here — no ascents, no comments, no photos."
 
 #: src/features/routeFilter/mobile/RouteFilterPanelMobile.tsx:73
+#: src/features/sectorConditions/desktop/ConditionsDialogDesktop.tsx:33
 #: src/features/topo/desktop/TopoPhotoDialog.tsx:31
-#: src/features/topo/mobile/TopoPhotoModal.tsx:34
+#: src/features/topo/mobile/TopoPhotoModal.tsx:45
 #: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:31
 #: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:39
 #: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:31
@@ -653,7 +655,7 @@ msgstr "Close the editor"
 msgid "Collapse"
 msgstr "Collapse"
 
-#: src/features/logTick/common/ui/TickForm.tsx:204
+#: src/features/logTick/common/ui/TickForm.tsx:181
 msgid "Comment"
 msgstr "Comment"
 
@@ -694,14 +696,18 @@ msgstr "Compressed photo"
 msgid "Compressing the photo…"
 msgstr "Compressing the photo…"
 
+#: src/features/logTick/common/ui/ConditionsSection.tsx:94
+msgid "Conditions"
+msgstr "Conditions"
+
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:36
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:71
 msgid "Conditions score"
 msgstr "Conditions score"
 
-#: src/features/logTick/common/ui/ConditionsSection.tsx:121
-msgid "Conditions, read at the sector"
-msgstr "Conditions, read at the sector"
+#: src/features/logTick/common/ui/ConditionsSection.tsx:90
+#~ msgid "Conditions, read at the sector"
+#~ msgstr "Conditions, read at the sector"
 
 #: src/features/installHint/common/hooks/useInstallSteps.ts:19
 msgid "Confirm. The crag-atlas icon appears with your other apps."
@@ -756,7 +762,7 @@ msgstr "Crags"
 msgid "Create a QR code"
 msgstr "Create a QR code"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:336
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:332
 msgid "Create route"
 msgstr "Create route"
 
@@ -776,7 +782,7 @@ msgstr "Current photo"
 msgid "Dark"
 msgstr "Dark"
 
-#: src/features/logTick/common/ui/ConditionsSection.tsx:101
+#: src/features/logTick/common/ui/ClimbedAtFields.tsx:27
 #: src/pages/logbook/common/ui/LogbookFilterFields.tsx:50
 msgid "Date"
 msgstr "Date"
@@ -819,7 +825,7 @@ msgid "Delete feedback?"
 msgstr "Delete feedback?"
 
 #: src/features/topoEditor/desktop/DeleteLineDialog.tsx:45
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:347
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:343
 msgid "Delete line"
 msgstr "Delete line"
 
@@ -860,7 +866,7 @@ msgstr "Descending"
 
 #: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:72
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:107
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:320
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:314
 msgid "Description"
 msgstr "Description"
 
@@ -869,11 +875,11 @@ msgid "Detailed"
 msgstr "Detailed"
 
 #. placeholder {0}: conditions.dewPointC
-#: src/features/logTick/common/ui/ConditionsSection.tsx:169
+#: src/features/logTick/common/ui/ConditionsSection.tsx:157
 msgid "dew {0}°"
 msgstr "dew {0}°"
 
-#: src/features/logTick/common/ui/TickForm.tsx:189
+#: src/features/logTick/common/ui/TickForm.tsx:166
 msgid "Did you like it?"
 msgstr "Did you like it?"
 
@@ -926,7 +932,7 @@ msgstr "Drag a route here"
 msgid "Drag cancelled"
 msgstr "Drag cancelled"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:200
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:194
 msgid "Draw the route first, then it can move between photos."
 msgstr "Draw the route first, then it can move between photos."
 
@@ -942,7 +948,7 @@ msgstr "Earlier addresses, still opening this sector:"
 #: src/features/catalogEdit/common/ui/EditToggleButton.tsx:24
 #: src/features/logTick/common/ui/TickMenuItems.tsx:28
 #: src/features/routeComment/common/hooks/useRouteCommentMenuItems.tsx:34
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:151
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:150
 #: src/shared/ui/CatalogCardMenu.tsx:85
 msgid "Edit"
 msgstr "Edit"
@@ -1001,7 +1007,10 @@ msgstr "Feedback"
 msgid "Feedback deleted"
 msgstr "Feedback deleted"
 
-#: src/features/routeFilter/common/ui/FiltersHeader.tsx:18
+#: src/features/logTick/common/ui/ConditionsSection.tsx:106
+msgid "Filled in automatically for the chosen date and time — you can edit them"
+msgstr "Filled in automatically for the chosen date and time — you can edit them"
+
 #: src/features/routeFilter/common/ui/FiltersToggleButton.tsx:28
 msgid "Filters"
 msgstr "Filters"
@@ -1051,8 +1060,7 @@ msgid "Got it"
 msgstr "Got it"
 
 #: src/features/routeFilter/common/hooks/useRouteSortLabel.ts:11
-#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:38
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:245
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:239
 #: src/pages/logbook/common/ui/LogbookFilterFields.tsx:47
 msgid "Grade"
 msgstr "Grade"
@@ -1102,11 +1110,19 @@ msgstr "Has photo"
 msgid "Has video"
 msgstr "Has video"
 
+#: src/features/logTick/common/ui/TickForm.tsx:206
+msgid "Hide details"
+msgstr "Hide details"
+
+#: src/shared/ui/CollapsibleMap.tsx:44
+msgid "Hide map"
+msgstr "Hide map"
+
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:56
 msgid "Hourly"
 msgstr "Hourly"
 
-#: src/features/logTick/common/ui/TickForm.tsx:159
+#: src/features/logTick/common/ui/TickForm.tsx:143
 msgid "How did you climb it?"
 msgstr "How did you climb it?"
 
@@ -1114,7 +1130,7 @@ msgstr "How did you climb it?"
 msgid "How do you find Crag Atlas?"
 msgstr "How do you find Crag Atlas?"
 
-#: src/features/logTick/common/ui/TickForm.tsx:179
+#: src/features/logTick/common/ui/TickForm.tsx:156
 msgid "How hard is the route?"
 msgstr "How hard is the route?"
 
@@ -1200,11 +1216,11 @@ msgid "Leave without saving?"
 msgstr "Leave without saving?"
 
 #: src/features/routeFilter/common/hooks/useRouteSortLabel.ts:10
-#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:58
+#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:62
 msgid "Length"
 msgstr "Length"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:258
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:252
 msgid "Length, m"
 msgstr "Length, m"
 
@@ -1228,7 +1244,7 @@ msgstr "Loading…"
 msgid "Location is blocked for this site. Allow it in the browser to see where you are."
 msgstr "Location is blocked for this site. Allow it in the browser to see where you are."
 
-#: src/features/logTick/common/ui/TickForm.tsx:246
+#: src/features/logTick/common/ui/TickForm.tsx:274
 #: src/pages/route/common/ui/LogTickButton.tsx:34
 #: src/pages/route/common/ui/RouteAscentsInvite.tsx:45
 msgid "Log ascent"
@@ -1238,7 +1254,7 @@ msgstr "Log ascent"
 msgid "Log every ascent and watch your grade pyramid build up"
 msgstr "Log every ascent and watch your grade pyramid build up"
 
-#: src/features/logTick/common/ui/TickForm.tsx:244
+#: src/features/logTick/common/ui/TickForm.tsx:272
 #: src/pages/route/common/ui/LogTickButton.tsx:26
 msgid "Log repeat"
 msgstr "Log repeat"
@@ -1255,7 +1271,7 @@ msgstr "Log your ascent to keep the result, follow your progress and build your 
 msgid "Log your ascents and watch your level grow."
 msgstr "Log your ascents and watch your level grow."
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:32
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:35
 #: src/app/mobile/layout/AppBottomNavigation.tsx:34
 #: src/pages/logbook/common/ui/LogbookTeaser.tsx:18
 #: src/pages/logbook/desktop/PageLogbookDesktop.tsx:48
@@ -1283,6 +1299,14 @@ msgstr "Message"
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:47
 msgid "mm"
 msgstr "mm"
+
+#: src/features/logTick/common/ui/TickForm.tsx:208
+msgid "More details"
+msgstr "More details"
+
+#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:52
+msgid "More filters"
+msgstr "More filters"
 
 #: src/features/catalogEdit/desktop/ArchiveRegionDialog.tsx:25
 msgid "Move the region to the archive?"
@@ -1314,7 +1338,7 @@ msgstr "Name"
 msgid "New photo"
 msgstr "New photo"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:173
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:167
 #: src/pages/routeEdit/desktop/PageRouteEditDesktop.tsx:72
 msgid "New route"
 msgstr "New route"
@@ -1353,8 +1377,8 @@ msgid "No internet connection. Send your feedback again once you are back online
 msgstr "No internet connection. Send your feedback again once you are back online"
 
 #: src/pages/region/common/ui/SectorCard.tsx:88
-msgid "no matches"
-msgstr "no matches"
+#~ msgid "no matches"
+#~ msgstr "no matches"
 
 #: src/features/sectorQr/common/hooks/useQrWarningLabels.ts:10
 msgid "No QR code yet"
@@ -1381,8 +1405,8 @@ msgstr "No Ukrainian name: the plaque shows only the Latin one"
 msgid "No videos or photos yet."
 msgstr "No videos or photos yet."
 
-#: src/features/logTick/common/ui/ConditionsSection.tsx:119
-#: src/features/sectorConditions/common/ui/ConditionsPanel.tsx:59
+#: src/features/logTick/common/ui/ConditionsSection.tsx:104
+#: src/features/sectorConditions/common/ui/ConditionsPanel.tsx:61
 msgid "No weather while you are offline"
 msgstr "No weather while you are offline"
 
@@ -1407,11 +1431,11 @@ msgstr "Not now"
 msgid "Not on a photo"
 msgstr "Not on a photo"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:114
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:115
 msgid "Not on a photo yet"
 msgstr "Not on a photo yet"
 
-#: src/pages/region/common/ui/SectorCard.tsx:77
+#: src/pages/region/common/ui/SectorCard.tsx:75
 msgid "not on the map"
 msgstr "not on the map"
 
@@ -1489,7 +1513,7 @@ msgid "Open region"
 msgstr "Open region"
 
 #: src/features/sectorMap/common/ui/SectorPointCard.tsx:31
-#: src/features/sectorMap/mobile/SectorMapMobile.tsx:56
+#: src/features/sectorMap/mobile/SectorMapMobile.tsx:63
 msgid "Open sector"
 msgstr "Open sector"
 
@@ -1523,13 +1547,13 @@ msgstr "Opening the sector"
 msgid "or"
 msgstr "or"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:262
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:265
 #: src/pages/home/desktop/ui/HomeEditSidebar.tsx:120
 #: src/pages/region/desktop/ui/RegionEditSidebar.tsx:120
 msgid "Or"
 msgstr "Or"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:292
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:286
 msgid "Or a name"
 msgstr "Or a name"
 
@@ -1553,11 +1577,11 @@ msgstr "Partly sheltered"
 msgid "Partly sheltered: some routes stay dry"
 msgstr "Partly sheltered: some routes stay dry"
 
-#: src/features/logTick/common/ui/TickForm.tsx:172
+#: src/features/logTick/common/ui/TickForm.tsx:239
 msgid "Partner"
 msgstr "Partner"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:194
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:188
 msgid "Photo"
 msgstr "Photo"
 
@@ -1570,11 +1594,11 @@ msgstr "Photo {0}"
 msgid "Photo {position}"
 msgstr "Photo {position}"
 
-#: src/features/logTick/common/ui/TickForm.tsx:220
-msgid "Photo and video"
-msgstr "Photo and video"
+#: src/features/logTick/common/ui/TickForm.tsx:249
+#~ msgid "Photo and video"
+#~ msgstr "Photo and video"
 
-#: src/features/topoEditor/common/hooks/useTopoEditorActions.ts:252
+#: src/features/topoEditor/common/hooks/useTopoEditorActions.ts:254
 msgid "Photo order saved"
 msgstr "Photo order saved"
 
@@ -1589,8 +1613,8 @@ msgid "Photo uploaded"
 msgstr "Photo uploaded"
 
 #: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:139
-msgid "Photos"
-msgstr "Photos"
+#~ msgid "Photos"
+#~ msgstr "Photos"
 
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:174
 msgid "Photos uploaded"
@@ -1600,7 +1624,7 @@ msgstr "Photos uploaded"
 msgid "Pick a region on the left to edit it."
 msgstr "Pick a region on the left to edit it."
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:259
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:262
 msgid "Pick a route on the left to edit it."
 msgstr "Pick a route on the left to edit it."
 
@@ -1672,11 +1696,11 @@ msgstr "Printed QR codes of its sectors stop working."
 msgid "Printed QR codes of this sector stop working."
 msgstr "Printed QR codes of this sector stop working."
 
-#: src/features/logTick/common/ui/TickForm.tsx:209
+#: src/features/logTick/common/ui/TickForm.tsx:186
 msgid "Private comment"
 msgstr "Private comment"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:48
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:52
 #: src/app/mobile/layout/AppBottomNavigation.tsx:41
 #: src/pages/profile/common/ui/ProfileTeaser.tsx:15
 #: src/pages/profile/desktop/PageProfileDesktop.tsx:25
@@ -1692,7 +1716,7 @@ msgstr "Put crag-atlas on your home screen. It opens in one tap, full screen, an
 msgid "QR address"
 msgstr "QR address"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:210
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:212
 #: src/pages/qrCodes/desktop/ui/QrCodesTable.tsx:45
 msgid "QR code"
 msgstr "QR code"
@@ -1712,17 +1736,17 @@ msgid "Rain shelter"
 msgstr "Rain shelter"
 
 #: src/features/routeFilter/common/hooks/useRouteSortLabel.ts:9
-#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:51
+#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:55
 #: src/pages/adminFeedback/desktop/ui/FeedbackTable.tsx:31
 msgid "Rating"
 msgstr "Rating"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:161
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:163
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:155
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:157
 msgid "Reader view"
 msgstr "Reader view"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:148
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:142
 msgid "Redo"
 msgstr "Redo"
 
@@ -1749,7 +1773,7 @@ msgstr "Region {0} created"
 msgid "Region saved"
 msgstr "Region saved"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:29
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:32
 #: src/features/catalogSearch/common/ui/CatalogSearchGroup.tsx:34
 msgid "Regions"
 msgstr "Regions"
@@ -1792,7 +1816,11 @@ msgstr "Replace the photo"
 msgid "Resend code"
 msgstr "Resend code"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:155
+#: src/features/routeFilter/common/ui/FiltersHeader.tsx:27
+msgid "Reset"
+msgstr "Reset"
+
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:149
 msgid "Reset to the saved state"
 msgstr "Reset to the saved state"
 
@@ -1824,15 +1852,15 @@ msgstr "Revoke access"
 msgid "Rock type"
 msgstr "Rock type"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:175
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:169
 msgid "Route №{number}"
 msgstr "Route №{number}"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:177
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:171
 msgid "Route not on the wall yet"
 msgstr "Route not on the wall yet"
 
-#: src/features/topoEditor/common/hooks/useTopoEditorActions.ts:96
+#: src/features/topoEditor/common/hooks/useTopoEditorActions.ts:106
 msgid "Route saved"
 msgstr "Route saved"
 
@@ -1841,6 +1869,10 @@ msgstr "Route saved"
 #: src/pages/profile/common/ui/GradeScaleSetting.tsx:33
 msgid "Routes"
 msgstr "Routes"
+
+#: src/features/topoEditor/common/hooks/useTopoEditorActions.ts:106
+msgid "Routes saved"
+msgstr "Routes saved"
 
 #: src/shared/ui/TickProgress.tsx:24
 msgid "Routes you have climbed here"
@@ -1853,7 +1885,7 @@ msgstr "Sandstone"
 #: src/features/avatarUpload/desktop/CropAvatarDialog.tsx:37
 #: src/features/avatarUpload/mobile/CropAvatarSheet.tsx:31
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:242
+#: src/features/logTick/common/ui/TickForm.tsx:270
 #: src/features/routeComment/desktop/EditRouteCommentDialog.tsx:29
 #: src/features/routeComment/mobile/EditRouteCommentSheet.tsx:24
 msgid "Save"
@@ -1869,9 +1901,13 @@ msgstr "Save a region"
 msgid "Save a region with its sectors, routes and topos to open it without a connection."
 msgstr "Save a region with its sectors, routes and topos to open it without a connection."
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:338
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:334
 msgid "Save changes"
 msgstr "Save changes"
+
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:330
+msgid "Save changes ({saveCount})"
+msgstr "Save changes ({saveCount})"
 
 #: src/features/offlineRegions/common/ui/SaveRegionOfflineBody.tsx:83
 msgid "Save it once, and every route, photo and line on it will open without the internet."
@@ -1881,7 +1917,7 @@ msgstr "Save it once, and every route, photo and line on it will open without th
 msgid "Save regions and open them offline."
 msgstr "Save regions and open them offline."
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:328
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:322
 msgid "Saved changes go live for everyone straight away."
 msgstr "Saved changes go live for everyone straight away."
 
@@ -1894,7 +1930,7 @@ msgid "Saved for offline:"
 msgstr "Saved for offline:"
 
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:240
+#: src/features/logTick/common/ui/TickForm.tsx:268
 #: src/features/offlineRegions/mobile/OfflineCtaMobile.tsx:39
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:55
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:95
@@ -1926,7 +1962,7 @@ msgstr "Search regions"
 msgid "Searching…"
 msgstr "Searching…"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:206
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:208
 #: src/pages/qrCodes/desktop/ui/QrCodesTable.tsx:42
 msgid "Sector"
 msgstr "Sector"
@@ -2004,13 +2040,17 @@ msgstr "Share your experience"
 msgid "Share your impressions and ideas"
 msgstr "Share your impressions and ideas"
 
-#: src/features/logTick/common/ui/TickForm.tsx:198
+#: src/features/logTick/common/ui/TickForm.tsx:175
 msgid "Share your thoughts"
 msgstr "Share your thoughts"
 
 #: src/features/sectorConditions/common/ui/ConditionsCard.tsx:30
 msgid "Sheltered · dry in rain"
 msgstr "Sheltered · dry in rain"
+
+#: src/shared/ui/CollapsibleMap.tsx:28
+msgid "Show map"
+msgstr "Show map"
 
 #: src/shared/ui/CatalogCardMenu.tsx:78
 msgid "Show on map"
@@ -2054,7 +2094,7 @@ msgstr "Something went wrong"
 msgid "Something went wrong, please try sending again"
 msgstr "Something went wrong, please try sending again"
 
-#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:76
+#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:80
 msgid "Sort"
 msgstr "Sort"
 
@@ -2062,9 +2102,9 @@ msgstr "Sort"
 msgid "Sort by"
 msgstr "Sort by"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:221
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:215
 #: src/pages/logbook/common/ui/DisciplineTabs.tsx:27
-#: src/shared/ui/GradeHistogram.tsx:63
+#: src/shared/ui/GradeHistogram.tsx:68
 msgid "Sport"
 msgstr "Sport"
 
@@ -2074,7 +2114,7 @@ msgstr "Sport"
 #~ msgid "Sun roughly {0} – {1}"
 #~ msgstr "Sun roughly {0} – {1}"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:231
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:225
 msgid "System"
 msgstr "System"
 
@@ -2085,6 +2125,14 @@ msgstr "Tap \"Add to Home screen\", then choose \"Install\". Older Chrome shows 
 #: src/features/installHint/common/hooks/useInstallSteps.ts:12
 msgid "Tap \"Add\" in the top right corner. The crag-atlas icon appears on your home screen."
 msgstr "Tap \"Add\" in the top right corner. The crag-atlas icon appears on your home screen."
+
+#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:40
+#~ msgid "Tap a grade to filter the routes"
+#~ msgstr "Tap a grade to filter the routes"
+
+#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:38
+msgid "Tap a grade to see only those routes"
+msgstr "Tap a grade to see only those routes"
 
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:37
 #: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:28
@@ -2127,11 +2175,11 @@ msgstr "The PDF could not be built"
 msgid "The region has no country, so it cannot get a QR code"
 msgstr "The region has no country, so it cannot get a QR code"
 
-#: src/features/topoEditor/desktop/TopoEditorRouteDesktop.tsx:101
+#: src/features/topoEditor/desktop/TopoEditorRouteDesktop.tsx:102
 msgid "The sector has no photo yet — add one in the sector editor."
 msgstr "The sector has no photo yet — add one in the sector editor."
 
-#: src/features/logTick/common/ui/ConditionsSection.tsx:123
+#: src/features/logTick/common/ui/ConditionsSection.tsx:111
 msgid "The sector has no point — fill the conditions in"
 msgstr "The sector has no point — fill the conditions in"
 
@@ -2161,7 +2209,7 @@ msgstr "This cannot be undone."
 msgid "This file could not be read as a photo."
 msgstr "This file could not be read as a photo."
 
-#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:79
+#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:66
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:55
 msgid "This is not a YouTube link."
 msgstr "This is not a YouTube link."
@@ -2191,11 +2239,11 @@ msgstr "This QR code does not lead to a sector."
 msgid "This region is in the archive, so it is out of the catalog. Its sectors, routes and everything climbers left on them — ascents, photos, links and comments — are still here."
 msgstr "This region is in the archive, so it is out of the catalog. Its sectors, routes and everything climbers left on them — ascents, photos, links and comments — are still here."
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:104
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:98
 msgid "this route"
 msgstr "this route"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:110
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:104
 msgid "This route"
 msgstr "This route"
 
@@ -2219,7 +2267,7 @@ msgstr "This sector is in the archive, so it is out of the catalog. Its routes a
 msgid "time"
 msgstr "time"
 
-#: src/features/logTick/common/ui/ConditionsSection.tsx:110
+#: src/features/logTick/common/ui/ClimbedAtFields.tsx:36
 msgid "Time"
 msgstr "Time"
 
@@ -2239,7 +2287,7 @@ msgstr "Track your progress"
 msgid "Track your progress sector by sector"
 msgstr "Track your progress sector by sector"
 
-#: src/shared/ui/GradeHistogram.tsx:64
+#: src/shared/ui/GradeHistogram.tsx:69
 msgid "Trad"
 msgstr "Trad"
 
@@ -2260,7 +2308,7 @@ msgstr "Type at least {MIN_SEARCH_LENGTH} letters"
 msgid "Type at least {MIN_SEARCH_LENGTH} letters of a name"
 msgstr "Type at least {MIN_SEARCH_LENGTH} letters of a name"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:142
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:136
 msgid "Undo"
 msgstr "Undo"
 
@@ -2298,6 +2346,10 @@ msgstr "Verifying…"
 msgid "Version {version}"
 msgstr "Version {version}"
 
+#: src/features/logTick/common/ui/TickForm.tsx:246
+msgid "Video"
+msgstr "Video"
+
 #: src/widgets/routeMedia/common/ui/RouteMediaGallery.tsx:47
 msgid "Video {position}"
 msgstr "Video {position}"
@@ -2326,11 +2378,14 @@ msgstr "Wall orientation, °"
 msgid "We sent a code to <0>{0}</0>"
 msgstr "We sent a code to <0>{0}</0>"
 
+#: src/features/sectorConditions/common/ui/ConditionsButton.tsx:54
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:74
+#: src/features/sectorConditions/desktop/ConditionsDialogDesktop.tsx:32
+#: src/features/sectorConditions/mobile/ConditionsSheetMobile.tsx:25
 msgid "Weather"
 msgstr "Weather"
 
-#: src/features/logTick/common/ui/ConditionsSection.tsx:192
+#: src/features/logTick/common/ui/ConditionsSection.tsx:180
 #: src/features/sectorConditions/common/ui/ConditionsCard.tsx:53
 msgid "Weather by Open-Meteo.com"
 msgstr "Weather by Open-Meteo.com"
@@ -2352,9 +2407,9 @@ msgstr "What could be better?"
 msgid "When"
 msgstr "When"
 
-#: src/features/logTick/common/ui/ConditionsSection.tsx:94
-msgid "When did you climb it?"
-msgstr "When did you climb it?"
+#: src/features/logTick/common/ui/TickForm.tsx:144
+#~ msgid "When did you climb it?"
+#~ msgstr "When did you climb it?"
 
 #: src/pages/adminFeedback/desktop/ui/FeedbackTable.tsx:40
 msgid "Where"
@@ -2367,6 +2422,10 @@ msgstr "Whether the wall stays dry in rain. The conditions forecast keeps a shel
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:117
 msgid "Which way the wall faces, in compass degrees: 0 north, 90 east, 180 south, 270 west. It sets when the wall is in sun or shade. Leave it empty to work it out from the terrain."
 msgstr "Which way the wall faces, in compass degrees: 0 north, 90 east, 180 south, 270 west. It sets when the wall is in sun or shade. Leave it empty to work it out from the terrain."
+
+#: src/features/logTick/common/ui/TickForm.tsx:235
+msgid "Who did you climb with?"
+msgstr "Who did you climb with?"
 
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:39
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:80
@@ -2390,7 +2449,7 @@ msgstr "Write it in your own language — it will be searchable both in Latin an
 msgid "Written for you from the name above"
 msgstr "Written for you from the name above"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:305
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:299
 msgid "Year"
 msgstr "Year"
 
@@ -2426,7 +2485,7 @@ msgstr "Your climbing, all in one place"
 msgid "Your connection is slow right now, so the download may take a while. Keep the app open until it finishes."
 msgstr "Your connection is slow right now, so the download may take a while. Keep the app open until it finishes."
 
-#: src/features/logTick/common/ui/ConditionsSection.tsx:157
+#: src/features/logTick/common/ui/ConditionsSection.tsx:145
 msgid "Your corrections were reset for the new date and time"
 msgstr "Your corrections were reset for the new date and time"
 
@@ -2467,7 +2526,7 @@ msgstr "Your photo has been updated"
 msgid "Your photo or send video helps the next climber read the line — and puts your ascent on the route page."
 msgstr "Your photo or send video helps the next climber read the line — and puts your ascent on the route page."
 
-#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:69
+#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:56
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:53
 msgid "YouTube link"
 msgstr "YouTube link"

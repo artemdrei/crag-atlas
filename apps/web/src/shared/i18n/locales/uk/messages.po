@@ -50,17 +50,17 @@ msgstr "{0, plural, one {# фото чи посилання} few {# фото ч�
 #: src/features/regionMap/common/ui/RegionPointCard.tsx:31
 #: src/features/sectorMap/common/ui/SectorPointCard.tsx:21
 #: src/pages/home/common/ui/RegionCard.tsx:67
-#: src/pages/region/common/ui/SectorCard.tsx:94
+#: src/pages/region/common/ui/SectorCard.tsx:90
 #: src/pages/sectorEdit/desktop/PageSectorEditDesktop.tsx:84
-#: src/shared/ui/GradeHistogram.tsx:81
+#: src/shared/ui/GradeHistogram.tsx:86
 msgid "{0, plural, one {# route} few {# routes} many {# routes} other {# routes}}"
 msgstr "{0, plural, one {# маршрут} few {# маршрути} many {# маршрутів} other {# маршрутів}}"
 
 #. placeholder {0}: save.region.routeCount
 #. placeholder {0}: visibleRoutes.length
 #: src/features/offlineRegions/common/ui/SaveRegionOfflineBody.tsx:63
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:197
-#: src/pages/sector/mobile/PageSectorMobile.tsx:157
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:190
+#: src/pages/sector/mobile/PageSectorMobile.tsx:153
 msgid "{0, plural, one {# route} other {# routes}}"
 msgstr "{0, plural, one {# маршрут} few {# маршрути} many {# маршрутів} other {# маршруту}}"
 
@@ -97,14 +97,14 @@ msgstr "{0} м/с"
 
 #. placeholder {0}: conditions.precipitation24hMm
 #. placeholder {0}: weather.precipitation24hMm
-#: src/features/logTick/common/ui/ConditionsSection.tsx:178
+#: src/features/logTick/common/ui/ConditionsSection.tsx:166
 #: src/widgets/tickList/common/ui/TickConditions.tsx:29
 msgid "{0} mm / 24 h"
 msgstr "{0} мм / 24 год"
 
 #. placeholder {0}: match.matchedCount
 #. placeholder {1}: sector.routeCount
-#: src/pages/region/common/ui/SectorCard.tsx:90
+#: src/pages/region/common/ui/SectorCard.tsx:86
 msgid "{0} of {1} match"
 msgstr "{0} з {1} підходять"
 
@@ -193,7 +193,7 @@ msgid "{size} · saved {savedAt}"
 msgstr "{size} · збережено {savedAt}"
 
 #: src/features/feedback/common/ui/FeedbackForm.tsx:72
-#: src/features/logTick/common/ui/TickForm.tsx:193
+#: src/features/logTick/common/ui/TickForm.tsx:170
 msgid "{stars} of 5"
 msgstr "{stars} з 5"
 
@@ -233,7 +233,7 @@ msgstr "Доступи"
 #. placeholder {0}: region.name
 #. placeholder {0}: sector.name
 #: src/pages/home/common/ui/RegionCard.tsx:46
-#: src/pages/region/common/ui/SectorCard.tsx:59
+#: src/pages/region/common/ui/SectorCard.tsx:57
 msgid "Actions for {0}"
 msgstr "Дії для {0}"
 
@@ -261,7 +261,7 @@ msgstr "Додати обкладинку"
 msgid "Add a photo"
 msgstr "Додати фото"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:163
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:165
 msgid "Add a photo to start drawing routes on it."
 msgstr "Додайте фото, щоб малювати на ньому маршрути."
 
@@ -272,15 +272,13 @@ msgid "Add admin"
 msgstr "Додати адміна"
 
 #: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:142
-msgid "Add as many as you like — everyone will see them."
-msgstr "Додавайте скільки завгодно — їх побачать усі."
+#~ msgid "Add as many as you like — everyone will see them."
+#~ msgstr "Додавайте скільки завгодно — їх побачать усі."
 
 #: src/shared/ui/SignInBenefits.tsx:63
 msgid "Add beta and photos that help the next climber"
 msgstr "Додавай бету й фото, які допоможуть наступному"
 
-#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:163
-#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:175
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:188
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:160
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:74
@@ -302,7 +300,7 @@ msgstr "Додавай фото й коментарі та дивись прол
 msgid "Add region"
 msgstr "Додати регіон"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:272
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:275
 msgid "Add route"
 msgstr "Додати маршрут"
 
@@ -312,7 +310,7 @@ msgstr "Додати маршрут"
 msgid "Add sector"
 msgstr "Додати сектор"
 
-#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:88
+#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:75
 msgid "Add the link"
 msgstr "Додати посилання"
 
@@ -329,7 +327,7 @@ msgstr "Додати своє"
 msgid "Address"
 msgstr "Адреса"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:36
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:39
 #: src/pages/admin/desktop/PageAdminDesktop.tsx:21
 #: src/pages/admin/mobile/PageAdminMobile.tsx:20
 #: src/pages/profile/common/ui/AdminSetting.tsx:17
@@ -400,7 +398,7 @@ msgid "Archive region"
 msgstr "Архівувати регіон"
 
 #: src/features/topoEditor/desktop/ArchiveRouteDialog.tsx:39
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:354
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:350
 msgid "Archive route"
 msgstr "Архівувати маршрут"
 
@@ -443,7 +441,7 @@ msgid "ascents"
 msgstr "пролазів"
 
 #: src/features/routeFilter/common/hooks/useRouteSortLabel.ts:12
-#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:65
+#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:69
 #: src/pages/route/common/ui/RouteAscents.tsx:60
 msgid "Ascents"
 msgstr "Пролази"
@@ -504,7 +502,7 @@ msgstr "Страхуючий"
 msgid "Bolt"
 msgstr "Гак"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:281
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:275
 msgid "Bolted by"
 msgstr "Пробив"
 
@@ -517,17 +515,17 @@ msgstr "Пробив:"
 msgid "Bolted in {0}"
 msgstr "Пробито {0}"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:269
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:263
 msgid "Bolts"
 msgstr "Болти"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:224
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:218
 msgid "Boulder"
 msgstr "Болдер"
 
 #: src/pages/logbook/common/ui/DisciplineTabs.tsx:36
 #: src/pages/profile/common/ui/GradeScaleSetting.tsx:43
-#: src/shared/ui/GradeHistogram.tsx:65
+#: src/shared/ui/GradeHistogram.tsx:70
 msgid "Bouldering"
 msgstr "Болдеринг"
 
@@ -541,7 +539,7 @@ msgstr "Навігаційний ланцюжок"
 #: src/features/feedback/common/ui/FeedbackForm.tsx:105
 #: src/features/grantAdmin/common/ui/GrantAdminBody.tsx:82
 #: src/features/logTick/common/ui/DeleteTickActions.tsx:17
-#: src/features/logTick/common/ui/TickForm.tsx:231
+#: src/features/logTick/common/ui/TickForm.tsx:259
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:276
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:450
 #: src/features/routeComment/common/ui/DeleteRouteCommentActions.tsx:17
@@ -578,6 +576,10 @@ msgstr "Змінити адресу QR-коду?"
 msgid "Change your photo"
 msgstr "Змінити фото"
 
+#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:38
+#~ msgid "Choose a grade"
+#~ msgstr "Оберіть категорію"
+
 #: src/features/avatarUpload/desktop/AvatarPickerDesktop.tsx:92
 #: src/features/avatarUpload/mobile/AvatarPickerMobile.tsx:92
 msgid "Choose a photo"
@@ -601,12 +603,11 @@ msgid "Clear"
 msgstr "Очистити"
 
 #: src/features/routeFilter/common/ui/ActiveFilterChips.tsx:36
-#: src/features/routeFilter/common/ui/FiltersHeader.tsx:30
 #: src/features/routeFilter/desktop/RouteFilterPanelDesktop.tsx:80
 msgid "Clear all filters"
 msgstr "Скинути фільтри"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:298
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:292
 msgid "Clear the climber above to type a name"
 msgstr "Очистіть вибір вище, щоб ввести ім'я"
 
@@ -623,7 +624,7 @@ msgstr "Клікни по карті або встав координати з G
 msgid "Climbed"
 msgstr "Пролізено"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:285
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:279
 msgid "Climber with an account"
 msgstr "Скелелаз з акаунтом"
 
@@ -632,8 +633,9 @@ msgid "Climbers left nothing here — no ascents, no comments, no photos."
 msgstr "Скелелази тут нічого не лишали — ні пролазів, ні коментарів, ні фото."
 
 #: src/features/routeFilter/mobile/RouteFilterPanelMobile.tsx:73
+#: src/features/sectorConditions/desktop/ConditionsDialogDesktop.tsx:33
 #: src/features/topo/desktop/TopoPhotoDialog.tsx:31
-#: src/features/topo/mobile/TopoPhotoModal.tsx:34
+#: src/features/topo/mobile/TopoPhotoModal.tsx:45
 #: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:31
 #: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:39
 #: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:31
@@ -653,7 +655,7 @@ msgstr "Закрити редагування"
 msgid "Collapse"
 msgstr "Згорнути"
 
-#: src/features/logTick/common/ui/TickForm.tsx:204
+#: src/features/logTick/common/ui/TickForm.tsx:181
 msgid "Comment"
 msgstr "Коментар"
 
@@ -694,14 +696,18 @@ msgstr "Стиснуте фото"
 msgid "Compressing the photo…"
 msgstr "Стискаємо фото…"
 
+#: src/features/logTick/common/ui/ConditionsSection.tsx:94
+msgid "Conditions"
+msgstr "Умови"
+
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:36
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:71
 msgid "Conditions score"
 msgstr "Оцінка умов"
 
-#: src/features/logTick/common/ui/ConditionsSection.tsx:121
-msgid "Conditions, read at the sector"
-msgstr "Умови, зчитані за координатами сектора"
+#: src/features/logTick/common/ui/ConditionsSection.tsx:90
+#~ msgid "Conditions, read at the sector"
+#~ msgstr "Умови, зчитані за координатами сектора"
 
 #: src/features/installHint/common/hooks/useInstallSteps.ts:19
 msgid "Confirm. The crag-atlas icon appears with your other apps."
@@ -756,7 +762,7 @@ msgstr "Скелі"
 msgid "Create a QR code"
 msgstr "Створити QR-код"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:336
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:332
 msgid "Create route"
 msgstr "Створити маршрут"
 
@@ -776,7 +782,7 @@ msgstr "Поточне фото"
 msgid "Dark"
 msgstr "Темна"
 
-#: src/features/logTick/common/ui/ConditionsSection.tsx:101
+#: src/features/logTick/common/ui/ClimbedAtFields.tsx:27
 #: src/pages/logbook/common/ui/LogbookFilterFields.tsx:50
 msgid "Date"
 msgstr "Дата"
@@ -819,7 +825,7 @@ msgid "Delete feedback?"
 msgstr "Видалити відгук?"
 
 #: src/features/topoEditor/desktop/DeleteLineDialog.tsx:45
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:347
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:343
 msgid "Delete line"
 msgstr "Видалити лінію"
 
@@ -860,7 +866,7 @@ msgstr "За спаданням"
 
 #: src/features/catalogEdit/common/ui/SectorCreateForm.tsx:72
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:107
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:320
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:314
 msgid "Description"
 msgstr "Опис"
 
@@ -869,11 +875,11 @@ msgid "Detailed"
 msgstr "Детально"
 
 #. placeholder {0}: conditions.dewPointC
-#: src/features/logTick/common/ui/ConditionsSection.tsx:169
+#: src/features/logTick/common/ui/ConditionsSection.tsx:157
 msgid "dew {0}°"
 msgstr "роса {0}°"
 
-#: src/features/logTick/common/ui/TickForm.tsx:189
+#: src/features/logTick/common/ui/TickForm.tsx:166
 msgid "Did you like it?"
 msgstr "Як тобі маршрут?"
 
@@ -926,7 +932,7 @@ msgstr "Перетягніть сюди маршрут"
 msgid "Drag cancelled"
 msgstr "Перетягування скасовано"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:200
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:194
 msgid "Draw the route first, then it can move between photos."
 msgstr "Спершу намалюйте маршрут, тоді його можна переносити між фото."
 
@@ -942,7 +948,7 @@ msgstr "Попередні адреси, які досі відкривають 
 #: src/features/catalogEdit/common/ui/EditToggleButton.tsx:24
 #: src/features/logTick/common/ui/TickMenuItems.tsx:28
 #: src/features/routeComment/common/hooks/useRouteCommentMenuItems.tsx:34
-#: src/pages/sector/desktop/PageSectorDesktop.tsx:151
+#: src/pages/sector/desktop/PageSectorDesktop.tsx:150
 #: src/shared/ui/CatalogCardMenu.tsx:85
 msgid "Edit"
 msgstr "Редагувати"
@@ -1001,7 +1007,10 @@ msgstr "Відгук"
 msgid "Feedback deleted"
 msgstr "Відгук видалено"
 
-#: src/features/routeFilter/common/ui/FiltersHeader.tsx:18
+#: src/features/logTick/common/ui/ConditionsSection.tsx:106
+msgid "Filled in automatically for the chosen date and time — you can edit them"
+msgstr "Підставляються автоматично за обраною датою й часом — їх можна відредагувати"
+
 #: src/features/routeFilter/common/ui/FiltersToggleButton.tsx:28
 msgid "Filters"
 msgstr "Фільтри"
@@ -1051,8 +1060,7 @@ msgid "Got it"
 msgstr "Зрозуміло"
 
 #: src/features/routeFilter/common/hooks/useRouteSortLabel.ts:11
-#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:38
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:245
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:239
 #: src/pages/logbook/common/ui/LogbookFilterFields.tsx:47
 msgid "Grade"
 msgstr "Категорія"
@@ -1102,11 +1110,19 @@ msgstr "Є фото"
 msgid "Has video"
 msgstr "Є відео"
 
+#: src/features/logTick/common/ui/TickForm.tsx:206
+msgid "Hide details"
+msgstr "Сховати деталі"
+
+#: src/shared/ui/CollapsibleMap.tsx:44
+msgid "Hide map"
+msgstr "Згорнути карту"
+
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:56
 msgid "Hourly"
 msgstr "Погодинно"
 
-#: src/features/logTick/common/ui/TickForm.tsx:159
+#: src/features/logTick/common/ui/TickForm.tsx:143
 msgid "How did you climb it?"
 msgstr "Як ти це проліз?"
 
@@ -1114,7 +1130,7 @@ msgstr "Як ти це проліз?"
 msgid "How do you find Crag Atlas?"
 msgstr "Як вам Crag Atlas?"
 
-#: src/features/logTick/common/ui/TickForm.tsx:179
+#: src/features/logTick/common/ui/TickForm.tsx:156
 msgid "How hard is the route?"
 msgstr "Складність маршруту"
 
@@ -1200,11 +1216,11 @@ msgid "Leave without saving?"
 msgstr "Вийти без збереження?"
 
 #: src/features/routeFilter/common/hooks/useRouteSortLabel.ts:10
-#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:58
+#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:62
 msgid "Length"
 msgstr "Довжина"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:258
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:252
 msgid "Length, m"
 msgstr "Довжина, м"
 
@@ -1228,7 +1244,7 @@ msgstr "Завантаження…"
 msgid "Location is blocked for this site. Allow it in the browser to see where you are."
 msgstr "Геолокацію для цього сайту заблоковано. Дозволь її в браузері, щоб бачити, де ти."
 
-#: src/features/logTick/common/ui/TickForm.tsx:246
+#: src/features/logTick/common/ui/TickForm.tsx:274
 #: src/pages/route/common/ui/LogTickButton.tsx:34
 #: src/pages/route/common/ui/RouteAscentsInvite.tsx:45
 msgid "Log ascent"
@@ -1238,7 +1254,7 @@ msgstr "Відмітити пролаз"
 msgid "Log every ascent and watch your grade pyramid build up"
 msgstr "Записуй кожен пролаз і дивись, як росте твоя піраміда категорій"
 
-#: src/features/logTick/common/ui/TickForm.tsx:244
+#: src/features/logTick/common/ui/TickForm.tsx:272
 #: src/pages/route/common/ui/LogTickButton.tsx:26
 msgid "Log repeat"
 msgstr "Записати повтор"
@@ -1255,7 +1271,7 @@ msgstr "Додай пролаз у логбук, щоб зберегти рез�
 msgid "Log your ascents and watch your level grow."
 msgstr "Записуй пролази й дивись, як зростає твій рівень."
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:32
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:35
 #: src/app/mobile/layout/AppBottomNavigation.tsx:34
 #: src/pages/logbook/common/ui/LogbookTeaser.tsx:18
 #: src/pages/logbook/desktop/PageLogbookDesktop.tsx:48
@@ -1283,6 +1299,14 @@ msgstr "Повідомлення"
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:47
 msgid "mm"
 msgstr "мм"
+
+#: src/features/logTick/common/ui/TickForm.tsx:208
+msgid "More details"
+msgstr "Більше деталей"
+
+#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:52
+msgid "More filters"
+msgstr "Додатково"
 
 #: src/features/catalogEdit/desktop/ArchiveRegionDialog.tsx:25
 msgid "Move the region to the archive?"
@@ -1314,7 +1338,7 @@ msgstr "Назва"
 msgid "New photo"
 msgstr "Нове фото"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:173
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:167
 #: src/pages/routeEdit/desktop/PageRouteEditDesktop.tsx:72
 msgid "New route"
 msgstr "Новий маршрут"
@@ -1353,8 +1377,8 @@ msgid "No internet connection. Send your feedback again once you are back online
 msgstr "Немає з'єднання з інтернетом. Надішліть відгук ще раз, коли знову будете онлайн"
 
 #: src/pages/region/common/ui/SectorCard.tsx:88
-msgid "no matches"
-msgstr "немає збігів"
+#~ msgid "no matches"
+#~ msgstr "немає збігів"
 
 #: src/features/sectorQr/common/hooks/useQrWarningLabels.ts:10
 msgid "No QR code yet"
@@ -1381,8 +1405,8 @@ msgstr "Немає української назви: на табличці бу
 msgid "No videos or photos yet."
 msgstr "Відео та фото ще немає."
 
-#: src/features/logTick/common/ui/ConditionsSection.tsx:119
-#: src/features/sectorConditions/common/ui/ConditionsPanel.tsx:59
+#: src/features/logTick/common/ui/ConditionsSection.tsx:104
+#: src/features/sectorConditions/common/ui/ConditionsPanel.tsx:61
 msgid "No weather while you are offline"
 msgstr "Погода недоступна без інтернету"
 
@@ -1407,11 +1431,11 @@ msgstr "Не зараз"
 msgid "Not on a photo"
 msgstr "Не на фото"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:114
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:115
 msgid "Not on a photo yet"
 msgstr "Ще не на фото"
 
-#: src/pages/region/common/ui/SectorCard.tsx:77
+#: src/pages/region/common/ui/SectorCard.tsx:75
 msgid "not on the map"
 msgstr "немає на карті"
 
@@ -1489,7 +1513,7 @@ msgid "Open region"
 msgstr "Відкрити регіон"
 
 #: src/features/sectorMap/common/ui/SectorPointCard.tsx:31
-#: src/features/sectorMap/mobile/SectorMapMobile.tsx:56
+#: src/features/sectorMap/mobile/SectorMapMobile.tsx:63
 msgid "Open sector"
 msgstr "Відкрити сектор"
 
@@ -1523,13 +1547,13 @@ msgstr "Відкриваємо сектор"
 msgid "or"
 msgstr "або"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:262
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:265
 #: src/pages/home/desktop/ui/HomeEditSidebar.tsx:120
 #: src/pages/region/desktop/ui/RegionEditSidebar.tsx:120
 msgid "Or"
 msgstr "Або"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:292
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:286
 msgid "Or a name"
 msgstr "Або ім'я"
 
@@ -1553,11 +1577,11 @@ msgstr "Частково вкритий"
 msgid "Partly sheltered: some routes stay dry"
 msgstr "Частково: частина маршрутів лишається сухою"
 
-#: src/features/logTick/common/ui/TickForm.tsx:172
+#: src/features/logTick/common/ui/TickForm.tsx:239
 msgid "Partner"
 msgstr "Партнер"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:194
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:188
 msgid "Photo"
 msgstr "Фото"
 
@@ -1570,11 +1594,11 @@ msgstr "Фото {0}"
 msgid "Photo {position}"
 msgstr "Фото {position}"
 
-#: src/features/logTick/common/ui/TickForm.tsx:220
-msgid "Photo and video"
-msgstr "Фото та відео"
+#: src/features/logTick/common/ui/TickForm.tsx:249
+#~ msgid "Photo and video"
+#~ msgstr "Фото та відео"
 
-#: src/features/topoEditor/common/hooks/useTopoEditorActions.ts:252
+#: src/features/topoEditor/common/hooks/useTopoEditorActions.ts:254
 msgid "Photo order saved"
 msgstr "Порядок фото збережено"
 
@@ -1589,8 +1613,8 @@ msgid "Photo uploaded"
 msgstr "Фото завантажено"
 
 #: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:139
-msgid "Photos"
-msgstr "Фото"
+#~ msgid "Photos"
+#~ msgstr "Фото"
 
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:174
 msgid "Photos uploaded"
@@ -1600,7 +1624,7 @@ msgstr "Фото завантажено"
 msgid "Pick a region on the left to edit it."
 msgstr "Оберіть регіон ліворуч, щоб редагувати його."
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:259
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:262
 msgid "Pick a route on the left to edit it."
 msgstr "Оберіть маршрут ліворуч, щоб редагувати його."
 
@@ -1672,11 +1696,11 @@ msgstr "Надруковані QR-коди його секторів перес�
 msgid "Printed QR codes of this sector stop working."
 msgstr "Надруковані QR-коди цього сектора перестануть працювати."
 
-#: src/features/logTick/common/ui/TickForm.tsx:209
+#: src/features/logTick/common/ui/TickForm.tsx:186
 msgid "Private comment"
 msgstr "Приватний коментар"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:48
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:52
 #: src/app/mobile/layout/AppBottomNavigation.tsx:41
 #: src/pages/profile/common/ui/ProfileTeaser.tsx:15
 #: src/pages/profile/desktop/PageProfileDesktop.tsx:25
@@ -1692,7 +1716,7 @@ msgstr "Додай crag-atlas на робочий стіл. Відкриваєт
 msgid "QR address"
 msgstr "Адреса QR-коду"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:210
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:212
 #: src/pages/qrCodes/desktop/ui/QrCodesTable.tsx:45
 msgid "QR code"
 msgstr "QR-код"
@@ -1712,17 +1736,17 @@ msgid "Rain shelter"
 msgstr "Захист від дощу"
 
 #: src/features/routeFilter/common/hooks/useRouteSortLabel.ts:9
-#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:51
+#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:55
 #: src/pages/adminFeedback/desktop/ui/FeedbackTable.tsx:31
 msgid "Rating"
 msgstr "Рейтинг"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:161
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:163
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:155
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:157
 msgid "Reader view"
 msgstr "Як бачить користувач"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:148
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:142
 msgid "Redo"
 msgstr "Повторити"
 
@@ -1749,7 +1773,7 @@ msgstr "Регіон {0} створено"
 msgid "Region saved"
 msgstr "Регіон збережено"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:29
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:32
 #: src/features/catalogSearch/common/ui/CatalogSearchGroup.tsx:34
 msgid "Regions"
 msgstr "Регіони"
@@ -1792,7 +1816,11 @@ msgstr "Замінити фото"
 msgid "Resend code"
 msgstr "Надіслати код ще раз"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:155
+#: src/features/routeFilter/common/ui/FiltersHeader.tsx:27
+msgid "Reset"
+msgstr "Скинути"
+
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:149
 msgid "Reset to the saved state"
 msgstr "Скинути до збереженого стану"
 
@@ -1824,15 +1852,15 @@ msgstr "Забрати доступ"
 msgid "Rock type"
 msgstr "Порода"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:175
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:169
 msgid "Route №{number}"
 msgstr "Маршрут №{number}"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:177
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:171
 msgid "Route not on the wall yet"
 msgstr "Маршрут ще не на стіні"
 
-#: src/features/topoEditor/common/hooks/useTopoEditorActions.ts:96
+#: src/features/topoEditor/common/hooks/useTopoEditorActions.ts:106
 msgid "Route saved"
 msgstr "Маршрут збережено"
 
@@ -1841,6 +1869,10 @@ msgstr "Маршрут збережено"
 #: src/pages/profile/common/ui/GradeScaleSetting.tsx:33
 msgid "Routes"
 msgstr "Маршрути"
+
+#: src/features/topoEditor/common/hooks/useTopoEditorActions.ts:106
+msgid "Routes saved"
+msgstr "Маршрути збережено"
 
 #: src/shared/ui/TickProgress.tsx:24
 msgid "Routes you have climbed here"
@@ -1853,7 +1885,7 @@ msgstr "Пісковик"
 #: src/features/avatarUpload/desktop/CropAvatarDialog.tsx:37
 #: src/features/avatarUpload/mobile/CropAvatarSheet.tsx:31
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:242
+#: src/features/logTick/common/ui/TickForm.tsx:270
 #: src/features/routeComment/desktop/EditRouteCommentDialog.tsx:29
 #: src/features/routeComment/mobile/EditRouteCommentSheet.tsx:24
 msgid "Save"
@@ -1869,9 +1901,13 @@ msgstr "Зберегти регіон"
 msgid "Save a region with its sectors, routes and topos to open it without a connection."
 msgstr "Збережіть регіон із секторами, маршрутами й топо, щоб відкривати його без інтернету."
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:338
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:334
 msgid "Save changes"
 msgstr "Відредагувати"
+
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:330
+msgid "Save changes ({saveCount})"
+msgstr "Відредагувати ({saveCount})"
 
 #: src/features/offlineRegions/common/ui/SaveRegionOfflineBody.tsx:83
 msgid "Save it once, and every route, photo and line on it will open without the internet."
@@ -1881,7 +1917,7 @@ msgstr "Збережіть один раз — і всі маршрути, фо�
 msgid "Save regions and open them offline."
 msgstr "Зберігай регіони та відкривай їх офлайн."
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:328
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:322
 msgid "Saved changes go live for everyone straight away."
 msgstr "Збережені зміни одразу стають видимими всім."
 
@@ -1894,7 +1930,7 @@ msgid "Saved for offline:"
 msgstr "Збережені для офлайну:"
 
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:240
+#: src/features/logTick/common/ui/TickForm.tsx:268
 #: src/features/offlineRegions/mobile/OfflineCtaMobile.tsx:39
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:55
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:95
@@ -1926,7 +1962,7 @@ msgstr "Пошук регіонів"
 msgid "Searching…"
 msgstr "Шукаємо…"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:206
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:208
 #: src/pages/qrCodes/desktop/ui/QrCodesTable.tsx:42
 msgid "Sector"
 msgstr "Сектор"
@@ -2004,13 +2040,17 @@ msgstr "Ділися досвідом"
 msgid "Share your impressions and ideas"
 msgstr "Поділіться враженнями та пропозиціями"
 
-#: src/features/logTick/common/ui/TickForm.tsx:198
+#: src/features/logTick/common/ui/TickForm.tsx:175
 msgid "Share your thoughts"
 msgstr "Що скажеш?"
 
 #: src/features/sectorConditions/common/ui/ConditionsCard.tsx:30
 msgid "Sheltered · dry in rain"
 msgstr "Під дахом · сухо в дощ"
+
+#: src/shared/ui/CollapsibleMap.tsx:28
+msgid "Show map"
+msgstr "Показати карту"
 
 #: src/shared/ui/CatalogCardMenu.tsx:78
 msgid "Show on map"
@@ -2054,7 +2094,7 @@ msgstr "Щось пішло не так"
 msgid "Something went wrong, please try sending again"
 msgstr "Щось пішло не так, спробуйте надіслати ще раз"
 
-#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:76
+#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:80
 msgid "Sort"
 msgstr "Сортування"
 
@@ -2062,9 +2102,9 @@ msgstr "Сортування"
 msgid "Sort by"
 msgstr "Сортування"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:221
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:215
 #: src/pages/logbook/common/ui/DisciplineTabs.tsx:27
-#: src/shared/ui/GradeHistogram.tsx:63
+#: src/shared/ui/GradeHistogram.tsx:68
 msgid "Sport"
 msgstr "Спорт"
 
@@ -2074,7 +2114,7 @@ msgstr "Спорт"
 #~ msgid "Sun roughly {0} – {1}"
 #~ msgstr "Сонце орієнтовно {0} – {1}"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:231
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:225
 msgid "System"
 msgstr "Система"
 
@@ -2085,6 +2125,14 @@ msgstr "Натисни «Додати на робочий стіл», потім
 #: src/features/installHint/common/hooks/useInstallSteps.ts:12
 msgid "Tap \"Add\" in the top right corner. The crag-atlas icon appears on your home screen."
 msgstr "Натисни «Додати» у правому верхньому куті. Іконка crag-atlas зʼявиться на робочому столі."
+
+#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:40
+#~ msgid "Tap a grade to filter the routes"
+#~ msgstr "Торкніться категорії, щоб відфільтрувати маршрути"
+
+#: src/features/routeFilter/common/ui/RouteFilterFields.tsx:38
+msgid "Tap a grade to see only those routes"
+msgstr "Натисни на категорію, щоб лишити тільки обрані маршрути"
 
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:37
 #: src/features/sectorConditions/common/ui/ConditionsReadings.tsx:28
@@ -2127,11 +2175,11 @@ msgstr "Не вдалося створити PDF"
 msgid "The region has no country, so it cannot get a QR code"
 msgstr "У регіону не вказана країна, тому QR-код створити не можна"
 
-#: src/features/topoEditor/desktop/TopoEditorRouteDesktop.tsx:101
+#: src/features/topoEditor/desktop/TopoEditorRouteDesktop.tsx:102
 msgid "The sector has no photo yet — add one in the sector editor."
 msgstr "У секторі ще немає фото — додайте його в редакторі сектора."
 
-#: src/features/logTick/common/ui/ConditionsSection.tsx:123
+#: src/features/logTick/common/ui/ConditionsSection.tsx:111
 msgid "The sector has no point — fill the conditions in"
 msgstr "Сектор без координат — заповніть умови вручну"
 
@@ -2161,7 +2209,7 @@ msgstr "Цю дію не можна скасувати."
 msgid "This file could not be read as a photo."
 msgstr "Не вдалося прочитати цей файл як фото."
 
-#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:79
+#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:66
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:55
 msgid "This is not a YouTube link."
 msgstr "Це не посилання на YouTube."
@@ -2191,11 +2239,11 @@ msgstr "Цей QR-код не веде до жодного сектора."
 msgid "This region is in the archive, so it is out of the catalog. Its sectors, routes and everything climbers left on them — ascents, photos, links and comments — are still here."
 msgstr "Цей регіон в архіві, тож поза каталогом. Його сектори, маршрути й усе, що лишили на них скелелази — пролази, фото, посилання й коментарі — досі тут."
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:104
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:98
 msgid "this route"
 msgstr "цього маршруту"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:110
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:104
 msgid "This route"
 msgstr "Цей маршрут"
 
@@ -2219,7 +2267,7 @@ msgstr "Цей сектор в архіві, тож поза каталогом.
 msgid "time"
 msgstr "час"
 
-#: src/features/logTick/common/ui/ConditionsSection.tsx:110
+#: src/features/logTick/common/ui/ClimbedAtFields.tsx:36
 msgid "Time"
 msgstr "Час"
 
@@ -2239,7 +2287,7 @@ msgstr "Зафіксуй свій прогрес"
 msgid "Track your progress sector by sector"
 msgstr "Стеж за прогресом по кожному сектору"
 
-#: src/shared/ui/GradeHistogram.tsx:64
+#: src/shared/ui/GradeHistogram.tsx:69
 msgid "Trad"
 msgstr "Трад"
 
@@ -2260,7 +2308,7 @@ msgstr "Введи щонайменше {MIN_SEARCH_LENGTH} літери"
 msgid "Type at least {MIN_SEARCH_LENGTH} letters of a name"
 msgstr "Введи щонайменше {MIN_SEARCH_LENGTH} літери імені"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:142
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:136
 msgid "Undo"
 msgstr "Скасувати"
 
@@ -2298,6 +2346,10 @@ msgstr "Перевіряємо…"
 msgid "Version {version}"
 msgstr "Версія {version}"
 
+#: src/features/logTick/common/ui/TickForm.tsx:246
+msgid "Video"
+msgstr "Відео"
+
 #: src/widgets/routeMedia/common/ui/RouteMediaGallery.tsx:47
 msgid "Video {position}"
 msgstr "Відео {position}"
@@ -2326,11 +2378,14 @@ msgstr "Орієнтація стіни, °"
 msgid "We sent a code to <0>{0}</0>"
 msgstr "Ми надіслали код на <0>{0}</0>"
 
+#: src/features/sectorConditions/common/ui/ConditionsButton.tsx:54
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:74
+#: src/features/sectorConditions/desktop/ConditionsDialogDesktop.tsx:32
+#: src/features/sectorConditions/mobile/ConditionsSheetMobile.tsx:25
 msgid "Weather"
 msgstr "Погода"
 
-#: src/features/logTick/common/ui/ConditionsSection.tsx:192
+#: src/features/logTick/common/ui/ConditionsSection.tsx:180
 #: src/features/sectorConditions/common/ui/ConditionsCard.tsx:53
 msgid "Weather by Open-Meteo.com"
 msgstr "Погода — Open-Meteo.com"
@@ -2352,9 +2407,9 @@ msgstr "Що можна покращити?"
 msgid "When"
 msgstr "Коли"
 
-#: src/features/logTick/common/ui/ConditionsSection.tsx:94
-msgid "When did you climb it?"
-msgstr "Коли ти це проліз?"
+#: src/features/logTick/common/ui/TickForm.tsx:144
+#~ msgid "When did you climb it?"
+#~ msgstr "Коли ти це проліз?"
 
 #: src/pages/adminFeedback/desktop/ui/FeedbackTable.tsx:40
 msgid "Where"
@@ -2367,6 +2422,10 @@ msgstr "Чи лишається стіна сухою під дощем. Про�
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:117
 msgid "Which way the wall faces, in compass degrees: 0 north, 90 east, 180 south, 270 west. It sets when the wall is in sun or shade. Leave it empty to work it out from the terrain."
 msgstr "Куди дивиться стіна, у градусах за компасом: 0 — північ, 90 — схід, 180 — південь, 270 — захід. Від цього залежить, коли на стіні сонце, а коли тінь. Якщо залишити порожнім, напрямок визначиться за рельєфом."
+
+#: src/features/logTick/common/ui/TickForm.tsx:235
+msgid "Who did you climb with?"
+msgstr "З ким ти ліз?"
 
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:39
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:80
@@ -2390,7 +2449,7 @@ msgstr "Напишіть рідною мовою — шукати можна б�
 msgid "Written for you from the name above"
 msgstr "Заповнено автоматично з назви вище"
 
-#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:305
+#: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:299
 msgid "Year"
 msgstr "Рік"
 
@@ -2426,7 +2485,7 @@ msgstr "Твоє скелелазіння — в одному місці"
 msgid "Your connection is slow right now, so the download may take a while. Keep the app open until it finishes."
 msgstr "Зараз у вас повільне з'єднання, тож завантаження може тривати довше. Не закривайте застосунок, доки воно не завершиться."
 
-#: src/features/logTick/common/ui/ConditionsSection.tsx:157
+#: src/features/logTick/common/ui/ConditionsSection.tsx:145
 msgid "Your corrections were reset for the new date and time"
 msgstr "Ваші виправлення скинуто для нової дати й часу"
 
@@ -2467,7 +2526,7 @@ msgstr "Фото оновлено"
 msgid "Your photo or send video helps the next climber read the line — and puts your ascent on the route page."
 msgstr "Твоє фото чи відео пролазу допоможе наступним скелелазам прочитати лінію — а твій пролаз з'явиться на сторінці маршруту."
 
-#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:69
+#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:56
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:53
 msgid "YouTube link"
 msgstr "Посилання на YouTube"
