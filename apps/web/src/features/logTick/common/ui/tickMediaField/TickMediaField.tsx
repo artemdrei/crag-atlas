@@ -1,10 +1,8 @@
-import { type ChangeEvent, useId, useRef, useState } from 'react';
+import { useId, useState } from 'react';
 
 import type { TickMedia } from '@crag-atlas/api';
 import { Trans, useLingui } from '@lingui/react/macro';
 import AddIcon from '@mui/icons-material/Add';
-import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
-import ButtonBase from '@mui/material/ButtonBase';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import { styled } from '@mui/material/styles';
@@ -14,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import { parseMediaLink } from '@web/shared/lib';
 
 import type { PendingMedia } from '../../entities';
-import { FileThumb, MediaThumb, THUMB_SIZE } from './MediaThumb';
+import { MediaThumb } from './MediaThumb';
 
 export interface Props {
   media?: TickMedia[];
@@ -25,12 +23,10 @@ export interface Props {
 export const TickMediaField = ({ media = [], pending, onChange }: Props) => {
   const { t } = useLingui();
   const idLink = useId();
-  const inputRef = useRef<HTMLInputElement>(null);
   const [draft, setDraft] = useState('');
   const [isInvalid, setIsInvalid] = useState(false);
 
   const savedVideos = media.filter((item) => item.kind === 'video');
-  const savedPhotos = media.filter((item) => item.kind === 'photo');
 
   const addLink = (value: string): boolean => {
     const link = parseMediaLink(value);
@@ -51,15 +47,6 @@ export const TickMediaField = ({ media = [], pending, onChange }: Props) => {
   // keystroke: a half-typed id already parses once it is five characters long.
   const commitDraft = () => {
     if (draft.trim() && !addLink(draft)) setIsInvalid(true);
-  };
-
-  const addFiles = (event: ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(event.target.files ?? []);
-
-    event.target.value = '';
-
-    if (files.length)
-      onChange({ ...pending, files: [...pending.files, ...files] });
   };
 
   return (
@@ -132,50 +119,6 @@ export const TickMediaField = ({ media = [], pending, onChange }: Props) => {
           </GridStyled>
         )}
       </GroupStyled>
-
-      <GroupStyled>
-        <div>
-          <Typography variant="subtitle2">
-            <Trans>Photos</Trans>
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
-            <Trans>Add as many as you like — everyone will see them.</Trans>
-          </Typography>
-        </div>
-        <GridStyled>
-          {savedPhotos.map((item) => (
-            <MediaThumb key={item.id} label={item.url} photoUrl={item.url} />
-          ))}
-          {pending.files.map((file) => (
-            <FileThumb
-              key={`${file.name}-${file.lastModified}`}
-              file={file}
-              onRemove={() =>
-                onChange({
-                  ...pending,
-                  files: pending.files.filter((item) => item !== file)
-                })
-              }
-            />
-          ))}
-          <AddTileStyled
-            type="button"
-            aria-label={t`Add photo`}
-            onClick={() => inputRef.current?.click()}
-          >
-            <AddPhotoAlternateOutlinedIcon />
-          </AddTileStyled>
-        </GridStyled>
-        <input
-          ref={inputRef}
-          type="file"
-          accept="image/*"
-          multiple
-          hidden
-          aria-label={t`Add photo`}
-          onChange={addFiles}
-        />
-      </GroupStyled>
     </FieldStyled>
   );
 };
@@ -197,17 +140,4 @@ const GridStyled = styled('div')`
   display: flex;
   flex-wrap: wrap;
   gap: ${({ theme }) => theme.spacing(1)};
-`;
-
-const AddTileStyled = styled(ButtonBase)`
-  width: ${THUMB_SIZE}px;
-  height: ${THUMB_SIZE}px;
-  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
-  border: 1px dashed ${({ theme }) => theme.palette.divider};
-  color: ${({ theme }) => theme.palette.text.secondary};
-
-  &:hover {
-    border-color: ${({ theme }) => theme.palette.primary.main};
-    color: ${({ theme }) => theme.palette.primary.main};
-  }
 `;

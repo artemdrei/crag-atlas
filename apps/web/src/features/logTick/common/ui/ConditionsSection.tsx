@@ -9,13 +9,13 @@ import WaterDropIcon from '@mui/icons-material/WaterDrop';
 import WaterDropOutlinedIcon from '@mui/icons-material/WaterDropOutlined';
 import Skeleton from '@mui/material/Skeleton';
 import { styled } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
 import { OPEN_METEO } from '@web/shared/api';
 import { IconValue, SunTimes } from '@web/shared/ui';
 
 import type { WeatherFieldName } from '../hooks';
+import { ClimbedAtFields } from './ClimbedAtFields';
 import { TickFormSection } from './TickFormSection';
 import { WeatherField } from './WeatherField';
 
@@ -91,34 +91,22 @@ export const ConditionsSection = ({
   const { t } = useLingui();
 
   return (
-    <TickFormSection isFirst title={<Trans>When did you climb it?</Trans>}>
-      <RowStyled>
-        <TextField
-          required
-          fullWidth
-          size="small"
-          type="date"
-          label={t`Date`}
-          value={climbedAt}
-          slotProps={{ inputLabel: { shrink: true } }}
-          onChange={(event) => onDateChange(event.target.value)}
-        />
-        <TextField
-          fullWidth
-          size="small"
-          type="time"
-          label={t`Time`}
-          value={climbedAtTime}
-          slotProps={{ inputLabel: { shrink: true } }}
-          onChange={(event) => onTimeChange(event.target.value)}
-        />
-      </RowStyled>
+    <TickFormSection title={<Trans>Conditions</Trans>}>
+      <ClimbedAtFields
+        climbedAt={climbedAt}
+        climbedAtTime={climbedAtTime}
+        onDateChange={onDateChange}
+        onTimeChange={onTimeChange}
+      />
 
       <Typography variant="body2" color="text.secondary">
         {isOffline ? (
           <Trans>No weather while you are offline</Trans>
         ) : hasPoint ? (
-          <Trans>Conditions, read at the sector</Trans>
+          <Trans>
+            Filled in automatically for the chosen date and time — you can edit
+            them
+          </Trans>
         ) : (
           <Trans>The sector has no point — fill the conditions in</Trans>
         )}

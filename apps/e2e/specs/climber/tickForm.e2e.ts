@@ -120,10 +120,11 @@ test('every answer in the form is kept with the ascent', async ({ page }) => {
   const dialog = page.getByRole('dialog');
 
   await test.step('the conditions come from the sector', async () => {
+    await dialog.getByRole('button', { name: 'More details' }).click();
     await dialog.getByLabel('Date').fill('2026-05-02');
-    await expect(dialog.locator('input[type=number]').first()).toHaveValue(
-      '14'
-    );
+    await expect(
+      dialog.locator('input[type=number][step=any]').first()
+    ).toHaveValue('14');
   });
 
   await test.step('how it was climbed', async () => {
