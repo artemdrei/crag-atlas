@@ -47,7 +47,7 @@ export const useTopoEditorActions = ({
   const { deleteTopo } = useApiDeleteTopo({ idSector });
   const { reorderTopos } = useApiReorderTopos({ idSector });
 
-  const saveRoute = useCallback(
+  const persistRoute = useCallback(
     async (idRoute: string) => {
       const draft = session.routes[idRoute];
 
@@ -67,46 +67,48 @@ export const useTopoEditorActions = ({
         description: draft.description
       };
 
+      let idSaved = idRoute;
+
+      if (draft.isNew) {
+        const route = await createRoute(fields);
+
+        idSaved = route.id;
+        dispatch({ type: 'ROUTE_CREATED', idDraft: idRoute, route });
+        resetHistory();
+      } else {
+        await updateRoute({ idRoute, payload: fields });
+      }
+
+      for (const topo of Object.values(session.topos)) {
+        const line = topo.lines[idRoute];
+
+        if (!line?.isDirty) continue;
+
+        await saveRouteLine({
+          idRoute: idSaved,
+          idTopo: topo.id,
+          payload: toLinePayload(line)
+        });
+      }
+
+      dispatch({ type: 'ROUTE_SAVED', idRoute: idSaved });
+    },
+    [session, dispatch, resetHistory, createRoute, updateRoute, saveRouteLine]
+  );
+
+  const saveRoutes = useCallback(
+    async (idsRoute: string[]) => {
       try {
-        let idSaved = idRoute;
-
-        if (draft.isNew) {
-          const route = await createRoute(fields);
-
-          idSaved = route.id;
-          dispatch({ type: 'ROUTE_CREATED', idDraft: idRoute, route });
-          resetHistory();
-        } else {
-          await updateRoute({ idRoute, payload: fields });
+        for (const idRoute of idsRoute) {
+          await persistRoute(idRoute);
         }
 
-        for (const topo of Object.values(session.topos)) {
-          const line = topo.lines[idRoute];
-
-          if (!line?.isDirty) continue;
-
-          await saveRouteLine({
-            idRoute: idSaved,
-            idTopo: topo.id,
-            payload: toLinePayload(line)
-          });
-        }
-
-        dispatch({ type: 'ROUTE_SAVED', idRoute: idSaved });
-        toast.success(t`Route saved`);
+        toast.success(idsRoute.length > 1 ? t`Routes saved` : t`Route saved`);
       } catch (error) {
         toast.error(resolveFailureMessage(toFailure(error)));
       }
     },
-    [
-      t,
-      session,
-      dispatch,
-      resetHistory,
-      createRoute,
-      updateRoute,
-      saveRouteLine
-    ]
+    [t, persistRoute]
   );
 
   const removeLine = useCallback(async () => {
@@ -261,7 +263,7 @@ export const useTopoEditorActions = ({
 
   return {
     isBusy: isSavingFields || isSavingLine || isCreatingRoute,
-    saveRoute,
+    saveRoutes,
     removeLine,
     addRoute,
     resetRoute,

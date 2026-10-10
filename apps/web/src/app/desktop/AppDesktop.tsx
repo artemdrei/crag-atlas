@@ -13,6 +13,7 @@ import { logTickDesktopRegistrations } from '@web/features/logTick';
 import { offlineRegionsDesktopRegistrations } from '@web/features/offlineRegions';
 import { photoUploadDesktopRegistrations } from '@web/features/photoUpload';
 import { routeCommentDesktopRegistrations } from '@web/features/routeComment';
+import { sectorConditionsDesktopRegistrations } from '@web/features/sectorConditions';
 import { sectorQrDesktopRegistrations } from '@web/features/sectorQr';
 import { signInPromptDesktopRegistrations } from '@web/features/signInPrompt';
 import { topoDesktopRegistrations } from '@web/features/topo';
@@ -49,6 +50,7 @@ const registrations = [
   ...offlineRegionsDesktopRegistrations,
   ...signInPromptDesktopRegistrations,
   ...routeMediaDesktopRegistrations,
+  ...sectorConditionsDesktopRegistrations,
   ...sectorQrDesktopRegistrations,
   ...adminFeedbackDesktopRegistrations,
   ...playgroundDesktopRegistrations

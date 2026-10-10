@@ -15,12 +15,18 @@ export interface Params {
   path: string;
   queryKey: readonly unknown[];
   coords?: Coords;
+  enabled?: boolean;
 }
 
 // The provider refreshes hourly, and sectors of one crag share its grid cell.
 const FORECAST_FRESH_MS = 15 * 60 * 1000;
 
-export const useApiGetConditionsAt = ({ path, queryKey, coords }: Params) => {
+export const useApiGetConditionsAt = ({
+  path,
+  queryKey,
+  coords,
+  enabled = true
+}: Params) => {
   const isOnline = useIsOnline();
   const queryClient = useQueryClient();
 
@@ -45,7 +51,7 @@ export const useApiGetConditionsAt = ({ path, queryKey, coords }: Params) => {
       apiPost<SectorConditions>(path, {
         forecast: coords ? await forecastAt(coords) : null
       }),
-    enabled: isOnline
+    enabled: isOnline && enabled
   });
 
   return {

@@ -149,6 +149,7 @@ test('an ascent logged with a link marks the route without a reload', async ({
 
   const dialog = page.getByRole('dialog');
 
+  await dialog.getByRole('button', { name: 'More details' }).click();
   await dialog
     .getByRole('textbox', { name: 'YouTube link' })
     .fill('https://youtu.be/dQw4w9WgXcQ');

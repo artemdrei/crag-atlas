@@ -6,16 +6,16 @@ import Typography from '@mui/material/Typography';
 
 export interface Props {
   title: ReactNode;
-  isFirst?: boolean;
+  hasDivider?: boolean;
 }
 
 export const TickFormSection = ({
   title,
-  isFirst,
+  hasDivider,
   children
 }: PropsWithChildren<Props>) => (
   <SectionStyled>
-    {!isFirst && <Divider />}
+    {hasDivider && <Divider />}
     <Typography variant="subtitle1">{title}</Typography>
     {children}
   </SectionStyled>

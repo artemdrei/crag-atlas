@@ -1,5 +1,5 @@
 import { createContext, type ReactNode, useContext } from 'react';
-import { Sheet } from 'react-modal-sheet';
+import { Sheet, useVirtualKeyboard } from 'react-modal-sheet';
 
 import { alpha, styled, useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
@@ -17,18 +17,22 @@ export const useIsInBottomSheet = () => useContext(BottomSheetContext);
 
 export const BottomSheet = ({ title, isOpen, children, onClose }: Props) => {
   const theme = useTheme();
+  const { keyboardHeight } = useVirtualKeyboard({ isEnabled: isOpen });
 
   return (
     <BottomSheetContext.Provider value>
       <SheetStyled
         detent="content"
         isOpen={isOpen}
+        // The built-in avoidance pads the scroller instead of lifting the
+        // sheet, so on iOS the sticky footer lands behind the keyboard.
+        avoidKeyboard={false}
         // Without it the library paints a white sheet through inline styles.
         unstyled
         onClose={onClose}
         // The library hard-codes z-index 9999 unless style.zIndex is given,
         // burying every MUI menu opened from inside the sheet.
-        style={{ zIndex: theme.zIndex.drawer }}
+        style={{ zIndex: theme.zIndex.drawer, bottom: keyboardHeight }}
       >
         <Sheet.Container>
           <Sheet.Header />
@@ -68,6 +72,10 @@ const SheetStyled = styled(Sheet)`
     box-shadow: ${({ theme }) => theme.shadows[8]};
     padding: 0 ${({ theme }) => theme.spacing(2)}
       calc(${({ theme }) => theme.spacing(3)} + env(safe-area-inset-bottom));
+  }
+
+  .react-modal-sheet-content-scroller {
+    scroll-padding-bottom: ${({ theme }) => theme.spacing(14)};
   }
 
   .react-modal-sheet-header {

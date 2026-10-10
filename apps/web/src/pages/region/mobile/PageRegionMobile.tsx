@@ -9,14 +9,12 @@ import {
   RouteFilterPanelMobile,
   useRouteFilterSearch
 } from '@web/features/routeFilter';
-import { RegionConditionsMobile } from '@web/features/sectorConditions';
 import {
   mapSectors,
   SectorMapMobile,
   sectorPinColors
 } from '@web/features/sectorMap';
 import { useApiGetRegion } from '@web/shared/api';
-import { coordsOf } from '@web/shared/lib';
 import { ApiFeedback, PageShell, PageTitle } from '@web/shared/ui';
 
 import {
@@ -84,9 +82,6 @@ export const PageRegionMobile = () => {
         )}
         onOpenSector={(sector) => openSector('map', sector)}
       />
-      {region && (
-        <RegionConditionsMobile idRegion={idRegion} coords={coordsOf(region)} />
-      )}
       <RouteFilterPanelMobile
         state={filterState}
         title={

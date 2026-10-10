@@ -54,17 +54,17 @@ test('the days ahead are scored, and a day opens its reading', async ({
     request.fulfill({ json: conditionsOf([94, 41]) })
   );
   await page.goto(sectorPath(region.id, sector.id));
+  await page.getByRole('button', { name: 'Weather' }).click();
 
-  const today = page.getByRole('button', { name: /^today \d+ 94$/ });
-  const tomorrow = page.getByRole('button', { name: / 41$/ });
+  const dialog = page.getByRole('dialog');
 
-  await expect(today).toBeVisible();
-  await expect(tomorrow).toBeVisible();
-  await expect(page.getByText('Weather by Open-Meteo.com')).toHaveCount(0);
+  await expect(
+    dialog.getByRole('button', { name: /^today .* 94$/ })
+  ).toBeVisible();
 
-  await tomorrow.click();
+  await dialog.getByRole('button', { name: / 41$/ }).click();
 
-  await expect(page.getByText('Weather by Open-Meteo.com')).toBeVisible();
+  await expect(dialog.getByText('Weather by Open-Meteo.com')).toBeVisible();
 });
 
 test('a sector without a pin has no conditions to show', async ({ page }) => {
@@ -75,7 +75,7 @@ test('a sector without a pin has no conditions to show', async ({ page }) => {
   await page.goto(sectorPath(region.id, sector.id));
 
   await expect(card(page, easy.name)).toBeVisible();
-  await expect(page.getByRole('button', { name: /^today / })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Weather' })).toHaveCount(0);
 });
 
 test('directions lead to the sector’s pin', async ({ page }) => {

@@ -24,7 +24,7 @@ export const RouteFilterSummary = ({
         {title}
       </TitleStyled>
       {tickedCount !== undefined && (
-        <ProgressStyled tickedCount={tickedCount} routesCount={routesCount} />
+        <TickProgress tickedCount={tickedCount} routesCount={routesCount} />
       )}
     </TitleGroupStyled>
     {action}
@@ -48,19 +48,4 @@ const TitleGroupStyled = styled('div')`
 const TitleStyled = styled(Typography)`
   flex: 0 1 auto;
   min-width: 0;
-`;
-
-const ProgressStyled = styled(TickProgress)`
-  flex: none;
-  width: 80px;
-
-  & .MuiLinearProgress-root {
-    top: 0;
-    height: 6px;
-    border-radius: 3px;
-  }
-
-  & .MuiLinearProgress-bar {
-    border-radius: 3px;
-  }
 `;

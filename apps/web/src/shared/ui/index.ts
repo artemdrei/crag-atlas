@@ -8,6 +8,7 @@ export { CatalogCard } from './CatalogCard';
 export { CatalogCardMenu } from './CatalogCardMenu';
 export { CatalogExplorerLayout } from './CatalogExplorerLayout';
 export { ChangedTextField } from './ChangedTextField';
+export { CollapsibleMap } from './CollapsibleMap';
 export { ConfirmDialog, SubjectStyled } from './ConfirmDialog';
 export { DangerButton } from './DangerButton';
 export { DirectionsButton } from './DirectionsButton';

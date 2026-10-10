@@ -196,7 +196,8 @@ export const answerOpenMeteo = (page: Page) =>
 
 /**
  * A sector's conditions as the API would send them, with the given scores
- * one day apart from today.
+ * one day apart from today. Each day carries one reading, so the header has a
+ * temperature to show.
  */
 export const conditionsOf = (scores: number[], hasPoint = true) => ({
   hasPoint,
@@ -213,6 +214,18 @@ export const conditionsOf = (scores: number[], hasPoint = true) => ({
     sunriseAt: null,
     sunsetAt: null,
     sunIntervals: [],
-    hours: []
+    hours: [
+      {
+        at: '12:00',
+        score,
+        band: null,
+        isSun: false,
+        temperatureC: 18,
+        precipitationMm: 0,
+        humidityPct: 50,
+        windSpeedMs: 2,
+        weatherCode: 1
+      }
+    ]
   }))
 });

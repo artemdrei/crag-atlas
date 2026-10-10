@@ -235,6 +235,20 @@ describe('editorSessionReducer', () => {
     expect(line.kinds).toHaveLength(line.points.length);
   });
 
+  it('leaves the label where it is when the start point moves', () => {
+    const session = run(
+      hydrated(),
+      { type: 'SELECT_ROUTE', idRoute: 'alpha' },
+      { type: 'MOVE_LABEL', offset: [0.1, 0.05] },
+      { type: 'MOVE_POINT', index: 0, point: [0.4, 0.8] }
+    );
+
+    const line = lineOf(session);
+
+    expect(line.points[0]).toEqual([0.4, 0.8]);
+    expect(line.labelOffset).toEqual([-0.1, 0.15]);
+  });
+
   it('marks a field edit dirty', () => {
     const session = editorSessionReducer(hydrated(), {
       type: 'EDIT_ROUTE',

@@ -16,7 +16,6 @@ import {
   RouteFilterPanelDesktop,
   useRouteFilter
 } from '@web/features/routeFilter';
-import { SectorConditionsDesktop } from '@web/features/sectorConditions';
 import {
   findTopoOfRoute,
   orderRoutes,
@@ -185,12 +184,6 @@ export const PageSectorDesktop = () => {
           </GalleryAreaStyled>
         </MainColumnStyled>
         <PanelStyled>
-          {sector && (
-            <SectorConditionsDesktop
-              idSector={idSector}
-              coords={coordsOf(sector)}
-            />
-          )}
           <RouteFilterPanelDesktop
             state={filterState}
             title={

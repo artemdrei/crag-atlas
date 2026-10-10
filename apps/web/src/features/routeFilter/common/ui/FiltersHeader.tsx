@@ -14,20 +14,17 @@ export interface Props {
 
 export const FiltersHeader = ({ summary, isActive, onClearAll }: Props) => (
   <RowStyled>
-    <Typography variant="subtitle1">
-      <Trans>Filters</Trans>
-      {summary && <SummaryStyled> · {summary}</SummaryStyled>}
-    </Typography>
+    <Typography variant="subtitle1">{summary}</Typography>
     <ClearButtonStyled
       size="small"
-      variant="outlined"
-      color="inverse"
-      startIcon={<CloseIcon />}
+      variant="text"
+      color="inherit"
+      startIcon={<CloseIcon fontSize="small" />}
       isVisible={isActive}
       disabled={!isActive}
       onClick={onClearAll}
     >
-      <Trans>Clear all filters</Trans>
+      <Trans>Reset</Trans>
     </ClearButtonStyled>
   </RowStyled>
 );
@@ -38,15 +35,12 @@ const RowStyled = styled('div')`
   gap: ${({ theme }) => theme.spacing(1)};
 `;
 
-const SummaryStyled = styled('span')`
-  font-weight: 400;
-  color: ${({ theme }) => theme.palette.text.secondary};
-`;
-
 const ClearButtonStyled = styled(Button, {
   shouldForwardProp: (prop) => prop !== 'isVisible'
 })<{ isVisible: boolean }>`
+  flex-shrink: 0;
   margin-left: auto;
   text-transform: none;
+  white-space: nowrap;
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
 `;

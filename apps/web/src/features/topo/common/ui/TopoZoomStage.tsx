@@ -18,6 +18,7 @@ export interface Props {
   isTopAligned?: boolean;
   onSelectRoute?: (idRoute: string) => void;
   onHoverRoute?: (idRoute?: string) => void;
+  onZoomChange?: (isZoomed: boolean) => void;
   className?: string;
 }
 
@@ -35,6 +36,7 @@ export const TopoZoomStage = ({
   onSelectRoute,
   onHoverRoute,
   isTopAligned,
+  onZoomChange,
   className,
   children
 }: PropsWithChildren<Props>) => {
@@ -52,7 +54,11 @@ export const TopoZoomStage = ({
         wheel={{ wheelDisabled: true }}
         panning={{ disabled: !isZoomed }}
         trackPadPanning={{ disabled: !isZoomed }}
-        onTransform={(_ref, state) => setIsZoomed(state.scale > MIN_SCALE)}
+        onTransform={(_ref, state) => {
+          const isZoomedNow = state.scale > MIN_SCALE;
+          setIsZoomed(isZoomedNow);
+          onZoomChange?.(isZoomedNow);
+        }}
       >
         <TransformComponent>
           <TopoImage

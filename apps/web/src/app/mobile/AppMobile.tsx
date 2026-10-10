@@ -15,6 +15,7 @@ import {
 import { logTickMobileRegistrations } from '@web/features/logTick';
 import { offlineRegionsMobileRegistrations } from '@web/features/offlineRegions';
 import { routeCommentMobileRegistrations } from '@web/features/routeComment';
+import { sectorConditionsMobileRegistrations } from '@web/features/sectorConditions';
 import { signInPromptMobileRegistrations } from '@web/features/signInPrompt';
 import { topoMobileRegistrations } from '@web/features/topo';
 import { adminFeedbackMobileRegistrations } from '@web/pages/adminFeedback/registrations';
@@ -44,6 +45,7 @@ const registrations = [
   ...logTickMobileRegistrations,
   ...routeCommentMobileRegistrations,
   ...offlineRegionsMobileRegistrations,
+  ...sectorConditionsMobileRegistrations,
   ...signInPromptMobileRegistrations,
   ...topoMobileRegistrations,
   ...routeMediaMobileRegistrations,

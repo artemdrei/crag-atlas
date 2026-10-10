@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { Trans } from '@lingui/react/macro';
 import CloseIcon from '@mui/icons-material/Close';
 import Button from '@mui/material/Button';
@@ -8,6 +10,7 @@ import { useModal } from '@web/app/providers';
 
 import type { TopoPhotoPayload } from '../common';
 import { TopoZoomStage } from '../common';
+import { useSwipeDownToClose } from './useSwipeDownToClose';
 
 export interface Props extends TopoPhotoPayload {
   open: boolean;
@@ -16,6 +19,11 @@ export interface Props extends TopoPhotoPayload {
 const TopoPhotoModal = ({ open, ...photo }: Props) => {
   const { closeModal } = useModal();
   const close = () => closeModal('VIEW_TOPO_PHOTO');
+  const [isZoomed, setIsZoomed] = useState(false);
+  const { stageRef, scrimRef, handlers } = useSwipeDownToClose({
+    isEnabled: !isZoomed,
+    onClose: close
+  });
 
   return (
     <DialogStyled
@@ -25,7 +33,10 @@ const TopoPhotoModal = ({ open, ...photo }: Props) => {
       transitionDuration={0}
       onClose={close}
     >
-      <StageStyled {...photo} />
+      <ScrimStyled ref={scrimRef} />
+      <SwipeAreaStyled ref={stageRef} {...handlers}>
+        <StageStyled {...photo} onZoomChange={setIsZoomed} />
+      </SwipeAreaStyled>
       <CloseButtonStyled
         variant="contained"
         startIcon={<CloseIcon />}
@@ -41,8 +52,19 @@ export default TopoPhotoModal;
 
 const DialogStyled = styled(Dialog)`
   & .MuiDialog-paper {
-    background: ${({ theme }) => theme.palette.common.black};
+    background: transparent;
   }
+`;
+
+const ScrimStyled = styled('div')`
+  position: absolute;
+  inset: 0;
+  background: ${({ theme }) => theme.palette.common.black};
+`;
+
+const SwipeAreaStyled = styled('div')`
+  position: relative;
+  height: 100%;
 `;
 
 const StageStyled = styled(TopoZoomStage)`

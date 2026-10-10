@@ -3,8 +3,10 @@ import { type FormEvent, useState } from 'react';
 import type { GradeScale, UserSummary } from '@crag-atlas/api';
 import { TEXT_LIMITS } from '@crag-atlas/utils';
 import { Trans, useLingui } from '@lingui/react/macro';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
+import Collapse from '@mui/material/Collapse';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Rating from '@mui/material/Rating';
 import { styled } from '@mui/material/styles';
@@ -83,6 +85,7 @@ export const TickForm = ({
   const [note, setNote] = useState(tick?.note ?? '');
   const [notePrivate, setNotePrivate] = useState(tick?.notePrivate ?? false);
   const [media, setMedia] = useState<PendingMedia>({ links: [], files: [] });
+  const [isDetailsOpen, setIsDetailsOpen] = useState(() => hasDetails(tick));
 
   const { firstSend, sendCount } = useRouteSends(idRoute);
   const isRepeat = !tick && !!firstSend;
@@ -137,25 +140,6 @@ export const TickForm = ({
         <RepeatAscentNotice firstSend={firstSend} sendCount={sendCount} />
       )}
 
-      <ConditionsSection
-        climbedAt={climbedAt}
-        climbedAtTime={climbedAtTime}
-        conditions={conditions}
-        failureMessage={
-          failure &&
-          describeWeatherFailure('code' in failure ? failure.code : null)
-        }
-        hasPoint={hasPoint}
-        isLoading={isLoading}
-        isOffline={isOffline}
-        isEditsReset={isEditsReset}
-        isEdited={isEdited}
-        onDateChange={setClimbedAt}
-        onTimeChange={setClimbedAtTime}
-        onFieldChange={setField}
-        onFieldReset={resetField}
-      />
-
       <TickFormSection title={<Trans>How did you climb it?</Trans>}>
         <TypeRowStyled>
           <AscentTypeChoice
@@ -167,13 +151,6 @@ export const TickForm = ({
             <AttemptsStepper value={attempts} onChange={setAttempts} />
           )}
         </TypeRowStyled>
-        <ClimberPicker
-          value={partner}
-          label={t`Partner`}
-          name={partnerName}
-          onChange={setPartner}
-          onNameChange={setPartnerName}
-        />
       </TickFormSection>
 
       <TickFormSection title={<Trans>How hard is the route?</Trans>}>
@@ -196,34 +173,87 @@ export const TickForm = ({
       </TickFormSection>
 
       <TickFormSection title={<Trans>Share your thoughts</Trans>}>
-        <LimitedTextField
-          fullWidth
-          multiline
-          minRows={2}
-          maxLength={TEXT_LIMITS.tickNote}
-          label={t`Comment`}
-          value={note}
-          onChange={(event) => setNote(event.target.value)}
-        />
-        <FormControlLabel
-          label={t`Private comment`}
-          control={
-            <Checkbox
-              size="small"
-              checked={notePrivate}
-              onChange={(event) => setNotePrivate(event.target.checked)}
-            />
-          }
-        />
+        <NoteStyled>
+          <LimitedTextField
+            fullWidth
+            multiline
+            minRows={2}
+            maxLength={TEXT_LIMITS.tickNote}
+            label={t`Comment`}
+            value={note}
+            onChange={(event) => setNote(event.target.value)}
+          />
+          <FormControlLabel
+            label={t`Private comment`}
+            control={
+              <Checkbox
+                size="small"
+                checked={notePrivate}
+                onChange={(event) => setNotePrivate(event.target.checked)}
+              />
+            }
+          />
+        </NoteStyled>
       </TickFormSection>
 
-      <TickFormSection title={<Trans>Photo and video</Trans>}>
-        <TickMediaField
-          media={tick?.media}
-          pending={media}
-          onChange={setMedia}
-        />
-      </TickFormSection>
+      <DetailsToggleStyled
+        type="button"
+        variant="outlined"
+        fullWidth
+        aria-expanded={isDetailsOpen}
+        endIcon={<ExpandMoreIcon />}
+        onClick={() => setIsDetailsOpen((isOpen) => !isOpen)}
+      >
+        {isDetailsOpen ? (
+          <Trans>Hide details</Trans>
+        ) : (
+          <Trans>More details</Trans>
+        )}
+      </DetailsToggleStyled>
+
+      <Collapse in={isDetailsOpen}>
+        <DetailsStyled>
+          <ConditionsSection
+            climbedAt={climbedAt}
+            climbedAtTime={climbedAtTime}
+            conditions={conditions}
+            failureMessage={
+              failure &&
+              describeWeatherFailure('code' in failure ? failure.code : null)
+            }
+            hasPoint={hasPoint}
+            isLoading={isLoading}
+            isOffline={isOffline}
+            isEditsReset={isEditsReset}
+            isEdited={isEdited}
+            onDateChange={setClimbedAt}
+            onTimeChange={setClimbedAtTime}
+            onFieldChange={setField}
+            onFieldReset={resetField}
+          />
+
+          <TickFormSection
+            hasDivider
+            title={<Trans>Who did you climb with?</Trans>}
+          >
+            <ClimberPicker
+              value={partner}
+              label={t`Partner`}
+              name={partnerName}
+              onChange={setPartner}
+              onNameChange={setPartnerName}
+            />
+          </TickFormSection>
+
+          <TickFormSection hasDivider title={<Trans>Video</Trans>}>
+            <TickMediaField
+              media={tick?.media}
+              pending={media}
+              onChange={setMedia}
+            />
+          </TickFormSection>
+        </DetailsStyled>
+      </Collapse>
 
       <ActionsStyled isInSheet={isInSheet}>
         <FormActions>
@@ -252,6 +282,13 @@ export const TickForm = ({
   );
 };
 
+const hasDetails = (tick?: Tick) =>
+  !!tick &&
+  (!!tick.idPartner ||
+    !!tick.partnerName ||
+    !!tick.media?.some((item) => item.kind === 'video') ||
+    !!tick.weather?.isManual);
+
 // Local, not UTC: an evening ascent would otherwise be logged for tomorrow.
 const nowLocal = () => {
   const now = new Date();
@@ -274,6 +311,36 @@ const TypeRowStyled = styled('div')`
   display: flex;
   align-items: flex-start;
   gap: ${({ theme }) => theme.spacing(1.5)};
+`;
+
+const DetailsToggleStyled = styled(Button)`
+  justify-content: space-between;
+  padding: ${({ theme }) => theme.spacing(1.25, 2)};
+
+  &,
+  &:hover {
+    border-style: dashed;
+  }
+
+  & .MuiButton-endIcon {
+    transition: transform 150ms ease-out;
+  }
+
+  &[aria-expanded='true'] .MuiButton-endIcon {
+    transform: rotate(180deg);
+  }
+`;
+
+const NoteStyled = styled('div')`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing(0.5)};
+`;
+
+const DetailsStyled = styled('div')`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing(2.5)};
 `;
 
 const ActionsStyled = styled('div', {

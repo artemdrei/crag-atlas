@@ -5,11 +5,13 @@ import AppBar from '@mui/material/AppBar';
 import { styled } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 
+import { conditionsPlaceOf } from '@web/app/router/conditionsPlaceOf';
 import { idRegionOf } from '@web/app/router/idRegionOf';
 import { parentPathOf } from '@web/app/router/parentPathOf';
 import { ROUTES } from '@web/app/router/routes';
 import { CatalogSearchMobile } from '@web/features/catalogSearch';
 import { OfflineCtaMobile } from '@web/features/offlineRegions';
+import { ConditionsButton } from '@web/features/sectorConditions';
 import { Wordmark } from '@web/shared/ui';
 
 import { HeaderBackButton } from './HeaderBackButton';
@@ -18,6 +20,7 @@ export const HeaderMobile = () => {
   const { pathname } = useLocation();
   const parentPath = parentPathOf(pathname);
   const idRegion = idRegionOf(pathname);
+  const conditionsPlace = conditionsPlaceOf(pathname);
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
 
   return (
@@ -29,6 +32,9 @@ export const HeaderMobile = () => {
           <Wordmark to={ROUTES.INDEX} />
         )}
         <SearchSlotStyled>
+          {conditionsPlace && !isSearchExpanded && (
+            <ConditionsButton place={conditionsPlace} />
+          )}
           {idRegion && !isSearchExpanded && (
             <OfflineCtaMobile idRegion={idRegion} />
           )}

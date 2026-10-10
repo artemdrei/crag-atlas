@@ -11,14 +11,13 @@ import {
   RouteFilterPanelDesktop,
   useRouteFilterSearch
 } from '@web/features/routeFilter';
-import { RegionConditionsDesktop } from '@web/features/sectorConditions';
 import {
   mapSectors,
   SectorMapDesktop,
   sectorPinColors
 } from '@web/features/sectorMap';
 import { useApiGetRegion } from '@web/shared/api';
-import { coordsOf, useCatalogSelection } from '@web/shared/lib';
+import { useCatalogSelection } from '@web/shared/lib';
 import {
   ApiFeedback,
   CatalogExplorerLayout,
@@ -120,14 +119,6 @@ export const PageRegionDesktop = () => {
       <CatalogExplorerLayout
         list={
           <>
-            <ConditionsSlotStyled>
-              {region && (
-                <RegionConditionsDesktop
-                  idRegion={idRegion}
-                  coords={coordsOf(region)}
-                />
-              )}
-            </ConditionsSlotStyled>
             {isFilterShown && (
               <RouteFilterPanelDesktop
                 state={filterState}
@@ -203,8 +194,4 @@ const HeaderRowStyled = styled('div')`
   align-items: center;
   justify-content: flex-end;
   gap: ${({ theme }) => theme.spacing(2)};
-`;
-
-const ConditionsSlotStyled = styled('div')`
-  margin-bottom: ${({ theme }) => theme.spacing(1.5)};
 `;
