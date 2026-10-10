@@ -3,6 +3,8 @@ export * from './dayRainMm';
 export * from './dayTemperature';
 export * from './dominantWeatherKind';
 export * from './hourMetric';
+export * from './nearestHour';
+export * from './placeSourceOf';
 export * from './representativeHour';
 export * from './sunShade';
 export * from './units';

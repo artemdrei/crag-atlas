@@ -2,8 +2,9 @@ export * from './entities';
 export * from './hooks';
 export * from './lib';
 export {
+  ConditionsButton,
   ConditionsCard,
   ConditionsDayStrip,
   ConditionsPanel,
-  ConditionsSection
+  WeatherIcon
 } from './ui';

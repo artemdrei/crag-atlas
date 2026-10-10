@@ -25,6 +25,7 @@ export interface Props {
   failure: Failure | null;
   isLoading: boolean;
   isOffline: boolean;
+  isOpenByDefault?: boolean;
 }
 
 // Collapsed, the strip of days is the whole feature: a glance says which day
@@ -35,9 +36,10 @@ export const ConditionsPanel = ({
   conditions,
   failure,
   isLoading,
-  isOffline
+  isOffline,
+  isOpenByDefault = false
 }: Props) => {
-  const [isOpen, setOpen] = useState(false);
+  const [isOpen, setOpen] = useState(isOpenByDefault);
   const { day, selectDate } = useSelectedDay(conditions);
 
   const handleSelect = (date: string) => {

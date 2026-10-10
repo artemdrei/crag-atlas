@@ -13,7 +13,6 @@ import {
   RouteFilterPanelMobile,
   useRouteFilter
 } from '@web/features/routeFilter';
-import { SectorConditionsMobile } from '@web/features/sectorConditions';
 import {
   orderRoutes,
   TopoGalleryMobile,
@@ -148,9 +147,6 @@ export const PageSectorMobile = () => {
         onSelectTopo={selectTopo}
         onSelectRoute={openRouteById}
       />
-      {sector && (
-        <SectorConditionsMobile idSector={idSector} coords={coordsOf(sector)} />
-      )}
       <RouteFilterPanelMobile
         state={filterState}
         title={

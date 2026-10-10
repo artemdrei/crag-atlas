@@ -39,9 +39,10 @@ test('the days ahead and the way there are on the phone', async ({
     request.fulfill({ json: conditionsOf([88, 35]) })
   );
   await phone.goto(sectorPath(region.id, sector.id));
+  await phone.getByRole('button', { name: 'Weather' }).click();
 
   await expect(
-    phone.getByRole('button', { name: /^today \d+ 88$/ })
+    phone.getByRole('button', { name: /^today .* 88$/ })
   ).toBeVisible();
 
   await phone.getByRole('button', { name: / 35$/ }).click();

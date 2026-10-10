@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 
 import { Trans, useLingui } from '@lingui/react/macro';
 import AppBar from '@mui/material/AppBar';
@@ -9,9 +9,11 @@ import { styled } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 
 import { useProfileIdentity, useUser } from '@web/app/providers';
+import { conditionsPlaceOf } from '@web/app/router/conditionsPlaceOf';
 import { ROUTES } from '@web/app/router/routes';
 import { useSignInLink } from '@web/app/router/useSignInLink';
 import { CatalogSearchDesktop } from '@web/features/catalogSearch';
+import { ConditionsButton } from '@web/features/sectorConditions';
 import { CONTENT_MAX_WIDTH } from '@web/shared/theme/layout';
 import { SignInCta, UserAvatar, Wordmark } from '@web/shared/ui';
 
@@ -20,6 +22,7 @@ export const AppHeaderDesktop = ({ hasSearch }: { hasSearch?: boolean }) => {
   const { isAuthenticated, isLoading, hasRole } = useUser();
   const { avatarUrl, displayName } = useProfileIdentity();
   const signInLink = useSignInLink();
+  const conditionsPlace = conditionsPlaceOf(useLocation().pathname);
 
   return (
     <HeaderStyled position="static" color="transparent" elevation={0}>
@@ -37,6 +40,7 @@ export const AppHeaderDesktop = ({ hasSearch }: { hasSearch?: boolean }) => {
           </Button>
         )}
         <SpacerStyled />
+        {conditionsPlace && <ConditionsButton place={conditionsPlace} />}
         {hasSearch && (
           <SearchSlotStyled>
             <CatalogSearchDesktop />
