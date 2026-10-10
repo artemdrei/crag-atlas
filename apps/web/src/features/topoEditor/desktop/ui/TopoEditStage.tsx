@@ -324,15 +324,6 @@ export const TopoEditStage = ({
                   colorOf={colorOf}
                 />
               </OverlayStyled>
-              <TopoEditMarkers
-                lines={lines}
-                idSelectedRoute={session.idSelectedRoute}
-                idHoveredRoute={idHoveredRoute}
-                idSelectedPoint={session.idSelectedPoint}
-                areHandlesHidden={session.isPreview}
-                colorOf={colorOf}
-                onPointDown={handlePointDown}
-              />
               {lines.map((line) => {
                 const number = numberOf[line.idRoute];
                 const [start] = line.points;
@@ -381,6 +372,17 @@ export const TopoEditStage = ({
                   </BadgeSlotStyled>
                 ) : null;
               })}
+              {/* Above the badges: a label parked on the start point must not
+                  hide the point's handle. */}
+              <TopoEditMarkers
+                lines={lines}
+                idSelectedRoute={session.idSelectedRoute}
+                idHoveredRoute={idHoveredRoute}
+                idSelectedPoint={session.idSelectedPoint}
+                areHandlesHidden={session.isPreview}
+                colorOf={colorOf}
+                onPointDown={handlePointDown}
+              />
             </FrameStyled>
           </StageStyled>
         </TransformComponent>

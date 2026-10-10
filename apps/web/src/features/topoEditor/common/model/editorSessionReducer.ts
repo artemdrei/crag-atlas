@@ -18,6 +18,11 @@ const MIN_POINTS = 2;
 const clampOffset = (value: number): number =>
   Math.round(Math.min(1, Math.max(-1, value)) * 1e5) / 1e5;
 
+const keepLabelInPlace = (offset: Point, from: Point, to: Point): Point => [
+  clampOffset(from[0] + offset[0] - to[0]),
+  clampOffset(from[1] + offset[1] - to[1])
+];
+
 export const editorSessionReducer = (
   session: TopoEditorSession,
   action: EditorAction
@@ -56,12 +61,21 @@ export const editorSessionReducer = (
       return { ...session, isPreview: !session.isPreview, ...noSelection };
 
     case 'MOVE_POINT':
-      return withLine(session, (line) => ({
-        ...line,
-        points: line.points.map((point, index) =>
-          index === action.index ? normalizePoint(action.point) : point
-        )
-      }));
+      return withLine(session, (line) => {
+        const moved = normalizePoint(action.point);
+        const [start] = line.points;
+
+        return {
+          ...line,
+          points: line.points.map((point, index) =>
+            index === action.index ? moved : point
+          ),
+          labelOffset:
+            action.index === 0 && start
+              ? keepLabelInPlace(line.labelOffset, start, moved)
+              : line.labelOffset
+        };
+      });
 
     case 'INSERT_POINT':
       return withLine(session, (line) => ({
