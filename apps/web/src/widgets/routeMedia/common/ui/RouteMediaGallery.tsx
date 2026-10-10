@@ -129,7 +129,7 @@ const MediaStage = ({ item, title }: MediaStageProps) => {
       allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
       // Someone else's page: it may run its player, but must not reach this
       // app's storage, forms or navigation.
-      sandbox="allow-scripts allow-same-origin allow-popups allow-presentation"
+      sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation"
       referrerPolicy="strict-origin-when-cross-origin"
     />
   );
