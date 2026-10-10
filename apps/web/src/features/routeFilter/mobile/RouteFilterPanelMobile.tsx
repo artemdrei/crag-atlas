@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 
 import { trackListControl } from '@web/shared/lib';
-import { BottomSheet } from '@web/shared/ui';
+import { BottomSheet, FormActions } from '@web/shared/ui';
 
 import {
   ActiveFilterChips,
@@ -64,25 +64,18 @@ export const RouteFilterPanelMobile = ({
             onClearAll={state.clearFilters}
           />
           <RouteFilterFields state={state} gradeHistogram={gradeHistogram} />
-          <ActionsStyled>
-            <Button
-              variant="outlined"
-              color="inverse"
-              onClick={() => setIsOpen(false)}
-            >
+          <FormActions>
+            <Button onClick={() => setIsOpen(false)}>
               <Trans>Close</Trans>
             </Button>
-            <ShowButtonStyled
-              variant="contained"
-              onClick={() => setIsOpen(false)}
-            >
+            <Button variant="contained" onClick={() => setIsOpen(false)}>
               <Plural
                 value={routesCount}
                 one="Show # route"
                 other="Show # routes"
               />
-            </ShowButtonStyled>
-          </ActionsStyled>
+            </Button>
+          </FormActions>
         </SheetBodyStyled>
       </BottomSheet>
     </PanelStyled>
@@ -104,13 +97,4 @@ const SheetBodyStyled = styled('div')`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(1.5)};
-`;
-
-const ActionsStyled = styled('div')`
-  display: flex;
-  gap: ${({ theme }) => theme.spacing(1)};
-`;
-
-const ShowButtonStyled = styled(Button)`
-  flex: 1 1 auto;
 `;
