@@ -18,10 +18,14 @@ const COLUMN_WIDTH = 56;
 // A fixed width, so a sector of three grades and one of eight compare.
 const COMPACT_COLUMN_WIDTH = 26;
 
-// Scales against at least this many routes, so a sector whose tallest grade
-// holds one route draws a low row.
+// A card scales against at least this many routes, so a sector whose tallest
+// grade holds one route draws a low row. The picker always fills its height.
 const COMPACT_REFERENCE = 8;
 const COMPACT_HEIGHT = 40;
+// The picker is the main filter, so it is drawn taller and wider than the
+// glance a card carries.
+const PICKER_HEIGHT = 72;
+const PICKER_COLUMN_WIDTH = 32;
 
 const COLUMN_MIN_WIDTH = 22;
 const CROWDED_COLUMNS = 12;
@@ -49,6 +53,7 @@ export const GradeHistogram = ({
   const displayGrade = useDisplayGrade();
   const scroll = useScrollHint();
   const compact = !!isCompact;
+  const isPicker = !!onToggleGrade;
 
   // A folded column stands for two grades, and the filter picks one.
   const bars = useMemo(() => {
@@ -65,7 +70,7 @@ export const GradeHistogram = ({
     boulder: t`Bouldering`
   };
   const top = Math.max(...bars.map(({ count }) => count));
-  const labelStep = bars.length > CROWDED_COLUMNS ? 2 : 1;
+  const labelStep = !isPicker && bars.length > CROWDED_COLUMNS ? 2 : 1;
   const hasFilter = !!selectedGrades && selectedGrades.length > 0;
   const isPicked = (key: string) =>
     !hasFilter || !!selectedGrades?.includes(key);
@@ -92,6 +97,8 @@ export const GradeHistogram = ({
         <ScrollStyled
           ref={scroll.ref}
           isCompact={compact}
+          hasFadeStart={!!hasScrollHint && scroll.hasBefore}
+          hasFadeEnd={!!hasScrollHint && scroll.hasMore}
           onScroll={scroll.onScroll}
         >
           <BarsRowStyled isCompact={compact} columns={bars.length}>
@@ -108,13 +115,14 @@ export const GradeHistogram = ({
                   <BarStyled
                     tone={tone}
                     share={
-                      compact
+                      compact && !isPicker
                         ? count / Math.max(top, COMPACT_REFERENCE)
                         : top
                           ? count / top
                           : 0
                     }
                     isCompact={compact}
+                    isPicker={isPicker}
                     isMuted={!isPicked(key)}
                   />
                 </>
@@ -126,6 +134,7 @@ export const GradeHistogram = ({
                   key={key}
                   type="button"
                   isCompact={compact}
+                  isPicker
                   aria-pressed={isPicked(key) && hasFilter}
                   aria-label={label}
                   onClick={(event) => {
@@ -136,7 +145,7 @@ export const GradeHistogram = ({
                   {cell}
                 </BarColumnStyled>
               ) : (
-                <ColumnStyled key={key} isCompact={compact}>
+                <ColumnStyled key={key} isCompact={compact} isPicker={false}>
                   {cell}
                 </ColumnStyled>
               );
@@ -144,7 +153,7 @@ export const GradeHistogram = ({
           </BarsRowStyled>
           <LabelsRowStyled isCompact={compact} columns={bars.length}>
             {bars.map(({ key, label }, index) => (
-              <ColumnStyled key={key} isCompact={compact}>
+              <ColumnStyled key={key} isCompact={compact} isPicker={isPicker}>
                 <Typography variant="caption" color="text.secondary" noWrap>
                   {index % labelStep === 0 ? label : ''}
                 </Typography>
@@ -152,7 +161,6 @@ export const GradeHistogram = ({
             ))}
           </LabelsRowStyled>
         </ScrollStyled>
-        {hasScrollHint && scroll.hasMore && <FadeStyled />}
       </ViewportStyled>
     </ChartStyled>
   );
@@ -206,23 +214,19 @@ const ViewportStyled = styled('div')`
   min-width: 0;
 `;
 
-const FadeStyled = styled('div')`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: ${({ theme }) => theme.spacing(3)};
-  pointer-events: none;
-  background: linear-gradient(
-    to right,
-    transparent,
-    ${({ theme }) => theme.palette.background.default}
-  );
-`;
+const FADE_PX = 24;
+
+// A mask fades the bars themselves, so the edge is clean on whatever surface
+// the chart sits on — a painted overlay only matches one background.
+const fadeMaskOf = (hasFadeStart: boolean, hasFadeEnd: boolean) =>
+  `linear-gradient(to right, ${hasFadeStart ? 'transparent' : 'black'} 0, black ${FADE_PX}px, black calc(100% - ${FADE_PX}px), ${hasFadeEnd ? 'transparent' : 'black'} 100%)`;
 
 const ScrollStyled = styled('div', {
-  shouldForwardProp: (prop) => prop !== 'isCompact'
-})<{ isCompact: boolean }>`
+  shouldForwardProp: (prop) =>
+    prop !== 'isCompact' && prop !== 'hasFadeStart' && prop !== 'hasFadeEnd'
+})<{ isCompact: boolean; hasFadeStart: boolean; hasFadeEnd: boolean }>`
+  mask-image: ${({ hasFadeStart, hasFadeEnd }) =>
+    fadeMaskOf(hasFadeStart, hasFadeEnd)};
   display: flex;
   flex-direction: column;
   gap: ${({ theme, isCompact }) => theme.spacing(isCompact ? 0 : 0.5)};
@@ -230,17 +234,21 @@ const ScrollStyled = styled('div', {
   overflow-x: auto;
 `;
 
+const compactWidthOf = (isPicker: boolean) =>
+  isPicker ? PICKER_COLUMN_WIDTH : COMPACT_COLUMN_WIDTH;
+
 const ColumnStyled = styled('div', {
-  shouldForwardProp: (prop) => prop !== 'isCompact'
-})<{ isCompact?: boolean }>`
+  shouldForwardProp: (prop) => prop !== 'isCompact' && prop !== 'isPicker'
+})<{ isCompact?: boolean; isPicker: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: ${({ theme }) => theme.spacing(0.5)};
   flex: ${({ isCompact }) => (isCompact ? '0 0 auto' : '1 1 0')};
-  width: ${({ isCompact }) => (isCompact ? `${COMPACT_COLUMN_WIDTH}px` : 'auto')};
-  min-width: ${({ isCompact }) =>
-    isCompact ? COMPACT_COLUMN_WIDTH : COLUMN_MIN_WIDTH}px;
+  width: ${({ isCompact, isPicker }) =>
+    isCompact ? `${compactWidthOf(isPicker)}px` : 'auto'};
+  min-width: ${({ isCompact, isPicker }) =>
+    isCompact ? compactWidthOf(isPicker) : COLUMN_MIN_WIDTH}px;
 `;
 
 const BarColumnStyled = styled(ColumnStyled.withComponent('button'))`
@@ -266,17 +274,19 @@ const BarStyled = styled('div', {
     prop !== 'tone' &&
     prop !== 'share' &&
     prop !== 'isCompact' &&
+    prop !== 'isPicker' &&
     prop !== 'isMuted'
 })<{
   tone: GradeTone;
   share: number;
   isCompact: boolean;
+  isPicker: boolean;
   isMuted: boolean;
 }>`
   width: 100%;
-  height: ${({ share, isCompact }) =>
+  height: ${({ share, isCompact, isPicker }) =>
     isCompact
-      ? `${Math.max(share * COMPACT_HEIGHT, 4)}px`
+      ? `${Math.max(share * (isPicker ? PICKER_HEIGHT : COMPACT_HEIGHT), 4)}px`
       : `${Math.max(share * 72, 6)}px`};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px
     ${({ theme }) => theme.shape.borderRadius}px 0 0;

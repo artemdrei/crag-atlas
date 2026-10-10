@@ -34,9 +34,9 @@ export const RouteFilterFields = ({ state, gradeHistogram }: Props) => {
 
   return (
     <FieldsStyled>
-      <Typography variant="caption" color="text.secondary">
-        {t`Grade`}
-      </Typography>
+      <GradeHeaderStyled>
+        <Typography variant="subtitle2">{t`Tap a grade to see only those routes`}</Typography>
+      </GradeHeaderStyled>
       {gradeHistogram.map((group) => (
         <GradeHistogramStyled
           key={group.type}
@@ -47,6 +47,10 @@ export const RouteFilterFields = ({ state, gradeHistogram }: Props) => {
           hasScrollHint
         />
       ))}
+      <Divider />
+      <Typography variant="caption" color="text.secondary">
+        {t`More filters`}
+      </Typography>
       <FilterOptionRow
         label={t`Rating`}
         value={state.filter.rating}
@@ -101,8 +105,13 @@ export const RouteFilterFields = ({ state, gradeHistogram }: Props) => {
   );
 };
 
+const GradeHeaderStyled = styled('div')`
+  display: flex;
+  flex-direction: column;
+`;
+
 const GradeHistogramStyled = styled(GradeHistogram)`
-  margin-bottom: ${({ theme }) => theme.spacing(1.5)};
+  margin-bottom: ${({ theme }) => theme.spacing(2.5)};
 `;
 
 const FieldsStyled = styled('div')`

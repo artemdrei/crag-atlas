@@ -83,7 +83,10 @@ test('the phone keeps its filter in the URL too', async ({ page }) => {
 
   await test.step('the address carries the grade', async () => {
     await expect(page).toHaveURL(/[?&]grades=french%7C7a/);
-    await expect(page.getByText('1 route', { exact: true })).toBeVisible();
+    // The closed filter sheet keeps the same count in its header.
+    await expect(
+      page.locator('#root').getByText('1 route', { exact: true })
+    ).toBeVisible();
   });
 
   await test.step('a reload reads it back', async () => {
@@ -159,7 +162,9 @@ test('the filter sheet names its count and closes without a choice', async ({
   await page.goto(`/regions/${region.id}/sectors/${sector.id}`);
   await page.getByRole('button', { name: /^Filters/ }).click();
 
-  const heading = page.getByRole('heading', { name: 'Filters · 2 routes' });
+  const heading = page
+    .locator('.react-modal-sheet-container')
+    .getByRole('heading', { name: '2 routes', exact: true });
 
   await expect(heading).toBeVisible();
 

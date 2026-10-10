@@ -35,22 +35,21 @@ export const TickProgress = ({
 
 const RowStyled = styled('div')`
   display: flex;
+  flex: none;
   align-items: center;
   gap: ${({ theme }) => theme.spacing(1)};
-  min-width: 0;
+  width: 80px;
 `;
 
 const BarStyled = styled(LinearProgress)`
-  position: relative;
-  top: -1px;
   flex: 1;
   min-width: 32px;
-  height: 3px;
-  border-radius: 2px;
+  height: 6px;
+  border-radius: 3px;
   background: ${({ theme }) => alpha(theme.palette.text.primary, 0.12)};
 
   & .MuiLinearProgress-bar {
-    border-radius: 2px;
+    border-radius: 3px;
     background: ${({ theme }) =>
       resolveAscentTypeInk(theme.palette.mode, 'onsight')};
   }
