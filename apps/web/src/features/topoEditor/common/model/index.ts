@@ -4,5 +4,7 @@ export {
   dirtyRouteIds,
   editorSessionReducer,
   hasUnsavedChanges,
-  isRouteDirty
+  isRouteDirty,
+  isRouteSavable,
+  savableRouteIds
 } from './editorSessionReducer';

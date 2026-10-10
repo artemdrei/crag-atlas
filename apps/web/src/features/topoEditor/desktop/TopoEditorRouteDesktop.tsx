@@ -11,6 +11,7 @@ import type { TopoEditorActions, TopoEditorSessionApi } from '../common';
 import {
   changedRouteFields,
   isRouteDirty,
+  isRouteSavable,
   orderedTopos,
   photoOf
 } from '../common';
@@ -122,6 +123,7 @@ export const TopoEditorRouteDesktop = ({
             savedRoutes.find(({ id }) => id === idRoute)
           )}
           isDirty={isRouteDirty(session, idRoute)}
+          saveCount={isRouteSavable(session, idRoute) ? 1 : 0}
           isBusy={actions.isBusy}
           isPreview={session.isPreview}
           canUndo={editor.canUndo}
@@ -131,7 +133,7 @@ export const TopoEditorRouteDesktop = ({
           onUndo={undo}
           onRedo={redo}
           onReset={() => actions.resetRoute(idRoute)}
-          onSave={() => actions.saveRoute(idRoute)}
+          onSave={() => actions.saveRoutes([idRoute])}
           photos={photos}
           idPhoto={photoOf(session, idRoute)}
           onMoveToPhoto={(idTopo) =>

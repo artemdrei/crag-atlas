@@ -21,9 +21,9 @@ import type {
 import {
   changedRouteFields,
   dirtyRouteIds,
-  isRouteDirty,
   orderedTopos,
-  photoOf
+  photoOf,
+  savableRouteIds
 } from '../common';
 import { useEditorHotkeys, useTopoEditorDerived } from './hooks';
 import {
@@ -122,6 +122,7 @@ export const TopoEditorDesktop = ({
   const photos = groups.filter((group) => group.id !== REST_GROUP);
 
   const idsDirtyRoutes = new Set(dirtyRouteIds(session));
+  const idsSavableRoutes = savableRouteIds(session);
 
   const handleDelete = useCallback(() => {
     if (session.idSelectedPoint !== undefined) {
@@ -222,7 +223,8 @@ export const TopoEditorDesktop = ({
                 selectedRoute,
                 savedRoutes.find(({ id }) => id === selectedRoute.id)
               )}
-              isDirty={isRouteDirty(session, selectedRoute.id)}
+              isDirty={idsDirtyRoutes.has(selectedRoute.id)}
+              saveCount={idsSavableRoutes.length}
               isBusy={actions.isBusy}
               isPreview={session.isPreview}
               canUndo={editor.canUndo}
@@ -238,7 +240,7 @@ export const TopoEditorDesktop = ({
               onUndo={undo}
               onRedo={redo}
               onReset={() => actions.resetRoute(selectedRoute.id)}
-              onSave={() => actions.saveRoute(selectedRoute.id)}
+              onSave={() => actions.saveRoutes(idsSavableRoutes)}
               photos={photos}
               idPhoto={photoOf(session, selectedRoute.id)}
               onMoveToPhoto={(idTopo) =>

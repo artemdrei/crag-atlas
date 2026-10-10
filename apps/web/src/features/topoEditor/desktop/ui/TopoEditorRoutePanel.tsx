@@ -27,8 +27,7 @@ import {
   gradeOptions,
   gradeScaleExample,
   gradeScaleName,
-  gradeScalesForType,
-  isNameLatin
+  gradeScalesForType
 } from '@web/shared/lib';
 import {
   ChangedTextField,
@@ -52,6 +51,7 @@ export interface Props {
   number?: number;
   hasLine: boolean;
   isDirty: boolean;
+  saveCount: number;
   isBusy: boolean;
   isPreview: boolean;
   canUndo: boolean;
@@ -75,6 +75,7 @@ export const TopoEditorRoutePanel = ({
   number,
   hasLine,
   isDirty,
+  saveCount,
   isBusy,
   isPreview,
   canUndo,
@@ -91,13 +92,6 @@ export const TopoEditorRoutePanel = ({
 }: Props) => {
   const { t } = useLingui();
   const { openModal } = useModal();
-
-  const isNameValid = isNameLatin(route.name);
-  const canSave =
-    !!route.name.trim() &&
-    !!route.nameLocal.trim() &&
-    isNameValid &&
-    !!route.grade;
 
   const askRemoveLine = () =>
     openModal('DELETE_TOPO_LINE', {
@@ -329,10 +323,12 @@ export const TopoEditorRoutePanel = ({
         </Typography>
         <Button
           variant="contained"
-          disabled={!canSave || (!isDirty && !route.isNew) || isBusy}
+          disabled={saveCount === 0 || isBusy}
           onClick={onSave}
         >
-          {route.isNew ? (
+          {saveCount > 1 ? (
+            <Trans>Save changes ({saveCount})</Trans>
+          ) : route.isNew ? (
             <Trans>Create route</Trans>
           ) : (
             <Trans>Save changes</Trans>

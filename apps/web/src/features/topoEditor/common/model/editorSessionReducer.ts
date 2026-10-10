@@ -10,7 +10,12 @@ import type {
   TopoEditorSession
 } from '../entities';
 import { EMPTY_SESSION } from '../entities';
-import { normalizePoint, toPointKinds, typedBolterName } from '../lib';
+import {
+  isDraftSavable,
+  normalizePoint,
+  toPointKinds,
+  typedBolterName
+} from '../lib';
 import type { EditorAction } from './editorActions';
 
 const MIN_POINTS = 2;
@@ -526,3 +531,19 @@ export const hasUnsavedChanges = (session: TopoEditorSession): boolean =>
 
 export const dirtyRouteIds = (session: TopoEditorSession): string[] =>
   session.routeOrder.filter((idRoute) => isRouteDirty(session, idRoute));
+
+export const isRouteSavable = (
+  session: TopoEditorSession,
+  idRoute: string
+): boolean => {
+  const draft = session.routes[idRoute];
+
+  return (
+    !!draft &&
+    (draft.isNew || isRouteDirty(session, idRoute)) &&
+    isDraftSavable(draft)
+  );
+};
+
+export const savableRouteIds = (session: TopoEditorSession): string[] =>
+  session.routeOrder.filter((idRoute) => isRouteSavable(session, idRoute));
