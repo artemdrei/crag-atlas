@@ -29,7 +29,7 @@ declare module '@mui/material/Button' {
   }
 }
 
-const CONTROL_RADIUS = 50;
+export const CONTROL_RADIUS = 50;
 
 export const createAppTheme = (mode: 'light' | 'dark', isEditing = false) =>
   createTheme({

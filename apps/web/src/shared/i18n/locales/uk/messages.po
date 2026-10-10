@@ -193,7 +193,7 @@ msgid "{size} · saved {savedAt}"
 msgstr "{size} · збережено {savedAt}"
 
 #: src/features/feedback/common/ui/FeedbackForm.tsx:72
-#: src/features/logTick/common/ui/TickForm.tsx:170
+#: src/features/logTick/common/ui/TickForm.tsx:169
 msgid "{stars} of 5"
 msgstr "{stars} з 5"
 
@@ -261,7 +261,7 @@ msgstr "Додати обкладинку"
 msgid "Add a photo"
 msgstr "Додати фото"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:165
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:164
 msgid "Add a photo to start drawing routes on it."
 msgstr "Додайте фото, щоб малювати на ньому маршрути."
 
@@ -300,7 +300,7 @@ msgstr "Додавай фото й коментарі та дивись прол
 msgid "Add region"
 msgstr "Додати регіон"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:275
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:274
 msgid "Add route"
 msgstr "Додати маршрут"
 
@@ -539,7 +539,7 @@ msgstr "Навігаційний ланцюжок"
 #: src/features/feedback/common/ui/FeedbackForm.tsx:105
 #: src/features/grantAdmin/common/ui/GrantAdminBody.tsx:82
 #: src/features/logTick/common/ui/DeleteTickActions.tsx:17
-#: src/features/logTick/common/ui/TickForm.tsx:259
+#: src/features/logTick/common/ui/TickForm.tsx:260
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:276
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:450
 #: src/features/routeComment/common/ui/DeleteRouteCommentActions.tsx:17
@@ -655,7 +655,7 @@ msgstr "Закрити редагування"
 msgid "Collapse"
 msgstr "Згорнути"
 
-#: src/features/logTick/common/ui/TickForm.tsx:181
+#: src/features/logTick/common/ui/TickForm.tsx:182
 msgid "Comment"
 msgstr "Коментар"
 
@@ -880,8 +880,8 @@ msgid "dew {0}°"
 msgstr "роса {0}°"
 
 #: src/features/logTick/common/ui/TickForm.tsx:166
-msgid "Did you like it?"
-msgstr "Як тобі маршрут?"
+#~ msgid "Did you like it?"
+#~ msgstr "Як тобі маршрут?"
 
 #: src/shared/ui/DirectionsButton.tsx:34
 msgid "Directions"
@@ -1069,6 +1069,10 @@ msgstr "Категорія"
 msgid "Grade consensus"
 msgstr "Консенсус категорії"
 
+#: src/features/logTick/common/ui/TickForm.tsx:156
+msgid "Grade feels"
+msgstr "Категорія"
+
 #: src/pages/profile/common/ui/GradeScaleSetting.tsx:29
 msgid "Grade system"
 msgstr "Система складності"
@@ -1100,7 +1104,7 @@ msgstr "жорстко"
 
 #: src/features/logTick/common/ui/GradeFeelChoice.tsx:57
 msgid "Harder"
-msgstr "Жорсткіше"
+msgstr "Важче"
 
 #: src/shared/ui/MediaBadge.tsx:18
 msgid "Has photo"
@@ -1110,7 +1114,7 @@ msgstr "Є фото"
 msgid "Has video"
 msgstr "Є відео"
 
-#: src/features/logTick/common/ui/TickForm.tsx:206
+#: src/features/logTick/common/ui/TickForm.tsx:207
 msgid "Hide details"
 msgstr "Сховати деталі"
 
@@ -1122,7 +1126,7 @@ msgstr "Згорнути карту"
 msgid "Hourly"
 msgstr "Погодинно"
 
-#: src/features/logTick/common/ui/TickForm.tsx:143
+#: src/features/logTick/common/ui/TickForm.tsx:144
 msgid "How did you climb it?"
 msgstr "Як ти це проліз?"
 
@@ -1131,8 +1135,8 @@ msgid "How do you find Crag Atlas?"
 msgstr "Як вам Crag Atlas?"
 
 #: src/features/logTick/common/ui/TickForm.tsx:156
-msgid "How hard is the route?"
-msgstr "Складність маршруту"
+#~ msgid "How hard is the route?"
+#~ msgstr "Складність маршруту"
 
 #: src/pages/qrCodes/desktop/PageQrCodesDesktop.tsx:91
 msgid "How QR codes work"
@@ -1244,7 +1248,7 @@ msgstr "Завантаження…"
 msgid "Location is blocked for this site. Allow it in the browser to see where you are."
 msgstr "Геолокацію для цього сайту заблоковано. Дозволь її в браузері, щоб бачити, де ти."
 
-#: src/features/logTick/common/ui/TickForm.tsx:274
+#: src/features/logTick/common/ui/TickForm.tsx:275
 #: src/pages/route/common/ui/LogTickButton.tsx:34
 #: src/pages/route/common/ui/RouteAscentsInvite.tsx:45
 msgid "Log ascent"
@@ -1254,7 +1258,7 @@ msgstr "Відмітити пролаз"
 msgid "Log every ascent and watch your grade pyramid build up"
 msgstr "Записуй кожен пролаз і дивись, як росте твоя піраміда категорій"
 
-#: src/features/logTick/common/ui/TickForm.tsx:272
+#: src/features/logTick/common/ui/TickForm.tsx:273
 #: src/pages/route/common/ui/LogTickButton.tsx:26
 msgid "Log repeat"
 msgstr "Записати повтор"
@@ -1300,7 +1304,7 @@ msgstr "Повідомлення"
 msgid "mm"
 msgstr "мм"
 
-#: src/features/logTick/common/ui/TickForm.tsx:208
+#: src/features/logTick/common/ui/TickForm.tsx:209
 msgid "More details"
 msgstr "Більше деталей"
 
@@ -1431,7 +1435,7 @@ msgstr "Не зараз"
 msgid "Not on a photo"
 msgstr "Не на фото"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:115
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:114
 msgid "Not on a photo yet"
 msgstr "Ще не на фото"
 
@@ -1470,11 +1474,11 @@ msgstr "Офлайн-регіони"
 msgid "OK"
 msgstr "Нормально"
 
-#: src/features/logTick/common/ui/AttemptsStepper.tsx:26
+#: src/features/logTick/common/ui/AttemptsStepper.tsx:29
 msgid "One less try"
 msgstr "На спробу менше"
 
-#: src/features/logTick/common/ui/AttemptsStepper.tsx:46
+#: src/features/logTick/common/ui/AttemptsStepper.tsx:45
 msgid "One more try"
 msgstr "На спробу більше"
 
@@ -1547,7 +1551,7 @@ msgstr "Відкриваємо сектор"
 msgid "or"
 msgstr "або"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:265
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:264
 #: src/pages/home/desktop/ui/HomeEditSidebar.tsx:120
 #: src/pages/region/desktop/ui/RegionEditSidebar.tsx:120
 msgid "Or"
@@ -1577,7 +1581,7 @@ msgstr "Частково вкритий"
 msgid "Partly sheltered: some routes stay dry"
 msgstr "Частково: частина маршрутів лишається сухою"
 
-#: src/features/logTick/common/ui/TickForm.tsx:239
+#: src/features/logTick/common/ui/TickForm.tsx:240
 msgid "Partner"
 msgstr "Партнер"
 
@@ -1624,7 +1628,7 @@ msgstr "Фото завантажено"
 msgid "Pick a region on the left to edit it."
 msgstr "Оберіть регіон ліворуч, щоб редагувати його."
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:262
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:261
 msgid "Pick a route on the left to edit it."
 msgstr "Оберіть маршрут ліворуч, щоб редагувати його."
 
@@ -1696,7 +1700,7 @@ msgstr "Надруковані QR-коди його секторів перес�
 msgid "Printed QR codes of this sector stop working."
 msgstr "Надруковані QR-коди цього сектора перестануть працювати."
 
-#: src/features/logTick/common/ui/TickForm.tsx:186
+#: src/features/logTick/common/ui/TickForm.tsx:187
 msgid "Private comment"
 msgstr "Приватний коментар"
 
@@ -1716,7 +1720,7 @@ msgstr "Додай crag-atlas на робочий стіл. Відкриваєт
 msgid "QR address"
 msgstr "Адреса QR-коду"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:212
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:211
 #: src/pages/qrCodes/desktop/ui/QrCodesTable.tsx:45
 msgid "QR code"
 msgstr "QR-код"
@@ -1735,6 +1739,7 @@ msgstr "QR-коди"
 msgid "Rain shelter"
 msgstr "Захист від дощу"
 
+#: src/features/logTick/common/ui/TickForm.tsx:165
 #: src/features/routeFilter/common/hooks/useRouteSortLabel.ts:9
 #: src/features/routeFilter/common/ui/RouteFilterFields.tsx:55
 #: src/pages/adminFeedback/desktop/ui/FeedbackTable.tsx:31
@@ -1885,7 +1890,7 @@ msgstr "Пісковик"
 #: src/features/avatarUpload/desktop/CropAvatarDialog.tsx:37
 #: src/features/avatarUpload/mobile/CropAvatarSheet.tsx:31
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:270
+#: src/features/logTick/common/ui/TickForm.tsx:271
 #: src/features/routeComment/desktop/EditRouteCommentDialog.tsx:29
 #: src/features/routeComment/mobile/EditRouteCommentSheet.tsx:24
 msgid "Save"
@@ -1930,7 +1935,7 @@ msgid "Saved for offline:"
 msgstr "Збережені для офлайну:"
 
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
-#: src/features/logTick/common/ui/TickForm.tsx:268
+#: src/features/logTick/common/ui/TickForm.tsx:269
 #: src/features/offlineRegions/mobile/OfflineCtaMobile.tsx:39
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:55
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:95
@@ -1962,7 +1967,7 @@ msgstr "Пошук регіонів"
 msgid "Searching…"
 msgstr "Шукаємо…"
 
-#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:208
+#: src/features/topoEditor/desktop/TopoEditorDesktop.tsx:207
 #: src/pages/qrCodes/desktop/ui/QrCodesTable.tsx:42
 msgid "Sector"
 msgstr "Сектор"
@@ -2040,9 +2045,9 @@ msgstr "Ділися досвідом"
 msgid "Share your impressions and ideas"
 msgstr "Поділіться враженнями та пропозиціями"
 
-#: src/features/logTick/common/ui/TickForm.tsx:175
-msgid "Share your thoughts"
-msgstr "Що скажеш?"
+#: src/features/logTick/common/ui/TickForm.tsx:176
+#~ msgid "Share your thoughts"
+#~ msgstr "Що скажеш?"
 
 #: src/features/sectorConditions/common/ui/ConditionsCard.tsx:30
 msgid "Sheltered · dry in rain"
@@ -2078,7 +2083,7 @@ msgstr "Вийти"
 msgid "soft"
 msgstr "мʼяко"
 
-#: src/features/logTick/common/ui/GradeFeelChoice.tsx:36
+#: src/features/logTick/common/ui/GradeFeelChoice.tsx:38
 msgid "Softer"
 msgstr "Мʼякше"
 
@@ -2291,7 +2296,8 @@ msgstr "Стеж за прогресом по кожному сектору"
 msgid "Trad"
 msgstr "Трад"
 
-#: src/features/logTick/common/ui/AttemptsStepper.tsx:35
+#: src/features/logTick/common/ui/AttemptsStepper.tsx:38
+#: src/features/logTick/common/ui/TickForm.tsx:152
 msgid "Tries"
 msgstr "Спроб"
 
@@ -2346,7 +2352,7 @@ msgstr "Перевіряємо…"
 msgid "Version {version}"
 msgstr "Версія {version}"
 
-#: src/features/logTick/common/ui/TickForm.tsx:246
+#: src/features/logTick/common/ui/TickForm.tsx:247
 msgid "Video"
 msgstr "Відео"
 
@@ -2378,7 +2384,7 @@ msgstr "Орієнтація стіни, °"
 msgid "We sent a code to <0>{0}</0>"
 msgstr "Ми надіслали код на <0>{0}</0>"
 
-#: src/features/sectorConditions/common/ui/ConditionsButton.tsx:54
+#: src/features/sectorConditions/common/ui/ConditionsButton.tsx:34
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:74
 #: src/features/sectorConditions/desktop/ConditionsDialogDesktop.tsx:32
 #: src/features/sectorConditions/mobile/ConditionsSheetMobile.tsx:25
@@ -2423,7 +2429,7 @@ msgstr "Чи лишається стіна сухою під дощем. Про�
 msgid "Which way the wall faces, in compass degrees: 0 north, 90 east, 180 south, 270 west. It sets when the wall is in sun or shade. Leave it empty to work it out from the terrain."
 msgstr "Куди дивиться стіна, у градусах за компасом: 0 — північ, 90 — схід, 180 — південь, 270 — захід. Від цього залежить, коли на стіні сонце, а коли тінь. Якщо залишити порожнім, напрямок визначиться за рельєфом."
 
-#: src/features/logTick/common/ui/TickForm.tsx:235
+#: src/features/logTick/common/ui/TickForm.tsx:236
 msgid "Who did you climb with?"
 msgstr "З ким ти ліз?"
 
@@ -2501,7 +2507,7 @@ msgstr "Ваш відгук надіслано."
 msgid "Your feedback truly matters to us. We read every message and build Crag Atlas together with climbers, so it becomes your best partner at the crag."
 msgstr "Ваш відгук для нас справді важливий. Ми читаємо кожне повідомлення і будуємо Crag Atlas разом зі скелелазами, щоб він став вашим найкращим помічником на скелях."
 
-#: src/features/logTick/common/ui/GradeFeelChoice.tsx:44
+#: src/features/logTick/common/ui/GradeFeelChoice.tsx:46
 msgid "Your grade"
 msgstr "Твій грейд"
 
