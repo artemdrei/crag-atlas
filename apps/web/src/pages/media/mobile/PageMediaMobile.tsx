@@ -9,6 +9,7 @@ import { PageShell } from '@web/shared/ui';
 
 import {
   useApiGetVideos,
+  useTrackVideoSearch,
   useVideoActions,
   useVideoFilters,
   VideoActionButton,
@@ -22,7 +23,8 @@ const MIN_COLUMN_WIDTH = 260;
 
 export const PageMediaMobile = () => {
   const { filters, idAdded, changeFilters } = useVideoFilters();
-  const { total } = useApiGetVideos(filters);
+  const { total, term } = useApiGetVideos(filters);
+  useTrackVideoSearch(term, total);
   const { t } = useLingui();
   const { canDelete, addVideo, openVideoMenu } = useVideoActions();
 

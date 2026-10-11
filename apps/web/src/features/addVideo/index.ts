@@ -7,13 +7,15 @@ import './types';
 export const addVideoDesktopRegistrations: ModalRegistration[] = [
   {
     id: 'VIDEO_ADD',
-    Component: lazy(() => import('./desktop/AddVideoDialog'))
+    Component: lazy(() => import('./desktop/AddVideoDialog')),
+    dialog: 'video_add'
   }
 ];
 
 export const addVideoMobileRegistrations: ModalRegistration[] = [
   {
     id: 'VIDEO_ADD',
-    Component: lazy(() => import('./mobile/AddVideoSheet'))
+    Component: lazy(() => import('./mobile/AddVideoSheet')),
+    dialog: 'video_add'
   }
 ];

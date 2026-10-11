@@ -44,6 +44,7 @@ export const useApiGetVideos = (filters: VideoFilters) => {
   return {
     videos: data?.pages.flatMap((page) => page.items) ?? [],
     total: data?.pages[0]?.total,
+    term: query,
     isLoading,
     isLoadingMore: isFetchingNextPage,
     hasMore: !!hasNextPage,

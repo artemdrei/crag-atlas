@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router';
 
+import { track } from '@crag-atlas/analytics';
 import type { Video } from '@crag-atlas/api';
 
 import { useModal, useUser } from '@web/app/providers';
@@ -26,9 +27,11 @@ export const useVideoActions = () => {
         return;
       }
 
+      track({ name: 'Sign In Prompted', props: { action: 'video' } });
       navigate(signInLink.to, { state: { from: signInLink.from } });
     },
-    playVideo: (video: Video) => openModal('ROUTE_MEDIA_VIEW', mediaOf(video)),
+    playVideo: (video: Video) =>
+      openModal('ROUTE_MEDIA_VIEW', mediaOf(video), { source: 'media' }),
     openVideoMenu: (video: Video) => openModal('VIDEO_MENU', mediaOf(video)),
     deleteVideo: (video: Video) =>
       openModal('ROUTE_MEDIA_DELETE', mediaOf(video))

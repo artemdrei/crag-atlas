@@ -62,7 +62,12 @@ export const ModalProvider = ({ registrations, children }: Props) => {
 
       if (dialog && !reportedRef.current.has(idModal)) {
         reportedRef.current.add(idModal);
-        track({ name: 'Dialog Opened', props: { dialog } });
+        track({
+          name: 'Dialog Opened',
+          props: options?.source
+            ? { dialog, source: options.source }
+            : { dialog }
+        });
       }
 
       setOpened((prev) =>

@@ -16,7 +16,8 @@ export const RouteMediaButton = ({ idRoute, hasPhoto, hasVideo }: Props) => {
 
   if (!hasPhoto && !hasVideo) return null;
 
-  const open = () => openModal('ROUTE_MEDIA_VIEW', { idRoute });
+  const open = () =>
+    openModal('ROUTE_MEDIA_VIEW', { idRoute }, { source: 'route' });
 
   return (
     <IconButton aria-label={t`Video and photo`} onClick={open}>

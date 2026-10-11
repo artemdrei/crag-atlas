@@ -70,7 +70,11 @@ export const RouteMedia = ({ idRoute }: Props) => {
               <CardStyled
                 type="button"
                 onClick={() =>
-                  openModal('ROUTE_MEDIA_VIEW', { idRoute, idMedia: item.id })
+                  openModal(
+                    'ROUTE_MEDIA_VIEW',
+                    { idRoute, idMedia: item.id },
+                    { source: 'route' }
+                  )
                 }
               >
                 <ThumbnailStyled>

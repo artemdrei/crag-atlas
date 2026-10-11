@@ -16,7 +16,12 @@ export type LoginMethod = 'google' | 'email';
 // restored, so a guest count never absorbs it.
 export type AuthState = 'guest' | 'member' | 'unknown';
 
-export type SignInPromptAction = 'tick' | 'logbook' | 'profile' | 'filter';
+export type SignInPromptAction =
+  | 'tick'
+  | 'logbook'
+  | 'profile'
+  | 'filter'
+  | 'video';
 
 export type ContentType = 'tick' | 'comment' | 'media' | 'topo';
 
@@ -26,7 +31,8 @@ export type DialogName =
   | 'route_media'
   | 'save_offline'
   | 'install_hint'
-  | 'feedback';
+  | 'feedback'
+  | 'video_add';
 
 export type OfflineAction =
   | 'save_started'
@@ -36,6 +42,10 @@ export type OfflineAction =
   | 'removed';
 
 export type OfflineSource = 'header' | 'profile';
+
+export type MediaSource = 'media' | 'route';
+
+export type VideoLinkResult = 'ok' | 'duplicate' | 'unsupported' | 'failed';
 
 export type AnalyticsEvent =
   | { name: 'Page Viewed'; props: { path: string } }
@@ -58,6 +68,7 @@ export type AnalyticsEvent =
   | {
       name: 'Search Performed';
       props: {
+        scope: 'catalog' | 'media';
         term_length: number;
         result_count: number;
         has_results: boolean;
@@ -72,7 +83,8 @@ export type AnalyticsEvent =
           | 'logbook'
           | 'sector'
           | 'region'
-          | 'topo_photo';
+          | 'topo_photo'
+          | 'media';
         control:
           | 'grade_filter'
           | 'grade_filter_reset'
@@ -94,7 +106,10 @@ export type AnalyticsEvent =
         value: string;
       };
     }
-  | { name: 'Dialog Opened'; props: { dialog: DialogName } }
+  | {
+      name: 'Dialog Opened';
+      props: { dialog: DialogName; source?: MediaSource };
+    }
   | { name: 'Dialog Dismissed'; props: { dialog: DialogName } }
   | {
       name: 'Directions Requested';
@@ -122,7 +137,13 @@ export type AnalyticsEvent =
         content_type: ContentType;
         id_route?: string;
         id_sector?: string;
+        source?: MediaSource;
+        route_pick?: 'suggested' | 'manual';
       };
+    }
+  | {
+      name: 'Video Link Checked';
+      props: { result: VideoLinkResult; has_suggestion: boolean };
     }
   | { name: 'Content Updated'; props: { content_type: ContentType } }
   | { name: 'Content Deleted'; props: { content_type: ContentType } }

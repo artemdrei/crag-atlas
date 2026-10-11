@@ -1,6 +1,6 @@
 import type { ComponentType, LazyExoticComponent } from 'react';
 
-import type { DialogName } from '@crag-atlas/analytics';
+import type { DialogName, MediaSource } from '@crag-atlas/analytics';
 
 // biome-ignore lint/suspicious/noExplicitAny: registry holds modal components with heterogeneous props
 type AnyModalComponent = ComponentType<any>;
@@ -23,6 +23,7 @@ export interface ModalAnchor {
 
 export interface ModalOptions {
   anchorEl?: HTMLElement | null;
+  source?: MediaSource;
 }
 
 export interface CloseModalOptions {

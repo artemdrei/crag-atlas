@@ -45,7 +45,7 @@ export const useApiCreateRouteMedia = ({ idRoute, onCreated }: Params) => {
     onSuccess: () => {
       track({
         name: 'Content Created',
-        props: { content_type: 'media', id_route: idRoute }
+        props: { content_type: 'media', id_route: idRoute, source: 'route' }
       });
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.routeMedia(idRoute)

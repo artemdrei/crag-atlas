@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 
+import { track, type VideoLinkResult } from '@crag-atlas/analytics';
 import type { VideoRoute } from '@crag-atlas/api';
 import { useLingui } from '@lingui/react/macro';
 
@@ -28,13 +29,41 @@ export const useAddVideoForm = () => {
   } = useApiGetVideoPreview(link);
   const existing = preview?.existing ?? null;
   const route = pickedRoute ?? preview?.suggestedRoute ?? null;
+  const isSuggested = !pickedRoute && !!preview?.suggestedRoute;
 
   const close = () => closeModal('VIDEO_ADD');
+  const complete = () => closeModal('VIDEO_ADD', { isCompleted: true });
+
+  const checkedUrl = useRef('');
+
+  const linkResult = ((): VideoLinkResult | null => {
+    if (!url) return null;
+    if (!link) return 'unsupported';
+    if (failure) return 'failed';
+    if (!preview) return null;
+
+    return existing ? 'duplicate' : 'ok';
+  })();
+
+  // A cached preview resolves again on every re-commit of the same link.
+  useEffect(() => {
+    if (!linkResult || checkedUrl.current === url) return;
+
+    checkedUrl.current = url;
+
+    track({
+      name: 'Video Link Checked',
+      props: {
+        result: linkResult,
+        has_suggestion: !!preview?.suggestedRoute
+      }
+    });
+  }, [linkResult, url, preview]);
 
   const { isPending, createVideo } = useApiCreateVideo({
     onCreated: (media) => {
       toast.success(t`Video added`);
-      close();
+      complete();
       navigate(buildMediaAddedPath(media.id));
     }
   });
@@ -68,7 +97,7 @@ export const useAddVideoForm = () => {
 
     const { idRegion, idSector, idRoute } = existing.route;
 
-    close();
+    complete();
     navigate(buildRoutePath(idRegion, idSector, idRoute));
   };
 
@@ -78,7 +107,8 @@ export const useAddVideoForm = () => {
     createVideo({
       idRoute: route.idRoute,
       url: link.url,
-      title: preview?.title ?? ''
+      title: preview?.title ?? '',
+      isSuggested
     });
   };
 
@@ -91,7 +121,7 @@ export const useAddVideoForm = () => {
     isReading,
     isPending,
     isUnsupported: !!url && !link,
-    isSuggested: !pickedRoute && !!preview?.suggestedRoute,
+    isSuggested,
     isChoosingRoute: isChoosingRoute || !route,
     canPickRoute: !!preview && !existing,
     canSubmit: !!preview && !existing && !!route && !isPending,

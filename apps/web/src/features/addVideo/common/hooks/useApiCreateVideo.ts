@@ -10,6 +10,7 @@ export interface VideoDraft {
   idRoute: string;
   url: string;
   title: string;
+  isSuggested: boolean;
 }
 
 export interface Params {
@@ -25,10 +26,15 @@ export const useApiCreateVideo = ({ onCreated }: Params) => {
 
       return apiPost<RouteMedia>(`/routes/${idRoute}/media`, payload);
     },
-    onSuccess: (media) => {
+    onSuccess: (media, { isSuggested }) => {
       track({
         name: 'Content Created',
-        props: { content_type: 'media', id_route: media.idRoute }
+        props: {
+          content_type: 'media',
+          id_route: media.idRoute,
+          source: 'media',
+          route_pick: isSuggested ? 'suggested' : 'manual'
+        }
       });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.videos() });
       queryClient.invalidateQueries({

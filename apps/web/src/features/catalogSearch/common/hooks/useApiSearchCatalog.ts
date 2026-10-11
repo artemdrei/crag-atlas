@@ -39,6 +39,7 @@ export const useApiSearchCatalog = (query: string) => {
     track({
       name: 'Search Performed',
       props: {
+        scope: 'catalog',
         term_length: debouncedTerm.length,
         result_count: resultCount,
         has_results: resultCount > 0
