@@ -7,8 +7,13 @@ import Chip from '@mui/material/Chip';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 
-import { parseMediaLink } from '@web/shared/lib';
-import { FormActions } from '@web/shared/ui';
+import { useApiGetVideoPreview } from '@web/shared/api';
+import {
+  parseMediaLink,
+  SEARCH_DEBOUNCE_MS,
+  useDebouncedValue
+} from '@web/shared/lib';
+import { FormActions, VideoExistsNotice } from '@web/shared/ui';
 
 import type { RouteMediaDraft } from '../entities';
 
@@ -25,7 +30,13 @@ export const AddRouteMediaForm = ({ isPending, onSubmit, onCancel }: Props) => {
   const [file, setFile] = useState<File | null>(null);
 
   const link = parseMediaLink(url);
-  const canSubmit = !!link || !!file;
+  const settledUrl = useDebouncedValue(url, SEARCH_DEBOUNCE_MS);
+  const { preview, isLoading } = useApiGetVideoPreview(
+    parseMediaLink(settledUrl)
+  );
+  const existing = preview?.existing;
+  const isChecked = settledUrl === url && !isLoading;
+  const canSubmit = (!!link && isChecked && !existing) || !!file;
 
   const pickFile = (event: ChangeEvent<HTMLInputElement>) => {
     const picked = event.target.files?.[0] ?? null;
@@ -56,6 +67,12 @@ export const AddRouteMediaForm = ({ isPending, onSubmit, onCancel }: Props) => {
         }
         onChange={(event) => setUrl(event.target.value)}
       />
+
+      {existing && (
+        <NoticeStyled>
+          <VideoExistsNotice routeName={existing.route.name} />
+        </NoticeStyled>
+      )}
 
       {file ? (
         <ChipStyled
@@ -109,6 +126,10 @@ const FormStyled = styled('form')`
   & > *:last-child {
     align-self: stretch;
   }
+`;
+
+const NoticeStyled = styled('div')`
+  align-self: stretch;
 `;
 
 const ChipStyled = styled(Chip)`

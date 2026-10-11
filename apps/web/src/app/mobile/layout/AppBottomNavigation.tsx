@@ -4,6 +4,7 @@ import { Trans } from '@lingui/react/macro';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import PersonIcon from '@mui/icons-material/Person';
 import TerrainIcon from '@mui/icons-material/Terrain';
+import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import Paper from '@mui/material/Paper';
@@ -14,7 +15,7 @@ import { ROUTES } from '@web/app/router/routes';
 export const AppBottomNavigation = () => {
   const location = useLocation();
 
-  const section = [ROUTES.PROFILE, ROUTES.LOGBOOK].find((route) =>
+  const section = [ROUTES.PROFILE, ROUTES.LOGBOOK, ROUTES.MEDIA].find((route) =>
     location.pathname.startsWith(route)
   );
 
@@ -36,6 +37,13 @@ export const AppBottomNavigation = () => {
           icon={<BookmarkIcon />}
           component={Link}
           to={ROUTES.LOGBOOK}
+        />
+        <BottomNavigationAction
+          label={<Trans>Media</Trans>}
+          value={ROUTES.MEDIA}
+          icon={<VideoLibraryIcon />}
+          component={Link}
+          to={ROUTES.MEDIA}
         />
         <BottomNavigationAction
           label={<Trans>Profile</Trans>}

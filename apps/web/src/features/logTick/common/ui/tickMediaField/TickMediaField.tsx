@@ -1,4 +1,4 @@
-import { useId, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 
 import type { TickMedia } from '@crag-atlas/api';
 import { Trans, useLingui } from '@lingui/react/macro';
@@ -9,7 +9,9 @@ import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import { parseMediaLink } from '@web/shared/lib';
+import { useFetchVideoPreview } from '@web/shared/api';
+import { type MediaLink, parseMediaLink } from '@web/shared/lib';
+import { VideoExistsNotice } from '@web/shared/ui';
 
 import type { PendingMedia } from '../../entities';
 import { MediaThumb } from './MediaThumb';
@@ -25,6 +27,12 @@ export const TickMediaField = ({ media = [], pending, onChange }: Props) => {
   const idLink = useId();
   const [draft, setDraft] = useState('');
   const [isInvalid, setIsInvalid] = useState(false);
+  const [duplicateRoute, setDuplicateRoute] = useState<string | null>(null);
+  const fetchVideoPreview = useFetchVideoPreview();
+  // The duplicate check answers after the climber may have changed the list.
+  const pendingRef = useRef(pending);
+
+  pendingRef.current = pending;
 
   const savedVideos = media.filter((item) => item.kind === 'video');
 
@@ -35,12 +43,35 @@ export const TickMediaField = ({ media = [], pending, onChange }: Props) => {
 
     setDraft('');
     setIsInvalid(false);
+    setDuplicateRoute(null);
 
-    if (!pending.links.includes(link.url)) {
+    const isAttached = pending.links.some(
+      (url) => parseMediaLink(url)?.id === link.id
+    );
+
+    if (!isAttached) {
       onChange({ ...pending, links: [...pending.links, link.url] });
+      void dropIfKnown(link);
     }
 
     return true;
+  };
+
+  // Attached first and taken back if the catalog already has it, so a save
+  // right after Enter keeps the link. An unreachable check lets it through:
+  // the server refuses a duplicate anyway.
+  const dropIfKnown = async (link: MediaLink) => {
+    const preview = await fetchVideoPreview(link).catch(() => null);
+
+    if (!preview?.existing) return;
+
+    const current = pendingRef.current;
+
+    setDuplicateRoute(preview.existing.route.name);
+    onChange({
+      ...current,
+      links: current.links.filter((url) => url !== link.url)
+    });
   };
 
   // Typed links are committed on blur, Enter or the add button, never per
@@ -84,6 +115,7 @@ export const TickMediaField = ({ media = [], pending, onChange }: Props) => {
           onChange={(event) => {
             setDraft(event.target.value);
             setIsInvalid(false);
+            setDuplicateRoute(null);
           }}
           onPaste={(event) => {
             if (addLink(event.clipboardData.getData('text'))) {
@@ -98,6 +130,7 @@ export const TickMediaField = ({ media = [], pending, onChange }: Props) => {
             commitDraft();
           }}
         />
+        {duplicateRoute && <VideoExistsNotice routeName={duplicateRoute} />}
         {(savedVideos.length > 0 || pending.links.length > 0) && (
           <GridStyled>
             {savedVideos.map((item) => (

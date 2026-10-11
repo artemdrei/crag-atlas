@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import type { RouteMedia } from '@crag-atlas/api';
 import { Trans, useLingui } from '@lingui/react/macro';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
@@ -8,27 +6,28 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import {
-  formatDateTime,
   isSafeHttpUrl,
   mediaEmbedUrl,
   mediaThumbnailOf,
   parseMediaLink
 } from '@web/shared/lib';
 
-import { useApiGetRouteMedia } from '../hooks';
+import { mediaCreditOf } from '../lib';
 
 export interface Props {
-  idRoute: string;
-  idMedia?: string;
+  media: RouteMedia[];
+  active: RouteMedia | undefined;
+  isLoading: boolean;
+  select: (idMedia: string) => void;
 }
 
-export const RouteMediaGallery = ({ idRoute, idMedia }: Props) => {
-  const { i18n, t } = useLingui();
-  const { media, isLoading } = useApiGetRouteMedia(idRoute);
-  const [idActive, setIdActive] = useState(idMedia);
-
-  // Opened from a row that only knows the route carries media.
-  const active = media.find(({ id }) => id === idActive) ?? media[0];
+export const RouteMediaGallery = ({
+  media,
+  active,
+  isLoading,
+  select
+}: Props) => {
+  const { t } = useLingui();
 
   if (isLoading) return null;
 
@@ -49,10 +48,6 @@ export const RouteMediaGallery = ({ idRoute, idMedia }: Props) => {
 
   return (
     <GalleryStyled>
-      <CaptionStyled variant="body2" color="text.secondary">
-        {creditOf(active, i18n.locale)}
-      </CaptionStyled>
-
       <StageStyled>
         <MediaStage item={active} title={labelOf(active)} />
       </StageStyled>
@@ -61,12 +56,13 @@ export const RouteMediaGallery = ({ idRoute, idMedia }: Props) => {
         <StripStyled>
           {media.map((item) => {
             const thumbnail = mediaThumbnailOf(item);
+            const { author, date } = mediaCreditOf(item);
 
             return (
               <ThumbStyled
                 key={item.id}
                 isActive={item.id === active.id}
-                onClick={() => setIdActive(item.id)}
+                onClick={() => select(item.id)}
               >
                 <ThumbFrameStyled>
                   {thumbnail ? (
@@ -80,12 +76,14 @@ export const RouteMediaGallery = ({ idRoute, idMedia }: Props) => {
                     <PlayArrowIcon fontSize="small" />
                   )}
                 </ThumbFrameStyled>
-                <ThumbLabelStyled variant="caption" noWrap>
-                  {item.authorName}
-                </ThumbLabelStyled>
-                <ThumbCreditStyled variant="caption" noWrap>
-                  {formatDateTime(item.createdAt, i18n.locale)}
-                </ThumbCreditStyled>
+                <ThumbTextStyled>
+                  <ThumbLabelStyled variant="caption" noWrap>
+                    {author}
+                  </ThumbLabelStyled>
+                  <ThumbCreditStyled variant="caption" noWrap>
+                    {date}
+                  </ThumbCreditStyled>
+                </ThumbTextStyled>
               </ThumbStyled>
             );
           })}
@@ -135,11 +133,6 @@ const MediaStage = ({ item, title }: MediaStageProps) => {
   );
 };
 
-const creditOf = (item: RouteMedia, locale: string) =>
-  [item.authorName, formatDateTime(item.createdAt, locale)]
-    .filter(Boolean)
-    .join(' · ');
-
 const GalleryStyled = styled('div')`
   display: flex;
   flex-direction: column;
@@ -170,18 +163,16 @@ const PhotoStyled = styled('img')`
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
 `;
 
-const CaptionStyled = styled(Typography)`
-  margin-bottom: ${({ theme }) => theme.spacing(-1)};
-`;
-
 const StripStyled = styled('div')`
   display: flex;
   flex: 0 0 auto;
   gap: ${({ theme }) => theme.spacing(1)};
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  scroll-padding: ${({ theme }) => theme.spacing(1.5)};
   scrollbar-width: none;
-  padding-bottom: ${({ theme }) => theme.spacing(0.5)};
+  margin: ${({ theme }) => theme.spacing(0, -1.5)};
+  padding: ${({ theme }) => theme.spacing(1, 1.5, 1.5)};
 
   &::-webkit-scrollbar {
     display: none;
@@ -197,14 +188,15 @@ const ThumbStyled = styled(ButtonBase, {
   flex-direction: column;
   align-items: stretch;
   gap: ${({ theme }) => theme.spacing(0.5)};
-  width: 120px;
+  width: 88px;
   text-align: left;
   padding: ${({ theme }) => theme.spacing(0.5)};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
   border: 2px solid
     ${({ theme, isActive }) =>
       isActive ? theme.palette.primary.main : 'transparent'};
-  opacity: ${({ isActive }) => (isActive ? 1 : 0.6)};
+  background: ${({ theme, isActive }) =>
+    isActive ? theme.palette.action.selected : 'transparent'};
 `;
 
 const ThumbFrameStyled = styled('div')`
@@ -225,10 +217,21 @@ const ThumbImageStyled = styled('img')`
   object-fit: cover;
 `;
 
+const ThumbTextStyled = styled('div')`
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.3;
+
+  & > * {
+    line-height: inherit;
+  }
+`;
+
 const ThumbLabelStyled = styled(Typography)`
-  color: ${({ theme }) => theme.palette.text.secondary};
+  color: ${({ theme }) => theme.palette.text.primary};
 `;
 
 const ThumbCreditStyled = styled(Typography)`
-  color: ${({ theme }) => theme.palette.text.disabled};
+  color: ${({ theme }) => theme.palette.text.secondary};
 `;

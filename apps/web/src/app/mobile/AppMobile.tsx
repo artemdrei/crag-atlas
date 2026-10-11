@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 
 import { ModalProvider } from '@web/app/providers';
+import { addVideoMobileRegistrations } from '@web/features/addVideo';
 import { avatarUploadMobileRegistrations } from '@web/features/avatarUpload';
 import {
   FeedbackPromptTrigger,
@@ -20,6 +21,7 @@ import { signInPromptMobileRegistrations } from '@web/features/signInPrompt';
 import { topoMobileRegistrations } from '@web/features/topo';
 import { adminFeedbackMobileRegistrations } from '@web/pages/adminFeedback/registrations';
 import { LogbookTeaser } from '@web/pages/logbook/common';
+import { mediaMobileRegistrations } from '@web/pages/media/registrations';
 import { playgroundMobileRegistrations } from '@web/pages/playground/registrations';
 import { ProfileSkeleton, ProfileTeaser } from '@web/pages/profile/common';
 import { routeMediaMobileRegistrations } from '@web/widgets/routeMedia';
@@ -38,6 +40,7 @@ import { ErrorBoundary } from '../ui/errorBoundary';
 // Below the device split on purpose: above it, the root bundle carries both
 // devices' features.
 const registrations = [
+  ...addVideoMobileRegistrations,
   ...avatarUploadMobileRegistrations,
   ...feedbackMobileRegistrations,
   ...grantAdminMobileRegistrations,
@@ -50,6 +53,7 @@ const registrations = [
   ...topoMobileRegistrations,
   ...routeMediaMobileRegistrations,
   ...adminFeedbackMobileRegistrations,
+  ...mediaMobileRegistrations,
   ...playgroundMobileRegistrations
 ];
 
@@ -66,6 +70,10 @@ const PageAdminAccessMobile = page(
   'PageAdminAccessMobile'
 );
 const PageHomeMobile = page(() => import('@web/pages/home'), 'PageHomeMobile');
+const PageMediaMobile = page(
+  () => import('@web/pages/media'),
+  'PageMediaMobile'
+);
 const PageLogbookMobile = page(
   () => import('@web/pages/logbook'),
   'PageLogbookMobile'
@@ -161,6 +169,7 @@ const AppMobile = () => (
               path={ROUTES.ACCESS}
               element={<Navigate to={ROUTES.ADMIN_ACCESS} replace />}
             />
+            <Route path={ROUTES.MEDIA} element={<PageMediaMobile />} />
             <Route
               path={ROUTES.LOGBOOK}
               element={

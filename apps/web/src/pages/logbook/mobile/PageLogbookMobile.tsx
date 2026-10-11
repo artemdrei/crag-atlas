@@ -1,14 +1,13 @@
 import { Trans } from '@lingui/react/macro';
 import Typography from '@mui/material/Typography';
 
-import { ApiFeedback, PageShell } from '@web/shared/ui';
-import { LogbookTabs, TicksList } from '@web/widgets/tickList';
+import { ApiFeedback, LoadMoreOnScroll, PageShell } from '@web/shared/ui';
+import { LogbookTabs, TicksList, TicksSkeleton } from '@web/widgets/tickList';
 
 import {
   AscentTypeFilter,
   DisciplineTabs,
   GradeChart,
-  LoadMoreOnScroll,
   LogbookFilterFields,
   TicksFeed,
   TicksGroupedList,
@@ -92,7 +91,9 @@ export const PageLogbookMobile = () => {
             hasMore={hasMore && !failure}
             isLoading={isLoadingMore}
             onReach={loadMore}
-          />
+          >
+            <TicksSkeleton count={1} />
+          </LoadMoreOnScroll>
         </>
       ) : (
         <TicksFeed />

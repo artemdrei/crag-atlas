@@ -172,7 +172,7 @@ msgstr "{routes} in {sectorsCount, plural, one {# sector} other {# sectors}}"
 msgid "{routesCount, plural, one {# route} other {# routes}}"
 msgstr "{routesCount, plural, one {# route} other {# routes}}"
 
-#: src/features/routeFilter/mobile/RouteFilterPanelMobile.tsx:79
+#: src/features/routeFilter/mobile/RouteFilterPanelMobile.tsx:77
 msgid "{routesCount, plural, one {Show # route} other {Show # routes}}"
 msgstr "{routesCount, plural, one {Show # route} other {Show # routes}}"
 
@@ -200,6 +200,10 @@ msgstr "{stars} of 5"
 #: src/pages/logbook/common/ui/TicksGroupedList.tsx:40
 msgid "{total, plural, one {# ascent} few {# ascents} many {# ascents} other {# ascents}}"
 msgstr "{total, plural, one {# ascent} few {# ascents} many {# ascents} other {# ascents}}"
+
+#: src/pages/media/common/ui/VideoCount.tsx:13
+msgid "{total, plural, one {# video} few {# videos} many {# videos} other {# videos}}"
+msgstr "{total, plural, one {# video} few {# videos} many {# videos} other {# videos}}"
 
 #: src/widgets/gradeConsensus/common/ui/GradeConsensus.tsx:39
 msgid "{total, plural, one {# vote} other {# votes}}"
@@ -237,7 +241,10 @@ msgstr "Access"
 msgid "Actions for {0}"
 msgstr "Actions for {0}"
 
-#: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:95
+#: src/features/addVideo/desktop/AddVideoDialog.tsx:135
+#: src/features/addVideo/mobile/AddVideoSheet.tsx:93
+#: src/pages/media/mobile/PageMediaMobile.tsx:39
+#: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:109
 msgid "Add"
 msgstr "Add"
 
@@ -281,8 +288,8 @@ msgstr "Add beta and photos that help the next climber"
 
 #: src/features/photoUpload/desktop/UploadPhotoDialog.tsx:188
 #: src/features/topoEditor/desktop/ui/TopoThumbRail.tsx:160
-#: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:74
-#: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:82
+#: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:88
+#: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:96
 msgid "Add photo"
 msgstr "Add photo"
 
@@ -310,24 +317,34 @@ msgstr "Add route"
 msgid "Add sector"
 msgstr "Add sector"
 
-#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:75
+#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:102
 msgid "Add the link"
 msgstr "Add the link"
+
+#: src/features/addVideo/desktop/AddVideoDialog.tsx:47
+#: src/features/addVideo/mobile/AddVideoSheet.tsx:39
+#: src/pages/media/desktop/PageMediaDesktop.tsx:39
+msgid "Add video"
+msgstr "Add video"
 
 #: src/widgets/routeMedia/desktop/AddRouteMediaDialog.tsx:19
 #: src/widgets/routeMedia/mobile/AddRouteMediaSheet.tsx:17
 msgid "Add video or photo"
 msgstr "Add video or photo"
 
-#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:38
+#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:39
 msgid "Add yours"
 msgstr "Add yours"
+
+#: src/pages/media/common/ui/VideoCard.tsx:71
+msgid "Added {year}"
+msgstr "Added {year}"
 
 #: src/pages/qrCodes/desktop/ui/QrCodesTable.tsx:48
 msgid "Address"
 msgstr "Address"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:39
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:42
 #: src/pages/admin/desktop/PageAdminDesktop.tsx:21
 #: src/pages/admin/mobile/PageAdminMobile.tsx:20
 #: src/pages/profile/common/ui/AdminSetting.tsx:17
@@ -423,11 +440,11 @@ msgstr "Ascent actions"
 msgid "Ascent deleted"
 msgstr "Ascent deleted"
 
-#: src/features/logTick/common/hooks/useLogTick.ts:51
+#: src/features/logTick/common/hooks/useLogTick.ts:52
 msgid "Ascent logged"
 msgstr "Ascent logged"
 
-#: src/features/logTick/common/hooks/useEditTick.ts:30
+#: src/features/logTick/common/hooks/useEditTick.ts:31
 msgid "Ascent saved"
 msgstr "Ascent saved"
 
@@ -460,6 +477,7 @@ msgid "Available offline"
 msgstr "Available offline"
 
 #: src/app/mobile/layout/HeaderBackButton.tsx:24
+#: src/features/addVideo/mobile/RoutePickerScreen.tsx:37
 msgid "Back"
 msgstr "Back"
 
@@ -533,6 +551,7 @@ msgstr "Bouldering"
 msgid "Breadcrumb"
 msgstr "Breadcrumb"
 
+#: src/features/addVideo/desktop/AddVideoDialog.tsx:128
 #: src/features/avatarUpload/desktop/CropAvatarDialog.tsx:29
 #: src/features/avatarUpload/mobile/CropAvatarSheet.tsx:23
 #: src/features/catalogEdit/common/ui/EditActions.tsx:32
@@ -548,7 +567,7 @@ msgstr "Breadcrumb"
 #: src/features/topoEditor/desktop/DeletePhotoDialog.tsx:43
 #: src/pages/adminFeedback/mobile/DeleteFeedbackSheet.tsx:38
 #: src/shared/ui/ConfirmDialog.tsx:37
-#: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:88
+#: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:102
 #: src/widgets/routeMedia/common/ui/DeleteRouteMediaActions.tsx:17
 msgid "Cancel"
 msgstr "Cancel"
@@ -557,6 +576,7 @@ msgstr "Cancel"
 msgid "Cards per row"
 msgstr "Cards per row"
 
+#: src/features/addVideo/common/ui/ChosenRoute.tsx:20
 #: src/features/sectorQr/desktop/QrSlugEditor.tsx:65
 msgid "Change"
 msgstr "Change"
@@ -598,6 +618,14 @@ msgstr "Choose a region to save its sectors, routes and topos for offline use."
 msgid "Choose a region to see its sectors and QR codes."
 msgstr "Choose a region to see its sectors and QR codes."
 
+#: src/features/addVideo/mobile/AddVideoSheet.tsx:79
+#: src/features/addVideo/mobile/RoutePickerScreen.tsx:41
+msgid "Choose a route"
+msgstr "Choose a route"
+
+#: src/features/addVideo/common/ui/VideoLinkField.tsx:51
+#: src/features/addVideo/mobile/RoutePickerScreen.tsx:62
+#: src/pages/media/common/ui/VideoSearchField.tsx:35
 #: src/shared/ui/PointEditor.tsx:72
 msgid "Clear"
 msgstr "Clear"
@@ -632,14 +660,15 @@ msgstr "Climber with an account"
 msgid "Climbers left nothing here — no ascents, no comments, no photos."
 msgstr "Climbers left nothing here — no ascents, no comments, no photos."
 
-#: src/features/routeFilter/mobile/RouteFilterPanelMobile.tsx:73
+#: src/features/addVideo/desktop/AddVideoDialog.tsx:49
+#: src/features/routeFilter/mobile/RouteFilterPanelMobile.tsx:74
 #: src/features/sectorConditions/desktop/ConditionsDialogDesktop.tsx:33
 #: src/features/topo/desktop/TopoPhotoDialog.tsx:31
 #: src/features/topo/mobile/TopoPhotoModal.tsx:45
-#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:31
-#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:39
-#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:31
-#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:39
+#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:32
+#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:40
+#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:32
+#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:40
 msgid "Close"
 msgstr "Close"
 
@@ -754,7 +783,7 @@ msgstr "Country"
 msgid "Cover"
 msgstr "Cover"
 
-#: src/app/mobile/layout/AppBottomNavigation.tsx:27
+#: src/app/mobile/layout/AppBottomNavigation.tsx:28
 msgid "Crags"
 msgstr "Crags"
 
@@ -829,7 +858,7 @@ msgstr "Delete feedback?"
 msgid "Delete line"
 msgstr "Delete line"
 
-#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:103
+#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:101
 #: src/widgets/routeMedia/desktop/DeleteRouteMediaDialog.tsx:25
 #: src/widgets/routeMedia/mobile/DeleteRouteMediaSheet.tsx:23
 msgid "Delete media"
@@ -852,6 +881,11 @@ msgstr "Delete the line?"
 #: src/features/topoEditor/desktop/DeletePhotoDialog.tsx:30
 msgid "Delete the photo?"
 msgstr "Delete the photo?"
+
+#: src/pages/media/desktop/PageMediaDesktop.tsx:58
+#: src/pages/media/mobile/VideoMenuSheet.tsx:35
+msgid "Delete video"
+msgstr "Delete video"
 
 #: src/features/logTick/common/ui/DeleteTickActions.tsx:26
 #: src/features/routeComment/common/ui/DeleteRouteCommentActions.tsx:26
@@ -1011,6 +1045,10 @@ msgstr "Feedback deleted"
 msgid "Filled in automatically for the chosen date and time — you can edit them"
 msgstr "Filled in automatically for the chosen date and time — you can edit them"
 
+#: src/features/addVideo/common/ui/ChosenRoute.tsx:25
+msgid "Filled in from the video title"
+msgstr "Filled in from the video title"
+
 #: src/features/routeFilter/common/ui/FiltersToggleButton.tsx:28
 msgid "Filters"
 msgstr "Filters"
@@ -1043,6 +1081,11 @@ msgstr "Free"
 msgid "From"
 msgstr "From"
 
+#: src/pages/media/common/ui/VideoFilterPills.tsx:78
+msgctxt "grade range"
+msgid "From"
+msgstr "From"
+
 #: src/features/catalogEdit/common/ui/SectorEditForm.tsx:135
 msgid "Fully sheltered: a roof or overhang keeps it dry"
 msgstr "Fully sheltered: a roof or overhang keeps it dry"
@@ -1062,6 +1105,7 @@ msgstr "Got it"
 #: src/features/routeFilter/common/hooks/useRouteSortLabel.ts:11
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:239
 #: src/pages/logbook/common/ui/LogbookFilterFields.tsx:47
+#: src/pages/media/common/ui/VideoFilterPills.tsx:58
 msgid "Grade"
 msgstr "Grade"
 
@@ -1118,7 +1162,7 @@ msgstr "Has video"
 msgid "Hide details"
 msgstr "Hide details"
 
-#: src/shared/ui/CollapsibleMap.tsx:44
+#: src/shared/ui/CollapsibleMap.tsx:49
 msgid "Hide map"
 msgstr "Hide map"
 
@@ -1236,6 +1280,10 @@ msgstr "Light"
 msgid "Limestone"
 msgstr "Limestone"
 
+#: src/features/addVideo/desktop/AddVideoDialog.tsx:59
+msgid "Link"
+msgstr "Link"
+
 #: src/pages/adminFeedback/common/ui/LoadMoreButton.tsx:17
 msgid "Load more"
 msgstr "Load more"
@@ -1276,10 +1324,10 @@ msgid "Log your ascents and watch your level grow."
 msgstr "Log your ascents and watch your level grow."
 
 #: src/app/desktop/layout/AppHeaderDesktop.tsx:35
-#: src/app/mobile/layout/AppBottomNavigation.tsx:34
+#: src/app/mobile/layout/AppBottomNavigation.tsx:35
 #: src/pages/logbook/common/ui/LogbookTeaser.tsx:18
-#: src/pages/logbook/desktop/PageLogbookDesktop.tsx:48
-#: src/pages/logbook/mobile/PageLogbookMobile.tsx:43
+#: src/pages/logbook/desktop/PageLogbookDesktop.tsx:52
+#: src/pages/logbook/mobile/PageLogbookMobile.tsx:42
 #: src/pages/route/common/ui/RouteTabs.tsx:44
 msgid "Logbook"
 msgstr "Logbook"
@@ -1287,6 +1335,13 @@ msgstr "Logbook"
 #: src/features/sectorQr/desktop/QrSlugEditor.tsx:54
 msgid "Lowercase Latin letters and digits, joined by single hyphens"
 msgstr "Lowercase Latin letters and digits, joined by single hyphens"
+
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:38
+#: src/app/mobile/layout/AppBottomNavigation.tsx:42
+#: src/pages/media/desktop/PageMediaDesktop.tsx:34
+#: src/pages/media/mobile/PageMediaMobile.tsx:34
+msgid "Media"
+msgstr "Media"
 
 #: src/widgets/routeMedia/common/hooks/useAddRouteMedia.ts:17
 msgid "Media added"
@@ -1347,6 +1402,10 @@ msgstr "New photo"
 msgid "New route"
 msgstr "New route"
 
+#: src/pages/media/common/ui/VideoFilterPills.tsx:46
+msgid "Newest first"
+msgstr "Newest first"
+
 #: src/pages/adminAccess/common/ui/AdminList.tsx:24
 msgid "No admins yet"
 msgstr "No admins yet"
@@ -1372,7 +1431,7 @@ msgstr "No feedback yet"
 msgid "No forecast is published that far ahead"
 msgstr "No forecast is published that far ahead"
 
-#: src/features/logTick/common/hooks/useLogTick.ts:62
+#: src/features/logTick/common/hooks/useLogTick.ts:63
 msgid "No internet connection. Log the ascent again once you are back online"
 msgstr "No internet connection. Log the ascent again once you are back online"
 
@@ -1393,6 +1452,10 @@ msgstr "No QR code yet"
 msgid "No region found"
 msgstr "No region found"
 
+#: src/features/addVideo/common/ui/RouteOptionList.tsx:31
+msgid "No routes found"
+msgstr "No routes found"
+
 #: src/features/topoEditor/desktop/ui/TopoEditorRouteList.tsx:137
 msgid "No routes yet — add the first one, then drag it onto the photo it is drawn on."
 msgstr "No routes yet — add the first one, then drag it onto the photo it is drawn on."
@@ -1405,9 +1468,17 @@ msgstr "No topo yet"
 msgid "No Ukrainian name: the plaque shows only the Latin one"
 msgstr "No Ukrainian name: the plaque shows only the Latin one"
 
-#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:52
+#: src/pages/media/common/ui/VideoList.tsx:46
+msgid "No videos match these filters"
+msgstr "No videos match these filters"
+
+#: src/widgets/routeMedia/common/ui/RouteMedia.tsx:53
 msgid "No videos or photos yet."
 msgstr "No videos or photos yet."
+
+#: src/pages/media/common/ui/VideoList.tsx:48
+msgid "No videos yet"
+msgstr "No videos yet"
 
 #: src/features/logTick/common/ui/ConditionsSection.tsx:104
 #: src/features/sectorConditions/common/ui/ConditionsPanel.tsx:61
@@ -1419,7 +1490,7 @@ msgstr "No weather while you are offline"
 msgid "Nobody found"
 msgstr "Nobody found"
 
-#: src/pages/logbook/common/ui/TicksFeed.tsx:23
+#: src/pages/logbook/common/ui/TicksFeed.tsx:22
 msgid "Nobody has logged an ascent yet."
 msgstr "Nobody has logged an ascent yet."
 
@@ -1474,6 +1545,10 @@ msgstr "Offline regions"
 msgid "OK"
 msgstr "OK"
 
+#: src/pages/media/common/ui/VideoFilterPills.tsx:47
+msgid "Oldest first"
+msgstr "Oldest first"
+
 #: src/features/logTick/common/ui/AttemptsStepper.tsx:29
 msgid "One less try"
 msgstr "One less try"
@@ -1496,6 +1571,10 @@ msgstr "Only an image can be used as a photo"
 #~ msgid "Only YouTube and Instagram links."
 #~ msgstr "Only YouTube and Instagram links."
 
+#: src/features/addVideo/common/ui/VideoLinkField.tsx:41
+msgid "Only YouTube links for now"
+msgstr "Only YouTube links for now"
+
 #: src/pages/route/common/ui/RouteStats.tsx:28
 msgid "onsight"
 msgstr "onsight"
@@ -1509,6 +1588,7 @@ msgid "Onsight and flash count on the first ascent only"
 msgstr "Onsight and flash count on the first ascent only"
 
 #: src/pages/profile/common/ui/AdminSetting.tsx:19
+#: src/shared/ui/VideoExistsNotice.tsx:20
 msgid "Open"
 msgstr "Open"
 
@@ -1517,7 +1597,7 @@ msgid "Open region"
 msgstr "Open region"
 
 #: src/features/sectorMap/common/ui/SectorPointCard.tsx:31
-#: src/features/sectorMap/mobile/SectorMapMobile.tsx:63
+#: src/features/sectorMap/mobile/SectorMapMobile.tsx:69
 msgid "Open sector"
 msgstr "Open sector"
 
@@ -1585,6 +1665,14 @@ msgstr "Partly sheltered: some routes stay dry"
 msgid "Partner"
 msgstr "Partner"
 
+#: src/features/addVideo/common/ui/VideoLinkField.tsx:62
+msgid "Paste"
+msgstr "Paste"
+
+#: src/features/addVideo/desktop/AddVideoDialog.tsx:100
+msgid "Paste a link first"
+msgstr "Paste a link first"
+
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:188
 msgid "Photo"
 msgstr "Photo"
@@ -1594,7 +1682,7 @@ msgstr "Photo"
 msgid "Photo {0}"
 msgstr "Photo {0}"
 
-#: src/widgets/routeMedia/common/ui/RouteMediaGallery.tsx:47
+#: src/widgets/routeMedia/common/ui/RouteMediaGallery.tsx:46
 msgid "Photo {position}"
 msgstr "Photo {position}"
 
@@ -1662,6 +1750,11 @@ msgstr "Plain point"
 msgid "Plaques already printed with <0>/q/{oldPath}</0> keep opening this sector. New plaques carry <1>/q/{newPath}</1>: download and print them again."
 msgstr "Plaques already printed with <0>/q/{oldPath}</0> keep opening this sector. New plaques carry <1>/q/{newPath}</1>: download and print them again."
 
+#. placeholder {0}: route.name
+#: src/pages/media/common/ui/VideoCard.tsx:40
+msgid "Play {0}"
+msgstr "Play {0}"
+
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:45
 msgid "points"
 msgstr "points"
@@ -1704,8 +1797,8 @@ msgstr "Printed QR codes of this sector stop working."
 msgid "Private comment"
 msgstr "Private comment"
 
-#: src/app/desktop/layout/AppHeaderDesktop.tsx:52
-#: src/app/mobile/layout/AppBottomNavigation.tsx:41
+#: src/app/desktop/layout/AppHeaderDesktop.tsx:55
+#: src/app/mobile/layout/AppBottomNavigation.tsx:49
 #: src/pages/profile/common/ui/ProfileTeaser.tsx:15
 #: src/pages/profile/desktop/PageProfileDesktop.tsx:25
 #: src/pages/profile/mobile/PageProfileMobile.tsx:27
@@ -1751,6 +1844,10 @@ msgstr "Rating"
 msgid "Reader view"
 msgstr "Reader view"
 
+#: src/features/addVideo/common/ui/VideoReading.tsx:19
+msgid "Reading the video…"
+msgstr "Reading the video…"
+
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:142
 msgid "Redo"
 msgstr "Redo"
@@ -1787,6 +1884,7 @@ msgstr "Regions"
 msgid "Reload"
 msgstr "Reload"
 
+#: src/features/addVideo/common/ui/VideoPreviewRow.tsx:34
 #: src/features/logTick/common/ui/tickMediaField/MediaThumb.tsx:34
 #: src/features/offlineRegions/common/ui/OfflineRegionRow.tsx:49
 msgid "Remove"
@@ -1822,6 +1920,7 @@ msgid "Resend code"
 msgstr "Resend code"
 
 #: src/features/routeFilter/common/ui/FiltersHeader.tsx:27
+#: src/pages/media/common/ui/VideoFilterPills.tsx:94
 msgid "Reset"
 msgstr "Reset"
 
@@ -1857,6 +1956,11 @@ msgstr "Revoke access"
 msgid "Rock type"
 msgstr "Rock type"
 
+#: src/features/addVideo/desktop/AddVideoDialog.tsx:82
+#: src/features/addVideo/mobile/AddVideoSheet.tsx:67
+msgid "Route"
+msgstr "Route"
+
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:169
 msgid "Route №{number}"
 msgstr "Route №{number}"
@@ -1864,6 +1968,10 @@ msgstr "Route №{number}"
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:171
 msgid "Route not on the wall yet"
 msgstr "Route not on the wall yet"
+
+#: src/pages/media/common/ui/VideoSearchField.tsx:22
+msgid "Route or author"
+msgstr "Route or author"
 
 #: src/features/topoEditor/common/hooks/useTopoEditorActions.ts:106
 msgid "Route saved"
@@ -1934,11 +2042,13 @@ msgstr "Saved for offline use"
 msgid "Saved for offline:"
 msgstr "Saved for offline:"
 
+#: src/features/addVideo/desktop/AddVideoDialog.tsx:135
+#: src/features/addVideo/mobile/AddVideoSheet.tsx:93
 #: src/features/catalogEdit/common/ui/EditActions.tsx:41
 #: src/features/logTick/common/ui/TickForm.tsx:269
 #: src/features/offlineRegions/mobile/OfflineCtaMobile.tsx:39
 #: src/features/routeComment/common/ui/RouteCommentForm.tsx:55
-#: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:95
+#: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:109
 msgid "Saving…"
 msgstr "Saving…"
 
@@ -1959,9 +2069,18 @@ msgstr "Search a region, sector or route"
 msgid "Search by name or email"
 msgstr "Search by name or email"
 
+#: src/features/addVideo/desktop/AddVideoDialog.tsx:99
+#: src/features/addVideo/mobile/RoutePickerScreen.tsx:49
+msgid "Search for a route"
+msgstr "Search for a route"
+
 #: src/features/offlineRegions/mobile/OfflineRegionList.tsx:33
 msgid "Search regions"
 msgstr "Search regions"
+
+#: src/pages/media/common/ui/VideoSearchField.tsx:43
+msgid "Search videos"
+msgstr "Search videos"
 
 #: src/features/catalogSearch/common/ui/CatalogSearchBox.tsx:63
 msgid "Searching…"
@@ -2053,7 +2172,8 @@ msgstr "Share your impressions and ideas"
 msgid "Sheltered · dry in rain"
 msgstr "Sheltered · dry in rain"
 
-#: src/shared/ui/CollapsibleMap.tsx:28
+#: src/pages/region/mobile/PageRegionMobile.tsx:112
+#: src/shared/ui/CollapsibleMap.tsx:33
 msgid "Show map"
 msgstr "Show map"
 
@@ -2118,6 +2238,10 @@ msgstr "Sport"
 #: src/features/sectorConditions/common/ui/ConditionsScore.tsx:62
 #~ msgid "Sun roughly {0} – {1}"
 #~ msgstr "Sun roughly {0} – {1}"
+
+#: src/features/addVideo/mobile/AddVideoSheet.tsx:46
+msgid "Supports youtube.com, youtu.be and Shorts"
+msgstr "Supports youtube.com, youtu.be and Shorts"
 
 #: src/features/topoEditor/desktop/ui/TopoEditorRoutePanel.tsx:225
 msgid "System"
@@ -2214,12 +2338,12 @@ msgstr "This cannot be undone."
 msgid "This file could not be read as a photo."
 msgstr "This file could not be read as a photo."
 
-#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:66
-#: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:55
+#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:93
+#: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:63
 msgid "This is not a YouTube link."
 msgstr "This is not a YouTube link."
 
-#: src/widgets/routeMedia/common/ui/RouteMediaGallery.tsx:38
+#: src/widgets/routeMedia/common/ui/RouteMediaGallery.tsx:37
 msgid "This media is gone."
 msgstr "This media is gone."
 
@@ -2268,6 +2392,10 @@ msgstr "This screen could not be drawn. Reloading usually gets past it."
 msgid "This sector is in the archive, so it is out of the catalog. Its routes and everything climbers left on them — ascents, photos, links and comments — are still here."
 msgstr "This sector is in the archive, so it is out of the catalog. Its routes and everything climbers left on them — ascents, photos, links and comments — are still here."
 
+#: src/shared/ui/VideoExistsNotice.tsx:16
+msgid "This video is already on {routeName}"
+msgstr "This video is already on {routeName}"
+
 #: src/features/sectorConditions/common/ui/ConditionsHourly.tsx:92
 msgid "time"
 msgstr "time"
@@ -2275,6 +2403,11 @@ msgstr "time"
 #: src/features/logTick/common/ui/ClimbedAtFields.tsx:36
 msgid "Time"
 msgstr "Time"
+
+#: src/pages/media/common/ui/VideoFilterPills.tsx:84
+msgctxt "grade range"
+msgid "To"
+msgstr "To"
 
 #: src/features/sectorConditions/common/ui/ConditionsDayStrip.tsx:72
 msgid "today"
@@ -2356,20 +2489,32 @@ msgstr "Version {version}"
 msgid "Video"
 msgstr "Video"
 
-#: src/widgets/routeMedia/common/ui/RouteMediaGallery.tsx:47
+#: src/widgets/routeMedia/common/ui/RouteMediaGallery.tsx:46
 msgid "Video {position}"
 msgstr "Video {position}"
 
+#: src/pages/media/mobile/PageMediaMobile.tsx:61
+msgid "Video actions"
+msgstr "Video actions"
+
+#: src/features/addVideo/common/hooks/useAddVideoForm.ts:36
+msgid "Video added"
+msgstr "Video added"
+
 #: src/pages/route/common/ui/RouteTabs.tsx:40
 #: src/widgets/routeMedia/common/ui/RouteMediaButton.tsx:22
-#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:29
-#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:29
+#: src/widgets/routeMedia/desktop/ViewRouteMediaDialog.tsx:30
+#: src/widgets/routeMedia/mobile/ViewRouteMediaModal.tsx:30
 msgid "Video and photo"
 msgstr "Video and photo"
 
 #: src/pages/route/common/ui/RouteTabs.tsx:40
 msgid "Video and photo ({mediaCount})"
 msgstr "Video and photo ({mediaCount})"
+
+#: src/shared/ui/VideoThumbnail.tsx:34
+msgid "Video unavailable"
+msgstr "Video unavailable"
 
 #: src/widgets/tickList/common/ui/TickViewSelect.tsx:21
 msgid "View"
@@ -2459,6 +2604,10 @@ msgstr "Written for you from the name above"
 msgid "Year"
 msgstr "Year"
 
+#: src/pages/media/common/ui/VideoCard.tsx:33
+msgid "You"
+msgstr "You"
+
 #: src/shared/ui/OfflineBanner.tsx:17
 msgid "You are offline — showing saved data"
 msgstr "You are offline — showing saved data"
@@ -2532,8 +2681,9 @@ msgstr "Your photo has been updated"
 msgid "Your photo or send video helps the next climber read the line — and puts your ascent on the route page."
 msgstr "Your photo or send video helps the next climber read the line — and puts your ascent on the route page."
 
-#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:56
-#: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:53
+#: src/features/addVideo/common/ui/VideoLinkField.tsx:39
+#: src/features/logTick/common/ui/tickMediaField/TickMediaField.tsx:83
+#: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:61
 msgid "YouTube link"
 msgstr "YouTube link"
 
@@ -2541,6 +2691,10 @@ msgstr "YouTube link"
 #: src/widgets/routeMedia/common/ui/AddRouteMediaForm.tsx:53
 #~ msgid "YouTube or Instagram link"
 #~ msgstr "YouTube or Instagram link"
+
+#: src/features/addVideo/common/ui/VideoPreviewRow.tsx:17
+msgid "YouTube video"
+msgstr "YouTube video"
 
 #: src/shared/ui/ImageCropper.tsx:114
 msgid "Zoom"

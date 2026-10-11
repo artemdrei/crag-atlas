@@ -26,6 +26,7 @@ export const useEditTick = (tick: Tick) => {
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.routeMedia(tick.idRoute)
       });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.videos() });
       invalidateRouteLists(queryClient);
       toast.success(t`Ascent saved`);
       close();

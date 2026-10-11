@@ -8,7 +8,8 @@ import {
   cleanup,
   makeRegion,
   makeRoute,
-  makeSector
+  makeSector,
+  uniqueIdYoutube
 } from '../../fixtures/catalog';
 import { routePath, sectorPath } from '../../fixtures/ui';
 
@@ -20,7 +21,9 @@ import { routePath, sectorPath } from '../../fixtures/ui';
  */
 test.describe.configure({ mode: 'serial' });
 
-const YOUTUBE = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+const ID_FILMED = uniqueIdYoutube();
+const YOUTUBE = `https://www.youtube.com/watch?v=${ID_FILMED}`;
+const YOUTUBE_FRESH = `https://youtu.be/${uniqueIdYoutube()}`;
 
 let region: Row;
 let added: Row;
@@ -68,7 +71,9 @@ test('a climber hangs a link and a photo on a route', async ({ page }) => {
   await test.step('a YouTube link goes in', async () => {
     const dialog = page.getByRole('dialog');
 
-    await dialog.getByRole('textbox', { name: 'YouTube link' }).fill(YOUTUBE);
+    await dialog
+      .getByRole('textbox', { name: 'YouTube link' })
+      .fill(YOUTUBE_FRESH);
     await dialog.getByRole('button', { name: 'Add', exact: true }).click();
 
     await expect(
@@ -124,7 +129,7 @@ test('the sector list marks the routes that carry something', async ({
       page.getByRole('dialog').getByTitle('Video 1')
     ).toHaveAttribute(
       'src',
-      'https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?playsinline=1'
+      `https://www.youtube-nocookie.com/embed/${ID_FILMED}?playsinline=1`
     );
   });
 });

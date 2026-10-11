@@ -1,11 +1,10 @@
 import { Trans } from '@lingui/react/macro';
 import Typography from '@mui/material/Typography';
 
-import { ApiFeedback } from '@web/shared/ui';
-import { TicksList } from '@web/widgets/tickList';
+import { ApiFeedback, LoadMoreOnScroll } from '@web/shared/ui';
+import { TicksList, TicksSkeleton } from '@web/widgets/tickList';
 
 import { useApiGetTicksFeed } from '../hooks';
-import { LoadMoreOnScroll } from './LoadMoreOnScroll';
 
 export interface Props {
   columns?: number;
@@ -34,7 +33,9 @@ export const TicksFeed = ({ columns }: Props) => {
         hasMore={hasMore && !failure}
         isLoading={isLoadingMore}
         onReach={loadMore}
-      />
+      >
+        <TicksSkeleton count={1} />
+      </LoadMoreOnScroll>
     </>
   );
 };

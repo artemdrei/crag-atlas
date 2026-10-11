@@ -6,7 +6,8 @@ import {
   cleanup,
   makeRegion,
   makeRoute,
-  makeSector
+  makeSector,
+  uniqueIdYoutube
 } from '../../fixtures/catalog';
 import { routePath, sectorPath } from '../../fixtures/ui';
 
@@ -17,7 +18,9 @@ import { routePath, sectorPath } from '../../fixtures/ui';
  */
 test.describe.configure({ mode: 'serial' });
 
-const YOUTUBE = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+const ID_FILMED = uniqueIdYoutube();
+const YOUTUBE = `https://www.youtube.com/watch?v=${ID_FILMED}`;
+const YOUTUBE_FRESH = `https://youtu.be/${uniqueIdYoutube()}`;
 
 let region: Row;
 let sector: Row;
@@ -45,7 +48,9 @@ test('a link is added from a sheet', async ({ page: phone }) => {
 
   await expect(phone.getByText('This is not a YouTube link.')).toBeVisible();
 
-  await phone.getByRole('textbox', { name: 'YouTube link' }).fill(YOUTUBE);
+  await phone
+    .getByRole('textbox', { name: 'YouTube link' })
+    .fill(YOUTUBE_FRESH);
   await phone.getByRole('button', { name: 'Add', exact: true }).click();
 
   await expect(
@@ -66,6 +71,6 @@ test('the mark in the route list opens the gallery here too', async ({
 
   await expect(phone.getByRole('dialog').getByTitle('Video 1')).toHaveAttribute(
     'src',
-    'https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?playsinline=1'
+    `https://www.youtube-nocookie.com/embed/${ID_FILMED}?playsinline=1`
   );
 });

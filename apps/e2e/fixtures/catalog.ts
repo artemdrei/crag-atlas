@@ -106,9 +106,16 @@ export const addAscent = (idRoute: string) =>
 export const addComment = (idRoute: string) =>
   api.post(`/routes/${idRoute}/comments`, { body: 'Fixture comment' });
 
+/**
+ * A video id nobody else in the run holds: the catalog keeps each YouTube
+ * video once, and specs run side by side.
+ */
+export const uniqueIdYoutube = () =>
+  `e2e${Math.random().toString(36).slice(2, 12)}`;
+
 export const addLink = (
   idRoute: string,
-  url = 'https://example.com/fixture-video'
+  url = `https://youtu.be/${uniqueIdYoutube()}`
 ) =>
   api.post<{ id: string }>(`/routes/${idRoute}/media`, { kind: 'video', url });
 

@@ -14,7 +14,9 @@ export type {
   DialogName,
   EntityType,
   LoginMethod,
+  MediaSource,
   OfflineAction,
   OfflineSource,
-  SignInPromptAction
+  SignInPromptAction,
+  VideoLinkResult
 } from './events';
