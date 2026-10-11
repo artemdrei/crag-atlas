@@ -43,6 +43,11 @@ export const FOREIGN_KEY_VIOLATION = '23503';
 export const isReferenced = (error?: DatabaseError): boolean =>
   error?.code === FOREIGN_KEY_VIOLATION;
 
+export const UNIQUE_VIOLATION = '23505';
+
+export const isDuplicate = (error?: DatabaseError): boolean =>
+  error?.code === UNIQUE_VIOLATION;
+
 // Raised by the `ticks_first_ascent_style_*` triggers in 017_repeat_ascents.sql.
 export const REPEAT_FIRST_ASCENT_STYLE = 'CA001';
 

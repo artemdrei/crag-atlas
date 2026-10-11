@@ -2155,6 +2155,105 @@
         "tags": ["Media"]
       }
     },
+    "/videos": {
+      "get": {
+        "operationId": "VideosController_findPage",
+        "parameters": [
+          {
+            "name": "query",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "gradeFrom",
+            "required": false,
+            "in": "query",
+            "description": "French grade",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "gradeTo",
+            "required": false,
+            "in": "query",
+            "description": "French grade",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": ["newest", "oldest"],
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VideoPageDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Videos"]
+      }
+    },
+    "/videos/preview": {
+      "get": {
+        "operationId": "VideosController_preview",
+        "parameters": [
+          {
+            "name": "url",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VideoPreviewDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Videos"]
+      }
+    },
     "/sectors/{idSector}/conditions": {
       "post": {
         "operationId": "ConditionsController_forSector",
@@ -4320,6 +4419,15 @@
             "type": "number",
             "nullable": true
           },
+          "channelName": {
+            "type": "string",
+            "nullable": true
+          },
+          "publishedAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "ISO timestamp the video went up on YouTube"
+          },
           "idTick": {
             "type": "string",
             "nullable": true
@@ -4364,6 +4472,169 @@
           }
         },
         "required": ["kind", "url"]
+      },
+      "VideoRouteDto": {
+        "type": "object",
+        "properties": {
+          "idRoute": {
+            "type": "string"
+          },
+          "idSector": {
+            "type": "string"
+          },
+          "idRegion": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "nameLocal": {
+            "type": "string",
+            "nullable": true
+          },
+          "grade": {
+            "type": "string"
+          },
+          "gradeScale": {
+            "type": "string",
+            "enum": [
+              "french",
+              "yds",
+              "uiaa",
+              "saxon",
+              "ewbank",
+              "norwegian",
+              "brazilian_crux",
+              "font",
+              "vscale"
+            ]
+          },
+          "sectorName": {
+            "type": "string"
+          },
+          "regionName": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "idRoute",
+          "idSector",
+          "idRegion",
+          "name",
+          "grade",
+          "gradeScale",
+          "sectorName",
+          "regionName"
+        ]
+      },
+      "VideoDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "idYoutube": {
+            "type": "string"
+          },
+          "idUser": {
+            "type": "string"
+          },
+          "authorName": {
+            "type": "string",
+            "description": "Author label; ids carry no meaning"
+          },
+          "title": {
+            "type": "string"
+          },
+          "channelName": {
+            "type": "string",
+            "nullable": true
+          },
+          "publishedAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "ISO timestamp the video went up on YouTube"
+          },
+          "idTick": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "ISO timestamp"
+          },
+          "route": {
+            "$ref": "#/components/schemas/VideoRouteDto"
+          }
+        },
+        "required": [
+          "id",
+          "idYoutube",
+          "idUser",
+          "authorName",
+          "title",
+          "createdAt",
+          "route"
+        ]
+      },
+      "VideoPageDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoDto"
+            }
+          },
+          "total": {
+            "type": "number",
+            "description": "Videos the filter matches, not just this page"
+          },
+          "nextCursor": {
+            "type": "string",
+            "nullable": true,
+            "description": "Pass back as `cursor` to get the next page"
+          }
+        },
+        "required": ["items", "total"]
+      },
+      "VideoPreviewDto": {
+        "type": "object",
+        "properties": {
+          "idYoutube": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true,
+            "description": "Null when YouTube could not be read; the form still works"
+          },
+          "channelName": {
+            "type": "string",
+            "nullable": true
+          },
+          "suggestedRoute": {
+            "nullable": true,
+            "description": "The route the title names, when exactly one matches",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VideoRouteDto"
+              }
+            ]
+          },
+          "existing": {
+            "nullable": true,
+            "description": "Set when this video is already in the catalog",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VideoDto"
+              }
+            ]
+          }
+        },
+        "required": ["idYoutube"]
       },
       "ForecastDto": {
         "type": "object",

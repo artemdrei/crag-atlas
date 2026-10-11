@@ -14,15 +14,21 @@ export const applyCursor = <Q extends Filterable>(
 ): Q => {
   if (!cursor) return query;
 
+  const { value, id } = readCursor(cursor);
+
+  return query.or(
+    `${column}.lt.${value},and(${column}.eq.${value},id.lt.${id})`
+  );
+};
+
+export const readCursor = (cursor: string): { value: string; id: string } => {
   const [value, id] = cursor.split('|');
 
   if (!value || !id || !CURSOR_VALUE.test(value) || !UUID.test(id)) {
     throw new ValidationException('The cursor is malformed');
   }
 
-  return query.or(
-    `${column}.lt.${value},and(${column}.eq.${value},id.lt.${id})`
-  );
+  return { value, id };
 };
 
 export const toPage = <Row extends { id: string }>(

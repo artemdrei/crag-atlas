@@ -804,6 +804,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/videos": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["VideosController_findPage"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/videos/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["VideosController_preview"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/sectors/{idSector}/conditions": {
         parameters: {
             query?: never;
@@ -1505,6 +1537,9 @@ export interface components {
             url: string;
             title: string;
             durationSeconds?: number | null;
+            channelName?: string | null;
+            /** @description ISO timestamp the video went up on YouTube */
+            publishedAt?: string | null;
             idTick?: string | null;
             /** @description ISO timestamp */
             createdAt: string;
@@ -1516,6 +1551,50 @@ export interface components {
             url: string;
             title?: string | null;
             durationSeconds?: number | null;
+        };
+        VideoRouteDto: {
+            idRoute: string;
+            idSector: string;
+            idRegion: string;
+            name: string;
+            nameLocal?: string | null;
+            grade: string;
+            /** @enum {string} */
+            gradeScale: "french" | "yds" | "uiaa" | "saxon" | "ewbank" | "norwegian" | "brazilian_crux" | "font" | "vscale";
+            sectorName: string;
+            regionName: string;
+        };
+        VideoDto: {
+            id: string;
+            idYoutube: string;
+            idUser: string;
+            /** @description Author label; ids carry no meaning */
+            authorName: string;
+            title: string;
+            channelName?: string | null;
+            /** @description ISO timestamp the video went up on YouTube */
+            publishedAt?: string | null;
+            idTick?: string | null;
+            /** @description ISO timestamp */
+            createdAt: string;
+            route: components["schemas"]["VideoRouteDto"];
+        };
+        VideoPageDto: {
+            items: components["schemas"]["VideoDto"][];
+            /** @description Videos the filter matches, not just this page */
+            total: number;
+            /** @description Pass back as `cursor` to get the next page */
+            nextCursor?: string | null;
+        };
+        VideoPreviewDto: {
+            idYoutube: string;
+            /** @description Null when YouTube could not be read; the form still works */
+            title?: string | null;
+            channelName?: string | null;
+            /** @description The route the title names, when exactly one matches */
+            suggestedRoute?: components["schemas"]["VideoRouteDto"] | null;
+            /** @description Set when this video is already in the catalog */
+            existing?: components["schemas"]["VideoDto"] | null;
         };
         ForecastDto: {
             /** @description Offset of the crag’s zone from UTC */
@@ -3160,6 +3239,55 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    VideosController_findPage: {
+        parameters: {
+            query?: {
+                query?: string;
+                /** @description French grade */
+                gradeFrom?: string;
+                /** @description French grade */
+                gradeTo?: string;
+                sort?: "newest" | "oldest";
+                cursor?: string;
+                limit?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VideoPageDto"];
+                };
+            };
+        };
+    };
+    VideosController_preview: {
+        parameters: {
+            query: {
+                url: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VideoPreviewDto"];
+                };
             };
         };
     };

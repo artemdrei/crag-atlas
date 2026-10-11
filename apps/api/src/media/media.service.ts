@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
 
 import {
+  AppException,
   NotFoundException,
   ValidationException
 } from '../common/exceptions/app.exception';
 import {
+  isDuplicate,
   readFailed,
   writeFailed
 } from '../common/exceptions/database.exception';
@@ -17,12 +19,13 @@ import {
   uploadPhoto
 } from '../common/utils/photoStorage';
 import { userClient } from '../common/utils/userClient';
+import { idYoutubeOf } from '../common/utils/youtube';
 import { publicSupabase, storagePublicUrl } from '../config/supabase.client';
 import type { CreateMediaDto, MediaDto } from './media.types';
 import { MEDIA_BUCKET, MEDIA_KINDS } from './media.types';
 
 const COLUMNS =
-  'id, id_route, id_tick, id_user, kind, url, storage_path, title, duration_seconds, created_at, users (display_name)';
+  'id, id_route, id_tick, id_user, kind, url, storage_path, title, duration_seconds, channel_name, published_at, created_at, users (display_name)';
 
 interface MediaRow {
   id: string;
@@ -34,6 +37,8 @@ interface MediaRow {
   url: string | null;
   title: string;
   duration_seconds: number | null;
+  channel_name: string | null;
+  published_at: string | null;
   created_at: string;
   users: { display_name: string } | null;
 }
@@ -80,6 +85,13 @@ export class MediaService {
       );
     }
 
+    if (payload.kind === 'video' && !idYoutubeOf(url)) {
+      throw new ValidationException(
+        'Only YouTube links are accepted',
+        'URL_UNSUPPORTED'
+      );
+    }
+
     const { data, error } = await userClient(authUser)
       .from('route_media')
       .insert({
@@ -93,6 +105,14 @@ export class MediaService {
       })
       .select(COLUMNS)
       .single<MediaRow>();
+
+    if (isDuplicate(error ?? undefined)) {
+      throw new AppException(
+        'This video is already in the catalog',
+        409,
+        'MEDIA_DUPLICATE'
+      );
+    }
 
     if (error) {
       throw writeFailed(
@@ -197,5 +217,7 @@ const toMediaDto = (row: MediaRow): MediaDto => ({
   url: row.url ?? storagePublicUrl(MEDIA_BUCKET, row.storage_path ?? ''),
   title: row.title,
   durationSeconds: row.duration_seconds,
+  channelName: row.channel_name,
+  publishedAt: row.published_at,
   createdAt: row.created_at
 });
