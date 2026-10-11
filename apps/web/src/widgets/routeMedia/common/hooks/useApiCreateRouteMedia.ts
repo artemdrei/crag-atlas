@@ -50,6 +50,7 @@ export const useApiCreateRouteMedia = ({ idRoute, onCreated }: Params) => {
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.routeMedia(idRoute)
       });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.videos() });
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.climberContents()
       });

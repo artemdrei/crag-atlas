@@ -7,6 +7,7 @@ export const ROUTES = {
   ADMIN_FEEDBACK: '/admin/feedback',
   LOGBOOK: '/logbook',
   LOGIN: '/login',
+  MEDIA: '/media',
   PROFILE: '/profile',
   REGION: '/regions/:idRegion',
   PLAYGROUND: '/playground',
@@ -16,6 +17,9 @@ export const ROUTES = {
   SECTOR_EDIT: '/regions/:idRegion/sectors/:idSector/edit',
   ROUTE_EDIT: '/regions/:idRegion/sectors/:idSector/routes/:idRoute/edit'
 } as const;
+
+export const buildMediaAddedPath = (idMedia: string) =>
+  `/media?added=${idMedia}`;
 
 export const buildRegionPath = (idRegion: string) => `/regions/${idRegion}`;
 

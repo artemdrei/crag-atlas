@@ -4,14 +4,18 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { useGridColumns } from '@web/shared/lib';
-import { ApiFeedback, GridColumnsMenu, PageShell } from '@web/shared/ui';
-import { LogbookTabs, TicksList } from '@web/widgets/tickList';
+import {
+  ApiFeedback,
+  GridColumnsMenu,
+  LoadMoreOnScroll,
+  PageShell
+} from '@web/shared/ui';
+import { LogbookTabs, TicksList, TicksSkeleton } from '@web/widgets/tickList';
 
 import {
   AscentTypeFilter,
   DisciplineTabs,
   GradeChart,
-  LoadMoreOnScroll,
   LogbookFilterFields,
   TicksFeed,
   TicksGroupedList,
@@ -106,7 +110,9 @@ export const PageLogbookDesktop = () => {
             hasMore={hasMore && !failure}
             isLoading={isLoadingMore}
             onReach={loadMore}
-          />
+          >
+            <TicksSkeleton count={1} />
+          </LoadMoreOnScroll>
         </>
       ) : (
         <TicksFeed columns={columns} />

@@ -46,6 +46,7 @@ export const useLogTick = (idRoute: string) => {
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.routeMedia(idRoute)
       });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.videos() });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ticks() });
       invalidateRouteLists(queryClient);
       toast.success(t`Ascent logged`);

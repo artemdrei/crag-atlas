@@ -27,6 +27,7 @@ export { imageToWebp } from './imageToWebp';
 export { isSafeHttpUrl } from './isSafeHttpUrl';
 export { isStandalone } from './isStandalone';
 export { localNameOf } from './localNameOf';
+export { type MatchPart, matchParts } from './matchParts';
 export type { MediaLink } from './mediaLink';
 export {
   mediaEmbedUrl,

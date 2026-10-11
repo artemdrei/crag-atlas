@@ -34,6 +34,9 @@ export const AppHeaderDesktop = ({ hasSearch }: { hasSearch?: boolean }) => {
         <Button color="inherit" component={Link} to={ROUTES.LOGBOOK}>
           <Trans>Logbook</Trans>
         </Button>
+        <Button color="inherit" component={Link} to={ROUTES.MEDIA}>
+          <Trans>Media</Trans>
+        </Button>
         {hasRole('admin') && (
           <Button color="inherit" component={Link} to={ROUTES.ADMIN}>
             <Trans>Admin</Trans>

@@ -13,6 +13,8 @@ export { getForecastDay, getForecastWindow, OPEN_METEO } from './openMeteo';
 export { queryClient } from './queryClient';
 export { QUERY_KEYS } from './queryKeys';
 export { useApiGetRegion } from './useApiGetRegion';
+export { useApiGetVideoPreview } from './useApiGetVideoPreview';
 export { useApiQuery } from './useApiQuery';
 export { MIN_SEARCH_LENGTH, useApiSearch } from './useApiSearch';
+export { useFetchVideoPreview } from './useFetchVideoPreview';
 export { useSeedDetailCache } from './useSeedDetailCache';

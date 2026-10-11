@@ -6,7 +6,8 @@ import {
   cleanup,
   makeRegion,
   makeRoute,
-  makeSector
+  makeSector,
+  uniqueIdYoutube
 } from '../../fixtures/catalog';
 import {
   ascentsPanel,
@@ -152,7 +153,7 @@ test('an ascent logged with a link marks the route without a reload', async ({
   await dialog.getByRole('button', { name: 'More details' }).click();
   await dialog
     .getByRole('textbox', { name: 'YouTube link' })
-    .fill('https://youtu.be/dQw4w9WgXcQ');
+    .fill(`https://youtu.be/${uniqueIdYoutube()}`);
   await dialog.getByRole('textbox', { name: 'YouTube link' }).press('Enter');
   await dialog.getByRole('button', { name: 'Log ascent' }).click();
 

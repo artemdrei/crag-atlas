@@ -25,6 +25,7 @@ export const useApiDeleteRouteMedia = ({
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.routeMedia(idRoute)
       });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.videos() });
       // A photo can be attached to an ascent, and the erase offer counts it.
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ticks() });
       queryClient.invalidateQueries({

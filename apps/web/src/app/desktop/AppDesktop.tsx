@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 
 import { ModalProvider } from '@web/app/providers';
+import { addVideoDesktopRegistrations } from '@web/features/addVideo';
 import { avatarUploadDesktopRegistrations } from '@web/features/avatarUpload';
 import { catalogEditDesktopRegistrations } from '@web/features/catalogEdit';
 import {
@@ -38,6 +39,7 @@ import { ErrorBoundary } from '../ui/errorBoundary';
 // Below the device split on purpose: above it, the root bundle carries both
 // devices' features.
 const registrations = [
+  ...addVideoDesktopRegistrations,
   ...avatarUploadDesktopRegistrations,
   ...catalogEditDesktopRegistrations,
   ...feedbackDesktopRegistrations,
@@ -75,6 +77,10 @@ const PageHomeDesktop = page(
 const PageLogbookDesktop = page(
   () => import('@web/pages/logbook'),
   'PageLogbookDesktop'
+);
+const PageMediaDesktop = page(
+  () => import('@web/pages/media'),
+  'PageMediaDesktop'
 );
 const PageLoginDesktop = page(
   () => import('@web/pages/login'),
@@ -178,6 +184,7 @@ const AppDesktop = () => (
                 element={<PagePlaygroundDesktop />}
               />
             )}
+            <Route path={ROUTES.MEDIA} element={<PageMediaDesktop />} />
             <Route
               path={ROUTES.LOGBOOK}
               element={

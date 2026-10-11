@@ -30,6 +30,10 @@ export const QUERY_KEYS = {
   route: (idRoute: string) => ['routes', idRoute] as const,
   routeComments: (idRoute: string) => ['routes', idRoute, 'comments'] as const,
   routeMedia: (idRoute: string) => ['routes', idRoute, 'media'] as const,
+  videos: () => ['videos'] as const,
+  videoPage: (filters: string) => ['videos', 'page', filters] as const,
+  videoPreview: (idYoutube: string) =>
+    ['videos', 'preview', idYoutube] as const,
   ticks: () => ['ticks'] as const,
   ticksPage: (filters: string) => ['ticks', 'page', filters] as const,
   tickStats: () => ['ticks', 'stats'] as const,

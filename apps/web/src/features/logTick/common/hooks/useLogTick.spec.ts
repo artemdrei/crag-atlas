@@ -28,7 +28,7 @@ vi.mock('@web/features/installHint', () => ({
 }));
 vi.mock('@web/shared/api', () => ({
   invalidateRouteLists: vi.fn(),
-  QUERY_KEYS: { routeMedia: () => [], ticks: () => [] }
+  QUERY_KEYS: { routeMedia: () => [], ticks: () => [], videos: () => [] }
 }));
 vi.mock('@web/shared/lib', () => ({
   celebrate: (name: string) => celebrate(name),

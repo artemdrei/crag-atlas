@@ -1,0 +1,1 @@
+export { mediaCreditOf } from './mediaCreditOf';

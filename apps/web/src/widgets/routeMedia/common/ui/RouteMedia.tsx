@@ -8,10 +8,11 @@ import { alpha, styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { useModal, useUser } from '@web/app/providers';
-import { formatDateTime, mediaThumbnailOf } from '@web/shared/lib';
+import { mediaThumbnailOf } from '@web/shared/lib';
 import { ApiFeedback, EmptyState } from '@web/shared/ui';
 
 import { useApiGetRouteMedia, useRouteMediaPermissions } from '../hooks';
+import { mediaCreditOf } from '../lib';
 import { RouteMediaInvite } from './RouteMediaInvite';
 import { RouteMediaSkeleton } from './RouteMediaSkeleton';
 import { TILE_RATIO, TILE_WIDTH } from './tile';
@@ -21,7 +22,7 @@ export interface Props {
 }
 
 export const RouteMedia = ({ idRoute }: Props) => {
-  const { i18n, t } = useLingui();
+  const { t } = useLingui();
   const { media, isLoading, failure } = useApiGetRouteMedia(idRoute);
   const { canDelete } = useRouteMediaPermissions();
   const { isAuthenticated } = useUser();
@@ -62,6 +63,7 @@ export const RouteMedia = ({ idRoute }: Props) => {
       <StripStyled>
         {media.map((item) => {
           const thumbnail = mediaThumbnailOf(item);
+          const { author, date } = mediaCreditOf(item);
 
           return (
             <ItemStyled key={item.id}>
@@ -86,11 +88,7 @@ export const RouteMedia = ({ idRoute }: Props) => {
                     {item.title}
                   </Typography>
                   <Typography variant="caption" color="text.secondary" noWrap>
-                    {[
-                      item.authorName,
-                      formatDateTime(item.createdAt, i18n.locale),
-                      formatDuration(item.durationSeconds)
-                    ]
+                    {[author, date, formatDuration(item.durationSeconds)]
                       .filter(Boolean)
                       .join(' · ')}
                   </Typography>
